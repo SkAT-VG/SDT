@@ -1,0 +1,73 @@
+/** \file SDTCommon.h
+ * Useful shared SDT-related stuff,
+ * E.g. SDT version number, sample rate, signal clipping etc.
+ *
+ * \author Stefano Baldan (stefanobaldan@iuav.it)
+ *
+ * This file is part of the 'Sound Design Toolkit' (SDT)
+ * Developed with the contribution of the following EU-projects:
+ * 2001-2003 'SOb' http://www.soundobject.org/
+ * 2006-2009 'CLOSED' http://closed.ircam.fr/
+ * 2008-2011 'NIW' http://www.niwproject.eu/
+ * 2014-2017 'SkAT-VG http://www.skatvg.eu/
+ *
+ * Contacts: 
+ * 	stefano.papetti@zhdk.ch
+ * 	stefano.dellemonache@gmail.com
+ *  stefanobaldan@iuav.it
+ *
+ * Complete list of authors (either programmers or designers):
+ * 	Federico Avanzini (avanzini@dei.unipd.it)
+ *	Nicola Bernardini (nicb@sme-ccppd.org)
+ *	Gianpaolo Borin (gianpaolo.borin@tin.it)
+ *	Carlo Drioli (carlo.drioli@univr.it)
+ *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
+ *	Delphine Devallez
+ *	Federico Fontana (federico.fontana@uniud.it)
+ *	Laura Ottaviani
+ *	Stefano Papetti (stefano.papetti@zhdk.ch)
+ *	Pietro Polotti (pietro.polotti@univr.it)
+ *	Matthias Rath
+ *	Davide Rocchesso (roc@iuav.it)
+ *	Stefania Serafin (sts@media.aau.dk)
+ *  Stefano Baldan (stefanobaldan@iuav.it)
+ *
+ * The SDT is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * The SDT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with the SDT; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *****************************************************************************/
+
+#ifndef SDT_COMMON_H
+#define SDT_COMMON_H
+
+#define SDT_ver 063
+#define SDT_ver_str "063"
+#define SDT_PI      3.14159265359
+#define SDT_TWOPI   6.28318530718
+#define SDT_EULER   2.71828182846
+#define SDT_MACH1 340.29
+
+extern double SDT_sampleRate;
+extern double SDT_timeStep;
+
+extern void SDT_setSampleRate(double sampleRate);
+extern long SDT_clip(long x, long min, long max);
+extern double SDT_fclip(double x, double min, double max);
+extern double SDT_frand();
+extern void SDT_hanning(double *sig, int n);
+extern double SDT_normalize(double x, double min, double max);
+extern double SDT_samplesInAir(double length);
+extern double SDT_scale(double x, double in0, double in1,
+                        double out0, double out1, double e);
+
+#endif
