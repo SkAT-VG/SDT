@@ -52,9 +52,12 @@
 
 #define SDT_ver 063
 #define SDT_ver_str "063"
-#define SDT_PI      3.14159265359
-#define SDT_TWOPI   6.28318530718
-#define SDT_EULER   2.71828182846
+#define SDT_FWD     0
+#define SDT_REV     1
+#define SDT_PI      3.141592653589793
+#define SDT_TWOPI   6.283185307179586
+#define SDT_EULER   2.718281828459045
+#define SDT_SQRT2   1.4142135623730951
 #define SDT_MACH1 340.29
 
 extern double SDT_sampleRate;

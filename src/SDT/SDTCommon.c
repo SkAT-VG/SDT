@@ -49,6 +49,7 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 #include "SDTCommon.h"
 
 double SDT_sampleRate = 0.0;
@@ -84,6 +85,30 @@ void SDT_hanning(double *sig, int n) {
     scale = 0.5 * (1 - cos(SDT_TWOPI * i / (n - 1)));
     sig[i] *= scale;
     sig[j] *= scale;
+  }
+}
+
+void SDT_haar(double *sig, long n, char verse) {
+  double tmp[n];
+  long x, i, j, k, l;
+  
+  memcpy(tmp, sig, n * sizeof(double)); 
+  n /= 2;
+  for (x = 0; x < n; x++) {
+    if (verse == SDT_FWD) {
+      i = x;
+      j = i + n;
+      k = 2 * x;
+      l = k + 1;
+    }
+    else {
+      i = 2 * x;
+      j = i + 1;
+      k = x;
+      l = k + n;
+    }
+    sig[i] = (tmp[k] + tmp[l]) / SDT_SQRT2;
+    sig[j] = (tmp[k] - tmp[l]) / SDT_SQRT2;
   }
 }
 

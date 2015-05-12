@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="max_extern_x86"
+	>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalLibraryDirectories="&quot;$(C74SUPPORT)\max-includes&quot;;&quot;$(C74SUPPORT)\msp-includes&quot;;&quot;$(C74SUPPORT)\jit-includes&quot;"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		PreprocessorDefinitions="VER_TARGETEXT=\&quot;.mxe\&quot;"
+	/>
+</VisualStudioPropertySheet>

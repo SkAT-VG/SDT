@@ -1,0 +1,51 @@
+// Xcode target configuration settings shared across all Max projects
+// To change settings for only one project, override the settings using Xcode's target inspector.
+//
+// Timothy Place
+// Copyright © 2011, Cycling '74
+
+
+PRODUCT_NAME = $(PROJECT_NAME)
+PRODUCT_VERSION = 6.0.6
+PRODUCT_BUILD = 1974
+
+ARCHS = i386 x86_64
+ONLY_ACTIVE_ARCH=YES
+
+
+// The following section sets the Mac SDK version to be used.
+// For most projects this has little to no impact because there are no direct dependencies on OS function calls.
+// In those projects with OS function calls, it should be okay to use the most recent SDK version because the 
+// MACOSX_DEPLOYMENT_TARGET will disable functionality that is unavailable in the older target OS.
+// For this reason, the SDKROOT variable is commented out, telling Xcode to use the default (which is the most recent SDK).
+//
+// If you do need to define the SDKROOT, different versions of Xcode have varying syntax and varying versions of the SDK present.
+
+// Xcode 3.x
+// SDKROOT = $(DEVELOPER_DIR)/SDKs/MacOSX10.5.sdk
+
+// Xcode 4.0 - Xcode 4.2
+// SDKROOT = $(DEVELOPER_DIR)/SDKs/MacOSX10.6.sdk
+
+// Xcode 4.3+
+// SDKROOT = macosx10.6
+
+
+MACOSX_DEPLOYMENT_TARGET = 10.5
+// MACOSX_DEPLOYMENT_TARGET = 10.6
+
+// GCC_VERSION = 4.2
+GCC_VERSION = com.apple.compilers.llvmgcc42
+// GCC_VERSION = com.apple.compilers.llvm.clang.1_0
+
+//SYSBUILD_BRANCH = master
+SYSBUILD = $(SRCROOT)/../../../sysbuild$(SYSBUILD_BRANCH)_$(ARCHS)
+
+C74_FRAMEWORK_PATH_SUFFIX[arch=i386] =
+C74_FRAMEWORK_PATH_SUFFIX[arch=x86_64] = x64
+C74_FRAMEWORK_PATH_SUFFIX[arch="i386 x86_64"] = x64
+C74_FRAMEWORK_PATH_SUFFIX[arch="x86_64 i386 "] = x64
+
+#include "max-local.xcconfig"
+
+C74_SYM_LINKER_FLAGS =

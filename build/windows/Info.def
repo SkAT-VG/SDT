@@ -1,0 +1,4 @@
+LIBRARY ${PRODUCT_NAME}
+
+EXPORTS
+	main

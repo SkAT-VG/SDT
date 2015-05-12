@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="max_extern_common"
+	OutputDirectory="$(C74SUPPORT)..\sdk-build\externals"
+	IntermediateDirectory="..\..\sysbuild\intermediate\$(ConfigurationName)_$(PlatformName)\$(ProjectName)\"
+	>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="MaxAPI.lib MaxAudio.lib jitlib.lib"
+	/>
+	<Tool
+		Name="VCResourceCompilerTool"
+		PreprocessorDefinitions="VER_TARGETNAME=\&quot;$(TargetName)\&quot;"
+	/>
+	<UserMacro
+		Name="C74SUPPORT"
+		Value="$(InputDir)..\..\..\c74support\"
+	/>
+</VisualStudioPropertySheet>

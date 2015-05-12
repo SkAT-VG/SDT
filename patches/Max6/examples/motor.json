@@ -1,0 +1,184 @@
+{
+	"pattrstorage" : 	{
+		"name" : "motor",
+		"slots" : 		{
+			"1" : 			{
+				"id" : 1,
+				"data" : 				{
+					"asymmetry" : [ 0.0 ],
+					"backfire" : [ 0.0 ],
+					"compressionRatio" : [ 9.076923 ],
+					"cylinderSize" : [ 153.846161 ],
+					"exhaustGain" : [ 130 ],
+					"exhaustSize" : [ 0.384615 ],
+					"extractorSize" : [ 0.153846 ],
+					"intakeGain" : [ 110 ],
+					"intakeSize" : [ 0.153846 ],
+					"mufflerFeedback" : [ 0.5 ],
+					"mufflerSize" : [ 0.384615 ],
+					"nCylinders" : [ 0 ],
+					"outletSize" : [ 0.076923 ],
+					"rpm" : [ 0.0 ],
+					"sparkTime" : [ 0.053846 ],
+					"strokes" : [ 0 ],
+					"throttle" : [ 0.0 ],
+					"vibrationGain" : [ 120 ]
+				}
+
+			}
+,
+			"2" : 			{
+				"id" : 2,
+				"data" : 				{
+					"asymmetry" : [ 0.153846 ],
+					"backfire" : [ 0.0 ],
+					"compressionRatio" : [ 12.0 ],
+					"cylinderSize" : [ 615.384644 ],
+					"exhaustGain" : [ 130 ],
+					"exhaustSize" : [ 1.538462 ],
+					"extractorSize" : [ 0.307692 ],
+					"intakeGain" : [ 110 ],
+					"intakeSize" : [ 0.153846 ],
+					"mufflerFeedback" : [ 0.0 ],
+					"mufflerSize" : [ 0.0 ],
+					"nCylinders" : [ 1 ],
+					"outletSize" : [ 0.0 ],
+					"rpm" : [ 0.0 ],
+					"sparkTime" : [ 0.007692 ],
+					"strokes" : [ 0 ],
+					"throttle" : [ 0.0 ],
+					"vibrationGain" : [ 120 ]
+				}
+
+			}
+,
+			"3" : 			{
+				"id" : 3,
+				"data" : 				{
+					"asymmetry" : [ 0.053846 ],
+					"backfire" : [ 0.0 ],
+					"compressionRatio" : [ 6.0 ],
+					"cylinderSize" : [ 307.692322 ],
+					"exhaustGain" : [ 130 ],
+					"exhaustSize" : [ 2.0 ],
+					"extractorSize" : [ 0.307692 ],
+					"intakeGain" : [ 100 ],
+					"intakeSize" : [ 0.153846 ],
+					"mufflerFeedback" : [ 0.5 ],
+					"mufflerSize" : [ 0.615385 ],
+					"nCylinders" : [ 2 ],
+					"outletSize" : [ 0.076923 ],
+					"rpm" : [ 0.0 ],
+					"sparkTime" : [ 0.1 ],
+					"strokes" : [ 0 ],
+					"throttle" : [ 0.0 ],
+					"vibrationGain" : [ 110 ]
+				}
+
+			}
+,
+			"4" : 			{
+				"id" : 4,
+				"data" : 				{
+					"asymmetry" : [ 0.053846 ],
+					"backfire" : [ 0.0 ],
+					"compressionRatio" : [ 9.076923 ],
+					"cylinderSize" : [ 461.538452 ],
+					"exhaustGain" : [ 130 ],
+					"exhaustSize" : [ 3.0 ],
+					"extractorSize" : [ 0.461538 ],
+					"intakeGain" : [ 110 ],
+					"intakeSize" : [ 0.307692 ],
+					"mufflerFeedback" : [ 0.5 ],
+					"mufflerSize" : [ 0.846154 ],
+					"nCylinders" : [ 3 ],
+					"outletSize" : [ 0.153846 ],
+					"rpm" : [ 0.0 ],
+					"sparkTime" : [ 0.069231 ],
+					"strokes" : [ 0 ],
+					"throttle" : [ 0.0 ],
+					"vibrationGain" : [ 120 ]
+				}
+
+			}
+,
+			"5" : 			{
+				"id" : 5,
+				"data" : 				{
+					"asymmetry" : [ 0.1 ],
+					"backfire" : [ 0.392308 ],
+					"compressionRatio" : [ 14.0 ],
+					"cylinderSize" : [ 615.384644 ],
+					"exhaustGain" : [ 130 ],
+					"exhaustSize" : [ 3.230769 ],
+					"extractorSize" : [ 0.615385 ],
+					"intakeGain" : [ 110 ],
+					"intakeSize" : [ 0.615385 ],
+					"mufflerFeedback" : [ 0.330769 ],
+					"mufflerSize" : [ 0.846154 ],
+					"nCylinders" : [ 5 ],
+					"outletSize" : [ 0.307692 ],
+					"rpm" : [ 0.0 ],
+					"sparkTime" : [ 0.053846 ],
+					"strokes" : [ 0 ],
+					"throttle" : [ 0.0 ],
+					"vibrationGain" : [ 120 ]
+				}
+
+			}
+,
+			"6" : 			{
+				"id" : 6,
+				"data" : 				{
+					"asymmetry" : [ 0.2 ],
+					"backfire" : [ 0.0 ],
+					"compressionRatio" : [ 11.076923 ],
+					"cylinderSize" : [ 2538.461426 ],
+					"exhaustGain" : [ 130 ],
+					"exhaustSize" : [ 6.0 ],
+					"extractorSize" : [ 2.0 ],
+					"intakeGain" : [ 110 ],
+					"intakeSize" : [ 1.538462 ],
+					"mufflerFeedback" : [ 0.5 ],
+					"mufflerSize" : [ 1.615385 ],
+					"nCylinders" : [ 5 ],
+					"outletSize" : [ 1.0 ],
+					"rpm" : [ 0.0 ],
+					"sparkTime" : [ 0.1 ],
+					"strokes" : [ 0 ],
+					"throttle" : [ 0.0 ],
+					"vibrationGain" : [ 120 ]
+				}
+
+			}
+,
+			"7" : 			{
+				"id" : 7,
+				"data" : 				{
+					"asymmetry" : [ 0.053846 ],
+					"backfire" : [ 0.0 ],
+					"compressionRatio" : [ 16.0 ],
+					"cylinderSize" : [ 307.692322 ],
+					"exhaustGain" : [ 130 ],
+					"exhaustSize" : [ 1.230769 ],
+					"extractorSize" : [ 0.538462 ],
+					"intakeGain" : [ 110 ],
+					"intakeSize" : [ 0.538462 ],
+					"mufflerFeedback" : [ 0.330769 ],
+					"mufflerSize" : [ 0.307692 ],
+					"nCylinders" : [ 9 ],
+					"outletSize" : [ 0.076923 ],
+					"rpm" : [ 0.0 ],
+					"sparkTime" : [ 0.007692 ],
+					"strokes" : [ 0 ],
+					"throttle" : [ 0.0 ],
+					"vibrationGain" : [ 120 ]
+				}
+
+			}
+
+		}
+
+	}
+
+}
