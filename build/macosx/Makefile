@@ -47,11 +47,12 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 sdt: $(SDTOBJS)
 	rm -rf $(SDTDIR)/SDT.framework
 	cp -a SDT.framework $(SDTDIR)
-	mkdir -p $(SDTDIR)/SDT.framework/Resources/fftw3
+	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
+	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Resources/fftw3
 	cp -a $(FFTW3DIR)/* $(SDTDIR)/SDT.framework/Resources/fftw3
 	install_name_tool -id @loader_path/Resources/fftw3/libfftw3.3.dylib \
 	$(SDTDIR)/SDT.framework/Resources/fftw3/libfftw3.3.dylib
-	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Versions/A/Headers
+	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
 	$(CC) $(LDFLAGS) -L$(SDTDIR)/SDT.framework/Resources/fftw3 $(SDTOBJS) \
 	-o $(SDTDIR)/SDT.framework/Versions/A/SDT -lfftw3
 

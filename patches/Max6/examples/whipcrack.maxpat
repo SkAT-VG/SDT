@@ -56,13 +56,13 @@
 					"fontname" : "Arial",
 					"fontsize" : 12.0,
 					"id" : "obj-8",
-					"linecount" : 4,
+					"linecount" : 2,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "signal" ],
-					"patching_rect" : [ 264.0, 359.0, 190.0, 60.0 ],
-					"text" : "sdt.explosion~ @blastTime 0.1 @scatterTime 0.5 @dispersion 0.5 @distance 10 @waveSpeed 343 @windSpeed 800"
+					"patching_rect" : [ 264.0, 359.0, 561.0, 33.0 ],
+					"text" : "sdt.explosion~ @blastTime 0.05 @scatterTime 0.5 @dispersion 0.5 @distance 2 @waveSpeed 340.27 @windSpeed 500"
 				}
 
 			}
@@ -75,8 +75,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 69.0, 399.0, 180.0, 20.0 ],
-					"text" : "sdt.windkarman~ @diameter 10"
+					"patching_rect" : [ 69.0, 399.0, 174.0, 20.0 ],
+					"text" : "sdt.windkarman~ @diameter 9"
 				}
 
 			}
@@ -117,8 +117,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 150.0, 121.0, 61.0, 18.0 ],
-					"text" : "1, 0 1000"
+					"patching_rect" : [ 150.0, 121.0, 54.0, 18.0 ],
+					"text" : "1, 0 500"
 				}
 
 			}
