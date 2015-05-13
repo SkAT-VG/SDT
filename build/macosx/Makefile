@@ -29,6 +29,7 @@ $(MAXDIR)/%.mxo: RFC1034=$(patsubst %~,%-,$(EXTNAME))
 $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	rm -rf $@
 	cp -a Max6External.mxo $@
+	mkdir -p $@/Contents/MacOS
 	sed -i "" s/\$${PRODUCT_NAME}/$(EXTNAME)/g $@/Contents/Info.plist
 	sed -i "" s/\$${PRODUCT_NAME:rfc1034identifier}/$(RFC1034)/g $@/Contents/Info.plist
 	sed -i "" s/\$${PRODUCT_VERSION}/$(MAXSDKVERSION)/g $@/Contents/Info.plist
