@@ -8,7 +8,7 @@
 			"architecture" : "x86"
 		}
 ,
-		"rect" : [ 304.0, 314.0, 649.0, 525.0 ],
+		"rect" : [ 304.0, 314.0, 667.0, 525.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -163,7 +163,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
 					"patching_rect" : [ 109.0, 286.0, 179.0, 74.0 ],
-					"text" : "sdt.dcmotor~ @airGain 0.05 @brushGain 0.05 @gearGain 0 @rotorGain 1 @coils 2 @gearRatio 1 @harshness 0.2 @reson 0.8 @size 0.2"
+					"text" : "sdt.dcmotor~ @airGain 0.1 @brushGain 0.01 @gearGain 0 @rotorGain 1 @coils 2 @gearRatio 1 @harshness 0.2 @reson 0.8 @size 0.2"
 				}
 
 			}

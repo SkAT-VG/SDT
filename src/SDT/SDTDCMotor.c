@@ -148,15 +148,14 @@ void SDTDCMotor_setAirGain(SDTDCMotor *x, double f) {
 
 double SDTDCMotor_dsp(SDTDCMotor *x) {
   double revStep, rotorStep, gearStep,
-         rev, rotor, gears, brushes, air,
+         rotor, gears, brushes, air,
          partPhase, partGain, totGain, outGain;
   int i;
   
   revStep = SDT_timeStep * x->rpm / 60.0;
   x->revPhase += revStep;
   x->revPhase -= (int)x->revPhase;
-  rev = 0.5 + 0.5 * x->load * cos(SDT_TWOPI * x->revPhase);
-  rotorStep = revStep * x->coils * rev;
+  rotorStep = revStep * x->coils * (1.0 + x->load * cos(SDT_TWOPI * x->revPhase));
   x->rotorPhase += rotorStep;
   x->rotorPhase -= (int)x->rotorPhase;
   gearStep = rotorStep * x->gearRatio;

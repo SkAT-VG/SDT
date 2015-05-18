@@ -169,7 +169,7 @@ int C74_EXPORT main(void) {
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitch, overlap);
   CLASS_ATTR_DOUBLE(c, "tolerance", 0, t_pitch, tolerance);
   
-  CLASS_ATTR_FILTER_MIN(c, "overlap", 1.0);
+  CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "tolerance", 0.0, 1.0);
   
   CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)pitch_overlap);

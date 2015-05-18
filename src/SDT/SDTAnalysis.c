@@ -254,7 +254,7 @@ void SDTPitch_free(SDTPitch *x) {
 }
 
 void SDTPitch_setOverlap(SDTPitch *x, double f) {
-  x->skip = x->size / SDT_fclip(f, 1.0, x->size);
+  x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
 }
 
 void SDTPitch_setTolerance(SDTPitch *x, double f) {

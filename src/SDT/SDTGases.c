@@ -296,7 +296,7 @@ void SDTExplosion_setWindSpeed(SDTExplosion *x, double f) {
 void SDTExplosion_update(SDTExplosion *x) {
   SDTReverb_setSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
   SDTReverb_setTime(x->scatter, x->scatterTime);
-  SDTReverb_setTime1k(x->scatter, x->scatterTime);
+  SDTReverb_setTime1k(x->scatter, 0.9 * x->scatterTime);
   SDTReverb_update(x->scatter);
   SDTTwoPoles_lowpass(x->wave, fmin(20000.0, 20000.0 / sqrt(x->distance)));
   SDTTwoPoles_resonant(x->wind, 800.0, 10.0);
