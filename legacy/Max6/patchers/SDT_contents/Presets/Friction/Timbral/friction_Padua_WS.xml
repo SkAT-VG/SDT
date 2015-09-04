@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<pattrstorage name = "friction_preset">
+	<slot number = "1" name = "basic_preset">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "48 88" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "700" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "500" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "13.8975" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "41.666668" />
+			<pattr name = "FRmu_d_F" value = "33.333332" />
+			<pattr name = "FRmu_s_F" value = "93.518517" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "43.51852" />
+			<pattr name = "FRsigma_1_F" value = "97.222221" />
+			<pattr name = "FRsigma_2_F" value = "97.222221" />
+			<pattr name = "FRv_s_F" value = "5.555555" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "1.3" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "2" name = "medium_stable">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "48 88" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "700" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "500" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "13.8975" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "41.666668" />
+			<pattr name = "FRmu_d_F" value = "25." />
+			<pattr name = "FRmu_s_F" value = "94.444443" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "43.51852" />
+			<pattr name = "FRsigma_1_F" value = "97.222221" />
+			<pattr name = "FRsigma_2_F" value = "97.222221" />
+			<pattr name = "FRv_s_F" value = "60.185184" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.6" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1.5" />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "3" name = "small_stable">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "48 88" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "700" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "500" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "4.639167" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "41.666668" />
+			<pattr name = "FRmu_d_F" value = "18.518518" />
+			<pattr name = "FRmu_s_F" value = "93.518517" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "43.51852" />
+			<pattr name = "FRsigma_1_F" value = "97.222221" />
+			<pattr name = "FRsigma_2_F" value = "97.222221" />
+			<pattr name = "FRv_s_F" value = "67.59259" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.4" />
+			<pattr name = "Mo2_Gfreq_fact" value = "2." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "4" name = "repeated">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "69 88" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "600" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "500" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "3.713333" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "91.666664" />
+			<pattr name = "FRmu_d_F" value = "25." />
+			<pattr name = "FRmu_s_F" value = "93.518517" />
+			<pattr name = "FRnoise_F" value = "99.074074" />
+			<pattr name = "FRsigma_0_F" value = "25." />
+			<pattr name = "FRsigma_1_F" value = "66.666664" />
+			<pattr name = "FRsigma_2_F" value = "94.444443" />
+			<pattr name = "FRv_s_F" value = "48.148148" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.4" />
+			<pattr name = "Mo2_Gfreq_fact" value = "2." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "5" name = "high_random">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "48 88" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "700" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "100" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "16.674999" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "76.851852" />
+			<pattr name = "FRmu_d_F" value = "33.333332" />
+			<pattr name = "FRmu_s_F" value = "93.518517" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "33.333332" />
+			<pattr name = "FRsigma_1_F" value = "89.814812" />
+			<pattr name = "FRsigma_2_F" value = "80.555557" />
+			<pattr name = "FRv_s_F" value = "46.296295" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.8" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "6" name = "falling_down">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "43 88" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "600" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "600" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "22.23" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "16.666666" />
+			<pattr name = "FRmu_d_F" value = "39.814816" />
+			<pattr name = "FRmu_s_F" value = "89.814812" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "18.518518" />
+			<pattr name = "FRsigma_1_F" value = "87.962959" />
+			<pattr name = "FRsigma_2_F" value = "35.185184" />
+			<pattr name = "FRv_s_F" value = "53.703705" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.7" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "7" name = "high_random">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 46.247368 47.842106 0 66.447365 87.710526 0 82.394737 83.723686 0 101. 73.092102 0 linear" />
+				<pattr name = "Ru_f_range" value = "74 77" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "50" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "400" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "16.674999" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "76.851852" />
+			<pattr name = "FRmu_d_F" value = "39.814816" />
+			<pattr name = "FRmu_s_F" value = "71.296295" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "25.925926" />
+			<pattr name = "FRsigma_1_F" value = "92.59259" />
+			<pattr name = "FRsigma_2_F" value = "97.222221" />
+			<pattr name = "FRv_s_F" value = "46.296295" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.8" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "8" name = "low_irregularities">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 68.573685 85.052635 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "89 94" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "300" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "600" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "12.045834" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "16.666666" />
+			<pattr name = "FRmu_d_F" value = "39.814816" />
+			<pattr name = "FRmu_s_F" value = "89.814812" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "52.777779" />
+			<pattr name = "FRsigma_1_F" value = "87.962959" />
+			<pattr name = "FRsigma_2_F" value = "93.518517" />
+			<pattr name = "FRv_s_F" value = "81.481483" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.7" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "9" name = "impulsive">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "0 100" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "200" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "600" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "5.565" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "88.888885" />
+			<pattr name = "FRmu_d_F" value = "83.333336" />
+			<pattr name = "FRmu_s_F" value = "89.814812" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "21.296297" />
+			<pattr name = "FRsigma_1_F" value = "98.148148" />
+			<pattr name = "FRsigma_2_F" value = "90.740738" />
+			<pattr name = "FRv_s_F" value = "82.40741" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.7" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "10" name = "linear">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "0 100" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "200" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "600" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "5.565" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "88.888885" />
+			<pattr name = "FRmu_d_F" value = "41.666668" />
+			<pattr name = "FRmu_s_F" value = "32.407406" />
+			<pattr name = "FRnoise_F" value = "100." />
+			<pattr name = "FRsigma_0_F" value = "65.740738" />
+			<pattr name = "FRsigma_1_F" value = "98.148148" />
+			<pattr name = "FRsigma_2_F" value = "68.518517" />
+			<pattr name = "FRv_s_F" value = "50.925926" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.7" />
+			<pattr name = "Mo2_Gfreq_fact" value = "2." />
+			<pattr name = "Mo2_Ggain_fact" value = "2." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "11" name = "rotating">
+		<pattr name = "extragain" value = "94" />
+		<patcher name = "03c_FRIC_rub-press-forces">
+			<pattr name = "u021002408" value = "" />
+			<patcher name = "03a_FRIC_rubbforce_control">
+				<pattr name = "Ru_f_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0 linear" />
+				<pattr name = "Ru_f_range" value = "65 74" />
+				<pattr name = "Ru_f_smooth" value = "0.7" />
+				<pattr name = "Ru_f_time" value = "1200" />
+			</patcher>
+			<patcher name = "03b_FRIC_pressrubb_control">
+				<pattr name = "Ru_p_map" value = "101. 0. 101. 0. 0. 0 101. 101. 0" />
+				<pattr name = "Ru_p_range" value = "61 92" />
+				<pattr name = "Ru_p_smooth" value = "0.5" />
+				<pattr name = "Ru_p_time" value = "600" />
+			</patcher>
+		</patcher>
+		<patcher name = "00_FRIC_Rubber_control.pat">
+			<pattr name = "RUmass_F" value = "37.043335" />
+		</patcher>
+		<patcher name = "01_FRIC_Friction_parameters.pat">
+			<pattr name = "FRc_ba_F" value = "94.444443" />
+			<pattr name = "FRmu_d_F" value = "34.259258" />
+			<pattr name = "FRmu_s_F" value = "93.518517" />
+			<pattr name = "FRnoise_F" value = "0." />
+			<pattr name = "FRsigma_0_F" value = "5.555555" />
+			<pattr name = "FRsigma_1_F" value = "90.740738" />
+			<pattr name = "FRsigma_2_F" value = "37.962963" />
+			<pattr name = "FRv_s_F" value = "78.703705" />
+		</patcher>
+		<patcher name = "02_FRIC_Resonator_control.pat">
+			<pattr name = "Active_modes" value = "6" />
+			<pattr name = "Mo2_Gdec_fact" value = "1.3" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1.6" />
+			<pattr name = "Mo2_Ggain_fact" value = "1.4" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "170." />
+				<pattr name = "decay" value = "0.025" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.02" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.2" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "86." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.5" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "14.3" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "19." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+</pattrstorage>
+

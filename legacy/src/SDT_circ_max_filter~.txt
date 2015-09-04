@@ -1,0 +1,10 @@
+NAME =	circ_max_filter~
+
+SRCDIR=Control
+
+#BUILDTYPE = shared
+
+HDRS = 	circular_buffer_1float2int.h
+
+SRCS = 	circ_max_filter~.cpp \
+	circular_buffer_1float2int.c

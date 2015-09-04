@@ -1,0 +1,12 @@
+NAME = splash~
+
+SRCDIR=Liquids
+
+#BUILDTYPE = shared
+
+HDRS =	SplashSampleObj.h \
+	bubbleObj.h
+	
+SRCS =	splashembedwmain.cpp \
+	SplashSampleObj.cpp \
+	bubbleObj.cpp

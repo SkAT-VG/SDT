@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<pattrstorage name = "cont_crumpling_preset">
+	<slot number = "1" name = "fire_like">
+		<patcher name = "00_Ccrump_crump_params.mxb">
+			<pattr name = "CR_Force" value = "60.975609" />
+			<pattr name = "CR_resistance" value = "11.111112" />
+		</patcher>
+		<patcher name = "01_Ccrump_Imp_parameters.mxb">
+			<pattr name = "Imp_shape_alpha" value = "89.430893" />
+			<pattr name = "Imp_stiff_k" value = "45.528454" />
+		</patcher>
+		<patcher name = "02_CCrump_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "15." />
+			<pattr name = "Mo2_Gfreq_fact" value = "68.181816" />
+			<pattr name = "Mo2_Ggain_fact" value = "4.058419" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "467." />
+				<pattr name = "decay" value = "0.0002" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "3.355" />
+				<pattr name = "decay" value = "0.0002" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "6.864" />
+				<pattr name = "decay" value = "0.0004" />
+				<pattr name = "gain" value = "85." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "3.904" />
+				<pattr name = "decay" value = "0.0003" />
+				<pattr name = "gain" value = "88." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "2" name = "ice_crush">
+		<patcher name = "00_Ccrump_crump_params.mxb">
+			<pattr name = "CR_Force" value = "52.845528" />
+			<pattr name = "CR_resistance" value = "24.390244" />
+		</patcher>
+		<patcher name = "01_Ccrump_Imp_parameters.mxb">
+			<pattr name = "Imp_shape_alpha" value = "95.934959" />
+			<pattr name = "Imp_stiff_k" value = "66.666664" />
+		</patcher>
+		<patcher name = "02_CCrump_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "54.471546" />
+			<pattr name = "Mo2_Gfreq_fact" value = "43.939392" />
+			<pattr name = "Mo2_Ggain_fact" value = "5.483798" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "586." />
+				<pattr name = "decay" value = "0.0035" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "3.684" />
+				<pattr name = "decay" value = "0.0018" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "7.193" />
+				<pattr name = "decay" value = "0.0025" />
+				<pattr name = "gain" value = "95." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.18" />
+				<pattr name = "decay" value = "0.005" />
+				<pattr name = "gain" value = "95." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "3" name = "ice_in">
+		<patcher name = "00_Ccrump_crump_params.mxb">
+			<pattr name = "CR_Force" value = "51.219513" />
+			<pattr name = "CR_resistance" value = "42.276424" />
+		</patcher>
+		<patcher name = "01_Ccrump_Imp_parameters.mxb">
+			<pattr name = "Imp_shape_alpha" value = "80.487808" />
+			<pattr name = "Imp_stiff_k" value = "66.666664" />
+		</patcher>
+		<patcher name = "02_CCrump_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "86.666664" />
+			<pattr name = "Mo2_Gfreq_fact" value = "43.939392" />
+			<pattr name = "Mo2_Ggain_fact" value = "2.115943" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "586." />
+				<pattr name = "decay" value = "0.0045" />
+				<pattr name = "gain" value = "75." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "2.807" />
+				<pattr name = "decay" value = "0.003" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "3.136" />
+				<pattr name = "decay" value = "0.0008" />
+				<pattr name = "gain" value = "91." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.18" />
+				<pattr name = "decay" value = "0.0009" />
+				<pattr name = "gain" value = "95." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+	<slot number = "4" name = "snow">
+		<patcher name = "00_Ccrump_crump_params.mxb">
+			<pattr name = "CR_Force" value = "51.219513" />
+			<pattr name = "CR_resistance" value = "42.276424" />
+		</patcher>
+		<patcher name = "01_Ccrump_Imp_parameters.mxb">
+			<pattr name = "Imp_shape_alpha" value = "80.487808" />
+			<pattr name = "Imp_stiff_k" value = "66.666664" />
+		</patcher>
+		<patcher name = "02_CCrump_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "86.666664" />
+			<pattr name = "Mo2_Gfreq_fact" value = "43.939392" />
+			<pattr name = "Mo2_Ggain_fact" value = "2.115943" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "682." />
+				<pattr name = "decay" value = "0.0001" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "3.465" />
+				<pattr name = "decay" value = "0.0004" />
+				<pattr name = "gain" value = "83." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "7.193" />
+				<pattr name = "decay" value = "0.0006" />
+				<pattr name = "gain" value = "96." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "8.18" />
+				<pattr name = "decay" value = "0.0009" />
+				<pattr name = "gain" value = "90." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+	</slot>
+</pattrstorage>
+

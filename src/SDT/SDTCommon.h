@@ -52,13 +52,12 @@
 
 #define SDT_ver 063
 #define SDT_ver_str "063"
-#define SDT_FWD     0
-#define SDT_REV     1
 #define SDT_PI      3.141592653589793
 #define SDT_TWOPI   6.283185307179586
 #define SDT_EULER   2.718281828459045
 #define SDT_SQRT2   1.4142135623730951
 #define SDT_MACH1 340.29
+#define SDT_SMALL   0.000001
 
 extern double SDT_sampleRate;
 extern double SDT_timeStep;
@@ -72,5 +71,5 @@ extern double SDT_normalize(double x, double min, double max);
 extern double SDT_samplesInAir(double length);
 extern double SDT_scale(double x, double in0, double in1,
                         double out0, double out1, double e);
-
+extern int SDT_signum(double x);
 #endif

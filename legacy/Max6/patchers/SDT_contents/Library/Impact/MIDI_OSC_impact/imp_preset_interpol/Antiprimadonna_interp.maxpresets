@@ -1,0 +1,11 @@
+{
+	"preset_data" : [ 		{
+			"number" : 1,
+			"data" : [ 5, "obj-17", "number", "int", 2, 5, "obj-30", "number", "int", 5000, 6, "obj-12", "rslider", "list", 0, 1, 5, "obj-16", "number", "int", 1 ]
+		}
+, 		{
+			"number" : 2,
+			"data" : [ 5, "obj-17", "number", "int", 8, 5, "obj-30", "number", "int", 5000, 6, "obj-12", "rslider", "list", 2, 4, 5, "obj-16", "number", "int", 1 ]
+		}
+ ]
+}

@@ -95,7 +95,7 @@ void SDT_haar(double *sig, long n, char verse) {
   memcpy(tmp, sig, n * sizeof(double)); 
   n /= 2;
   for (x = 0; x < n; x++) {
-    if (verse == SDT_FWD) {
+    if (verse == 0) {
       i = x;
       j = i + n;
       k = 2 * x;
@@ -123,4 +123,13 @@ double SDT_samplesInAir(double length) {
 double SDT_scale(double x, double in0, double in1,
                  double out0, double out1, double e) {
   return pow((x - in0) / (in1 - in0), e) * (out1 - out0) + out0;
+}
+
+int SDT_signum(double x) {
+  int result;
+  
+  if (x < 0) result = -1;
+  else if (x == 0) result = 0;
+  else result = 1;
+  return result;
 }

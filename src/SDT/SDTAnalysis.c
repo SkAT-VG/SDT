@@ -168,7 +168,7 @@ void SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
     logSum = 0.0;
     for (i = x->min; i < x->max; i++) {
       x->ampli[0][i] = sqrt(x->fft[i][0] * x->fft[i][0] + x->fft[i][1] * x->fft[i][1]);
-      x->whitener[i] = fmax(0.000001, fmax(x->alpha * x->whitener[i], x->ampli[0][i]));
+      x->whitener[i] = fmax(SDT_SMALL, fmax(x->alpha * x->whitener[i], x->ampli[0][i]));
       x->white[0][i] = x->ampli[0][i] / x->whitener[i];
       sum += x->ampli[0][i];
       logSum += log(x->ampli[0][i]);

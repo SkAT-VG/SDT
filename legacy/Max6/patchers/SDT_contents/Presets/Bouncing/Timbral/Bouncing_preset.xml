@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<pattrstorage name = "Bouncing_preset">
+	<slot number = "1" name = "bounce_1">
+		<patcher name = "00_Bounce_Impact_params.mxb">
+			<pattr name = "Imp_dissip_lambda" value = "9.756098" />
+			<pattr name = "Imp_shape_alpha" value = "56.097561" />
+			<pattr name = "Imp_stiff_k" value = "32.520325" />
+		</patcher>
+		<patcher name = "01_Bounce_Hammer_control.mxb">
+			<pattr name = "Mo1_Ham_mass" value = "16.190475" />
+			<pattr name = "Mo1_acc" value = "0." />
+		</patcher>
+		<patcher name = "02_Bounce_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.4" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "0.68" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "400." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "1.33" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "1.66" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "1.9" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "78." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+		<patcher name = "03_Bounce_bounce_params.mxb">
+			<pattr name = "BNC_height" value = "77.235771" />
+			<pattr name = "BNC_obj_elast" value = "73.170731" />
+			<pattr name = "BNC_obj_shape" value = "96.747971" />
+			<pattr name = "BNC_obj_soft" value = "76.422768" />
+			<pattr name = "BNC_obj_weight" value = "73.170731" />
+			<pattr name = "BNC_shape_tune" value = "0.925926" />
+			<pattr name = "BNC_soft_tune" value = "0.975309" />
+		</patcher>
+	</slot>
+	<slot number = "2" name = "bounce_2">
+		<patcher name = "00_Bounce_Impact_params.mxb">
+			<pattr name = "Imp_dissip_lambda" value = "91.056908" />
+			<pattr name = "Imp_shape_alpha" value = "80.487808" />
+			<pattr name = "Imp_stiff_k" value = "23.577236" />
+		</patcher>
+		<patcher name = "01_Bounce_Hammer_control.mxb">
+			<pattr name = "Mo1_Ham_mass" value = "6.666667" />
+			<pattr name = "Mo1_acc" value = "0." />
+		</patcher>
+		<patcher name = "02_Bounce_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "1." />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1." />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "2300." />
+				<pattr name = "decay" value = "0.3" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "1.002" />
+				<pattr name = "decay" value = "0.3" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "1.001" />
+				<pattr name = "decay" value = "0.3" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "1.02" />
+				<pattr name = "decay" value = "0.3" />
+				<pattr name = "gain" value = "78." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+		<patcher name = "03_Bounce_bounce_params.mxb">
+			<pattr name = "BNC_height" value = "21.95122" />
+			<pattr name = "BNC_obj_elast" value = "86.991867" />
+			<pattr name = "BNC_obj_shape" value = "100." />
+			<pattr name = "BNC_obj_soft" value = "82.926826" />
+			<pattr name = "BNC_obj_weight" value = "68.292686" />
+			<pattr name = "BNC_shape_tune" value = "0.925926" />
+			<pattr name = "BNC_soft_tune" value = "0.975309" />
+		</patcher>
+	</slot>
+	<slot number = "3" name = "bounce_3">
+		<patcher name = "00_Bounce_Impact_params.mxb">
+			<pattr name = "Imp_dissip_lambda" value = "86.991867" />
+			<pattr name = "Imp_shape_alpha" value = "24.390244" />
+			<pattr name = "Imp_stiff_k" value = "67.479675" />
+		</patcher>
+		<patcher name = "01_Bounce_Hammer_control.mxb">
+			<pattr name = "Mo1_Ham_mass" value = "25.714285" />
+			<pattr name = "Mo1_acc" value = "0." />
+		</patcher>
+		<patcher name = "02_Bounce_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.16" />
+			<pattr name = "Mo2_Gfreq_fact" value = "0.86" />
+			<pattr name = "Mo2_Ggain_fact" value = "1.69" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "700." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "1.82" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "1.25" />
+				<pattr name = "decay" value = "0.04" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "3.12" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "78." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+		<patcher name = "03_Bounce_bounce_params.mxb">
+			<pattr name = "BNC_height" value = "29.268293" />
+			<pattr name = "BNC_obj_elast" value = "61.788616" />
+			<pattr name = "BNC_obj_shape" value = "85.365852" />
+			<pattr name = "BNC_obj_soft" value = "82.926826" />
+			<pattr name = "BNC_obj_weight" value = "28.455284" />
+			<pattr name = "BNC_shape_tune" value = "0.592593" />
+			<pattr name = "BNC_soft_tune" value = "0.975309" />
+		</patcher>
+	</slot>
+	<slot number = "4" name = "bounce_4">
+		<patcher name = "00_Bounce_Impact_params.mxb">
+			<pattr name = "Imp_dissip_lambda" value = "74.796745" />
+			<pattr name = "Imp_shape_alpha" value = "69.10569" />
+			<pattr name = "Imp_stiff_k" value = "41.463413" />
+		</patcher>
+		<patcher name = "01_Bounce_Hammer_control.mxb">
+			<pattr name = "Mo1_Ham_mass" value = "84.761902" />
+			<pattr name = "Mo1_acc" value = "0." />
+		</patcher>
+		<patcher name = "02_Bounce_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "0.16" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "1.69" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "2500." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "1.82" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "1.25" />
+				<pattr name = "decay" value = "0.04" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "3.12" />
+				<pattr name = "decay" value = "0.03" />
+				<pattr name = "gain" value = "78." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+		<patcher name = "03_Bounce_bounce_params.mxb">
+			<pattr name = "BNC_height" value = "100." />
+			<pattr name = "BNC_obj_elast" value = "86.178864" />
+			<pattr name = "BNC_obj_shape" value = "19.512196" />
+			<pattr name = "BNC_obj_soft" value = "100." />
+			<pattr name = "BNC_obj_weight" value = "26.829268" />
+			<pattr name = "BNC_shape_tune" value = "0.592593" />
+			<pattr name = "BNC_soft_tune" value = "0.975309" />
+		</patcher>
+	</slot>
+	<slot number = "5" name = "bounce_5">
+		<patcher name = "00_Bounce_Impact_params.mxb">
+			<pattr name = "Imp_dissip_lambda" value = "74.796745" />
+			<pattr name = "Imp_shape_alpha" value = "87.804878" />
+			<pattr name = "Imp_stiff_k" value = "11.382113" />
+		</patcher>
+		<patcher name = "01_Bounce_Hammer_control.mxb">
+			<pattr name = "Mo1_Ham_mass" value = "24.761906" />
+			<pattr name = "Mo1_acc" value = "0." />
+		</patcher>
+		<patcher name = "02_Bounce_Resonator_control.mxb">
+			<pattr name = "Active_modes" value = "4" />
+			<pattr name = "Mo2_Gdec_fact" value = "1.11" />
+			<pattr name = "Mo2_Gfreq_fact" value = "1." />
+			<pattr name = "Mo2_Ggain_fact" value = "0.1" />
+			<patcher name = "mode_1">
+				<pattr name = "frequency" value = "90." />
+				<pattr name = "decay" value = "0.01" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_2">
+				<pattr name = "frequency" value = "1.82" />
+				<pattr name = "decay" value = "0.02" />
+				<pattr name = "gain" value = "70." />
+			</patcher>
+			<patcher name = "mode_3">
+				<pattr name = "frequency" value = "1.25" />
+				<pattr name = "decay" value = "0.04" />
+				<pattr name = "gain" value = "80." />
+			</patcher>
+			<patcher name = "mode_4">
+				<pattr name = "frequency" value = "30." />
+				<pattr name = "decay" value = "1." />
+				<pattr name = "gain" value = "78." />
+			</patcher>
+			<patcher name = "mode_5">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_6">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_7">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_8">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_9">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_10">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_11">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_12">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_13">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_14">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_15">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+			<patcher name = "mode_16">
+				<pattr name = "frequency" value = "0.1" />
+				<pattr name = "decay" value = "0.001" />
+				<pattr name = "gain" value = "0." />
+			</patcher>
+		</patcher>
+		<patcher name = "03_Bounce_bounce_params.mxb">
+			<pattr name = "BNC_height" value = "59.349594" />
+			<pattr name = "BNC_obj_elast" value = "71.544716" />
+			<pattr name = "BNC_obj_shape" value = "74.796745" />
+			<pattr name = "BNC_obj_soft" value = "81.3" />
+			<pattr name = "BNC_obj_weight" value = "37.398373" />
+			<pattr name = "BNC_shape_tune" value = "0.962963" />
+			<pattr name = "BNC_soft_tune" value = "0.975309" />
+		</patcher>
+	</slot>
+</pattrstorage>
+

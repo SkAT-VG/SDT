@@ -1,0 +1,9 @@
+NAME = control_crump
+
+SRCDIR=Control
+
+#BUILDTYPE = shared
+
+#HDRS =
+
+SRCS =	control_crump_v2.cpp

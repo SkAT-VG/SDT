@@ -4,8 +4,7 @@ CC=gcc
 CFLAGS=-Wall -Wno-unknown-pragmas -Werror
 LDFLAGS=-shared
 SRCDIR=../../src
-PREFIX=C:
-SDTPATH=SoundDesignToolkit
+DSTDIR=../../SoundDesignToolkit
 
 SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
@@ -44,14 +43,14 @@ $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
 	
 install:
-	mkdir -p $(PREFIX)/$(SDTPATH)/Max6/{externals,patches}
-	cp -a $(FFTW3DIR)/libfftw* $(PREFIX)/$(SDTPATH)
-	cp -a $(SDTDIR)/libSDT.dll $(PREFIX)/$(SDTPATH)
-	cp -a $(MAXDIR)/*.mxe $(PREFIX)/$(SDTPATH)/Max6/externals
-	cp -a ../../patches/Max6/* $(PREFIX)/$(SDTPATH)/Max6/patches
+	mkdir -p $(DSTDIR)/{externals,support}
+	cp -a $(FFTW3DIR)/libfftw* $(DSTDIR)/support
+	cp -a $(SDTDIR)/libSDT.dll $(DSTDIR)/support
+	cp -a $(MAXDIR)/*.mxe $(DSTDIR)/externals
+	cp -a ../../Max6/* $(DSTDIR)
 
 uninstall:
-	rm -rf $(PREFIX)/$(SDTPATH)
+	rm -rf $(DSTDIR)
 
 clean:
 	rm -rf $(SDTDIR)/libSDT.dll

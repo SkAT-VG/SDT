@@ -123,13 +123,13 @@ void SDTWindCavity_free(SDTWindCavity *x) {
 }
 
 void SDTWindCavity_setLength(SDTWindCavity *x, double f) {
-  x->length = fmax(0.001, f);
+  x->length = fmax(SDT_SMALL, f);
   SDTWindCavity_updateGeometry(x);
   SDTWindCavity_updateResonance(x);
 }
 
 void SDTWindCavity_setDiameter(SDTWindCavity *x, double f) {
-  x->diameter = fmax(0.001, f);
+  x->diameter = fmax(SDT_SMALL, f);
   SDTWindCavity_updateGeometry(x);
   SDTWindCavity_updateResonance(x);
 }
@@ -195,7 +195,7 @@ extern void SDTWindKarman_free(SDTWindKarman *x) {
 }
 
 void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
-  x->diameter = fmax(0.000001, f);
+  x->diameter = fmax(SDT_SMALL, f);
   SDTWindKarman_updateResonance(x);
 }
 
@@ -294,7 +294,10 @@ void SDTExplosion_setWindSpeed(SDTExplosion *x, double f) {
 }
 
 void SDTExplosion_update(SDTExplosion *x) {
-  SDTReverb_setSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
+  SDTReverb_setXSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
+  SDTReverb_setYSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
+  SDTReverb_setZSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
+  SDTReverb_setRandomness(x->scatter, 1.0);
   SDTReverb_setTime(x->scatter, x->scatterTime);
   SDTReverb_setTime1k(x->scatter, 0.9 * x->scatterTime);
   SDTReverb_update(x->scatter);
@@ -330,51 +333,3 @@ void SDTExplosion_dsp(SDTExplosion *x, double *outs) {
   x->time += SDT_timeStep;
   x->i = (x->i + 1) % x->size;
 }
-
-/*void SDTExplosion_update(SDTExplosion *x) {
-  double w;
-  
-  w = x->angle * M_PI / 180.0;
-  SDTReverb_setSize(x->scatter, 0.01 * SDT_MACH1 * x->turbulenceTime);
-  SDTReverb_setTime(x->scatter, x->turbulenceTime);
-  SDTReverb_setTime1k(x->scatter, 0.9 * x->turbulenceTime);
-  SDTReverb_update(x->scatter);
-  SDTTwoPoles_lowpass(x->damp, fmin(20000.0, 20000.0 / sqrt(x->distance)));
-  SDTTwoPoles_resonant(x->blastWind, 800.0, 10.0);
-  x->groundOffset = x->distance * fmax(0.0, SDT_sampleRate / x->groundSpeed);
-  x->windOffset = x->distance * fmax(0.0, SDT_sampleRate / x->windSpeed);
-  x->objectOffset = x->distance * SDT_sampleRate / fmax(SDT_MACH1, x->objectSpeed * cos(w)));
-  w = x->angle * M_PI / 180.0;
-  x->posX = x->distance * (cos(w) - x->objectSpeed / SDT_MACH1);
-  x->posY = x->distance * sin(w);
-  x->time = 0.0;
-}
-
-double SDTExplosion_dsp(SDTExplosion *x) {
-  double zeroCross, boom, turbulence, blast, ground, wind, amp, w, freq, object, out;
-  long groundI, windI, objectI;
-  
-  zeroCross = x->time / x->blastTime;
-  boom = exp(-zeroCross) * (1.0 - zeroCross);
-  turbulence = SDTReverb_dsp(x->scatter, boom);
-  blast = SDTTwoPoles_dsp(x->damp, boom + turbulence);
-  ground = x->groundGain * blast;
-  wind = x->windGain * SDTTwoPoles_dsp(x->blastWind, SDT_whiteNoise() * blast);
-  amp = fmin(1.0, 1.0 / (x->posX * x->posX + x->posY * x->posY));
-  w = atan2(x->posY, x->posX);
-  freq = 800.0 * SDT_MACH1 / (SDT_MACH1 - x->objectSpeed * cos(w));
-  SDTTwoPoles_resonant(x->objectWind, freq, 10.0);
-  object = x->objectGain * amp * SDTTwoPoles_dsp(x->objectWind, SDT_whiteNoise());
-  groundI = (x->i + x->groundOffset) % x->bufSize;
-  windI = (x->i + x->windOffset) % x->bufSize;
-  objectI = (x->i + x->objectOffset) % x->bufSize;
-  x->buf[groundI] += ground;
-  x->buf[windI] += wind;
-  x->buf[objectI] += object;
-  out = x->buf[x->i];
-  x->buf[x->i] = 0.0;
-  x->time += SDT_timeStep;
-  x->posX -= x->objectSpeed * SDT_timeStep;
-  x->i = (x->i + 1) % x->bufSize;
-  return out;
-}*/

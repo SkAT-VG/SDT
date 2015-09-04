@@ -49,21 +49,6 @@
 #ifndef SDT_OSCILLATORS_H
 #define SDT_OSCILLATORS_H
 
-typedef struct SDTLumpedMass SDTLumpedMass;
-
-extern SDTLumpedMass *SDTLumpedMass_new();
-extern void SDTLumpedMass_free(SDTLumpedMass *x);
-extern void SDTLumpedMass_update(SDTLumpedMass *x);
-extern double SDTLumpedMass_getDisplacement(SDTLumpedMass *x);
-extern double SDTLumpedMass_getVelocity(SDTLumpedMass *x);
-extern void SDTLumpedMass_setState(SDTLumpedMass *x, double p, double v, double f);
-extern void SDTLumpedMass_setMaxPos(SDTLumpedMass *x, double f);
-extern void SDTLumpedMass_setMinPos(SDTLumpedMass *x, double f);
-extern void SDTLumpedMass_setFrequency(SDTLumpedMass *x, double f);
-extern void SDTLumpedMass_setDecay(SDTLumpedMass *x, double f);
-extern void SDTLumpedMass_setWeight(SDTLumpedMass *x, double f);
-extern void SDTLumpedMass_dsp(SDTLumpedMass *x, double f);
-
 //-------------------------------------------------------------------------------------//
 
 typedef struct SDTPinkNoise SDTPinkNoise;

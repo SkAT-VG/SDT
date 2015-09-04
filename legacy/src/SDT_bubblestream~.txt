@@ -1,0 +1,12 @@
+NAME = bubblestream~
+
+SRCDIR=Liquids
+
+#BUILDTYPE = shared
+
+HDRS = 	manybubblesObj.h \
+	bubbleObj.h 
+		
+SRCS =	bubblestreammain.cpp \
+	manybubblesObj.cpp \
+	bubbleObj.cpp

@@ -103,18 +103,8 @@ typedef struct SDTDelay SDTDelay;
 extern SDTDelay *SDTDelay_new(long maxDelay);
 extern void SDTDelay_free(SDTDelay *x);
 extern void SDTDelay_clear(SDTDelay *x);
-extern void SDTDelay_setDelay(SDTDelay *x, long l);
+extern void SDTDelay_setDelay(SDTDelay *x, double f);
 extern double SDTDelay_dsp(SDTDelay *x, double in);
-
-//-------------------------------------------------------------------------------------//
-
-typedef struct SDTVDelay SDTVDelay;
-
-extern SDTVDelay *SDTVDelay_new(long maxDelay);
-extern void SDTVDelay_free(SDTVDelay *x);
-extern void SDTVDelay_clear(SDTVDelay *x);
-extern void SDTVDelay_setDelay(SDTVDelay *x, double f);
-extern double SDTVDelay_dsp(SDTVDelay *x, double in);
 
 //-------------------------------------------------------------------------------------//
 

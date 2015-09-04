@@ -272,8 +272,10 @@ double SDTAverage_dsp(SDTAverage *x, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTDelay {
-  double *buf;
-  long size, curr, delay;
+  SDTAllPass *filters[2];
+  double *buf, fade[16], feedback;
+  long size, head, read[2], delay;
+  int count, curr;
 };
 
 SDTDelay *SDTDelay_new(long maxDelay) {
@@ -282,17 +284,29 @@ SDTDelay *SDTDelay_new(long maxDelay) {
 
   if (maxDelay < 1) maxDelay = 1;
   x = (SDTDelay *)malloc(sizeof(SDTDelay));
+  x->filters[0] = SDTAllPass_new();
+  x->filters[1] = SDTAllPass_new();
   x->buf = (double *)malloc(maxDelay * sizeof(double));
   for (i = 0; i < maxDelay; i++) {
     x->buf[i] = 0.0;
   }
-  x->size = maxDelay;
-  x->curr = 0;
+  for (i = 0; i < 16; i++) {
+    x->fade[i] = i < 5 ? 0.0 : 0.1 * (i - 5.0);
+  }
+  x->feedback = 0.0;
   x->delay = 0;
+  x->size = maxDelay;
+  x->head = 0;
+  x->read[0] = 0;
+  x->read[1] = 0;
+  x->count = 0;
+  x->curr = 0;
   return x;
 }
 
 void SDTDelay_free(SDTDelay *x) {
+  SDTAllPass_free(x->filters[0]);
+  SDTAllPass_free(x->filters[1]);
   free(x->buf);
   free(x);
 }
@@ -303,101 +317,42 @@ void SDTDelay_clear(SDTDelay *x) {
   for (i = 0; i < x->size; i++) {
     x->buf[i] = 0.0;
   }
-  x->curr = 0;
+  x->head = 0;
 }
 
-void SDTDelay_setDelay(SDTDelay *x, long l) {
-  x->delay = SDT_clip(l, 0, x->size);
+void SDTDelay_setDelay(SDTDelay *x, double f) {
+  double d;
+  
+  f = SDT_fclip(f, 0.618, x->size);
+  x->delay = f - 0.618;
+  d = f - x->delay;
+  x->feedback = (1.0 - d) / (1.0 + d);
 }
 
 double SDTDelay_dsp(SDTDelay *x, double in) {
-  double out;
-  long i;
-
-  x->buf[x->curr] = in;
-  i = (x->size + x->curr - x->delay) % x->size;
-  out = x->buf[i];
-  x->curr = (x->curr + 1) % x->size;
-  return out;
-}
-
-//-------------------------------------------------------------------------------------//
-
-struct SDTVDelay {
-  SDTAllPass *ap[2];
-  double *buf, delay;
-  long size, head, read[2];
-  int i, j, count;
-};
-
-SDTVDelay *SDTVDelay_new(long maxDelay) {
-  SDTVDelay *x;
-  long i;
-
-  if (maxDelay < 1) maxDelay = 1;
-  x = (SDTVDelay *)malloc(sizeof(SDTVDelay));
-  x->ap[0] = SDTAllPass_new();
-  x->ap[1] = SDTAllPass_new();
-  x->buf = (double *)malloc(maxDelay * sizeof(double));
-  for (i = 0; i < maxDelay; i++) {
-    x->buf[i] = 0.0;
-  }
-  x->delay = 0;
-  x->size = maxDelay;
-  x->head = 0;
-  x->read[0] = 0;
-  x->read[1] = 0;
-  x->count = 0;
-  x->i = 0;
-  x->j = 1;
-  return x;
-}
-
-void SDTVDelay_free(SDTVDelay *x) {
-  SDTAllPass_free(x->ap[0]);
-  SDTAllPass_free(x->ap[1]);
-  free(x->buf);
-  free(x);
-}
-
-void SDTVDelay_clear(SDTVDelay *x) {
-  long i;
+  double yi, yj, gi, gj, out;
+  long ri, rj;
+  int i, j;
   
-  for (i = 0; i < x->size; i++) {
-    x->buf[i] = 0.0;
-  }
-  x->head = 0;
-  x->read[0] = 0;
-  x->read[1] = 0;
-}
-
-void SDTVDelay_setDelay(SDTVDelay *x, double f) {
-  x->delay = SDT_fclip(f, 0.618, x->size);
-}
-
-double SDTVDelay_dsp(SDTVDelay *x, double in) {
-  double d, a, yi, yj, gi, gj, out;
-  long intDelay;
-  
-  if (x->count == 0) {
-    x->i ^= 1;
-    x->j ^= 1;
-    intDelay = floor(x->delay - 0.618);
-    d = x->delay - intDelay;
-    a = (1.0 - d) / (1.0 + d);
-    x->read[x->i] = (x->size + x->head - intDelay) % x->size;
-    SDTAllPass_setFeedback(x->ap[x->i], a);
-  }
   x->buf[x->head] = in;
-  yi = SDTAllPass_dsp(x->ap[x->i], x->buf[x->read[x->i]]);
-  yj = SDTAllPass_dsp(x->ap[x->j], x->buf[x->read[x->j]]);
-  gi = 0.1 * SDT_clip(x->count - 5, 0, 10);
+  if (x->count == 0) {
+    x->curr ^= 1;
+    x->read[x->curr] = (x->size + x->head - x->delay) % x->size;
+    SDTAllPass_setFeedback(x->filters[x->curr], x->feedback);
+  }
+  i = x->curr;
+  j = i ^ 1;
+  ri = x->read[i];
+  rj = x->read[j];
+  yi = SDTAllPass_dsp(x->filters[i], x->buf[ri]);
+  yj = SDTAllPass_dsp(x->filters[j], x->buf[rj]);
+  gi = x->fade[x->count];
   gj = 1.0 - gi;
   out = gi * yi + gj * yj;
   x->head = (x->head + 1) % x->size;
-  x->read[x->i] = (x->read[x->i] + 1) % x->size;
-  x->read[x->j] = (x->read[x->j] + 1) % x->size;
-  x->count = (x->count + 1) & 0xF;
+  x->read[i] = (ri + 1) % x->size;
+  x->read[j] = (rj + 1) % x->size;
+  x->count = (x->count + 1) % 16;
   return out;
 }
 

@@ -56,7 +56,7 @@
 typedef struct _reverb {
   t_pxobject ob;
   SDTReverb *reverb;
-  double size, time, time1k;
+  double xSize, ySize, zSize, randomness, time, time1k;
 } t_reverb;
 
 static t_class *reverb_class = NULL;
@@ -75,6 +75,7 @@ void *reverb_new(t_symbol *s, long argc, t_atom *argv) {
       maxDelay = 44100;
     }
     x->reverb = SDTReverb_new(maxDelay);
+    attr_args_process(x, argc, argv);
   }
   return (x);
 }
@@ -86,31 +87,38 @@ void reverb_free(t_reverb *x) {
 
 void reverb_assist(t_reverb *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    switch (a) {
-      case 0:
-        sprintf(s, "(signal): Input");
-        break;
-      case 1:
-        sprintf(s, "size (float): Average room size in m");
-        break;
-      case 2:
-        sprintf(s, "time (float): Reverberation time, in s (global)");
-        break;
-      case 3:
-        sprintf(s, "time1k (float): Reverberation time, in s (at 1 kHz)");
-        break;
-      default:
-        break;
-    }
+    sprintf(s, "(signal): Input\n"
+               "xSize (float): room xSize, in m\n"
+               "ySize (float): room ySize, in m\n"
+               "zSize (float): room zSize, in m\n"
+               "randomness (float): irregularity of the room shape [0.0 ~ 1.0]");
   } 
   else {
     sprintf(s, "(signal): Reverberated output");
   }
 }
 
-void reverb_size(t_reverb *x, void *attr, long ac, t_atom *av) {
-    x->size = atom_getfloat(av);
-    SDTReverb_setSize(x->reverb, x->size);
+void reverb_xSize(t_reverb *x, void *attr, long ac, t_atom *av) {
+    x->xSize = atom_getfloat(av);
+    SDTReverb_setXSize(x->reverb, x->xSize);
+    SDTReverb_update(x->reverb);
+}
+
+void reverb_ySize(t_reverb *x, void *attr, long ac, t_atom *av) {
+    x->ySize = atom_getfloat(av);
+    SDTReverb_setYSize(x->reverb, x->ySize);
+    SDTReverb_update(x->reverb);
+}
+
+void reverb_zSize(t_reverb *x, void *attr, long ac, t_atom *av) {
+    x->zSize = atom_getfloat(av);
+    SDTReverb_setZSize(x->reverb, x->zSize);
+    SDTReverb_update(x->reverb);
+}
+
+void reverb_randomness(t_reverb *x, void *attr, long ac, t_atom *av) {
+    x->randomness = atom_getfloat(av);
+    SDTReverb_setRandomness(x->reverb, x->randomness);
     SDTReverb_update(x->reverb);
 }
 
@@ -141,7 +149,10 @@ t_int *reverb_perform(t_int *w) {
 
 void reverb_dsp(t_reverb *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTReverb_setSize(x->reverb, x->size);
+  SDTReverb_setXSize(x->reverb, x->xSize);
+  SDTReverb_setYSize(x->reverb, x->ySize);
+  SDTReverb_setZSize(x->reverb, x->zSize);
+  SDTReverb_setRandomness(x->reverb, x->randomness);
   SDTReverb_setTime(x->reverb, x->time);
   SDTReverb_setTime1k(x->reverb, x->time1k);
   SDTReverb_update(x->reverb);
@@ -163,7 +174,10 @@ void reverb_perform64(t_reverb *x, t_object *dsp64, double **ins, long numins,
 void reverb_dsp64(t_reverb *x, t_object *dsp64, short *count, double samplerate,
                   long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTReverb_setSize(x->reverb, x->size);
+  SDTReverb_setXSize(x->reverb, x->xSize);
+  SDTReverb_setYSize(x->reverb, x->ySize);
+  SDTReverb_setZSize(x->reverb, x->zSize);
+  SDTReverb_setRandomness(x->reverb, x->randomness);
   SDTReverb_setTime(x->reverb, x->time);
   SDTReverb_setTime1k(x->reverb, x->time1k);
   SDTReverb_update(x->reverb);
@@ -178,21 +192,33 @@ int C74_EXPORT main(void) {
   class_addmethod(c, (method)reverb_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)reverb_assist, "assist",	A_CANT, 0);
 
-  CLASS_ATTR_DOUBLE(c, "size", 0, t_reverb, size);
+  CLASS_ATTR_DOUBLE(c, "xSize", 0, t_reverb, xSize);
+  CLASS_ATTR_DOUBLE(c, "ySize", 0, t_reverb, ySize);
+  CLASS_ATTR_DOUBLE(c, "zSize", 0, t_reverb, zSize);
+  CLASS_ATTR_DOUBLE(c, "randomness", 0, t_reverb, randomness);
   CLASS_ATTR_DOUBLE(c, "time", 0, t_reverb, time);
   CLASS_ATTR_DOUBLE(c, "time1k", 0, t_reverb, time1k);
   
-  CLASS_ATTR_FILTER_MIN(c, "size", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "time", 0.000002);
-  CLASS_ATTR_FILTER_MIN(c, "time1k", 0.000001);
+  CLASS_ATTR_FILTER_MIN(c, "xSize", 0.0);
+  CLASS_ATTR_FILTER_MIN(c, "ySize", 0.0);
+  CLASS_ATTR_FILTER_MIN(c, "zSize", 0.0);
+  CLASS_ATTR_FILTER_CLIP(c, "randomness", 0.0, 1.0);
+  CLASS_ATTR_FILTER_MIN(c, "time", 0.0);
+  CLASS_ATTR_FILTER_MIN(c, "time1k", 0.0);
   
-  CLASS_ATTR_ACCESSORS(c, "size", NULL, (method)reverb_size);
+  CLASS_ATTR_ACCESSORS(c, "xSize", NULL, (method)reverb_xSize);
+  CLASS_ATTR_ACCESSORS(c, "ySize", NULL, (method)reverb_ySize);
+  CLASS_ATTR_ACCESSORS(c, "zSize", NULL, (method)reverb_zSize);
+  CLASS_ATTR_ACCESSORS(c, "randomness", NULL, (method)reverb_randomness);
   CLASS_ATTR_ACCESSORS(c, "time", NULL, (method)reverb_time);
   CLASS_ATTR_ACCESSORS(c, "time1k", NULL, (method)reverb_time1k);
   
-  CLASS_ATTR_ORDER(c, "size", 0, "1");
-  CLASS_ATTR_ORDER(c, "time", 0, "2");
-  CLASS_ATTR_ORDER(c, "time1k", 0, "3");
+  CLASS_ATTR_ORDER(c, "xSize", 0, "1");
+  CLASS_ATTR_ORDER(c, "ySize", 0, "2");
+  CLASS_ATTR_ORDER(c, "zSize", 0, "3");
+  CLASS_ATTR_ORDER(c, "randomness", 0, "4");
+  CLASS_ATTR_ORDER(c, "time", 0, "5");
+  CLASS_ATTR_ORDER(c, "time1k", 0, "6");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

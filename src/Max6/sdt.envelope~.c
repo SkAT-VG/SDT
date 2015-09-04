@@ -118,7 +118,8 @@ void envelope_dsp(t_envelope *x, t_signal **sp, short *count) {
   dsp_add(envelope_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
-void envelope_perform64(t_envelope *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam) {
+void envelope_perform64(t_envelope *x, t_object *dsp64, double **ins, long numins, double **outs,
+                        long numouts, long sampleframes, long flags, void *userparam) {
   t_double *in = ins[0];
   t_double *out = outs[0];
   int n = sampleframes;
@@ -136,8 +137,8 @@ void envelope_dsp64(t_envelope *x, t_object *dsp64, short *count, double sampler
 }
 
 int C74_EXPORT main(void) {	
-  t_class *c = class_new("sdt.envelope~", (method)envelope_new, (method)envelope_free, (long)sizeof(t_envelope), 0L, A_GIMME, 0);
-	
+  t_class *c = class_new("sdt.envelope~", (method)envelope_new, (method)envelope_free,
+                         (long)sizeof(t_envelope), 0L, A_GIMME, 0);
   class_addmethod(c, (method)envelope_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)envelope_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)envelope_assist, "assist", A_CANT, 0);

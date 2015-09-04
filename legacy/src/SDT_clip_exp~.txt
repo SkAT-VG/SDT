@@ -1,0 +1,7 @@
+NAME = clip_exp~
+
+SRCDIR=Control
+
+#BUILDTYPE = shared
+
+SRCS =	clip_exp~.cpp

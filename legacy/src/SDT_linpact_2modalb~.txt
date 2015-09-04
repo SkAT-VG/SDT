@@ -1,0 +1,13 @@
+NAME = linpact_2modalb~
+
+SRCDIR=Solids
+
+#BUILDTYPE = shared
+
+HDRS =	solids.h \
+	matrix_calc.h \
+	modal_obj_b.h linpact_interactor.h
+
+SRCS =	linpact_2modalb.cpp \
+	matrix_calc.c \
+	modal_obj_b.c linpact_interactor.c

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<pattrstorage name = "Splash_preset">
+	<slot number = "1" name = "splash_default">
+		<patcher name = "00_onebub_params.mxb">
+			<pattr name = "splash_bubble" value = "44.715446" />
+			<pattr name = "splash_head" value = "42.276424" />
+			<pattr name = "splash_radius" value = "66.666664" />
+			<pattr name = "splash_slope" value = "52.845528" />
+			<pattr name = "splash_tail" value = "44.715446" />
+		</patcher>
+	</slot>
+	<slot number = "2" name = "splash2">
+		<patcher name = "00_onebub_params.mxb">
+			<pattr name = "splash_bubble" value = "43.089432" />
+			<pattr name = "splash_head" value = "39.024391" />
+			<pattr name = "splash_radius" value = "45.528454" />
+			<pattr name = "splash_slope" value = "44.715446" />
+			<pattr name = "splash_tail" value = "36.585365" />
+		</patcher>
+	</slot>
+	<slot number = "3" name = "anchorTEI12">
+		<patcher name = "00_onebub_params.mxb">
+			<pattr name = "splash_bubble" value = "44.715446" />
+			<pattr name = "splash_head" value = "42.276424" />
+			<pattr name = "splash_radius" value = "92.68293" />
+			<pattr name = "splash_slope" value = "100." />
+			<pattr name = "splash_tail" value = "42.276424" />
+		</patcher>
+	</slot>
+</pattrstorage>
+

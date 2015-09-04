@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<pattrstorage name = "velocity-map">
+	<slot number = "1">
+		<pattr name = "Gesture_vel_rng" value = "5 41" />
+		<pattr name = "Pace_attr" value = "0.847692" />
+		<pattr name = "Rolling_vel_rng" value = "0 10" />
+		<pattr name = "Speed_attr" value = "7" />
+	</slot>
+	<slot number = "2">
+		<pattr name = "Gesture_vel_rng" value = "19 42" />
+		<pattr name = "Pace_attr" value = "0.847692" />
+		<pattr name = "Rolling_vel_rng" value = "19 32" />
+		<pattr name = "Speed_attr" value = "18" />
+	</slot>
+</pattrstorage>
+

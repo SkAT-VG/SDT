@@ -1,0 +1,13 @@
+NAME = linpact_inertialb_modalb~
+
+SRCDIR=Solids
+
+#BUILDTYPE = shared
+
+HDRS =	solids.h \
+	matrix_calc.h \
+	inertial_obj_b.h modal_obj_b.h linpact_interactor.h
+
+SRCS =	linpact_inertialb_modalb.cpp \
+	matrix_calc.c \
+	inertial_obj_b.c modal_obj_b.c linpact_interactor.c

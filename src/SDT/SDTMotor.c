@@ -206,7 +206,7 @@ void SDTMotor_setCompressionRatio(SDTMotor *x, double f) {
 }
 
 void SDTMotor_setSparkTime(SDTMotor *x, double f) {
-  x->sparkTime = SDT_fclip(f, 0.000001, 1.0);
+  x->sparkTime = SDT_fclip(f, SDT_SMALL, 1.0);
 }
 
 void SDTMotor_setAsymmetry(SDTMotor *x, double f) {

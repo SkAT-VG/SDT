@@ -1,0 +1,11 @@
+NAME = onebubble~
+
+SRCDIR=Liquids
+
+#BUILDTYPE = shared
+
+HDRS =	bubbleObj.h
+
+SRCS =	bblmain.cpp \
+	bubbleObj.cpp
+	

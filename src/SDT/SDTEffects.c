@@ -53,11 +53,17 @@
 #include "SDTFilters.h"
 #include "SDTEffects.h"
 
+double modes[15][3] = {{1,0,0},{0,2,1},{1,0,1},
+                       {2,1,0},{0,1,1},{1,1,1},
+                       {1,1,0},{0,1,2},{1,2,1},
+                       {1,2,0},{0,0,1},{2,1,1},
+                       {0,1,0},{1,0,2},{2,0,1}};
+                     
 struct SDTReverb {
-  SDTVDelay *delays[15];
-  SDTOnePole *dampings[15];
-  double feedbacks[15], outs[15], ratios[15],
-         avgDelay, time, time1k;
+  SDTDelay *delays[15];
+  SDTOnePole *filters[15];
+  double g[15], v[29], r[15],
+         xSize, ySize, zSize, randomness, time, time1k;
 };
 
 SDTReverb *SDTReverb_new(long maxDelay) {
@@ -66,15 +72,19 @@ SDTReverb *SDTReverb_new(long maxDelay) {
   
   x = (SDTReverb *)malloc(sizeof(SDTReverb));
   for (i = 0; i < 15; i++) {
-    x->delays[i] = SDTVDelay_new(maxDelay);
-    x->dampings[i] = SDTOnePole_new();
-    x->feedbacks[i] = 0.0;
-    x->outs[i] = 0.0;
-    x->ratios[i] = 2 * SDT_frand();
-    x->avgDelay = 0.1 * maxDelay;
-    x->time = 4.0;
-    x->time1k = 3.0;
+    x->delays[i] = SDTDelay_new(maxDelay);
+    x->filters[i] = SDTOnePole_new();
+    x->g[i] = 0.0;
+    x->v[i] = 0.0;
+    x->v[i+15] = 0.0;
+    x->r[i] = 2.0 * SDT_frand() - 1.0;
   }
+  x->xSize = 4.0;
+  x->ySize = 5.0;
+  x->zSize = 3.0;
+  x->randomness = 0.0;
+  x->time = 4.0;
+  x->time1k = 3.6;
   return x;
 }
 
@@ -82,58 +92,74 @@ void SDTReverb_free(SDTReverb *x) {
   int i;
   
   for (i = 0; i < 15; i++) {
-    SDTVDelay_free(x->delays[i]);
-    SDTOnePole_free(x->dampings[i]);
+    SDTDelay_free(x->delays[i]);
+    SDTOnePole_free(x->filters[i]);
   }
   free(x);
 }
 
 void SDTReverb_update(SDTReverb *x) {
-  double delay, gi, gw, b, a;
+  double xMode, yMode, zMode, freq, delay, gi, gw, a, b, c, d;
   int i;
   
   for (i = 0; i < 15; i++) {
-    delay = x->avgDelay * x->ratios[i];
-    SDTVDelay_setDelay(x->delays[i], delay);
-    gi = pow(10, -3 * delay * SDT_timeStep / x->time);
-    gw = pow(10, -6 * delay * SDT_timeStep / x->time1k) / (gi * gi);
-    b = (gw * cos(SDT_TWOPI * 1000 * SDT_timeStep) - 1) / (gw - 1);
-    a = -b + sqrt(b * b - 1);
-    x->feedbacks[i] = gi;
-    SDTOnePole_setFeedback(x->dampings[i], a);
+    xMode = modes[i][0] / x->xSize;
+    yMode = modes[i][1] / x->ySize;
+    zMode = modes[i][2] / x->zSize;
+    freq = 0.5 * SDT_MACH1 * sqrt(xMode * xMode + yMode * yMode + zMode * zMode);
+    delay = SDT_sampleRate * (1.0 + x->randomness * x->r[i]) / freq;
+    SDTDelay_setDelay(x->delays[i], delay);
+    gi = fmax(0.0, pow(10.0, -3.0 * delay * SDT_timeStep / x->time));
+    x->g[i] = gi;
+    gw = fmax(0.0, pow(10.0, -3.0 * delay * SDT_timeStep / fmin(x->time1k, x->time)) / gi);
+    a = gw * gw - 1.0;
+    b = (gw * gw * cos(SDT_TWOPI * 1000 * SDT_timeStep) - 1.0);
+    c = a;
+    d = fmin(0.0, (-b - sqrt(b * b - a * c)) / a);
+    SDTOnePole_setFeedback(x->filters[i], d);
   }
 }
 
-void SDTReverb_setSize(SDTReverb *x, double f) {
-  x->avgDelay = SDT_samplesInAir(f);
+void SDTReverb_setXSize(SDTReverb *x, double f) {
+  x->xSize = fmax(0.0, f);
+}
+
+void SDTReverb_setYSize(SDTReverb *x, double f) {
+  x->ySize = fmax(0.0, f);
+}
+
+void SDTReverb_setZSize(SDTReverb *x, double f) {
+  x->zSize = fmax(0.0, f);
+}
+
+void SDTReverb_setRandomness(SDTReverb *x, double f) {
+  x->randomness = SDT_fclip(f, 0.0, 1.0);
 }
 
 void SDTReverb_setTime(SDTReverb *x, double f) {
-  x->time = fmax(0.000001, f);
-  SDTReverb_setTime1k(x, x->time1k);
+  x->time = fmax(0.0, f);
 }
 
 void SDTReverb_setTime1k(SDTReverb *x, double f) {
-  x->time1k = SDT_fclip(f, 0.000001, x->time - 0.000001);
+  x->time1k = fmax(0.0, f);
 }
 
 double SDTReverb_dsp(SDTReverb *x, double in) {
-  double a, b, c, d, *s, v[29], out;
+  double a, b, c, d, *s, out;
   int i;
   
   out = 0.0;
-  memcpy(v, x->outs, 15 * sizeof(double));
-  memcpy(&v[15], x->outs, 14 * sizeof(double));
-  s = &v[0];
+
   for (i = 0; i < 15; i++) {
-    s = &v[i];
+    s = &x->v[i];
     b = s[1] + s[2] + s[3] + s[5] + s[6] + s[9] + s[11];
     c = s[0] + s[4] + s[7] + s[8] + s[10] + s[12] + s[13] + s[14];
     a = 0.25 * (b - c);
-    d = SDTVDelay_dsp(x->delays[i], in + x->feedbacks[i] * a);
-    x->outs[i] = SDTOnePole_dsp(x->dampings[i], d);
-    out += x->outs[i];
+    d = SDTDelay_dsp(x->delays[i], in + a);
+    x->v[i] = x->g[i] * SDTOnePole_dsp(x->filters[i], d);
+    out += x->v[i];
   }
+  memcpy(&x->v[15], x->v, 14 * sizeof(double));
   return out / 15.0;
 }
 

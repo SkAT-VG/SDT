@@ -1,11 +1,12 @@
 SHELL=/bin/bash
 
 CC=clang
-CFLAGS=-arch i386 -arch x86_64 -mmacosx-version-min=10.6 -Wall -Wno-unknown-pragmas -Werror -fPIC
-LDFLAGS=-arch i386 -arch x86_64 -mmacosx-version-min=10.6 -shared
+MACARCH=-arch i386 -arch x86_64
+MACVERSION=-mmacosx-version-min=10.6
+CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -O -fno-common
+LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib
 SRCDIR=../../src
-PREFIX=~
-SDTPATH=Library/SoundDesignToolkit
+DSTDIR=/Applications/Max\ 6.1/packages/SoundDesignToolkit
 
 SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
@@ -18,9 +19,16 @@ MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 MAXSDKDIR=../../3rdparty/Max6SDK
 MAXSDKVERSION=6.1.4
 
+PDDIR=$(SRCDIR)/Pd
+PDSRCS=$(wildcard $(PDDIR)/*.c)
+PDOBJS=$(patsubst %.c,%.pd_darwin,$(PDSRCS))
+
+PDSDKDIR=../../3rdparty/Pd
+PDVERSION=0.41.4
+
 FFTW3DIR=../../3rdparty/fftw3/macosx
 
-all: max
+all: sdt max
 
 max: sdt $(MAXOBJS)
 
@@ -45,8 +53,15 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch -c $< -o $@
 
+pd: sdt $(PDOBJS)
+
+$(PDDIR)/%.pd_darwin: $(PDDIR)/%.o
+	$(CC) $(LDFLAGS) -F$(SDTDIR) -framework SDT $< -o $@
+
+$(PDDIR)/%.o: $(PDDIR)/%.c
+	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -F$(SDTDIR) -c $< -o $@
+
 sdt: $(SDTOBJS)
-	rm -rf $(SDTDIR)/SDT.framework
 	cp -a SDT.framework $(SDTDIR)
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Resources/fftw3
@@ -55,24 +70,25 @@ sdt: $(SDTOBJS)
 	$(SDTDIR)/SDT.framework/Resources/fftw3/libfftw3.3.dylib
 	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
 	$(CC) $(LDFLAGS) -L$(SDTDIR)/SDT.framework/Resources/fftw3 $(SDTOBJS) \
-	-o $(SDTDIR)/SDT.framework/Versions/A/SDT -lfftw3
-
+	-o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System -lfftw3
+	install_name_tool -id @loader_path/../../../../support/SDT.framework/SDT \
+	$(SDTDIR)/SDT.framework/SDT
+	
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
 
 install:
-	mkdir -p $(PREFIX)/Library/Frameworks
-	mkdir -p $(PREFIX)/$(SDTPATH)/Max6/{externals,patches}
-	cp -a $(SDTDIR)/SDT.framework $(PREFIX)/Library/Frameworks
-	cp -a $(MAXDIR)/*.mxo $(PREFIX)/$(SDTPATH)/Max6/externals
-	cp -a ../../patches/Max6/* $(PREFIX)/$(SDTPATH)/Max6/patches
+	mkdir -p $(DSTDIR)/{externals,extras,help,init,misc,patchers,support}
+	cp -a ../../legacy/Max6/* $(DSTDIR)
+	cp -a ../../Max6/* $(DSTDIR)
+	cp -a $(SDTDIR)/SDT.framework $(DSTDIR)/support
+	cp -a $(MAXDIR)/*.mxo $(DSTDIR)/externals
 
 uninstall:
-	rm -rf $(PREFIX)/Library/Frameworks/SDT.framework
-	rm -rf $(PREFIX)/$(SDTPATH)
+	rm -rf $(DSTDIR)
 
 clean:
-	rm -rf $(SDTDIR)/SDT.framework
+	rm -rf $(SDTDIR)/*.framework
 	rm -rf $(SDTDIR)/*.o
 	rm -rf $(MAXDIR)/*.mxo
 	rm -rf $(MAXDIR)/*.o

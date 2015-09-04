@@ -53,7 +53,10 @@ typedef struct SDTReverb SDTReverb;
 
 extern SDTReverb *SDTReverb_new(long maxDelay);
 extern void SDTReverb_free(SDTReverb *x);
-extern void SDTReverb_setSize(SDTReverb *x, double f);
+extern void SDTReverb_setXSize(SDTReverb *x, double f);
+extern void SDTReverb_setYSize(SDTReverb *x, double f);
+extern void SDTReverb_setZSize(SDTReverb *x, double f);
+extern void SDTReverb_setRandomness(SDTReverb *x, double f);
 extern void SDTReverb_setTime(SDTReverb *x, double f);
 extern void SDTReverb_setTime1k(SDTReverb *x, double f);
 extern void SDTReverb_update(SDTReverb *x);
