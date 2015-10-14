@@ -72,13 +72,13 @@ void *explosion_new(t_symbol *s, long argc, t_atom *argv) {
       maxScatter = atom_getlong(&argv[0]);
     }
     else {
-      maxScatter = 48000;
+      maxScatter = 44100;
     }
     if (argc > 1 && atom_gettype(&argv[1]) == A_LONG) {
       maxDelay = atom_getlong(&argv[1]);
     }
     else {
-      maxDelay = 4800000;
+      maxDelay = 4410000;
     }
     x->blow = SDTExplosion_new(maxScatter, maxDelay);
     attr_args_process(x, argc, argv);

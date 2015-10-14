@@ -78,8 +78,7 @@ $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
 
 install:
-	mkdir -p $(DSTDIR)/{externals,extras,help,init,misc,patchers,support}
-	cp -a ../../legacy/Max6/* $(DSTDIR)
+	mkdir -p $(DSTDIR)/{externals,support}
 	cp -a ../../Max6/* $(DSTDIR)
 	cp -a $(SDTDIR)/SDT.framework $(DSTDIR)/support
 	cp -a $(MAXDIR)/*.mxo $(DSTDIR)/externals

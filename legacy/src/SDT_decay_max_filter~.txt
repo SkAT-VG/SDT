@@ -1,7 +1,0 @@
-NAME = decay_max_filter~
-
-SRCDIR=Control
-
-#BUILDTYPE = shared
-
-SRCS =	decay_max_filter~.cpp

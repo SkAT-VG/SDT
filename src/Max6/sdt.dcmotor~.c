@@ -74,7 +74,7 @@ void *dcmotor_new(t_symbol *s, long argc, t_atom *argv) {
       maxDelay = atom_getlong(&argv[0]);
     }
     else {
-      maxDelay = 48000;
+      maxDelay = 44100;
     }
     x->motor = SDTDCMotor_new(maxDelay);
     attr_args_process(x, argc, argv);

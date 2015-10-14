@@ -89,7 +89,9 @@ void bubble_assist(t_bubble *x, void *b, long m, long a, char *s) {
 }
 
 void bubble_bang(t_bubble *x) {
-    SDTBubble_update(x->bubble, 0.001 * x->radius, 1.0, x->riseFactor);
+    SDTBubble_setRadius(x->bubble, 0.001 * x->radius);
+    SDTBubble_setRiseFactor(x->bubble, x->riseFactor);
+    SDTBubble_update(x->bubble);
     SDTBubble_normAmp(x->bubble);
 }
 
@@ -116,12 +118,14 @@ void bubble_perform64(t_bubble *x, t_object *dsp64, double **ins, long numins,
 
 void bubble_dsp(t_bubble *x, t_signal **sp, short *count) {
 	SDT_setSampleRate(sp[0]->s_sr);
+	SDTBubble_setDepth(x->bubble, 1.0);
 	dsp_add(bubble_perform, 3, x, sp[1]->s_vec, sp[0]->s_n);
 }
 
 void bubble_dsp64(t_bubble *x, t_object *dsp64, short *count,
                   double samplerate, long maxvectorsize, long flags) {
 	SDT_setSampleRate(samplerate);
+	SDTBubble_setDepth(x->bubble, 1.0);
 	object_method(dsp64, gensym("dsp_add64"), x, bubble_perform64, 0, NULL);
 }
 

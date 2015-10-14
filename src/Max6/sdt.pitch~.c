@@ -73,7 +73,7 @@ void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
       windowSize = atom_getlong(&argv[0]);
     }
     else {
-      windowSize = 1024;
+      windowSize = 4096;
     }
     x->pitch = SDTPitch_new(windowSize);
     attr_args_process(x, argc, argv);

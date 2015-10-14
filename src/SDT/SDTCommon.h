@@ -50,23 +50,29 @@
 #ifndef SDT_COMMON_H
 #define SDT_COMMON_H
 
-#define SDT_ver 063
-#define SDT_ver_str "063"
-#define SDT_PI      3.141592653589793
-#define SDT_TWOPI   6.283185307179586
-#define SDT_EULER   2.718281828459045
-#define SDT_SQRT2   1.4142135623730951
-#define SDT_MACH1 340.29
-#define SDT_SMALL   0.000001
+#define SDT_ver          064
+#define SDT_ver_str     "064"
+#define SDT_PI           3.141592653589793
+#define SDT_TWOPI        6.283185307179586
+#define SDT_EULER        2.718281828459045
+#define SDT_SQRT2        1.4142135623730951
+#define SDT_MACH1      340.29
+#define SDT_EARTH        9.81
+#define SDT_MICRO        0.000001
+#define SDT_LN001       -6.907755278982137
 
 extern double SDT_sampleRate;
 extern double SDT_timeStep;
 
 extern void SDT_setSampleRate(double sampleRate);
 extern long SDT_clip(long x, long min, long max);
+extern double SDT_expRand(double min, double max);
 extern double SDT_fclip(double x, double min, double max);
 extern double SDT_frand();
+extern double SDT_gravity(double mass);
+extern double SDT_groundDecay(double grain, double velocity);
 extern void SDT_hanning(double *sig, int n);
+extern double SDT_kinetic(double mass, double velocity);
 extern double SDT_normalize(double x, double min, double max);
 extern double SDT_samplesInAir(double length);
 extern double SDT_scale(double x, double in0, double in1,

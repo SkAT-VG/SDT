@@ -123,13 +123,13 @@ void SDTWindCavity_free(SDTWindCavity *x) {
 }
 
 void SDTWindCavity_setLength(SDTWindCavity *x, double f) {
-  x->length = fmax(SDT_SMALL, f);
+  x->length = fmax(SDT_MICRO, f);
   SDTWindCavity_updateGeometry(x);
   SDTWindCavity_updateResonance(x);
 }
 
 void SDTWindCavity_setDiameter(SDTWindCavity *x, double f) {
-  x->diameter = fmax(SDT_SMALL, f);
+  x->diameter = fmax(SDT_MICRO, f);
   SDTWindCavity_updateGeometry(x);
   SDTWindCavity_updateResonance(x);
 }
@@ -195,7 +195,7 @@ extern void SDTWindKarman_free(SDTWindKarman *x) {
 }
 
 void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
-  x->diameter = fmax(SDT_SMALL, f);
+  x->diameter = fmax(SDT_MICRO, f);
   SDTWindKarman_updateResonance(x);
 }
 

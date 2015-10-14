@@ -53,7 +53,10 @@ typedef struct SDTBubble SDTBubble;
 
 extern SDTBubble *SDTBubble_new();
 extern void SDTBubble_free(SDTBubble *x);
-extern void SDTBubble_update(SDTBubble *x, double radius, double depth, double freqRise);
+extern void SDTBubble_setRadius(SDTBubble *x, double f);
+extern void SDTBubble_setDepth(SDTBubble *x, double f);
+extern void SDTBubble_setRiseFactor(SDTBubble *x, double f);
+extern void SDTBubble_update(SDTBubble *x);
 extern void SDTBubble_normAmp(SDTBubble *x);
 extern double SDTBubble_dsp(SDTBubble *x);
 

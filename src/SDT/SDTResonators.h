@@ -63,23 +63,81 @@ extern void SDTResonator_dsp(SDTResonator *x);
 
 //-------------------------------------------------------------------------------------//
 
+/*!
+ * Physical modeling of an inertial mass.
+ */
 typedef struct SDTInertialMass SDTInertialMass;
 
+//! Inertial mass constructor
 extern SDTResonator *SDTInertialMass_new();
+
+//! Inertial mass destructor
 extern void SDTInertialMass_free(SDTResonator *x);
+
+//! Sets the mass of the inertial object
 extern void SDTInertialMass_setMass(SDTResonator *x, double f);
+
+//! Sets the fragment size of the inertial object
+extern void SDTInertialMass_setFragmentSize(SDTResonator *x, double f);
+
+//! Sets a displacement for the inertial mass
 extern void SDTInertialMass_setPosition(SDTResonator *x, double f);
+
+//! Sets a velocity for the inertial mass
 extern void SDTInertialMass_setVelocity(SDTResonator *x, double f);
+
+//! Updates the object state
+extern void SDTInertialMass_update(SDTResonator *x);
 
 //-------------------------------------------------------------------------------------//
 
 typedef struct SDTModalResonator SDTModalResonator;
 
-extern SDTResonator *SDTModalResonator_new(unsigned int nModes, unsigned int nPickups);
-extern void SDTModalResonator_free(SDTResonator *x);
-extern void SDTModalResonator_setWeight(SDTResonator *x, unsigned int i, double f);
-extern void SDTModalResonator_setFrequency(SDTResonator *x, unsigned int i, double f);
-extern void SDTModalResonator_setDecay(SDTResonator *x, unsigned int i, double f);
-extern void SDTModalResonator_update(SDTResonator *x, unsigned int i);
+//! Constructs a new instance of the modal resonator.
+/**
+ *  Each created instance should be correctly destroyed later by calling SDTModalResonator_free().
+ *
+ *  \return Pointer to the created instance.
+ */
+extern SDTResonator *SDTModalResonator_new(unsigned int nModes, /**< Number of resonant modes. */
+                                           unsigned int nPickups /**< Number of listening points. */);
+
+//! Destroys a modal resonator instance.
+extern void SDTModalResonator_free(SDTResonator *x /**< Pointer to the modal resonator instance. */);
+
+//! Sets the resonant frequency for a given mode.
+/**
+ *  Remember to call SDTModalResonator_update() for changes to take effect.
+ */
+extern void SDTModalResonator_setFrequency(SDTResonator *x, /**< Pointer to the modal resonator instance. */
+                                           unsigned int i, /**< Selected mode index. */
+                                           double f /**< New mode frequency, in Hz */);
+
+//! Sets the decay time for a given mode.
+/**
+ *  Remember to call SDTModalResonator_update() for changes to take effect.
+ */                                         
+extern void SDTModalResonator_setDecay(SDTResonator *x, /**< Pointer to the modal resonator instance. */
+                                       unsigned int i, /**< Selected mode index. */
+                                       double f /**< New mode decay time, in seconds */);
+
+//! Sets the weight for a given mode.
+/**
+ *  Remember to call SDTModalResonator_update() for changes to take effect.
+ */                                         
+extern void SDTModalResonator_setWeight(SDTResonator *x, /**< Pointer to the modal resonator instance. */
+                                       unsigned int i, /**< Selected mode index. */
+                                       double f /**< New mode weight, in 1/Kg */);
+
+//! Sets the fragment size of the inertial object
+extern void SDTModalResonator_setFragmentSize(SDTResonator *x, double f);
+                                       
+//! Updates the internal attributes for a given mode.
+/**
+ * This function should always be called to apply the changes made through
+ * SDTModalResonator_setFrequency() and SDTModalResonator_setDecay().
+ */
+extern void SDTModalResonator_update(SDTResonator *x, /**< Pointer to the modal resonator instance. */
+                                     unsigned int i /**< Selected mode index. */);
 
 #endif

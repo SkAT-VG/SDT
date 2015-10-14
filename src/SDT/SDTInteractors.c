@@ -98,9 +98,12 @@ void SDTInteractor_setSecondPoint(SDTInteractor *x, long l) {
 
 void SDTInteractor_dsp(SDTInteractor *x, double f0, double f1, double *outs) {
   int i, n0, n1;
+  
   if (x->obj0 && x->obj1) {
     x->updateForces(x);
   }
+  n0 = 0;
+  n1 = 0;
   if (x->obj0) {
     SDTResonator_applyForce(x->obj0, x->p0, f0);
     SDTResonator_dsp(x->obj0);

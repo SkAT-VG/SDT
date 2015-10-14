@@ -60,16 +60,25 @@
 
 struct SDTBubble {
   SDTTwoPoles *filter;
-  double radius, depth,
-         amp, decay, freq, rise,
-         env, phase, time;
+  double radius, depth, riseFactor,
+         amp, decay, freq, freqRise,
+         phase, time;
 };
 
 SDTBubble *SDTBubble_new() {
   SDTBubble *x;
   
-  x = (SDTBubble *)calloc(1, sizeof(SDTBubble));
+  x = (SDTBubble *)malloc(sizeof(SDTBubble));
   x->filter = SDTTwoPoles_new();
+  x->radius = 1.0;
+  x->depth = 1.0;
+  x->riseFactor = 0.1;
+  x->amp = 1.0;
+  x->decay = 0.0;
+  x->freq = 0.0;
+  x->freqRise = 0.0;
+  x->phase = 0.0;
+  x->time = 0.0;
   return x;
 }
 
@@ -78,15 +87,25 @@ void SDTBubble_free(SDTBubble *x) {
   free(x);
 }
 
-void SDTBubble_update(SDTBubble *x, double radius, double depth, double freqRise) {
-  x->radius = SDT_fclip(radius, MIN_RADIUS, MAX_RADIUS);
-  x->depth = SDT_fclip(depth, 0.0, 1.0);
+void SDTBubble_setRadius(SDTBubble *x, double f) {
+  x->radius = SDT_fclip(f, MIN_RADIUS, MAX_RADIUS);
+}
+
+void SDTBubble_setDepth(SDTBubble *x, double f) {
+  x->depth = SDT_fclip(f, 0.0, 1.0);
+}
+
+void SDTBubble_setRiseFactor(SDTBubble *x, double f) {
+  x->riseFactor = SDT_fclip(f, 0.0, MAX_RISE);
+}
+
+void SDTBubble_update(SDTBubble *x) {
   x->amp = pow(x->radius / MAX_RADIUS, 1.5) * x->depth;
   x->decay = 0.13 / x->radius + 0.0072 * pow(x->radius, -1.5);
   x->freq = 3.0 / x->radius;
-  x->rise = x->decay * x->freq * SDT_fclip(freqRise, 0.0, MAX_RISE);
-  x->time = 0.0;
   SDTTwoPoles_lowpass(x->filter, x->freq);
+  x->freqRise = x->decay * x->freq * x->riseFactor;
+  x->time = 0.0;
 }
 
 void SDTBubble_normAmp(SDTBubble *x) {
@@ -94,20 +113,23 @@ void SDTBubble_normAmp(SDTBubble *x) {
 }
 
 double SDTBubble_dsp(SDTBubble *x) {
-  x->env = SDTTwoPoles_dsp(x->filter, x->amp * exp(-x->decay * x->time));
-  x->phase += (x->freq + x->rise * x->time) * SDT_timeStep;
+  double envelope;
+  
+  envelope = SDTTwoPoles_dsp(x->filter, x->amp * exp(-x->decay * x->time));
+  x->phase += (x->freq + x->freqRise * x->time) * SDT_timeStep;
   x->phase -= (long)x->phase;
   x->time += SDT_timeStep;
-  return x->env * sin(SDT_TWOPI * x->phase);
+  return envelope * sin(SDT_TWOPI * x->phase);
 }
 
 //-------------------------------------------------------------------------------------//
 
 struct SDTFluidFlow {
-  double minRadius, maxRadius, expRadius,
-  minDepth, maxDepth, expDepth,
-  riseFactor, riseCutoff, avgRate;
   SDTBubble **bubbles;
+  double minRadius, maxRadius, expRadius,
+         minDepth, maxDepth, expDepth,
+         riseFactor, riseCutoff, avgRate,
+         success, gain;
   int nBubbles;
 };
 
@@ -116,6 +138,10 @@ SDTFluidFlow *SDTFluidFlow_new(int nBubbles) {
   int i;
     
   x = (SDTFluidFlow *)malloc(sizeof(SDTFluidFlow));
+  x->bubbles = (SDTBubble **)malloc(nBubbles * sizeof(SDTBubble *));
+  for (i = 0; i < nBubbles; i++) {
+    x->bubbles[i] = SDTBubble_new();
+  }
   x->minRadius = 0.00015;
   x->maxRadius = 0.015;
   x->expRadius = 1.0;
@@ -123,18 +149,18 @@ SDTFluidFlow *SDTFluidFlow_new(int nBubbles) {
   x->maxDepth = 1.0;
   x->expDepth = 1.0;
   x->riseFactor = 0.1;
-  x->riseCutoff = 0.5;
+  x->riseCutoff = 0.9;
   x->avgRate = 0.0;
-  x->bubbles = (SDTBubble **)malloc(nBubbles * sizeof(SDTBubble *));
+  x->success = 0.0;
+  x->gain = 1.0;
   x->nBubbles = nBubbles;
-  for (i = 0; i < x->nBubbles; i++) {
-    x->bubbles[i] = SDTBubble_new();
-  }
+  
   return x;
 }
 
 void SDTFluidFlow_free(SDTFluidFlow *x) {
   int i;
+  
   for (i = 0; i < x->nBubbles; i++) {
     SDTBubble_free(x->bubbles[i]);
   }
@@ -142,16 +168,34 @@ void SDTFluidFlow_free(SDTFluidFlow *x) {
   free(x);
 }
 
+void SDTFluidFlow_updateRadii(SDTFluidFlow *x) {
+  double radius;
+  int i;
+  
+  for (i = 0; i < x->nBubbles; i++) {
+    radius = SDT_scale(i + 0.5, 0.0, x->nBubbles, x->minRadius, x->maxRadius, x->expRadius);
+    SDTBubble_setRadius(x->bubbles[i], radius);
+  }
+}
+
+void SDTFluidFlow_updateGain(SDTFluidFlow *x) {
+  x->gain = MAX_RADIUS / x->maxRadius;
+}
+
 void SDTFluidFlow_setMinRadius(SDTFluidFlow *x, double f) {
     x->minRadius = SDT_fclip(f, MIN_RADIUS, x->maxRadius);
+    SDTFluidFlow_updateRadii(x);
 }
 
 void SDTFluidFlow_setMaxRadius(SDTFluidFlow *x, double f) {
 	x->maxRadius = SDT_fclip(f, x->minRadius, MAX_RADIUS);
+	SDTFluidFlow_updateGain(x);
+	SDTFluidFlow_updateRadii(x);
 }
 
 void SDTFluidFlow_setExpRadius(SDTFluidFlow *x, double f) {
 	x->expRadius = SDT_fclip(f, 0.0, MAX_EXP);
+	SDTFluidFlow_updateRadii(x);
 }
 
 void SDTFluidFlow_setMinDepth(SDTFluidFlow *x, double f) {
@@ -175,26 +219,27 @@ void SDTFluidFlow_setRiseCutoff(SDTFluidFlow *x, double f) {
 }
 
 void SDTFluidFlow_setAvgRate(SDTFluidFlow *x, double f) {
-	x->avgRate = SDT_fclip(f, 0.0, MAX_RATE) / x->nBubbles;
+	x->avgRate = SDT_fclip(f, 0.0, MAX_RATE);
+	x->success = x->avgRate / x->nBubbles * SDT_timeStep;
 }
 
 double SDTFluidFlow_dsp(SDTFluidFlow *x) {
   SDTBubble *b;
-  double radius, depth, freqRise, result;
+  double result, depth, riseFactor;
   int i;
     
   result = 0;
   for (i = 0; i < x->nBubbles; i++) {
     b = x->bubbles[i];
-    if (SDT_frand() < x->avgRate * SDT_timeStep) {
-      radius = SDT_scale(i, 0.0, x->nBubbles, x->minRadius, x->maxRadius, x->expRadius);
+    if (SDT_frand() < x->success) {
       depth = SDT_scale(rand(), 0.0, RAND_MAX, x->minDepth, x->maxDepth, x->expDepth);
-      if (depth > x->riseCutoff) freqRise = x->riseFactor;
-      else freqRise = 0.0;
-      SDTBubble_update(b, radius, depth, freqRise);
+      riseFactor = depth > x->riseCutoff ? x->riseFactor : 0.0;
+      SDTBubble_setDepth(b, depth);
+      SDTBubble_setRiseFactor(b, riseFactor);
+      SDTBubble_update(b);
     }
     result += SDTBubble_dsp(b);
   }
-  result *= MAX_RADIUS / x->maxRadius;
+  result *= x->gain;
   return result;
 }

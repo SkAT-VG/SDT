@@ -66,6 +66,10 @@ long SDT_clip(long x, long min, long max) {
   return x;
 }
 
+double SDT_expRand(double min, double max) {
+  return SDT_fclip(-log(1.0 - SDT_frand()), min, max);
+}
+
 double SDT_fclip(double x, double min, double max) {
   x = fmax(min, x);
   x = fmin(x, max);
@@ -73,7 +77,15 @@ double SDT_fclip(double x, double min, double max) {
 }
 
 double SDT_frand() {
-  return (double)rand() / (double)RAND_MAX;
+  return (double)rand() / ((double)RAND_MAX + (double)1);
+}
+
+double SDT_gravity(double mass) {
+  return SDT_EARTH * mass;
+}
+
+double SDT_groundDecay(double grain, double velocity) {
+  return SDT_fclip(2.0 * grain * fabs(velocity), 0.0, 2.0);
 }
 
 void SDT_hanning(double *sig, int n) {
@@ -110,6 +122,10 @@ void SDT_haar(double *sig, long n, char verse) {
     sig[i] = (tmp[k] + tmp[l]) / SDT_SQRT2;
     sig[j] = (tmp[k] - tmp[l]) / SDT_SQRT2;
   }
+}
+
+double SDT_kinetic(double mass, double velocity) {
+  return 0.5 * mass * velocity * velocity;
 }
 
 double SDT_normalize(double x, double min, double max) {
