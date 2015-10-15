@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 6,
 			"minor" : 1,
-			"revision" : 9,
+			"revision" : 10,
 			"architecture" : "x86"
 		}
 ,
@@ -192,7 +192,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "float", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 656.5, 457.0, 50.0, 24.0 ]
+					"patching_rect" : [ 656.5, 457.0, 200.5, 24.0 ]
 				}
 
 			}
@@ -247,8 +247,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 594.0, 493.0, 44.0, 24.0 ],
-					"text" : "*~ 1."
+					"patching_rect" : [ 594.0, 493.0, 75.0, 24.0 ],
+					"text" : "*~ 50000"
 				}
 
 			}
