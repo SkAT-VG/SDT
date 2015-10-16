@@ -81,8 +81,7 @@ void envelope_free(t_envelope *x) {
 void envelope_assist(t_envelope *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
     sprintf(s, "(signal): Input\n"
-               "attack (float): Attack time, in ms\n"
-               "release (float): Release time, in ms");
+               "Object attributes and messages (see help patch)");
   } 
   else {
       sprintf(s, "(signal): Signal envelope");

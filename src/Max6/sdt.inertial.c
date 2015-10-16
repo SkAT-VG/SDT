@@ -101,8 +101,8 @@ void inertial_free(t_inertial *x) {
 
 void inertial_assist(t_inertial *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    sprintf(s, "mass (float): object mass\n"
-               "strike (float, float): instantly set position and velocity");
+    sprintf(s, "strike (float, float): instantly set position and velocity\n"
+               "Object attributes and messages (see help patch)");
   }
 }
 

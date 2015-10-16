@@ -87,8 +87,7 @@ void windcavity_free(t_windcavity *x)  {
 void windcavity_assist(t_windcavity *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
     sprintf(s, "(signal): Wind speed [0.0 ~ 1.0]\n"
-               "length (float): Cavity length, in m\n"
-               "diameter (float): Cavity diameter, in m\n");
+               "Object attributes and messages (see help patch)");
   } 
   else {
     sprintf(s, "(signal): Output");

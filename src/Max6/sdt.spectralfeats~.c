@@ -94,9 +94,7 @@ void spectralfeats_free(t_spectralfeats *x) {
 void spectralfeats_assist(t_spectralfeats *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
     sprintf(s, "(signal): Input\n"
-               "overlap (float): Window overlapping ratio\n"
-               "minFreq (float): Lower frequency limit, in Hz\n"
-               "maxFreq (float): Upper frequency limit, in Hz");
+               "Object attributes and messages (see help patch)");
   } 
   else {
     switch (a) {

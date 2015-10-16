@@ -115,12 +115,15 @@ void impact_free(t_impact *x) {
 
 void impact_assist(t_impact *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    sprintf(s, "(signal): Input\n"
-               "stiffness (float): impact stiffness\n"
-               "dissipation (float): impact dissipation\n"
-               "shape (float): impact shape\n"
-               "contact0 (int): contact point of first object\n"
-               "contact1 (int): contact point of second object\n");
+    switch (a) {
+      case 0:
+        sprintf(s, "(signal): External force applied on first object\n"
+                  "Object attributes and messages (see help patch)");
+        break;
+      case 1:
+        sprintf(s, "(signal): External force applied on second object");
+        break;
+    }
   } 
   else {
     sprintf(s, "(signal): Pickup outputs");

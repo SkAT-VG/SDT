@@ -133,11 +133,7 @@ void modal_free(t_modal *x) {
 
 void modal_assist(t_modal *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
-    sprintf(s, "weights (list of floats): mode weights\n"
-               "freqs (list of floats): mode frequencies, in Hz\n"
-               "decays (list of floats): mode decays, in s\n"
-               "activeModes (int): n. of active modes\n"
-               "pickup# (list of floats): pickup mask for pickup n. #");
+    sprintf(s, "Object attributes and messages (see help patch)");
   } 
 }
 

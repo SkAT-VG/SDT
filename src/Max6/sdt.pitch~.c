@@ -89,8 +89,7 @@ void pitch_free(t_pitch *x) {
 void pitch_assist(t_pitch *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
     sprintf(s, "(signal): Input\n"
-               "overlap (float): Window overlap ratio\n"
-               "tolerance (float): Peak tolerance [0.0 ~ 1.0]");
+               "Object attributes and messages (see help patch)");
   } 
   else {
     switch (a) {

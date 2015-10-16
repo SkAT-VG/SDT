@@ -97,25 +97,10 @@ void motor_assist(t_motor *x, void *b, long m, long a, char *s) {
       case 0:
         sprintf(s,
         "(signal): Revolutions per minute (RPM)\n"
-        "cycle (int): 0 = four-stroke, 1 = two-stroke\n"
-        "nCylinders (int): Number of cylinders [1 ~ 12]\n"
-        "cylinderSize (float): Volume of each cylinder, in cc\n"
-        "compressionRatio (float): Compression ratio [5.0 ~ 20.0]\n"
-        "sparkTime (float): Fuel ignition time [0.000001 ~ 1.0]\n"
-        "asymmetry (float): Engine eccentricity [0.0 ~ 1.0]\n"
-        "backfire (float): Amount of backfiring when revving down [0.0 ~ 1.0]\n"
-        "intakeSize (float): Average length of intake collectors, in m\n"
-        "extractorSize (float): Average length of exhaust collectors, in m\n"
-        "exhaustSize (float): Length of the main exhaust pipe, in m\n"
-        "mufflerSize (float): Average length of muffler resonators, in m\n"
-        "outletSize (float): Length of the exhaust outlet, in m\n"
-        "expansion (float): Impedance mismatch between collectors and exhaust [0.0 ~ 1.0]\n"
-        "mufflerFeedback (float): Muffler efficiency [0.0 ~ 1.0]");
+        "Object attributes and messages (see help patch)");
         break;
       case 1:
         sprintf(s, "(signal): Throttle load [0.0 ~ 1.0]");
-        break;
-      default:
         break;
     }
   } 

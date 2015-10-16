@@ -80,8 +80,7 @@ void bubble_free(t_bubble *x)  {
 void bubble_assist(t_bubble *x, void *b, long m, long a, char *s) {
 	if (m == ASSIST_INLET) {
         sprintf(s, "(bang): Triggers a bubble\n"
-                   "radius (float): Bubble radius, in mm [0.15 ~ 150.0]\n"
-                   "riseFactor (float): Noticeable rise in frequency [0.0 ~ 3.0]");
+                   "Object attributes and messages (see help patch)");
 	} 
 	else {
 	    sprintf(s, "(signal): Output");
