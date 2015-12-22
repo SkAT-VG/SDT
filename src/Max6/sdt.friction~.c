@@ -117,13 +117,15 @@ void friction_free(t_friction *x) {
 
 void friction_assist(t_friction *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    sprintf(s, "(signal): Input\n"
-               "force (float): Normal force\n"
-               "stribeck (float): Stribeck velocity\n"
-               "kStatic (float): static friction coefficient\n"
-               "kDynamic (float): dynamic friction coefficient\n"
-               "contact0 (int): contact point of first object\n"
-               "contact1 (int): contact point of second object\n");
+    switch (a) {
+      case 0:
+        sprintf(s, "(signal): External force applied on first object\n"
+                  "Object attributes and messages (see help patch)");
+        break;
+      case 1:
+        sprintf(s, "(signal): External force applied on second object");
+        break;
+    }
   } 
   else {
     sprintf(s, "(signal): Pickup outputs");

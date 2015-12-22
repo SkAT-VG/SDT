@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 6,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 9,
 			"architecture" : "x86"
 		}
 ,
@@ -75,7 +75,7 @@
 						"appversion" : 						{
 							"major" : 6,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 9,
 							"architecture" : "x86"
 						}
 ,
@@ -213,7 +213,7 @@
 						"appversion" : 						{
 							"major" : 6,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 9,
 							"architecture" : "x86"
 						}
 ,
@@ -567,7 +567,7 @@
 						"appversion" : 						{
 							"major" : 6,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 9,
 							"architecture" : "x86"
 						}
 ,
@@ -1044,7 +1044,7 @@
 						"appversion" : 						{
 							"major" : 6,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 9,
 							"architecture" : "x86"
 						}
 ,
@@ -1104,8 +1104,8 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 190.0, 225.0, 68.0, 15.0 ],
-									"text" : "900, 400 4000"
+									"patching_rect" : [ 190.0, 225.0, 58.0, 15.0 ],
+									"text" : "900, 0 4000"
 								}
 
 							}
@@ -1513,13 +1513,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "/Users/stefanodemo/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"patcherrelativepath" : "../../../../../../../../Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.fluidflow~.mxo",
 				"type" : "iLaX"
 			}
