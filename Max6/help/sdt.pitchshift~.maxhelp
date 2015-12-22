@@ -2,34 +2,43 @@
 	"patcher" : 	{
 		"fileversion" : 1,
 		"appversion" : 		{
-			"major" : 6,
-			"minor" : 1,
-			"revision" : 10,
-			"architecture" : "x86"
+			"major" : 7,
+			"minor" : 0,
+			"revision" : 6,
+			"architecture" : "x86",
+			"modernui" : 1
 		}
 ,
-		"rect" : [ 25.0, 136.0, 612.0, 522.0 ],
+		"rect" : [ 34.0, 136.0, 612.0, 522.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
 		"default_fontface" : 0,
 		"default_fontname" : "Arial",
-		"gridonopen" : 0,
+		"gridonopen" : 1,
 		"gridsize" : [ 15.0, 15.0 ],
-		"gridsnaponopen" : 0,
+		"gridsnaponopen" : 1,
+		"objectsnaponopen" : 1,
 		"statusbarvisible" : 2,
 		"toolbarvisible" : 1,
+		"lefttoolbarpinned" : 0,
+		"toptoolbarpinned" : 0,
+		"righttoolbarpinned" : 0,
+		"bottomtoolbarpinned" : 0,
+		"toolbars_unpinned_last_save" : 0,
+		"tallnewobj" : 0,
 		"boxanimatetime" : 200,
-		"imprint" : 0,
 		"enablehscroll" : 1,
 		"enablevscroll" : 1,
 		"devicewidth" : 0.0,
 		"description" : "",
 		"digest" : "",
 		"tags" : "",
+		"style" : "",
+		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
-					"fontname" : "Arial",
+					"fontname" : "Helvetica Neue",
 					"fontsize" : 12.0,
 					"hidden" : 1,
 					"id" : "obj-10",
@@ -37,14 +46,15 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 147.5, 81.0, 20.0 ],
+					"patching_rect" : [ 153.0, 147.5, 83.0, 22.0 ],
+					"style" : "",
 					"text" : "prepend ratio"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Arial",
+					"fontname" : "Helvetica Neue",
 					"fontsize" : 12.0,
 					"hidden" : 1,
 					"id" : "obj-9",
@@ -52,76 +62,79 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 129.0, 82.0, 20.0 ],
+					"patching_rect" : [ 153.0, 122.0, 82.0, 22.0 ],
+					"style" : "",
 					"text" : "loadmess 1.5"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
-					"bordercolor" : [ 0.8, 0.8, 0.8, 1.0 ],
 					"id" : "obj-8",
 					"maxclass" : "meter~",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "float" ],
-					"patching_rect" : [ 60.5, 248.0, 21.0, 96.0 ]
+					"patching_rect" : [ 57.5, 248.0, 21.0, 96.0 ],
+					"style" : "default"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
-					"bordercolor" : [ 0.8, 0.8, 0.8, 1.0 ],
 					"id" : "obj-7",
 					"maxclass" : "meter~",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "float" ],
-					"patching_rect" : [ 132.5, 248.0, 21.0, 96.0 ]
+					"patching_rect" : [ 127.5, 248.0, 21.0, 96.0 ],
+					"style" : "default"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Helvetica",
+					"fontname" : "Helvetica Neue",
 					"fontsize" : 14.0,
-					"frgb" : 0.0,
 					"id" : "obj-64",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 17.0, 76.625, 310.0, 20.0 ],
+					"patching_rect" : [ 17.0, 76.625, 316.0, 23.0 ],
+					"style" : "",
 					"text" : "Time domain pitch shifter"
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"angle" : 0.0,
 					"bgcolor" : [ 0.0, 0.0, 0.0, 0.0 ],
 					"border" : 1,
-					"bordercolor" : [ 0.0, 0.0, 0.0, 0.207843 ],
+					"bordercolor" : [ 0.223529, 0.243137, 0.235294, 1.0 ],
 					"id" : "obj-141",
 					"maxclass" : "panel",
+					"mode" : 0,
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 17.0, 69.625, 278.0, 7.0 ],
-					"rounded" : 0
+					"patching_rect" : [ 17.0, 69.625, 281.0, 4.0 ],
+					"proportion" : 0.39,
+					"rounded" : 0,
+					"style" : ""
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"fontface" : 1,
-					"fontname" : "Arial",
+					"fontname" : "Helvetica Neue",
 					"fontsize" : 30.0,
-					"frgb" : 0.0,
 					"id" : "obj-142",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 17.0, 29.625, 252.0, 40.0 ],
+					"patching_rect" : [ 17.0, 29.625, 252.0, 42.0 ],
+					"style" : "",
 					"text" : "sdt.pitchshift~",
 					"textcolor" : [ 0.0, 0.8, 1.0, 1.0 ]
 				}
@@ -129,52 +142,68 @@
 			}
 , 			{
 				"box" : 				{
+					"bgmode" : 0,
+					"border" : 0,
+					"clickthrough" : 0,
 					"embed" : 1,
+					"enablehscroll" : 0,
+					"enablevscroll" : 0,
 					"id" : "obj-6",
+					"lockeddragscroll" : 0,
 					"maxclass" : "bpatcher",
 					"name" : "_SDT_label2016.maxpat",
 					"numinlets" : 0,
 					"numoutlets" : 0,
+					"offset" : [ 0.0, 0.0 ],
 					"patcher" : 					{
 						"fileversion" : 1,
 						"appversion" : 						{
-							"major" : 6,
-							"minor" : 1,
-							"revision" : 10,
-							"architecture" : "x86"
+							"major" : 7,
+							"minor" : 0,
+							"revision" : 6,
+							"architecture" : "x86",
+							"modernui" : 1
 						}
 ,
-						"rect" : [ 378.0, 145.0, 214.0, 109.0 ],
+						"rect" : [ 387.0, 145.0, 214.0, 109.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
 						"default_fontface" : 0,
 						"default_fontname" : "Arial",
-						"gridonopen" : 0,
+						"gridonopen" : 1,
 						"gridsize" : [ 15.0, 15.0 ],
-						"gridsnaponopen" : 0,
+						"gridsnaponopen" : 1,
+						"objectsnaponopen" : 1,
 						"statusbarvisible" : 2,
 						"toolbarvisible" : 1,
+						"lefttoolbarpinned" : 0,
+						"toptoolbarpinned" : 0,
+						"righttoolbarpinned" : 0,
+						"bottomtoolbarpinned" : 0,
+						"toolbars_unpinned_last_save" : 0,
+						"tallnewobj" : 0,
 						"boxanimatetime" : 200,
-						"imprint" : 0,
 						"enablehscroll" : 1,
 						"enablevscroll" : 1,
 						"devicewidth" : 0.0,
 						"description" : "",
 						"digest" : "",
 						"tags" : "",
+						"style" : "",
+						"subpatcher_template" : "",
 						"boxes" : [ 							{
 								"box" : 								{
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-9",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 95.0, 69.0, 113.0, 17.0 ],
+									"style" : "",
 									"text" : "soundobject.org/niw/"
 								}
 
@@ -239,10 +268,11 @@
 									"patcher" : 									{
 										"fileversion" : 1,
 										"appversion" : 										{
-											"major" : 6,
-											"minor" : 1,
-											"revision" : 10,
-											"architecture" : "x86"
+											"major" : 7,
+											"minor" : 0,
+											"revision" : 6,
+											"architecture" : "x86",
+											"modernui" : 1
 										}
 ,
 										"rect" : [ 25.0, 69.0, 640.0, 480.0 ],
@@ -251,19 +281,27 @@
 										"default_fontsize" : 9.0,
 										"default_fontface" : 0,
 										"default_fontname" : "Arial",
-										"gridonopen" : 0,
+										"gridonopen" : 1,
 										"gridsize" : [ 15.0, 15.0 ],
-										"gridsnaponopen" : 0,
+										"gridsnaponopen" : 1,
+										"objectsnaponopen" : 1,
 										"statusbarvisible" : 2,
 										"toolbarvisible" : 1,
+										"lefttoolbarpinned" : 0,
+										"toptoolbarpinned" : 0,
+										"righttoolbarpinned" : 0,
+										"bottomtoolbarpinned" : 0,
+										"toolbars_unpinned_last_save" : 0,
+										"tallnewobj" : 0,
 										"boxanimatetime" : 200,
-										"imprint" : 0,
 										"enablehscroll" : 1,
 										"enablevscroll" : 1,
 										"devicewidth" : 0.0,
 										"description" : "",
 										"digest" : "",
 										"tags" : "",
+										"style" : "",
+										"subpatcher_template" : "",
 										"boxes" : [ 											{
 												"box" : 												{
 													"comment" : "",
@@ -272,7 +310,8 @@
 													"numinlets" : 0,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 177.0, 87.0, 25.0, 25.0 ]
+													"patching_rect" : [ 177.0, 87.0, 25.0, 25.0 ],
+													"style" : ""
 												}
 
 											}
@@ -283,7 +322,8 @@
 													"numinlets" : 1,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 184.0, 210.0, 20.0, 20.0 ]
+													"patching_rect" : [ 184.0, 210.0, 20.0, 20.0 ],
+													"style" : ""
 												}
 
 											}
@@ -298,6 +338,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 184.0, 276.0, 228.0, 31.0 ],
+													"style" : "",
 													"text" : ";\rmax launchbrowser http://www.skatvg.eu"
 												}
 
@@ -310,7 +351,8 @@
 													"numinlets" : 0,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 96.0, 87.0, 25.0, 25.0 ]
+													"patching_rect" : [ 96.0, 87.0, 25.0, 25.0 ],
+													"style" : ""
 												}
 
 											}
@@ -322,7 +364,8 @@
 													"numinlets" : 0,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 61.0, 87.0, 25.0, 25.0 ]
+													"patching_rect" : [ 61.0, 87.0, 25.0, 25.0 ],
+													"style" : ""
 												}
 
 											}
@@ -334,7 +377,8 @@
 													"numinlets" : 0,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 139.0, 87.0, 25.0, 25.0 ]
+													"patching_rect" : [ 139.0, 87.0, 25.0, 25.0 ],
+													"style" : ""
 												}
 
 											}
@@ -345,7 +389,8 @@
 													"numinlets" : 1,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 68.0, 210.0, 20.0, 20.0 ]
+													"patching_rect" : [ 68.0, 210.0, 20.0, 20.0 ],
+													"style" : ""
 												}
 
 											}
@@ -360,6 +405,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 67.0, 236.0, 265.0, 31.0 ],
+													"style" : "",
 													"text" : ";\rmax launchbrowser http://www.soundobject.org/"
 												}
 
@@ -371,7 +417,8 @@
 													"numinlets" : 1,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 94.0, 172.0, 20.0, 20.0 ]
+													"patching_rect" : [ 94.0, 172.0, 20.0, 20.0 ],
+													"style" : ""
 												}
 
 											}
@@ -386,6 +433,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 93.0, 198.0, 226.0, 31.0 ],
+													"style" : "",
 													"text" : ";\rmax launchbrowser http://closed.ircam.fr"
 												}
 
@@ -397,7 +445,8 @@
 													"numinlets" : 1,
 													"numoutlets" : 1,
 													"outlettype" : [ "bang" ],
-													"patching_rect" : [ 123.0, 120.0, 20.0, 20.0 ]
+													"patching_rect" : [ 123.0, 120.0, 20.0, 20.0 ],
+													"style" : ""
 												}
 
 											}
@@ -412,6 +461,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 122.0, 146.0, 317.0, 31.0 ],
+													"style" : "",
 													"text" : ";\rmax launchbrowser http://www.soundobject.org/niw/"
 												}
 
@@ -494,18 +544,15 @@
 ,
 									"patching_rect" : [ 58.333336, 212.0, 123.0, 18.0 ],
 									"saved_object_attributes" : 									{
-										"default_fontface" : 0,
-										"default_fontname" : "Arial",
-										"default_fontsize" : 9.0,
 										"description" : "",
 										"digest" : "",
-										"fontface" : 0,
-										"fontname" : "Arial",
 										"fontsize" : 9.0,
 										"globalpatchername" : "",
+										"style" : "",
 										"tags" : ""
 									}
 ,
+									"style" : "",
 									"text" : "p url"
 								}
 
@@ -515,12 +562,12 @@
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-8",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 9.0, 70.0, 86.0, 17.0 ],
+									"style" : "",
 									"text" : "project NIW "
 								}
 
@@ -530,12 +577,12 @@
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-2",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 9.0, 84.0, 86.0, 17.0 ],
+									"style" : "",
 									"text" : "project SkAT-VG"
 								}
 
@@ -545,12 +592,12 @@
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-7",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 9.0, 55.0, 86.0, 17.0 ],
+									"style" : "",
 									"text" : "project CLOSED"
 								}
 
@@ -560,12 +607,12 @@
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-6",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 9.0, 40.0, 86.0, 17.0 ],
+									"style" : "",
 									"text" : "project SOb"
 								}
 
@@ -574,12 +621,12 @@
 								"box" : 								{
 									"fontname" : "Arial",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-5",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 9.0, 25.0, 101.0, 17.0 ],
+									"style" : "",
 									"text" : "(C) 2001 - 2016"
 								}
 
@@ -589,12 +636,12 @@
 									"fontface" : 1,
 									"fontname" : "Arial",
 									"fontsize" : 18.0,
-									"frgb" : 0.0,
 									"id" : "obj-3",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 9.0, 1.0, 198.0, 27.0 ],
+									"style" : "",
 									"text" : "Sound Design Toolkit",
 									"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ]
 								}
@@ -605,12 +652,12 @@
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-10",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 95.0, 85.0, 104.5, 17.0 ],
+									"style" : "",
 									"text" : "www.skatvg.eu"
 								}
 
@@ -620,12 +667,12 @@
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-11",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 95.0, 54.0, 113.0, 17.0 ],
+									"style" : "",
 									"text" : "closed.ircam.fr"
 								}
 
@@ -635,25 +682,29 @@
 									"fontface" : 1,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 9.0,
-									"frgb" : 0.0,
 									"id" : "obj-12",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 95.0, 39.0, 113.0, 17.0 ],
+									"style" : "",
 									"text" : "soundobject.org"
 								}
 
 							}
 , 							{
 								"box" : 								{
+									"angle" : 0.0,
 									"bgcolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 									"id" : "obj-1",
 									"maxclass" : "panel",
+									"mode" : 0,
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 1.0, 1.0, 206.0, 104.0 ],
-									"rounded" : 31
+									"proportion" : 0.39,
+									"rounded" : 31,
+									"style" : ""
 								}
 
 							}
@@ -697,79 +748,81 @@
  ]
 					}
 ,
-					"patching_rect" : [ 352.5, 8.625, 214.0, 109.0 ]
+					"patching_rect" : [ 352.5, 8.625, 214.0, 109.0 ],
+					"viewvisibility" : 1
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Arial",
+					"fontname" : "Helvetica Neue",
 					"fontsize" : 12.0,
-					"frgb" : 0.0,
 					"id" : "obj-43",
 					"linecount" : 11,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 335.5, 183.0, 234.0, 154.0 ],
+					"patching_rect" : [ 335.5, 183.0, 233.0, 160.0 ],
+					"style" : "",
 					"text" : "ARGUMENTS:\n1. Window size, in samples (default 4096)\n\nINLETS:\n1. (signal): Input\n\nATTRIBUTES:\nratio (float): Pitch shifting ratio\n\nOUTLETS:\n1. (signal): Pitch shifted signal"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 0.8, 0.8, 0.8, 1.0 ],
-					"bordercolor" : [ 0.8, 0.8, 0.8, 1.0 ],
 					"id" : "obj-5",
-					"knobcolor" : [ 0.6, 0.6, 0.6, 1.0 ],
+					"interpinlet" : 1,
+					"knobcolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"maxclass" : "gain~",
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "int" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 80.5, 248.0, 31.5, 96.0 ],
-					"stripecolor" : [ 1.0, 1.0, 1.0, 1.0 ]
+					"style" : "default"
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 0.8, 0.8, 0.8, 1.0 ],
-					"bordercolor" : [ 0.8, 0.8, 0.8, 1.0 ],
 					"id" : "obj-2",
-					"knobcolor" : [ 0.6, 0.6, 0.6, 1.0 ],
+					"interpinlet" : 1,
+					"knobcolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"maxclass" : "gain~",
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "int" ],
 					"parameter_enable" : 0,
 					"patching_rect" : [ 153.0, 248.0, 31.5, 96.0 ],
-					"stripecolor" : [ 1.0, 1.0, 1.0, 1.0 ]
+					"style" : "default"
 				}
 
 			}
 , 			{
 				"box" : 				{
+					"color" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"id" : "obj-12",
 					"maxclass" : "ezadc~",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "signal" ],
-					"patching_rect" : [ 80.5, 129.0, 57.0, 57.0 ]
+					"patching_rect" : [ 80.5, 129.0, 57.0, 57.0 ],
+					"style" : ""
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"attr" : "ratio",
-					"fontname" : "Arial",
+					"fontname" : "Helvetica Neue",
 					"fontsize" : 12.0,
 					"id" : "obj-4",
 					"maxclass" : "attrui",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 183.0, 150.0, 20.0 ]
+					"patching_rect" : [ 153.0, 183.0, 150.0, 22.0 ],
+					"style" : ""
 				}
 
 			}
@@ -779,21 +832,24 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 80.5, 364.0, 57.0, 57.0 ]
+					"patching_rect" : [ 80.5, 364.0, 57.0, 57.0 ],
+					"style" : ""
 				}
 
 			}
 , 			{
 				"box" : 				{
 					"color" : [ 0.0, 0.8, 1.0, 1.0 ],
-					"fontname" : "Arial",
+					"fontface" : 3,
+					"fontname" : "Helvetica Neue",
 					"fontsize" : 14.0,
 					"id" : "obj-1",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 153.0, 215.0, 133.0, 22.0 ],
+					"patching_rect" : [ 153.0, 215.0, 145.0, 25.0 ],
+					"style" : "",
 					"text" : "sdt.pitchshift~ 4096"
 				}
 
@@ -910,8 +966,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "/Applications/Max 6.1/packages/SoundDesignToolkit/misc",
-				"patcherrelativepath" : "../../../../../../../../../../Applications/Max 6.1/packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -919,7 +974,8 @@
 				"name" : "sdt.pitchshift~.mxo",
 				"type" : "iLaX"
 			}
- ]
+ ],
+		"embedsnapshot" : 0
 	}
 
 }
