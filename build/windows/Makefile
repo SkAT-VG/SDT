@@ -58,14 +58,14 @@ $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
 	
 install:
-	mkdir -p "$(DSTDIR)"/{externals,support}
-	cp -a $(FFTW3DIR)/libfftw* "$(DSTDIR)"/support
-	cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/support
-	cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/externals
-	cp -a ../../Max6/* "$(DSTDIR)"
+	mkdir -p "$(DSTDIR)"/SoundDesignToolkit/{externals,support}
+	cp -a $(FFTW3DIR)/libfftw* "$(DSTDIR)"/SoundDesignToolkit/support
+	cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SoundDesignToolkit/support
+	cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/SoundDesignToolkit/externals
+	cp -a ../../Max6/* "$(DSTDIR)"/SoundDesignToolkit
 
 uninstall:
-	rm -rf "$(DSTDIR)"
+	rm -rf "$(DSTDIR)"/SoundDesignToolkit
 
 clean:
 	rm -rf $(SDTDIR)/libSDT.dll
