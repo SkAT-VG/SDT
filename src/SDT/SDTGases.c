@@ -252,7 +252,7 @@ SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay) {
   x->distance = 0.0;
   x->waveSpeed = 0.0;
   x->windSpeed = 0.0;
-  x->time = 0.0;
+  x->time = 1000000.0;
   x->i = 0;
   x->waveDelay = 0;
   x->windDelay = 0;

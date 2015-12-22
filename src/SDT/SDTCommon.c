@@ -1,52 +1,3 @@
-/** \file SDTCommon.c
- * Useful shared SDT-related stuff,
- * E.g. SDT version number, sample rate, signal clipping etc.
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
-
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -66,8 +17,8 @@ long SDT_clip(long x, long min, long max) {
   return x;
 }
 
-double SDT_expRand(double min, double max) {
-  return SDT_fclip(-log(1.0 - SDT_frand()), min, max);
+double SDT_expRand(double lambda) {
+  return -log(1.0 - SDT_frand()) / lambda;
 }
 
 double SDT_fclip(double x, double min, double max) {
@@ -132,13 +83,38 @@ double SDT_normalize(double x, double min, double max) {
   return (x - min) / (max - min);
 }
 
+void SDT_RK4(void *x, int argc, double *argv, void (*f)(void*, double *)) {
+  double k[4][argc];
+  int i;
+  
+  for (i = 0; i < argc; i++) {
+    k[0][i] = argv[i];
+  }
+  f(x, k[0]);
+  for (i = 0; i < argc; i++) {
+    k[1][i] = argv[i] + 0.5 * SDT_timeStep * k[0][i];
+  }
+  f(x, k[1]);
+  for (i = 0; i < argc; i++) {
+    k[2][i] = argv[i] + 0.5 * SDT_timeStep * k[1][i];
+  }
+  f(x, k[2]);
+  for (i = 0; i < argc; i++) {
+    k[3][i] = argv[i] + SDT_timeStep * k[2][i];
+  }
+  f(x, k[3]);
+  for (i = 0; i < argc; i++) {
+    argv[i] += SDT_timeStep * (k[0][i] + 2.0 * (k[1][i] + k[2][i]) + k[3][i]) / 6;
+  }
+}
+
 double SDT_samplesInAir(double length) {
   return fmax(0.0, length) / SDT_MACH1 * SDT_sampleRate;
 }
 
-double SDT_scale(double x, double in0, double in1,
-                 double out0, double out1, double e) {
-  return pow((x - in0) / (in1 - in0), e) * (out1 - out0) + out0;
+double SDT_scale(double x, double srcMin, double srcMax,
+                 double dstMin, double dstMax, double gamma) {
+  return pow((x - srcMin) / (srcMax - srcMin), gamma) * (dstMax - dstMin) + dstMin;
 }
 
 int SDT_signum(double x) {

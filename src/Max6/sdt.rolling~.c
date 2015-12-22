@@ -80,14 +80,11 @@ void rolling_free(t_rolling *x) {
 
 void rolling_assist(t_rolling *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
-    sprintf(s, "(signal): Input\n"
-               "grain (float): Surface grain\n"
-               "depth (float): Surface depth\n"
-               "mass (float): Rolling mass, in kg\n"
-               "velocity (float): Rolling velocity, in m/s\n");
+    sprintf(s, "(signal): Surface profile\n"
+               "Object attributes and messages (see help patch)");
   } 
   else {
-    sprintf(s, "(signal): Striker force, in N");
+    sprintf(s, "(signal): Striker velocity");
   }
 }
 

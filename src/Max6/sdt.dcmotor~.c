@@ -92,15 +92,7 @@ void dcmotor_assist(t_dcmotor *x, void *b, long m, long a, char *s) {
     switch (a) {
       case 0:
         sprintf(s, "(signal): RPM\n"
-                   "coils (long): N. of coils on the rotor\n"
-                   "size (float): Size of the chassis, in m\n"
-                   "reson (float): Amount of body resonance [0.0 ~ 1.0]\n"
-                   "gearRatio (float): Gear ratio\n"
-                   "harshness (float): Spectral density [0.0 ~ 1.0]\n"
-                   "rotorGain (float): Amount of rotor noise [0.0 ~ 1.0]\n"
-                   "gearGain (float): Amount of gear noise [0.0 ~ 1.0]\n"
-                   "brushGain (float): Amount of brush noise [0.0 ~ 1.0]\n"
-                   "airGain (float): Amount of air noise [0.0 ~ 1.0]\n");
+                   "Object attributes and messages (see help patch)");
         break;
       case 1:
         sprintf(s, "(signal): Load [0.0 ~ 1.0]");

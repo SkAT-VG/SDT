@@ -88,10 +88,7 @@ void reverb_free(t_reverb *x) {
 void reverb_assist(t_reverb *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
     sprintf(s, "(signal): Input\n"
-               "xSize (float): room xSize, in m\n"
-               "ySize (float): room ySize, in m\n"
-               "zSize (float): room zSize, in m\n"
-               "randomness (float): irregularity of the room shape [0.0 ~ 1.0]");
+               "Object attributes and messages (see help patch)");
   } 
   else {
     sprintf(s, "(signal): Reverberated output");

@@ -6,7 +6,6 @@ MACVERSION=-mmacosx-version-min=10.6
 CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -O -fno-common
 LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib
 SRCDIR=../../src
-DSTDIR=/Applications/Max\ 6.1/packages/SoundDesignToolkit
 
 SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
@@ -45,6 +44,8 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	-L$(MAXSDKDIR)/max-includes -L$(MAXSDKDIR)/msp-includes -L$(MAXSDKDIR)/jit-includes \
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -framework SDT -framework MaxAudioAPI $< -o $@/Contents/MacOS/$(EXTNAME)
+	install_name_tool -change SDT @loader_path/../../../../support/SDT.framework/SDT \
+	$@/Contents/MacOS/$(EXTNAME)
 
 $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
@@ -56,7 +57,8 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 pd: sdt $(PDOBJS)
 
 $(PDDIR)/%.pd_darwin: $(PDDIR)/%.o
-	$(CC) $(LDFLAGS) -F$(SDTDIR) -framework SDT $< -o $@
+	$(CC) $(LDFLAGS) -undefined dynamic_lookup -F$(SDTDIR) -framework SDT $< -o $@
+	install_name_tool -change SDT @loader_path/SDT.framework/SDT $@
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -F$(SDTDIR) -c $< -o $@
@@ -71,23 +73,37 @@ sdt: $(SDTOBJS)
 	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
 	$(CC) $(LDFLAGS) -L$(SDTDIR)/SDT.framework/Resources/fftw3 $(SDTOBJS) \
 	-o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System -lfftw3
-	install_name_tool -id @loader_path/../../../../support/SDT.framework/SDT \
-	$(SDTDIR)/SDT.framework/SDT
+	install_name_tool -id SDT $(SDTDIR)/SDT.framework/SDT
 	
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
 
 install:
-	mkdir -p $(DSTDIR)/{externals,support}
-	cp -a ../../Max6/* $(DSTDIR)
-	cp -a $(SDTDIR)/SDT.framework $(DSTDIR)/support
-	cp -a $(MAXDIR)/*.mxo $(DSTDIR)/externals
-
+	@if [ -z "$(DSTDIR)" ]; \
+	then echo "Usage: make install DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; \
+	then echo "Error: installation path does not exist or is not a directory"; \
+	else mkdir -p "$(DSTDIR)"/SoundDesignToolkit/{externals,support} && \
+	     cp -a ../../Max6/* "$(DSTDIR)"/SoundDesignToolkit && \
+	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SoundDesignToolkit/support && \
+	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SoundDesignToolkit/externals && \
+	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
+	fi
+	
 uninstall:
-	rm -rf $(DSTDIR)
+	@if [ -z "$(DSTDIR)" ]; \
+	then echo "Usage: make uninstall DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; \
+	then echo "Error: installation path does not exist or is not a directory"; \
+	else rm -r "$(DSTDIR)"/SoundDesignToolkit && \
+	     echo "Sound Design Toolkit uninstalled from $(DSTDIR)"; \
+	fi
+	
 
 clean:
 	rm -rf $(SDTDIR)/*.framework
 	rm -rf $(SDTDIR)/*.o
 	rm -rf $(MAXDIR)/*.mxo
 	rm -rf $(MAXDIR)/*.o
+	rm -rf $(PDDIR)/*.pd_darwin
+	rm -rf $(PDDIR)/*.o

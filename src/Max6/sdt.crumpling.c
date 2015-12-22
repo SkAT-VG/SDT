@@ -62,10 +62,11 @@ static t_class *crumpling_class = NULL;
 
 void crumpling_assist(t_crumpling *x, void *b, long m, long a, char *s) {
 	if (m == ASSIST_INLET) {
-        sprintf(s, "(bang): Starts the crumpling process\n"
-                   "fragmentation (float): Object fragmentation to breaking, in N\n"
-                   "crushingEnergy (float): Crushing energy, in N\n"
-                   "granularity (float): Event density [0.0 ~ 1.0]");
+        sprintf(s, "(bang): Starts a discrete crumpling process\n"
+                   "(int): 1 starts a continuous crumpling process, 0 stops it\n"
+                   "start: Starts a continuous crumpling process\n"
+                   "stop: stops a continuous crumpling process\n"
+                   "Object attributes and messages (see help patch)");
 	} 
 	else {
 	  switch (a) {

@@ -17,9 +17,24 @@ MAXOBJS=$(patsubst %.c,%.mxe,$(MAXSRCS))
 MAXSDKDIR=../../3rdparty/Max6SDK
 MAXSDKVERSION=6.1.4
 
+PDDIR=$(SRCDIR)/Pd
+PDSRCS=$(wildcard $(PDDIR)/*.c)
+PDOBJS=$(patsubst %.c,%.dll,$(PDSRCS))
+
+PDSDKDIR=../../3rdparty/Pd
+PDSDKVERSION=0.43.4
+
 FFTW3DIR=../../3rdparty/fftw3/windows
 
-all: max
+all: sdt max pd
+
+pd: sdt $(PDOBJS)
+
+$(PDDIR)/%.dll: $(PDDIR)/%.o
+	$(CC) $(LDFLAGS) -L$(SDTDIR) -L$(PDSDKDIR) $< -o $@ -lSDT -lpd
+
+$(PDDIR)/%.o: $(PDDIR)/%.c
+	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -c $< -o $@
 
 max: sdt $(MAXOBJS)
 
@@ -43,14 +58,14 @@ $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
 	
 install:
-	mkdir -p $(DSTDIR)/{externals,support}
-	cp -a $(FFTW3DIR)/libfftw* $(DSTDIR)/support
-	cp -a $(SDTDIR)/libSDT.dll $(DSTDIR)/support
-	cp -a $(MAXDIR)/*.mxe $(DSTDIR)/externals
-	cp -a ../../Max6/* $(DSTDIR)
+	mkdir -p "$(DSTDIR)"/{externals,support}
+	cp -a $(FFTW3DIR)/libfftw* "$(DSTDIR)"/support
+	cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/support
+	cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/externals
+	cp -a ../../Max6/* "$(DSTDIR)"
 
 uninstall:
-	rm -rf $(DSTDIR)
+	rm -rf "$(DSTDIR)"
 
 clean:
 	rm -rf $(SDTDIR)/libSDT.dll

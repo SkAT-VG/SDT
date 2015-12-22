@@ -80,13 +80,11 @@ void scraping_free(t_scraping *x) {
 
 void scraping_assist(t_scraping *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
-    sprintf(s, "(signal): Input\n"
-               "grain (float): Surface grain\n"
-               "force (float): Applied force, in N\n"
-               "velocity (float): Scraping velocity, in m/s\n");
+    sprintf(s, "(signal): Surface profile\n"
+               "Object attributes and messages (see help patch)");
   } 
   else {
-    sprintf(s, "(signal): Force on resonator, in N");
+    sprintf(s, "(signal): Force on resonator");
   }
 }
 

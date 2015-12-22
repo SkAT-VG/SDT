@@ -1,53 +1,32 @@
-/** \file SDTDCMotor.h
- * Physically informed sound synthesis model of a DC electric motor.
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
-
 #ifndef SDT_DCMOTOR_H
 #define SDT_DCMOTOR_H
+
+/**
+@defgroup dcmotor Electric motors
+
+Electric motors exploit magnetic induction to convert electric energy into mechanical energy.
+The simplest arrangement is the DC brushed motor, composed by a stator with magnets
+of opposite polarity and a rotor with induction coils. Electric contacts (brushes)
+power the coils, inducing a magnetic field. Coils get pushed away from one of the magnets
+and drawn toward the other, causing rotation. A commutator ring is used to invert the polarity
+of the coils, allowing the process to repeat.
+An ideal electric motor should be perfectly silent. In practice, however, rotors are never
+perfectly balanced and generate pitched tones depending on their revolutions per minute (RPM).
+Moreover, contacts between the brushes and the commutator ring cause friction noise,
+as it does the gearing system transmittimg the mechanical energy to the engine load.
+Finally, rotation causes air movement and therefore turbulence noise, sometimes increased
+by the presence of a cooling fan attached to the rotor.
+The pitched tone of the rotor is obtained through additive synthesis, summing a fixed number
+of harmonic partials. Frequency modulation simulates the unevenness in the rotation caused
+by attached loads. Brush noise is obtained using this waveform as an envelope for
+bandpass-filtered white noise. Gear noise is modeled like rotor noise, with each partial
+frequency multiplied by the gear ratio. A comb filter models the resonances of the closed
+chassis in which rotor, gears and brushes are usually contained. Aerodynamic turbulence
+caused by the spinning parts (rotor, cooling fan) is synthesized with bandpass-filtered
+white noise.
+
+@{
+*/
 
 typedef struct SDTDCMotor SDTDCMotor;
 
@@ -66,5 +45,9 @@ extern void SDTDCMotor_setGearGain(SDTDCMotor *x, double f);
 extern void SDTDCMotor_setBrushGain(SDTDCMotor *x, double f);
 extern void SDTDCMotor_setAirGain(SDTDCMotor *x, double f);
 extern double SDTDCMotor_dsp(SDTDCMotor *x);
+
+/**
+@}
+*/
 
 #endif

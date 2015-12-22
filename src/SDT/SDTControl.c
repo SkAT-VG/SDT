@@ -1,10 +1,3 @@
-/**
- * \file SDTControl.c
- * This module contains objects designed to provide a temporal control layer over
- * the basic mechanical interactions, to simulate complex textures, evolving patterns
- * and compound sound events.
- */
-
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
@@ -33,23 +26,10 @@ void SDTCrumpling_free(SDTCrumpling *x) {
   free(x);
 }
 
-/**
- * This is the average energy value spent for each micro impact contributing
- * to the global crumpling process. The actual value for each event is determined
- * by an exponentially distributed random variable.
- */ 
 void SDTCrumpling_setCrushingEnergy(SDTCrumpling *x, double f) {
-  x->crushingEnergy = SDT_fclip(f, 0.0, 1.0);
+  x->crushingEnergy = SDT_fclip(f, SDT_MICRO, 1.0);
 }
 
-/**
- * The generation of micro impacts is implemented as a poissonian process:
- * At each iteration, a uniformly distributed random variable between 0 and 1 is compared
- * against the remaining resistance of the process multiplied by the granularity factor.
- * If the random variable is less than the threshold, a micro impact is generated.
- * A granularity factor of 0 completely inhibits the crumpling process, while a granularity
- * factor of 1 yields a very dense texture.
- */
 void SDTCrumpling_setGranularity(SDTCrumpling *x, double f) {
   x->granularity = SDT_fclip(f, 0.0, 1.0);
 }
@@ -75,7 +55,7 @@ void SDTCrumpling_discrete(SDTCrumpling *x, double *size, double *energy) {
     if (SDT_frand() < success) {
       fragment = 1.0 - x->fragmentation + x->fragmentation * x->remainingEnergy;
       *size = fmax(SDT_MICRO, fragment * (0.5 + 0.5 * SDT_frand()));
-      *energy = x->crushingEnergy * SDT_expRand(UNDERSHOOT, OVERSHOOT);
+      *energy = x->crushingEnergy * SDT_fclip(SDT_expRand(1.0), UNDERSHOOT, OVERSHOOT);
       x->remainingEnergy -= *energy;
     }
   }
@@ -90,7 +70,7 @@ void SDTCrumpling_continuous(SDTCrumpling *x, double *size, double *energy) {
   if (SDT_frand() < success) {
     fragment = 1.0 - x->fragmentation + x->fragmentation * SDT_frand();
     *size = fmax(SDT_MICRO, fragment * (0.5 + 0.5 * SDT_frand()));
-    *energy = x->crushingEnergy * SDT_expRand(UNDERSHOOT, OVERSHOOT);
+    *energy = x->crushingEnergy * SDT_fclip(SDT_expRand(1.0), UNDERSHOOT, OVERSHOOT);
   }
 }
 

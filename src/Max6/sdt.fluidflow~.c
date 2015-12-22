@@ -90,15 +90,7 @@ void fluidflow_free(t_fluidflow *x) {
 void fluidflow_assist(t_fluidflow *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
     sprintf(s,
-      /*"avgRate (float): Average n. of bubbles per second [0.0 ~ 100000.0]\n"
-      "minRadius (float): Minimum bubble radius in mm [0.15 ~ 150.0]\n"
-      "maxRadius (float): Maximum bubble radius in mm [0.15 ~ 150.0]\n"
-      "expRadius (float): Bubble radius gamma factor [0.0 ~ 10.0]\n"
-      "minDepth (float): Minimum bubble depth (deep) [0.0 ~ 1.0]\n"
-      "maxDepth (float): Maximum bubble depth (shallow) [0.0 ~ 1.0]\n"
-      "expDepth (float): Bubble depth gamma factor [0.0 ~ 10.0]\n"
-      "riseFactor (float): Noticeable rise in frequency [0.0 ~ 3.0]\n"
-      "riseCutoff (float): Bubbles below this depth do not change frequency [0.0 ~ 1.0]"*/"buh"
+      "Object attributes and messages (see help patch)"
     );
   } 
   else {

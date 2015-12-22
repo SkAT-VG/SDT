@@ -81,7 +81,7 @@ void windkarman_free(t_windkarman *x) {
 void windkarman_assist(t_windkarman *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
     sprintf(s, "(signal): Wind speed [0.0 ~ 1.0]\n"
-               "diameter (float): Object diameter (mm)");
+               "Object attributes and messages (see help patch)");
   } 
   else {
     sprintf(s, "(signal): Output");

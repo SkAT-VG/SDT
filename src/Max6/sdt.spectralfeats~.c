@@ -55,71 +55,42 @@
 typedef struct _spectralfeats {
   t_pxobject ob;
   SDTSpectralFeats *feats;
-  double overlap, minFreq, maxFreq;
+  void *outlets[8], *send;
+  double overlap, minFreq, maxFreq, outs[8];
 } t_spectralfeats;
 
 static t_class *spectralfeats_class = NULL;
 
-void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
-  t_spectralfeats *x;
-  long windowSize;
-  
-  x = (t_spectralfeats *)object_alloc(spectralfeats_class);
-  if (x) {
-    dsp_setup((t_pxobject *)x, 1);
-    outlet_new(x, "signal");
-    outlet_new(x, "signal");
-    outlet_new(x, "signal");
-    outlet_new(x, "signal");
-    outlet_new(x, "signal");
-    outlet_new(x, "signal");
-    outlet_new(x, "signal");
-    if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
-      windowSize = atom_getlong(&argv[0]);
-    }
-    else {
-      windowSize = 1024;
-    }
-    x->feats = SDTSpectralFeats_new(windowSize);
-    attr_args_process(x, argc, argv);
-  }
-  return (x);
-}
-
-void spectralfeats_free(t_spectralfeats *x) {
-  dsp_free((t_pxobject *)x);
-  SDTSpectralFeats_free(x->feats);
-}
-
 void spectralfeats_assist(t_spectralfeats *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
     sprintf(s, "(signal): Input\n"
-               "overlap (float): Window overlapping ratio\n"
-               "minFreq (float): Lower frequency limit, in Hz\n"
-               "maxFreq (float): Upper frequency limit, in Hz");
+               "Object attributes and messages (see help patch)");
   } 
   else {
     switch (a) {
       case 0:
-        sprintf(s, "(signal): Spectral centroid (brightness)");
+        sprintf(s, "(float): Spectral magnitude");
         break;
       case 1:
-        sprintf(s, "(signal): Spectral variance (spread)");
+        sprintf(s, "(float): Spectral centroid (brightness)");
         break;
       case 2:
-        sprintf(s, "(signal): Spectral skewness");
+        sprintf(s, "(float): Spectral variance (spread)");
         break;
       case 3:
-        sprintf(s, "(signal): Spectral kurtosis");
+        sprintf(s, "(float): Spectral skewness");
         break;
       case 4:
-        sprintf(s, "(signal): Spectral flatness");
+        sprintf(s, "(float): Spectral kurtosis");
         break;
       case 5:
-        sprintf(s, "(signal): Spectral flux");
+        sprintf(s, "(float): Spectral flatness");
         break;
       case 6:
-        sprintf(s, "(signal): Whitened and rectified spectral flux (onset function)");
+        sprintf(s, "(float): Spectral flux");
+        break;
+      case 7:
+        sprintf(s, "(float): Whitened and rectified spectral flux (onset function)");
         break;
     }
   }
@@ -140,31 +111,29 @@ void spectralfeats_maxFreq(t_spectralfeats *x, void *attr, long ac, t_atom *av) 
   SDTSpectralFeats_setMaxFreq(x->feats, x->maxFreq);
 }
 
+void spectralfeats_send(t_spectralfeats *x) {
+  outlet_float(x->outlets[0], x->outs[0]);
+  outlet_float(x->outlets[1], x->outs[1]);
+  outlet_float(x->outlets[2], x->outs[2]);
+  outlet_float(x->outlets[3], x->outs[3]);
+  outlet_float(x->outlets[4], x->outs[4]);
+  outlet_float(x->outlets[5], x->outs[5]);
+  outlet_float(x->outlets[6], x->outs[6]);
+  outlet_float(x->outlets[7], x->outs[7]);
+}
+
 t_int *spectralfeats_perform(t_int *w) {
   t_spectralfeats *x = (t_spectralfeats *)(w[1]);
   t_float *in = (t_float *)(w[2]);
-  t_float *out0 = (t_float *)(w[3]);
-  t_float *out1 = (t_float *)(w[4]);
-  t_float *out2 = (t_float *)(w[5]);
-  t_float *out3 = (t_float *)(w[6]);
-  t_float *out4 = (t_float *)(w[7]);
-  t_float *out5 = (t_float *)(w[8]);
-  t_float *out6 = (t_float *)(w[9]);
-  int n = (int)w[10];
-  double tmpOuts[7];
+  int n = (int)w[3];
   
   while (n--) {
-    SDTSpectralFeats_dsp(x->feats, tmpOuts, *in++);
-    *out0++ = (float)tmpOuts[0];
-    *out1++ = (float)tmpOuts[1];
-    *out2++ = (float)tmpOuts[2];
-    *out3++ = (float)tmpOuts[3];
-    *out4++ = (float)tmpOuts[4];
-    *out5++ = (float)tmpOuts[5];
-    *out6++ = (float)tmpOuts[6];
+    if (SDTSpectralFeats_dsp(x->feats, x->outs, *in++)) {
+      qelem_set(x->send);
+    }
   }
 
-  return w + 11;
+  return w + 4;
 }
 
 void spectralfeats_dsp(t_spectralfeats *x, t_signal **sp, short *count) {
@@ -172,30 +141,17 @@ void spectralfeats_dsp(t_spectralfeats *x, t_signal **sp, short *count) {
   SDTSpectralFeats_setOverlap(x->feats, x->overlap);
   SDTSpectralFeats_setMinFreq(x->feats, x->minFreq);
   SDTSpectralFeats_setMaxFreq(x->feats, x->maxFreq);
-  dsp_add(spectralfeats_perform, 10, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec, sp[3]->s_vec, sp[4]->s_vec, sp[5]->s_vec, sp[6]->s_vec, sp[7]->s_vec, sp[0]->s_n);
+  dsp_add(spectralfeats_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
 void spectralfeats_perform64(t_spectralfeats *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam) {
   t_double *in = ins[0];
-  t_double *out0 = outs[0];
-  t_double *out1 = outs[1];
-  t_double *out2 = outs[2];
-  t_double *out3 = outs[3];
-  t_double *out4 = outs[4];
-  t_double *out5 = outs[5];
-  t_double *out6 = outs[6];
   int n = sampleframes;
-  double tmpOuts[7];
   
   while (n--) {
-    SDTSpectralFeats_dsp(x->feats, tmpOuts, *in++);
-    *out0++ = tmpOuts[0];
-    *out1++ = tmpOuts[1];
-    *out2++ = tmpOuts[2];
-    *out3++ = tmpOuts[3];
-    *out4++ = tmpOuts[4];
-    *out5++ = tmpOuts[5];
-    *out6++ = tmpOuts[6];
+    if (SDTSpectralFeats_dsp(x->feats, x->outs, *in++)) {
+      qelem_set(x->send);
+    }
   }
 }
 
@@ -205,6 +161,48 @@ void spectralfeats_dsp64(t_spectralfeats *x, t_object *dsp64, short *count, doub
   SDTSpectralFeats_setMinFreq(x->feats, x->minFreq);
   SDTSpectralFeats_setMaxFreq(x->feats, x->maxFreq);
   object_method(dsp64, gensym("dsp_add64"), x, spectralfeats_perform64, 0, NULL);
+}
+
+void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
+  t_spectralfeats *x;
+  long windowSize;
+  
+  x = (t_spectralfeats *)object_alloc(spectralfeats_class);
+  if (x) {
+    dsp_setup((t_pxobject *)x, 1);
+    if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
+      windowSize = atom_getlong(&argv[0]);
+    }
+    else {
+      windowSize = 1024;
+    }
+    x->feats = SDTSpectralFeats_new(windowSize);
+    x->outlets[7] = floatout(x);
+    x->outlets[6] = floatout(x);
+    x->outlets[5] = floatout(x);
+    x->outlets[4] = floatout(x);
+    x->outlets[3] = floatout(x);
+    x->outlets[2] = floatout(x);
+    x->outlets[1] = floatout(x);
+    x->outlets[0] = floatout(x);
+    x->send = qelem_new((t_object *)x, (method)spectralfeats_send);
+    attr_args_process(x, argc, argv);
+  }
+  return (x);
+}
+
+void spectralfeats_free(t_spectralfeats *x) {
+  dsp_free((t_pxobject *)x);
+  object_free(x->outlets[0]);
+  object_free(x->outlets[1]);
+  object_free(x->outlets[2]);
+  object_free(x->outlets[3]);
+  object_free(x->outlets[4]);
+  object_free(x->outlets[5]);
+  object_free(x->outlets[6]);
+  object_free(x->outlets[7]);
+  qelem_free(x->send);
+  SDTSpectralFeats_free(x->feats);
 }
 
 int C74_EXPORT main(void) {	

@@ -87,7 +87,7 @@ void pitchshift_free(t_pitchshift *x) {
 void pitchshift_assist(t_pitchshift *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
     sprintf(s, "(signal): Input\n"
-               "ratio (float): Playback speed ratio");
+               "Object attributes and messages (see help patch)");
   } 
   else {
     sprintf(s, "(signal): Output");
