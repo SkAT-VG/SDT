@@ -9,20 +9,9 @@ MAC OS X
 In a terminal, type the following commands:
 
 	cd build/macosx
+	make clean
 	make
-	make install
-
-By default, the Sound Design Toolkit is installed as a Max package in:
-
-/Applications/Max 6.1/packages/SoundDesignToolkit
-
-If you want to install in another directory, you can do so by appending
-DSTDIR=<path> to the install command. For example, to install just for the
-current user:
-
-	cd build/macosx
-	make
-	make install DSTDIR=~/Documents/Max/packages
+	make install DSTDIR=<installation_path>
 	
 To clean the source directories after compilation:
 
@@ -30,12 +19,8 @@ To clean the source directories after compilation:
 	
 To uninstall:
 
-	make uninstall
+	make uninstall DSTDIR=<installation_path>
 	
-If you installed to a custom location, remember to give the correct
-paths to the uninstall command. For the previous example:
-
-	make uninstall DSTDIR=~/Documents/Max/packages
 
 WINDOWS
 -------
@@ -49,10 +34,16 @@ or Cygwin (http://www.cygwin.com).
 
 In your UNIX shell, type the following commands:
 
-	cd build/windows
+	cd build/macosx
+	make clean
 	make
-	make install
+	make install DSTDIR=<installation_path>
+	
+To clean the source directories after compilation:
 
-Then copy the resulting SoundDesignToolkit folder into the
-packages section of your Max installation.
+	make clean
+	
+To uninstall:
+
+	make uninstall DSTDIR=<installation_path>
 
