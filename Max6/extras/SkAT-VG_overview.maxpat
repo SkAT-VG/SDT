@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 554.0, 79.0, 767.0, 736.0 ],
+		"rect" : [ 37.0, 45.0, 767.0, 736.0 ],
 		"bgcolor" : [ 0.85098, 0.85098, 0.823529, 1.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
@@ -133,7 +133,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 286.0, 462.0, 122.0, 22.0 ],
 					"style" : "",
-					"text" : "blenders/mixers~",
+					"text" : "blenders-mixers~",
 					"textoncolor" : [ 1.0, 1.0, 1.0, 1.0 ]
 				}
 
@@ -201,7 +201,7 @@
 					"parameter_enable" : 0,
 					"patching_rect" : [ 286.0, 284.0, 122.0, 22.0 ],
 					"style" : "",
-					"text" : "buttons/switches~",
+					"text" : "buttons-switches~",
 					"textoncolor" : [ 1.0, 1.0, 1.0, 1.0 ]
 				}
 

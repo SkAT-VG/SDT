@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 136.0, 74.0, 540.0, 466.0 ],
+		"rect" : [ 100.0, 100.0, 540.0, 466.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -37,6 +37,66 @@
 		"style" : "",
 		"subpatcher_template" : "Default Max 7",
 		"boxes" : [ 			{
+				"box" : 				{
+					"fontface" : 0,
+					"fontname" : "Helvetica Neue",
+					"fontsize" : 10.0,
+					"id" : "obj-22",
+					"linecount" : 2,
+					"maxclass" : "newobj",
+					"numinlets" : 6,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 112.0, 340.0, 89.0, 32.0 ],
+					"style" : "",
+					"text" : "scale 0. 100. 0.15 150. 1.06"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 0,
+					"fontname" : "Helvetica Neue",
+					"fontsize" : 10.0,
+					"id" : "obj-20",
+					"linecount" : 2,
+					"maxclass" : "newobj",
+					"numinlets" : 6,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 224.5, 340.0, 67.0, 32.0 ],
+					"style" : "",
+					"text" : "scale 0. 100. 0. 3. 1.06"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-11",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 2,
+					"outlettype" : [ "bang", "" ],
+					"patching_rect" : [ 23.0, 243.0, 43.0, 22.0 ],
+					"style" : "",
+					"text" : "sel 97"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-5",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 4,
+					"outlettype" : [ "int", "int", "int", "int" ],
+					"patching_rect" : [ 23.0, 205.5, 50.5, 22.0 ],
+					"style" : "",
+					"text" : "key"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"bgcolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"color" : [ 0.0, 0.8, 1.0, 1.0 ],
@@ -232,11 +292,11 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 184.5, 367.5, 62.0, 22.0 ],
+					"patching_rect" : [ 181.5, 379.5, 62.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 115.875, 280.0, 62.0, 22.0 ],
 					"style" : "default",
-					"text" : "0.144675"
+					"text" : "0.125508"
 				}
 
 			}
@@ -247,11 +307,11 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 70.0, 367.5, 64.0, 22.0 ],
+					"patching_rect" : [ 59.0, 379.5, 72.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 7.875, 280.0, 64.0, 22.0 ],
+					"presentation_rect" : [ 7.875, 280.0, 70.0, 22.0 ],
 					"style" : "default",
-					"text" : "5.588597"
+					"text" : "19.692537"
 				}
 
 			}
@@ -477,7 +537,7 @@
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 378.0, 78.0, 212.0, 113.0 ],
+						"rect" : [ 342.0, 104.0, 212.0, 113.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
@@ -1078,7 +1138,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 349.5, 403.5, 150.0, 22.0 ],
+					"patching_rect" : [ 355.5, 403.5, 150.0, 22.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 242.0, 153.0, 150.0, 22.0 ],
 					"style" : ""
@@ -1157,10 +1217,73 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-10", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-11", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-3", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-15", 2 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-6", 1 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-20", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-8", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-20", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-7", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-22", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-9", 1 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-22", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-20", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-27", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-22", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-28", 0 ]
 				}
 
 			}
@@ -1202,6 +1325,15 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-11", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-5", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-1", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -1220,12 +1352,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.bubble~.mxo",
 				"type" : "iLaX"
 			}

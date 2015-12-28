@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 203.0, 45.0, 668.0, 547.0 ],
+		"rect" : [ 1673.0, 95.0, 668.0, 547.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 9.0,
@@ -551,7 +551,7 @@
 			}
 , 			{
 				"box" : 				{
-					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 81.265419, 4.081633, 0, -0.0, 968.219421, 4.081633, 0, 0.0, 1000.0, 0.0, 0, -0.1 ],
+					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 104.484108, 15.671641, 0, -0.15, 866.05719, 15.671641, 0, 0.7, 1000.0, 0.0, 0, -0.1 ],
 					"id" : "obj-107",
 					"linecolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"maxclass" : "function",
@@ -595,6 +595,10 @@
 , 						{
 							"number" : 4,
 							"data" : [ 5, "obj-28", "multislider", "list", 0.0, 5, "obj-57", "multislider", "list", 0.0, 5, "obj-67", "multislider", "list", 71.544716, 5, "obj-71", "multislider", "list", 6.504065, 5, "obj-75", "multislider", "list", 62.601627, 5, "obj-80", "multislider", "list", 10.569106, 5, "obj-101", "multislider", "list", 63.414635, 5, "obj-105", "multislider", "list", 0.0, 5, "<invalid>", "number", "int", 50, 5, "obj-21", "multislider", "list", 78.861786, 5, "obj-18", "multislider", "list", 40.650406, 4, "obj-107", "function", "clear", 8, "obj-107", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-107", "function", "add_with_curve", 81.265419, 4.081633, 0, -0.0, 8, "obj-107", "function", "add_with_curve", 968.219421, 4.081633, 0, 0.0, 8, "obj-107", "function", "add_with_curve", 1000.0, 0.0, 0, -0.1, 5, "obj-107", "function", "domain", 1000.0, 6, "obj-107", "function", "range", 0.0, 100.0, 5, "obj-107", "function", "mode", 1, 5, "obj-119", "flonum", "float", 0.0, 5, "obj-126", "toggle", "int", 0, 5, "obj-131", "number", "int", 10000, 5, "obj-29", "flonum", "float", 50.0 ]
+						}
+, 						{
+							"number" : 5,
+							"data" : [ 5, "obj-28", "multislider", "list", 0.0, 5, "obj-57", "multislider", "list", 64.800003, 5, "obj-67", "multislider", "list", 79.199997, 5, "obj-71", "multislider", "list", 34.400002, 5, "obj-75", "multislider", "list", 60.0, 5, "obj-80", "multislider", "list", 35.200001, 5, "obj-101", "multislider", "list", 24.799999, 5, "obj-105", "multislider", "list", 15.671641, 5, "obj-21", "multislider", "list", 54.400002, 5, "obj-18", "multislider", "list", 2.4, 4, "obj-107", "function", "clear", 8, "obj-107", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-107", "function", "add_with_curve", 104.484108, 15.671641, 0, -0.15, 8, "obj-107", "function", "add_with_curve", 866.05719, 15.671641, 0, 0.7, 8, "obj-107", "function", "add_with_curve", 1000.0, 0.0, 0, -0.1, 5, "obj-107", "function", "domain", 1000.0, 6, "obj-107", "function", "range", 0.0, 100.0, 5, "obj-107", "function", "mode", 1, 5, "obj-119", "flonum", "float", 15.671641, 5, "obj-126", "toggle", "int", 1, 5, "obj-131", "number", "int", 4000, 5, "obj-29", "flonum", "float", 6.0 ]
 						}
  ],
 					"style" : ""
@@ -840,7 +844,7 @@
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 641.0, 52.0, 210.0, 110.0 ],
+						"rect" : [ 2111.0, 102.0, 210.0, 110.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
@@ -1489,7 +1493,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 172.25, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "4.065634"
+					"text" : "0.240976"
 				}
 
 			}
@@ -1566,7 +1570,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 520.75, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.788618"
+					"text" : "0.544"
 				}
 
 			}
@@ -1704,7 +1708,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 7.375, 306.75, 47.0, 19.0 ],
 					"style" : "",
-					"text" : "0"
+					"text" : "4568"
 				}
 
 			}
@@ -1779,7 +1783,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 61.0, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.634146"
+					"text" : "0.248"
 				}
 
 			}
@@ -1872,7 +1876,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 237.25, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.105691"
+					"text" : "0.352"
 				}
 
 			}
@@ -1948,7 +1952,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 578.5, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.626016"
+					"text" : "0.6"
 				}
 
 			}
@@ -2008,7 +2012,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 464.0, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.650406"
+					"text" : "3.44"
 				}
 
 			}
@@ -2069,7 +2073,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 406.25, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.715447"
+					"text" : "0.792"
 				}
 
 			}
@@ -2130,7 +2134,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 348.5, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0."
+					"text" : "0.648"
 				}
 
 			}

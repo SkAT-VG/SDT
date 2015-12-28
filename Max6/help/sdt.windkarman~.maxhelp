@@ -26,7 +26,7 @@
 		"toptoolbarpinned" : 0,
 		"righttoolbarpinned" : 0,
 		"bottomtoolbarpinned" : 0,
-		"toolbars_unpinned_last_save" : 0,
+		"toolbars_unpinned_last_save" : 15,
 		"tallnewobj" : 0,
 		"boxanimatetime" : 200,
 		"enablehscroll" : 1,
@@ -102,17 +102,15 @@
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 9.0,
 					"id" : "obj-13",
 					"maxclass" : "number",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 70.5, 217.5, 36.0, 19.0 ],
+					"patching_rect" : [ 70.5, 217.5, 39.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 466.5, 263.5, 36.0, 19.0 ],
+					"presentation_rect" : [ 466.5, 263.5, 39.0, 22.0 ],
 					"style" : "default",
 					"triangle" : 0,
 					"triscale" : 0.9
@@ -121,17 +119,15 @@
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 9.0,
 					"id" : "obj-46",
 					"maxclass" : "number",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 65.5, 291.5, 36.0, 19.0 ],
+					"patching_rect" : [ 65.5, 291.5, 39.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 476.5, 329.0, 33.0, 19.0 ],
+					"presentation_rect" : [ 476.5, 329.0, 36.0, 22.0 ],
 					"style" : "default",
 					"triangle" : 0,
 					"triscale" : 0.9
@@ -140,17 +136,15 @@
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 9.0,
 					"id" : "obj-47",
 					"maxclass" : "number",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 89.5, 266.5, 36.0, 19.0 ],
+					"patching_rect" : [ 89.5, 266.5, 39.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 503.5, 308.0, 36.0, 19.0 ],
+					"presentation_rect" : [ 503.5, 308.0, 39.0, 22.0 ],
 					"style" : "default",
 					"triangle" : 0,
 					"triscale" : 0.9
@@ -238,17 +232,15 @@
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 9.0,
 					"id" : "obj-15",
 					"maxclass" : "number",
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 30.5, 313.5, 36.0, 19.0 ],
+					"patching_rect" : [ 30.5, 313.5, 39.0, 22.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 443.5, 350.0, 28.0, 19.0 ],
+					"presentation_rect" : [ 443.5, 350.0, 30.0, 22.0 ],
 					"style" : "default",
 					"triangle" : 0,
 					"triscale" : 0.9
@@ -303,7 +295,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 44.0, 319.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.39"
+					"text" : "0.64"
 				}
 
 			}
@@ -1591,12 +1583,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.windkarman~.mxo",
 				"type" : "iLaX"
 			}
