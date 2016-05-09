@@ -1,74 +1,95 @@
-/** \file SDTEffects.h
- * Digital audio effects. 
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
+/** @file SDTEffects.h
+@defgroup effects SDTEffects.h: Digital audio effects
+Algorithms for audio post-processing, such as reverberation and pitch shifting
+@{ */
 
 #ifndef SDT_EFFECTS_H
 #define SDT_EFFECTS_H
 
+/** @defgroup reverb Reverb
+Artificial reverberator based on Feedback Delay Networks, as found in
+D. Rocchesso, "Maximally diffusive yet efficient feedback delay networks
+for artificial reverberation", Signal Processing Letters, IEEE 4.9 (1997): 252-255.
+@{ */
+
+/** @brief Opaque data structure for a reverberator object. */
 typedef struct SDTReverb SDTReverb;
 
+/** @brief Object constructor.
+@param[in] maxDelay Maximum length of the delay lines, in samples
+@return Pointer to the new instance */
 extern SDTReverb *SDTReverb_new(long maxDelay);
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
 extern void SDTReverb_free(SDTReverb *x);
+
+/** @brief Sets the room width.
+@param[in] f Room width, in m */
 extern void SDTReverb_setXSize(SDTReverb *x, double f);
+
+/** @brief Sets the room height.
+@param[in] f Room height, in m */
 extern void SDTReverb_setYSize(SDTReverb *x, double f);
+
+/** @brief Sets the room depth.
+@param[in] f Room depth, in m */
 extern void SDTReverb_setZSize(SDTReverb *x, double f);
+
+/** @brief Sets how randomly distributed are the resonant modes.
+This parameter is directly proportional to the irregularity of the shape of the room.
+@param[in] f Randomness in the modal distribution [0, 1] */
 extern void SDTReverb_setRandomness(SDTReverb *x, double f);
+
+/** @brief Sets the global, frequency-independent reverberation time.
+@param[in] f Reverberation time, in s */
 extern void SDTReverb_setTime(SDTReverb *x, double f);
+
+/** @brief Sets the reverberation time at 1kHz.
+@param[in] f Reverberation time at 1kHz, in s */
 extern void SDTReverb_setTime1k(SDTReverb *x, double f);
+
+/** @brief Updates the internal filters.
+Call this function after every sample rate change. */
 extern void SDTReverb_update(SDTReverb *x);
+
+/** @brief Signal processing routine.
+Call this function at sample rate to compute the reverberated signal.
+@param[in] in Input sample
+@return Output sample */
 extern double SDTReverb_dsp(SDTReverb *x, double in);
 
-//-------------------------------------------------------------------------------------//
+/** @} */
 
+/** @defgroup pitchshift Pitch shift
+Time-domain pitch shifter, useful to simulate doppler effect
+or other applications requiring pitch shifting.
+@{ */
+
+/** @brief Opaque data structure for a pitch shifter object. */
 typedef struct SDTPitchShift SDTPitchShift;
 
+/** @brief Object constructor.
+@param[in] size Internal buffer size, in samples
+@return Pointer to the new instance */
 extern SDTPitchShift *SDTPitchShift_new(long size);
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
 extern void SDTPitchShift_free(SDTPitchShift *x);
+
+/** @brief Sets the pitch shifting ratio.
+@param[in] f New pitch / original pitch ratio */
 extern void SDTPitchShift_setRatio(SDTPitchShift *x, double f);
+
+/** @brief Signal processing routine.
+Call this function at sample rate to compute the pitch shifted signal.
+@param[in] in Input sample
+@return Output sample */
 extern double SDTPitchShift_dsp(SDTPitchShift *x, double in);
 
+/** @} */
+
 #endif
+
+/** @} */

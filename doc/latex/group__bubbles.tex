@@ -1,0 +1,132 @@
+\hypertarget{group__bubbles}{}\section{Bubbles}
+\label{group__bubbles}\index{Bubbles@{Bubbles}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{}typedef struct \hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} \hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble}\label{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing a bubble object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$ \hyperlink{group__bubbles_gac69094ba71af6a065520a824b784f119}{S\+D\+T\+Bubble\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga684ec1f5b434c7faa961a7665815867b}{S\+D\+T\+Bubble\+\_\+free} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga82b35f8a2ac8f122aa7daa1c82048de0}{S\+D\+T\+Bubble\+\_\+set\+Radius} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the bubble radius. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga9654e6c4c3df2c83c18a3697fcbf6c87}{S\+D\+T\+Bubble\+\_\+set\+Depth} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the bubble depth. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga944bbb593d6a56aef2d3e19380a6908d}{S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of blooping. \end{DoxyCompactList}\item 
+\hypertarget{group__bubbles_ga538ac5581fa91ee6e0a3cfa9d4dca699}{}void \hyperlink{group__bubbles_ga538ac5581fa91ee6e0a3cfa9d4dca699}{S\+D\+T\+Bubble\+\_\+update} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)\label{group__bubbles_ga538ac5581fa91ee6e0a3cfa9d4dca699}
+
+\begin{DoxyCompactList}\small\item\em Triggers a new bubble. \end{DoxyCompactList}\item 
+\hypertarget{group__bubbles_gaaee6fb3f1576fda28ac548482229fffd}{}void \hyperlink{group__bubbles_gaaee6fb3f1576fda28ac548482229fffd}{S\+D\+T\+Bubble\+\_\+norm\+Amp} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)\label{group__bubbles_gaaee6fb3f1576fda28ac548482229fffd}
+
+\begin{DoxyCompactList}\small\item\em Sets bubble amplitude to the maximum instead of computing it from radius and depth. \end{DoxyCompactList}\item 
+double \hyperlink{group__bubbles_ga36550a7621093fddb164de1f68ae6577}{S\+D\+T\+Bubble\+\_\+dsp} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to obtain a bubble sound. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The main responsible for acoustic emission in water and other liquids, rather than the liquid mass on its own, is the gas trapped inside emerging as a population of bubbles. From a physical point of view, a spherical bubble acts as an exponentially decaying sinusoidal oscillator. Frequency, decay time and relative amplitude of each bubble can be derived from its radius and depth.
+
+When the bubble is formed close to the surface and therefore the effective mass around the liquid is reduced, the oscillating frequency rises and a characteristic \textquotesingle{}\textquotesingle{}blooping\textquotesingle{}\textquotesingle{} sound is generated. The amount of blooping can be set as an independent parameter in the model. 
+
+\subsection{Function Documentation}
+\hypertarget{group__bubbles_ga36550a7621093fddb164de1f68ae6577}{}\index{Bubbles@{Bubbles}!S\+D\+T\+Bubble\+\_\+dsp@{S\+D\+T\+Bubble\+\_\+dsp}}
+\index{S\+D\+T\+Bubble\+\_\+dsp@{S\+D\+T\+Bubble\+\_\+dsp}!Bubbles@{Bubbles}}
+\subsubsection[{S\+D\+T\+Bubble\+\_\+dsp(\+S\+D\+T\+Bubble $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Bubble\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bubble} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__bubbles_ga36550a7621093fddb164de1f68ae6577}
+
+
+Signal processing routine. Call this function at sample rate to obtain a bubble sound. 
+
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__bubbles_ga684ec1f5b434c7faa961a7665815867b}{}\index{Bubbles@{Bubbles}!S\+D\+T\+Bubble\+\_\+free@{S\+D\+T\+Bubble\+\_\+free}}
+\index{S\+D\+T\+Bubble\+\_\+free@{S\+D\+T\+Bubble\+\_\+free}!Bubbles@{Bubbles}}
+\subsubsection[{S\+D\+T\+Bubble\+\_\+free(\+S\+D\+T\+Bubble $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bubble\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bubble} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__bubbles_ga684ec1f5b434c7faa961a7665815867b}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__bubbles_gac69094ba71af6a065520a824b784f119}{}\index{Bubbles@{Bubbles}!S\+D\+T\+Bubble\+\_\+new@{S\+D\+T\+Bubble\+\_\+new}}
+\index{S\+D\+T\+Bubble\+\_\+new@{S\+D\+T\+Bubble\+\_\+new}!Bubbles@{Bubbles}}
+\subsubsection[{S\+D\+T\+Bubble\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Bubble}$\ast$ S\+D\+T\+Bubble\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__bubbles_gac69094ba71af6a065520a824b784f119}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__bubbles_ga9654e6c4c3df2c83c18a3697fcbf6c87}{}\index{Bubbles@{Bubbles}!S\+D\+T\+Bubble\+\_\+set\+Depth@{S\+D\+T\+Bubble\+\_\+set\+Depth}}
+\index{S\+D\+T\+Bubble\+\_\+set\+Depth@{S\+D\+T\+Bubble\+\_\+set\+Depth}!Bubbles@{Bubbles}}
+\subsubsection[{S\+D\+T\+Bubble\+\_\+set\+Depth(\+S\+D\+T\+Bubble $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bubble\+\_\+set\+Depth (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bubble} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__bubbles_ga9654e6c4c3df2c83c18a3697fcbf6c87}
+
+
+Sets the bubble depth. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Bubble depth \mbox{[}0, 1\mbox{]}. 0 means very deep, 1 means touching the surface. \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__bubbles_ga82b35f8a2ac8f122aa7daa1c82048de0}{}\index{Bubbles@{Bubbles}!S\+D\+T\+Bubble\+\_\+set\+Radius@{S\+D\+T\+Bubble\+\_\+set\+Radius}}
+\index{S\+D\+T\+Bubble\+\_\+set\+Radius@{S\+D\+T\+Bubble\+\_\+set\+Radius}!Bubbles@{Bubbles}}
+\subsubsection[{S\+D\+T\+Bubble\+\_\+set\+Radius(\+S\+D\+T\+Bubble $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bubble\+\_\+set\+Radius (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bubble} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__bubbles_ga82b35f8a2ac8f122aa7daa1c82048de0}
+
+
+Sets the bubble radius. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Bubble radius, in m \mbox{[}0.\+00015, 0.\+150\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__bubbles_ga944bbb593d6a56aef2d3e19380a6908d}{}\index{Bubbles@{Bubbles}!S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor@{S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor}}
+\index{S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor@{S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor}!Bubbles@{Bubbles}}
+\subsubsection[{S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor(\+S\+D\+T\+Bubble $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bubble} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__bubbles_ga944bbb593d6a56aef2d3e19380a6908d}
+
+
+Sets the amount of blooping. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Rise factor, positive scalar. Typical value for bubbles in water = 0.\+1 \\
+\hline
+\end{DoxyParams}

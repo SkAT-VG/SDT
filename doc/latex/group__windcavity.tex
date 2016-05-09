@@ -1,0 +1,129 @@
+\hypertarget{group__windcavity}{}\section{Turbulence through hollow cavities}
+\label{group__windcavity}\index{Turbulence through hollow cavities@{Turbulence through hollow cavities}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{}typedef struct \hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity} \hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity}\label{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a hollow cavity object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity} $\ast$ \hyperlink{group__windcavity_ga43d1e1b7f9f6805028ee6ae1fdd65259}{S\+D\+T\+Wind\+Cavity\+\_\+new} (int max\+Delay)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__windcavity_ga9008aba40c8c6cb64d02ee1e0d684ea8}{S\+D\+T\+Wind\+Cavity\+\_\+free} (\hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__windcavity_gaef77096c3a3f373028523cc5a677421f}{S\+D\+T\+Wind\+Cavity\+\_\+set\+Length} (\hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the lenght of the cavity. \end{DoxyCompactList}\item 
+void \hyperlink{group__windcavity_gaeab62d14a0f417bd9189ae7f53bfa11d}{S\+D\+T\+Wind\+Cavity\+\_\+set\+Diameter} (\hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the diameter of the cavity. \end{DoxyCompactList}\item 
+void \hyperlink{group__windcavity_ga947ec140c066f2bb6520215880de1fbc}{S\+D\+T\+Wind\+Cavity\+\_\+set\+Wind\+Speed} (\hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the wind speed. \end{DoxyCompactList}\item 
+double \hyperlink{group__windcavity_gac7243f85f382566893437c60c81d433c}{S\+D\+T\+Wind\+Cavity\+\_\+dsp} (\hyperlink{group__windcavity_gab89dab8c4a56cb2ae4aa501ddfd38466}{S\+D\+T\+Wind\+Cavity} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to synthesize wind through a cavity. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Hollow objects such as pipes, valves, tunnels and doorways force the air moving inside them to oscillate at their resonant frequencies, which depend on the size and shape of the cavity itself. Different modes of resonance can be excited, in a more or less noticeable way, depending on the speed of the air flowing inside the tube. For each mode of resonance there is an optimal speed, which makes the air inside the tube resonate the most. As the speed increases, resonance gets weaker and weaker until it breaks up into the next harmonic. Sound waves trapped in a cylindrical cavity can be effectively simulated using a simple comb filter, namely a delay line with feedback. The different excitation of the various harmonics is modeled by a resonant bandpass filter with a high Q factor, therefore with a narrow band and a high resonance. 
+
+\subsection{Function Documentation}
+\hypertarget{group__windcavity_gac7243f85f382566893437c60c81d433c}{}\index{Turbulence through hollow cavities@{Turbulence through hollow cavities}!S\+D\+T\+Wind\+Cavity\+\_\+dsp@{S\+D\+T\+Wind\+Cavity\+\_\+dsp}}
+\index{S\+D\+T\+Wind\+Cavity\+\_\+dsp@{S\+D\+T\+Wind\+Cavity\+\_\+dsp}!Turbulence through hollow cavities@{Turbulence through hollow cavities}}
+\subsubsection[{S\+D\+T\+Wind\+Cavity\+\_\+dsp(\+S\+D\+T\+Wind\+Cavity $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Wind\+Cavity\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Cavity} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__windcavity_gac7243f85f382566893437c60c81d433c}
+
+
+Signal processing routine. Call this function at sample rate to synthesize wind through a cavity. 
+
+\begin{DoxyReturn}{Returns}
+Computed audio sample 
+\end{DoxyReturn}
+\hypertarget{group__windcavity_ga9008aba40c8c6cb64d02ee1e0d684ea8}{}\index{Turbulence through hollow cavities@{Turbulence through hollow cavities}!S\+D\+T\+Wind\+Cavity\+\_\+free@{S\+D\+T\+Wind\+Cavity\+\_\+free}}
+\index{S\+D\+T\+Wind\+Cavity\+\_\+free@{S\+D\+T\+Wind\+Cavity\+\_\+free}!Turbulence through hollow cavities@{Turbulence through hollow cavities}}
+\subsubsection[{S\+D\+T\+Wind\+Cavity\+\_\+free(\+S\+D\+T\+Wind\+Cavity $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Cavity\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Cavity} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__windcavity_ga9008aba40c8c6cb64d02ee1e0d684ea8}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__windcavity_ga43d1e1b7f9f6805028ee6ae1fdd65259}{}\index{Turbulence through hollow cavities@{Turbulence through hollow cavities}!S\+D\+T\+Wind\+Cavity\+\_\+new@{S\+D\+T\+Wind\+Cavity\+\_\+new}}
+\index{S\+D\+T\+Wind\+Cavity\+\_\+new@{S\+D\+T\+Wind\+Cavity\+\_\+new}!Turbulence through hollow cavities@{Turbulence through hollow cavities}}
+\subsubsection[{S\+D\+T\+Wind\+Cavity\+\_\+new(int max\+Delay)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Wind\+Cavity}$\ast$ S\+D\+T\+Wind\+Cavity\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{int}]{max\+Delay}
+\end{DoxyParamCaption}
+)}\label{group__windcavity_ga43d1e1b7f9f6805028ee6ae1fdd65259}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\+Delay} & Size of the comb filter buffer, in samples. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__windcavity_gaeab62d14a0f417bd9189ae7f53bfa11d}{}\index{Turbulence through hollow cavities@{Turbulence through hollow cavities}!S\+D\+T\+Wind\+Cavity\+\_\+set\+Diameter@{S\+D\+T\+Wind\+Cavity\+\_\+set\+Diameter}}
+\index{S\+D\+T\+Wind\+Cavity\+\_\+set\+Diameter@{S\+D\+T\+Wind\+Cavity\+\_\+set\+Diameter}!Turbulence through hollow cavities@{Turbulence through hollow cavities}}
+\subsubsection[{S\+D\+T\+Wind\+Cavity\+\_\+set\+Diameter(\+S\+D\+T\+Wind\+Cavity $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Cavity\+\_\+set\+Diameter (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Cavity} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__windcavity_gaeab62d14a0f417bd9189ae7f53bfa11d}
+
+
+Sets the diameter of the cavity. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Diameter of the cavity, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__windcavity_gaef77096c3a3f373028523cc5a677421f}{}\index{Turbulence through hollow cavities@{Turbulence through hollow cavities}!S\+D\+T\+Wind\+Cavity\+\_\+set\+Length@{S\+D\+T\+Wind\+Cavity\+\_\+set\+Length}}
+\index{S\+D\+T\+Wind\+Cavity\+\_\+set\+Length@{S\+D\+T\+Wind\+Cavity\+\_\+set\+Length}!Turbulence through hollow cavities@{Turbulence through hollow cavities}}
+\subsubsection[{S\+D\+T\+Wind\+Cavity\+\_\+set\+Length(\+S\+D\+T\+Wind\+Cavity $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Cavity\+\_\+set\+Length (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Cavity} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__windcavity_gaef77096c3a3f373028523cc5a677421f}
+
+
+Sets the lenght of the cavity. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Length of the cavity, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__windcavity_ga947ec140c066f2bb6520215880de1fbc}{}\index{Turbulence through hollow cavities@{Turbulence through hollow cavities}!S\+D\+T\+Wind\+Cavity\+\_\+set\+Wind\+Speed@{S\+D\+T\+Wind\+Cavity\+\_\+set\+Wind\+Speed}}
+\index{S\+D\+T\+Wind\+Cavity\+\_\+set\+Wind\+Speed@{S\+D\+T\+Wind\+Cavity\+\_\+set\+Wind\+Speed}!Turbulence through hollow cavities@{Turbulence through hollow cavities}}
+\subsubsection[{S\+D\+T\+Wind\+Cavity\+\_\+set\+Wind\+Speed(\+S\+D\+T\+Wind\+Cavity $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Cavity\+\_\+set\+Wind\+Speed (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Cavity} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__windcavity_ga947ec140c066f2bb6520215880de1fbc}
+
+
+Sets the wind speed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Wind speed, \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}

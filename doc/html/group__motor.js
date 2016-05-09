@@ -1,0 +1,25 @@
+var group__motor =
+[
+    [ "SDTMotor", "group__motor.html#ga71a2e0e68d27c741a163f1b9819acb1b", null ],
+    [ "SDTMotor_dsp", "group__motor.html#ga35ecc975f9677666d422b51cac470ac5", null ],
+    [ "SDTMotor_free", "group__motor.html#gab676597b28c2a4ea89e235531b0dc447", null ],
+    [ "SDTMotor_new", "group__motor.html#gae43489459dcd0fbca5439691c7a1adb0", null ],
+    [ "SDTMotor_setAsymmetry", "group__motor.html#gad9a4854f47020082a99ae9a7f6195688", null ],
+    [ "SDTMotor_setBackfire", "group__motor.html#gaa7fee7082e9f8de4b49e0fd65a22ff58", null ],
+    [ "SDTMotor_setCompressionRatio", "group__motor.html#gaba51c023320c4b669867c4bff7c09d20", null ],
+    [ "SDTMotor_setCylinderSize", "group__motor.html#ga8f1f2fd7f068222a20149daa1bb9b0f6", null ],
+    [ "SDTMotor_setExhaustSize", "group__motor.html#ga35cbf60595115242bf8e29a7443612a5", null ],
+    [ "SDTMotor_setExpansion", "group__motor.html#ga72480c08c712aace30be07d8a1b63ad0", null ],
+    [ "SDTMotor_setExtractorSize", "group__motor.html#ga54ffb4c0b609969d8b52b22c99b9cc4c", null ],
+    [ "SDTMotor_setFilters", "group__motor.html#gad6a38e1945353b9a4eeab3950218fe92", null ],
+    [ "SDTMotor_setFourStroke", "group__motor.html#ga4bf849a8cde98def844917176a2294a0", null ],
+    [ "SDTMotor_setIntakeSize", "group__motor.html#gafc68a7323ed663a6d640cc8edd31c03b", null ],
+    [ "SDTMotor_setMufflerFeedback", "group__motor.html#ga6c62a51a0682eedfeb8a45617894f0b7", null ],
+    [ "SDTMotor_setMufflerSize", "group__motor.html#ga7c5e374c07941b8801cd96667a641e2c", null ],
+    [ "SDTMotor_setNCylinders", "group__motor.html#ga6741c59cfd0c2ee14082107c82020ffe", null ],
+    [ "SDTMotor_setOutletSize", "group__motor.html#gace132edd2c286707ad518e5b83e57fbd", null ],
+    [ "SDTMotor_setRpm", "group__motor.html#gadb7382560e21de6e085b1a38dc0f10da", null ],
+    [ "SDTMotor_setSparkTime", "group__motor.html#ga2a9413739465e0ada9469684fa0d72f2", null ],
+    [ "SDTMotor_setThrottle", "group__motor.html#gab4ed2474a1faff5f6ff258c728e9fa73", null ],
+    [ "SDTMotor_setTwoStroke", "group__motor.html#ga053e9e113632f147c53de3d5830a6a04", null ]
+];

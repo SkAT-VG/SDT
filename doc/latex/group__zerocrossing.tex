@@ -1,0 +1,104 @@
+\hypertarget{group__zerocrossing}{}\section{Zero crossing rate}
+\label{group__zerocrossing}\index{Zero crossing rate@{Zero crossing rate}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{}typedef struct \hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} \hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing}\label{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a zero crossing rate detector object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} $\ast$ \hyperlink{group__zerocrossing_gae165c64fd2e68870d362bdd541aacf28}{S\+D\+T\+Zero\+Crossing\+\_\+new} (unsigned int size)
+\begin{DoxyCompactList}\small\item\em Instantiates a zero crossing rate detector. \end{DoxyCompactList}\item 
+void \hyperlink{group__zerocrossing_gaa4bb5b8f8bdfaad702557c27369e3bc7}{S\+D\+T\+Zero\+Crossing\+\_\+free} (\hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Destroys a zero crossing rate detector. \end{DoxyCompactList}\item 
+void \hyperlink{group__zerocrossing_ga75cef03ffbd632a635904b577965851e}{S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap} (\hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the analysis window overlapping ratio. Accepted values go from 0.\+0 to 1.\+0, with 0.\+0 meaning no overlap and 1.\+0 meaning total overlap. \end{DoxyCompactList}\item 
+int \hyperlink{group__zerocrossing_ga22964baa5e5ba9a9d96ed374bf5f4a16}{S\+D\+T\+Zero\+Crossing\+\_\+dsp} (\hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} $\ast$x, double $\ast$out, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to perform signal analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Zero crossing rate signal analyzer. 
+
+\subsection{Function Documentation}
+\hypertarget{group__zerocrossing_ga22964baa5e5ba9a9d96ed374bf5f4a16}{}\index{Zero crossing rate@{Zero crossing rate}!S\+D\+T\+Zero\+Crossing\+\_\+dsp@{S\+D\+T\+Zero\+Crossing\+\_\+dsp}}
+\index{S\+D\+T\+Zero\+Crossing\+\_\+dsp@{S\+D\+T\+Zero\+Crossing\+\_\+dsp}!Zero crossing rate@{Zero crossing rate}}
+\subsubsection[{S\+D\+T\+Zero\+Crossing\+\_\+dsp(\+S\+D\+T\+Zero\+Crossing $\ast$x, double $\ast$out, double in)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Zero\+Crossing\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Zero\+Crossing} $\ast$}]{x, }
+\item[{double $\ast$}]{out, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__zerocrossing_ga22964baa5e5ba9a9d96ed374bf5f4a16}
+
+
+Signal processing routine. Call this function at sample rate to perform signal analysis. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt out}  & {\em out} & Pointer to a double containing the algorithm output \\
+\hline
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if output available (analysis window full), 0 otherwise 
+\end{DoxyReturn}
+\hypertarget{group__zerocrossing_gaa4bb5b8f8bdfaad702557c27369e3bc7}{}\index{Zero crossing rate@{Zero crossing rate}!S\+D\+T\+Zero\+Crossing\+\_\+free@{S\+D\+T\+Zero\+Crossing\+\_\+free}}
+\index{S\+D\+T\+Zero\+Crossing\+\_\+free@{S\+D\+T\+Zero\+Crossing\+\_\+free}!Zero crossing rate@{Zero crossing rate}}
+\subsubsection[{S\+D\+T\+Zero\+Crossing\+\_\+free(\+S\+D\+T\+Zero\+Crossing $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Zero\+Crossing\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Zero\+Crossing} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__zerocrossing_gaa4bb5b8f8bdfaad702557c27369e3bc7}
+
+
+Destroys a zero crossing rate detector. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__zerocrossing_gae165c64fd2e68870d362bdd541aacf28}{}\index{Zero crossing rate@{Zero crossing rate}!S\+D\+T\+Zero\+Crossing\+\_\+new@{S\+D\+T\+Zero\+Crossing\+\_\+new}}
+\index{S\+D\+T\+Zero\+Crossing\+\_\+new@{S\+D\+T\+Zero\+Crossing\+\_\+new}!Zero crossing rate@{Zero crossing rate}}
+\subsubsection[{S\+D\+T\+Zero\+Crossing\+\_\+new(unsigned int size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Zero\+Crossing}$\ast$ S\+D\+T\+Zero\+Crossing\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{size}
+\end{DoxyParamCaption}
+)}\label{group__zerocrossing_gae165c64fd2e68870d362bdd541aacf28}
+
+
+Instantiates a zero crossing rate detector. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Size of the analysis window, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__zerocrossing_ga75cef03ffbd632a635904b577965851e}{}\index{Zero crossing rate@{Zero crossing rate}!S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap@{S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap}}
+\index{S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap@{S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap}!Zero crossing rate@{Zero crossing rate}}
+\subsubsection[{S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap(\+S\+D\+T\+Zero\+Crossing $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Zero\+Crossing} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__zerocrossing_ga75cef03ffbd632a635904b577965851e}
+
+
+Sets the analysis window overlapping ratio. Accepted values go from 0.\+0 to 1.\+0, with 0.\+0 meaning no overlap and 1.\+0 meaning total overlap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Overlap ratio \mbox{[}0.\+0, 1.\+0\mbox{]} \\
+\hline
+\end{DoxyParams}

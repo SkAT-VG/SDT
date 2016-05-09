@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -39,14 +39,13 @@
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-39",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 318.5, 331.0, 50.0, 32.0 ],
+					"patching_rect" : [ 318.5, 331.0, 50.0, 20.0 ],
 					"style" : "",
-					"text" : "17.058823"
+					"text" : "3.823529"
 				}
 
 			}
@@ -241,8 +240,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -769,8 +768,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1235,7 +1234,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 42.0, 426.0, 80.0, 22.0 ],
 					"style" : "",
-					"text" : "strike -0.6 0"
+					"text" : "strike -0.01 0"
 				}
 
 			}
@@ -1262,9 +1261,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 135.0, 426.0, 74.0, 22.0 ],
+					"patching_rect" : [ 135.0, 426.0, 87.0, 22.0 ],
 					"style" : "",
-					"text" : "strike -0.3 0"
+					"text" : "strike -0.005 0"
 				}
 
 			}
@@ -1313,9 +1312,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 42.0, 557.5, 530.0, 85.0 ],
+					"patching_rect" : [ 42.0, 557.5, 501.0, 85.0 ],
 					"style" : "",
-					"text" : "sdt.modal modalbutton 8 1 @freqs 2000. 3000. 5000. 7000. 11000. 13000. 17000. 19000. @decays 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 @weights 8000. 7000. 6000. 5000. 4000. 3000. 2000. 1000. @pickup0 1. 1. 1. 1. 1. 1. 1. 1. @activeModes 8"
+					"text" : "sdt.modal modalbutton 8 1 @freqs 2000. 3000. 5000. 7000. 11000. 13000. 17000. 19000. @decays 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 @pickup0 8000. 7000. 6000. 5000. 4000. 3000. 2000. 1000. @activeModes 8"
 				}
 
 			}
@@ -1690,12 +1689,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "~/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.modal.mxo",
 				"type" : "iLaX"
 			}
@@ -1712,7 +1705,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

@@ -1,143 +1,108 @@
-/** \file SDTResonators.h
- * Physically informed models for resonating solid objects. 
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
+/**
+@defgroup resonators SDTResonators.h: Solid resonators
+Physical model of a solid resonator, represented as a set of parallel mass-spring-damper
+mechanical oscillators. Each oscillator corresponds to a normal mode of resonance of the
+object, with the oscillation period, the mass and the damping coefficient of each
+oscillator corresponding respectively to the resonance frequency, the magnitude and
+the decay time of each mode. Resonant modes can be mixed and weighted with different gains,
+to simulate different pickup points on the resonating object. A single mode with a resonant
+frequency of 0 Hz, infinite decay time and unity pickup gain behaves like an inertial
+point mass. The model uses the impulse invariant method as discretization scheme.
+@{
+*/
 
 #ifndef SDT_RESONATORS_H
 #define SDT_RESONATORS_H
 
+/** @brief Opaque data structure representing a solid resonator object. */
 typedef struct SDTResonator SDTResonator;
 
-extern double SDTResonator_getPosition(SDTResonator *x, unsigned int p);
-extern double SDTResonator_getVelocity(SDTResonator *x, unsigned int p);
-extern double SDTResonator_getKPosition(SDTResonator *x, unsigned int p);
-extern double SDTResonator_getKVelocity(SDTResonator *x, unsigned int p);
+/** @brief Object constructor.
+@param[in] nModes Number of resonant modes
+@param[in] nPickups Number of pickup points
+@return Pointer to the new instance */
+extern SDTResonator *SDTResonator_new(unsigned int nModes, unsigned int nPickups);
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTResonator_free(SDTResonator *x);
+
+/** @brief Gets the displacement of the object at a given pickup point.
+@param[in] pickup Pickup point
+@return Object displacement, in m */
+extern double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup);
+
+/** @brief Gets the velocity of the object at a given pickup point.
+@param[in] pickup Pickup point
+@return Object velocity, in m/s */
+extern double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup);
+
+/** @brief Gets the momentum of the object.
+@return Object momentum, in Kg * m/s */
+extern double SDTResonator_getMomentum(SDTResonator *x);
+
+/** @brief Gets the number of pickup points
+@return Number of pickup points */
 extern double SDTResonator_getNPickups(SDTResonator *x);
-extern void SDTResonator_setPickupMask(SDTResonator *x, unsigned int p, unsigned int m, double f);
-extern void SDTResonator_setActiveModes(SDTResonator *x, int i);
-extern void SDTResonator_applyForce(SDTResonator *x, unsigned int p, double f);
+
+/** @brief Sets a modal displacement at a given pickup point
+@param[in] pickup Pickup point
+@param[in] mode Mode number
+@param[in] f Modal displacement, in m */
+extern void SDTResonator_setPosition(SDTResonator *x, unsigned int pickup, unsigned int mode, double f);
+
+/** @brief Sets a modal velocity at a given pickup point
+@param[in] pickup Pickup point
+@param[in] mode Mode number
+@param[in] f Modal velocity, in m/s */
+extern void SDTResonator_setVelocity(SDTResonator *x, unsigned int pickup, unsigned int mode, double f);
+
+/** @brief Sets the resonant frequency for a given mode
+@param[in] mode Mode number
+@param[in] f Modal frequency, in Hz */
+extern void SDTResonator_setFrequency(SDTResonator *x, unsigned int mode, double f);
+
+/** @brief Sets the decay for a given mode
+@param[in] mode Mode number
+@param[in] f Modal decay, in s. A value of 0 means no decay at all (infinite decay time) */
+extern void SDTResonator_setDecay(SDTResonator *x, unsigned int mode, double f);
+
+/** @brief Sets the weight for a given mode and pickup
+@param[in] pickup Pickup number
+@param[in] mode Mode number
+@param[in] f Modal weight, in 1/Kg */
+extern void SDTResonator_setWeight(SDTResonator *x, unsigned int pickup, unsigned int mode, double f);
+
+/** @brief Sets the mass for a given mode and pickup
+@param[in] pickup Pickup number
+@param[in] mode Mode number
+@param[in] f Modal mass, in Kg */
+extern void SDTResonator_setMass(SDTResonator *x, unsigned int pickup, unsigned int mode, double f);
+
+/** @brief Reduces the object into a smaller fragment.
+This paramenter influences various aspects of the object: Smaller fragments resonate
+louder and at higher frequencies, but with shorter decay times.
+@param[in] f Fragment size, compared to the whole object [0,1] */
+extern void SDTResonator_setFragmentSize(SDTResonator *x, double f);
+
+/** @brief Sets the number of active (actually computed) modes.
+@param[in] i Number of active (computed) modes */
+extern void SDTResonator_setActiveModes(SDTResonator *x, unsigned int i);
+
+/** @brief Applies a force to the resonator at a given pickup point.
+The force is distributed across the modes according to their normalized pickup gains
+(modal gain/sum of all gains). If the function is called multiple times in a single
+DSP cycle, the applied force gets accumulated.  
+@param[in] pickup Pickup point
+@param[in] f Applied force, in N */
+extern void SDTResonator_applyForce(SDTResonator *x, unsigned int pickup, double f);
+
+/** @brief Signal processing routine.
+Call this function at sample rate to update the internal state of the resonator.
+DO NOT call this function if you plan to use any of the interactor DSP methods instead!
+See the SDTInteractors.h module documentation for further information. */
 extern void SDTResonator_dsp(SDTResonator *x);
 
-//-------------------------------------------------------------------------------------//
-
-/*!
- * Physical modeling of an inertial mass.
- */
-typedef struct SDTInertialMass SDTInertialMass;
-
-//! Inertial mass constructor
-extern SDTResonator *SDTInertialMass_new();
-
-//! Inertial mass destructor
-extern void SDTInertialMass_free(SDTResonator *x);
-
-//! Sets the mass of the inertial object
-extern void SDTInertialMass_setMass(SDTResonator *x, double f);
-
-//! Sets the fragment size of the inertial object
-extern void SDTInertialMass_setFragmentSize(SDTResonator *x, double f);
-
-//! Sets a displacement for the inertial mass
-extern void SDTInertialMass_setPosition(SDTResonator *x, double f);
-
-//! Sets a velocity for the inertial mass
-extern void SDTInertialMass_setVelocity(SDTResonator *x, double f);
-
-//! Updates the object state
-extern void SDTInertialMass_update(SDTResonator *x);
-
-//-------------------------------------------------------------------------------------//
-
-typedef struct SDTModalResonator SDTModalResonator;
-
-//! Constructs a new instance of the modal resonator.
-/**
- *  Each created instance should be correctly destroyed later by calling SDTModalResonator_free().
- *
- *  \return Pointer to the created instance.
- */
-extern SDTResonator *SDTModalResonator_new(unsigned int nModes, /**< Number of resonant modes. */
-                                           unsigned int nPickups /**< Number of listening points. */);
-
-//! Destroys a modal resonator instance.
-extern void SDTModalResonator_free(SDTResonator *x /**< Pointer to the modal resonator instance. */);
-
-//! Sets the resonant frequency for a given mode.
-/**
- *  Remember to call SDTModalResonator_update() for changes to take effect.
- */
-extern void SDTModalResonator_setFrequency(SDTResonator *x, /**< Pointer to the modal resonator instance. */
-                                           unsigned int i, /**< Selected mode index. */
-                                           double f /**< New mode frequency, in Hz */);
-
-//! Sets the decay time for a given mode.
-/**
- *  Remember to call SDTModalResonator_update() for changes to take effect.
- */                                         
-extern void SDTModalResonator_setDecay(SDTResonator *x, /**< Pointer to the modal resonator instance. */
-                                       unsigned int i, /**< Selected mode index. */
-                                       double f /**< New mode decay time, in seconds */);
-
-//! Sets the weight for a given mode.
-/**
- *  Remember to call SDTModalResonator_update() for changes to take effect.
- */                                         
-extern void SDTModalResonator_setWeight(SDTResonator *x, /**< Pointer to the modal resonator instance. */
-                                       unsigned int i, /**< Selected mode index. */
-                                       double f /**< New mode weight, in 1/Kg */);
-
-//! Sets the fragment size of the inertial object
-extern void SDTModalResonator_setFragmentSize(SDTResonator *x, double f);
-                                       
-//! Updates the internal attributes for a given mode.
-/**
- * This function should always be called to apply the changes made through
- * SDTModalResonator_setFrequency() and SDTModalResonator_setDecay().
- */
-extern void SDTModalResonator_update(SDTResonator *x, /**< Pointer to the modal resonator instance. */
-                                     unsigned int i /**< Selected mode index. */);
-
 #endif
+
+/** @} */

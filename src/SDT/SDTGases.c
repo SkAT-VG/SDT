@@ -1,51 +1,3 @@
-/** \file SDTGases.c
- * Physical models for gas turbulence, flow and explosion. 
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
-
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
@@ -101,6 +53,28 @@ struct SDTWindCavity {
   double length, diameter, windSpeed, harmonics, freq, delay, q;
 };
 
+void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
+  double gain;
+  
+  x->harmonics = x->length / x->diameter;
+  x->freq = SDT_MACH1 / (2.0 * x->length + 1.6 * x->diameter);
+  x->delay = SDT_sampleRate / x->freq;
+  x->q = fmin(100.0, 0.5 * x->delay);
+  gain = 1.0 - SDT_fclip(x->diameter / x->length, 0.1, 1.0);
+  SDTComb_setXDelay(x->comb, x->delay);
+  SDTComb_setYDelay(x->comb, x->delay);
+  SDTComb_setXGain(x->comb, gain);
+  SDTComb_setYGain(x->comb, gain);
+}
+
+void SDTWindCavity_updateResonance(SDTWindCavity *x) {
+  double fc;
+  
+  fc = x->freq * x->windSpeed * x->harmonics;
+  SDTTwoPoles_resonant(x->reso1, 800.0, 3.0);
+  SDTTwoPoles_resonant(x->reso2, fc, x->q);
+}
+
 SDTWindCavity *SDTWindCavity_new(int maxDelay) {
   SDTWindCavity *x;
   
@@ -139,28 +113,6 @@ void SDTWindCavity_setWindSpeed(SDTWindCavity *x, double f) {
   SDTWindCavity_updateResonance(x);
 }
 
-void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
-  double gain;
-  
-  x->harmonics = x->length / x->diameter;
-  x->freq = SDT_MACH1 / (2.0 * x->length + 1.6 * x->diameter);
-  x->delay = SDT_sampleRate / x->freq;
-  x->q = fmin(100.0, 0.5 * x->delay);
-  gain = 1.0 - SDT_fclip(x->diameter / x->length, 0.1, 1.0);
-  SDTComb_setXDelay(x->comb, x->delay);
-  SDTComb_setYDelay(x->comb, x->delay);
-  SDTComb_setXGain(x->comb, gain);
-  SDTComb_setYGain(x->comb, gain);
-}
-
-void SDTWindCavity_updateResonance(SDTWindCavity *x) {
-  double fc;
-  
-  fc = x->freq * x->windSpeed * x->harmonics;
-  SDTTwoPoles_resonant(x->reso1, 800.0, 3.0);
-  SDTTwoPoles_resonant(x->reso2, fc, x->q);
-}
-
 double SDTWindCavity_dsp(SDTWindCavity *x) {
   double out;
   
@@ -178,6 +130,14 @@ struct SDTWindKarman {
   double windSpeed, diameter;
 };
 
+void SDTWindKarman_updateResonance(SDTWindKarman *x) {
+  double fc;
+  
+  fc = 8.0 * x->windSpeed / x->diameter;
+  SDTTwoPoles_resonant(x->reso1, fc, 60);
+  SDTTwoPoles_resonant(x->reso2, fc, 60);
+}
+
 SDTWindKarman *SDTWindKarman_new() {
   SDTWindKarman *x;
   
@@ -185,6 +145,7 @@ SDTWindKarman *SDTWindKarman_new() {
   x->reso1 = SDTTwoPoles_new();
   x->reso2 = SDTTwoPoles_new();
   x->diameter = 0.001;
+  SDTWindKarman_updateResonance(x);
   return x;
 }
 
@@ -202,14 +163,6 @@ void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
 void SDTWindKarman_setWindSpeed(SDTWindKarman *x, double f) {
   x->windSpeed = SDT_fclip(f, 0.0, 1.0);
   SDTWindKarman_updateResonance(x);
-}
-
-void SDTWindKarman_updateResonance(SDTWindKarman *x) {
-  double fc;
-  
-  fc = 8.0 * x->windSpeed / x->diameter;
-  SDTTwoPoles_resonant(x->reso1, fc, 60);
-  SDTTwoPoles_resonant(x->reso2, fc, 60);
 }
 
 double SDTWindKarman_dsp(SDTWindKarman *x) {

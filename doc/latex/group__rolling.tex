@@ -1,0 +1,149 @@
+\hypertarget{group__rolling}{}\section{Rolling}
+\label{group__rolling}\index{Rolling@{Rolling}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{}typedef struct \hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} \hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling}\label{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for the rolling object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$ \hyperlink{group__rolling_ga8a04949ff0e9034761cb3ed0634c7014}{S\+D\+T\+Rolling\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__rolling_ga4b159394b13ddd09edeaceaa17f98982}{S\+D\+T\+Rolling\+\_\+free} (\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__rolling_ga7550d2bef269842332c90282c7da22e5}{S\+D\+T\+Rolling\+\_\+set\+Grain} (\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the grain of the surface. This parameter affects the density of the micro-\/impacts\+: Lower values result in a bumpier rolling, higher values result in a smoother rolling. \end{DoxyCompactList}\item 
+void \hyperlink{group__rolling_gabcca17d6ff4bbc44e25e8d6a3a7b3ce4}{S\+D\+T\+Rolling\+\_\+set\+Depth} (\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the average bump depth. This parameter affects the energy of the micro-\/impacts. \end{DoxyCompactList}\item 
+void \hyperlink{group__rolling_ga7678110b0e5f86877bf05d51cef1bfcb}{S\+D\+T\+Rolling\+\_\+set\+Mass} (\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the rolling mass. The mass parameter of the controlled object should be updated accordingly. \end{DoxyCompactList}\item 
+void \hyperlink{group__rolling_gafb37a010de14a5d517bcca40c02e3ff4}{S\+D\+T\+Rolling\+\_\+set\+Velocity} (\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the rolling velocity. \end{DoxyCompactList}\item 
+double \hyperlink{group__rolling_gaf6a6b2b6e7ce4a6d61577b35d0620efc}{S\+D\+T\+Rolling\+\_\+dsp} (\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the force acting on the rolling object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Control layer for the impact model, generating rolling sonic textures. The output is a force, which should be applied to an inertial mass hitting a resonator. 
+
+\subsection{Function Documentation}
+\hypertarget{group__rolling_gaf6a6b2b6e7ce4a6d61577b35d0620efc}{}\index{Rolling@{Rolling}!S\+D\+T\+Rolling\+\_\+dsp@{S\+D\+T\+Rolling\+\_\+dsp}}
+\index{S\+D\+T\+Rolling\+\_\+dsp@{S\+D\+T\+Rolling\+\_\+dsp}!Rolling@{Rolling}}
+\subsubsection[{S\+D\+T\+Rolling\+\_\+dsp(\+S\+D\+T\+Rolling $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Rolling\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Rolling} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__rolling_gaf6a6b2b6e7ce4a6d61577b35d0620efc}
+
+
+Signal processing routine. Call this function at sample rate to compute the force acting on the rolling object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Surface profile, as an audio signal \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Normal force on the exciter 
+\end{DoxyReturn}
+\hypertarget{group__rolling_ga4b159394b13ddd09edeaceaa17f98982}{}\index{Rolling@{Rolling}!S\+D\+T\+Rolling\+\_\+free@{S\+D\+T\+Rolling\+\_\+free}}
+\index{S\+D\+T\+Rolling\+\_\+free@{S\+D\+T\+Rolling\+\_\+free}!Rolling@{Rolling}}
+\subsubsection[{S\+D\+T\+Rolling\+\_\+free(\+S\+D\+T\+Rolling $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Rolling\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Rolling} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__rolling_ga4b159394b13ddd09edeaceaa17f98982}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__rolling_ga8a04949ff0e9034761cb3ed0634c7014}{}\index{Rolling@{Rolling}!S\+D\+T\+Rolling\+\_\+new@{S\+D\+T\+Rolling\+\_\+new}}
+\index{S\+D\+T\+Rolling\+\_\+new@{S\+D\+T\+Rolling\+\_\+new}!Rolling@{Rolling}}
+\subsubsection[{S\+D\+T\+Rolling\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Rolling}$\ast$ S\+D\+T\+Rolling\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__rolling_ga8a04949ff0e9034761cb3ed0634c7014}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__rolling_gabcca17d6ff4bbc44e25e8d6a3a7b3ce4}{}\index{Rolling@{Rolling}!S\+D\+T\+Rolling\+\_\+set\+Depth@{S\+D\+T\+Rolling\+\_\+set\+Depth}}
+\index{S\+D\+T\+Rolling\+\_\+set\+Depth@{S\+D\+T\+Rolling\+\_\+set\+Depth}!Rolling@{Rolling}}
+\subsubsection[{S\+D\+T\+Rolling\+\_\+set\+Depth(\+S\+D\+T\+Rolling $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Rolling\+\_\+set\+Depth (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Rolling} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__rolling_gabcca17d6ff4bbc44e25e8d6a3a7b3ce4}
+
+
+Sets the average bump depth. This parameter affects the energy of the micro-\/impacts. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Average depth of the surface bumps \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__rolling_ga7550d2bef269842332c90282c7da22e5}{}\index{Rolling@{Rolling}!S\+D\+T\+Rolling\+\_\+set\+Grain@{S\+D\+T\+Rolling\+\_\+set\+Grain}}
+\index{S\+D\+T\+Rolling\+\_\+set\+Grain@{S\+D\+T\+Rolling\+\_\+set\+Grain}!Rolling@{Rolling}}
+\subsubsection[{S\+D\+T\+Rolling\+\_\+set\+Grain(\+S\+D\+T\+Rolling $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Rolling\+\_\+set\+Grain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Rolling} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__rolling_ga7550d2bef269842332c90282c7da22e5}
+
+
+Sets the grain of the surface. This parameter affects the density of the micro-\/impacts\+: Lower values result in a bumpier rolling, higher values result in a smoother rolling. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Surface grain \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__rolling_ga7678110b0e5f86877bf05d51cef1bfcb}{}\index{Rolling@{Rolling}!S\+D\+T\+Rolling\+\_\+set\+Mass@{S\+D\+T\+Rolling\+\_\+set\+Mass}}
+\index{S\+D\+T\+Rolling\+\_\+set\+Mass@{S\+D\+T\+Rolling\+\_\+set\+Mass}!Rolling@{Rolling}}
+\subsubsection[{S\+D\+T\+Rolling\+\_\+set\+Mass(\+S\+D\+T\+Rolling $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Rolling\+\_\+set\+Mass (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Rolling} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__rolling_ga7678110b0e5f86877bf05d51cef1bfcb}
+
+
+Sets the rolling mass. The mass parameter of the controlled object should be updated accordingly. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Mass of the rolling object, in Kg \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__rolling_gafb37a010de14a5d517bcca40c02e3ff4}{}\index{Rolling@{Rolling}!S\+D\+T\+Rolling\+\_\+set\+Velocity@{S\+D\+T\+Rolling\+\_\+set\+Velocity}}
+\index{S\+D\+T\+Rolling\+\_\+set\+Velocity@{S\+D\+T\+Rolling\+\_\+set\+Velocity}!Rolling@{Rolling}}
+\subsubsection[{S\+D\+T\+Rolling\+\_\+set\+Velocity(\+S\+D\+T\+Rolling $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Rolling\+\_\+set\+Velocity (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Rolling} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__rolling_gafb37a010de14a5d517bcca40c02e3ff4}
+
+
+Sets the rolling velocity. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Rolling velocity \\
+\hline
+\end{DoxyParams}

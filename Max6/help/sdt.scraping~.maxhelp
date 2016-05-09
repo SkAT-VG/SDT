@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 1,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -48,8 +48,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -633,8 +633,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1035,10 +1035,10 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 534.5, 543.5, 596.0, 40.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 3,
-					"presentation_rect" : [ 376.680542, 348.5, 384.0, 55.0 ],
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 376.680542, 348.5, 384.0, 40.0 ],
 					"style" : "",
-					"text" : "sdt.modal objectsc 3 2 @freqs 500. 1000. 1500 @decays 0.06 0.03 0.01 @weights 50. 50. 50. @pickup0 1. 1. 1. @pickup1 1. 1. 1. @activeModes 3"
+					"text" : "sdt.modal objectsc 3 1 @freqs 500. 1000. 1500 @decays 0.06 0.03 0.01 @pickup0 50. 50. 50. @activeModes 3"
 				}
 
 			}
@@ -1267,13 +1267,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 1516.0, 62.0, 920.0, 729.0 ],
+						"rect" : [ 486.0, 79.0, 920.0, 729.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
@@ -1350,13 +1350,13 @@
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 14.0,
 									"id" : "obj-8",
-									"linecount" : 20,
+									"linecount" : 19,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 7.0, 37.0, 430.0, 332.0 ],
+									"patching_rect" : [ 7.0, 37.0, 430.0, 316.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n\nATTRIBUTES\n- freqs (float, list): frequency of each mode, in Hz\n- decays (float, list): decay of each mode, in seconds\n- weights (float, list): weight of each mode, in 1/Kg\n- pickup[n] (list): modal gain masks for each pickup [0.0, 1.0]\n- fragmentSize (float): fraction of the whole object, used by the crumpling algorithm to simulate fragmentation [0.0, 1.0]\n- activeModes (int): number of currently active modes out of all the available ones.\nOUTPUT\n- none\n\nARGUMENTS\nArguments are mandatory\n- unique ID name of the modal object\n- max number of modes (int)\n- max number of pickup points (int)"
+									"text" : "INPUT\n- messages\n\nATTRIBUTES\n- freqs (float, list): frequency of each mode, in Hz\n- decays (float, list): decay of each mode, in seconds\n- pickup[n] (list): modal weight for each pickup, in 1/Kg\n- fragmentSize (float): fraction of the whole object, used by the crumpling algorithm to simulate fragmentation [0.0, 1.0]\n- activeModes (int): number of currently active modes out of all the available ones.\nOUTPUT\n- none\n\nARGUMENTS\nArguments are mandatory\n- unique ID name of the modal object\n- max number of modes (int)\n- max number of pickup points (int)"
 								}
 
 							}
@@ -1433,21 +1433,6 @@
 					"fontface" : 3,
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 9.0,
-					"id" : "obj-108",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 255.0, 657.0, 117.0, 17.0 ],
-					"style" : "",
-					"text" : "displacement @pickup1 "
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 9.0,
 					"id" : "obj-107",
 					"maxclass" : "comment",
 					"numinlets" : 1,
@@ -1504,11 +1489,11 @@
 					"id" : "obj-63",
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
-					"patching_rect" : [ 127.5, 624.5, 355.0, 25.0 ],
+					"numoutlets" : 1,
+					"outlettype" : [ "signal" ],
+					"patching_rect" : [ 127.5, 624.5, 236.0, 25.0 ],
 					"style" : "",
-					"text" : "sdt.impact~ objectsc hammersc 3"
+					"text" : "sdt.impact~ objectsc hammersc 1"
 				}
 
 			}
@@ -1697,7 +1682,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 572.889038, 327.5, 77.0, 19.0 ],
 					"style" : "",
-					"text" : "prepend weights"
+					"text" : "prepend pickup0"
 				}
 
 			}
@@ -1877,8 +1862,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2318,8 +2303,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2758,8 +2743,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -3233,7 +3218,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 376.680542, 286.5, 66.0, 17.0 ],
 					"style" : "",
-					"text" : "weights_fact"
+					"text" : "pickup0_fact"
 				}
 
 			}
@@ -3327,7 +3312,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 587.389038, 286.5, 55.0, 17.0 ],
 					"style" : "",
-					"text" : "weights_3"
+					"text" : "pickup0_3"
 				}
 
 			}
@@ -3361,7 +3346,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 519.951538, 286.5, 55.0, 17.0 ],
 					"style" : "",
-					"text" : "weights_2"
+					"text" : "pickup0_2"
 				}
 
 			}
@@ -3395,7 +3380,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 452.514038, 286.5, 55.0, 17.0 ],
 					"style" : "",
-					"text" : "weights_1"
+					"text" : "pickup0_1"
 				}
 
 			}
@@ -3639,13 +3624,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 754.0, -196.0, 216.0, 120.0 ],
+						"rect" : [ 833.0, 86.0, 208.0, 117.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
@@ -3749,8 +3734,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 1,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -4327,7 +4312,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 285.9375, 304.5, 54.0, 19.0 ],
 					"style" : "",
-					"text" : "0.132433"
+					"text" : "1.856484"
 				}
 
 			}
@@ -4884,16 +4869,6 @@
 					"destination" : [ "obj-22", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 305.0, 688.0, 137.0, 688.0 ],
-					"source" : [ "obj-63", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-22", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
 					"source" : [ "obj-63", 0 ]
 				}
 
@@ -5067,7 +5042,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

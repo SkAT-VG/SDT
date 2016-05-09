@@ -744,14 +744,13 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 10.0,
 					"id" : "obj-45",
-					"linecount" : 2,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 192.0, 334.0, 59.0, 32.0 ],
+					"patching_rect" : [ 192.0, 334.0, 86.0, 20.0 ],
 					"style" : "",
-					"text" : "prepend weights"
+					"text" : "prepend pickup0"
 				}
 
 			}
@@ -766,7 +765,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 192.0, 173.5, 82.0, 17.0 ],
 					"style" : "",
-					"text" : "weights"
+					"text" : "pickups0"
 				}
 
 			}
@@ -1797,7 +1796,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 626.5, 371.0, 55.25, 26.0 ],
+					"patching_rect" : [ 626.5, 371.0, 57.0, 26.0 ],
 					"style" : "default",
 					"textcolor" : [ 0.0, 0.8, 1.0, 1.0 ]
 				}
@@ -1819,7 +1818,7 @@
 			}
 , 			{
 				"box" : 				{
-					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 219.533279, 100.0, 0, -0.3, 551.426086, 0.0, 0, 0.6, 786.516846, 82.666664, 0, -0.595, 1000.0, 0.0, 0, 0.7 ],
+					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 219.533279, 94.666664, 0, -0.45, 475.36734, 0.0, 0, 0.55, 658.599854, 100.0, 0, -0.395, 1000.0, 0.0, 0, 0.45 ],
 					"id" : "obj-78",
 					"linecolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"maxclass" : "function",
@@ -1922,13 +1921,13 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 16.0,
 					"id" : "obj-3",
-					"linecount" : 4,
+					"linecount" : 3,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 12.0, 421.0, 312.0, 85.0 ],
+					"patching_rect" : [ 12.0, 421.0, 312.0, 66.0 ],
 					"style" : "",
-					"text" : "sdt.modal filesawB 3 2 @freqs 660 1056 2046 @decays 0.003 0.002 0.002 @weights 100 100 100 @pickup0 1. 1. 1. @pickup1 1. 1. 1. @activeModes 3"
+					"text" : "sdt.modal filesawB 3 1 @freqs 660 1056 2046 @decays 0.003 0.002 0.002 @pickup0 100 100 100 @activeModes 3"
 				}
 
 			}

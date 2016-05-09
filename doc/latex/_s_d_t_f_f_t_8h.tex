@@ -1,0 +1,21 @@
+\hypertarget{_s_d_t_f_f_t_8h}{}\section{src/\+S\+D\+T/\+S\+D\+T\+F\+F\+T.h File Reference}
+\label{_s_d_t_f_f_t_8h}\index{src/\+S\+D\+T/\+S\+D\+T\+F\+F\+T.\+h@{src/\+S\+D\+T/\+S\+D\+T\+F\+F\+T.\+h}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{}typedef struct \hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} \hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T}\label{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure, representing a F\+F\+T object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$ \hyperlink{group__fft_ga7451c1112b79820b9c7cfa39aa502869}{S\+D\+T\+F\+F\+T\+\_\+new} (unsigned int n)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_ga232ab38b8aaf2ca31d16756c62c77e7b}{S\+D\+T\+F\+F\+T\+\_\+free} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_ga0ff30a0fbadf6d0a75d87dee3eb47a99}{S\+D\+T\+F\+F\+T\+\_\+fft} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x, int inverse, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$in, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$out)
+\begin{DoxyCompactList}\small\item\em Performs a direct or inverse F\+F\+T of a complex-\/valued signal. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_gaf4cbb91317ebe5652582ba3761941d1b}{S\+D\+T\+F\+F\+T\+\_\+fftr} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x, double $\ast$in, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$out)
+\begin{DoxyCompactList}\small\item\em Performs a direct F\+F\+T of a real-\/valued signal. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_ga1939d8a2eaa608ffd066dff554d9ae6e}{S\+D\+T\+F\+F\+T\+\_\+ifftr} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$in, double $\ast$out)
+\begin{DoxyCompactList}\small\item\em Performs an inverse F\+F\+T of a signal known to be real-\/valued. \end{DoxyCompactList}\end{DoxyCompactItemize}

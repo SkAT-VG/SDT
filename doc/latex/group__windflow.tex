@@ -1,0 +1,106 @@
+\hypertarget{group__windflow}{}\section{Turbulence against solid objects}
+\label{group__windflow}\index{Turbulence against solid objects@{Turbulence against solid objects}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{}typedef struct \hyperlink{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{S\+D\+T\+Wind\+Flow} \hyperlink{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{S\+D\+T\+Wind\+Flow}\label{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a solid obstacle object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{S\+D\+T\+Wind\+Flow} $\ast$ \hyperlink{group__windflow_gabfb3c93b2f5663b5772a9c33e131e5ae}{S\+D\+T\+Wind\+Flow\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__windflow_ga96b1c440d6fc00788ca1190babcea973}{S\+D\+T\+Wind\+Flow\+\_\+free} (\hyperlink{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{S\+D\+T\+Wind\+Flow} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__windflow_ga6f7ed2fe43b58cdfb9b4a186560d1060}{S\+D\+T\+Wind\+Flow\+\_\+set\+Filters} (\hyperlink{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{S\+D\+T\+Wind\+Flow} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Update filter coefficients. Should be always called after setting the sampling rate with \hyperlink{group__common_gad76f7b9f128e79164c76764be6e03be8}{S\+D\+T\+\_\+set\+Sample\+Rate()}. \end{DoxyCompactList}\item 
+void \hyperlink{group__windflow_gaf1e2f8adc5294b5da5b76a40e044a842}{S\+D\+T\+Wind\+Flow\+\_\+set\+Wind\+Speed} (\hyperlink{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{S\+D\+T\+Wind\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the wind speed. \end{DoxyCompactList}\item 
+double \hyperlink{group__windflow_ga0ea8e48562a527e97a12799254a07358}{S\+D\+T\+Wind\+Flow\+\_\+dsp} (\hyperlink{group__windflow_ga7eba31614e4346c35a480ca5da3945fe}{S\+D\+T\+Wind\+Flow} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to synthesize a wind turbulence sound. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+One of the possible sources of turbulence is the impact on a large solid surface. In this case, turbulence is generated due to the impact of the air molecules on the surface and to their random change of direction caused by the irregularities of the surface itself. The resulting sound is modeled through a bandpass-\/filtered white noise generator. The center frequency and bandwidth of the filter are empirically set to fixed values, while the resulting output is modulated in amplitude according to the velocity of the air flow. 
+
+\subsection{Function Documentation}
+\hypertarget{group__windflow_ga0ea8e48562a527e97a12799254a07358}{}\index{Turbulence against solid objects@{Turbulence against solid objects}!S\+D\+T\+Wind\+Flow\+\_\+dsp@{S\+D\+T\+Wind\+Flow\+\_\+dsp}}
+\index{S\+D\+T\+Wind\+Flow\+\_\+dsp@{S\+D\+T\+Wind\+Flow\+\_\+dsp}!Turbulence against solid objects@{Turbulence against solid objects}}
+\subsubsection[{S\+D\+T\+Wind\+Flow\+\_\+dsp(\+S\+D\+T\+Wind\+Flow $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Wind\+Flow\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Flow} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__windflow_ga0ea8e48562a527e97a12799254a07358}
+
+
+Signal processing routine. Call this function at sample rate to synthesize a wind turbulence sound. 
+
+\begin{DoxyReturn}{Returns}
+Computed audio sample 
+\end{DoxyReturn}
+\hypertarget{group__windflow_ga96b1c440d6fc00788ca1190babcea973}{}\index{Turbulence against solid objects@{Turbulence against solid objects}!S\+D\+T\+Wind\+Flow\+\_\+free@{S\+D\+T\+Wind\+Flow\+\_\+free}}
+\index{S\+D\+T\+Wind\+Flow\+\_\+free@{S\+D\+T\+Wind\+Flow\+\_\+free}!Turbulence against solid objects@{Turbulence against solid objects}}
+\subsubsection[{S\+D\+T\+Wind\+Flow\+\_\+free(\+S\+D\+T\+Wind\+Flow $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Flow\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Flow} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__windflow_ga96b1c440d6fc00788ca1190babcea973}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__windflow_gabfb3c93b2f5663b5772a9c33e131e5ae}{}\index{Turbulence against solid objects@{Turbulence against solid objects}!S\+D\+T\+Wind\+Flow\+\_\+new@{S\+D\+T\+Wind\+Flow\+\_\+new}}
+\index{S\+D\+T\+Wind\+Flow\+\_\+new@{S\+D\+T\+Wind\+Flow\+\_\+new}!Turbulence against solid objects@{Turbulence against solid objects}}
+\subsubsection[{S\+D\+T\+Wind\+Flow\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Wind\+Flow}$\ast$ S\+D\+T\+Wind\+Flow\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__windflow_gabfb3c93b2f5663b5772a9c33e131e5ae}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__windflow_ga6f7ed2fe43b58cdfb9b4a186560d1060}{}\index{Turbulence against solid objects@{Turbulence against solid objects}!S\+D\+T\+Wind\+Flow\+\_\+set\+Filters@{S\+D\+T\+Wind\+Flow\+\_\+set\+Filters}}
+\index{S\+D\+T\+Wind\+Flow\+\_\+set\+Filters@{S\+D\+T\+Wind\+Flow\+\_\+set\+Filters}!Turbulence against solid objects@{Turbulence against solid objects}}
+\subsubsection[{S\+D\+T\+Wind\+Flow\+\_\+set\+Filters(\+S\+D\+T\+Wind\+Flow $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Flow\+\_\+set\+Filters (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Flow} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__windflow_ga6f7ed2fe43b58cdfb9b4a186560d1060}
+
+
+Update filter coefficients. Should be always called after setting the sampling rate with \hyperlink{group__common_gad76f7b9f128e79164c76764be6e03be8}{S\+D\+T\+\_\+set\+Sample\+Rate()}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to a S\+D\+T\+Wind\+Flow instance \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__windflow_gaf1e2f8adc5294b5da5b76a40e044a842}{}\index{Turbulence against solid objects@{Turbulence against solid objects}!S\+D\+T\+Wind\+Flow\+\_\+set\+Wind\+Speed@{S\+D\+T\+Wind\+Flow\+\_\+set\+Wind\+Speed}}
+\index{S\+D\+T\+Wind\+Flow\+\_\+set\+Wind\+Speed@{S\+D\+T\+Wind\+Flow\+\_\+set\+Wind\+Speed}!Turbulence against solid objects@{Turbulence against solid objects}}
+\subsubsection[{S\+D\+T\+Wind\+Flow\+\_\+set\+Wind\+Speed(\+S\+D\+T\+Wind\+Flow $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Flow\+\_\+set\+Wind\+Speed (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Flow} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__windflow_gaf1e2f8adc5294b5da5b76a40e044a842}
+
+
+Sets the wind speed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to a S\+D\+T\+Wind\+Flow instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Wind speed \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}

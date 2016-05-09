@@ -1,0 +1,125 @@
+\hypertarget{group__fft}{}\section{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}
+\label{group__fft}\index{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{}typedef struct \hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} \hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T}\label{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure, representing a F\+F\+T object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$ \hyperlink{group__fft_ga7451c1112b79820b9c7cfa39aa502869}{S\+D\+T\+F\+F\+T\+\_\+new} (unsigned int n)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_ga232ab38b8aaf2ca31d16756c62c77e7b}{S\+D\+T\+F\+F\+T\+\_\+free} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_ga0ff30a0fbadf6d0a75d87dee3eb47a99}{S\+D\+T\+F\+F\+T\+\_\+fft} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x, int inverse, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$in, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$out)
+\begin{DoxyCompactList}\small\item\em Performs a direct or inverse F\+F\+T of a complex-\/valued signal. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_gaf4cbb91317ebe5652582ba3761941d1b}{S\+D\+T\+F\+F\+T\+\_\+fftr} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x, double $\ast$in, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$out)
+\begin{DoxyCompactList}\small\item\em Performs a direct F\+F\+T of a real-\/valued signal. \end{DoxyCompactList}\item 
+void \hyperlink{group__fft_ga1939d8a2eaa608ffd066dff554d9ae6e}{S\+D\+T\+F\+F\+T\+\_\+ifftr} (\hyperlink{group__fft_ga015ad058ec983e8f92811ba2ab637ab8}{S\+D\+T\+F\+F\+T} $\ast$x, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} $\ast$in, double $\ast$out)
+\begin{DoxyCompactList}\small\item\em Performs an inverse F\+F\+T of a signal known to be real-\/valued. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Data structures and functions to perform frequency analysis on signals by means of the Discrete Fourier Transform and its inverse. This implementation is based on the iterative version of the Cooley-\/\+Tukey algorithm, works with double precision floating point arithmetic and provides an optimization for the transformation of real-\/valued signals. 
+
+\subsection{Function Documentation}
+\hypertarget{group__fft_ga0ff30a0fbadf6d0a75d87dee3eb47a99}{}\index{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}!S\+D\+T\+F\+F\+T\+\_\+fft@{S\+D\+T\+F\+F\+T\+\_\+fft}}
+\index{S\+D\+T\+F\+F\+T\+\_\+fft@{S\+D\+T\+F\+F\+T\+\_\+fft}!S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}}
+\subsubsection[{S\+D\+T\+F\+F\+T\+\_\+fft(\+S\+D\+T\+F\+F\+T $\ast$x, int inverse, S\+D\+T\+Complex $\ast$in, S\+D\+T\+Complex $\ast$out)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+F\+F\+T\+\_\+fft (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+F\+F\+T} $\ast$}]{x, }
+\item[{int}]{inverse, }
+\item[{{\bf S\+D\+T\+Complex} $\ast$}]{in, }
+\item[{{\bf S\+D\+T\+Complex} $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\label{group__fft_ga0ff30a0fbadf6d0a75d87dee3eb47a99}
+
+
+Performs a direct or inverse F\+F\+T of a complex-\/valued signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em inverse} & Perform a direct F\+F\+T if 0, or an inverse F\+F\+T otherwise \\
+\hline
+\mbox{\tt in}  & {\em in} & Input signal to transform, must be at least of length n \\
+\hline
+\mbox{\tt out}  & {\em out} & Transformed output, must be at least of length n. When performing an inverse transform, divide every sample by n to obtain the original signal \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__fft_gaf4cbb91317ebe5652582ba3761941d1b}{}\index{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}!S\+D\+T\+F\+F\+T\+\_\+fftr@{S\+D\+T\+F\+F\+T\+\_\+fftr}}
+\index{S\+D\+T\+F\+F\+T\+\_\+fftr@{S\+D\+T\+F\+F\+T\+\_\+fftr}!S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}}
+\subsubsection[{S\+D\+T\+F\+F\+T\+\_\+fftr(\+S\+D\+T\+F\+F\+T $\ast$x, double $\ast$in, S\+D\+T\+Complex $\ast$out)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+F\+F\+T\+\_\+fftr (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+F\+F\+T} $\ast$}]{x, }
+\item[{double $\ast$}]{in, }
+\item[{{\bf S\+D\+T\+Complex} $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\label{group__fft_gaf4cbb91317ebe5652582ba3761941d1b}
+
+
+Performs a direct F\+F\+T of a real-\/valued signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input signal to transform, must be at least of length 2n \\
+\hline
+\mbox{\tt out}  & {\em out} & Transformed output \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__fft_ga232ab38b8aaf2ca31d16756c62c77e7b}{}\index{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}!S\+D\+T\+F\+F\+T\+\_\+free@{S\+D\+T\+F\+F\+T\+\_\+free}}
+\index{S\+D\+T\+F\+F\+T\+\_\+free@{S\+D\+T\+F\+F\+T\+\_\+free}!S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}}
+\subsubsection[{S\+D\+T\+F\+F\+T\+\_\+free(\+S\+D\+T\+F\+F\+T $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+F\+F\+T\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+F\+F\+T} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__fft_ga232ab38b8aaf2ca31d16756c62c77e7b}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em Pointer} & to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__fft_ga1939d8a2eaa608ffd066dff554d9ae6e}{}\index{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}!S\+D\+T\+F\+F\+T\+\_\+ifftr@{S\+D\+T\+F\+F\+T\+\_\+ifftr}}
+\index{S\+D\+T\+F\+F\+T\+\_\+ifftr@{S\+D\+T\+F\+F\+T\+\_\+ifftr}!S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}}
+\subsubsection[{S\+D\+T\+F\+F\+T\+\_\+ifftr(\+S\+D\+T\+F\+F\+T $\ast$x, S\+D\+T\+Complex $\ast$in, double $\ast$out)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+F\+F\+T\+\_\+ifftr (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+F\+F\+T} $\ast$}]{x, }
+\item[{{\bf S\+D\+T\+Complex} $\ast$}]{in, }
+\item[{double $\ast$}]{out}
+\end{DoxyParamCaption}
+)}\label{group__fft_ga1939d8a2eaa608ffd066dff554d9ae6e}
+
+
+Performs an inverse F\+F\+T of a signal known to be real-\/valued. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input F\+F\+T to invert \\
+\hline
+\mbox{\tt out}  & {\em out} & Reconstructed signal. Divide every sample by n to obtain the original signal \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__fft_ga7451c1112b79820b9c7cfa39aa502869}{}\index{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}!S\+D\+T\+F\+F\+T\+\_\+new@{S\+D\+T\+F\+F\+T\+\_\+new}}
+\index{S\+D\+T\+F\+F\+T\+\_\+new@{S\+D\+T\+F\+F\+T\+\_\+new}!S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform@{S\+D\+T\+F\+F\+T.\+h\+: Fast Fourier Transform}}
+\subsubsection[{S\+D\+T\+F\+F\+T\+\_\+new(unsigned int n)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+F\+F\+T}$\ast$ S\+D\+T\+F\+F\+T\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{n}
+\end{DoxyParamCaption}
+)}\label{group__fft_ga7451c1112b79820b9c7cfa39aa502869}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em n} & F\+F\+T window length, must be a power of 2 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the newly created instance, or N\+U\+L\+L if n is not a power of 2 
+\end{DoxyReturn}

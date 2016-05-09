@@ -1,0 +1,128 @@
+\hypertarget{group__structs}{}\section{S\+D\+T\+Structs.\+h\+: Common data structures}
+\label{group__structs}\index{S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{}typedef struct \hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap} \hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap}\label{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a hashmap object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap} $\ast$ \hyperlink{group__structs_ga80b88bc1e13aeeed73863c3a5855baa1}{S\+D\+T\+Hashmap\+\_\+new} (int size)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__structs_ga2d8f81e03ba59b433fa1fe0ff760ec82}{S\+D\+T\+Hashmap\+\_\+free} (\hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{group__structs_ga2e7b98637480590ed4c7f873200d8db7}{S\+D\+T\+Hashmap\+\_\+get} (\hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap} $\ast$x, char $\ast$key)
+\begin{DoxyCompactList}\small\item\em Looks for an entry with the given key in the hashmap. \end{DoxyCompactList}\item 
+int \hyperlink{group__structs_gaeb73501a575fbc9c4d8603456a05b204}{S\+D\+T\+Hashmap\+\_\+put} (\hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap} $\ast$x, char $\ast$key, void $\ast$value)
+\begin{DoxyCompactList}\small\item\em Inserts a key/value pair in the hashmap. \end{DoxyCompactList}\item 
+int \hyperlink{group__structs_gac8c9b9ea95106b84ff6990e9a67ebcf7}{S\+D\+T\+Hashmap\+\_\+del} (\hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap} $\ast$x, char $\ast$key)
+\begin{DoxyCompactList}\small\item\em Deletes a key/value pair from the hashmap. \end{DoxyCompactList}\item 
+\hypertarget{group__structs_gae537b6cca07a0106a788e6d8a0f53958}{}void \hyperlink{group__structs_gae537b6cca07a0106a788e6d8a0f53958}{S\+D\+T\+Hashmap\+\_\+clear} (\hyperlink{group__structs_gaf9aa86ada58e2863bd06d6feb4fdf07c}{S\+D\+T\+Hashmap} $\ast$x)\label{group__structs_gae537b6cca07a0106a788e6d8a0f53958}
+
+\begin{DoxyCompactList}\small\item\em Deletes all the entries in the hashmap. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__structs_gac8c9b9ea95106b84ff6990e9a67ebcf7}{}\index{S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}!S\+D\+T\+Hashmap\+\_\+del@{S\+D\+T\+Hashmap\+\_\+del}}
+\index{S\+D\+T\+Hashmap\+\_\+del@{S\+D\+T\+Hashmap\+\_\+del}!S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}}
+\subsubsection[{S\+D\+T\+Hashmap\+\_\+del(\+S\+D\+T\+Hashmap $\ast$x, char $\ast$key)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Hashmap\+\_\+del (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Hashmap} $\ast$}]{x, }
+\item[{char $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\label{group__structs_gac8c9b9ea95106b84ff6990e9a67ebcf7}
+
+
+Deletes a key/value pair from the hashmap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em key} & Key to look for in the hashmap \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if deletion is succesful, 1 otherwise (e.\+g. key not found) 
+\end{DoxyReturn}
+\hypertarget{group__structs_ga2d8f81e03ba59b433fa1fe0ff760ec82}{}\index{S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}!S\+D\+T\+Hashmap\+\_\+free@{S\+D\+T\+Hashmap\+\_\+free}}
+\index{S\+D\+T\+Hashmap\+\_\+free@{S\+D\+T\+Hashmap\+\_\+free}!S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}}
+\subsubsection[{S\+D\+T\+Hashmap\+\_\+free(\+S\+D\+T\+Hashmap $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Hashmap\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Hashmap} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__structs_ga2d8f81e03ba59b433fa1fe0ff760ec82}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__structs_ga2e7b98637480590ed4c7f873200d8db7}{}\index{S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}!S\+D\+T\+Hashmap\+\_\+get@{S\+D\+T\+Hashmap\+\_\+get}}
+\index{S\+D\+T\+Hashmap\+\_\+get@{S\+D\+T\+Hashmap\+\_\+get}!S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}}
+\subsubsection[{S\+D\+T\+Hashmap\+\_\+get(\+S\+D\+T\+Hashmap $\ast$x, char $\ast$key)}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ S\+D\+T\+Hashmap\+\_\+get (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Hashmap} $\ast$}]{x, }
+\item[{char $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\label{group__structs_ga2e7b98637480590ed4c7f873200d8db7}
+
+
+Looks for an entry with the given key in the hashmap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em key} & Key to look for in the hashmap \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value associated to the key if found, N\+U\+L\+L otherwise 
+\end{DoxyReturn}
+\hypertarget{group__structs_ga80b88bc1e13aeeed73863c3a5855baa1}{}\index{S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}!S\+D\+T\+Hashmap\+\_\+new@{S\+D\+T\+Hashmap\+\_\+new}}
+\index{S\+D\+T\+Hashmap\+\_\+new@{S\+D\+T\+Hashmap\+\_\+new}!S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}}
+\subsubsection[{S\+D\+T\+Hashmap\+\_\+new(int size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Hashmap}$\ast$ S\+D\+T\+Hashmap\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}\label{group__structs_ga80b88bc1e13aeeed73863c3a5855baa1}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Number of bins in the hashmap \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__structs_gaeb73501a575fbc9c4d8603456a05b204}{}\index{S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}!S\+D\+T\+Hashmap\+\_\+put@{S\+D\+T\+Hashmap\+\_\+put}}
+\index{S\+D\+T\+Hashmap\+\_\+put@{S\+D\+T\+Hashmap\+\_\+put}!S\+D\+T\+Structs.\+h\+: Common data structures@{S\+D\+T\+Structs.\+h\+: Common data structures}}
+\subsubsection[{S\+D\+T\+Hashmap\+\_\+put(\+S\+D\+T\+Hashmap $\ast$x, char $\ast$key, void $\ast$value)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Hashmap\+\_\+put (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Hashmap} $\ast$}]{x, }
+\item[{char $\ast$}]{key, }
+\item[{void $\ast$}]{value}
+\end{DoxyParamCaption}
+)}\label{group__structs_gaeb73501a575fbc9c4d8603456a05b204}
+
+
+Inserts a key/value pair in the hashmap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em key} & Key to associate to the value \\
+\hline
+\mbox{\tt in}  & {\em value} & Value to insert in the hashmap \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if insertion is succesful, 1 otherwise (e.\+g. key already present) 
+\end{DoxyReturn}

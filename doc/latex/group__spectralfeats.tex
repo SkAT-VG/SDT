@@ -1,0 +1,155 @@
+\hypertarget{group__spectralfeats}{}\section{Spectral audio descriptors}
+\label{group__spectralfeats}\index{Spectral audio descriptors@{Spectral audio descriptors}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{}typedef struct \hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} \hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats}\label{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a spectral features extractor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} $\ast$ \hyperlink{group__spectralfeats_ga7d1f2beebf0219377016b4e1a120ad9e}{S\+D\+T\+Spectral\+Feats\+\_\+new} (unsigned int size)
+\begin{DoxyCompactList}\small\item\em Instantiates a spectral features extractor. \end{DoxyCompactList}\item 
+void \hyperlink{group__spectralfeats_ga43c22dcd6dcdec53a7fa8f2c277e2120}{S\+D\+T\+Spectral\+Feats\+\_\+free} (\hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Destroys a spectral features extractor. \end{DoxyCompactList}\item 
+void \hyperlink{group__spectralfeats_gad410c59f8895ee4f504505dd6fe8dc3c}{S\+D\+T\+Spectral\+Feats\+\_\+set\+Overlap} (\hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the analysis window overlapping ratio. Accepted values go from 0.\+0 to 1.\+0, with 0.\+0 meaning no overlap and 1.\+0 meaning total overlap. \end{DoxyCompactList}\item 
+void \hyperlink{group__spectralfeats_ga6b0511211ad0aa2a49409bc881a74df3}{S\+D\+T\+Spectral\+Feats\+\_\+set\+Min\+Freq} (\hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the lower frequency bound for spectral analysis. Spectral bins below this frequency are ignored in the audio descriptors computation. \end{DoxyCompactList}\item 
+void \hyperlink{group__spectralfeats_ga6aaec8acdf52f62715c1622b325eec82}{S\+D\+T\+Spectral\+Feats\+\_\+set\+Max\+Freq} (\hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the upper frequency bound for spectral analysis. Spectral bins above this frequency are ignored in the audio descriptors computation. \end{DoxyCompactList}\item 
+int \hyperlink{group__spectralfeats_ga8f1bfac03bc113005a103140e3dcf935}{S\+D\+T\+Spectral\+Feats\+\_\+dsp} (\hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} $\ast$x, double $\ast$outs, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function for each sample to perform signal analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Spectral features extractor\+: statistical moments (centroid, spread, skewness, kurtosis), spectral flatness, spectral flux and an onset detection function based on rectified, whitened spectral flux. 
+
+\subsection{Function Documentation}
+\hypertarget{group__spectralfeats_ga8f1bfac03bc113005a103140e3dcf935}{}\index{Spectral audio descriptors@{Spectral audio descriptors}!S\+D\+T\+Spectral\+Feats\+\_\+dsp@{S\+D\+T\+Spectral\+Feats\+\_\+dsp}}
+\index{S\+D\+T\+Spectral\+Feats\+\_\+dsp@{S\+D\+T\+Spectral\+Feats\+\_\+dsp}!Spectral audio descriptors@{Spectral audio descriptors}}
+\subsubsection[{S\+D\+T\+Spectral\+Feats\+\_\+dsp(\+S\+D\+T\+Spectral\+Feats $\ast$x, double $\ast$outs, double in)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Spectral\+Feats\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Spectral\+Feats} $\ast$}]{x, }
+\item[{double $\ast$}]{outs, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__spectralfeats_ga8f1bfac03bc113005a103140e3dcf935}
+
+
+Signal processing routine. Call this function for each sample to perform signal analysis. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt out}  & {\em outs} & Pointer to an array of seven doubles, containing the algorithm outputs. Array members represent the following information respectively\+:
+\begin{DoxyEnumerate}
+\item Spectral centroid,
+\item Spectral spread,
+\item Spectral skewness,
+\item Spectral kurtosis,
+\item Spectral flatness,
+\item Spectral flux,
+\item Onset detection function (rectified and whitened spectral flux). 
+\end{DoxyEnumerate}\\
+\hline
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if output available (analysis window full), 0 otherwise 
+\end{DoxyReturn}
+\hypertarget{group__spectralfeats_ga43c22dcd6dcdec53a7fa8f2c277e2120}{}\index{Spectral audio descriptors@{Spectral audio descriptors}!S\+D\+T\+Spectral\+Feats\+\_\+free@{S\+D\+T\+Spectral\+Feats\+\_\+free}}
+\index{S\+D\+T\+Spectral\+Feats\+\_\+free@{S\+D\+T\+Spectral\+Feats\+\_\+free}!Spectral audio descriptors@{Spectral audio descriptors}}
+\subsubsection[{S\+D\+T\+Spectral\+Feats\+\_\+free(\+S\+D\+T\+Spectral\+Feats $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Spectral\+Feats\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Spectral\+Feats} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__spectralfeats_ga43c22dcd6dcdec53a7fa8f2c277e2120}
+
+
+Destroys a spectral features extractor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__spectralfeats_ga7d1f2beebf0219377016b4e1a120ad9e}{}\index{Spectral audio descriptors@{Spectral audio descriptors}!S\+D\+T\+Spectral\+Feats\+\_\+new@{S\+D\+T\+Spectral\+Feats\+\_\+new}}
+\index{S\+D\+T\+Spectral\+Feats\+\_\+new@{S\+D\+T\+Spectral\+Feats\+\_\+new}!Spectral audio descriptors@{Spectral audio descriptors}}
+\subsubsection[{S\+D\+T\+Spectral\+Feats\+\_\+new(unsigned int size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Spectral\+Feats}$\ast$ S\+D\+T\+Spectral\+Feats\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{size}
+\end{DoxyParamCaption}
+)}\label{group__spectralfeats_ga7d1f2beebf0219377016b4e1a120ad9e}
+
+
+Instantiates a spectral features extractor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Size of the analysis window, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__spectralfeats_ga6aaec8acdf52f62715c1622b325eec82}{}\index{Spectral audio descriptors@{Spectral audio descriptors}!S\+D\+T\+Spectral\+Feats\+\_\+set\+Max\+Freq@{S\+D\+T\+Spectral\+Feats\+\_\+set\+Max\+Freq}}
+\index{S\+D\+T\+Spectral\+Feats\+\_\+set\+Max\+Freq@{S\+D\+T\+Spectral\+Feats\+\_\+set\+Max\+Freq}!Spectral audio descriptors@{Spectral audio descriptors}}
+\subsubsection[{S\+D\+T\+Spectral\+Feats\+\_\+set\+Max\+Freq(\+S\+D\+T\+Spectral\+Feats $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Spectral\+Feats\+\_\+set\+Max\+Freq (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Spectral\+Feats} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__spectralfeats_ga6aaec8acdf52f62715c1622b325eec82}
+
+
+Sets the upper frequency bound for spectral analysis. Spectral bins above this frequency are ignored in the audio descriptors computation. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Maximum analyzed frequency, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__spectralfeats_ga6b0511211ad0aa2a49409bc881a74df3}{}\index{Spectral audio descriptors@{Spectral audio descriptors}!S\+D\+T\+Spectral\+Feats\+\_\+set\+Min\+Freq@{S\+D\+T\+Spectral\+Feats\+\_\+set\+Min\+Freq}}
+\index{S\+D\+T\+Spectral\+Feats\+\_\+set\+Min\+Freq@{S\+D\+T\+Spectral\+Feats\+\_\+set\+Min\+Freq}!Spectral audio descriptors@{Spectral audio descriptors}}
+\subsubsection[{S\+D\+T\+Spectral\+Feats\+\_\+set\+Min\+Freq(\+S\+D\+T\+Spectral\+Feats $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Spectral\+Feats\+\_\+set\+Min\+Freq (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Spectral\+Feats} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__spectralfeats_ga6b0511211ad0aa2a49409bc881a74df3}
+
+
+Sets the lower frequency bound for spectral analysis. Spectral bins below this frequency are ignored in the audio descriptors computation. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Minimum analyzed frequency, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__spectralfeats_gad410c59f8895ee4f504505dd6fe8dc3c}{}\index{Spectral audio descriptors@{Spectral audio descriptors}!S\+D\+T\+Spectral\+Feats\+\_\+set\+Overlap@{S\+D\+T\+Spectral\+Feats\+\_\+set\+Overlap}}
+\index{S\+D\+T\+Spectral\+Feats\+\_\+set\+Overlap@{S\+D\+T\+Spectral\+Feats\+\_\+set\+Overlap}!Spectral audio descriptors@{Spectral audio descriptors}}
+\subsubsection[{S\+D\+T\+Spectral\+Feats\+\_\+set\+Overlap(\+S\+D\+T\+Spectral\+Feats $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Spectral\+Feats\+\_\+set\+Overlap (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Spectral\+Feats} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__spectralfeats_gad410c59f8895ee4f504505dd6fe8dc3c}
+
+
+Sets the analysis window overlapping ratio. Accepted values go from 0.\+0 to 1.\+0, with 0.\+0 meaning no overlap and 1.\+0 meaning total overlap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Overlap ratio \mbox{[}0.\+0, 1.\+0\mbox{]} \\
+\hline
+\end{DoxyParams}

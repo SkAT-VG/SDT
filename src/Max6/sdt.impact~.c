@@ -1,51 +1,3 @@
-/** \file sdt.impact~.c
- * Max external for the simulation of impacts between solid objects.
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
-
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -115,18 +67,15 @@ void impact_free(t_impact *x) {
 
 void impact_assist(t_impact *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    switch (a) {
-      case 0:
-        sprintf(s, "(signal): External force applied on first object\n"
-                  "Object attributes and messages (see help patch)");
-        break;
-      case 1:
-        sprintf(s, "(signal): External force applied on second object");
-        break;
-    }
+    sprintf(s, "(signal): Input\n"
+               "stiffness (float): impact stiffness\n"
+               "dissipation (float): impact dissipation\n"
+               "shape (float): impact shape\n"
+               "contact0 (int): contact point of first object\n"
+               "contact1 (int): contact point of second object\n");
   } 
   else {
-    sprintf(s, "(signal): Pickup outputs");
+    sprintf(s, "(signal): Pickup displacements");
   }
 }
 
@@ -218,8 +167,8 @@ int C74_EXPORT main(void) {
   CLASS_ATTR_LONG(c, "contact1", 0, t_impact, contact1);
   
   CLASS_ATTR_FILTER_MIN(c, "stiffness", 0.0);
-  CLASS_ATTR_FILTER_CLIP(c, "dissipation", 0.0, 1.0);
-  CLASS_ATTR_FILTER_MIN(c, "shape", 0.0);
+  CLASS_ATTR_FILTER_MIN(c, "dissipation", 0.0);//CLIP(c, "dissipation", 0.0, 1.0);
+  CLASS_ATTR_FILTER_MIN(c, "shape", 1.0);
   CLASS_ATTR_FILTER_MIN(c, "contact0", 0);
   CLASS_ATTR_FILTER_MIN(c, "contact1", 0);
   

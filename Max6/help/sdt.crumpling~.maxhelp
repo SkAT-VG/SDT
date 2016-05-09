@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 1,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -52,8 +52,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -135,13 +135,13 @@
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 14.0,
 									"id" : "obj-8",
-									"linecount" : 21,
+									"linecount" : 20,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 7.0, 324.5, 445.0, 349.0 ],
+									"patching_rect" : [ 7.0, 324.5, 445.0, 332.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n\nATTRIBUTES\n- freqs (float, list): frequency of each mode, in Hz\n- decays (float, list): decay of each mode, in seconds\n- weights (float, list): weight of each mode, in 1/Kg\n- pickup[n] (list): modal gain masks for each pickup [0.0, 1.0]\n- fragmentSize (float): fraction of the whole object, used by the crumpling algorithm to simulate fragmentation [0.0, 1.0]\n- activeModes (int): number of currently active modes out of all the available ones.\n\nOUTPUT\n- none\n\nARGUMENTS\nArguments are mandatory\n- unique ID name of the modal object\n- number of available modes (int)\n- number of available pickup points (int)"
+									"text" : "INPUT\n- messages\n\nATTRIBUTES\n- freqs (float, list): frequency of each mode, in Hz\n- decays (float, list): decay of each mode, in seconds\n- pickup[n] (list): modal weight for each pickup, in 1/Kg\n- fragmentSize (float): fraction of the whole object, used by the crumpling algorithm to simulate fragmentation [0.0, 1.0]\n- activeModes (int): number of currently active modes out of all the available ones.\n\nOUTPUT\n- none\n\nARGUMENTS\nArguments are mandatory\n- unique ID name of the modal object\n- number of available modes (int)\n- number of available pickup points (int)"
 								}
 
 							}
@@ -566,9 +566,9 @@
 					"patching_rect" : [ 678.200012, 743.0, 588.0, 42.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
-					"presentation_rect" : [ 432.680542, 358.5, 349.0, 59.0 ],
+					"presentation_rect" : [ 432.680542, 358.5, 337.5, 59.0 ],
 					"style" : "",
-					"text" : "sdt.modal objectcr 3 2 @freqs 500. 1000. 1500 @decays 0.06 0.03 0.01 @weights 50. 50. 50. @pickup0 1. 1. 1. @pickup1 1. 1. 1. @activeModes 3"
+					"text" : "sdt.modal objectcr 3 2 @freqs 500. 1000. 1500 @decays 0.06 0.03 0.01 @pickup0 50. 50. 50. @activeModes 3"
 				}
 
 			}
@@ -868,14 +868,13 @@
 					"fontname" : "Arial",
 					"fontsize" : 9.0,
 					"id" : "obj-55",
-					"linecount" : 2,
 					"maxclass" : "newobj",
 					"numinlets" : 6,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 444.0, 943.5, 71.0, 29.0 ],
+					"patching_rect" : [ 444.0, 943.5, 92.0, 19.0 ],
 					"style" : "",
-					"text" : "scale 0. 100. 0.1 4. 1.02"
+					"text" : "scale 0. 100. 1. 4. 1."
 				}
 
 			}
@@ -946,26 +945,11 @@
 					"fontface" : 3,
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 9.0,
-					"id" : "obj-108",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 558.5625, 1176.0, 117.0, 17.0 ],
-					"style" : "",
-					"text" : "displacement @pickup1 "
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 9.0,
 					"id" : "obj-107",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 386.0, 1176.0, 171.0, 17.0 ],
+					"patching_rect" : [ 552.0625, 1176.0, 171.0, 17.0 ],
 					"style" : "",
 					"text" : "displacement @pickup0 "
 				}
@@ -1032,11 +1016,11 @@
 					"presentation_rect" : [ 498.680542, 503.5, 49.0, 95.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
-							"data" : [ 5, "obj-224", "flonum", "float", 700.0, 5, "obj-76", "flonum", "float", 0.003, 5, "obj-223", "flonum", "float", 80.0, 5, "obj-222", "flonum", "float", 700.0, 5, "obj-221", "flonum", "float", 1120.0, 5, "obj-220", "flonum", "float", 0.002, 5, "obj-211", "flonum", "float", 80.0, 5, "obj-210", "flonum", "float", 1.6, 5, "obj-209", "flonum", "float", 2170.0, 5, "obj-57", "flonum", "float", 0.002, 5, "obj-207", "flonum", "float", 80.0, 5, "obj-206", "flonum", "float", 3.1, 5, "obj-219", "flonum", "float", 1.65, 5, "obj-218", "flonum", "float", 0.77, 5, "obj-216", "flonum", "float", 1.0, 5, "obj-175", "number", "int", 3, 5, "obj-17", "multislider", "list", 50.0, 5, "obj-15", "multislider", "list", 61.111111, 5, "obj-14", "multislider", "list", 1.851852, 5, "obj-23", "multislider", "list", 21.296297, 5, "obj-299", "multislider", "list", 8909, 5, "obj-30", "number~", "list", 0.0, 5, "obj-26", "multislider", "list", 8.333333, 5, "obj-45", "multislider", "list", 29.629629, 5, "obj-54", "multislider", "list", 51.851852, 5, "obj-19", "number", "int", 1, 5, "obj-65", "toggle", "int", 0, 5, "obj-21", "multislider", "list", 83.333336 ]
+							"data" : [ 5, "obj-224", "flonum", "float", 700.0, 5, "obj-76", "flonum", "float", 0.003, 5, "obj-223", "flonum", "float", 80.0, 5, "obj-222", "flonum", "float", 700.0, 5, "obj-221", "flonum", "float", 1120.0, 5, "obj-220", "flonum", "float", 0.002, 5, "obj-211", "flonum", "float", 80.0, 5, "obj-210", "flonum", "float", 1.6, 5, "obj-209", "flonum", "float", 2170.0, 5, "obj-57", "flonum", "float", 0.002, 5, "obj-207", "flonum", "float", 80.0, 5, "obj-206", "flonum", "float", 3.1, 5, "obj-219", "flonum", "float", 1.65, 5, "obj-218", "flonum", "float", 0.77, 5, "obj-216", "flonum", "float", 1.0, 5, "obj-175", "number", "int", 3, 5, "obj-17", "multislider", "list", 50.0, 5, "obj-15", "multislider", "list", 40.0, 5, "obj-14", "multislider", "list", 1.851852, 5, "obj-23", "multislider", "list", 21.296297, 5, "obj-299", "multislider", "list", 8909, 5, "obj-30", "number~", "list", 0.0, 5, "obj-26", "multislider", "list", 8.333333, 5, "obj-45", "multislider", "list", 29.629629, 5, "obj-54", "multislider", "list", 51.851852, 5, "obj-19", "number", "int", 1, 5, "obj-65", "toggle", "int", 0, 5, "obj-21", "multislider", "list", 83.333336 ]
 						}
 , 						{
 							"number" : 2,
-							"data" : [ 5, "obj-224", "flonum", "float", 400.0, 5, "obj-76", "flonum", "float", 0.003, 5, "obj-223", "flonum", "float", 80.0, 5, "obj-222", "flonum", "float", 400.0, 5, "obj-221", "flonum", "float", 640.0, 5, "obj-220", "flonum", "float", 0.002, 5, "obj-211", "flonum", "float", 80.0, 5, "obj-210", "flonum", "float", 1.6, 5, "obj-209", "flonum", "float", 1240.0, 5, "obj-57", "flonum", "float", 0.002, 5, "obj-207", "flonum", "float", 80.0, 5, "obj-206", "flonum", "float", 3.1, 5, "obj-219", "flonum", "float", 1.65, 5, "obj-218", "flonum", "float", 0.77, 5, "obj-216", "flonum", "float", 1.0, 5, "obj-175", "number", "int", 3, 5, "obj-17", "multislider", "list", 50.0, 5, "obj-15", "multislider", "list", 50.0, 5, "obj-14", "multislider", "list", 1.851852, 5, "obj-23", "multislider", "list", 49.074074, 5, "obj-299", "multislider", "list", 1000, 5, "obj-30", "number~", "list", 0.0, 5, "obj-26", "multislider", "list", 11.111111, 5, "obj-45", "multislider", "list", 15.740741, 5, "obj-54", "multislider", "list", 100.0, 5, "obj-19", "number", "int", 2, 5, "obj-65", "toggle", "int", 0, 5, "obj-21", "multislider", "list", 83.333336 ]
+							"data" : [ 5, "obj-224", "flonum", "float", 400.0, 5, "obj-76", "flonum", "float", 0.003, 5, "obj-223", "flonum", "float", 80.0, 5, "obj-222", "flonum", "float", 400.0, 5, "obj-221", "flonum", "float", 640.0, 5, "obj-220", "flonum", "float", 0.002, 5, "obj-211", "flonum", "float", 80.0, 5, "obj-210", "flonum", "float", 1.6, 5, "obj-209", "flonum", "float", 1240.0, 5, "obj-57", "flonum", "float", 0.002, 5, "obj-207", "flonum", "float", 80.0, 5, "obj-206", "flonum", "float", 3.1, 5, "obj-219", "flonum", "float", 1.65, 5, "obj-218", "flonum", "float", 0.77, 5, "obj-216", "flonum", "float", 1.0, 5, "obj-175", "number", "int", 3, 5, "obj-17", "multislider", "list", 50.0, 5, "obj-15", "multislider", "list", 13.636364, 5, "obj-14", "multislider", "list", 1.851852, 5, "obj-23", "multislider", "list", 49.074074, 5, "obj-299", "multislider", "list", 1000, 5, "obj-30", "number~", "list", 0.0, 5, "obj-26", "multislider", "list", 11.111111, 5, "obj-45", "multislider", "list", 15.740741, 5, "obj-54", "multislider", "list", 100.0, 5, "obj-19", "number", "int", 2, 5, "obj-65", "toggle", "int", 0, 5, "obj-21", "multislider", "list", 83.333336 ]
 						}
 , 						{
 							"number" : 3,
@@ -1061,14 +1045,14 @@
 					"linecount" : 3,
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
-					"patching_rect" : [ 267.0, 1117.5, 297.0, 59.0 ],
+					"numoutlets" : 2,
+					"outlettype" : [ "signal", "signal" ],
+					"patching_rect" : [ 267.0, 1117.5, 296.0, 59.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 3,
 					"presentation_rect" : [ 34.0, 661.5, 349.0, 59.0 ],
 					"style" : "",
-					"text" : "sdt.impact~ hammercr objectcr 3 @stiffness 10000000 @shape 1.5 @dissipation 0.01 @contact0 0 @contact1 0"
+					"text" : "sdt.impact~ hammercr objectcr 2 @stiffness 10000000 @shape 1.5 @dissipation 0.01 @contact0 0 @contact1 0"
 				}
 
 			}
@@ -1390,7 +1374,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 572.180542, 335.5, 77.0, 19.0 ],
 					"style" : "",
-					"text" : "prepend weights"
+					"text" : "prepend pickup0"
 				}
 
 			}
@@ -1570,8 +1554,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2011,8 +1995,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2451,8 +2435,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2926,7 +2910,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 432.680542, 290.5, 66.0, 17.0 ],
 					"style" : "",
-					"text" : "weights_fact"
+					"text" : "pickup0_fact"
 				}
 
 			}
@@ -3100,9 +3084,9 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1302.666504, 316.5, 45.0, 28.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 646.389038, 290.5, 48.0, 17.0 ],
+					"presentation_rect" : [ 646.389038, 290.5, 55.0, 17.0 ],
 					"style" : "",
-					"text" : "weight_3"
+					"text" : "pickup0_3"
 				}
 
 			}
@@ -3135,9 +3119,9 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1255.229004, 316.5, 45.0, 28.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 574.951538, 290.5, 48.0, 17.0 ],
+					"presentation_rect" : [ 574.951538, 290.5, 55.0, 17.0 ],
 					"style" : "",
-					"text" : "weight_2"
+					"text" : "pickup0_2"
 				}
 
 			}
@@ -3170,9 +3154,9 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 1207.791504, 316.5, 45.0, 28.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 508.514038, 290.5, 48.0, 17.0 ],
+					"presentation_rect" : [ 508.514038, 290.5, 55.0, 17.0 ],
 					"style" : "",
-					"text" : "weight_1"
+					"text" : "pickup0_1"
 				}
 
 			}
@@ -3722,13 +3706,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 743.0, 86.0, 214.0, 117.0 ],
+						"rect" : [ 743.0, 112.0, 214.0, 117.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
@@ -3832,8 +3816,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 1,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -4459,7 +4443,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 140.25, 619.5, 54.0, 19.0 ],
 					"style" : "",
-					"text" : "1.905568"
+					"text" : "2.2"
 				}
 
 			}
@@ -5325,16 +5309,6 @@
 					"destination" : [ "obj-29", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 554.5, 1248.25, 435.0, 1248.25 ],
-					"source" : [ "obj-63", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-29", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
 					"source" : [ "obj-63", 1 ]
 				}
 
@@ -5495,7 +5469,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

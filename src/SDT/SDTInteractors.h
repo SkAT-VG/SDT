@@ -1,94 +1,155 @@
-/** \file SDTInteractors.h
- * Interactions between solid objects. 
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
+/** @file SDTInteractors.h
+@defgroup interactors SDTInteractors.h: interactions between solids
+These models simulate basic mechanical interactions that can occur
+between two resonators: impacts and friction.
+@{ */
 
 #ifndef SDT_INTERACTORS_H
 #define SDT_INTERACTORS_H
 
+/** @defgroup interactor Interactor interface
+This abstract object acts as a generic interface implemented by all interactors.
+It contains two pointers to the interacting objects, information
+on the chosen contact points, and an algorithm that, after reading the state
+of the objects (displacement and velocity) at the specified contact points, accordingly
+computes a force to apply to those contact points.
+The generic interactor should never be directly instantiated, instead it should be
+obtained through the specific SDTImpact and SDTFriction constructors.
+@{ */
+
+/** @brief Opaque data structure representing the interactor interface */
 typedef struct SDTInteractor SDTInteractor;
 
+/** @brief Sets the pointer to the first interacting resonator
+@param[in] p Pointer to a SDTResonator instance */
 extern void SDTInteractor_setFirstResonator(SDTInteractor *x, SDTResonator *p);
+
+/** @brief Sets the pointer to the second interacting resonator
+@param[in] p Pointer to a SDTResonator instance */
 extern void SDTInteractor_setSecondResonator(SDTInteractor *x, SDTResonator *p);
+
+/** @brief Sets the contact point index for the first resonator
+@param[in] Number of the first resonator pickup chosen for interaction */
 extern void SDTInteractor_setFirstPoint(SDTInteractor *x, long l);
+
+/** @brief Sets the contact point index for the second resonator
+@param[in] Number of the second resonator pickup chosen for interaction */
 extern void SDTInteractor_setSecondPoint(SDTInteractor *x, long l);
+
+/** @brief Computes a force to apply to the contact points,
+based on the resonators' state at the chosen pickups */ 
+extern double SDTInteractor_computeForce(SDTInteractor *x);
+
+/** @brief Signal processing routine.
+Convenience method to compute the interaction force, apply it to the resonators
+and update their state. This method already calls the DSP routines of the two
+resonators, so be sure not to call them if you use this method. */
 extern void SDTInteractor_dsp(SDTInteractor *x, double f0, double f1, double *outs);
 
-//-------------------------------------------------------------------------------------//
+/** @} */
 
+/** @defgroup impact Impact
+Simulates a non-linear impact, computing impact force from the total compression,
+namely the relative displacement between the two contact points. The algorithm is based
+on the Hunt-Crossley impact model, with the resulting force being the sum of an
+elastic component and a dissipative term.
+
+The elastic component is parameterized by the force stiffness (or elasticity)
+and a non-linear exponent which models the local geometry around the contact area.
+The linear dissipative component is parameterized by a dissipation (damping) weight.
+@{ */
+
+/** @brief Opaque data structure representing the internal state of an impact interactor. */
 typedef struct SDTImpact SDTImpact;
 
+/** @brief Object constructor.
+@return Pointer to a SDTInteractor instance, configured for the impact case */
 extern SDTInteractor *SDTImpact_new();
+
+/** @brief Object destructor.
+param[in] Pointer to a SDTInteractor instance, configured for the impact case. */
 extern void SDTImpact_free(SDTInteractor *x);
+
+/** @brief Sets the impact stiffness.
+@param[in] f Impact stiffness (>> 1) */
 extern void SDTImpact_setStiffness(SDTInteractor *x, double f);
+
+/** @brief Sets the dissipation coefficient.
+@param[in] f Dissipation coefficient, positive scalar */
 extern void SDTImpact_setDissipation(SDTInteractor *x, double f);
+
+/** @brief Sets the shape factor.
+@param[in] f Shape factor. Must be > 1, with 1.5 = spherical shape. Optimal range [1,4] */
 extern void SDTImpact_setShape(SDTInteractor *x, double f);
-extern void SDTImpact_setLinear(SDTInteractor *x);
-extern void SDTImpact_setNonlinear(SDTInteractor *x);
-extern void SDTImpact_linear(SDTInteractor *x);
-extern void SDTImpact_nonlinear(SDTInteractor *x);
 
-//-------------------------------------------------------------------------------------//
+/** @} */
 
+/** @defgroup friction Friction
+Elasto-plastic friction model, computing friction force from the relative velocity
+between the two contact points. The resulting force is the sum of four components:
+an elastic term, an internal dissipation term, a viscosity term,
+and finally a random term representing noise related to the surface roughness.
+
+More subtle phenomena, such as pre-sliding behavior
+(gradual increase of the friction force for very small displacements),
+are simulated by the "plastic" part of the algorithm and parametrized
+by several other values, such as static/dynamic friction coefficients,
+break-away and Stribeck velocity, and so on.
+
+These phenomena are mostly related to the transients and are worth being modeled
+despite the added complexity of the algorithm because of their importance
+for a realistic simulation of friction sounds.
+@{ */
+
+/** @brief Opaque data structure representing the internal state of a friction interactor. */
 typedef struct SDTFriction SDTFriction;
 
+/** @brief Object constructor.
+@return Pointer to a SDTInteractor instance, configured for the friction case */
 extern SDTInteractor *SDTFriction_new();
+
+/** @brief Object destructor.
+param[in] Pointer to a SDTInteractor instance, configured for the friction case. */
 extern void SDTFriction_free(SDTInteractor *x);
+
+/** @brief Sets the perpendicular force (pressure) applied to the two sliding resonators.
+@param[in] f Normal force, in N */
 extern void SDTFriction_setNormalForce(SDTInteractor *x, double f);
+
+/** @brief Sets the Stribeck velocity.
+@param[in] f Stribeck velocity, in m/s */
 extern void SDTFriction_setStribeckVelocity(SDTInteractor *x, double f);
+
+/** @brief Sets the static friction coefficient.
+@param[in] f Static friction coefficient [0,1] */
 extern void SDTFriction_setStaticCoefficient(SDTInteractor *x, double f);
+
+/** @brief Sets the dynamic friction coefficient.
+@param[in] f Dynamic friction coefficient [0,1]. Should be less than the static friction coefficient */
 extern void SDTFriction_setDynamicCoefficient(SDTInteractor *x, double f);
-extern void SDTFriction_setStiffness(SDTInteractor *x, double f);
-extern void SDTFriction_setDissipation(SDTInteractor *x, double f);
-extern void SDTFriction_setViscosity(SDTInteractor *x, double f);
-extern void SDTFriction_setNoisiness(SDTInteractor *x, double f);
+
+/** @brief Sets the break away coefficient.
+@param[in] f Break away coefficient, positive scalar */
 extern void SDTFriction_setBreakAway(SDTInteractor *x, double f);
-extern void SDTFriction_setStatic(SDTInteractor *x);
-extern void SDTFriction_setDynamic(SDTInteractor *x);
-extern void SDTFriction_static(SDTInteractor *x);
-extern void SDTFriction_dynamic(SDTInteractor *x);
+
+/** @brief Sets the contact stiffness.
+@param[in] f Contact stiffness, positive scalar */
+extern void SDTFriction_setStiffness(SDTInteractor *x, double f);
+
+/** @brief Sets the dissipation coefficient.
+@param[in] f Dissipation coefficient, positive scalar */
+extern void SDTFriction_setDissipation(SDTInteractor *x, double f);
+
+/** @brief Sets the contact viscosity.
+@param[in] f Contact viscosity, positive scalar */
+extern void SDTFriction_setViscosity(SDTInteractor *x, double f);
+
+/** @brief Sets the surface roughness.
+@param[in] f Surface roughness, positive scalar */
+extern void SDTFriction_setNoisiness(SDTInteractor *x, double f);
+
+/** @} */
 
 #endif
+
+/** @} */

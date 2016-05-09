@@ -1,51 +1,3 @@
-/** \file SDTFilters.c
- * Useful DSP routines and algorithms for signal filtering.
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
-
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
@@ -150,16 +102,16 @@ void SDTEnvelope_free(SDTEnvelope *x) {
 void SDTEnvelope_setAttack(SDTEnvelope *x, double a) {
   double w;
   
-  w = SDT_fclip(SDT_timeStep / a, 0.0, 0.5);
-  x->a1a = -exp(-SDT_TWOPI * w);
+  w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / a, 0.0, 0.5);
+  x->a1a = -exp(w);
   x->b0a = 1.0 + x->a1a;
 }
 
 void SDTEnvelope_setRelease(SDTEnvelope *x, double r) {
   double w;
   
-  w = SDT_TWOPI * SDT_fclip(SDT_timeStep / r, 0.0, 0.5);
-  x->a1r = -exp(-SDT_TWOPI * w);
+  w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / r, 0.0, 0.5);
+  x->a1r = -exp(w);
   x->b0r = 1.0 + x->a1r;
 }
 
@@ -195,42 +147,40 @@ void SDTTwoPoles_free(SDTTwoPoles *x) {
 }
 
 void SDTTwoPoles_lowpass(SDTTwoPoles *x, double fc) {
-  double w, gain;
+  double d;
   
-  w = SDT_fclip(fc * SDT_timeStep, 0.0, 0.5);
-  x->a2 = -exp(-SDT_TWOPI * w);
-  gain = 1.0 + x->a2;
-  x->a1 = x->a2 * gain;
-  x->b0 = gain * gain;
+  d = -exp(-SDT_TWOPI * SDT_fclip(fc * SDT_timeStep, 0.0, 0.5));
+  x->a1 = 2.0 * d;
+  x->a2 = d * d;
+  x->b0 = (1.0 + d) * (1.0 + d);
 }
 
 void SDTTwoPoles_highpass(SDTTwoPoles *x, double fc) {
-  double w, gain;
+  double d;
   
-  w = SDT_TWOPI * SDT_fclip(fc * SDT_timeStep, 0.0, 0.5);
-  x->a2 = exp(-SDT_TWOPI * (0.5 - w));
-  gain = 1.0 - x->a2;
-  x->a1 = x->a2 * gain;
-  x->b0 = gain * gain;
+  d = exp(-SDT_TWOPI * (0.5 - SDT_fclip(fc * SDT_timeStep, 0.0, 0.5)));
+  x->a1 = 2.0 * d;
+  x->a2 = d * d; 
+  x->b0 = (1.0 - d) * (1.0 - d);
 }
 
 void SDTTwoPoles_resonant(SDTTwoPoles *x, double fc, double q) {
   double w, r;
   
-  w = SDT_fclip(fc * SDT_timeStep, 0.0, 0.5);
+  w = SDT_TWOPI * SDT_fclip(fc * SDT_timeStep, 0.0, 0.5);
   r = 1.0 - 0.5 / fmax(0.5, q);
-  x->a1 = -2.0 * r * cos(SDT_TWOPI * w);
+  x->a1 = -2.0 * r * cos(w);
   x->a2 = r * r;
-  x->b0 = (1.0 - r) * sqrt(1.0 - 2 * r * cos(2 * SDT_TWOPI * w) + r * r);
+  x->b0 = (1.0 - r) * sqrt(1.0 - 2 * r * cos(2.0 * w) + r * r);
 }
 
 double SDTTwoPoles_dsp(SDTTwoPoles *x, double in) {
-  double tmp;
+  double result;
   
-  tmp = x->y1;
-  x->y1 = x->b0 * in - x->a1 * x->y1 - x->a2 * x->y2;
-  x->y2 = tmp;
-  return x->y1;
+  result = x->b0 * in - x->a1 * x->y1 - x->a2 * x->y2;
+  x->y2 = x->y1;
+  x->y1 = result;
+  return result;
 }
 
 //-------------------------------------------------------------------------------------//
@@ -381,17 +331,17 @@ void SDTComb_free(SDTComb *x) {
   free(x);
 }
 
-void SDTComb_setXDelay(SDTComb *x, long l) {
-  SDTDelay_setDelay(x->xDelay, l);
+void SDTComb_setXDelay(SDTComb *x, double f) {
+  SDTDelay_setDelay(x->xDelay, f);
 }
 
-void SDTComb_setYDelay(SDTComb *x, long l) {
-  SDTDelay_setDelay(x->yDelay, l);
+void SDTComb_setYDelay(SDTComb *x, double f) {
+  SDTDelay_setDelay(x->yDelay, f);
 }
 
-void SDTComb_setXYDelay(SDTComb *x, long l) {
-  SDTDelay_setDelay(x->xDelay, l);
-  SDTDelay_setDelay(x->yDelay, l);
+void SDTComb_setXYDelay(SDTComb *x, double f) {
+  SDTDelay_setDelay(x->xDelay, f);
+  SDTDelay_setDelay(x->yDelay, f);
 }
 
 void SDTComb_setXGain(SDTComb *x, double f) {
@@ -457,9 +407,9 @@ double SDTWaveguide_getRevOut(SDTWaveguide *x) {
   return x->revThru;
 }
 
-void SDTWaveguide_setDelay(SDTWaveguide *x, long l) {
-  SDTDelay_setDelay(x->fwdDelay, l);
-  SDTDelay_setDelay(x->revDelay, l);
+void SDTWaveguide_setDelay(SDTWaveguide *x, double f) {
+  SDTDelay_setDelay(x->fwdDelay, f);
+  SDTDelay_setDelay(x->revDelay, f);
 }
 
 void SDTWaveguide_setFwdFeedback(SDTWaveguide *x, double f) {

@@ -1,51 +1,3 @@
-/** \file SDTLiquids.c
- * Physical models for bubbling and flowing liquids. 
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
-
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
@@ -59,31 +11,30 @@
 #define MAX_RATE   100000.0
 
 struct SDTBubble {
-  SDTTwoPoles *filter;
   double radius, depth, riseFactor,
-         amp, decay, freq, freqRise,
-         phase, time;
+         amp, decay, gain, phaseStep, phaseRise,
+         phase, out, lastOut;
 };
 
 SDTBubble *SDTBubble_new() {
   SDTBubble *x;
   
   x = (SDTBubble *)malloc(sizeof(SDTBubble));
-  x->filter = SDTTwoPoles_new();
   x->radius = 1.0;
   x->depth = 0.0;
   x->riseFactor = 0.0;
   x->amp = 0.0;
   x->decay = 0.0;
-  x->freq = 0.0;
-  x->freqRise = 0.0;
+  x->gain = 0.0;
+  x->phaseStep = 0.0;
+  x->phaseRise = 0.0;
   x->phase = 0.0;
-  x->time = 0.0;
+  x->out = 0.0;
+  x->lastOut = 0.0;
   return x;
 }
 
 void SDTBubble_free(SDTBubble *x) {
-  SDTTwoPoles_free(x->filter);
   free(x);
 }
 
@@ -100,12 +51,16 @@ void SDTBubble_setRiseFactor(SDTBubble *x, double f) {
 }
 
 void SDTBubble_update(SDTBubble *x) {
-  x->amp = pow(x->radius / MAX_RADIUS, 1.5) * x->depth;
-  x->decay = 0.13 / x->radius + 0.0072 * pow(x->radius, -1.5);
-  x->freq = 3.0 / x->radius;
-  SDTTwoPoles_lowpass(x->filter, x->freq);
-  x->freqRise = x->decay * x->freq * x->riseFactor;
-  x->time = 0.0;
+  double pRadius;
+  
+  x->lastOut = x->out;
+  pRadius = x->radius * sqrt(x->radius);
+  x->amp = 17.2133 * pRadius * x->depth;
+  x->decay = 0.13 / x->radius + 0.0072 / pRadius;
+  x->gain = exp(-x->decay * SDT_timeStep);
+  x->phaseStep = 3.0 / x->radius * SDT_timeStep;
+  x->phaseRise = x->phaseStep * x->decay * x->riseFactor * SDT_timeStep; 
+  x->phase = 0.0;
 }
 
 void SDTBubble_normAmp(SDTBubble *x) {
@@ -113,13 +68,15 @@ void SDTBubble_normAmp(SDTBubble *x) {
 }
 
 double SDTBubble_dsp(SDTBubble *x) {
-  double envelope;
+  double alpha;
   
-  envelope = SDTTwoPoles_dsp(x->filter, x->amp * exp(-x->decay * x->time));
-  x->phase += (x->freq + x->freqRise * x->time) * SDT_timeStep;
-  x->phase -= (long)x->phase;
-  x->time += SDT_timeStep;
-  return envelope * sin(SDT_TWOPI * x->phase);
+  if (x->amp < SDT_QUIET && x->phase > 1.0) return 0.0;
+  alpha = x->phase < 1.0 ? x->phase : 1.0;
+  x->out = (1.0 - alpha) * x->lastOut + alpha * x->amp * sin(SDT_TWOPI * x->phase);
+  x->phase += x->phaseStep;
+  x->phaseStep += x->phaseRise;
+  x->amp *= x->gain;
+  return x->out;
 }
 
 //-------------------------------------------------------------------------------------//
@@ -168,34 +125,17 @@ void SDTFluidFlow_free(SDTFluidFlow *x) {
   free(x);
 }
 
-void SDTFluidFlow_updateRadii(SDTFluidFlow *x) {
-  double radius;
-  int i;
-  
-  for (i = 0; i < x->nBubbles; i++) {
-    radius = SDT_scale(i + 0.5, 0.0, x->nBubbles, x->minRadius, x->maxRadius, x->expRadius);
-    SDTBubble_setRadius(x->bubbles[i], radius);
-  }
-}
-
-void SDTFluidFlow_updateGain(SDTFluidFlow *x) {
-  x->gain = MAX_RADIUS / x->maxRadius;
-}
-
 void SDTFluidFlow_setMinRadius(SDTFluidFlow *x, double f) {
     x->minRadius = SDT_fclip(f, MIN_RADIUS, x->maxRadius);
-    SDTFluidFlow_updateRadii(x);
 }
 
 void SDTFluidFlow_setMaxRadius(SDTFluidFlow *x, double f) {
 	x->maxRadius = SDT_fclip(f, x->minRadius, MAX_RADIUS);
-	SDTFluidFlow_updateGain(x);
-	SDTFluidFlow_updateRadii(x);
+	x->gain = MAX_RADIUS / x->maxRadius;
 }
 
 void SDTFluidFlow_setExpRadius(SDTFluidFlow *x, double f) {
 	x->expRadius = SDT_fclip(f, 0.0, MAX_EXP);
-	SDTFluidFlow_updateRadii(x);
 }
 
 void SDTFluidFlow_setMinDepth(SDTFluidFlow *x, double f) {
@@ -220,25 +160,34 @@ void SDTFluidFlow_setRiseCutoff(SDTFluidFlow *x, double f) {
 
 void SDTFluidFlow_setAvgRate(SDTFluidFlow *x, double f) {
 	x->avgRate = SDT_fclip(f, 0.0, MAX_RATE);
-	x->success = x->avgRate / x->nBubbles * SDT_timeStep;
+	x->success = x->avgRate * SDT_timeStep;
 }
 
 double SDTFluidFlow_dsp(SDTFluidFlow *x) {
-  SDTBubble *b;
-  double result, depth, riseFactor;
+  SDTBubble *bubble;
+  double minAmp, radius, depth, riseFactor, result;
   int i;
-    
-  result = 0;
-  for (i = 0; i < x->nBubbles; i++) {
-    b = x->bubbles[i];
-    if (SDT_frand() < x->success) {
-      depth = SDT_scale(rand(), 0.0, RAND_MAX, x->minDepth, x->maxDepth, x->expDepth);
-      riseFactor = depth > x->riseCutoff ? x->riseFactor : 0.0;
-      SDTBubble_setDepth(b, depth);
-      SDTBubble_setRiseFactor(b, riseFactor);
-      SDTBubble_update(b);
+
+  if (SDT_frand() < x->success) {
+    minAmp = x->bubbles[0]->amp;
+    bubble = x->bubbles[0];
+    for (i = 1; i < x->nBubbles; i++) {
+      if (x->bubbles[i]->amp < minAmp) {
+        minAmp = x->bubbles[i]->amp;
+        bubble = x->bubbles[i];
+      }
     }
-    result += SDTBubble_dsp(b);
+    radius = SDT_scale(rand(), 0.0, RAND_MAX, x->minRadius, x->maxRadius, x->expRadius);
+    depth = SDT_scale(rand(), 0.0, RAND_MAX, x->minDepth, x->maxDepth, x->expDepth);
+    riseFactor = depth > x->riseCutoff ? x->riseFactor : 0.0;
+    SDTBubble_setRadius(bubble, radius);
+    SDTBubble_setDepth(bubble, depth);
+    SDTBubble_setRiseFactor(bubble, riseFactor);
+    SDTBubble_update(bubble);
+  }
+  result = 0.0;
+  for (i = 0; i < x->nBubbles; i++) { 
+    result += SDTBubble_dsp(x->bubbles[i]);
   }
   result *= x->gain;
   return result;

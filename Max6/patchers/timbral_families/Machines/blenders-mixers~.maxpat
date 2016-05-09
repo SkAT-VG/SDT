@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -38,6 +38,19 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 2,
+					"numoutlets" : 1,
+					"outlettype" : [ "signal" ],
+					"patching_rect" : [ 491.0, 668.5, 45.0, 20.0 ],
+					"style" : "",
+					"text" : "*~ 1000"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-84",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -62,7 +75,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 54.0, 446.0, 423.0, 66.0 ],
 					"style" : "",
-					"text" : "sdt.modal blendmodal 4 1 @freqs 800 3100 4500 6000 @decays 0.0005 0.0004 0.0004 0.0007 @weights 500 1200 2000 2500 @pickup0 1 1 1 1"
+					"text" : "sdt.modal blendmodal 4 1 @freqs 800 3100 4500 6000 @decays 0.0005 0.0004 0.0004 0.0007 @pickup0 500 1200 2000 2500"
 				}
 
 			}
@@ -214,8 +227,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -791,8 +804,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -943,7 +956,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 491.0, 673.5, 92.0, 20.0 ],
+					"patching_rect" : [ 489.0, 696.5, 92.0, 20.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1079,8 +1092,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1166,6 +1179,7 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-39",
+									"int" : 1,
 									"maxclass" : "gswitch2",
 									"numinlets" : 2,
 									"numoutlets" : 2,
@@ -1558,9 +1572,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 54.0, 519.5, 72.0, 20.0 ],
+					"patching_rect" : [ 54.0, 519.5, 58.0, 20.0 ],
 					"style" : "",
-					"text" : "strike -0.4 0."
+					"text" : "strike 0 -2."
 				}
 
 			}
@@ -1581,7 +1595,7 @@
 			}
 , 			{
 				"box" : 				{
-					"attr" : "weights",
+					"attr" : "pickup0",
 					"id" : "obj-9",
 					"maxclass" : "attrui",
 					"numinlets" : 1,
@@ -1652,13 +1666,14 @@
 					"fontface" : 3,
 					"fontsize" : 16.0,
 					"id" : "obj-73",
+					"linecount" : 3,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 491.0, 542.0, 268.0, 28.0 ],
+					"patching_rect" : [ 491.0, 542.0, 141.5, 66.0 ],
 					"style" : "",
-					"text" : "sdt.scraping~ @force 20 @grain 1"
+					"text" : "sdt.scraping~ @force 0.1 @grain 1"
 				}
 
 			}
@@ -1675,7 +1690,7 @@
 					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 54.0, 615.0, 456.0, 47.0 ],
 					"style" : "",
-					"text" : "sdt.impact~ blendinertial blendmodal 2 @stiffness 10000000. @shape 0.95 @dissipation 0.05"
+					"text" : "sdt.impact~ blendinertial blendmodal 2 @stiffness 10000000. @shape 1. @dissipation 0.05"
 				}
 
 			}
@@ -1753,7 +1768,7 @@
 					"destination" : [ "obj-37", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 500.5, 697.5, 641.75, 697.5, 641.75, 568.5, 661.75, 568.5 ],
+					"midpoints" : [ 498.5, 697.5, 641.75, 697.5, 641.75, 568.5, 661.75, 568.5 ],
 					"source" : [ "obj-18", 0 ]
 				}
 
@@ -1790,6 +1805,15 @@
 					"destination" : [ "obj-18", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-3", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
 					"source" : [ "obj-34", 1 ]
 				}
 
@@ -1799,7 +1823,7 @@
 					"destination" : [ "obj-18", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 15.5, 668.25, 500.5, 668.25 ],
+					"midpoints" : [ 15.5, 671.0, 495.0, 671.0, 495.0, 684.0, 498.5, 684.0 ],
 					"source" : [ "obj-36", 0 ]
 				}
 
@@ -2067,12 +2091,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "~/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.dcmotor~.mxo",
 				"type" : "iLaX"
 			}
@@ -2093,7 +2111,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

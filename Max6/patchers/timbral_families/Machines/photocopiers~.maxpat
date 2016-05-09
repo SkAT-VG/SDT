@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -62,8 +62,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -316,7 +316,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 342.0, 456.0, 50.0, 20.0 ],
 					"style" : "",
-					"text" : "0."
+					"text" : "1."
 				}
 
 			}
@@ -331,8 +331,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -847,8 +847,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1376,7 +1376,7 @@
 					"outlettype" : [ "signal" ],
 					"patching_rect" : [ 417.0, 512.5, 157.0, 47.0 ],
 					"style" : "",
-					"text" : "sdt.scraping~ @force 10 @grain 1"
+					"text" : "sdt.scraping~ @force 20 @grain 1"
 				}
 
 			}
@@ -1515,7 +1515,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 239.5, 290.0, 375.0, 66.0 ],
 					"style" : "",
-					"text" : "sdt.modal printerB 4 1 @freqs 2300 3100 3700 4100 @decays 0.001 0.002 0.003 0.004 @weights 1000 500 300 200 @pickup0 1 1 1 1"
+					"text" : "sdt.modal printerB 4 1 @freqs 2300 3100 3700 4100 @decays 0.001 0.002 0.003 0.004 @pickup0 1000 500 300 200"
 				}
 
 			}
@@ -1558,7 +1558,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 239.5, 210.0, 375.0, 66.0 ],
 					"style" : "",
-					"text" : "sdt.modal printerA 4 1 @freqs 500 700 1100 1300 @decays 0.001 0.001 0.001 0.001 @weights 1000 1000 1000 1000 @pickup0 1 1 1 1"
+					"text" : "sdt.modal printerA 4 1 @freqs 500 700 1100 1300 @decays 0.001 0.001 0.001 0.001 @pickup0 1000 1000 1000 1000"
 				}
 
 			}
@@ -1616,9 +1616,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 244.0, 512.5, 166.0, 47.0 ],
+					"patching_rect" : [ 244.0, 512.5, 170.0, 47.0 ],
 					"style" : "",
-					"text" : "sdt.scraping~ @force 10 @grain 0.2"
+					"text" : "sdt.scraping~ @force 40 @grain 0.2"
 				}
 
 			}
@@ -1629,12 +1629,12 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 16.0,
 					"id" : "obj-1",
-					"linecount" : 8,
+					"linecount" : 7,
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 51.0, 512.5, 127.0, 161.0 ],
+					"patching_rect" : [ 51.0, 512.5, 132.0, 142.0 ],
 					"style" : "",
 					"text" : "sdt.dcmotor~ @coils 16 @size 0.5 @gearRatio 1.7 @rotorGain 0.6 @brushGain 0. @gearGain 0.1 @airGain 0.3"
 				}
@@ -1977,12 +1977,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "~/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.dcmotor~.mxo",
 				"type" : "iLaX"
 			}
@@ -1999,7 +1993,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

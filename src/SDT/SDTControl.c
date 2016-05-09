@@ -6,6 +6,10 @@
 #define UNDERSHOOT  0.1
 #define OVERSHOOT  10.0
 
+double SDT_groundDecay(double grain, double velocity) {
+  return SDT_fclip(2.0 * grain * fabs(velocity), 0.0, 2.0);
+}
+
 struct SDTCrumpling {
   double crushingEnergy, granularity, fragmentation,
          remainingEnergy;
@@ -38,11 +42,8 @@ void SDTCrumpling_setFragmentation(SDTCrumpling *x, double f) {
   x->fragmentation = SDT_fclip(f, 0.0, 1.0);
 }
 
-void SDTCrumpling_reset(SDTCrumpling *x, double *size, double *energy) {
+void SDTCrumpling_reset(SDTCrumpling *x) {
   x->remainingEnergy = 1.0;
-  *size = 0.5 + 0.5 * SDT_frand();
-  *energy = x->crushingEnergy;
-  x->remainingEnergy -= *energy;
 }
 
 void SDTCrumpling_discrete(SDTCrumpling *x, double *size, double *energy) {

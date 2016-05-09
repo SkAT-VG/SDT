@@ -1,0 +1,62 @@
+\hypertarget{group__oscillators}{}\section{S\+D\+T\+Oscillators.\+h\+: Oscillators}
+\label{group__oscillators}\index{S\+D\+T\+Oscillators.\+h\+: Oscillators@{S\+D\+T\+Oscillators.\+h\+: Oscillators}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__oscillators_gac933fcdadc8959769a466840604f8f6c}{}typedef struct \hyperlink{group__oscillators_gac933fcdadc8959769a466840604f8f6c}{S\+D\+T\+Pink\+Noise} \hyperlink{group__oscillators_gac933fcdadc8959769a466840604f8f6c}{S\+D\+T\+Pink\+Noise}\label{group__oscillators_gac933fcdadc8959769a466840604f8f6c}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a pink noise generator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__oscillators_gac933fcdadc8959769a466840604f8f6c}{S\+D\+T\+Pink\+Noise} $\ast$ \hyperlink{group__oscillators_gad8d0978883d1803dc1990bd10984f8e0}{S\+D\+T\+Pink\+Noise\+\_\+new} (int n\+Octaves)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__oscillators_ga55abe80084a29281f67492a6aa231983}{S\+D\+T\+Pink\+Noise\+\_\+free} (\hyperlink{group__oscillators_gac933fcdadc8959769a466840604f8f6c}{S\+D\+T\+Pink\+Noise} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+\hypertarget{group__oscillators_ga39efe508a6e97453dc8577e6f4e21035}{}double \hyperlink{group__oscillators_ga39efe508a6e97453dc8577e6f4e21035}{S\+D\+T\+Pink\+Noise\+\_\+dsp} (\hyperlink{group__oscillators_gac933fcdadc8959769a466840604f8f6c}{S\+D\+T\+Pink\+Noise} $\ast$x)\label{group__oscillators_ga39efe508a6e97453dc8577e6f4e21035}
+
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to generate pink noise. \end{DoxyCompactList}\item 
+\hypertarget{group__oscillators_ga442d1292dbae9332064f427ee40c15d4}{}double \hyperlink{group__oscillators_ga442d1292dbae9332064f427ee40c15d4}{S\+D\+T\+\_\+white\+Noise} ()\label{group__oscillators_ga442d1292dbae9332064f427ee40c15d4}
+
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to generate white noise. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simple, commonly used sound generators. 
+
+\subsection{Function Documentation}
+\hypertarget{group__oscillators_ga55abe80084a29281f67492a6aa231983}{}\index{S\+D\+T\+Oscillators.\+h\+: Oscillators@{S\+D\+T\+Oscillators.\+h\+: Oscillators}!S\+D\+T\+Pink\+Noise\+\_\+free@{S\+D\+T\+Pink\+Noise\+\_\+free}}
+\index{S\+D\+T\+Pink\+Noise\+\_\+free@{S\+D\+T\+Pink\+Noise\+\_\+free}!S\+D\+T\+Oscillators.\+h\+: Oscillators@{S\+D\+T\+Oscillators.\+h\+: Oscillators}}
+\subsubsection[{S\+D\+T\+Pink\+Noise\+\_\+free(\+S\+D\+T\+Pink\+Noise $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Pink\+Noise\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pink\+Noise} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__oscillators_ga55abe80084a29281f67492a6aa231983}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__oscillators_gad8d0978883d1803dc1990bd10984f8e0}{}\index{S\+D\+T\+Oscillators.\+h\+: Oscillators@{S\+D\+T\+Oscillators.\+h\+: Oscillators}!S\+D\+T\+Pink\+Noise\+\_\+new@{S\+D\+T\+Pink\+Noise\+\_\+new}}
+\index{S\+D\+T\+Pink\+Noise\+\_\+new@{S\+D\+T\+Pink\+Noise\+\_\+new}!S\+D\+T\+Oscillators.\+h\+: Oscillators@{S\+D\+T\+Oscillators.\+h\+: Oscillators}}
+\subsubsection[{S\+D\+T\+Pink\+Noise\+\_\+new(int n\+Octaves)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Pink\+Noise}$\ast$ S\+D\+T\+Pink\+Noise\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{int}]{n\+Octaves}
+\end{DoxyParamCaption}
+)}\label{group__oscillators_gad8d0978883d1803dc1990bd10984f8e0}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em n\+Octaves} & N. of octave bands for the pink noise generator. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}

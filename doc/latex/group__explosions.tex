@@ -1,0 +1,193 @@
+\hypertarget{group__explosions}{}\section{Supersonic explosions}
+\label{group__explosions}\index{Supersonic explosions@{Supersonic explosions}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__explosions_ga9be74dfac803ba58938fa89367285343}{}typedef struct \hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} \hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion}\label{group__explosions_ga9be74dfac803ba58938fa89367285343}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for an explosion object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$ \hyperlink{group__explosions_gaedb86f6ec58cd642f6704542d44d8161}{S\+D\+T\+Explosion\+\_\+new} (long max\+Scatter, long max\+Delay)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_ga6627ef314c38d7dd804230dde4a455d2}{S\+D\+T\+Explosion\+\_\+free} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_ga28333314489e331e7b610c302e57d3c5}{S\+D\+T\+Explosion\+\_\+set\+Blast\+Time} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the duration of the initial spike. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_ga309fc62b6cfcdf2c708beb845e22a2f9}{S\+D\+T\+Explosion\+\_\+set\+Scatter\+Time} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the duration of the scattering. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_gafb2968fefaddd8499587fe0795986f67}{S\+D\+T\+Explosion\+\_\+set\+Dispersion} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the balance between initial spike and successive scattering. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_gae0a55198a5ca115743a67f9e1aee6bdd}{S\+D\+T\+Explosion\+\_\+set\+Distance} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the distance of the listener from the explosion. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_gac34ce16e91a9d0edcc380627aa985f58}{S\+D\+T\+Explosion\+\_\+set\+Wave\+Speed} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the propagation velocity of the shockwave. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_ga4d605e033e91897729849f9da9606f7a}{S\+D\+T\+Explosion\+\_\+set\+Wind\+Speed} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the propagation velocity of the blast wind. \end{DoxyCompactList}\item 
+\hypertarget{group__explosions_gaaf5006654372cb953f701ca2c644f328}{}void \hyperlink{group__explosions_gaaf5006654372cb953f701ca2c644f328}{S\+D\+T\+Explosion\+\_\+update} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x)\label{group__explosions_gaaf5006654372cb953f701ca2c644f328}
+
+\begin{DoxyCompactList}\small\item\em Updates the internal state of the object. Please call this function after having reset one or more synthesis parameters. \end{DoxyCompactList}\item 
+void \hyperlink{group__explosions_ga52725161c20b23d31187cad3b987d5af}{S\+D\+T\+Explosion\+\_\+dsp} (\hyperlink{group__explosions_ga9be74dfac803ba58938fa89367285343}{S\+D\+T\+Explosion} $\ast$x, double $\ast$outs)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to synthesize an explosion sound. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Powerful explosions, as well as objects travelling at supersonic speed such as rifle bullets or cracking whip tails. 
+
+\subsection{Function Documentation}
+\hypertarget{group__explosions_ga52725161c20b23d31187cad3b987d5af}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+dsp@{S\+D\+T\+Explosion\+\_\+dsp}}
+\index{S\+D\+T\+Explosion\+\_\+dsp@{S\+D\+T\+Explosion\+\_\+dsp}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+dsp(\+S\+D\+T\+Explosion $\ast$x, double $\ast$outs)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x, }
+\item[{double $\ast$}]{outs}
+\end{DoxyParamCaption}
+)}\label{group__explosions_ga52725161c20b23d31187cad3b987d5af}
+
+
+Signal processing routine. Call this function at sample rate to synthesize an explosion sound. 
+
+\begin{DoxyReturn}{Returns}
+Computed audio sample 
+\end{DoxyReturn}
+\hypertarget{group__explosions_ga6627ef314c38d7dd804230dde4a455d2}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+free@{S\+D\+T\+Explosion\+\_\+free}}
+\index{S\+D\+T\+Explosion\+\_\+free@{S\+D\+T\+Explosion\+\_\+free}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+free(\+S\+D\+T\+Explosion $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__explosions_ga6627ef314c38d7dd804230dde4a455d2}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__explosions_gaedb86f6ec58cd642f6704542d44d8161}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+new@{S\+D\+T\+Explosion\+\_\+new}}
+\index{S\+D\+T\+Explosion\+\_\+new@{S\+D\+T\+Explosion\+\_\+new}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+new(long max\+Scatter, long max\+Delay)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Explosion}$\ast$ S\+D\+T\+Explosion\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{long}]{max\+Scatter, }
+\item[{long}]{max\+Delay}
+\end{DoxyParamCaption}
+)}\label{group__explosions_gaedb86f6ec58cd642f6704542d44d8161}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\+Scatter} & Maximum scattering time, in samples) \\
+\hline
+\mbox{\tt in}  & {\em max\+Delay} & Maximum delay between explosion and sound, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__explosions_ga28333314489e331e7b610c302e57d3c5}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+set\+Blast\+Time@{S\+D\+T\+Explosion\+\_\+set\+Blast\+Time}}
+\index{S\+D\+T\+Explosion\+\_\+set\+Blast\+Time@{S\+D\+T\+Explosion\+\_\+set\+Blast\+Time}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+set\+Blast\+Time(\+S\+D\+T\+Explosion $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+set\+Blast\+Time (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__explosions_ga28333314489e331e7b610c302e57d3c5}
+
+
+Sets the duration of the initial spike. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Blast time, in s \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__explosions_gafb2968fefaddd8499587fe0795986f67}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+set\+Dispersion@{S\+D\+T\+Explosion\+\_\+set\+Dispersion}}
+\index{S\+D\+T\+Explosion\+\_\+set\+Dispersion@{S\+D\+T\+Explosion\+\_\+set\+Dispersion}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+set\+Dispersion(\+S\+D\+T\+Explosion $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+set\+Dispersion (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__explosions_gafb2968fefaddd8499587fe0795986f67}
+
+
+Sets the balance between initial spike and successive scattering. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Amount of scattering, \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__explosions_gae0a55198a5ca115743a67f9e1aee6bdd}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+set\+Distance@{S\+D\+T\+Explosion\+\_\+set\+Distance}}
+\index{S\+D\+T\+Explosion\+\_\+set\+Distance@{S\+D\+T\+Explosion\+\_\+set\+Distance}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+set\+Distance(\+S\+D\+T\+Explosion $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+set\+Distance (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__explosions_gae0a55198a5ca115743a67f9e1aee6bdd}
+
+
+Sets the distance of the listener from the explosion. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Distance between explosion and listener, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__explosions_ga309fc62b6cfcdf2c708beb845e22a2f9}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+set\+Scatter\+Time@{S\+D\+T\+Explosion\+\_\+set\+Scatter\+Time}}
+\index{S\+D\+T\+Explosion\+\_\+set\+Scatter\+Time@{S\+D\+T\+Explosion\+\_\+set\+Scatter\+Time}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+set\+Scatter\+Time(\+S\+D\+T\+Explosion $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+set\+Scatter\+Time (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__explosions_ga309fc62b6cfcdf2c708beb845e22a2f9}
+
+
+Sets the duration of the scattering. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Scattering time, in s \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__explosions_gac34ce16e91a9d0edcc380627aa985f58}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+set\+Wave\+Speed@{S\+D\+T\+Explosion\+\_\+set\+Wave\+Speed}}
+\index{S\+D\+T\+Explosion\+\_\+set\+Wave\+Speed@{S\+D\+T\+Explosion\+\_\+set\+Wave\+Speed}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+set\+Wave\+Speed(\+S\+D\+T\+Explosion $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+set\+Wave\+Speed (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__explosions_gac34ce16e91a9d0edcc380627aa985f58}
+
+
+Sets the propagation velocity of the shockwave. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Propagation velocity of the shockwave, in m/s \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__explosions_ga4d605e033e91897729849f9da9606f7a}{}\index{Supersonic explosions@{Supersonic explosions}!S\+D\+T\+Explosion\+\_\+set\+Wind\+Speed@{S\+D\+T\+Explosion\+\_\+set\+Wind\+Speed}}
+\index{S\+D\+T\+Explosion\+\_\+set\+Wind\+Speed@{S\+D\+T\+Explosion\+\_\+set\+Wind\+Speed}!Supersonic explosions@{Supersonic explosions}}
+\subsubsection[{S\+D\+T\+Explosion\+\_\+set\+Wind\+Speed(\+S\+D\+T\+Explosion $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Explosion\+\_\+set\+Wind\+Speed (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Explosion} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__explosions_ga4d605e033e91897729849f9da9606f7a}
+
+
+Sets the propagation velocity of the blast wind. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Propagation velocity of the blast wind, in m/s \\
+\hline
+\end{DoxyParams}

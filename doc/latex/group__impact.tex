@@ -1,0 +1,95 @@
+\hypertarget{group__impact}{}\section{Impact}
+\label{group__impact}\index{Impact@{Impact}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__impact_gacfb0db11e829c7ef3beb7711b57cdc08}{}typedef struct \hyperlink{group__impact_gacfb0db11e829c7ef3beb7711b57cdc08}{S\+D\+T\+Impact} \hyperlink{group__impact_gacfb0db11e829c7ef3beb7711b57cdc08}{S\+D\+T\+Impact}\label{group__impact_gacfb0db11e829c7ef3beb7711b57cdc08}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing the internal state of an impact interactor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$ \hyperlink{group__impact_gadf0b4c5f0d17362aa5ae3f33c21978c1}{S\+D\+T\+Impact\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+\hypertarget{group__impact_ga4d8ff655b0456b661420118bf2ed5bba}{}void \hyperlink{group__impact_ga4d8ff655b0456b661420118bf2ed5bba}{S\+D\+T\+Impact\+\_\+free} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x)\label{group__impact_ga4d8ff655b0456b661420118bf2ed5bba}
+
+\begin{DoxyCompactList}\small\item\em Object destructor. param\mbox{[}in\mbox{]} Pointer to a S\+D\+T\+Interactor instance, configured for the impact case. \end{DoxyCompactList}\item 
+void \hyperlink{group__impact_ga2285e78c4be49f6d45b4add33dc5366b}{S\+D\+T\+Impact\+\_\+set\+Stiffness} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the impact stiffness. \end{DoxyCompactList}\item 
+void \hyperlink{group__impact_ga91113280e3b346e3b6ff9ca17c3a551e}{S\+D\+T\+Impact\+\_\+set\+Dissipation} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the dissipation coefficient. \end{DoxyCompactList}\item 
+void \hyperlink{group__impact_gaff2728768b2dec2ebe36ddb3f6e2105d}{S\+D\+T\+Impact\+\_\+set\+Shape} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the shape factor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simulates a non-\/linear impact, computing impact force from the total compression, namely the relative displacement between the two contact points. The algorithm is based on the Hunt-\/\+Crossley impact model, with the resulting force being the sum of an elastic component and a dissipative term.
+
+The elastic component is parameterized by the force stiffness (or elasticity) and a non-\/linear exponent which models the local geometry around the contact area. The linear dissipative component is parameterized by a dissipation (damping) weight. 
+
+\subsection{Function Documentation}
+\hypertarget{group__impact_gadf0b4c5f0d17362aa5ae3f33c21978c1}{}\index{Impact@{Impact}!S\+D\+T\+Impact\+\_\+new@{S\+D\+T\+Impact\+\_\+new}}
+\index{S\+D\+T\+Impact\+\_\+new@{S\+D\+T\+Impact\+\_\+new}!Impact@{Impact}}
+\subsubsection[{S\+D\+T\+Impact\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Interactor}$\ast$ S\+D\+T\+Impact\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__impact_gadf0b4c5f0d17362aa5ae3f33c21978c1}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to a S\+D\+T\+Interactor instance, configured for the impact case 
+\end{DoxyReturn}
+\hypertarget{group__impact_ga91113280e3b346e3b6ff9ca17c3a551e}{}\index{Impact@{Impact}!S\+D\+T\+Impact\+\_\+set\+Dissipation@{S\+D\+T\+Impact\+\_\+set\+Dissipation}}
+\index{S\+D\+T\+Impact\+\_\+set\+Dissipation@{S\+D\+T\+Impact\+\_\+set\+Dissipation}!Impact@{Impact}}
+\subsubsection[{S\+D\+T\+Impact\+\_\+set\+Dissipation(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Impact\+\_\+set\+Dissipation (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__impact_ga91113280e3b346e3b6ff9ca17c3a551e}
+
+
+Sets the dissipation coefficient. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Dissipation coefficient, positive scalar \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__impact_gaff2728768b2dec2ebe36ddb3f6e2105d}{}\index{Impact@{Impact}!S\+D\+T\+Impact\+\_\+set\+Shape@{S\+D\+T\+Impact\+\_\+set\+Shape}}
+\index{S\+D\+T\+Impact\+\_\+set\+Shape@{S\+D\+T\+Impact\+\_\+set\+Shape}!Impact@{Impact}}
+\subsubsection[{S\+D\+T\+Impact\+\_\+set\+Shape(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Impact\+\_\+set\+Shape (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__impact_gaff2728768b2dec2ebe36ddb3f6e2105d}
+
+
+Sets the shape factor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Shape factor. Must be $>$ 1, with 1.\+5 = spherical shape. Optimal range \mbox{[}1,4\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__impact_ga2285e78c4be49f6d45b4add33dc5366b}{}\index{Impact@{Impact}!S\+D\+T\+Impact\+\_\+set\+Stiffness@{S\+D\+T\+Impact\+\_\+set\+Stiffness}}
+\index{S\+D\+T\+Impact\+\_\+set\+Stiffness@{S\+D\+T\+Impact\+\_\+set\+Stiffness}!Impact@{Impact}}
+\subsubsection[{S\+D\+T\+Impact\+\_\+set\+Stiffness(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Impact\+\_\+set\+Stiffness (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__impact_ga2285e78c4be49f6d45b4add33dc5366b}
+
+
+Sets the impact stiffness. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Impact stiffness ($>$$>$ 1) \\
+\hline
+\end{DoxyParams}

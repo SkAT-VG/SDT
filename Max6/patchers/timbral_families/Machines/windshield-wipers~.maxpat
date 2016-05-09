@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -169,8 +169,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -669,8 +669,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1258,8 +1258,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1505,9 +1505,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "signal" ],
-					"patching_rect" : [ 63.0, 281.0, 264.0, 123.0 ],
+					"patching_rect" : [ 63.0, 281.0, 260.0, 123.0 ],
 					"style" : "",
-					"text" : "sdt.friction~ a b 2 @stiffness 200. @dissipation 20. @viscosity 5. @breakAway 0.1 @stribeck 0.1 @kDynamic 0.3 @kStatic 0.9 @noisiness 1.5 @force 0.5 @contact0 0 @contact1 0"
+					"text" : "sdt.friction~ a b 2 @stiffness 500. @dissipation 20. @viscosity 5. @breakAway 0.1 @stribeck 0.1 @kDynamic 0.3 @kStatic 0.9 @noisiness 1.5 @force 0.5 @contact0 0 @contact1 0"
 				}
 
 			}
@@ -1518,13 +1518,13 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 16.0,
 					"id" : "obj-11",
-					"linecount" : 5,
+					"linecount" : 4,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 63.0, 450.0, 260.0, 104.0 ],
+					"patching_rect" : [ 63.0, 450.0, 260.0, 85.0 ],
 					"style" : "",
-					"text" : "sdt.modal b 4 1 @freqs 80. 400. 970. 1240. @decays 0.1 0.1 0.1 0.1 @weights 400. 300. 200. 100. @pickup0 1. 1. 1. 1. @activeModes 4"
+					"text" : "sdt.modal b 4 1 @freqs 80. 400. 970. 1240. @decays 0.1 0.1 0.1 0.1 @pickup0 400. 300. 200. 100. @activeModes 4"
 				}
 
 			}
@@ -1712,12 +1712,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "~/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.dcmotor~.mxo",
 				"type" : "iLaX"
 			}
@@ -1734,7 +1728,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

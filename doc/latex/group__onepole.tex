@@ -1,0 +1,130 @@
+\hypertarget{group__onepole}{}\section{One pole filter}
+\label{group__onepole}\index{One pole filter@{One pole filter}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{}typedef struct \hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole} \hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole}\label{group__onepole_gaf029661adfbccd326c286c801bfcdd01}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a one pole filter object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole} $\ast$ \hyperlink{group__onepole_ga576752a0253d0c601ef81669d72df786}{S\+D\+T\+One\+Pole\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__onepole_ga9045b072e02d583a5ba8cd241a681580}{S\+D\+T\+One\+Pole\+\_\+free} (\hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__onepole_ga9bd83dc031322ae0bbbae14fff1ab028}{S\+D\+T\+One\+Pole\+\_\+set\+Feedback} (\hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Manually sets the alpha coefficient. \end{DoxyCompactList}\item 
+void \hyperlink{group__onepole_gaf4b868ac1d8e47b7b8831dd892805bb4}{S\+D\+T\+One\+Pole\+\_\+lowpass} (\hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Puts the filter in lowpass mode, at the given cutoff frequency. \end{DoxyCompactList}\item 
+void \hyperlink{group__onepole_ga24acad97eb378be5d39d80695514b491}{S\+D\+T\+One\+Pole\+\_\+highpass} (\hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Puts the filter in highpass mode, at the given cutoff frequency. \end{DoxyCompactList}\item 
+double \hyperlink{group__onepole_ga051260b3e1b165bed970723f2b63d791}{S\+D\+T\+One\+Pole\+\_\+dsp} (\hyperlink{group__onepole_gaf029661adfbccd326c286c801bfcdd01}{S\+D\+T\+One\+Pole} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the filtered signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Simple one pole filter. 
+
+\subsection{Function Documentation}
+\hypertarget{group__onepole_ga051260b3e1b165bed970723f2b63d791}{}\index{One pole filter@{One pole filter}!S\+D\+T\+One\+Pole\+\_\+dsp@{S\+D\+T\+One\+Pole\+\_\+dsp}}
+\index{S\+D\+T\+One\+Pole\+\_\+dsp@{S\+D\+T\+One\+Pole\+\_\+dsp}!One pole filter@{One pole filter}}
+\subsubsection[{S\+D\+T\+One\+Pole\+\_\+dsp(\+S\+D\+T\+One\+Pole $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+One\+Pole\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+One\+Pole} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__onepole_ga051260b3e1b165bed970723f2b63d791}
+
+
+Signal processing routine. Call this function at sample rate to compute the filtered signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__onepole_ga9045b072e02d583a5ba8cd241a681580}{}\index{One pole filter@{One pole filter}!S\+D\+T\+One\+Pole\+\_\+free@{S\+D\+T\+One\+Pole\+\_\+free}}
+\index{S\+D\+T\+One\+Pole\+\_\+free@{S\+D\+T\+One\+Pole\+\_\+free}!One pole filter@{One pole filter}}
+\subsubsection[{S\+D\+T\+One\+Pole\+\_\+free(\+S\+D\+T\+One\+Pole $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+One\+Pole\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+One\+Pole} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__onepole_ga9045b072e02d583a5ba8cd241a681580}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__onepole_ga24acad97eb378be5d39d80695514b491}{}\index{One pole filter@{One pole filter}!S\+D\+T\+One\+Pole\+\_\+highpass@{S\+D\+T\+One\+Pole\+\_\+highpass}}
+\index{S\+D\+T\+One\+Pole\+\_\+highpass@{S\+D\+T\+One\+Pole\+\_\+highpass}!One pole filter@{One pole filter}}
+\subsubsection[{S\+D\+T\+One\+Pole\+\_\+highpass(\+S\+D\+T\+One\+Pole $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+One\+Pole\+\_\+highpass (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+One\+Pole} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__onepole_ga24acad97eb378be5d39d80695514b491}
+
+
+Puts the filter in highpass mode, at the given cutoff frequency. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Cutoff frequency, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__onepole_gaf4b868ac1d8e47b7b8831dd892805bb4}{}\index{One pole filter@{One pole filter}!S\+D\+T\+One\+Pole\+\_\+lowpass@{S\+D\+T\+One\+Pole\+\_\+lowpass}}
+\index{S\+D\+T\+One\+Pole\+\_\+lowpass@{S\+D\+T\+One\+Pole\+\_\+lowpass}!One pole filter@{One pole filter}}
+\subsubsection[{S\+D\+T\+One\+Pole\+\_\+lowpass(\+S\+D\+T\+One\+Pole $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+One\+Pole\+\_\+lowpass (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+One\+Pole} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__onepole_gaf4b868ac1d8e47b7b8831dd892805bb4}
+
+
+Puts the filter in lowpass mode, at the given cutoff frequency. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Cutoff frequency, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__onepole_ga576752a0253d0c601ef81669d72df786}{}\index{One pole filter@{One pole filter}!S\+D\+T\+One\+Pole\+\_\+new@{S\+D\+T\+One\+Pole\+\_\+new}}
+\index{S\+D\+T\+One\+Pole\+\_\+new@{S\+D\+T\+One\+Pole\+\_\+new}!One pole filter@{One pole filter}}
+\subsubsection[{S\+D\+T\+One\+Pole\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+One\+Pole}$\ast$ S\+D\+T\+One\+Pole\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__onepole_ga576752a0253d0c601ef81669d72df786}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__onepole_ga9bd83dc031322ae0bbbae14fff1ab028}{}\index{One pole filter@{One pole filter}!S\+D\+T\+One\+Pole\+\_\+set\+Feedback@{S\+D\+T\+One\+Pole\+\_\+set\+Feedback}}
+\index{S\+D\+T\+One\+Pole\+\_\+set\+Feedback@{S\+D\+T\+One\+Pole\+\_\+set\+Feedback}!One pole filter@{One pole filter}}
+\subsubsection[{S\+D\+T\+One\+Pole\+\_\+set\+Feedback(\+S\+D\+T\+One\+Pole $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+One\+Pole\+\_\+set\+Feedback (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+One\+Pole} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__onepole_ga9bd83dc031322ae0bbbae14fff1ab028}
+
+
+Manually sets the alpha coefficient. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Weight of the input sample \\
+\hline
+\end{DoxyParams}

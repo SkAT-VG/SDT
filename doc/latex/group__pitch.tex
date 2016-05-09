@@ -1,0 +1,129 @@
+\hypertarget{group__pitch}{}\section{Fundamental frequency estimator}
+\label{group__pitch}\index{Fundamental frequency estimator@{Fundamental frequency estimator}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__pitch_ga93a04dd02784981e8efabae71a248942}{}typedef struct \hyperlink{group__pitch_ga93a04dd02784981e8efabae71a248942}{S\+D\+T\+Pitch} \hyperlink{group__pitch_ga93a04dd02784981e8efabae71a248942}{S\+D\+T\+Pitch}\label{group__pitch_ga93a04dd02784981e8efabae71a248942}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a fundamental frequency estimator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__pitch_ga93a04dd02784981e8efabae71a248942}{S\+D\+T\+Pitch} $\ast$ \hyperlink{group__pitch_ga14f1ce31f420c7d3467967c1ada751ab}{S\+D\+T\+Pitch\+\_\+new} (unsigned int size)
+\begin{DoxyCompactList}\small\item\em Instantiates a fundamental frequency estimator object. \end{DoxyCompactList}\item 
+void \hyperlink{group__pitch_ga2389738427ae0e00c78cccb293683c18}{S\+D\+T\+Pitch\+\_\+free} (\hyperlink{group__pitch_ga93a04dd02784981e8efabae71a248942}{S\+D\+T\+Pitch} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Destroys a fundamental frequency estimator instance. \end{DoxyCompactList}\item 
+void \hyperlink{group__pitch_ga09aca4d2a376f801a631b5702af0dbe3}{S\+D\+T\+Pitch\+\_\+set\+Overlap} (\hyperlink{group__pitch_ga93a04dd02784981e8efabae71a248942}{S\+D\+T\+Pitch} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the analysis window overlapping ratio. Accepted values go from 0.\+0 to 1.\+0, with 0.\+0 meaning no overlap and 1.\+0 meaning total overlap. \end{DoxyCompactList}\item 
+void \hyperlink{group__pitch_ga33cbcd21ce755f3cfc79ad0131ac7e02}{S\+D\+T\+Pitch\+\_\+set\+Tolerance} (\hyperlink{group__pitch_ga93a04dd02784981e8efabae71a248942}{S\+D\+T\+Pitch} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the peak detection tolerance. Always choosing the greatest N\+S\+D\+F peak as pitch estimation sometimes leads to wrong octave detection errors. To overcome this problem, some tolerance is introduced in the peak detection algorithm. The chosen N\+S\+D\+F peak is the one with lowest frequency among those with value close enough to the global maximum. A value of 0.\+0 always selects the global maximum, while a value of 1.\+0 always selects the last N\+S\+D\+F peak. \end{DoxyCompactList}\item 
+int \hyperlink{group__pitch_gacf5aaf510204ed203896e00aa2e9022d}{S\+D\+T\+Pitch\+\_\+dsp} (\hyperlink{group__pitch_ga93a04dd02784981e8efabae71a248942}{S\+D\+T\+Pitch} $\ast$x, double $\ast$outs, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function for each sample to perform signal analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The pitch detection algorithm implemented in this object is discussed in the paper \char`\"{}\+A smarter way to find pitch\char`\"{} by Philip Mc\+Leod and Geoff Wyvill (2005) and it is based on the N\+S\+D\+F (Normalized Squared Differences Function), a close relative of the autocorrelation function. 
+
+\subsection{Function Documentation}
+\hypertarget{group__pitch_gacf5aaf510204ed203896e00aa2e9022d}{}\index{Fundamental frequency estimator@{Fundamental frequency estimator}!S\+D\+T\+Pitch\+\_\+dsp@{S\+D\+T\+Pitch\+\_\+dsp}}
+\index{S\+D\+T\+Pitch\+\_\+dsp@{S\+D\+T\+Pitch\+\_\+dsp}!Fundamental frequency estimator@{Fundamental frequency estimator}}
+\subsubsection[{S\+D\+T\+Pitch\+\_\+dsp(\+S\+D\+T\+Pitch $\ast$x, double $\ast$outs, double in)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Pitch\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pitch} $\ast$}]{x, }
+\item[{double $\ast$}]{outs, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__pitch_gacf5aaf510204ed203896e00aa2e9022d}
+
+
+Signal processing routine. Call this function for each sample to perform signal analysis. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt out}  & {\em outs} & Pointer to an array of two doubles, containing the algorithm outputs. Array members represent the following information respectively\+:
+\begin{DoxyEnumerate}
+\item Estimated pitch (Hz),
+\item Pitch clarity \mbox{[}0.\+0, 1.\+0\mbox{]}. 
+\end{DoxyEnumerate}\\
+\hline
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if output available (analysis window full), 0 otherwise 
+\end{DoxyReturn}
+\hypertarget{group__pitch_ga2389738427ae0e00c78cccb293683c18}{}\index{Fundamental frequency estimator@{Fundamental frequency estimator}!S\+D\+T\+Pitch\+\_\+free@{S\+D\+T\+Pitch\+\_\+free}}
+\index{S\+D\+T\+Pitch\+\_\+free@{S\+D\+T\+Pitch\+\_\+free}!Fundamental frequency estimator@{Fundamental frequency estimator}}
+\subsubsection[{S\+D\+T\+Pitch\+\_\+free(\+S\+D\+T\+Pitch $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Pitch\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pitch} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__pitch_ga2389738427ae0e00c78cccb293683c18}
+
+
+Destroys a fundamental frequency estimator instance. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__pitch_ga14f1ce31f420c7d3467967c1ada751ab}{}\index{Fundamental frequency estimator@{Fundamental frequency estimator}!S\+D\+T\+Pitch\+\_\+new@{S\+D\+T\+Pitch\+\_\+new}}
+\index{S\+D\+T\+Pitch\+\_\+new@{S\+D\+T\+Pitch\+\_\+new}!Fundamental frequency estimator@{Fundamental frequency estimator}}
+\subsubsection[{S\+D\+T\+Pitch\+\_\+new(unsigned int size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Pitch}$\ast$ S\+D\+T\+Pitch\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{size}
+\end{DoxyParamCaption}
+)}\label{group__pitch_ga14f1ce31f420c7d3467967c1ada751ab}
+
+
+Instantiates a fundamental frequency estimator object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Size of the analysis window, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__pitch_ga09aca4d2a376f801a631b5702af0dbe3}{}\index{Fundamental frequency estimator@{Fundamental frequency estimator}!S\+D\+T\+Pitch\+\_\+set\+Overlap@{S\+D\+T\+Pitch\+\_\+set\+Overlap}}
+\index{S\+D\+T\+Pitch\+\_\+set\+Overlap@{S\+D\+T\+Pitch\+\_\+set\+Overlap}!Fundamental frequency estimator@{Fundamental frequency estimator}}
+\subsubsection[{S\+D\+T\+Pitch\+\_\+set\+Overlap(\+S\+D\+T\+Pitch $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Pitch\+\_\+set\+Overlap (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pitch} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__pitch_ga09aca4d2a376f801a631b5702af0dbe3}
+
+
+Sets the analysis window overlapping ratio. Accepted values go from 0.\+0 to 1.\+0, with 0.\+0 meaning no overlap and 1.\+0 meaning total overlap. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Overlap ratio \mbox{[}0.\+0, 1.\+0\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__pitch_ga33cbcd21ce755f3cfc79ad0131ac7e02}{}\index{Fundamental frequency estimator@{Fundamental frequency estimator}!S\+D\+T\+Pitch\+\_\+set\+Tolerance@{S\+D\+T\+Pitch\+\_\+set\+Tolerance}}
+\index{S\+D\+T\+Pitch\+\_\+set\+Tolerance@{S\+D\+T\+Pitch\+\_\+set\+Tolerance}!Fundamental frequency estimator@{Fundamental frequency estimator}}
+\subsubsection[{S\+D\+T\+Pitch\+\_\+set\+Tolerance(\+S\+D\+T\+Pitch $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Pitch\+\_\+set\+Tolerance (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pitch} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__pitch_ga33cbcd21ce755f3cfc79ad0131ac7e02}
+
+
+Sets the peak detection tolerance. Always choosing the greatest N\+S\+D\+F peak as pitch estimation sometimes leads to wrong octave detection errors. To overcome this problem, some tolerance is introduced in the peak detection algorithm. The chosen N\+S\+D\+F peak is the one with lowest frequency among those with value close enough to the global maximum. A value of 0.\+0 always selects the global maximum, while a value of 1.\+0 always selects the last N\+S\+D\+F peak. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Pitch estimation tolerance \mbox{[}0.\+0, 1.\+0\mbox{]} \\
+\hline
+\end{DoxyParams}

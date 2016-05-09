@@ -1,0 +1,288 @@
+\hypertarget{group__dcmotor}{}\section{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}
+\label{group__dcmotor}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{}typedef struct \hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} \hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor}\label{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for the electric motor synthesis model. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$ \hyperlink{group__dcmotor_gaad3570a8a5707025e7ca299b8c47dded}{S\+D\+T\+D\+C\+Motor\+\_\+new} (long max\+Size)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_gacd8bb9c4aa4b25de0682e7adc7e1795b}{S\+D\+T\+D\+C\+Motor\+\_\+free} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+\hypertarget{group__dcmotor_ga8fac279ba4d3ea254f7855e26d826fbf}{}void \hyperlink{group__dcmotor_ga8fac279ba4d3ea254f7855e26d826fbf}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Filters} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x)\label{group__dcmotor_ga8fac279ba4d3ea254f7855e26d826fbf}
+
+\begin{DoxyCompactList}\small\item\em Sets the filter coefficients. Call this function whenever the sample rate changes. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_ga29e28c4889291a8167940ad159211c6b}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rpm} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the Revolutions Per Minute (R\+P\+M) of the engine rotor. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_ga070ad631ae1c5059497ebcd05b0d8b39}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Load} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the mechanical stress on the rotor. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_gad097108d217e31d104f3aa667be48cb2}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Coils} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, long l)
+\begin{DoxyCompactList}\small\item\em Sets the number of coils on the rotor. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_gacbbac17dfb5b44eb180c8c275deb3567}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Size} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the size of the chassis. The maximum chassis size depends on the buffer length defined at construction time and on the current sampling rate. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_ga0c98a28412de74c1407788792a38297a}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Reson} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of resonance caused by the chassis. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_ga1c81eff31c21ae35dc5b631b8434b7c1}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Ratio} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the gear ratio of the engine. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_ga384adbb7ed127917e7a8c74f1e2f2265}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Harshness} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the harshness of the engine sound. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_gaabebcadc876c5c3b99ffce9d875d9165}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rotor\+Gain} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the sound volume coming from the rotor. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_ga7338f00d20c753ccd2f4a8496076900b}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Gain} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the sound volume coming from the gears. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_gad66558a813966abe1ae62510418e6c63}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Brush\+Gain} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the sound volume coming from the commutator ring and brushes. \end{DoxyCompactList}\item 
+void \hyperlink{group__dcmotor_ga452456af1c6fccdbfe3549d925f8d95f}{S\+D\+T\+D\+C\+Motor\+\_\+set\+Air\+Gain} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the sound volume of the air turbulence caused by rotation. \end{DoxyCompactList}\item 
+double \hyperlink{group__dcmotor_ga9901fc9e89e42b93d5fdedec0f6d025c}{S\+D\+T\+D\+C\+Motor\+\_\+dsp} (\hyperlink{group__dcmotor_ga55042fc98f1704ef2f8dd270e90c4cef}{S\+D\+T\+D\+C\+Motor} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to synthesize an electric motor sound. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Physically informed model for the synthesis of electric motor sounds.
+
+Electric motors exploit magnetic induction to convert electric energy into mechanical energy. An ideal electric motor should be perfectly silent. In practice, however, rotors are never perfectly balanced and generate pitched tones depending on their revolutions per minute (R\+P\+M). Moreover, contacts between parts cause friction noise. Finally, rotation causes air movement and therefore turbulence noise, sometimes increased by the presence of a cooling fan attached to the rotor.
+
+The pitched tone of the rotor is obtained through additive synthesis, summing a fixed number of harmonic partials. Frequency modulation simulates the unevenness in the rotation caused by attached loads. Resonances modes of the chassis are modeled through a comb filter. Aerodynamic turbulence caused by the spinning parts is synthesized with bandpass-\/filtered white noise, exactly like in the gas model. 
+
+\subsection{Function Documentation}
+\hypertarget{group__dcmotor_ga9901fc9e89e42b93d5fdedec0f6d025c}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+dsp@{S\+D\+T\+D\+C\+Motor\+\_\+dsp}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+dsp@{S\+D\+T\+D\+C\+Motor\+\_\+dsp}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+dsp(\+S\+D\+T\+D\+C\+Motor $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+D\+C\+Motor\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga9901fc9e89e42b93d5fdedec0f6d025c}
+
+
+Signal processing routine. Call this function at sample rate to synthesize an electric motor sound. 
+
+\begin{DoxyReturn}{Returns}
+Computed audio sample 
+\end{DoxyReturn}
+\hypertarget{group__dcmotor_gacd8bb9c4aa4b25de0682e7adc7e1795b}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+free@{S\+D\+T\+D\+C\+Motor\+\_\+free}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+free@{S\+D\+T\+D\+C\+Motor\+\_\+free}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+free(\+S\+D\+T\+D\+C\+Motor $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_gacd8bb9c4aa4b25de0682e7adc7e1795b}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_gaad3570a8a5707025e7ca299b8c47dded}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+new@{S\+D\+T\+D\+C\+Motor\+\_\+new}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+new@{S\+D\+T\+D\+C\+Motor\+\_\+new}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+new(long max\+Size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+D\+C\+Motor}$\ast$ S\+D\+T\+D\+C\+Motor\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{long}]{max\+Size}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_gaad3570a8a5707025e7ca299b8c47dded}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\+Size} & Buffer length of the internal comb filter, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__dcmotor_ga452456af1c6fccdbfe3549d925f8d95f}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Air\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Air\+Gain}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Air\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Air\+Gain}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Air\+Gain(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Air\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga452456af1c6fccdbfe3549d925f8d95f}
+
+
+Sets the sound volume of the air turbulence caused by rotation. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Air gain \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_gad66558a813966abe1ae62510418e6c63}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Brush\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Brush\+Gain}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Brush\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Brush\+Gain}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Brush\+Gain(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Brush\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_gad66558a813966abe1ae62510418e6c63}
+
+
+Sets the sound volume coming from the commutator ring and brushes. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Brush gain \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_gad097108d217e31d104f3aa667be48cb2}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Coils@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Coils}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Coils@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Coils}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Coils(\+S\+D\+T\+D\+C\+Motor $\ast$x, long l)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Coils (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{long}]{l}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_gad097108d217e31d104f3aa667be48cb2}
+
+
+Sets the number of coils on the rotor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em l} & Number of coils on the rotor \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_ga7338f00d20c753ccd2f4a8496076900b}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Gain}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Gain}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Gain(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga7338f00d20c753ccd2f4a8496076900b}
+
+
+Sets the sound volume coming from the gears. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Gear gain \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_ga1c81eff31c21ae35dc5b631b8434b7c1}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Ratio@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Ratio}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Ratio@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Ratio}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Ratio(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Gear\+Ratio (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga1c81eff31c21ae35dc5b631b8434b7c1}
+
+
+Sets the gear ratio of the engine. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Gear ratio \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_ga384adbb7ed127917e7a8c74f1e2f2265}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Harshness@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Harshness}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Harshness@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Harshness}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Harshness(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Harshness (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga384adbb7ed127917e7a8c74f1e2f2265}
+
+
+Sets the harshness of the engine sound. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Harshness \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_ga070ad631ae1c5059497ebcd05b0d8b39}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Load@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Load}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Load@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Load}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Load(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Load (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga070ad631ae1c5059497ebcd05b0d8b39}
+
+
+Sets the mechanical stress on the rotor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Engine load \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_ga0c98a28412de74c1407788792a38297a}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Reson@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Reson}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Reson@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Reson}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Reson(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Reson (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga0c98a28412de74c1407788792a38297a}
+
+
+Sets the amount of resonance caused by the chassis. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Chassis resonance \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_gaabebcadc876c5c3b99ffce9d875d9165}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Rotor\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rotor\+Gain}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rotor\+Gain@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rotor\+Gain}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rotor\+Gain(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Rotor\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_gaabebcadc876c5c3b99ffce9d875d9165}
+
+
+Sets the sound volume coming from the rotor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Rotor gain \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_ga29e28c4889291a8167940ad159211c6b}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Rpm@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rpm}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rpm@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rpm}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Rpm(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Rpm (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_ga29e28c4889291a8167940ad159211c6b}
+
+
+Sets the Revolutions Per Minute (R\+P\+M) of the engine rotor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Engine R\+P\+M \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__dcmotor_gacbbac17dfb5b44eb180c8c275deb3567}{}\index{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}!S\+D\+T\+D\+C\+Motor\+\_\+set\+Size@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Size}}
+\index{S\+D\+T\+D\+C\+Motor\+\_\+set\+Size@{S\+D\+T\+D\+C\+Motor\+\_\+set\+Size}!S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors@{S\+D\+T\+D\+C\+Motor.\+h\+: Electric motors}}
+\subsubsection[{S\+D\+T\+D\+C\+Motor\+\_\+set\+Size(\+S\+D\+T\+D\+C\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+D\+C\+Motor\+\_\+set\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+D\+C\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__dcmotor_gacbbac17dfb5b44eb180c8c275deb3567}
+
+
+Sets the size of the chassis. The maximum chassis size depends on the buffer length defined at construction time and on the current sampling rate. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Chassis length, in m \\
+\hline
+\end{DoxyParams}

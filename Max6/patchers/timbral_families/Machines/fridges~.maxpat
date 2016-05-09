@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -101,8 +101,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -424,8 +424,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1000,9 +1000,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 368.5, 375.0, 70.0, 20.0 ],
+					"patching_rect" : [ 368.5, 375.0, 75.0, 20.0 ],
 					"style" : "",
-					"text" : "strike -0.25 0"
+					"text" : "strike -0.025 0"
 				}
 
 			}
@@ -1044,9 +1044,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 302.5, 375.0, 56.0, 20.0 ],
+					"patching_rect" : [ 302.5, 375.0, 64.0, 20.0 ],
 					"style" : "",
-					"text" : "strike -1 0"
+					"text" : "strike -0.1 0"
 				}
 
 			}
@@ -1091,13 +1091,13 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 16.0,
 					"id" : "obj-13",
-					"linecount" : 9,
+					"linecount" : 10,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 554.5, 408.0, 228.0, 180.0 ],
+					"patching_rect" : [ 554.5, 408.0, 173.75, 199.0 ],
 					"style" : "",
-					"text" : "sdt.modal b 8 1 @freqs 2000. 3000. 5000. 7000. 11000. 13000. 17000. 19000. @decays 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 @weights 1000. 1000. 1000. 1000. 1000. 1000. 1000. 1000. @pickup0 1. 1. 1. 1. 1. 1. 1. 1. @activeModes 8"
+					"text" : "sdt.modal b 8 1 @freqs 2000. 3000. 5000. 7000. 11000. 13000. 17000. 19000. @decays 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 @pickup0 50. 50. 50. 50. 50. 50. 50. 50. @activeModes 8"
 				}
 
 			}
@@ -1190,7 +1190,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 21.0, 408.0, 132.0, 199.0 ],
+					"patching_rect" : [ 21.0, 408.0, 136.0, 199.0 ],
 					"style" : "",
 					"text" : "sdt.dcmotor~ @airGain 0. @brushGain 0.3 @gearGain 0.15 @rotorGain 0.4 @coils 2 @gearRatio 13.1 @harshness 0.6 @reson 0.8 @size 0.3"
 				}
@@ -1481,12 +1481,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "~/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.dcmotor~.mxo",
 				"type" : "iLaX"
 			}
@@ -1511,7 +1505,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

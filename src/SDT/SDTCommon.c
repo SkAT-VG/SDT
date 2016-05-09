@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +10,15 @@ double SDT_timeStep = 0.0;
 void SDT_setSampleRate(double sampleRate) {
   SDT_sampleRate = sampleRate;
   SDT_timeStep = 1.0 / sampleRate;
+}
+
+unsigned int SDT_bitReverse(unsigned int u, unsigned int bits) {
+  u = ((u >> 0x01) & 0x55555555) | ((u & 0x55555555) << 0x01);
+  u = ((u >> 0x02) & 0x33333333) | ((u & 0x33333333) << 0x02); 
+  u = ((u >> 0x04) & 0x0F0F0F0F) | ((u & 0x0F0F0F0F) << 0x04);
+  u = ((u >> 0x08) & 0x00FF00FF) | ((u & 0x00FF00FF) << 0x08);
+  u = ( u >> 0x10              ) | ( u               << 0x10);
+  return u >> (sizeof(u) * CHAR_BIT - bits);
 }
 
 long SDT_clip(long x, long min, long max) {
@@ -28,15 +38,11 @@ double SDT_fclip(double x, double min, double max) {
 }
 
 double SDT_frand() {
-  return (double)rand() / ((double)RAND_MAX + (double)1);
+  return rand() / ((double)RAND_MAX + 1);
 }
 
 double SDT_gravity(double mass) {
   return SDT_EARTH * mass;
-}
-
-double SDT_groundDecay(double grain, double velocity) {
-  return SDT_fclip(2.0 * grain * fabs(velocity), 0.0, 2.0);
 }
 
 void SDT_hanning(double *sig, int n) {
@@ -79,33 +85,12 @@ double SDT_kinetic(double mass, double velocity) {
   return 0.5 * mass * velocity * velocity;
 }
 
-double SDT_normalize(double x, double min, double max) {
-  return (x - min) / (max - min);
+unsigned int SDT_nextPow2(unsigned int u) {
+  return 1 << (unsigned int)ceil(log2(u));
 }
 
-void SDT_RK4(void *x, int argc, double *argv, void (*f)(void*, double *)) {
-  double k[4][argc];
-  int i;
-  
-  for (i = 0; i < argc; i++) {
-    k[0][i] = argv[i];
-  }
-  f(x, k[0]);
-  for (i = 0; i < argc; i++) {
-    k[1][i] = argv[i] + 0.5 * SDT_timeStep * k[0][i];
-  }
-  f(x, k[1]);
-  for (i = 0; i < argc; i++) {
-    k[2][i] = argv[i] + 0.5 * SDT_timeStep * k[1][i];
-  }
-  f(x, k[2]);
-  for (i = 0; i < argc; i++) {
-    k[3][i] = argv[i] + SDT_timeStep * k[2][i];
-  }
-  f(x, k[3]);
-  for (i = 0; i < argc; i++) {
-    argv[i] += SDT_timeStep * (k[0][i] + 2.0 * (k[1][i] + k[2][i]) + k[3][i]) / 6;
-  }
+double SDT_normalize(double x, double min, double max) {
+  return (x - min) / (max - min);
 }
 
 double SDT_samplesInAir(double length) {

@@ -3,13 +3,13 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 1,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 57.0, 81.0, 646.0, 533.0 ],
+		"rect" : [ 100.0, 100.0, 646.0, 512.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 9.0,
@@ -38,6 +38,19 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-3",
+					"maxclass" : "newobj",
+					"numinlets" : 9,
+					"numoutlets" : 9,
+					"outlettype" : [ "", "", "", "", "", "", "", "", "" ],
+					"patching_rect" : [ 29.0, 247.25, 605.285706, 19.0 ],
+					"style" : "",
+					"text" : "route magnitude centroid spread skewness kurtosis flatness flux onset"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"fontface" : 3,
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 9.0,
@@ -46,7 +59,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 35.0, 248.5, 70.0, 28.0 ],
+					"patching_rect" : [ 35.0, 271.5, 70.0, 28.0 ],
 					"style" : "",
 					"text" : "SPECTRAL MAGNITUDE"
 				}
@@ -62,7 +75,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 542.0, 276.0, 59.0, 27.0 ],
+					"patching_rect" : [ 542.0, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -77,7 +90,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 468.714294, 276.0, 59.0, 27.0 ],
+					"patching_rect" : [ 468.714294, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -92,7 +105,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 395.428558, 276.0, 59.0, 27.0 ],
+					"patching_rect" : [ 395.428558, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -107,7 +120,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 322.142853, 276.0, 59.0, 27.0 ],
+					"patching_rect" : [ 322.142853, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -122,7 +135,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 248.857147, 276.0, 59.0, 27.0 ],
+					"patching_rect" : [ 248.857147, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -137,7 +150,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 175.571426, 276.0, 59.0, 27.0 ],
+					"patching_rect" : [ 175.571426, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -152,7 +165,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 102.285713, 276.0, 59.0, 27.0 ],
+					"patching_rect" : [ 102.285713, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -167,7 +180,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 29.0, 276.0, 58.0, 27.0 ],
+					"patching_rect" : [ 29.0, 299.0, 59.0, 27.0 ],
 					"style" : ""
 				}
 
@@ -180,7 +193,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 358.0, 317.0, 215.0, 20.0 ],
+					"patching_rect" : [ 358.0, 331.0, 215.0, 20.0 ],
 					"style" : "",
 					"text" : "OUTLETS: (click on the boxes below)"
 				}
@@ -196,7 +209,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 459.0, 214.0, 36.0 ],
+					"patching_rect" : [ 358.0, 473.0, 214.0, 36.0 ],
 					"style" : "",
 					"text" : "8.(float): Rectified and whitened spectral flux (onset function)"
 				}
@@ -211,7 +224,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 433.0, 124.0, 22.0 ],
+					"patching_rect" : [ 358.0, 447.0, 124.0, 22.0 ],
 					"style" : "",
 					"text" : "7.(float): Spectral flux"
 				}
@@ -226,7 +239,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 409.0, 146.0, 22.0 ],
+					"patching_rect" : [ 358.0, 423.0, 146.0, 22.0 ],
 					"style" : "",
 					"text" : "6.(float): Spectral flatness"
 				}
@@ -241,7 +254,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 409.0, 155.0, 22.0 ],
+					"patching_rect" : [ 358.0, 423.0, 155.0, 22.0 ],
 					"style" : "",
 					"text" : "5.(signal): Spectral kurtosis"
 				}
@@ -256,7 +269,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 386.0, 158.0, 22.0 ],
+					"patching_rect" : [ 358.0, 400.0, 158.0, 22.0 ],
 					"style" : "",
 					"text" : "4.(float): Spectral skewness"
 				}
@@ -271,7 +284,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 363.0, 196.0, 22.0 ],
+					"patching_rect" : [ 358.0, 377.0, 196.0, 22.0 ],
 					"style" : "",
 					"text" : "3.(float): Spectral variance (spread)"
 				}
@@ -286,7 +299,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 111.0, 248.5, 61.0, 17.0 ],
+					"patching_rect" : [ 111.0, 281.5, 61.0, 17.0 ],
 					"style" : "",
 					"text" : "CENTROID"
 				}
@@ -301,7 +314,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 187.0, 248.5, 61.0, 17.0 ],
+					"patching_rect" : [ 187.0, 281.5, 61.0, 17.0 ],
 					"style" : "",
 					"text" : "SPREAD"
 				}
@@ -316,7 +329,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 259.142853, 248.5, 61.0, 17.0 ],
+					"patching_rect" : [ 259.142853, 281.5, 61.0, 17.0 ],
 					"style" : "",
 					"text" : "SKEWNESS"
 				}
@@ -331,7 +344,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 331.0, 248.5, 61.0, 17.0 ],
+					"patching_rect" : [ 331.0, 281.5, 61.0, 17.0 ],
 					"style" : "",
 					"text" : "KURTOSIS"
 				}
@@ -346,7 +359,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 404.0, 248.5, 61.0, 17.0 ],
+					"patching_rect" : [ 404.0, 281.5, 61.0, 17.0 ],
 					"style" : "",
 					"text" : "FLATNESS"
 				}
@@ -361,7 +374,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 478.0, 248.5, 61.0, 17.0 ],
+					"patching_rect" : [ 478.0, 281.5, 61.0, 17.0 ],
 					"style" : "",
 					"text" : "FLUX"
 				}
@@ -377,7 +390,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "https://en.wikipedia.org/wiki/Onset_(audio)" ],
-					"patching_rect" : [ 358.0, 620.0, 188.0, 19.0 ],
+					"patching_rect" : [ 358.0, 634.0, 188.0, 19.0 ],
 					"style" : "",
 					"text" : "t https://en.wikipedia.org/wiki/Onset_(audio)"
 				}
@@ -393,7 +406,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "https://en.wikipedia.org/wiki/Spectral_flux" ],
-					"patching_rect" : [ 358.0, 593.0, 184.0, 19.0 ],
+					"patching_rect" : [ 358.0, 607.0, 184.0, 19.0 ],
 					"style" : "",
 					"text" : "t https://en.wikipedia.org/wiki/Spectral_flux"
 				}
@@ -409,7 +422,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "https://en.wikipedia.org/wiki/Spectral_flatness" ],
-					"patching_rect" : [ 358.0, 576.0, 201.0, 19.0 ],
+					"patching_rect" : [ 358.0, 590.0, 201.0, 19.0 ],
 					"style" : "",
 					"text" : "t https://en.wikipedia.org/wiki/Spectral_flatness"
 				}
@@ -425,7 +438,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "https://en.wikipedia.org/wiki/Kurtosis" ],
-					"patching_rect" : [ 358.0, 549.0, 165.0, 19.0 ],
+					"patching_rect" : [ 358.0, 563.0, 165.0, 19.0 ],
 					"style" : "",
 					"text" : "t https://en.wikipedia.org/wiki/Kurtosis"
 				}
@@ -441,7 +454,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "https://en.wikipedia.org/wiki/Skewness" ],
-					"patching_rect" : [ 358.0, 525.0, 173.0, 19.0 ],
+					"patching_rect" : [ 358.0, 539.0, 173.0, 19.0 ],
 					"style" : "",
 					"text" : "t https://en.wikipedia.org/wiki/Skewness"
 				}
@@ -455,7 +468,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
-					"patching_rect" : [ 358.0, 673.0, 20.0, 20.0 ],
+					"patching_rect" : [ 358.0, 687.0, 20.0, 20.0 ],
 					"style" : ""
 				}
 
@@ -471,7 +484,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 703.0, 299.0, 29.0 ],
+					"patching_rect" : [ 358.0, 717.0, 299.0, 29.0 ],
 					"style" : "",
 					"text" : ";\rmax launchbrowser https://en.wikipedia.org/wiki/Onset_(audio)"
 				}
@@ -487,7 +500,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 650.0, 136.0, 19.0 ],
+					"patching_rect" : [ 358.0, 664.0, 136.0, 19.0 ],
 					"style" : "",
 					"text" : "sprintf \\; max launchbrowser %s"
 				}
@@ -503,7 +516,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "https://en.wikipedia.org/wiki/Spectral_centroid" ],
-					"patching_rect" : [ 358.0, 504.0, 203.0, 19.0 ],
+					"patching_rect" : [ 358.0, 518.0, 203.0, 19.0 ],
 					"style" : "",
 					"text" : "t https://en.wikipedia.org/wiki/Spectral_centroid"
 				}
@@ -518,7 +531,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 358.0, 337.0, 214.0, 22.0 ],
+					"patching_rect" : [ 358.0, 351.0, 214.0, 22.0 ],
 					"style" : "",
 					"text" : "2.(float): Spectral centroid (brightness)"
 				}
@@ -533,7 +546,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 555.0, 248.5, 40.0, 17.0 ],
+					"patching_rect" : [ 555.0, 281.5, 40.0, 17.0 ],
 					"style" : "",
 					"text" : "ONSET"
 				}
@@ -606,13 +619,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 441.0, 106.0, 215.0, 113.0 ],
+						"rect" : [ 484.0, 125.0, 215.0, 113.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
@@ -716,8 +729,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 1,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -1237,7 +1250,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 29.0, 337.0, 329.0, 160.0 ],
+					"patching_rect" : [ 29.0, 351.0, 329.0, 160.0 ],
 					"style" : "",
 					"text" : "ARGUMENTS:\n\n1. Window size, in samples (default 1024)\n\nINLETS:\n1. (signal): Input\n\nATTRIBUTES:\noverlap (float): Window overlap ratio\nmintFreq (float): Lower frequency limit, in Hz (0 for DC)\nmaxFreq (float): Upper frequency limit, in Hz (0 for Nyquist)\n"
 				}
@@ -1252,8 +1265,8 @@
 					"id" : "obj-1",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 8,
-					"outlettype" : [ "float", "float", "float", "float", "float", "float", "float", "float" ],
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 29.0, 216.0, 532.0, 25.0 ],
 					"style" : "",
 					"text" : "sdt.spectralfeats~ 4096 @minFreq 100. @maxFreq 10000. @overlap 0.75"
@@ -1263,73 +1276,10 @@
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
-					"destination" : [ "obj-10", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-1", 5 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-11", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-1", 6 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-12", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-1", 7 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-5", 0 ],
+					"destination" : [ "obj-3", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-1", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-6", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-1", 1 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-7", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-1", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-8", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-1", 3 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-9", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
-					"source" : [ "obj-1", 4 ]
 				}
 
 			}
@@ -1348,6 +1298,78 @@
 					"disabled" : 0,
 					"hidden" : 1,
 					"source" : [ "obj-23", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-10", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 5 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-11", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 6 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-12", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 7 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-5", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-6", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-7", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 2 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-8", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 3 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-9", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 4 ]
 				}
 
 			}
@@ -1498,7 +1520,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

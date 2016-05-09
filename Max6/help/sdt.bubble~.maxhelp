@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 1,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -38,6 +38,19 @@
 		"subpatcher_template" : "Default Max 7",
 		"boxes" : [ 			{
 				"box" : 				{
+					"id" : "obj-12",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
+					"patching_rect" : [ 281.0, 500.0, 72.0, 22.0 ],
+					"style" : "",
+					"text" : "loadmess 1"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"fontface" : 0,
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 10.0,
@@ -47,7 +60,7 @@
 					"numinlets" : 6,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 112.0, 340.0, 89.0, 32.0 ],
+					"patching_rect" : [ 112.0, 340.0, 90.0, 32.0 ],
 					"style" : "",
 					"text" : "scale 0. 100. 0.15 150. 1.06"
 				}
@@ -64,7 +77,7 @@
 					"numinlets" : 6,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 224.5, 340.0, 67.0, 32.0 ],
+					"patching_rect" : [ 224.5, 340.0, 68.0, 32.0 ],
 					"style" : "",
 					"text" : "scale 0. 100. 0. 3. 1.06"
 				}
@@ -111,8 +124,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -296,7 +309,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 115.875, 280.0, 62.0, 22.0 ],
 					"style" : "default",
-					"text" : "0.125508"
+					"text" : "0.144675"
 				}
 
 			}
@@ -311,7 +324,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 7.875, 280.0, 70.0, 22.0 ],
 					"style" : "default",
-					"text" : "19.692537"
+					"text" : "5.588597"
 				}
 
 			}
@@ -531,8 +544,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 1,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -641,8 +654,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 1,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -1226,6 +1239,15 @@
 			}
 , 			{
 				"patchline" : 				{
+					"destination" : [ "obj-15", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-12", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-3", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
@@ -1352,11 +1374,17 @@
 			}
  ],
 		"dependency_cache" : [ 			{
+				"name" : "_SDT_label2016.maxpat",
+				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "sdt.bubble~.mxo",
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0,
+		"autosave" : 0,
 		"bgfillcolor_type" : "gradient",
 		"bgfillcolor_color1" : [ 0.376471, 0.384314, 0.4, 1.0 ],
 		"bgfillcolor_color2" : [ 0.290196, 0.309804, 0.301961, 1.0 ],

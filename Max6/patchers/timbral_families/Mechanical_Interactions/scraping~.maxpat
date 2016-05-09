@@ -740,9 +740,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 192.0, 334.0, 85.0, 20.0 ],
+					"patching_rect" : [ 192.0, 334.0, 86.0, 20.0 ],
 					"style" : "",
-					"text" : "prepend weights"
+					"text" : "prepend pickup0"
 				}
 
 			}
@@ -757,7 +757,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 192.0, 173.5, 82.0, 17.0 ],
 					"style" : "",
-					"text" : "weights"
+					"text" : "pickups0"
 				}
 
 			}
@@ -1797,7 +1797,7 @@
 			}
 , 			{
 				"box" : 				{
-					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 789.97406, 84.0, 0, 0.355, 848.746765, 49.333332, 0, -0.6, 921.348328, 100.0, 0, 0.25, 1000.0, 0.0, 0, 0.5 ],
+					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 300.835663, 99.833336, 0, -0.45, 479.108643, 0.0, 0, 0.55, 698.23584, 93.166664, 0, 0.155, 1000.0, 0.0, 0, 0.45 ],
 					"id" : "obj-78",
 					"linecolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"maxclass" : "function",
@@ -1900,13 +1900,13 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 16.0,
 					"id" : "obj-3",
-					"linecount" : 4,
+					"linecount" : 3,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 12.0, 421.0, 310.0, 85.0 ],
+					"patching_rect" : [ 12.0, 421.0, 364.0, 66.0 ],
 					"style" : "",
-					"text" : "sdt.modal rubbscrapeB 3 2 @freqs 660 1056 2046 @decays 0.003 0.002 0.002 @weights 100 100 100 @pickup0 1. 1. 1. @pickup1 1. 1. 1. @activeModes 3"
+					"text" : "sdt.modal rubbscrapeB 3 2 @freqs 660 1056 2046 @decays 0.003 0.002 0.002 @pickup0 100 100 100 @activeModes 3"
 				}
 
 			}

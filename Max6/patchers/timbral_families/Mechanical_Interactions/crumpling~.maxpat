@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -48,8 +48,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -442,8 +442,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -642,8 +642,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -933,8 +933,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1576,9 +1576,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 29.0, 587.0, 331.0, 85.0 ],
+					"patching_rect" : [ 29.0, 587.0, 301.0, 85.0 ],
 					"style" : "",
-					"text" : "sdt.modal objectcr 3 2 @freqs 1000. 2750. 3380 @decays 0.0036 0.0024 0.0012 @weights 78. 91. 100. @pickup0 1. 1. 1. @pickup1 1. 1. 1. @activeModes 3"
+					"text" : "sdt.modal objectcr 3 2 @freqs 1000. 2750. 3380 @decays 0.0036 0.0024 0.0012 @pickup0 160. 180. 200. @activeModes 3"
 				}
 
 			}
@@ -1652,11 +1652,11 @@
 					"linecount" : 4,
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
-					"patching_rect" : [ 457.75, 396.0, 268.0, 85.0 ],
+					"numoutlets" : 2,
+					"outlettype" : [ "signal", "signal" ],
+					"patching_rect" : [ 457.75, 396.0, 267.25, 85.0 ],
 					"style" : "",
-					"text" : "sdt.impact~ hammercr objectcr 3 @stiffness 699231488. @shape 0.920729 @dissipation 0.046306 @contact0 0 @contact1 0"
+					"text" : "sdt.impact~ hammercr objectcr 2 @stiffness 699231488. @shape 1. @dissipation 0.046306 @contact0 0 @contact1 0"
 				}
 
 			}
@@ -2003,17 +2003,7 @@
 					"destination" : [ "obj-29", 0 ],
 					"disabled" : 0,
 					"hidden" : 1,
-					"midpoints" : [ 716.25, 488.75, 607.0, 488.75 ],
-					"source" : [ "obj-63", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-29", 0 ],
-					"disabled" : 0,
-					"hidden" : 1,
-					"midpoints" : [ 591.75, 488.0625, 607.0, 488.0625 ],
+					"midpoints" : [ 715.5, 488.0625, 607.0, 488.0625 ],
 					"source" : [ "obj-63", 1 ]
 				}
 
@@ -2120,12 +2110,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "~/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.impact~.mxo",
 				"type" : "iLaX"
 			}
@@ -2142,7 +2126,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

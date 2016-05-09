@@ -1,0 +1,56 @@
+\hypertarget{_s_d_t_liquids_8h}{}\section{src/\+S\+D\+T/\+S\+D\+T\+Liquids.h File Reference}
+\label{_s_d_t_liquids_8h}\index{src/\+S\+D\+T/\+S\+D\+T\+Liquids.\+h@{src/\+S\+D\+T/\+S\+D\+T\+Liquids.\+h}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{}typedef struct \hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} \hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble}\label{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing a bubble object. \end{DoxyCompactList}\item 
+\hypertarget{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{}typedef struct \hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} \hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow}\label{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing a fluid flow object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$ \hyperlink{group__bubbles_gac69094ba71af6a065520a824b784f119}{S\+D\+T\+Bubble\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga684ec1f5b434c7faa961a7665815867b}{S\+D\+T\+Bubble\+\_\+free} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga82b35f8a2ac8f122aa7daa1c82048de0}{S\+D\+T\+Bubble\+\_\+set\+Radius} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the bubble radius. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga9654e6c4c3df2c83c18a3697fcbf6c87}{S\+D\+T\+Bubble\+\_\+set\+Depth} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the bubble depth. \end{DoxyCompactList}\item 
+void \hyperlink{group__bubbles_ga944bbb593d6a56aef2d3e19380a6908d}{S\+D\+T\+Bubble\+\_\+set\+Rise\+Factor} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of blooping. \end{DoxyCompactList}\item 
+\hypertarget{group__bubbles_ga538ac5581fa91ee6e0a3cfa9d4dca699}{}void \hyperlink{group__bubbles_ga538ac5581fa91ee6e0a3cfa9d4dca699}{S\+D\+T\+Bubble\+\_\+update} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)\label{group__bubbles_ga538ac5581fa91ee6e0a3cfa9d4dca699}
+
+\begin{DoxyCompactList}\small\item\em Triggers a new bubble. \end{DoxyCompactList}\item 
+\hypertarget{group__bubbles_gaaee6fb3f1576fda28ac548482229fffd}{}void \hyperlink{group__bubbles_gaaee6fb3f1576fda28ac548482229fffd}{S\+D\+T\+Bubble\+\_\+norm\+Amp} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)\label{group__bubbles_gaaee6fb3f1576fda28ac548482229fffd}
+
+\begin{DoxyCompactList}\small\item\em Sets bubble amplitude to the maximum instead of computing it from radius and depth. \end{DoxyCompactList}\item 
+double \hyperlink{group__bubbles_ga36550a7621093fddb164de1f68ae6577}{S\+D\+T\+Bubble\+\_\+dsp} (\hyperlink{group__bubbles_ga112f59b24c7a304d0ff6280c98cf7e75}{S\+D\+T\+Bubble} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to obtain a bubble sound. \end{DoxyCompactList}\item 
+\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$ \hyperlink{group__fluidflow_ga6d2b03d974e7ee6a5d0c45aab4baa5d3}{S\+D\+T\+Fluid\+Flow\+\_\+new} (int n\+Bubbles)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_ga5278f1f0a757874202d7e61b7da90b1e}{S\+D\+T\+Fluid\+Flow\+\_\+free} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_ga3a76e68eb9e7af294fee95e98cdc002a}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Min\+Radius} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the minimum radius for the bubble population. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_ga9bb67f45f1d78d87fcef214a30fc3ed8}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Max\+Radius} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the maximum radius for the bubble population. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_ga4d9010f3830990fe1028047d8dd8fb4d}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Exp\+Radius} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the gamma factor for the radius assignment. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_gafcb871876cb30f6a1057926a577a5bd6}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Min\+Depth} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the minimum depth value for the bubble population. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_gafceba9a9992d28b9b8fb31931d90c550}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Max\+Depth} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the maximum depth value for the bubble population. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_ga3eda104aac66882a84162c197922af26}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Exp\+Depth} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the gamma factor for the depth assignment. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_ga7f24b38de9b85ad2d06d25b6d807b2c7}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Rise\+Factor} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of blooping for the bubble population. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_ga165e0cedcfba37141d0250db467d9e4a}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Rise\+Cutoff} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Bubbles deeper than this threshold do not rise in frequency. \end{DoxyCompactList}\item 
+void \hyperlink{group__fluidflow_gab315da9a42eb440b577e4f546eff86f2}{S\+D\+T\+Fluid\+Flow\+\_\+set\+Avg\+Rate} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of generated bubbles per second. \end{DoxyCompactList}\item 
+double \hyperlink{group__fluidflow_gae8ed3d484d89474d3007f1f70a8f0dfd}{S\+D\+T\+Fluid\+Flow\+\_\+dsp} (\hyperlink{group__fluidflow_ga2df6b1f85ce5d2b1dfb5943ef84cd132}{S\+D\+T\+Fluid\+Flow} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to obtain a liquid sound. \end{DoxyCompactList}\end{DoxyCompactItemize}

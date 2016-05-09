@@ -1,0 +1,104 @@
+\hypertarget{group__solids}{}\section{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}
+\label{group__solids}\index{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__solids_ga4798bf3097d15ac12831bffa616ab71f}{}\#define {\bfseries S\+D\+T\+\_\+\+M\+A\+X\+\_\+\+M\+O\+D\+E\+S}~16\label{group__solids_ga4798bf3097d15ac12831bffa616ab71f}
+
+\item 
+\hypertarget{group__solids_ga4920a8283b4fa0d571a031e751fe9f86}{}\#define {\bfseries S\+D\+T\+\_\+\+M\+A\+X\+\_\+\+P\+I\+C\+K\+U\+P\+S}~16\label{group__solids_ga4920a8283b4fa0d571a031e751fe9f86}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{group__solids_gaffc95f5df4212748c12a6c55f8461433}{S\+D\+T\+\_\+register\+Resonator} (\hyperlink{group__resonators_ga07d183de45e9713277c8f62d93d9be9c}{S\+D\+T\+Resonator} $\ast$x, char $\ast$key)
+\begin{DoxyCompactList}\small\item\em Registers a resonator into the resonators list with a unique I\+D. If an interactor with the same I\+D is present, the resonator is bound to the interactor. \end{DoxyCompactList}\item 
+int \hyperlink{group__solids_gacccd077a38a5fa07ee1b15794367a82b}{S\+D\+T\+\_\+unregister\+Resonator} (char $\ast$key)
+\begin{DoxyCompactList}\small\item\em Unregisters a resonator from the resonator list. If a resonator with the given I\+D is present, it is unregistered from the list. If also an interactor with the same I\+D is present, the object is released by the interactor as well. \end{DoxyCompactList}\item 
+int \hyperlink{group__solids_gae0087b21c1611fcfb1e679856fc8a1d6}{S\+D\+T\+\_\+register\+Interactor} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, char $\ast$key0, char $\ast$key1)
+\begin{DoxyCompactList}\small\item\em Registers an interactor into the interactors list with two unique I\+Ds, one for each resonator. If resonators with the same I\+Ds are present, they are immediately bound to the interactor. \end{DoxyCompactList}\item 
+int \hyperlink{group__solids_ga76b9f01d7a3a55eee9df3a32c810109a}{S\+D\+T\+\_\+unregister\+Interactor} (char $\ast$key0, char $\ast$key1)
+\begin{DoxyCompactList}\small\item\em Unregisters an interactor from the interactors list. If an interactor with the given I\+Ds is present, it is unregistered from the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Bidirectional observer pattern, implementing a loose coupling between resonator and interactor objects. Particularly useful in patcher languages, where object instantiation is generally asynchronous. 
+
+\subsection{Function Documentation}
+\hypertarget{group__solids_gae0087b21c1611fcfb1e679856fc8a1d6}{}\index{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}!S\+D\+T\+\_\+register\+Interactor@{S\+D\+T\+\_\+register\+Interactor}}
+\index{S\+D\+T\+\_\+register\+Interactor@{S\+D\+T\+\_\+register\+Interactor}!S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}}
+\subsubsection[{S\+D\+T\+\_\+register\+Interactor(\+S\+D\+T\+Interactor $\ast$x, char $\ast$key0, char $\ast$key1)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+\_\+register\+Interactor (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{char $\ast$}]{key0, }
+\item[{char $\ast$}]{key1}
+\end{DoxyParamCaption}
+)}\label{group__solids_gae0087b21c1611fcfb1e679856fc8a1d6}
+
+
+Registers an interactor into the interactors list with two unique I\+Ds, one for each resonator. If resonators with the same I\+Ds are present, they are immediately bound to the interactor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Resonator instance to register \\
+\hline
+\mbox{\tt in}  & {\em key0} & Unique I\+D of the first resonator \\
+\hline
+\mbox{\tt in}  & {\em key1} & Unique I\+D of the second resonator \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__solids_gaffc95f5df4212748c12a6c55f8461433}{}\index{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}!S\+D\+T\+\_\+register\+Resonator@{S\+D\+T\+\_\+register\+Resonator}}
+\index{S\+D\+T\+\_\+register\+Resonator@{S\+D\+T\+\_\+register\+Resonator}!S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}}
+\subsubsection[{S\+D\+T\+\_\+register\+Resonator(\+S\+D\+T\+Resonator $\ast$x, char $\ast$key)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+\_\+register\+Resonator (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Resonator} $\ast$}]{x, }
+\item[{char $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\label{group__solids_gaffc95f5df4212748c12a6c55f8461433}
+
+
+Registers a resonator into the resonators list with a unique I\+D. If an interactor with the same I\+D is present, the resonator is bound to the interactor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Resonator instance to register \\
+\hline
+\mbox{\tt in}  & {\em key} & Unique I\+D assigned to the resonator instance \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__solids_ga76b9f01d7a3a55eee9df3a32c810109a}{}\index{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}!S\+D\+T\+\_\+unregister\+Interactor@{S\+D\+T\+\_\+unregister\+Interactor}}
+\index{S\+D\+T\+\_\+unregister\+Interactor@{S\+D\+T\+\_\+unregister\+Interactor}!S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}}
+\subsubsection[{S\+D\+T\+\_\+unregister\+Interactor(char $\ast$key0, char $\ast$key1)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+\_\+unregister\+Interactor (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{key0, }
+\item[{char $\ast$}]{key1}
+\end{DoxyParamCaption}
+)}\label{group__solids_ga76b9f01d7a3a55eee9df3a32c810109a}
+
+
+Unregisters an interactor from the interactors list. If an interactor with the given I\+Ds is present, it is unregistered from the list. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em key0} & Unique I\+D of the first resonator \\
+\hline
+\mbox{\tt in}  & {\em key1} & Unique I\+D of the second resonator \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__solids_gacccd077a38a5fa07ee1b15794367a82b}{}\index{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}!S\+D\+T\+\_\+unregister\+Resonator@{S\+D\+T\+\_\+unregister\+Resonator}}
+\index{S\+D\+T\+\_\+unregister\+Resonator@{S\+D\+T\+\_\+unregister\+Resonator}!S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors@{S\+D\+T\+Solids.\+h\+: Registering/notifying resonators and interactors}}
+\subsubsection[{S\+D\+T\+\_\+unregister\+Resonator(char $\ast$key)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+\_\+unregister\+Resonator (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{key}
+\end{DoxyParamCaption}
+)}\label{group__solids_gacccd077a38a5fa07ee1b15794367a82b}
+
+
+Unregisters a resonator from the resonator list. If a resonator with the given I\+D is present, it is unregistered from the list. If also an interactor with the same I\+D is present, the object is released by the interactor as well. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em key} & Unique I\+D of the resonator instance to unregister \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,99 @@
+\hypertarget{group__interactor}{}\section{Interactor interface}
+\label{group__interactor}\index{Interactor interface@{Interactor interface}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{}typedef struct \hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} \hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor}\label{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing the interactor interface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__interactor_ga73c9ca147996c7ff9994ddc26ff19d00}{S\+D\+T\+Interactor\+\_\+set\+First\+Resonator} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, \hyperlink{group__resonators_ga07d183de45e9713277c8f62d93d9be9c}{S\+D\+T\+Resonator} $\ast$p)
+\begin{DoxyCompactList}\small\item\em Sets the pointer to the first interacting resonator. \end{DoxyCompactList}\item 
+void \hyperlink{group__interactor_ga3f6b6eb1d662fb2770e3079beee4a19c}{S\+D\+T\+Interactor\+\_\+set\+Second\+Resonator} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, \hyperlink{group__resonators_ga07d183de45e9713277c8f62d93d9be9c}{S\+D\+T\+Resonator} $\ast$p)
+\begin{DoxyCompactList}\small\item\em Sets the pointer to the second interacting resonator. \end{DoxyCompactList}\item 
+void \hyperlink{group__interactor_ga96b6bb2e7608f4ec80e569634758303c}{S\+D\+T\+Interactor\+\_\+set\+First\+Point} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, long l)
+\begin{DoxyCompactList}\small\item\em Sets the contact point index for the first resonator. \end{DoxyCompactList}\item 
+void \hyperlink{group__interactor_ga0f55a3259e515011bc56039fe9d59277}{S\+D\+T\+Interactor\+\_\+set\+Second\+Point} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, long l)
+\begin{DoxyCompactList}\small\item\em Sets the contact point index for the second resonator. \end{DoxyCompactList}\item 
+\hypertarget{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}{}double \hyperlink{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}{S\+D\+T\+Interactor\+\_\+compute\+Force} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x)\label{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}
+
+\begin{DoxyCompactList}\small\item\em Computes a force to apply to the contact points, based on the resonators\textquotesingle{} state at the chosen pickups. \end{DoxyCompactList}\item 
+\hypertarget{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}{}void \hyperlink{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}{S\+D\+T\+Interactor\+\_\+dsp} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f0, double f1, double $\ast$outs)\label{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}
+
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Convenience method to compute the interaction force, apply it to the resonators and update their state. This method already calls the D\+S\+P routines of the two resonators, so be sure not to call them if you use this method. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This abstract object acts as a generic interface implemented by all interactors. It contains two pointers to the interacting objects, information on the chosen contact points, and an algorithm that, after reading the state of the objects (displacement and velocity) at the specified contact points, accordingly computes a force to apply to those contact points. The generic interactor should never be directly instantiated, instead it should be obtained through the specific S\+D\+T\+Impact and S\+D\+T\+Friction constructors. 
+
+\subsection{Function Documentation}
+\hypertarget{group__interactor_ga96b6bb2e7608f4ec80e569634758303c}{}\index{Interactor interface@{Interactor interface}!S\+D\+T\+Interactor\+\_\+set\+First\+Point@{S\+D\+T\+Interactor\+\_\+set\+First\+Point}}
+\index{S\+D\+T\+Interactor\+\_\+set\+First\+Point@{S\+D\+T\+Interactor\+\_\+set\+First\+Point}!Interactor interface@{Interactor interface}}
+\subsubsection[{S\+D\+T\+Interactor\+\_\+set\+First\+Point(\+S\+D\+T\+Interactor $\ast$x, long l)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Interactor\+\_\+set\+First\+Point (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{long}]{l}
+\end{DoxyParamCaption}
+)}\label{group__interactor_ga96b6bb2e7608f4ec80e569634758303c}
+
+
+Sets the contact point index for the first resonator. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em Number} & of the first resonator pickup chosen for interaction \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__interactor_ga73c9ca147996c7ff9994ddc26ff19d00}{}\index{Interactor interface@{Interactor interface}!S\+D\+T\+Interactor\+\_\+set\+First\+Resonator@{S\+D\+T\+Interactor\+\_\+set\+First\+Resonator}}
+\index{S\+D\+T\+Interactor\+\_\+set\+First\+Resonator@{S\+D\+T\+Interactor\+\_\+set\+First\+Resonator}!Interactor interface@{Interactor interface}}
+\subsubsection[{S\+D\+T\+Interactor\+\_\+set\+First\+Resonator(\+S\+D\+T\+Interactor $\ast$x, S\+D\+T\+Resonator $\ast$p)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Interactor\+\_\+set\+First\+Resonator (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{{\bf S\+D\+T\+Resonator} $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\label{group__interactor_ga73c9ca147996c7ff9994ddc26ff19d00}
+
+
+Sets the pointer to the first interacting resonator. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Pointer to a S\+D\+T\+Resonator instance \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__interactor_ga0f55a3259e515011bc56039fe9d59277}{}\index{Interactor interface@{Interactor interface}!S\+D\+T\+Interactor\+\_\+set\+Second\+Point@{S\+D\+T\+Interactor\+\_\+set\+Second\+Point}}
+\index{S\+D\+T\+Interactor\+\_\+set\+Second\+Point@{S\+D\+T\+Interactor\+\_\+set\+Second\+Point}!Interactor interface@{Interactor interface}}
+\subsubsection[{S\+D\+T\+Interactor\+\_\+set\+Second\+Point(\+S\+D\+T\+Interactor $\ast$x, long l)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Interactor\+\_\+set\+Second\+Point (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{long}]{l}
+\end{DoxyParamCaption}
+)}\label{group__interactor_ga0f55a3259e515011bc56039fe9d59277}
+
+
+Sets the contact point index for the second resonator. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em Number} & of the second resonator pickup chosen for interaction \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__interactor_ga3f6b6eb1d662fb2770e3079beee4a19c}{}\index{Interactor interface@{Interactor interface}!S\+D\+T\+Interactor\+\_\+set\+Second\+Resonator@{S\+D\+T\+Interactor\+\_\+set\+Second\+Resonator}}
+\index{S\+D\+T\+Interactor\+\_\+set\+Second\+Resonator@{S\+D\+T\+Interactor\+\_\+set\+Second\+Resonator}!Interactor interface@{Interactor interface}}
+\subsubsection[{S\+D\+T\+Interactor\+\_\+set\+Second\+Resonator(\+S\+D\+T\+Interactor $\ast$x, S\+D\+T\+Resonator $\ast$p)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Interactor\+\_\+set\+Second\+Resonator (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{{\bf S\+D\+T\+Resonator} $\ast$}]{p}
+\end{DoxyParamCaption}
+)}\label{group__interactor_ga3f6b6eb1d662fb2770e3079beee4a19c}
+
+
+Sets the pointer to the second interacting resonator. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em p} & Pointer to a S\+D\+T\+Resonator instance \\
+\hline
+\end{DoxyParams}

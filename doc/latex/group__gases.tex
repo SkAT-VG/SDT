@@ -1,0 +1,19 @@
+\hypertarget{group__gases}{}\section{S\+D\+T\+Gases.\+h\+: Air turbulence and explosions}
+\label{group__gases}\index{S\+D\+T\+Gases.\+h\+: Air turbulence and explosions@{S\+D\+T\+Gases.\+h\+: Air turbulence and explosions}}
+\subsection*{Modules}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__windflow}{Turbulence against solid objects}
+\item 
+\hyperlink{group__windcavity}{Turbulence through hollow cavities}
+\item 
+\hyperlink{group__windkarman}{Turbulence across thin objects}
+\item 
+\hyperlink{group__explosions}{Supersonic explosions}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Physical models to simulate wooshes, wind gusts and howls, helicopter rotors and so on. A gas flowing in a more or less constant direction usually doesn\textquotesingle{}t make any sound by itself, its pressure variations being too slow to fall into the audible range. Nevertheless, objects obstructing the air flow are likely to cause turbulence at much higher frequencies, and therefore they do make sounds. Heavily inspired by the work of Andy Farnell in his book \char`\"{}\+Designing Sound\char`\"{}, these models render chaotic turbulences through filtered random noise.
+
+This module also includes the simulation of powerful explosions, as well as objects travelling at supersonic speed such as rifle bullets or cracking whip tails. All these phenomena create shock waves, namely a sudden peak in pressure followed by a negative expansion tail. Although being highly impulsive events, explosions also generate turbulence and other kinds of chaotic scattering which yield complex acoustic textures and have a direct effect on the resulting sound. The S\+D\+T explosion model uses a Friedlander waveform to render the impulsive part, and a Feedback Delay Network reverb to simulate scattering. 

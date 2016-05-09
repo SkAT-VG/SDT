@@ -1,0 +1,111 @@
+\hypertarget{group__envelope}{}\section{Envelope follower}
+\label{group__envelope}\index{Envelope follower@{Envelope follower}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{}typedef struct \hyperlink{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{S\+D\+T\+Envelope} \hyperlink{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{S\+D\+T\+Envelope}\label{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for an envelope tracker object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{S\+D\+T\+Envelope} $\ast$ \hyperlink{group__envelope_ga7560e74069e92e5801ef05f62029db28}{S\+D\+T\+Envelope\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__envelope_ga52fa046a8fa04e2aebd2694b8a4dda27}{S\+D\+T\+Envelope\+\_\+free} (\hyperlink{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{S\+D\+T\+Envelope} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__envelope_gaf5b219fc0777375765a6aecca809252b}{S\+D\+T\+Envelope\+\_\+set\+Attack} (\hyperlink{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{S\+D\+T\+Envelope} $\ast$x, double a)
+\begin{DoxyCompactList}\small\item\em Sets the attack time. \end{DoxyCompactList}\item 
+void \hyperlink{group__envelope_ga3486e9286a82a3f38b326a96376e6c5d}{S\+D\+T\+Envelope\+\_\+set\+Release} (\hyperlink{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{S\+D\+T\+Envelope} $\ast$x, double r)
+\begin{DoxyCompactList}\small\item\em Sets the release time. \end{DoxyCompactList}\item 
+double \hyperlink{group__envelope_gacdb45bbde2c62d73cc7325d915742063}{S\+D\+T\+Envelope\+\_\+dsp} (\hyperlink{group__envelope_gafbf35d3d3dc5e65f15a864c79934206d}{S\+D\+T\+Envelope} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the filtered signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+One pole envelope follower, with independent attack and release times. 
+
+\subsection{Function Documentation}
+\hypertarget{group__envelope_gacdb45bbde2c62d73cc7325d915742063}{}\index{Envelope follower@{Envelope follower}!S\+D\+T\+Envelope\+\_\+dsp@{S\+D\+T\+Envelope\+\_\+dsp}}
+\index{S\+D\+T\+Envelope\+\_\+dsp@{S\+D\+T\+Envelope\+\_\+dsp}!Envelope follower@{Envelope follower}}
+\subsubsection[{S\+D\+T\+Envelope\+\_\+dsp(\+S\+D\+T\+Envelope $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Envelope\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Envelope} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__envelope_gacdb45bbde2c62d73cc7325d915742063}
+
+
+Signal processing routine. Call this function at sample rate to compute the filtered signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__envelope_ga52fa046a8fa04e2aebd2694b8a4dda27}{}\index{Envelope follower@{Envelope follower}!S\+D\+T\+Envelope\+\_\+free@{S\+D\+T\+Envelope\+\_\+free}}
+\index{S\+D\+T\+Envelope\+\_\+free@{S\+D\+T\+Envelope\+\_\+free}!Envelope follower@{Envelope follower}}
+\subsubsection[{S\+D\+T\+Envelope\+\_\+free(\+S\+D\+T\+Envelope $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Envelope\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Envelope} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__envelope_ga52fa046a8fa04e2aebd2694b8a4dda27}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__envelope_ga7560e74069e92e5801ef05f62029db28}{}\index{Envelope follower@{Envelope follower}!S\+D\+T\+Envelope\+\_\+new@{S\+D\+T\+Envelope\+\_\+new}}
+\index{S\+D\+T\+Envelope\+\_\+new@{S\+D\+T\+Envelope\+\_\+new}!Envelope follower@{Envelope follower}}
+\subsubsection[{S\+D\+T\+Envelope\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Envelope}$\ast$ S\+D\+T\+Envelope\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__envelope_ga7560e74069e92e5801ef05f62029db28}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__envelope_gaf5b219fc0777375765a6aecca809252b}{}\index{Envelope follower@{Envelope follower}!S\+D\+T\+Envelope\+\_\+set\+Attack@{S\+D\+T\+Envelope\+\_\+set\+Attack}}
+\index{S\+D\+T\+Envelope\+\_\+set\+Attack@{S\+D\+T\+Envelope\+\_\+set\+Attack}!Envelope follower@{Envelope follower}}
+\subsubsection[{S\+D\+T\+Envelope\+\_\+set\+Attack(\+S\+D\+T\+Envelope $\ast$x, double a)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Envelope\+\_\+set\+Attack (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Envelope} $\ast$}]{x, }
+\item[{double}]{a}
+\end{DoxyParamCaption}
+)}\label{group__envelope_gaf5b219fc0777375765a6aecca809252b}
+
+
+Sets the attack time. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Attack time, in ms \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__envelope_ga3486e9286a82a3f38b326a96376e6c5d}{}\index{Envelope follower@{Envelope follower}!S\+D\+T\+Envelope\+\_\+set\+Release@{S\+D\+T\+Envelope\+\_\+set\+Release}}
+\index{S\+D\+T\+Envelope\+\_\+set\+Release@{S\+D\+T\+Envelope\+\_\+set\+Release}!Envelope follower@{Envelope follower}}
+\subsubsection[{S\+D\+T\+Envelope\+\_\+set\+Release(\+S\+D\+T\+Envelope $\ast$x, double r)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Envelope\+\_\+set\+Release (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Envelope} $\ast$}]{x, }
+\item[{double}]{r}
+\end{DoxyParamCaption}
+)}\label{group__envelope_ga3486e9286a82a3f38b326a96376e6c5d}
+
+
+Sets the release time. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em r} & Release time, in ms \\
+\hline
+\end{DoxyParams}

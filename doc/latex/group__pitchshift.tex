@@ -1,0 +1,97 @@
+\hypertarget{group__pitchshift}{}\section{Pitch shift}
+\label{group__pitchshift}\index{Pitch shift@{Pitch shift}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}{}typedef struct \hyperlink{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}{S\+D\+T\+Pitch\+Shift} \hyperlink{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}{S\+D\+T\+Pitch\+Shift}\label{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a pitch shifter object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}{S\+D\+T\+Pitch\+Shift} $\ast$ \hyperlink{group__pitchshift_gaa93d13148a303debfed6a254916350da}{S\+D\+T\+Pitch\+Shift\+\_\+new} (long size)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__pitchshift_ga797b695000742e91d3b6de3f0fdda906}{S\+D\+T\+Pitch\+Shift\+\_\+free} (\hyperlink{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}{S\+D\+T\+Pitch\+Shift} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__pitchshift_ga3a07dff035c7fd43fa17eadb72cbbff9}{S\+D\+T\+Pitch\+Shift\+\_\+set\+Ratio} (\hyperlink{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}{S\+D\+T\+Pitch\+Shift} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the pitch shifting ratio. \end{DoxyCompactList}\item 
+double \hyperlink{group__pitchshift_ga30c5a47a5b206c7bceb5dd100e3af3bd}{S\+D\+T\+Pitch\+Shift\+\_\+dsp} (\hyperlink{group__pitchshift_ga7dff86b6eec0359c1234a618d7880fc8}{S\+D\+T\+Pitch\+Shift} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the pitch shifted signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Time-\/domain pitch shifter, useful to simulate doppler effect or other applications requiring pitch shifting. 
+
+\subsection{Function Documentation}
+\hypertarget{group__pitchshift_ga30c5a47a5b206c7bceb5dd100e3af3bd}{}\index{Pitch shift@{Pitch shift}!S\+D\+T\+Pitch\+Shift\+\_\+dsp@{S\+D\+T\+Pitch\+Shift\+\_\+dsp}}
+\index{S\+D\+T\+Pitch\+Shift\+\_\+dsp@{S\+D\+T\+Pitch\+Shift\+\_\+dsp}!Pitch shift@{Pitch shift}}
+\subsubsection[{S\+D\+T\+Pitch\+Shift\+\_\+dsp(\+S\+D\+T\+Pitch\+Shift $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Pitch\+Shift\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pitch\+Shift} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__pitchshift_ga30c5a47a5b206c7bceb5dd100e3af3bd}
+
+
+Signal processing routine. Call this function at sample rate to compute the pitch shifted signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__pitchshift_ga797b695000742e91d3b6de3f0fdda906}{}\index{Pitch shift@{Pitch shift}!S\+D\+T\+Pitch\+Shift\+\_\+free@{S\+D\+T\+Pitch\+Shift\+\_\+free}}
+\index{S\+D\+T\+Pitch\+Shift\+\_\+free@{S\+D\+T\+Pitch\+Shift\+\_\+free}!Pitch shift@{Pitch shift}}
+\subsubsection[{S\+D\+T\+Pitch\+Shift\+\_\+free(\+S\+D\+T\+Pitch\+Shift $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Pitch\+Shift\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pitch\+Shift} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__pitchshift_ga797b695000742e91d3b6de3f0fdda906}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__pitchshift_gaa93d13148a303debfed6a254916350da}{}\index{Pitch shift@{Pitch shift}!S\+D\+T\+Pitch\+Shift\+\_\+new@{S\+D\+T\+Pitch\+Shift\+\_\+new}}
+\index{S\+D\+T\+Pitch\+Shift\+\_\+new@{S\+D\+T\+Pitch\+Shift\+\_\+new}!Pitch shift@{Pitch shift}}
+\subsubsection[{S\+D\+T\+Pitch\+Shift\+\_\+new(long size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Pitch\+Shift}$\ast$ S\+D\+T\+Pitch\+Shift\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{long}]{size}
+\end{DoxyParamCaption}
+)}\label{group__pitchshift_gaa93d13148a303debfed6a254916350da}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Internal buffer size, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__pitchshift_ga3a07dff035c7fd43fa17eadb72cbbff9}{}\index{Pitch shift@{Pitch shift}!S\+D\+T\+Pitch\+Shift\+\_\+set\+Ratio@{S\+D\+T\+Pitch\+Shift\+\_\+set\+Ratio}}
+\index{S\+D\+T\+Pitch\+Shift\+\_\+set\+Ratio@{S\+D\+T\+Pitch\+Shift\+\_\+set\+Ratio}!Pitch shift@{Pitch shift}}
+\subsubsection[{S\+D\+T\+Pitch\+Shift\+\_\+set\+Ratio(\+S\+D\+T\+Pitch\+Shift $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Pitch\+Shift\+\_\+set\+Ratio (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Pitch\+Shift} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__pitchshift_ga3a07dff035c7fd43fa17eadb72cbbff9}
+
+
+Sets the pitch shifting ratio. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & New pitch / original pitch ratio \\
+\hline
+\end{DoxyParams}

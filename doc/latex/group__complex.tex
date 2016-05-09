@@ -1,0 +1,349 @@
+\hypertarget{group__complex}{}\section{S\+D\+T\+Complex.\+h\+: Handling complex numbers}
+\label{group__complex}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex}
+\begin{DoxyCompactList}\small\item\em Data structure containing the real and imaginary part of a complex number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__complex_gabb05378b3dc6672fd924fc3033ffd55b}{}typedef struct \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_gabb05378b3dc6672fd924fc3033ffd55b}{S\+D\+T\+Complex}\label{group__complex_gabb05378b3dc6672fd924fc3033ffd55b}
+
+\begin{DoxyCompactList}\small\item\em Data structure containing the real and imaginary part of a complex number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_ga0e9bfb21fd5dd18d5c9ce8ca46c69bb9}{S\+D\+T\+Complex\+\_\+cart} (double real, double imag)
+\begin{DoxyCompactList}\small\item\em Returns a complex number with the given real and imaginary parts. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_gadab30e2d42c6d4d09a9377340d8130a5}{S\+D\+T\+Complex\+\_\+exp} (double phase)
+\begin{DoxyCompactList}\small\item\em Returns a complex exponential with base e and given phase. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_gaeeb0da7bd344c3c11659bdf6ed4fe28d}{S\+D\+T\+Complex\+\_\+conj} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a)
+\begin{DoxyCompactList}\small\item\em Returns the complex conjugate of a complex number. \end{DoxyCompactList}\item 
+double \hyperlink{group__complex_gabacc30ac0cc7bf106ba1319c621f20be}{S\+D\+T\+Complex\+\_\+abs} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a)
+\begin{DoxyCompactList}\small\item\em Returns the absolute value (magnitude) of a complex number. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_gad6478dedaf5b90f78c4cb6e4a6f6165c}{S\+D\+T\+Complex\+\_\+add} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} b)
+\begin{DoxyCompactList}\small\item\em Returns the sum of two complex numbers. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_ga8edae46f63b6b4bb9887a12b6842e54e}{S\+D\+T\+Complex\+\_\+sub} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} b)
+\begin{DoxyCompactList}\small\item\em Returns the difference of two complex numbers. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_gaba87299809d4514703cb283c606b9a72}{S\+D\+T\+Complex\+\_\+mult} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} b)
+\begin{DoxyCompactList}\small\item\em Returns the multiplication between two complex numbers. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_gaa162a50704fd0bf879953a9b2668471b}{S\+D\+T\+Complex\+\_\+div} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} b)
+\begin{DoxyCompactList}\small\item\em Returns the division between two complex numbers. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_ga4be5b2b04dbfd45919bf64a7c67407e0}{S\+D\+T\+Complex\+\_\+add\+Real} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, double b)
+\begin{DoxyCompactList}\small\item\em Returns the sum of a complex number and a real number. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_gacd63301a8d4ba8f9b39e549e3f5726f9}{S\+D\+T\+Complex\+\_\+sub\+Real} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, double b)
+\begin{DoxyCompactList}\small\item\em Returns the difference of a complex number and a real number. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_ga5fd0b3a06607aeaea89b1bd7079a8a4b}{S\+D\+T\+Complex\+\_\+real\+Sub} (double a, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} b)
+\begin{DoxyCompactList}\small\item\em Returns the difference of a real number and a complex number. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_ga62b4c54b79fd962a1607de8d39cd85d4}{S\+D\+T\+Complex\+\_\+mult\+Real} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, double b)
+\begin{DoxyCompactList}\small\item\em Returns the multiplication between a complex number and a real number. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_ga0c324c5f1d759ec1bd1039193eb6f738}{S\+D\+T\+Complex\+\_\+div\+Real} (\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} a, double b)
+\begin{DoxyCompactList}\small\item\em Returns the division between a complex number and a real number. \end{DoxyCompactList}\item 
+\hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} \hyperlink{group__complex_ga6f26e1b8e14b15bf49ca42aa0a44b5be}{S\+D\+T\+Complex\+\_\+real\+Div} (double a, \hyperlink{struct_s_d_t_complex}{S\+D\+T\+Complex} b)
+\begin{DoxyCompactList}\small\item\em Returns the division between a real number and a complex number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This module contains data structures and functions to perform basic operations with complex numbers. 
+
+\subsection{Function Documentation}
+\hypertarget{group__complex_gabacc30ac0cc7bf106ba1319c621f20be}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+abs@{S\+D\+T\+Complex\+\_\+abs}}
+\index{S\+D\+T\+Complex\+\_\+abs@{S\+D\+T\+Complex\+\_\+abs}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+abs(\+S\+D\+T\+Complex a)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Complex\+\_\+abs (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a}
+\end{DoxyParamCaption}
+)}\label{group__complex_gabacc30ac0cc7bf106ba1319c621f20be}
+
+
+Returns the absolute value (magnitude) of a complex number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Absolute value of input 
+\end{DoxyReturn}
+\hypertarget{group__complex_gad6478dedaf5b90f78c4cb6e4a6f6165c}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+add@{S\+D\+T\+Complex\+\_\+add}}
+\index{S\+D\+T\+Complex\+\_\+add@{S\+D\+T\+Complex\+\_\+add}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+add(\+S\+D\+T\+Complex a, S\+D\+T\+Complex b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+add (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{{\bf S\+D\+T\+Complex}}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_gad6478dedaf5b90f78c4cb6e4a6f6165c}
+
+
+Returns the sum of two complex numbers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & First operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Second operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a plus b 
+\end{DoxyReturn}
+\hypertarget{group__complex_ga4be5b2b04dbfd45919bf64a7c67407e0}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+add\+Real@{S\+D\+T\+Complex\+\_\+add\+Real}}
+\index{S\+D\+T\+Complex\+\_\+add\+Real@{S\+D\+T\+Complex\+\_\+add\+Real}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+add\+Real(\+S\+D\+T\+Complex a, double b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+add\+Real (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{double}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_ga4be5b2b04dbfd45919bf64a7c67407e0}
+
+
+Returns the sum of a complex number and a real number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Complex operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Real operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a plus b 
+\end{DoxyReturn}
+\hypertarget{group__complex_ga0e9bfb21fd5dd18d5c9ce8ca46c69bb9}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+cart@{S\+D\+T\+Complex\+\_\+cart}}
+\index{S\+D\+T\+Complex\+\_\+cart@{S\+D\+T\+Complex\+\_\+cart}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+cart(double real, double imag)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+cart (
+\begin{DoxyParamCaption}
+\item[{double}]{real, }
+\item[{double}]{imag}
+\end{DoxyParamCaption}
+)}\label{group__complex_ga0e9bfb21fd5dd18d5c9ce8ca46c69bb9}
+
+
+Returns a complex number with the given real and imaginary parts. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em real} & Real part \\
+\hline
+\mbox{\tt in}  & {\em imag} & Imaginary part \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Complex number 
+\end{DoxyReturn}
+\hypertarget{group__complex_gaeeb0da7bd344c3c11659bdf6ed4fe28d}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+conj@{S\+D\+T\+Complex\+\_\+conj}}
+\index{S\+D\+T\+Complex\+\_\+conj@{S\+D\+T\+Complex\+\_\+conj}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+conj(\+S\+D\+T\+Complex a)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+conj (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a}
+\end{DoxyParamCaption}
+)}\label{group__complex_gaeeb0da7bd344c3c11659bdf6ed4fe28d}
+
+
+Returns the complex conjugate of a complex number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Input value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Complex conjugate of input 
+\end{DoxyReturn}
+\hypertarget{group__complex_gaa162a50704fd0bf879953a9b2668471b}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+div@{S\+D\+T\+Complex\+\_\+div}}
+\index{S\+D\+T\+Complex\+\_\+div@{S\+D\+T\+Complex\+\_\+div}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+div(\+S\+D\+T\+Complex a, S\+D\+T\+Complex b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+div (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{{\bf S\+D\+T\+Complex}}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_gaa162a50704fd0bf879953a9b2668471b}
+
+
+Returns the division between two complex numbers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & First operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Second operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a divided by b 
+\end{DoxyReturn}
+\hypertarget{group__complex_ga0c324c5f1d759ec1bd1039193eb6f738}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+div\+Real@{S\+D\+T\+Complex\+\_\+div\+Real}}
+\index{S\+D\+T\+Complex\+\_\+div\+Real@{S\+D\+T\+Complex\+\_\+div\+Real}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+div\+Real(\+S\+D\+T\+Complex a, double b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+div\+Real (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{double}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_ga0c324c5f1d759ec1bd1039193eb6f738}
+
+
+Returns the division between a complex number and a real number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Complex operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Real operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a divided by b 
+\end{DoxyReturn}
+\hypertarget{group__complex_gadab30e2d42c6d4d09a9377340d8130a5}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+exp@{S\+D\+T\+Complex\+\_\+exp}}
+\index{S\+D\+T\+Complex\+\_\+exp@{S\+D\+T\+Complex\+\_\+exp}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+exp(double phase)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+exp (
+\begin{DoxyParamCaption}
+\item[{double}]{phase}
+\end{DoxyParamCaption}
+)}\label{group__complex_gadab30e2d42c6d4d09a9377340d8130a5}
+
+
+Returns a complex exponential with base e and given phase. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em phase} & Phase \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Complex exponential 
+\end{DoxyReturn}
+\hypertarget{group__complex_gaba87299809d4514703cb283c606b9a72}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+mult@{S\+D\+T\+Complex\+\_\+mult}}
+\index{S\+D\+T\+Complex\+\_\+mult@{S\+D\+T\+Complex\+\_\+mult}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+mult(\+S\+D\+T\+Complex a, S\+D\+T\+Complex b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+mult (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{{\bf S\+D\+T\+Complex}}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_gaba87299809d4514703cb283c606b9a72}
+
+
+Returns the multiplication between two complex numbers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & First operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Second operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a times b 
+\end{DoxyReturn}
+\hypertarget{group__complex_ga62b4c54b79fd962a1607de8d39cd85d4}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+mult\+Real@{S\+D\+T\+Complex\+\_\+mult\+Real}}
+\index{S\+D\+T\+Complex\+\_\+mult\+Real@{S\+D\+T\+Complex\+\_\+mult\+Real}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+mult\+Real(\+S\+D\+T\+Complex a, double b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+mult\+Real (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{double}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_ga62b4c54b79fd962a1607de8d39cd85d4}
+
+
+Returns the multiplication between a complex number and a real number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Complex operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Real operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a times b 
+\end{DoxyReturn}
+\hypertarget{group__complex_ga6f26e1b8e14b15bf49ca42aa0a44b5be}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+real\+Div@{S\+D\+T\+Complex\+\_\+real\+Div}}
+\index{S\+D\+T\+Complex\+\_\+real\+Div@{S\+D\+T\+Complex\+\_\+real\+Div}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+real\+Div(double a, S\+D\+T\+Complex b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+real\+Div (
+\begin{DoxyParamCaption}
+\item[{double}]{a, }
+\item[{{\bf S\+D\+T\+Complex}}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_ga6f26e1b8e14b15bf49ca42aa0a44b5be}
+
+
+Returns the division between a real number and a complex number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Real operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Complex operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a divided by b 
+\end{DoxyReturn}
+\hypertarget{group__complex_ga5fd0b3a06607aeaea89b1bd7079a8a4b}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+real\+Sub@{S\+D\+T\+Complex\+\_\+real\+Sub}}
+\index{S\+D\+T\+Complex\+\_\+real\+Sub@{S\+D\+T\+Complex\+\_\+real\+Sub}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+real\+Sub(double a, S\+D\+T\+Complex b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+real\+Sub (
+\begin{DoxyParamCaption}
+\item[{double}]{a, }
+\item[{{\bf S\+D\+T\+Complex}}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_ga5fd0b3a06607aeaea89b1bd7079a8a4b}
+
+
+Returns the difference of a real number and a complex number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Real operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Complex operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a minus b 
+\end{DoxyReturn}
+\hypertarget{group__complex_ga8edae46f63b6b4bb9887a12b6842e54e}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+sub@{S\+D\+T\+Complex\+\_\+sub}}
+\index{S\+D\+T\+Complex\+\_\+sub@{S\+D\+T\+Complex\+\_\+sub}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+sub(\+S\+D\+T\+Complex a, S\+D\+T\+Complex b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+sub (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{{\bf S\+D\+T\+Complex}}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_ga8edae46f63b6b4bb9887a12b6842e54e}
+
+
+Returns the difference of two complex numbers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & First operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Second operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a minus b 
+\end{DoxyReturn}
+\hypertarget{group__complex_gacd63301a8d4ba8f9b39e549e3f5726f9}{}\index{S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}!S\+D\+T\+Complex\+\_\+sub\+Real@{S\+D\+T\+Complex\+\_\+sub\+Real}}
+\index{S\+D\+T\+Complex\+\_\+sub\+Real@{S\+D\+T\+Complex\+\_\+sub\+Real}!S\+D\+T\+Complex.\+h\+: Handling complex numbers@{S\+D\+T\+Complex.\+h\+: Handling complex numbers}}
+\subsubsection[{S\+D\+T\+Complex\+\_\+sub\+Real(\+S\+D\+T\+Complex a, double b)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Complex} S\+D\+T\+Complex\+\_\+sub\+Real (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Complex}}]{a, }
+\item[{double}]{b}
+\end{DoxyParamCaption}
+)}\label{group__complex_gacd63301a8d4ba8f9b39e549e3f5726f9}
+
+
+Returns the difference of a complex number and a real number. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em a} & Complex operand \\
+\hline
+\mbox{\tt in}  & {\em b} & Real operand \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a minus b 
+\end{DoxyReturn}

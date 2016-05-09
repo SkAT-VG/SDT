@@ -1,0 +1,211 @@
+\hypertarget{group__friction}{}\section{Friction}
+\label{group__friction}\index{Friction@{Friction}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__friction_ga7d67f5fd1c67b9282542c959789178a8}{}typedef struct \hyperlink{group__friction_ga7d67f5fd1c67b9282542c959789178a8}{S\+D\+T\+Friction} \hyperlink{group__friction_ga7d67f5fd1c67b9282542c959789178a8}{S\+D\+T\+Friction}\label{group__friction_ga7d67f5fd1c67b9282542c959789178a8}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing the internal state of a friction interactor. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$ \hyperlink{group__friction_ga19e93c58ce49488d9e14962169b1eb59}{S\+D\+T\+Friction\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+\hypertarget{group__friction_gadd954f97f0f293cf6091f569cfdf1aa1}{}void \hyperlink{group__friction_gadd954f97f0f293cf6091f569cfdf1aa1}{S\+D\+T\+Friction\+\_\+free} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x)\label{group__friction_gadd954f97f0f293cf6091f569cfdf1aa1}
+
+\begin{DoxyCompactList}\small\item\em Object destructor. param\mbox{[}in\mbox{]} Pointer to a S\+D\+T\+Interactor instance, configured for the friction case. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_gaef2ca9747bec539021c4e7c612c5c16a}{S\+D\+T\+Friction\+\_\+set\+Normal\+Force} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the perpendicular force (pressure) applied to the two sliding resonators. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_ga1f8c1925e766ce483368cd8423fc1e90}{S\+D\+T\+Friction\+\_\+set\+Stribeck\+Velocity} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the Stribeck velocity. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_gaf2bd7d13cd30814529aeddb852e1a9a5}{S\+D\+T\+Friction\+\_\+set\+Static\+Coefficient} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the static friction coefficient. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_ga42aa68a7b3a9bcb89579b30cc9c79644}{S\+D\+T\+Friction\+\_\+set\+Dynamic\+Coefficient} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the dynamic friction coefficient. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_ga35d1dad1e9619cc54338d20fffabba7a}{S\+D\+T\+Friction\+\_\+set\+Break\+Away} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the break away coefficient. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_ga521b1a9cf85934f1aa9a2fd5b54c7e8c}{S\+D\+T\+Friction\+\_\+set\+Stiffness} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the contact stiffness. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_ga7aa2f93cea56ec41fee77ccce15ec772}{S\+D\+T\+Friction\+\_\+set\+Dissipation} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the dissipation coefficient. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_gabd224dee530d500917b721bbaecfd103}{S\+D\+T\+Friction\+\_\+set\+Viscosity} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the contact viscosity. \end{DoxyCompactList}\item 
+void \hyperlink{group__friction_ga4ceea5e4a10d144080074dd3f9551a7c}{S\+D\+T\+Friction\+\_\+set\+Noisiness} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the surface roughness. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Elasto-\/plastic friction model, computing friction force from the relative velocity between the two contact points. The resulting force is the sum of four components\+: an elastic term, an internal dissipation term, a viscosity term, and finally a random term representing noise related to the surface roughness.
+
+More subtle phenomena, such as pre-\/sliding behavior (gradual increase of the friction force for very small displacements), are simulated by the \char`\"{}plastic\char`\"{} part of the algorithm and parametrized by several other values, such as static/dynamic friction coefficients, break-\/away and Stribeck velocity, and so on.
+
+These phenomena are mostly related to the transients and are worth being modeled despite the added complexity of the algorithm because of their importance for a realistic simulation of friction sounds. 
+
+\subsection{Function Documentation}
+\hypertarget{group__friction_ga19e93c58ce49488d9e14962169b1eb59}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+new@{S\+D\+T\+Friction\+\_\+new}}
+\index{S\+D\+T\+Friction\+\_\+new@{S\+D\+T\+Friction\+\_\+new}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Interactor}$\ast$ S\+D\+T\+Friction\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__friction_ga19e93c58ce49488d9e14962169b1eb59}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to a S\+D\+T\+Interactor instance, configured for the friction case 
+\end{DoxyReturn}
+\hypertarget{group__friction_ga35d1dad1e9619cc54338d20fffabba7a}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Break\+Away@{S\+D\+T\+Friction\+\_\+set\+Break\+Away}}
+\index{S\+D\+T\+Friction\+\_\+set\+Break\+Away@{S\+D\+T\+Friction\+\_\+set\+Break\+Away}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Break\+Away(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Break\+Away (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_ga35d1dad1e9619cc54338d20fffabba7a}
+
+
+Sets the break away coefficient. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Break away coefficient, positive scalar \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_ga7aa2f93cea56ec41fee77ccce15ec772}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Dissipation@{S\+D\+T\+Friction\+\_\+set\+Dissipation}}
+\index{S\+D\+T\+Friction\+\_\+set\+Dissipation@{S\+D\+T\+Friction\+\_\+set\+Dissipation}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Dissipation(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Dissipation (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_ga7aa2f93cea56ec41fee77ccce15ec772}
+
+
+Sets the dissipation coefficient. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Dissipation coefficient, positive scalar \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_ga42aa68a7b3a9bcb89579b30cc9c79644}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Dynamic\+Coefficient@{S\+D\+T\+Friction\+\_\+set\+Dynamic\+Coefficient}}
+\index{S\+D\+T\+Friction\+\_\+set\+Dynamic\+Coefficient@{S\+D\+T\+Friction\+\_\+set\+Dynamic\+Coefficient}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Dynamic\+Coefficient(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Dynamic\+Coefficient (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_ga42aa68a7b3a9bcb89579b30cc9c79644}
+
+
+Sets the dynamic friction coefficient. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Dynamic friction coefficient \mbox{[}0,1\mbox{]}. Should be less than the static friction coefficient \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_ga4ceea5e4a10d144080074dd3f9551a7c}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Noisiness@{S\+D\+T\+Friction\+\_\+set\+Noisiness}}
+\index{S\+D\+T\+Friction\+\_\+set\+Noisiness@{S\+D\+T\+Friction\+\_\+set\+Noisiness}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Noisiness(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Noisiness (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_ga4ceea5e4a10d144080074dd3f9551a7c}
+
+
+Sets the surface roughness. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Surface roughness, positive scalar \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_gaef2ca9747bec539021c4e7c612c5c16a}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Normal\+Force@{S\+D\+T\+Friction\+\_\+set\+Normal\+Force}}
+\index{S\+D\+T\+Friction\+\_\+set\+Normal\+Force@{S\+D\+T\+Friction\+\_\+set\+Normal\+Force}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Normal\+Force(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Normal\+Force (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_gaef2ca9747bec539021c4e7c612c5c16a}
+
+
+Sets the perpendicular force (pressure) applied to the two sliding resonators. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Normal force, in N \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_gaf2bd7d13cd30814529aeddb852e1a9a5}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Static\+Coefficient@{S\+D\+T\+Friction\+\_\+set\+Static\+Coefficient}}
+\index{S\+D\+T\+Friction\+\_\+set\+Static\+Coefficient@{S\+D\+T\+Friction\+\_\+set\+Static\+Coefficient}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Static\+Coefficient(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Static\+Coefficient (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_gaf2bd7d13cd30814529aeddb852e1a9a5}
+
+
+Sets the static friction coefficient. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Static friction coefficient \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_ga521b1a9cf85934f1aa9a2fd5b54c7e8c}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Stiffness@{S\+D\+T\+Friction\+\_\+set\+Stiffness}}
+\index{S\+D\+T\+Friction\+\_\+set\+Stiffness@{S\+D\+T\+Friction\+\_\+set\+Stiffness}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Stiffness(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Stiffness (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_ga521b1a9cf85934f1aa9a2fd5b54c7e8c}
+
+
+Sets the contact stiffness. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Contact stiffness, positive scalar \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_ga1f8c1925e766ce483368cd8423fc1e90}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Stribeck\+Velocity@{S\+D\+T\+Friction\+\_\+set\+Stribeck\+Velocity}}
+\index{S\+D\+T\+Friction\+\_\+set\+Stribeck\+Velocity@{S\+D\+T\+Friction\+\_\+set\+Stribeck\+Velocity}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Stribeck\+Velocity(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Stribeck\+Velocity (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_ga1f8c1925e766ce483368cd8423fc1e90}
+
+
+Sets the Stribeck velocity. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Stribeck velocity, in m/s \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__friction_gabd224dee530d500917b721bbaecfd103}{}\index{Friction@{Friction}!S\+D\+T\+Friction\+\_\+set\+Viscosity@{S\+D\+T\+Friction\+\_\+set\+Viscosity}}
+\index{S\+D\+T\+Friction\+\_\+set\+Viscosity@{S\+D\+T\+Friction\+\_\+set\+Viscosity}!Friction@{Friction}}
+\subsubsection[{S\+D\+T\+Friction\+\_\+set\+Viscosity(\+S\+D\+T\+Interactor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Friction\+\_\+set\+Viscosity (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__friction_gabd224dee530d500917b721bbaecfd103}
+
+
+Sets the contact viscosity. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Contact viscosity, positive scalar \\
+\hline
+\end{DoxyParams}

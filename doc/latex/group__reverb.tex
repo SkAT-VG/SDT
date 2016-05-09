@@ -1,0 +1,196 @@
+\hypertarget{group__reverb}{}\section{Reverb}
+\label{group__reverb}\index{Reverb@{Reverb}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{}typedef struct \hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} \hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb}\label{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a reverberator object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$ \hyperlink{group__reverb_gad797c84e5ea2bdd4a20412c90bfa8eb0}{S\+D\+T\+Reverb\+\_\+new} (long max\+Delay)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__reverb_ga0c23107b2b864dfa62fab6cb324df18e}{S\+D\+T\+Reverb\+\_\+free} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__reverb_ga1fce189f6806f888f1b78d94d1f80100}{S\+D\+T\+Reverb\+\_\+set\+X\+Size} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the room width. \end{DoxyCompactList}\item 
+void \hyperlink{group__reverb_ga867a5a0f5466f4ee67313af9d8318243}{S\+D\+T\+Reverb\+\_\+set\+Y\+Size} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the room height. \end{DoxyCompactList}\item 
+void \hyperlink{group__reverb_ga4f34d4b5d03dc65dfc293444abdf75ff}{S\+D\+T\+Reverb\+\_\+set\+Z\+Size} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the room depth. \end{DoxyCompactList}\item 
+void \hyperlink{group__reverb_ga6be003102de6fbf822315734b6a38ea2}{S\+D\+T\+Reverb\+\_\+set\+Randomness} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets how randomly distributed are the resonant modes. This parameter is directly proportional to the irregularity of the shape of the room. \end{DoxyCompactList}\item 
+void \hyperlink{group__reverb_gab0c497984a8bc2aa26f0e030401b5758}{S\+D\+T\+Reverb\+\_\+set\+Time} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the global, frequency-\/independent reverberation time. \end{DoxyCompactList}\item 
+void \hyperlink{group__reverb_ga096895486faa57d1741050abbe8f5084}{S\+D\+T\+Reverb\+\_\+set\+Time1k} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the reverberation time at 1k\+Hz. \end{DoxyCompactList}\item 
+\hypertarget{group__reverb_ga45b224ccc8e69decae90e47e22d729b9}{}void \hyperlink{group__reverb_ga45b224ccc8e69decae90e47e22d729b9}{S\+D\+T\+Reverb\+\_\+update} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x)\label{group__reverb_ga45b224ccc8e69decae90e47e22d729b9}
+
+\begin{DoxyCompactList}\small\item\em Updates the internal filters. Call this function after every sample rate change. \end{DoxyCompactList}\item 
+double \hyperlink{group__reverb_ga8e4c33e0dff5f7f106dc003f1a0c6efa}{S\+D\+T\+Reverb\+\_\+dsp} (\hyperlink{group__reverb_ga572fe1bba384610f4d05431c8f2bed73}{S\+D\+T\+Reverb} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the reverberated signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Artificial reverberator based on Feedback Delay Networks, as found in D. Rocchesso, \char`\"{}\+Maximally diffusive yet efficient feedback delay networks
+for artificial reverberation\char`\"{}, Signal Processing Letters, I\+E\+E\+E 4.\+9 (1997)\+: 252-\/255. 
+
+\subsection{Function Documentation}
+\hypertarget{group__reverb_ga8e4c33e0dff5f7f106dc003f1a0c6efa}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+dsp@{S\+D\+T\+Reverb\+\_\+dsp}}
+\index{S\+D\+T\+Reverb\+\_\+dsp@{S\+D\+T\+Reverb\+\_\+dsp}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+dsp(\+S\+D\+T\+Reverb $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Reverb\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__reverb_ga8e4c33e0dff5f7f106dc003f1a0c6efa}
+
+
+Signal processing routine. Call this function at sample rate to compute the reverberated signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__reverb_ga0c23107b2b864dfa62fab6cb324df18e}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+free@{S\+D\+T\+Reverb\+\_\+free}}
+\index{S\+D\+T\+Reverb\+\_\+free@{S\+D\+T\+Reverb\+\_\+free}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+free(\+S\+D\+T\+Reverb $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Reverb\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__reverb_ga0c23107b2b864dfa62fab6cb324df18e}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__reverb_gad797c84e5ea2bdd4a20412c90bfa8eb0}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+new@{S\+D\+T\+Reverb\+\_\+new}}
+\index{S\+D\+T\+Reverb\+\_\+new@{S\+D\+T\+Reverb\+\_\+new}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+new(long max\+Delay)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Reverb}$\ast$ S\+D\+T\+Reverb\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{long}]{max\+Delay}
+\end{DoxyParamCaption}
+)}\label{group__reverb_gad797c84e5ea2bdd4a20412c90bfa8eb0}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\+Delay} & Maximum length of the delay lines, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__reverb_ga6be003102de6fbf822315734b6a38ea2}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+set\+Randomness@{S\+D\+T\+Reverb\+\_\+set\+Randomness}}
+\index{S\+D\+T\+Reverb\+\_\+set\+Randomness@{S\+D\+T\+Reverb\+\_\+set\+Randomness}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+set\+Randomness(\+S\+D\+T\+Reverb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Reverb\+\_\+set\+Randomness (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__reverb_ga6be003102de6fbf822315734b6a38ea2}
+
+
+Sets how randomly distributed are the resonant modes. This parameter is directly proportional to the irregularity of the shape of the room. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Randomness in the modal distribution \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__reverb_gab0c497984a8bc2aa26f0e030401b5758}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+set\+Time@{S\+D\+T\+Reverb\+\_\+set\+Time}}
+\index{S\+D\+T\+Reverb\+\_\+set\+Time@{S\+D\+T\+Reverb\+\_\+set\+Time}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+set\+Time(\+S\+D\+T\+Reverb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Reverb\+\_\+set\+Time (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__reverb_gab0c497984a8bc2aa26f0e030401b5758}
+
+
+Sets the global, frequency-\/independent reverberation time. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Reverberation time, in s \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__reverb_ga096895486faa57d1741050abbe8f5084}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+set\+Time1k@{S\+D\+T\+Reverb\+\_\+set\+Time1k}}
+\index{S\+D\+T\+Reverb\+\_\+set\+Time1k@{S\+D\+T\+Reverb\+\_\+set\+Time1k}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+set\+Time1k(\+S\+D\+T\+Reverb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Reverb\+\_\+set\+Time1k (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__reverb_ga096895486faa57d1741050abbe8f5084}
+
+
+Sets the reverberation time at 1k\+Hz. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Reverberation time at 1k\+Hz, in s \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__reverb_ga1fce189f6806f888f1b78d94d1f80100}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+set\+X\+Size@{S\+D\+T\+Reverb\+\_\+set\+X\+Size}}
+\index{S\+D\+T\+Reverb\+\_\+set\+X\+Size@{S\+D\+T\+Reverb\+\_\+set\+X\+Size}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+set\+X\+Size(\+S\+D\+T\+Reverb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Reverb\+\_\+set\+X\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__reverb_ga1fce189f6806f888f1b78d94d1f80100}
+
+
+Sets the room width. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Room width, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__reverb_ga867a5a0f5466f4ee67313af9d8318243}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+set\+Y\+Size@{S\+D\+T\+Reverb\+\_\+set\+Y\+Size}}
+\index{S\+D\+T\+Reverb\+\_\+set\+Y\+Size@{S\+D\+T\+Reverb\+\_\+set\+Y\+Size}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+set\+Y\+Size(\+S\+D\+T\+Reverb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Reverb\+\_\+set\+Y\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__reverb_ga867a5a0f5466f4ee67313af9d8318243}
+
+
+Sets the room height. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Room height, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__reverb_ga4f34d4b5d03dc65dfc293444abdf75ff}{}\index{Reverb@{Reverb}!S\+D\+T\+Reverb\+\_\+set\+Z\+Size@{S\+D\+T\+Reverb\+\_\+set\+Z\+Size}}
+\index{S\+D\+T\+Reverb\+\_\+set\+Z\+Size@{S\+D\+T\+Reverb\+\_\+set\+Z\+Size}!Reverb@{Reverb}}
+\subsubsection[{S\+D\+T\+Reverb\+\_\+set\+Z\+Size(\+S\+D\+T\+Reverb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Reverb\+\_\+set\+Z\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Reverb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__reverb_ga4f34d4b5d03dc65dfc293444abdf75ff}
+
+
+Sets the room depth. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Room depth, in m \\
+\hline
+\end{DoxyParams}

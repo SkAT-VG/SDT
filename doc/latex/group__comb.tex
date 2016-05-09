@@ -1,0 +1,195 @@
+\hypertarget{group__comb}{}\section{Comb filter}
+\label{group__comb}\index{Comb filter@{Comb filter}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{}typedef struct \hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} \hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb}\label{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing a comb filter object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$ \hyperlink{group__comb_ga92ff713863bef8b57bc434787634afd6}{S\+D\+T\+Comb\+\_\+new} (long max\+X\+Delay, long max\+Y\+Delay)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__comb_ga310930d194e1fd84d1ed68054aa54cef}{S\+D\+T\+Comb\+\_\+free} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__comb_ga986c2fc99686d4feafdd72ee10168f8e}{S\+D\+T\+Comb\+\_\+set\+X\+Delay} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the delay time for the feed forward section. \end{DoxyCompactList}\item 
+void \hyperlink{group__comb_ga3cd9614a4ebd3258be154d50d1b5d9d5}{S\+D\+T\+Comb\+\_\+set\+Y\+Delay} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the delay time for the feedback section. \end{DoxyCompactList}\item 
+void \hyperlink{group__comb_ga87f0537d8b094f217846e8925db9510f}{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Delay} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the delay time for both sections. \end{DoxyCompactList}\item 
+void \hyperlink{group__comb_ga9a4fde40832f1109ebcbdd80e9dff8de}{S\+D\+T\+Comb\+\_\+set\+X\+Gain} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the gain for the feed forward section. \end{DoxyCompactList}\item 
+void \hyperlink{group__comb_ga18482b9ec18a83cf4dea55538319b32a}{S\+D\+T\+Comb\+\_\+set\+Y\+Gain} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the gain for the feedback section. \end{DoxyCompactList}\item 
+void \hyperlink{group__comb_gae288a3b9b776a5b492663dc40ac87267}{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Gain} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the gain for both sections. \end{DoxyCompactList}\item 
+double \hyperlink{group__comb_ga476a303de520ccd185979a3ff10c9214}{S\+D\+T\+Comb\+\_\+dsp} (\hyperlink{group__comb_ga6d48ca6dc0e03cd39bc44193e4d208db}{S\+D\+T\+Comb} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to output the filtered signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Comb filter, obtained adding to the input signal a rescaled and delayed copy of itself. The filter works both in feed forward (delayed copy added to the output) and feedback (delayed copy added to the input, causing a loop) configurations, with independent gains and delay times. 
+
+\subsection{Function Documentation}
+\hypertarget{group__comb_ga476a303de520ccd185979a3ff10c9214}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+dsp@{S\+D\+T\+Comb\+\_\+dsp}}
+\index{S\+D\+T\+Comb\+\_\+dsp@{S\+D\+T\+Comb\+\_\+dsp}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+dsp(\+S\+D\+T\+Comb $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Comb\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga476a303de520ccd185979a3ff10c9214}
+
+
+Signal processing routine. Call this function at sample rate to output the filtered signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__comb_ga310930d194e1fd84d1ed68054aa54cef}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+free@{S\+D\+T\+Comb\+\_\+free}}
+\index{S\+D\+T\+Comb\+\_\+free@{S\+D\+T\+Comb\+\_\+free}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+free(\+S\+D\+T\+Comb $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Comb\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga310930d194e1fd84d1ed68054aa54cef}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__comb_ga92ff713863bef8b57bc434787634afd6}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+new@{S\+D\+T\+Comb\+\_\+new}}
+\index{S\+D\+T\+Comb\+\_\+new@{S\+D\+T\+Comb\+\_\+new}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+new(long max\+X\+Delay, long max\+Y\+Delay)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Comb}$\ast$ S\+D\+T\+Comb\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{long}]{max\+X\+Delay, }
+\item[{long}]{max\+Y\+Delay}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga92ff713863bef8b57bc434787634afd6}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\+X\+Delay} & Feed forward buffer size, in samples \\
+\hline
+\mbox{\tt in}  & {\em max\+X\+Delay} & Feedback buffer size, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__comb_ga986c2fc99686d4feafdd72ee10168f8e}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+set\+X\+Delay@{S\+D\+T\+Comb\+\_\+set\+X\+Delay}}
+\index{S\+D\+T\+Comb\+\_\+set\+X\+Delay@{S\+D\+T\+Comb\+\_\+set\+X\+Delay}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+set\+X\+Delay(\+S\+D\+T\+Comb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Comb\+\_\+set\+X\+Delay (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga986c2fc99686d4feafdd72ee10168f8e}
+
+
+Sets the delay time for the feed forward section. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Feed forward delay time, in samples \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__comb_ga9a4fde40832f1109ebcbdd80e9dff8de}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+set\+X\+Gain@{S\+D\+T\+Comb\+\_\+set\+X\+Gain}}
+\index{S\+D\+T\+Comb\+\_\+set\+X\+Gain@{S\+D\+T\+Comb\+\_\+set\+X\+Gain}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+set\+X\+Gain(\+S\+D\+T\+Comb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Comb\+\_\+set\+X\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga9a4fde40832f1109ebcbdd80e9dff8de}
+
+
+Sets the gain for the feed forward section. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Feed forward gain \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__comb_ga87f0537d8b094f217846e8925db9510f}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+set\+X\+Y\+Delay@{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Delay}}
+\index{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Delay@{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Delay}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Delay(\+S\+D\+T\+Comb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Comb\+\_\+set\+X\+Y\+Delay (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga87f0537d8b094f217846e8925db9510f}
+
+
+Sets the delay time for both sections. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Delay time, in samples \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__comb_gae288a3b9b776a5b492663dc40ac87267}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+set\+X\+Y\+Gain@{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Gain}}
+\index{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Gain@{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Gain}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+set\+X\+Y\+Gain(\+S\+D\+T\+Comb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Comb\+\_\+set\+X\+Y\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__comb_gae288a3b9b776a5b492663dc40ac87267}
+
+
+Sets the gain for both sections. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Gain \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__comb_ga3cd9614a4ebd3258be154d50d1b5d9d5}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+set\+Y\+Delay@{S\+D\+T\+Comb\+\_\+set\+Y\+Delay}}
+\index{S\+D\+T\+Comb\+\_\+set\+Y\+Delay@{S\+D\+T\+Comb\+\_\+set\+Y\+Delay}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+set\+Y\+Delay(\+S\+D\+T\+Comb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Comb\+\_\+set\+Y\+Delay (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga3cd9614a4ebd3258be154d50d1b5d9d5}
+
+
+Sets the delay time for the feedback section. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Feedback delay time, in samples \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__comb_ga18482b9ec18a83cf4dea55538319b32a}{}\index{Comb filter@{Comb filter}!S\+D\+T\+Comb\+\_\+set\+Y\+Gain@{S\+D\+T\+Comb\+\_\+set\+Y\+Gain}}
+\index{S\+D\+T\+Comb\+\_\+set\+Y\+Gain@{S\+D\+T\+Comb\+\_\+set\+Y\+Gain}!Comb filter@{Comb filter}}
+\subsubsection[{S\+D\+T\+Comb\+\_\+set\+Y\+Gain(\+S\+D\+T\+Comb $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Comb\+\_\+set\+Y\+Gain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Comb} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__comb_ga18482b9ec18a83cf4dea55538319b32a}
+
+
+Sets the gain for the feedback section. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Feedback gain \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}

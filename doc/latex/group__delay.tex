@@ -1,0 +1,100 @@
+\hypertarget{group__delay}{}\section{Delay line}
+\label{group__delay}\index{Delay line@{Delay line}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{}typedef struct \hyperlink{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{S\+D\+T\+Delay} \hyperlink{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{S\+D\+T\+Delay}\label{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a delay line object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{S\+D\+T\+Delay} $\ast$ \hyperlink{group__delay_ga2755a4639fdfd9928b54a0d97e113cfb}{S\+D\+T\+Delay\+\_\+new} (long max\+Delay)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__delay_ga29fa258d35a81249072073b5783459e7}{S\+D\+T\+Delay\+\_\+free} (\hyperlink{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{S\+D\+T\+Delay} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+\hypertarget{group__delay_ga2cfd25625ebed02f9cfce81ccee8b12f}{}void \hyperlink{group__delay_ga2cfd25625ebed02f9cfce81ccee8b12f}{S\+D\+T\+Delay\+\_\+clear} (\hyperlink{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{S\+D\+T\+Delay} $\ast$x)\label{group__delay_ga2cfd25625ebed02f9cfce81ccee8b12f}
+
+\begin{DoxyCompactList}\small\item\em Clears the buffer, therefore silencing the delayed signal. \end{DoxyCompactList}\item 
+void \hyperlink{group__delay_gaab8ec12397cfa540a2b1b679f162d0b6}{S\+D\+T\+Delay\+\_\+set\+Delay} (\hyperlink{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{S\+D\+T\+Delay} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the delay time. Fractional values are allowed. The delay time can be continuously changed over time without audible glitches. \end{DoxyCompactList}\item 
+double \hyperlink{group__delay_ga955ae27c207ec6b8a0c90fc6029c8e2e}{S\+D\+T\+Delay\+\_\+dsp} (\hyperlink{group__delay_gad32f7855edcb8049b7666b2e27cfd6b5}{S\+D\+T\+Delay} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to output the delayed signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Delay line, supporting fractional and time-\/varying delay lengths. 
+
+\subsection{Function Documentation}
+\hypertarget{group__delay_ga955ae27c207ec6b8a0c90fc6029c8e2e}{}\index{Delay line@{Delay line}!S\+D\+T\+Delay\+\_\+dsp@{S\+D\+T\+Delay\+\_\+dsp}}
+\index{S\+D\+T\+Delay\+\_\+dsp@{S\+D\+T\+Delay\+\_\+dsp}!Delay line@{Delay line}}
+\subsubsection[{S\+D\+T\+Delay\+\_\+dsp(\+S\+D\+T\+Delay $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Delay\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Delay} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__delay_ga955ae27c207ec6b8a0c90fc6029c8e2e}
+
+
+Signal processing routine. Call this function at sample rate to output the delayed signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__delay_ga29fa258d35a81249072073b5783459e7}{}\index{Delay line@{Delay line}!S\+D\+T\+Delay\+\_\+free@{S\+D\+T\+Delay\+\_\+free}}
+\index{S\+D\+T\+Delay\+\_\+free@{S\+D\+T\+Delay\+\_\+free}!Delay line@{Delay line}}
+\subsubsection[{S\+D\+T\+Delay\+\_\+free(\+S\+D\+T\+Delay $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Delay\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Delay} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__delay_ga29fa258d35a81249072073b5783459e7}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__delay_ga2755a4639fdfd9928b54a0d97e113cfb}{}\index{Delay line@{Delay line}!S\+D\+T\+Delay\+\_\+new@{S\+D\+T\+Delay\+\_\+new}}
+\index{S\+D\+T\+Delay\+\_\+new@{S\+D\+T\+Delay\+\_\+new}!Delay line@{Delay line}}
+\subsubsection[{S\+D\+T\+Delay\+\_\+new(long max\+Delay)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Delay}$\ast$ S\+D\+T\+Delay\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{long}]{max\+Delay}
+\end{DoxyParamCaption}
+)}\label{group__delay_ga2755a4639fdfd9928b54a0d97e113cfb}
+
+
+Object constructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em max\+Delay} & Buffer size, determining the maximum delay length, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__delay_gaab8ec12397cfa540a2b1b679f162d0b6}{}\index{Delay line@{Delay line}!S\+D\+T\+Delay\+\_\+set\+Delay@{S\+D\+T\+Delay\+\_\+set\+Delay}}
+\index{S\+D\+T\+Delay\+\_\+set\+Delay@{S\+D\+T\+Delay\+\_\+set\+Delay}!Delay line@{Delay line}}
+\subsubsection[{S\+D\+T\+Delay\+\_\+set\+Delay(\+S\+D\+T\+Delay $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Delay\+\_\+set\+Delay (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Delay} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__delay_gaab8ec12397cfa540a2b1b679f162d0b6}
+
+
+Sets the delay time. Fractional values are allowed. The delay time can be continuously changed over time without audible glitches. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Delay time, in samples \\
+\hline
+\end{DoxyParams}

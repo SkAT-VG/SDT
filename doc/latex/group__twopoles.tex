@@ -1,0 +1,133 @@
+\hypertarget{group__twopoles}{}\section{Two poles filter}
+\label{group__twopoles}\index{Two poles filter@{Two poles filter}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{}typedef struct \hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles} \hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles}\label{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a two poles filter object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles} $\ast$ \hyperlink{group__twopoles_gaa74c762508dce666d9fa776946b9f42b}{S\+D\+T\+Two\+Poles\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__twopoles_ga5dd05014c4b2a789571624492d682d96}{S\+D\+T\+Two\+Poles\+\_\+free} (\hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__twopoles_gafa19c0d5b56bda7d23a9defd94d5896a}{S\+D\+T\+Two\+Poles\+\_\+lowpass} (\hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles} $\ast$x, double fc)
+\begin{DoxyCompactList}\small\item\em Puts the filter in lowpass mode, at the given cutoff frequency. \end{DoxyCompactList}\item 
+void \hyperlink{group__twopoles_gaa82c69d3d5e24fd7e3a97ca2452a2db4}{S\+D\+T\+Two\+Poles\+\_\+highpass} (\hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles} $\ast$x, double fc)
+\begin{DoxyCompactList}\small\item\em Puts the filter in highpass mode, at the given cutoff frequency. \end{DoxyCompactList}\item 
+void \hyperlink{group__twopoles_gadf81cf6cff0122fab17a9d541d42f907}{S\+D\+T\+Two\+Poles\+\_\+resonant} (\hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles} $\ast$x, double fc, double q)
+\begin{DoxyCompactList}\small\item\em Puts the filter in resonant bandpass mode, at the given center frequency and Q. \end{DoxyCompactList}\item 
+double \hyperlink{group__twopoles_ga417ac7f368f84f83496c1ba12a351568}{S\+D\+T\+Two\+Poles\+\_\+dsp} (\hyperlink{group__twopoles_gab843f82d5b6d8ab18ebdf6f43bf0ad6d}{S\+D\+T\+Two\+Poles} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the filtered signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Two poles filter, configurable as lowpass, highpass or resonant bandpass. 
+
+\subsection{Function Documentation}
+\hypertarget{group__twopoles_ga417ac7f368f84f83496c1ba12a351568}{}\index{Two poles filter@{Two poles filter}!S\+D\+T\+Two\+Poles\+\_\+dsp@{S\+D\+T\+Two\+Poles\+\_\+dsp}}
+\index{S\+D\+T\+Two\+Poles\+\_\+dsp@{S\+D\+T\+Two\+Poles\+\_\+dsp}!Two poles filter@{Two poles filter}}
+\subsubsection[{S\+D\+T\+Two\+Poles\+\_\+dsp(\+S\+D\+T\+Two\+Poles $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Two\+Poles\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Two\+Poles} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__twopoles_ga417ac7f368f84f83496c1ba12a351568}
+
+
+Signal processing routine. Call this function at sample rate to compute the filtered signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__twopoles_ga5dd05014c4b2a789571624492d682d96}{}\index{Two poles filter@{Two poles filter}!S\+D\+T\+Two\+Poles\+\_\+free@{S\+D\+T\+Two\+Poles\+\_\+free}}
+\index{S\+D\+T\+Two\+Poles\+\_\+free@{S\+D\+T\+Two\+Poles\+\_\+free}!Two poles filter@{Two poles filter}}
+\subsubsection[{S\+D\+T\+Two\+Poles\+\_\+free(\+S\+D\+T\+Two\+Poles $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Two\+Poles\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Two\+Poles} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__twopoles_ga5dd05014c4b2a789571624492d682d96}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__twopoles_gaa82c69d3d5e24fd7e3a97ca2452a2db4}{}\index{Two poles filter@{Two poles filter}!S\+D\+T\+Two\+Poles\+\_\+highpass@{S\+D\+T\+Two\+Poles\+\_\+highpass}}
+\index{S\+D\+T\+Two\+Poles\+\_\+highpass@{S\+D\+T\+Two\+Poles\+\_\+highpass}!Two poles filter@{Two poles filter}}
+\subsubsection[{S\+D\+T\+Two\+Poles\+\_\+highpass(\+S\+D\+T\+Two\+Poles $\ast$x, double fc)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Two\+Poles\+\_\+highpass (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Two\+Poles} $\ast$}]{x, }
+\item[{double}]{fc}
+\end{DoxyParamCaption}
+)}\label{group__twopoles_gaa82c69d3d5e24fd7e3a97ca2452a2db4}
+
+
+Puts the filter in highpass mode, at the given cutoff frequency. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fc} & Cutoff frequency, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__twopoles_gafa19c0d5b56bda7d23a9defd94d5896a}{}\index{Two poles filter@{Two poles filter}!S\+D\+T\+Two\+Poles\+\_\+lowpass@{S\+D\+T\+Two\+Poles\+\_\+lowpass}}
+\index{S\+D\+T\+Two\+Poles\+\_\+lowpass@{S\+D\+T\+Two\+Poles\+\_\+lowpass}!Two poles filter@{Two poles filter}}
+\subsubsection[{S\+D\+T\+Two\+Poles\+\_\+lowpass(\+S\+D\+T\+Two\+Poles $\ast$x, double fc)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Two\+Poles\+\_\+lowpass (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Two\+Poles} $\ast$}]{x, }
+\item[{double}]{fc}
+\end{DoxyParamCaption}
+)}\label{group__twopoles_gafa19c0d5b56bda7d23a9defd94d5896a}
+
+
+Puts the filter in lowpass mode, at the given cutoff frequency. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fc} & Cutoff frequency, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__twopoles_gaa74c762508dce666d9fa776946b9f42b}{}\index{Two poles filter@{Two poles filter}!S\+D\+T\+Two\+Poles\+\_\+new@{S\+D\+T\+Two\+Poles\+\_\+new}}
+\index{S\+D\+T\+Two\+Poles\+\_\+new@{S\+D\+T\+Two\+Poles\+\_\+new}!Two poles filter@{Two poles filter}}
+\subsubsection[{S\+D\+T\+Two\+Poles\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Two\+Poles}$\ast$ S\+D\+T\+Two\+Poles\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__twopoles_gaa74c762508dce666d9fa776946b9f42b}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__twopoles_gadf81cf6cff0122fab17a9d541d42f907}{}\index{Two poles filter@{Two poles filter}!S\+D\+T\+Two\+Poles\+\_\+resonant@{S\+D\+T\+Two\+Poles\+\_\+resonant}}
+\index{S\+D\+T\+Two\+Poles\+\_\+resonant@{S\+D\+T\+Two\+Poles\+\_\+resonant}!Two poles filter@{Two poles filter}}
+\subsubsection[{S\+D\+T\+Two\+Poles\+\_\+resonant(\+S\+D\+T\+Two\+Poles $\ast$x, double fc, double q)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Two\+Poles\+\_\+resonant (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Two\+Poles} $\ast$}]{x, }
+\item[{double}]{fc, }
+\item[{double}]{q}
+\end{DoxyParamCaption}
+)}\label{group__twopoles_gadf81cf6cff0122fab17a9d541d42f907}
+
+
+Puts the filter in resonant bandpass mode, at the given center frequency and Q. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fc} & Center frequency, in Hz \\
+\hline
+\mbox{\tt in}  & {\em q} & Q factor, in 1/octave \\
+\hline
+\end{DoxyParams}

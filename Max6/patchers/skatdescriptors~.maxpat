@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 7,
 			"minor" : 0,
-			"revision" : 3,
+			"revision" : 6,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -37,6 +37,19 @@
 		"style" : "",
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
+				"box" : 				{
+					"id" : "obj-29",
+					"maxclass" : "newobj",
+					"numinlets" : 9,
+					"numoutlets" : 9,
+					"outlettype" : [ "", "", "", "", "", "", "", "", "" ],
+					"patching_rect" : [ 532.0, 173.0, 383.0, 22.0 ],
+					"style" : "",
+					"text" : "route magnitude centroid spread skewness kurtosis flatness flux onset"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"id" : "obj-14",
 					"maxclass" : "newobj",
@@ -140,9 +153,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 356.0, 241.0, 75.0, 22.0 ],
+					"patching_rect" : [ 356.0, 241.0, 63.0, 22.0 ],
 					"style" : "",
-					"text" : "s brightness"
+					"text" : "s centroid"
 				}
 
 			}
@@ -365,11 +378,11 @@
 					"id" : "obj-3",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
-					"numoutlets" : 8,
-					"outlettype" : [ "float", "float", "float", "float", "float", "float", "float", "float" ],
+					"numoutlets" : 1,
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 532.0, 146.0, 379.0, 22.0 ],
 					"style" : "",
-					"text" : "sdt.spectralfeats~ 2048 @overlap 0.5 @minFreq 80 @maxFreq 8000"
+					"text" : "sdt.spectralfeats~ 4096 @overlap 0.5 @minFreq 50 @maxFreq 5000"
 				}
 
 			}
@@ -380,9 +393,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "float", "float" ],
-					"patching_rect" : [ 14.0, 146.0, 259.0, 22.0 ],
+					"patching_rect" : [ 14.0, 146.0, 252.0, 22.0 ],
 					"style" : "",
-					"text" : "sdt.pitch~ 4096 @overlap 0.75 @tolerance 0.1"
+					"text" : "sdt.pitch~ 4096 @overlap 0.5 @tolerance 0.1"
 				}
 
 			}
@@ -395,7 +408,7 @@
 					"outlettype" : [ "float" ],
 					"patching_rect" : [ 319.0, 146.0, 171.0, 22.0 ],
 					"style" : "",
-					"text" : "sdt.zerox~ 2048 @overlap 0.5"
+					"text" : "sdt.zerox~ 4096 @overlap 0.5"
 				}
 
 			}
@@ -504,7 +517,7 @@
 					"destination" : [ "obj-10", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 5 ]
+					"source" : [ "obj-29", 5 ]
 				}
 
 			}
@@ -513,7 +526,7 @@
 					"destination" : [ "obj-11", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 4 ]
+					"source" : [ "obj-29", 4 ]
 				}
 
 			}
@@ -522,7 +535,7 @@
 					"destination" : [ "obj-12", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 7 ]
+					"source" : [ "obj-29", 7 ]
 				}
 
 			}
@@ -531,7 +544,7 @@
 					"destination" : [ "obj-13", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 6 ]
+					"source" : [ "obj-29", 6 ]
 				}
 
 			}
@@ -540,7 +553,7 @@
 					"destination" : [ "obj-5", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 0 ]
+					"source" : [ "obj-29", 0 ]
 				}
 
 			}
@@ -549,7 +562,7 @@
 					"destination" : [ "obj-7", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 1 ]
+					"source" : [ "obj-29", 1 ]
 				}
 
 			}
@@ -558,7 +571,7 @@
 					"destination" : [ "obj-8", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 3 ]
+					"source" : [ "obj-29", 3 ]
 				}
 
 			}
@@ -567,7 +580,16 @@
 					"destination" : [ "obj-9", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"source" : [ "obj-3", 2 ]
+					"source" : [ "obj-29", 2 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-29", 0 ],
+					"disabled" : 0,
+					"hidden" : 0,
+					"source" : [ "obj-3", 0 ]
 				}
 
 			}

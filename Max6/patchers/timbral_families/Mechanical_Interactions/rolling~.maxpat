@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 1,
+			"revision" : 0,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -48,8 +48,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -311,8 +311,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -629,8 +629,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 1,
+							"revision" : 0,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1125,13 +1125,13 @@
 					"fontname" : "Arial",
 					"fontsize" : 16.0,
 					"id" : "obj-24",
-					"linecount" : 5,
+					"linecount" : 4,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 9.0, 331.0, 270.0, 98.0 ],
+					"patching_rect" : [ 9.0, 331.0, 264.0, 80.0 ],
 					"style" : "",
-					"text" : "sdt.modal objectr 3 2 @freqs 660. 1056. 2046 @decays 0.00231 0.00150.0015 @weights 80. 80. 80. @pickup0 1. 1. 1. @pickup1 1. 1. 1. @activeModes 3"
+					"text" : "sdt.modal objectr 3 2 @freqs 660. 1056. 2046 @decays 0.00231 0.00150.0015 @pickup0 200. 180. 160. @activeModes 3"
 				}
 
 			}
@@ -1226,7 +1226,7 @@
 					"outlettype" : [ "signal" ],
 					"patching_rect" : [ 284.0, 254.0, 253.0, 47.0 ],
 					"style" : "",
-					"text" : "sdt.rolling~ @mass 0.00428 @grain 0.002058 @depth 187"
+					"text" : "sdt.rolling~ @mass 0.00428 @grain 0.002058 @depth 400"
 				}
 
 			}
@@ -1270,11 +1270,11 @@
 					"linecount" : 4,
 					"maxclass" : "newobj",
 					"numinlets" : 2,
-					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
+					"numoutlets" : 2,
+					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 284.0, 331.0, 253.0, 85.0 ],
 					"style" : "",
-					"text" : "sdt.impact~ hammerr objectr 3 @stiffness 170371840. @shape 1.603082 @dissipation 0.879631 @contact0 0 @contact1 0"
+					"text" : "sdt.impact~ hammerr objectr 2 @stiffness 170371840. @shape 1.603082 @dissipation 0.879631 @contact0 0 @contact1 0"
 				}
 
 			}
@@ -1521,16 +1521,6 @@
 					"destination" : [ "obj-22", 0 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 527.5, 422.5, 410.5, 422.5 ],
-					"source" : [ "obj-63", 2 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-22", 0 ],
-					"disabled" : 0,
-					"hidden" : 0,
 					"source" : [ "obj-63", 1 ]
 				}
 
@@ -1600,12 +1590,6 @@
 			}
  ],
 		"dependency_cache" : [ 			{
-				"name" : "logoskatvg.png",
-				"bootpath" : "~/Documents/LAVORI/RICERCA/Owncloud_SkAT-VG/Shared/SkAT-VG/Documents/Logo",
-				"type" : "PNG ",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "sdt.inertial.mxo",
 				"type" : "iLaX"
 			}
@@ -1622,7 +1606,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

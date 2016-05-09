@@ -1,0 +1,381 @@
+\hypertarget{group__motor}{}\section{S\+D\+T\+Motor.\+h\+: Combustion engines}
+\label{group__motor}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{}typedef struct \hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} \hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor}\label{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure representing a combustion engine object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$ \hyperlink{group__motor_gae43489459dcd0fbca5439691c7a1adb0}{S\+D\+T\+Motor\+\_\+new} (long max\+Delay)
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gab676597b28c2a4ea89e235531b0dc447}{S\+D\+T\+Motor\+\_\+free} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gad6a38e1945353b9a4eeab3950218fe92}{S\+D\+T\+Motor\+\_\+set\+Filters} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double damp, double dc)
+\begin{DoxyCompactList}\small\item\em Update filter coefficients. Should be always called after setting the sampling rate with \hyperlink{group__common_gad76f7b9f128e79164c76764be6e03be8}{S\+D\+T\+\_\+set\+Sample\+Rate()}. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gadb7382560e21de6e085b1a38dc0f10da}{S\+D\+T\+Motor\+\_\+set\+Rpm} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the Revolutions Per Minute (R\+P\+M) of the engine. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gab4ed2474a1faff5f6ff258c728e9fa73}{S\+D\+T\+Motor\+\_\+set\+Throttle} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the throttle load. \end{DoxyCompactList}\item 
+\hypertarget{group__motor_ga4bf849a8cde98def844917176a2294a0}{}void \hyperlink{group__motor_ga4bf849a8cde98def844917176a2294a0}{S\+D\+T\+Motor\+\_\+set\+Four\+Stroke} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x)\label{group__motor_ga4bf849a8cde98def844917176a2294a0}
+
+\begin{DoxyCompactList}\small\item\em Simulates the operation cycle of a four-\/stroke engine. \end{DoxyCompactList}\item 
+\hypertarget{group__motor_ga053e9e113632f147c53de3d5830a6a04}{}void \hyperlink{group__motor_ga053e9e113632f147c53de3d5830a6a04}{S\+D\+T\+Motor\+\_\+set\+Two\+Stroke} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x)\label{group__motor_ga053e9e113632f147c53de3d5830a6a04}
+
+\begin{DoxyCompactList}\small\item\em Simulates the operation cycle of a two-\/stroke engine. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga6741c59cfd0c2ee14082107c82020ffe}{S\+D\+T\+Motor\+\_\+set\+N\+Cylinders} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, int i)
+\begin{DoxyCompactList}\small\item\em Sets the number of cylinders in the engine block. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga8f1f2fd7f068222a20149daa1bb9b0f6}{S\+D\+T\+Motor\+\_\+set\+Cylinder\+Size} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the size of each single cylinder. The total volume of the engine is this value multiplied by the number of cylinders. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gaba51c023320c4b669867c4bff7c09d20}{S\+D\+T\+Motor\+\_\+set\+Compression\+Ratio} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the compression ratio of the engine. The compression ratio is computed dividing the cylinder volume at maximum expansion (piston down) by its volume at maximum compression (piston up). \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga2a9413739465e0ada9469684fa0d72f2}{S\+D\+T\+Motor\+\_\+set\+Spark\+Time} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the width of the ignition pulse, compared to a full operation cycle. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gad9a4854f47020082a99ae9a7f6195688}{S\+D\+T\+Motor\+\_\+set\+Asymmetry} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of irregularity in the operation cycle. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gaa7fee7082e9f8de4b49e0fd65a22ff58}{S\+D\+T\+Motor\+\_\+set\+Backfire} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of backfiring when the engine revs down. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gafc68a7323ed663a6d640cc8edd31c03b}{S\+D\+T\+Motor\+\_\+set\+Intake\+Size} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the average length of the intake pipes. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga54ffb4c0b609969d8b52b22c99b9cc4c}{S\+D\+T\+Motor\+\_\+set\+Extractor\+Size} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the average length of the extractor pipes. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga35cbf60595115242bf8e29a7443612a5}{S\+D\+T\+Motor\+\_\+set\+Exhaust\+Size} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the length of the main exhaust pipe. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga72480c08c712aace30be07d8a1b63ad0}{S\+D\+T\+Motor\+\_\+set\+Expansion} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of expansion of the main exhaust pipe. This is a feature commonly found in two-\/stroke engines, to avoid the passage of fresh fuel mixture into the exhaust system. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga7c5e374c07941b8801cd96667a641e2c}{S\+D\+T\+Motor\+\_\+set\+Muffler\+Size} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the average length of the muffler chambers. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga6c62a51a0682eedfeb8a45617894f0b7}{S\+D\+T\+Motor\+\_\+set\+Muffler\+Feedback} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of energy dissipated by the muffler chambers. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_gace132edd2c286707ad518e5b83e57fbd}{S\+D\+T\+Motor\+\_\+set\+Outlet\+Size} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the length of the exhaust outlet. \end{DoxyCompactList}\item 
+void \hyperlink{group__motor_ga35ecc975f9677666d422b51cac470ac5}{S\+D\+T\+Motor\+\_\+dsp} (\hyperlink{group__motor_ga71a2e0e68d27c741a163f1b9819acb1b}{S\+D\+T\+Motor} $\ast$x, double $\ast$outs)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to synthesize the engine sound. The output is written in an array of three doubles. The first value represents the sound picked up at the intakes, from the front of the vehicle; the second represents the engine vibrations, mostly heard inside the cabin; the third and last output represents the sound coming from the exhaust outlet, towards the rear of the vehicle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+From a mechanical point of view, an internal combustion engine converts chemical energy into kinetic energy by means of a series of controlled explosions. From an acoustical point of view, the previously described setup is basically a set of resonating pipes, excited by the explosions happening in the combustion chambers. Resonances happening inside intake pipes, cylinders, exhaust collectors, exhaust pipe, exhaust muffler and final outlet are simulated by means of digital waveguides, whose inputs, lengths and feedback gains are controlled by a physical model of the engine operation cycle representing the behavior of the engine block. Four mechanical components are simulated\+: Piston motion, fuel ignition, intake valves operation and exhaust valves operation. The model provides also a simulation of exhaust backfiring, a phenomenon which occurs especially in sports or muscle cars, where the very rich fuel mixture sometimes doesn\textquotesingle{}t burn completely in the cylinders and self ignites later in the hotter parts of the exhaust system. 
+
+\subsection{Function Documentation}
+\hypertarget{group__motor_ga35ecc975f9677666d422b51cac470ac5}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+dsp@{S\+D\+T\+Motor\+\_\+dsp}}
+\index{S\+D\+T\+Motor\+\_\+dsp@{S\+D\+T\+Motor\+\_\+dsp}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+dsp(\+S\+D\+T\+Motor $\ast$x, double $\ast$outs)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double $\ast$}]{outs}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga35ecc975f9677666d422b51cac470ac5}
+
+
+Signal processing routine. Call this function at sample rate to synthesize the engine sound. The output is written in an array of three doubles. The first value represents the sound picked up at the intakes, from the front of the vehicle; the second represents the engine vibrations, mostly heard inside the cabin; the third and last output represents the sound coming from the exhaust outlet, towards the rear of the vehicle. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em outs} & Pointer to an array of three doubles, destination of the output \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gab676597b28c2a4ea89e235531b0dc447}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+free@{S\+D\+T\+Motor\+\_\+free}}
+\index{S\+D\+T\+Motor\+\_\+free@{S\+D\+T\+Motor\+\_\+free}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+free(\+S\+D\+T\+Motor $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__motor_gab676597b28c2a4ea89e235531b0dc447}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gae43489459dcd0fbca5439691c7a1adb0}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+new@{S\+D\+T\+Motor\+\_\+new}}
+\index{S\+D\+T\+Motor\+\_\+new@{S\+D\+T\+Motor\+\_\+new}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+new(long max\+Delay)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Motor}$\ast$ S\+D\+T\+Motor\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{long}]{max\+Delay}
+\end{DoxyParamCaption}
+)}\label{group__motor_gae43489459dcd0fbca5439691c7a1adb0}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__motor_gad9a4854f47020082a99ae9a7f6195688}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Asymmetry@{S\+D\+T\+Motor\+\_\+set\+Asymmetry}}
+\index{S\+D\+T\+Motor\+\_\+set\+Asymmetry@{S\+D\+T\+Motor\+\_\+set\+Asymmetry}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Asymmetry(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Asymmetry (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_gad9a4854f47020082a99ae9a7f6195688}
+
+
+Sets the amount of irregularity in the operation cycle. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Cycle asymmetry \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gaa7fee7082e9f8de4b49e0fd65a22ff58}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Backfire@{S\+D\+T\+Motor\+\_\+set\+Backfire}}
+\index{S\+D\+T\+Motor\+\_\+set\+Backfire@{S\+D\+T\+Motor\+\_\+set\+Backfire}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Backfire(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Backfire (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_gaa7fee7082e9f8de4b49e0fd65a22ff58}
+
+
+Sets the amount of backfiring when the engine revs down. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Chance of backfiring \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gaba51c023320c4b669867c4bff7c09d20}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Compression\+Ratio@{S\+D\+T\+Motor\+\_\+set\+Compression\+Ratio}}
+\index{S\+D\+T\+Motor\+\_\+set\+Compression\+Ratio@{S\+D\+T\+Motor\+\_\+set\+Compression\+Ratio}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Compression\+Ratio(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Compression\+Ratio (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_gaba51c023320c4b669867c4bff7c09d20}
+
+
+Sets the compression ratio of the engine. The compression ratio is computed dividing the cylinder volume at maximum expansion (piston down) by its volume at maximum compression (piston up). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Compression ratio \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga8f1f2fd7f068222a20149daa1bb9b0f6}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Cylinder\+Size@{S\+D\+T\+Motor\+\_\+set\+Cylinder\+Size}}
+\index{S\+D\+T\+Motor\+\_\+set\+Cylinder\+Size@{S\+D\+T\+Motor\+\_\+set\+Cylinder\+Size}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Cylinder\+Size(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Cylinder\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga8f1f2fd7f068222a20149daa1bb9b0f6}
+
+
+Sets the size of each single cylinder. The total volume of the engine is this value multiplied by the number of cylinders. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Cylinder volume, in cc \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga35cbf60595115242bf8e29a7443612a5}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Exhaust\+Size@{S\+D\+T\+Motor\+\_\+set\+Exhaust\+Size}}
+\index{S\+D\+T\+Motor\+\_\+set\+Exhaust\+Size@{S\+D\+T\+Motor\+\_\+set\+Exhaust\+Size}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Exhaust\+Size(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Exhaust\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga35cbf60595115242bf8e29a7443612a5}
+
+
+Sets the length of the main exhaust pipe. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Exhaust size, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga72480c08c712aace30be07d8a1b63ad0}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Expansion@{S\+D\+T\+Motor\+\_\+set\+Expansion}}
+\index{S\+D\+T\+Motor\+\_\+set\+Expansion@{S\+D\+T\+Motor\+\_\+set\+Expansion}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Expansion(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Expansion (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga72480c08c712aace30be07d8a1b63ad0}
+
+
+Sets the amount of expansion of the main exhaust pipe. This is a feature commonly found in two-\/stroke engines, to avoid the passage of fresh fuel mixture into the exhaust system. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Exhaust expansion \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga54ffb4c0b609969d8b52b22c99b9cc4c}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Extractor\+Size@{S\+D\+T\+Motor\+\_\+set\+Extractor\+Size}}
+\index{S\+D\+T\+Motor\+\_\+set\+Extractor\+Size@{S\+D\+T\+Motor\+\_\+set\+Extractor\+Size}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Extractor\+Size(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Extractor\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga54ffb4c0b609969d8b52b22c99b9cc4c}
+
+
+Sets the average length of the extractor pipes. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Extractor size, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gad6a38e1945353b9a4eeab3950218fe92}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Filters@{S\+D\+T\+Motor\+\_\+set\+Filters}}
+\index{S\+D\+T\+Motor\+\_\+set\+Filters@{S\+D\+T\+Motor\+\_\+set\+Filters}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Filters(\+S\+D\+T\+Motor $\ast$x, double damp, double dc)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Filters (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{damp, }
+\item[{double}]{dc}
+\end{DoxyParamCaption}
+)}\label{group__motor_gad6a38e1945353b9a4eeab3950218fe92}
+
+
+Update filter coefficients. Should be always called after setting the sampling rate with \hyperlink{group__common_gad76f7b9f128e79164c76764be6e03be8}{S\+D\+T\+\_\+set\+Sample\+Rate()}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to a S\+D\+T\+Motor instance \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gafc68a7323ed663a6d640cc8edd31c03b}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Intake\+Size@{S\+D\+T\+Motor\+\_\+set\+Intake\+Size}}
+\index{S\+D\+T\+Motor\+\_\+set\+Intake\+Size@{S\+D\+T\+Motor\+\_\+set\+Intake\+Size}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Intake\+Size(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Intake\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_gafc68a7323ed663a6d640cc8edd31c03b}
+
+
+Sets the average length of the intake pipes. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Intake size, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga6c62a51a0682eedfeb8a45617894f0b7}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Muffler\+Feedback@{S\+D\+T\+Motor\+\_\+set\+Muffler\+Feedback}}
+\index{S\+D\+T\+Motor\+\_\+set\+Muffler\+Feedback@{S\+D\+T\+Motor\+\_\+set\+Muffler\+Feedback}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Muffler\+Feedback(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Muffler\+Feedback (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga6c62a51a0682eedfeb8a45617894f0b7}
+
+
+Sets the amount of energy dissipated by the muffler chambers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Muffler feedback \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga7c5e374c07941b8801cd96667a641e2c}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Muffler\+Size@{S\+D\+T\+Motor\+\_\+set\+Muffler\+Size}}
+\index{S\+D\+T\+Motor\+\_\+set\+Muffler\+Size@{S\+D\+T\+Motor\+\_\+set\+Muffler\+Size}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Muffler\+Size(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Muffler\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga7c5e374c07941b8801cd96667a641e2c}
+
+
+Sets the average length of the muffler chambers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Muffler size, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga6741c59cfd0c2ee14082107c82020ffe}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+N\+Cylinders@{S\+D\+T\+Motor\+\_\+set\+N\+Cylinders}}
+\index{S\+D\+T\+Motor\+\_\+set\+N\+Cylinders@{S\+D\+T\+Motor\+\_\+set\+N\+Cylinders}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+N\+Cylinders(\+S\+D\+T\+Motor $\ast$x, int i)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+N\+Cylinders (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{int}]{i}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga6741c59cfd0c2ee14082107c82020ffe}
+
+
+Sets the number of cylinders in the engine block. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em i} & Number of cylinders \mbox{[}1,12\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gace132edd2c286707ad518e5b83e57fbd}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Outlet\+Size@{S\+D\+T\+Motor\+\_\+set\+Outlet\+Size}}
+\index{S\+D\+T\+Motor\+\_\+set\+Outlet\+Size@{S\+D\+T\+Motor\+\_\+set\+Outlet\+Size}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Outlet\+Size(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Outlet\+Size (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_gace132edd2c286707ad518e5b83e57fbd}
+
+
+Sets the length of the exhaust outlet. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Outlet size, in m \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gadb7382560e21de6e085b1a38dc0f10da}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Rpm@{S\+D\+T\+Motor\+\_\+set\+Rpm}}
+\index{S\+D\+T\+Motor\+\_\+set\+Rpm@{S\+D\+T\+Motor\+\_\+set\+Rpm}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Rpm(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Rpm (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_gadb7382560e21de6e085b1a38dc0f10da}
+
+
+Sets the Revolutions Per Minute (R\+P\+M) of the engine. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & R\+P\+M value \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_ga2a9413739465e0ada9469684fa0d72f2}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Spark\+Time@{S\+D\+T\+Motor\+\_\+set\+Spark\+Time}}
+\index{S\+D\+T\+Motor\+\_\+set\+Spark\+Time@{S\+D\+T\+Motor\+\_\+set\+Spark\+Time}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Spark\+Time(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Spark\+Time (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_ga2a9413739465e0ada9469684fa0d72f2}
+
+
+Sets the width of the ignition pulse, compared to a full operation cycle. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Ignition time \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__motor_gab4ed2474a1faff5f6ff258c728e9fa73}{}\index{S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}!S\+D\+T\+Motor\+\_\+set\+Throttle@{S\+D\+T\+Motor\+\_\+set\+Throttle}}
+\index{S\+D\+T\+Motor\+\_\+set\+Throttle@{S\+D\+T\+Motor\+\_\+set\+Throttle}!S\+D\+T\+Motor.\+h\+: Combustion engines@{S\+D\+T\+Motor.\+h\+: Combustion engines}}
+\subsubsection[{S\+D\+T\+Motor\+\_\+set\+Throttle(\+S\+D\+T\+Motor $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Motor\+\_\+set\+Throttle (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Motor} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__motor_gab4ed2474a1faff5f6ff258c728e9fa73}
+
+
+Sets the throttle load. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Throttle load \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}

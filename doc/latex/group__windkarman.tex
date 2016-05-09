@@ -1,0 +1,105 @@
+\hypertarget{group__windkarman}{}\section{Turbulence across thin objects}
+\label{group__windkarman}\index{Turbulence across thin objects@{Turbulence across thin objects}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{}typedef struct \hyperlink{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{S\+D\+T\+Wind\+Karman} \hyperlink{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{S\+D\+T\+Wind\+Karman}\label{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a thin obstacle object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{S\+D\+T\+Wind\+Karman} $\ast$ \hyperlink{group__windkarman_gaa79063d645c1f21fad8c5a819ad78996}{S\+D\+T\+Wind\+Karman\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__windkarman_gab2485afd8530db883dec772e2d797f93}{S\+D\+T\+Wind\+Karman\+\_\+free} (\hyperlink{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{S\+D\+T\+Wind\+Karman} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__windkarman_ga347782dade60398f65e40ecba6533513}{S\+D\+T\+Wind\+Karman\+\_\+set\+Diameter} (\hyperlink{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{S\+D\+T\+Wind\+Karman} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the diameter of the object. \end{DoxyCompactList}\item 
+void \hyperlink{group__windkarman_ga5180e7a0c805236099e8b253d3774b2d}{S\+D\+T\+Wind\+Karman\+\_\+set\+Wind\+Speed} (\hyperlink{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{S\+D\+T\+Wind\+Karman} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the wind speed. \end{DoxyCompactList}\item 
+double \hyperlink{group__windkarman_gaea472085b6034ca075c6be100086b97f}{S\+D\+T\+Wind\+Karman\+\_\+dsp} (\hyperlink{group__windkarman_ga80be8ba31406840ae33d6a97e0cad1b1}{S\+D\+T\+Wind\+Karman} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to synthesize wind blowing against a thin object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+An air flow hitting a thin object, such as a tree branch or a suspended wire, produces a singing or howling sound caused by a phenomenon known as Karman vortex street. This particular kind of turbulence is a repeating pattern of swirling vortices caused by the unsteady separation of flow of a fluid around the object. Karman vortex streets are modeled by white noise, passing through a bandpass filter with narrow bandwidth and high resonance. 
+
+\subsection{Function Documentation}
+\hypertarget{group__windkarman_gaea472085b6034ca075c6be100086b97f}{}\index{Turbulence across thin objects@{Turbulence across thin objects}!S\+D\+T\+Wind\+Karman\+\_\+dsp@{S\+D\+T\+Wind\+Karman\+\_\+dsp}}
+\index{S\+D\+T\+Wind\+Karman\+\_\+dsp@{S\+D\+T\+Wind\+Karman\+\_\+dsp}!Turbulence across thin objects@{Turbulence across thin objects}}
+\subsubsection[{S\+D\+T\+Wind\+Karman\+\_\+dsp(\+S\+D\+T\+Wind\+Karman $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Wind\+Karman\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Karman} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__windkarman_gaea472085b6034ca075c6be100086b97f}
+
+
+Signal processing routine. Call this function at sample rate to synthesize wind blowing against a thin object. 
+
+\begin{DoxyReturn}{Returns}
+Computed audio sample 
+\end{DoxyReturn}
+\hypertarget{group__windkarman_gab2485afd8530db883dec772e2d797f93}{}\index{Turbulence across thin objects@{Turbulence across thin objects}!S\+D\+T\+Wind\+Karman\+\_\+free@{S\+D\+T\+Wind\+Karman\+\_\+free}}
+\index{S\+D\+T\+Wind\+Karman\+\_\+free@{S\+D\+T\+Wind\+Karman\+\_\+free}!Turbulence across thin objects@{Turbulence across thin objects}}
+\subsubsection[{S\+D\+T\+Wind\+Karman\+\_\+free(\+S\+D\+T\+Wind\+Karman $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Karman\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Karman} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__windkarman_gab2485afd8530db883dec772e2d797f93}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__windkarman_gaa79063d645c1f21fad8c5a819ad78996}{}\index{Turbulence across thin objects@{Turbulence across thin objects}!S\+D\+T\+Wind\+Karman\+\_\+new@{S\+D\+T\+Wind\+Karman\+\_\+new}}
+\index{S\+D\+T\+Wind\+Karman\+\_\+new@{S\+D\+T\+Wind\+Karman\+\_\+new}!Turbulence across thin objects@{Turbulence across thin objects}}
+\subsubsection[{S\+D\+T\+Wind\+Karman\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Wind\+Karman}$\ast$ S\+D\+T\+Wind\+Karman\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__windkarman_gaa79063d645c1f21fad8c5a819ad78996}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__windkarman_ga347782dade60398f65e40ecba6533513}{}\index{Turbulence across thin objects@{Turbulence across thin objects}!S\+D\+T\+Wind\+Karman\+\_\+set\+Diameter@{S\+D\+T\+Wind\+Karman\+\_\+set\+Diameter}}
+\index{S\+D\+T\+Wind\+Karman\+\_\+set\+Diameter@{S\+D\+T\+Wind\+Karman\+\_\+set\+Diameter}!Turbulence across thin objects@{Turbulence across thin objects}}
+\subsubsection[{S\+D\+T\+Wind\+Karman\+\_\+set\+Diameter(\+S\+D\+T\+Wind\+Karman $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Karman\+\_\+set\+Diameter (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Karman} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__windkarman_ga347782dade60398f65e40ecba6533513}
+
+
+Sets the diameter of the object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Diameter of the object, in m. Works best with very small values ($<$ 0.\+1) \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__windkarman_ga5180e7a0c805236099e8b253d3774b2d}{}\index{Turbulence across thin objects@{Turbulence across thin objects}!S\+D\+T\+Wind\+Karman\+\_\+set\+Wind\+Speed@{S\+D\+T\+Wind\+Karman\+\_\+set\+Wind\+Speed}}
+\index{S\+D\+T\+Wind\+Karman\+\_\+set\+Wind\+Speed@{S\+D\+T\+Wind\+Karman\+\_\+set\+Wind\+Speed}!Turbulence across thin objects@{Turbulence across thin objects}}
+\subsubsection[{S\+D\+T\+Wind\+Karman\+\_\+set\+Wind\+Speed(\+S\+D\+T\+Wind\+Karman $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Wind\+Karman\+\_\+set\+Wind\+Speed (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Wind\+Karman} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__windkarman_ga5180e7a0c805236099e8b253d3774b2d}
+
+
+Sets the wind speed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Wind speed, \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}

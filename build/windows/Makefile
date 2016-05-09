@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
-CC=gcc
-CFLAGS=-Wall -Wno-unknown-pragmas -Werror
+CC=i686-w64-mingw32-gcc
+CFLAGS=-Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=-shared
 SRCDIR=../../src
 DSTDIR=../../SoundDesignToolkit
@@ -23,8 +23,6 @@ PDOBJS=$(patsubst %.c,%.dll,$(PDSRCS))
 
 PDSDKDIR=../../3rdparty/Pd
 PDSDKVERSION=0.43.4
-
-FFTW3DIR=../../3rdparty/fftw3/windows
 
 all: sdt max pd
 
@@ -52,14 +50,13 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	-I$(SRCDIR) -c $< -o $@
 
 sdt: $(SDTOBJS)
-	$(CC) $(LDFLAGS) -L$(FFTW3DIR) $(SDTOBJS) -o $(SDTDIR)/libSDT.dll -lfftw3-3
+	$(CC) $(LDFLAGS) $(SDTOBJS) -o $(SDTDIR)/libSDT.dll
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
-	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
-	
+	$(CC) $(CFLAGS) -c $< -o $@
+
 install:
 	mkdir -p "$(DSTDIR)"/SoundDesignToolkit/{externals,support}
-	cp -a $(FFTW3DIR)/libfftw* "$(DSTDIR)"/SoundDesignToolkit/support
 	cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SoundDesignToolkit/support
 	cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/SoundDesignToolkit/externals
 	cp -a ../../Max6/* "$(DSTDIR)"/SoundDesignToolkit
@@ -72,3 +69,4 @@ clean:
 	rm -rf $(SDTDIR)/*.o
 	rm -rf $(MAXDIR)/*.mxe
 	rm -rf $(MAXDIR)/*.def
+	rm -rf $(PDDIR)/*.dll

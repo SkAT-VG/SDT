@@ -1,51 +1,3 @@
-/** \file sdt.spectralfeats~.c
- * Max external for spectral feature extraction.
- *
- * \author Stefano Baldan (stefanobaldan@iuav.it)
- *
- * This file is part of the 'Sound Design Toolkit' (SDT)
- * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
- *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
- *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
- *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *****************************************************************************/
-
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -55,7 +7,7 @@
 typedef struct _spectralfeats {
   t_pxobject ob;
   SDTSpectralFeats *feats;
-  void *outlets[8], *send;
+  void *outlet, *send;
   double overlap, minFreq, maxFreq, outs[8];
 } t_spectralfeats;
 
@@ -67,32 +19,7 @@ void spectralfeats_assist(t_spectralfeats *x, void *b, long m, long a, char *s) 
                "Object attributes and messages (see help patch)");
   } 
   else {
-    switch (a) {
-      case 0:
-        sprintf(s, "(float): Spectral magnitude");
-        break;
-      case 1:
-        sprintf(s, "(float): Spectral centroid (brightness)");
-        break;
-      case 2:
-        sprintf(s, "(float): Spectral variance (spread)");
-        break;
-      case 3:
-        sprintf(s, "(float): Spectral skewness");
-        break;
-      case 4:
-        sprintf(s, "(float): Spectral kurtosis");
-        break;
-      case 5:
-        sprintf(s, "(float): Spectral flatness");
-        break;
-      case 6:
-        sprintf(s, "(float): Spectral flux");
-        break;
-      case 7:
-        sprintf(s, "(float): Whitened and rectified spectral flux (onset function)");
-        break;
-    }
+    sprintf(s, "(symbol, float): Audio descriptors");
   }
 }
 
@@ -112,14 +39,24 @@ void spectralfeats_maxFreq(t_spectralfeats *x, void *attr, long ac, t_atom *av) 
 }
 
 void spectralfeats_send(t_spectralfeats *x) {
-  outlet_float(x->outlets[0], x->outs[0]);
-  outlet_float(x->outlets[1], x->outs[1]);
-  outlet_float(x->outlets[2], x->outs[2]);
-  outlet_float(x->outlets[3], x->outs[3]);
-  outlet_float(x->outlets[4], x->outs[4]);
-  outlet_float(x->outlets[5], x->outs[5]);
-  outlet_float(x->outlets[6], x->outs[6]);
-  outlet_float(x->outlets[7], x->outs[7]);
+  t_atom argv[1];
+  
+  atom_setfloat(argv, x->outs[0]);
+  outlet_anything(x->outlet, gensym("magnitude"), 1, argv);
+  atom_setfloat(argv, x->outs[1]);
+  outlet_anything(x->outlet, gensym("centroid"), 1, argv);
+  atom_setfloat(argv, x->outs[2]);
+  outlet_anything(x->outlet, gensym("spread"), 1, argv);
+  atom_setfloat(argv, x->outs[3]);
+  outlet_anything(x->outlet, gensym("skewness"), 1, argv);
+  atom_setfloat(argv, x->outs[4]);
+  outlet_anything(x->outlet, gensym("kurtosis"), 1, argv);
+  atom_setfloat(argv, x->outs[5]);
+  outlet_anything(x->outlet, gensym("flatness"), 1, argv);
+  atom_setfloat(argv, x->outs[6]);
+  outlet_anything(x->outlet, gensym("flux"), 1, argv);
+  atom_setfloat(argv, x->outs[7]);
+  outlet_anything(x->outlet, gensym("onset"), 1, argv);
 }
 
 t_int *spectralfeats_perform(t_int *w) {
@@ -165,26 +102,23 @@ void spectralfeats_dsp64(t_spectralfeats *x, t_object *dsp64, short *count, doub
 
 void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
   t_spectralfeats *x;
-  long windowSize;
+  long tmpSize, windowSize;
   
   x = (t_spectralfeats *)object_alloc(spectralfeats_class);
   if (x) {
     dsp_setup((t_pxobject *)x, 1);
     if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
-      windowSize = atom_getlong(&argv[0]);
+      tmpSize = atom_getlong(&argv[0]);
+      windowSize = SDT_nextPow2(tmpSize);
+      if (tmpSize != windowSize) {
+        post("sdt.spectralfeats~: Window size must be a power of 2, setting it to %d", windowSize);
+      }
     }
     else {
       windowSize = 1024;
     }
     x->feats = SDTSpectralFeats_new(windowSize);
-    x->outlets[7] = floatout(x);
-    x->outlets[6] = floatout(x);
-    x->outlets[5] = floatout(x);
-    x->outlets[4] = floatout(x);
-    x->outlets[3] = floatout(x);
-    x->outlets[2] = floatout(x);
-    x->outlets[1] = floatout(x);
-    x->outlets[0] = floatout(x);
+    x->outlet = outlet_new((t_object *)x, NULL);
     x->send = qelem_new((t_object *)x, (method)spectralfeats_send);
     attr_args_process(x, argc, argv);
   }
@@ -193,14 +127,7 @@ void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
 
 void spectralfeats_free(t_spectralfeats *x) {
   dsp_free((t_pxobject *)x);
-  object_free(x->outlets[0]);
-  object_free(x->outlets[1]);
-  object_free(x->outlets[2]);
-  object_free(x->outlets[3]);
-  object_free(x->outlets[4]);
-  object_free(x->outlets[5]);
-  object_free(x->outlets[6]);
-  object_free(x->outlets[7]);
+  object_free(x->outlet);
   qelem_free(x->send);
   SDTSpectralFeats_free(x->feats);
 }

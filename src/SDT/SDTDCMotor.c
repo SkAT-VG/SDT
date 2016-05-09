@@ -1,6 +1,5 @@
 #include <math.h>
 #include <stdlib.h>
-#include <time.h>
 #include "SDTCommon.h"
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
@@ -119,8 +118,10 @@ double SDTDCMotor_dsp(SDTDCMotor *x) {
   for (i = 0; i < 16; i++) {
     partPhase = SDT_TWOPI * (i + 1);
     partGain = exp(-(1.0 - x->harshness) * i);
-    rotor += cos(partPhase * x->rotorPhase) * partGain;
-    gears += cos(partPhase * x->gearPhase) * partGain;
+    if (rotorStep * partPhase < SDT_PI)
+      rotor += cos(x->rotorPhase * partPhase) * partGain;
+    if (gearStep * partPhase < SDT_PI)
+      gears += cos(x->gearPhase * partPhase) * partGain;
     totGain += partGain;
   }
   rotor /= totGain;

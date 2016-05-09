@@ -73,9 +73,9 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 63.5, 406.0, 70.0, 22.0 ],
+					"patching_rect" : [ 63.5, 406.0, 63.0, 22.0 ],
 					"style" : "",
-					"text" : "strike 0 -7"
+					"text" : "strike 0 -5"
 				}
 
 			}
@@ -102,9 +102,9 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 289.5, 327.0, 85.0, 20.0 ],
+					"patching_rect" : [ 289.5, 327.0, 86.0, 20.0 ],
 					"style" : "",
-					"text" : "prepend weights"
+					"text" : "prepend pickup0"
 				}
 
 			}
@@ -119,7 +119,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 289.5, 164.5, 82.0, 17.0 ],
 					"style" : "",
-					"text" : "weights"
+					"text" : "pickups0"
 				}
 
 			}
@@ -1264,7 +1264,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 144.5, 406.0, 70.0, 22.0 ],
 					"style" : "",
-					"text" : "strike 0 -12"
+					"text" : "strike 0 -10"
 				}
 
 			}
@@ -1293,7 +1293,7 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 274.0, 401.0, 70.0, 22.0 ],
 					"style" : "",
-					"text" : "strike 0 -25"
+					"text" : "strike 0 -20"
 				}
 
 			}
@@ -1342,9 +1342,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.5, 545.5, 508.0, 83.0 ],
+					"patching_rect" : [ 40.5, 545.5, 504.0, 83.0 ],
 					"style" : "",
-					"text" : "sdt.modal modaldoor 8 1 @freqs 2000. 3000. 5000. 7000. 11000. 13000. 17000. 19000. @decays 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 @weights 2000. 2000. 2000. 1500. 1500. 1000. 800. 700. @pickup0 1. 1. 1. 1. 1. 1. 1. 1. @activeModes 8"
+					"text" : "sdt.modal modaldoor 8 1 @freqs 2000. 3000. 5000. 7000. 11000. 13000. 17000. 19000. @decays 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 @pickup0 2000. 2000. 2000. 1500. 1500. 1000. 800. 700. @activeModes 8"
 				}
 
 			}

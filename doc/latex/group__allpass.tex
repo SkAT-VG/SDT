@@ -1,0 +1,92 @@
+\hypertarget{group__allpass}{}\section{Allpass filter}
+\label{group__allpass}\index{Allpass filter@{Allpass filter}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__allpass_gaf7204b2111eb2234dc0c510955013960}{}typedef struct \hyperlink{group__allpass_gaf7204b2111eb2234dc0c510955013960}{S\+D\+T\+All\+Pass} \hyperlink{group__allpass_gaf7204b2111eb2234dc0c510955013960}{S\+D\+T\+All\+Pass}\label{group__allpass_gaf7204b2111eb2234dc0c510955013960}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for an allpass filter object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__allpass_gaf7204b2111eb2234dc0c510955013960}{S\+D\+T\+All\+Pass} $\ast$ \hyperlink{group__allpass_gabb468282b9800c1cf9d010d8c7e617d0}{S\+D\+T\+All\+Pass\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__allpass_ga6e6304c9636c0f8be12079e3e58958b7}{S\+D\+T\+All\+Pass\+\_\+free} (\hyperlink{group__allpass_gaf7204b2111eb2234dc0c510955013960}{S\+D\+T\+All\+Pass} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__allpass_ga2fbffd0e09a0d97024a1f8609db04d04}{S\+D\+T\+All\+Pass\+\_\+set\+Feedback} (\hyperlink{group__allpass_gaf7204b2111eb2234dc0c510955013960}{S\+D\+T\+All\+Pass} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the feedback coefficient. \end{DoxyCompactList}\item 
+double \hyperlink{group__allpass_gaf81b61028bbcf05de50828a6ff528800}{S\+D\+T\+All\+Pass\+\_\+dsp} (\hyperlink{group__allpass_gaf7204b2111eb2234dc0c510955013960}{S\+D\+T\+All\+Pass} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the filtered signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Allpass filter, used to adjust phases in fractional delay lines. 
+
+\subsection{Function Documentation}
+\hypertarget{group__allpass_gaf81b61028bbcf05de50828a6ff528800}{}\index{Allpass filter@{Allpass filter}!S\+D\+T\+All\+Pass\+\_\+dsp@{S\+D\+T\+All\+Pass\+\_\+dsp}}
+\index{S\+D\+T\+All\+Pass\+\_\+dsp@{S\+D\+T\+All\+Pass\+\_\+dsp}!Allpass filter@{Allpass filter}}
+\subsubsection[{S\+D\+T\+All\+Pass\+\_\+dsp(\+S\+D\+T\+All\+Pass $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+All\+Pass\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+All\+Pass} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__allpass_gaf81b61028bbcf05de50828a6ff528800}
+
+
+Signal processing routine. Call this function at sample rate to compute the filtered signal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Output sample 
+\end{DoxyReturn}
+\hypertarget{group__allpass_ga6e6304c9636c0f8be12079e3e58958b7}{}\index{Allpass filter@{Allpass filter}!S\+D\+T\+All\+Pass\+\_\+free@{S\+D\+T\+All\+Pass\+\_\+free}}
+\index{S\+D\+T\+All\+Pass\+\_\+free@{S\+D\+T\+All\+Pass\+\_\+free}!Allpass filter@{Allpass filter}}
+\subsubsection[{S\+D\+T\+All\+Pass\+\_\+free(\+S\+D\+T\+All\+Pass $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+All\+Pass\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+All\+Pass} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__allpass_ga6e6304c9636c0f8be12079e3e58958b7}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__allpass_gabb468282b9800c1cf9d010d8c7e617d0}{}\index{Allpass filter@{Allpass filter}!S\+D\+T\+All\+Pass\+\_\+new@{S\+D\+T\+All\+Pass\+\_\+new}}
+\index{S\+D\+T\+All\+Pass\+\_\+new@{S\+D\+T\+All\+Pass\+\_\+new}!Allpass filter@{Allpass filter}}
+\subsubsection[{S\+D\+T\+All\+Pass\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+All\+Pass}$\ast$ S\+D\+T\+All\+Pass\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__allpass_gabb468282b9800c1cf9d010d8c7e617d0}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__allpass_ga2fbffd0e09a0d97024a1f8609db04d04}{}\index{Allpass filter@{Allpass filter}!S\+D\+T\+All\+Pass\+\_\+set\+Feedback@{S\+D\+T\+All\+Pass\+\_\+set\+Feedback}}
+\index{S\+D\+T\+All\+Pass\+\_\+set\+Feedback@{S\+D\+T\+All\+Pass\+\_\+set\+Feedback}!Allpass filter@{Allpass filter}}
+\subsubsection[{S\+D\+T\+All\+Pass\+\_\+set\+Feedback(\+S\+D\+T\+All\+Pass $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+All\+Pass\+\_\+set\+Feedback (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+All\+Pass} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__allpass_ga2fbffd0e09a0d97024a1f8609db04d04}
+
+
+Sets the feedback coefficient. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Weight of the input sample \\
+\hline
+\end{DoxyParams}

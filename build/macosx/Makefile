@@ -3,8 +3,8 @@ SHELL=/bin/bash
 CC=clang
 MACARCH=-arch i386 -arch x86_64
 MACVERSION=-mmacosx-version-min=10.6
-CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -O -fno-common
-LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib
+CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -O3
+LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib -headerpad_max_install_names
 SRCDIR=../../src
 
 SDTDIR=$(SRCDIR)/SDT
@@ -25,9 +25,7 @@ PDOBJS=$(patsubst %.c,%.pd_darwin,$(PDSRCS))
 PDSDKDIR=../../3rdparty/Pd
 PDVERSION=0.41.4
 
-FFTW3DIR=../../3rdparty/fftw3/macosx
-
-all: sdt max
+all: sdt max pd
 
 max: sdt $(MAXOBJS)
 
@@ -64,19 +62,15 @@ $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -F$(SDTDIR) -c $< -o $@
 
 sdt: $(SDTOBJS)
+	rm -rf $(SDTDIR)/SDT.framework
 	cp -a SDT.framework $(SDTDIR)
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
-	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Resources/fftw3
-	cp -a $(FFTW3DIR)/* $(SDTDIR)/SDT.framework/Resources/fftw3
-	install_name_tool -id @loader_path/Resources/fftw3/libfftw3.3.dylib \
-	$(SDTDIR)/SDT.framework/Resources/fftw3/libfftw3.3.dylib
 	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
-	$(CC) $(LDFLAGS) -L$(SDTDIR)/SDT.framework/Resources/fftw3 $(SDTOBJS) \
-	-o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System -lfftw3
+	$(CC) $(LDFLAGS) $(SDTOBJS) -o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System
 	install_name_tool -id SDT $(SDTDIR)/SDT.framework/SDT
 	
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
-	$(CC) $(CFLAGS) -I$(FFTW3DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 install:
 	@if [ -z "$(DSTDIR)" ]; \
@@ -90,6 +84,18 @@ install:
 	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
 	fi
 	
+install_pd:
+	@if [ -z "$(DSTDIR)" ]; \
+        then echo "Usage: make install DSTDIR=<installation_path>"; \
+        elif [ ! -d "$(DSTDIR)" ]; \
+        then echo "Error: installation path does not exist or is not a directory"; \
+	else mkdir -p "$(DSTDIR)"/SDT && \
+	     cp -a ../../Pd/* "$(DSTDIR)"/SDT && \
+	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT && \
+	     cp -a $(PDDIR)/*.pd_darwin "$(DSTDIR)"/SDT && \
+	     echo "Sound Design Toolkit for PureData installed in $(DSTDIR)"; \
+	fi
+
 uninstall:
 	@if [ -z "$(DSTDIR)" ]; \
 	then echo "Usage: make uninstall DSTDIR=<installation_path>"; \
@@ -98,7 +104,15 @@ uninstall:
 	else rm -r "$(DSTDIR)"/SoundDesignToolkit && \
 	     echo "Sound Design Toolkit uninstalled from $(DSTDIR)"; \
 	fi
-	
+
+uninstall_pd:
+	@if [ -z "$(DSTDIR)" ]; \
+	then echo "Usage: make uninstall DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; \
+	then echo "Error: installation path does not exist or is not a directory"; \
+	else rm -r "$(DSTDIR)"/SDT && \
+	     echo "Sound Design Toolkit for PureData uninstalled from $(DSTDIR)"; \
+	fi	
 
 clean:
 	rm -rf $(SDTDIR)/*.framework

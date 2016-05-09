@@ -1,0 +1,130 @@
+\hypertarget{group__scraping}{}\section{Scraping}
+\label{group__scraping}\index{Scraping@{Scraping}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{}typedef struct \hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping} \hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping}\label{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for the scraping object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping} $\ast$ \hyperlink{group__scraping_gaeba68cf1ec2ca297e46a4a3cd7da8415}{S\+D\+T\+Scraping\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__scraping_gac291caf6b1ab22e723bb75f476f2a66f}{S\+D\+T\+Scraping\+\_\+free} (\hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__scraping_ga015ecdce2da4cb91bf64c6794918e627}{S\+D\+T\+Scraping\+\_\+set\+Grain} (\hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the grain of the surface. This parameter affects the density of the micro-\/impacts\+: Lower values result in a rougher scraping, higher values result in a smoother scraping. \end{DoxyCompactList}\item 
+void \hyperlink{group__scraping_ga00e1a82a147b9c2f6eb5ba7894cb9c83}{S\+D\+T\+Scraping\+\_\+set\+Force} (\hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the normal force of the scraping probe on the surface. This parameter affects the energy of the micro-\/impacts. \end{DoxyCompactList}\item 
+void \hyperlink{group__scraping_gabf0eacd5788f48c3d48b416460d18092}{S\+D\+T\+Scraping\+\_\+set\+Velocity} (\hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the scraping velocity. \end{DoxyCompactList}\item 
+double \hyperlink{group__scraping_ga22b839ce06e1e62409e51bd284dc60f8}{S\+D\+T\+Scraping\+\_\+dsp} (\hyperlink{group__scraping_ga31635c2bb9b5bed7af5e675ad89f1bde}{S\+D\+T\+Scraping} $\ast$x, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the force acting on the scraped surface. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Control layer for resonators, generating scraping sonic textures. The output is a force, which should be applied directly to a single resonator. Interactors are not needed, although friction with another solid can be used to add a rubbing character to the sound. 
+
+\subsection{Function Documentation}
+\hypertarget{group__scraping_ga22b839ce06e1e62409e51bd284dc60f8}{}\index{Scraping@{Scraping}!S\+D\+T\+Scraping\+\_\+dsp@{S\+D\+T\+Scraping\+\_\+dsp}}
+\index{S\+D\+T\+Scraping\+\_\+dsp@{S\+D\+T\+Scraping\+\_\+dsp}!Scraping@{Scraping}}
+\subsubsection[{S\+D\+T\+Scraping\+\_\+dsp(\+S\+D\+T\+Scraping $\ast$x, double in)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Scraping\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Scraping} $\ast$}]{x, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__scraping_ga22b839ce06e1e62409e51bd284dc60f8}
+
+
+Signal processing routine. Call this function at sample rate to compute the force acting on the scraped surface. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em in} & Surface profile, as an audio signal \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Normal force on the resonator 
+\end{DoxyReturn}
+\hypertarget{group__scraping_gac291caf6b1ab22e723bb75f476f2a66f}{}\index{Scraping@{Scraping}!S\+D\+T\+Scraping\+\_\+free@{S\+D\+T\+Scraping\+\_\+free}}
+\index{S\+D\+T\+Scraping\+\_\+free@{S\+D\+T\+Scraping\+\_\+free}!Scraping@{Scraping}}
+\subsubsection[{S\+D\+T\+Scraping\+\_\+free(\+S\+D\+T\+Scraping $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Scraping\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Scraping} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__scraping_gac291caf6b1ab22e723bb75f476f2a66f}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__scraping_gaeba68cf1ec2ca297e46a4a3cd7da8415}{}\index{Scraping@{Scraping}!S\+D\+T\+Scraping\+\_\+new@{S\+D\+T\+Scraping\+\_\+new}}
+\index{S\+D\+T\+Scraping\+\_\+new@{S\+D\+T\+Scraping\+\_\+new}!Scraping@{Scraping}}
+\subsubsection[{S\+D\+T\+Scraping\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Scraping}$\ast$ S\+D\+T\+Scraping\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__scraping_gaeba68cf1ec2ca297e46a4a3cd7da8415}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__scraping_ga00e1a82a147b9c2f6eb5ba7894cb9c83}{}\index{Scraping@{Scraping}!S\+D\+T\+Scraping\+\_\+set\+Force@{S\+D\+T\+Scraping\+\_\+set\+Force}}
+\index{S\+D\+T\+Scraping\+\_\+set\+Force@{S\+D\+T\+Scraping\+\_\+set\+Force}!Scraping@{Scraping}}
+\subsubsection[{S\+D\+T\+Scraping\+\_\+set\+Force(\+S\+D\+T\+Scraping $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Scraping\+\_\+set\+Force (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Scraping} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__scraping_ga00e1a82a147b9c2f6eb5ba7894cb9c83}
+
+
+Sets the normal force of the scraping probe on the surface. This parameter affects the energy of the micro-\/impacts. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Normal force of the scraping probe on the resonating surface \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__scraping_ga015ecdce2da4cb91bf64c6794918e627}{}\index{Scraping@{Scraping}!S\+D\+T\+Scraping\+\_\+set\+Grain@{S\+D\+T\+Scraping\+\_\+set\+Grain}}
+\index{S\+D\+T\+Scraping\+\_\+set\+Grain@{S\+D\+T\+Scraping\+\_\+set\+Grain}!Scraping@{Scraping}}
+\subsubsection[{S\+D\+T\+Scraping\+\_\+set\+Grain(\+S\+D\+T\+Scraping $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Scraping\+\_\+set\+Grain (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Scraping} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__scraping_ga015ecdce2da4cb91bf64c6794918e627}
+
+
+Sets the grain of the surface. This parameter affects the density of the micro-\/impacts\+: Lower values result in a rougher scraping, higher values result in a smoother scraping. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Surface grain \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__scraping_gabf0eacd5788f48c3d48b416460d18092}{}\index{Scraping@{Scraping}!S\+D\+T\+Scraping\+\_\+set\+Velocity@{S\+D\+T\+Scraping\+\_\+set\+Velocity}}
+\index{S\+D\+T\+Scraping\+\_\+set\+Velocity@{S\+D\+T\+Scraping\+\_\+set\+Velocity}!Scraping@{Scraping}}
+\subsubsection[{S\+D\+T\+Scraping\+\_\+set\+Velocity(\+S\+D\+T\+Scraping $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Scraping\+\_\+set\+Velocity (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Scraping} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__scraping_gabf0eacd5788f48c3d48b416460d18092}
+
+
+Sets the scraping velocity. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Probe velocity \\
+\hline
+\end{DoxyParams}
