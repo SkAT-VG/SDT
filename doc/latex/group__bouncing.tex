@@ -1,0 +1,143 @@
+\hypertarget{group__bouncing}{}\section{Bouncing}
+\label{group__bouncing}\index{Bouncing@{Bouncing}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{}typedef struct \hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} \hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing}\label{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for the crumpling object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$ \hyperlink{group__bouncing_ga114e29abaede43bdc471c79a657c1fb8}{S\+D\+T\+Bouncing\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_gabfaffe0eaf93138631e284fe5ed798c7}{S\+D\+T\+Bouncing\+\_\+free} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_ga5165a72d3db90defcceb2b5497278f8c}{S\+D\+T\+Bouncing\+\_\+set\+Restitution} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the coefficient of restitution. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_gaf52e4153995574ea3c5f911af0c91ae4}{S\+D\+T\+Bouncing\+\_\+set\+Height} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the initial height of the falling object. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_ga2f97eb41d869310dca1422a3ee8ff5ca}{S\+D\+T\+Bouncing\+\_\+set\+Irregularity} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the irregularity of the shape of the object. \end{DoxyCompactList}\item 
+\hypertarget{group__bouncing_ga3ecf14685e79e027cda2cfeeab44e6e6}{}void \hyperlink{group__bouncing_ga3ecf14685e79e027cda2cfeeab44e6e6}{S\+D\+T\+Bouncing\+\_\+reset} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)\label{group__bouncing_ga3ecf14685e79e027cda2cfeeab44e6e6}
+
+\begin{DoxyCompactList}\small\item\em Resets the bouncing process, restoring its initial energy. \end{DoxyCompactList}\item 
+double \hyperlink{group__bouncing_ga88e82a64cd061694977c69b13c52521c}{S\+D\+T\+Bouncing\+\_\+dsp} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Single iteration of the whole buncing process. Call this routine in a loop to simulate the bouncing process. The loop should end when \hyperlink{group__bouncing_gaad83fdd39bd35c1b8fd315b5804135db}{S\+D\+T\+Bouncing\+\_\+has\+Finished()} returns true. \end{DoxyCompactList}\item 
+int \hyperlink{group__bouncing_gaad83fdd39bd35c1b8fd315b5804135db}{S\+D\+T\+Bouncing\+\_\+has\+Finished} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Checks if the bouncing process is finished, i.\+e. if the remaining energy is 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Control layer for the impact model, generating (irregular) bouncing sonic textures. The output should be used to control the impact velocity between two resonators. 
+
+\subsection{Function Documentation}
+\hypertarget{group__bouncing_ga88e82a64cd061694977c69b13c52521c}{}\index{Bouncing@{Bouncing}!S\+D\+T\+Bouncing\+\_\+dsp@{S\+D\+T\+Bouncing\+\_\+dsp}}
+\index{S\+D\+T\+Bouncing\+\_\+dsp@{S\+D\+T\+Bouncing\+\_\+dsp}!Bouncing@{Bouncing}}
+\subsubsection[{S\+D\+T\+Bouncing\+\_\+dsp(\+S\+D\+T\+Bouncing $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+Bouncing\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bouncing} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__bouncing_ga88e82a64cd061694977c69b13c52521c}
+
+
+Single iteration of the whole buncing process. Call this routine in a loop to simulate the bouncing process. The loop should end when \hyperlink{group__bouncing_gaad83fdd39bd35c1b8fd315b5804135db}{S\+D\+T\+Bouncing\+\_\+has\+Finished()} returns true. 
+
+\begin{DoxyReturn}{Returns}
+Impact velocity of the bounce 
+\end{DoxyReturn}
+\hypertarget{group__bouncing_gabfaffe0eaf93138631e284fe5ed798c7}{}\index{Bouncing@{Bouncing}!S\+D\+T\+Bouncing\+\_\+free@{S\+D\+T\+Bouncing\+\_\+free}}
+\index{S\+D\+T\+Bouncing\+\_\+free@{S\+D\+T\+Bouncing\+\_\+free}!Bouncing@{Bouncing}}
+\subsubsection[{S\+D\+T\+Bouncing\+\_\+free(\+S\+D\+T\+Bouncing $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bouncing\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bouncing} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__bouncing_gabfaffe0eaf93138631e284fe5ed798c7}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__bouncing_gaad83fdd39bd35c1b8fd315b5804135db}{}\index{Bouncing@{Bouncing}!S\+D\+T\+Bouncing\+\_\+has\+Finished@{S\+D\+T\+Bouncing\+\_\+has\+Finished}}
+\index{S\+D\+T\+Bouncing\+\_\+has\+Finished@{S\+D\+T\+Bouncing\+\_\+has\+Finished}!Bouncing@{Bouncing}}
+\subsubsection[{S\+D\+T\+Bouncing\+\_\+has\+Finished(\+S\+D\+T\+Bouncing $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Bouncing\+\_\+has\+Finished (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bouncing} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__bouncing_gaad83fdd39bd35c1b8fd315b5804135db}
+
+
+Checks if the bouncing process is finished, i.\+e. if the remaining energy is 0. 
+
+\begin{DoxyReturn}{Returns}
+1 (true) if the remaining energy is $<$= 0, 0 (false) otherwise. 
+\end{DoxyReturn}
+\hypertarget{group__bouncing_ga114e29abaede43bdc471c79a657c1fb8}{}\index{Bouncing@{Bouncing}!S\+D\+T\+Bouncing\+\_\+new@{S\+D\+T\+Bouncing\+\_\+new}}
+\index{S\+D\+T\+Bouncing\+\_\+new@{S\+D\+T\+Bouncing\+\_\+new}!Bouncing@{Bouncing}}
+\subsubsection[{S\+D\+T\+Bouncing\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Bouncing}$\ast$ S\+D\+T\+Bouncing\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__bouncing_ga114e29abaede43bdc471c79a657c1fb8}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__bouncing_gaf52e4153995574ea3c5f911af0c91ae4}{}\index{Bouncing@{Bouncing}!S\+D\+T\+Bouncing\+\_\+set\+Height@{S\+D\+T\+Bouncing\+\_\+set\+Height}}
+\index{S\+D\+T\+Bouncing\+\_\+set\+Height@{S\+D\+T\+Bouncing\+\_\+set\+Height}!Bouncing@{Bouncing}}
+\subsubsection[{S\+D\+T\+Bouncing\+\_\+set\+Height(\+S\+D\+T\+Bouncing $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bouncing\+\_\+set\+Height (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bouncing} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__bouncing_gaf52e4153995574ea3c5f911af0c91ae4}
+
+
+Sets the initial height of the falling object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Object height, in m. \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__bouncing_ga2f97eb41d869310dca1422a3ee8ff5ca}{}\index{Bouncing@{Bouncing}!S\+D\+T\+Bouncing\+\_\+set\+Irregularity@{S\+D\+T\+Bouncing\+\_\+set\+Irregularity}}
+\index{S\+D\+T\+Bouncing\+\_\+set\+Irregularity@{S\+D\+T\+Bouncing\+\_\+set\+Irregularity}!Bouncing@{Bouncing}}
+\subsubsection[{S\+D\+T\+Bouncing\+\_\+set\+Irregularity(\+S\+D\+T\+Bouncing $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bouncing\+\_\+set\+Irregularity (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bouncing} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__bouncing_ga2f97eb41d869310dca1422a3ee8ff5ca}
+
+
+Sets the irregularity of the shape of the object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Object shape irregularity (deviation from a spherical shape) \mbox{[}0,1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__bouncing_ga5165a72d3db90defcceb2b5497278f8c}{}\index{Bouncing@{Bouncing}!S\+D\+T\+Bouncing\+\_\+set\+Restitution@{S\+D\+T\+Bouncing\+\_\+set\+Restitution}}
+\index{S\+D\+T\+Bouncing\+\_\+set\+Restitution@{S\+D\+T\+Bouncing\+\_\+set\+Restitution}!Bouncing@{Bouncing}}
+\subsubsection[{S\+D\+T\+Bouncing\+\_\+set\+Restitution(\+S\+D\+T\+Bouncing $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Bouncing\+\_\+set\+Restitution (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Bouncing} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__bouncing_ga5165a72d3db90defcceb2b5497278f8c}
+
+
+Sets the coefficient of restitution. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Coefficient of restitution of the bouncing process \\
+\hline
+\end{DoxyParams}

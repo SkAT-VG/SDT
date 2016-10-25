@@ -2,6 +2,8 @@ var searchData=
 [
   ['sdtallpass',['SDTAllPass',['../group__allpass.html#gaf7204b2111eb2234dc0c510955013960',1,'SDTFilters.h']]],
   ['sdtaverage',['SDTAverage',['../group__average.html#ga59d09dcb18c4d483a1577d87ad90d1c3',1,'SDTFilters.h']]],
+  ['sdtbouncing',['SDTBouncing',['../group__bouncing.html#gaab51e1dac97a045a7e339645c7ef84e8',1,'SDTControl.h']]],
+  ['sdtbreaking',['SDTBreaking',['../group__breaking.html#gaf66ba3e9569d061a0d6337a24bce1dc5',1,'SDTControl.h']]],
   ['sdtbubble',['SDTBubble',['../group__bubbles.html#ga112f59b24c7a304d0ff6280c98cf7e75',1,'SDTLiquids.h']]],
   ['sdtcomb',['SDTComb',['../group__comb.html#ga6d48ca6dc0e03cd39bc44193e4d208db',1,'SDTFilters.h']]],
   ['sdtcomplex',['SDTComplex',['../group__complex.html#gabb05378b3dc6672fd924fc3033ffd55b',1,'SDTComplex.h']]],
@@ -17,6 +19,7 @@ var searchData=
   ['sdtimpact',['SDTImpact',['../group__impact.html#gacfb0db11e829c7ef3beb7711b57cdc08',1,'SDTInteractors.h']]],
   ['sdtinteractor',['SDTInteractor',['../group__interactor.html#gacd68aba5c96532193d9cbc8dfa8f1c8c',1,'SDTInteractors.h']]],
   ['sdtmotor',['SDTMotor',['../group__motor.html#ga71a2e0e68d27c741a163f1b9819acb1b',1,'SDTMotor.h']]],
+  ['sdtmyoelastic',['SDTMyoelastic',['../group__myoelastic.html#gaaaf3320e161f43bf74a8c802519e5c3e',1,'SDTAnalysis.h']]],
   ['sdtonepole',['SDTOnePole',['../group__onepole.html#gaf029661adfbccd326c286c801bfcdd01',1,'SDTFilters.h']]],
   ['sdtpinknoise',['SDTPinkNoise',['../group__oscillators.html#gac933fcdadc8959769a466840604f8f6c',1,'SDTOscillators.h']]],
   ['sdtpitch',['SDTPitch',['../group__pitch.html#ga93a04dd02784981e8efabae71a248942',1,'SDTAnalysis.h']]],

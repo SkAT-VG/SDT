@@ -1,11 +1,14 @@
-\hypertarget{_s_d_t_analysis_8h}{}\section{src/\+S\+D\+T/\+S\+D\+T\+Analysis.h File Reference}
-\label{_s_d_t_analysis_8h}\index{src/\+S\+D\+T/\+S\+D\+T\+Analysis.\+h@{src/\+S\+D\+T/\+S\+D\+T\+Analysis.\+h}}
+\hypertarget{_s_d_t_analysis_8h}{}\section{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Analysis.h File Reference}
+\label{_s_d_t_analysis_8h}\index{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Analysis.\+h@{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Analysis.\+h}}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{}typedef struct \hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} \hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing}\label{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}
 
 \begin{DoxyCompactList}\small\item\em Opaque data structure for a zero crossing rate detector object. \end{DoxyCompactList}\item 
+\hypertarget{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{}typedef struct \hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} \hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic}\label{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a myoelastic feature extractor object. \end{DoxyCompactList}\item 
 \hypertarget{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{}typedef struct \hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} \hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats}\label{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}
 
 \begin{DoxyCompactList}\small\item\em Opaque data structure for a spectral features extractor. \end{DoxyCompactList}\item 
@@ -22,6 +25,18 @@ void \hyperlink{group__zerocrossing_gaa4bb5b8f8bdfaad702557c27369e3bc7}{S\+D\+T\
 void \hyperlink{group__zerocrossing_ga75cef03ffbd632a635904b577965851e}{S\+D\+T\+Zero\+Crossing\+\_\+set\+Overlap} (\hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} $\ast$x, double f)
 \begin{DoxyCompactList}\small\item\em Sets the analysis window overlapping ratio. Accepted values go from 0.\+0 to 1.\+0, with 0.\+0 meaning no overlap and 1.\+0 meaning total overlap. \end{DoxyCompactList}\item 
 int \hyperlink{group__zerocrossing_ga22964baa5e5ba9a9d96ed374bf5f4a16}{S\+D\+T\+Zero\+Crossing\+\_\+dsp} (\hyperlink{group__zerocrossing_gae3cf5e0effced03712240753a4a60d06}{S\+D\+T\+Zero\+Crossing} $\ast$x, double $\ast$out, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to perform signal analysis. \end{DoxyCompactList}\item 
+\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$ \hyperlink{group__myoelastic_ga9b10fe4d528fa1b5a19ea619a3de4601}{S\+D\+T\+Myoelastic\+\_\+new} (unsigned int size)
+\begin{DoxyCompactList}\small\item\em Instantiates a myoelastic feature extractor. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_ga98a69e569953c88684003bf467d87263}{S\+D\+T\+Myoelastic\+\_\+free} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Destroys a myoelastic feature extractor. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_gafb33a8f68eddfbdb2e190c1b8ee6d6a9}{S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the low frequency cutoff. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_gafba72e2959eea8451c07411b992fa96e}{S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the high frequency cutoff. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_gae209925f758db266b9f9c5f70443b0f3}{S\+D\+T\+Myoelastic\+\_\+set\+Threshold} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amplitude threshold of the input gate. Myoelastic activity is not computed for signals whose amplitude is below this thresold. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_ga2ad77892da5bfe3df69088504a8ad19a}{S\+D\+T\+Myoelastic\+\_\+dsp} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double $\ast$outs, double in)
 \begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to perform signal analysis. \end{DoxyCompactList}\item 
 \hyperlink{group__spectralfeats_ga92a20692ab1920ebf580c87a45285d4b}{S\+D\+T\+Spectral\+Feats} $\ast$ \hyperlink{group__spectralfeats_ga7d1f2beebf0219377016b4e1a120ad9e}{S\+D\+T\+Spectral\+Feats\+\_\+new} (unsigned int size)
 \begin{DoxyCompactList}\small\item\em Instantiates a spectral features extractor. \end{DoxyCompactList}\item 

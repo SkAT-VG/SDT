@@ -1,0 +1,18 @@
+#N canvas 189 484 552 303 10;
+#X obj 39 79 vsl 15 128 0 1 0 0 empty speed empty 0 -9 0 10 -262144
+-1 -1 5080 1;
+#X floatatom 39 218 5 0 0 0 - - -, f 5;
+#X text 15 55 Wind speed;
+#X obj 39 272 dac~;
+#X msg 328 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X text 45 4 windflow~ - Wind against solid surfaces;
+#X msg 470 258 \; speed 0.4 \;;
+#X obj 39 242 windflow~;
+#X obj 470 231 loadbang;
+#X connect 0 0 1 0;
+#X connect 1 0 7 0;
+#X connect 7 0 3 0;
+#X connect 7 0 3 1;
+#X connect 8 0 6 0;

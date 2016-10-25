@@ -4,35 +4,14 @@
 #include "SDTCommon.h"
 #include "SDTStructs.h"
 
-typedef struct SDTItem {
+typedef struct SDTHashItem {
   char *key;
   void *value;
-  struct SDTItem *prev, *next;
-} SDTItem;
-
-static SDTItem *SDTItem_new(char *key, void *value) {
-  SDTItem *x;
-  
-  x = (SDTItem *)malloc(sizeof(SDTItem));
-  x->key = (char *)malloc(strlen(key) + 1);
-  strcpy(x->key, key);
-  x->value = value;
-  x->prev = NULL;
-  x->next = NULL;
-  return x;
-}
-
-static void SDTItem_free(SDTItem *x) {
-  if (x->next) x->next->prev = x->prev;
-  if (x->prev) x->prev->next = x->next;
-  free(x->key);
-  free(x);
-}
-
-//-------------------------------------------------------------------------------------//
+  struct SDTHashItem *next;
+} SDTHashItem;
 
 struct SDTHashmap {
-  SDTItem **bins;
+  SDTHashItem **bins, *item, *prev;
   int size;
 };
 
@@ -47,12 +26,18 @@ int SDTHashmap_hash(SDTHashmap *x, char *key) {
   return h % x->size;
 }
 
-SDTItem *SDTHashmap_lookup(SDTItem *item, char *key) {
-  while (item) {
-    if (strcmp(item->key, key) == 0) break;
-    item = item->next;
+int SDTHashmap_lookup(SDTHashmap *x, char *key) {
+  int hash;
+  
+  hash = SDTHashmap_hash(x, key);
+  x->prev = NULL;
+  x->item = x->bins[hash];
+  while (x->item) {
+    if (strcmp(x->item->key, key) == 0) break;
+    x->prev = x->item;
+    x->item = x->item->next;
   }
-  return item;
+  return hash;
 }
 
 SDTHashmap *SDTHashmap_new(int size) {
@@ -60,7 +45,7 @@ SDTHashmap *SDTHashmap_new(int size) {
   int i;
   
   x = (SDTHashmap *)malloc(sizeof(SDTHashmap));
-  x->bins = (SDTItem **)malloc(size * sizeof(SDTItem *));
+  x->bins = (SDTHashItem **)malloc(size * sizeof(SDTHashItem *));
   for (i = 0; i < size; i++) {
     x->bins[i] = NULL;
   }
@@ -75,44 +60,38 @@ void SDTHashmap_free(SDTHashmap *x) {
 }
 
 void *SDTHashmap_get(SDTHashmap *x, char *key) {
-  SDTItem *item;
-  int i;
-  
-  i = SDTHashmap_hash(x, key);
-  item = SDTHashmap_lookup(x->bins[i], key);
-  return item ? item->value : NULL;
+  SDTHashmap_lookup(x, key);
+  return x->item ? x->item->value : NULL;
 }
 
 int SDTHashmap_put(SDTHashmap *x, char *key, void *value) {
-  SDTItem *item;
-  int i;
+  int hash;
   
-  i = SDTHashmap_hash(x, key);
-  item = SDTHashmap_lookup(x->bins[i], key);
-  if (item) return 1;
-  item = SDTItem_new(key, value);
-  if (x->bins[i]) {
-    item->next = x->bins[i];
-    x->bins[i]->prev = item;
-  }
-  x->bins[i] = item;
+  hash = SDTHashmap_lookup(x, key);
+  if (x->item) return 1;
+  x->item = (SDTHashItem *)malloc(sizeof(SDTHashItem));
+  x->item->key = (char *)malloc(strlen(key) + 1);
+  strcpy(x->item->key, key);
+  x->item->value = value;
+  x->item->next = x->bins[hash];
+  x->bins[hash] = x->item;
   return 0;
 }
 
 int SDTHashmap_del(SDTHashmap *x, char *key) {
-  SDTItem *item;
-  int i;
+  int hash;
   
-  i = SDTHashmap_hash(x, key);
-  item = SDTHashmap_lookup(x->bins[i], key);
-  if (!item) return 1;
-  if (item == x->bins[i]) x->bins[i] = item->next;
-  SDTItem_free(item);
+  hash = SDTHashmap_lookup(x, key);
+  if (!x->item) return 1;
+  if (x->prev) x->prev->next = x->item->next;
+  else x->bins[hash] = x->item->next;
+  free(x->item->key);
+  free(x->item);
   return 0;
 }
 
 void SDTHashmap_clear(SDTHashmap *x) {
-  SDTItem *item, *next;
+  SDTHashItem *item, *next;
   int i;
   
   for (i = 0; i < x->size; i++) {

@@ -1,0 +1,180 @@
+\hypertarget{group__breaking}{}\section{Breaking}
+\label{group__breaking}\index{Breaking@{Breaking}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{}typedef struct \hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} \hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking}\label{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for the breaking object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$ \hyperlink{group__breaking_ga39727589c894fa0bbddfa84330c49768}{S\+D\+T\+Breaking\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga22047c794361f1c91df0f8665786d58e}{S\+D\+T\+Breaking\+\_\+free} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga9c62b00b5e6b52a3ba591c987a3afe04}{S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the total energy stored in the object. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga2b8e7a030bbca5807ee047d078067233}{S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the crushing energy. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_gab5b53d06e7b1a144ca755ad51768d93f}{S\+D\+T\+Breaking\+\_\+set\+Granularity} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the event density of the crumpling process. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_gad80e128f84e8aab1b403a94e53216d0f}{S\+D\+T\+Breaking\+\_\+set\+Fragmentation} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of progressive fragmentation of the object during the process. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga4fa0c4311c67d886798cce4c97a97146}{S\+D\+T\+Breaking\+\_\+reset} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Resets the crumpling process, restoring its initial energy and triggering the first micro impact. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga0d441bf8dd961599eb3a58f1da1fb020}{S\+D\+T\+Breaking\+\_\+dsp} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double $\ast$outs)
+\begin{DoxyCompactList}\small\item\em Single iteration of the whole breaking process. Call this routine in a loop to simulate a breaking process. The loop should end when \hyperlink{group__breaking_ga4712157447efae292a131e389beb265a}{S\+D\+T\+Breaking\+\_\+has\+Finished()} returns true. \end{DoxyCompactList}\item 
+int \hyperlink{group__breaking_ga4712157447efae292a131e389beb265a}{S\+D\+T\+Breaking\+\_\+has\+Finished} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Checks if the breaking process is finished, i.\+e. if the remaining energy is 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Control layer for the impact model, generating breaking sonic textures. Two main outputs are exposed\+: energy and size. The former should be used to control the impact velocity, the latter should be used to control the size of the resonators. 
+
+\subsection{Function Documentation}
+\hypertarget{group__breaking_ga0d441bf8dd961599eb3a58f1da1fb020}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+dsp@{S\+D\+T\+Breaking\+\_\+dsp}}
+\index{S\+D\+T\+Breaking\+\_\+dsp@{S\+D\+T\+Breaking\+\_\+dsp}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+dsp(\+S\+D\+T\+Breaking $\ast$x, double $\ast$outs)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Breaking\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x, }
+\item[{double $\ast$}]{outs}
+\end{DoxyParamCaption}
+)}\label{group__breaking_ga0d441bf8dd961599eb3a58f1da1fb020}
+
+
+Single iteration of the whole breaking process. Call this routine in a loop to simulate a breaking process. The loop should end when \hyperlink{group__breaking_ga4712157447efae292a131e389beb265a}{S\+D\+T\+Breaking\+\_\+has\+Finished()} returns true. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em outs} & Pointer to the output array\+: impact energy and fragment size \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__breaking_ga22047c794361f1c91df0f8665786d58e}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+free@{S\+D\+T\+Breaking\+\_\+free}}
+\index{S\+D\+T\+Breaking\+\_\+free@{S\+D\+T\+Breaking\+\_\+free}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+free(\+S\+D\+T\+Breaking $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Breaking\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__breaking_ga22047c794361f1c91df0f8665786d58e}
+
+
+Object destructor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__breaking_ga4712157447efae292a131e389beb265a}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+has\+Finished@{S\+D\+T\+Breaking\+\_\+has\+Finished}}
+\index{S\+D\+T\+Breaking\+\_\+has\+Finished@{S\+D\+T\+Breaking\+\_\+has\+Finished}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+has\+Finished(\+S\+D\+T\+Breaking $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Breaking\+\_\+has\+Finished (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__breaking_ga4712157447efae292a131e389beb265a}
+
+
+Checks if the breaking process is finished, i.\+e. if the remaining energy is 0. 
+
+\begin{DoxyReturn}{Returns}
+1 (true) if the remaining energy is $<$= 0, 0 (false) otherwise. 
+\end{DoxyReturn}
+\hypertarget{group__breaking_ga39727589c894fa0bbddfa84330c49768}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+new@{S\+D\+T\+Breaking\+\_\+new}}
+\index{S\+D\+T\+Breaking\+\_\+new@{S\+D\+T\+Breaking\+\_\+new}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Breaking}$\ast$ S\+D\+T\+Breaking\+\_\+new (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{group__breaking_ga39727589c894fa0bbddfa84330c49768}
+
+
+Object constructor. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__breaking_ga4fa0c4311c67d886798cce4c97a97146}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+reset@{S\+D\+T\+Breaking\+\_\+reset}}
+\index{S\+D\+T\+Breaking\+\_\+reset@{S\+D\+T\+Breaking\+\_\+reset}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+reset(\+S\+D\+T\+Breaking $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Breaking\+\_\+reset (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__breaking_ga4fa0c4311c67d886798cce4c97a97146}
+
+
+Resets the crumpling process, restoring its initial energy and triggering the first micro impact. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em outs} & Pointer to the output array\+: impact energy and fragment size \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__breaking_ga2b8e7a030bbca5807ee047d078067233}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy@{S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy}}
+\index{S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy@{S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy(\+S\+D\+T\+Breaking $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__breaking_ga2b8e7a030bbca5807ee047d078067233}
+
+
+Sets the crushing energy. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Average energy of the micro impacts, compared to the global energy of the process, in N \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__breaking_gad80e128f84e8aab1b403a94e53216d0f}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+set\+Fragmentation@{S\+D\+T\+Breaking\+\_\+set\+Fragmentation}}
+\index{S\+D\+T\+Breaking\+\_\+set\+Fragmentation@{S\+D\+T\+Breaking\+\_\+set\+Fragmentation}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+set\+Fragmentation(\+S\+D\+T\+Breaking $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Breaking\+\_\+set\+Fragmentation (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__breaking_gad80e128f84e8aab1b403a94e53216d0f}
+
+
+Sets the amount of progressive fragmentation of the object during the process. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Object fragmentation \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__breaking_gab5b53d06e7b1a144ca755ad51768d93f}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+set\+Granularity@{S\+D\+T\+Breaking\+\_\+set\+Granularity}}
+\index{S\+D\+T\+Breaking\+\_\+set\+Granularity@{S\+D\+T\+Breaking\+\_\+set\+Granularity}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+set\+Granularity(\+S\+D\+T\+Breaking $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Breaking\+\_\+set\+Granularity (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__breaking_gab5b53d06e7b1a144ca755ad51768d93f}
+
+
+Sets the event density of the crumpling process. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Event density \mbox{[}0, 1\mbox{]} \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__breaking_ga9c62b00b5e6b52a3ba591c987a3afe04}{}\index{Breaking@{Breaking}!S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy@{S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy}}
+\index{S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy@{S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy}!Breaking@{Breaking}}
+\subsubsection[{S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy(\+S\+D\+T\+Breaking $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Breaking} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__breaking_ga9c62b00b5e6b52a3ba591c987a3afe04}
+
+
+Sets the total energy stored in the object. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f} & Total stored energy consumed by the micro impacts, in N \\
+\hline
+\end{DoxyParams}

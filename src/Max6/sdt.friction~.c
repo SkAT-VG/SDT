@@ -49,7 +49,7 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
     error("sdt.friction~: Instantiation error.");
     return NULL;
   }
-  dsp_setup((t_pxobject *)x, 2);
+  dsp_setup((t_pxobject *)x, 6);
   x->nOutlets = atom_getlong(&argv[2]);
   for (i = 0; i < x->nOutlets; i++) { 
     outlet_new(x, "signal");
@@ -69,16 +69,32 @@ void friction_free(t_friction *x) {
 
 void friction_assist(t_friction *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    sprintf(s, "(signal): Input\n"
-               "force (float): Normal force\n"
-               "stribeck (float): Stribeck velocity\n"
-               "kStatic (float): static friction coefficient\n"
-               "kDynamic (float): dynamic friction coefficient\n"
-               "contact0 (int): contact point of first object\n"
-               "contact1 (int): contact point of second object\n");
+    switch (a) { 
+      case 0:
+        sprintf(s, "(signal): Force applied on first resonator (N)\n"
+                   "Object attributes and messages (see help patch)");
+        break;
+      case 1:
+        sprintf(s, "(signal): Impact velocity of first resonator (m/s)");
+        break;
+      case 2:
+        sprintf(s, "(signal): Fragment size of first resonator [0,1]");
+        break;
+      case 3:
+        sprintf(s, "(signal): Force applied on second resonator (N)");
+        break;
+      case 4:
+        sprintf(s, "(signal): Impact velocity of second resonator (m/s)");
+        break;
+      case 5:
+        sprintf(s, "(signal): Fragment size of second resonator [0,1]");
+        break;
+      default:
+        break;
+    }
   } 
   else {
-    sprintf(s, "(signal): Pickup outputs");
+    sprintf(s, "(signal): Output sound from pickup %ld", a + 1);
   }
 }
 
@@ -142,15 +158,19 @@ t_int *friction_perform(t_int *w) {
   t_signal **sp = (t_signal **)(w[2]);
   t_float *in0 = (t_float *)(sp[0]->s_vec);
   t_float *in1 = (t_float *)(sp[1]->s_vec);
+  t_float *in2 = (t_float *)(sp[2]->s_vec);
+  t_float *in3 = (t_float *)(sp[3]->s_vec);
+  t_float *in4 = (t_float *)(sp[4]->s_vec);
+  t_float *in5 = (t_float *)(sp[5]->s_vec);
   int n = (int)w[3];
   t_float *out;
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
   
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->friction, *in0++, *in1++, tmpOuts);
+    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
-      out = (t_float *)(sp[2+i]->s_vec);
+      out = (t_float *)(sp[6+i]->s_vec);
       out[k] = (float)tmpOuts[i];
     }
   }
@@ -167,12 +187,16 @@ void friction_perform64(t_friction *x, t_object *dsp64, double **ins, long numin
                       long flags, void *userparam) {
   t_double *in0 = (t_double *)ins[0];
   t_double *in1 = (t_double *)ins[1];
+  t_double *in2 = (t_double *)ins[2];
+  t_double *in3 = (t_double *)ins[3];
+  t_double *in4 = (t_double *)ins[4];
+  t_double *in5 = (t_double *)ins[5];
   int n = sampleframes;
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
   
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->friction, *in0++, *in1++, tmpOuts);
+    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
       outs[i][k] = tmpOuts[i];
     }

@@ -1,0 +1,19 @@
+#N canvas 434 339 531 181 10;
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 11 83 adc~;
+#X obj 11 154 dac~;
+#X msg 58 104 ratio \$1;
+#X floatatom 58 83 5 0.1 10 0 - ratio -, f 5;
+#X msg 306 139 \; ratio 1 \;;
+#X text 55 64 Pitch shifting ratio;
+#X obj 306 113 loadbang;
+#X text 48 4 pitchshift~ - Pitch shifter;
+#X obj 11 129 pitchshift~ 4096;
+#X text 146 129 Args: buffer size;
+#X connect 1 0 9 0;
+#X connect 3 0 9 0;
+#X connect 4 0 3 0;
+#X connect 7 0 5 0;
+#X connect 9 0 2 0;

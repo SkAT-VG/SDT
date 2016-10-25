@@ -1,0 +1,108 @@
+#N canvas 71 170 1085 515 10;
+#X obj 12 425 dcmotor~;
+#X floatatom 81 364 5 0 0 0 - - -, f 5;
+#X floatatom 12 365 5 0 0 0 - - -, f 5;
+#X msg 143 387 coils \$1;
+#X msg 229 387 size \$1;
+#X msg 323 386 reson \$1;
+#X msg 417 386 gearRatio \$1;
+#X msg 502 385 harshness \$1;
+#X msg 596 384 rotorGain \$1;
+#X msg 687 384 gearGain \$1;
+#X msg 782 384 brushGain \$1;
+#X msg 875 384 airGain \$1;
+#X floatatom 143 364 5 0 0 0 - - -, f 5;
+#X floatatom 229 364 5 0 0 0 - - -, f 5;
+#X floatatom 323 363 5 0 0 0 - - -, f 5;
+#X floatatom 417 362 5 0 0 0 - - -, f 5;
+#X floatatom 502 362 5 0 0 0 - - -, f 5;
+#X floatatom 596 359 5 0 0 0 - - -, f 5;
+#X floatatom 687 360 5 0 0 0 - - -, f 5;
+#X floatatom 782 361 5 0 0 0 - - -, f 5;
+#X floatatom 875 360 5 0 0 0 - - -, f 5;
+#X obj 12 485 dac~;
+#X obj 875 193 vsl 15 128 0 1 0 0 empty airGain empty 0 -9 0 10 -262144
+-1 -1 1270 1;
+#X obj 323 196 vsl 15 128 0 1 0 0 empty reson empty 0 -9 0 10 -262144
+-1 -1 10160 1;
+#X obj 502 195 vsl 15 128 0 1 0 0 empty harshness empty 0 -9 0 10 -262144
+-1 -1 5080 1;
+#X obj 143 197 vsl 15 128 2 128 0 0 empty coils empty 0 -9 0 10 -262144
+-1 -1 403 1;
+#X obj 229 196 vsl 15 128 0.01 10 1 0 empty size empty 0 -9 0 10 -262144
+-1 -1 5508 1;
+#X obj 417 195 vsl 15 128 0 10 0 0 empty gearRatio empty 0 -9 0 10
+-262144 -1 -1 5588 1;
+#X obj 596 194 vsl 15 128 0 1 0 0 empty rotorGain empty 0 -9 0 10 -262144
+-1 -1 7620 1;
+#X obj 687 195 vsl 15 128 0 1 0 0 empty gearGain empty 0 -9 0 10 -262144
+-1 -1 1270 1;
+#X obj 782 194 vsl 15 128 0 1 0 0 empty brushGain empty 0 -9 0 10 -262144
+-1 -1 2540 1;
+#X obj 143 337 int;
+#X obj 12 454 hip~ 10;
+#X text 46 4 dcmotor~ - Electric motor model;
+#X msg 850 10 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 12 198 vsl 15 128 0 20000 0 0 empty RPM empty 0 -9 0 10 -262144
+-1 -1 508 1;
+#X obj 81 197 vsl 15 128 0 1 0 0 empty load empty 0 -9 0 10 -262144
+-1 -1 1905 1;
+#X text 8 175 RPM;
+#X text 73 174 Load;
+#X text 119 174 Rotor coils;
+#X text 201 174 Chassis size;
+#X text 290 174 Chassis reson.;
+#X text 392 173 Gear ratio;
+#X text 481 173 Harshness;
+#X text 565 173 Rotor noise;
+#X text 662 173 Gear noise;
+#X text 753 173 Brush noise;
+#X text 852 173 Fan noise;
+#X obj 974 149 r pd;
+#X obj 974 173 route dsp;
+#X obj 974 197 select 1;
+#X obj 1014 219 loadbang;
+#X msg 974 242 \; RPM 4000 \; load 0.05 \; coils 6 \; size 0.2 \; reson
+0.8 \; gearRatio 4.4 \; harshness 0.4 \; rotorGain 0.6 \; gearGain
+0.1 \; brushGain 0.2 \; airGain 0.1 \;;
+#X connect 0 0 32 0;
+#X connect 1 0 0 1;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 0;
+#X connect 6 0 0 0;
+#X connect 7 0 0 0;
+#X connect 8 0 0 0;
+#X connect 9 0 0 0;
+#X connect 10 0 0 0;
+#X connect 11 0 0 0;
+#X connect 12 0 3 0;
+#X connect 13 0 4 0;
+#X connect 14 0 5 0;
+#X connect 15 0 6 0;
+#X connect 16 0 7 0;
+#X connect 17 0 8 0;
+#X connect 18 0 9 0;
+#X connect 19 0 10 0;
+#X connect 20 0 11 0;
+#X connect 22 0 20 0;
+#X connect 23 0 14 0;
+#X connect 24 0 16 0;
+#X connect 25 0 31 0;
+#X connect 26 0 13 0;
+#X connect 27 0 15 0;
+#X connect 28 0 17 0;
+#X connect 29 0 18 0;
+#X connect 30 0 19 0;
+#X connect 31 0 12 0;
+#X connect 32 0 21 0;
+#X connect 32 0 21 1;
+#X connect 35 0 2 0;
+#X connect 36 0 1 0;
+#X connect 48 0 49 0;
+#X connect 49 0 50 0;
+#X connect 50 0 52 0;
+#X connect 51 0 52 0;

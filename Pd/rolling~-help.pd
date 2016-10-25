@@ -1,0 +1,82 @@
+#N canvas 371 172 759 648 10;
+#X obj 321 566 dac~;
+#X text 185 619 Args: object ID;
+#X text 478 618 Args: object ID \, n. of modes \, n. of pickups;
+#X text 340 429 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
+#X msg 538 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 267 97 vsl 15 128 1e-05 1 1 0 empty grain empty 0 -9 0 10 -262144
+-1 -1 5080 1;
+#X obj 379 97 vsl 15 128 0 200 0 0 empty depth empty 0 -9 0 10 -262144
+-1 -1 6350 1;
+#X obj 138 96 vsl 15 128 0 10 0 0 empty velocity empty 0 -9 0 10 -262144
+-1 -1 1270 1;
+#X floatatom 379 233 5 0 0 0 - - -, f 5;
+#X floatatom 267 233 6 0 0 0 - - -, f 6;
+#X floatatom 138 233 5 0 0 0 - - -, f 5;
+#X obj 556 121 r pd;
+#X obj 556 148 route dsp;
+#X obj 556 173 select 1;
+#X obj 617 173 loadbang;
+#X obj 366 458 vsl 30 64 1000 100000 0 0 empty gain empty 0 -9 0 10
+-262144 -1 -1 3118 1;
+#X obj 138 374 rolling~;
+#X obj 179 401 r ro;
+#X msg 50 253 mass \$1;
+#X obj 70 591 r hammerro;
+#X obj 338 591 r objectro;
+#X obj 50 97 vsl 15 128 0.001 1 0 0 empty mass empty 0 -9 0 10 -262144
+-1 -1 114 1;
+#X floatatom 50 234 5 0 0 0 - - -, f 5;
+#X msg 138 252 velocity \$1;
+#X text 8 59 Rolling mass (Kg) and velocity (m/s);
+#X msg 267 252 grain \$1;
+#X text 243 59 Surface grain;
+#X msg 379 252 depth \$1;
+#X text 354 60 Grain depth;
+#X obj 77 286 noise~;
+#X obj 77 313 lop~ 20;
+#X obj 77 341 *~ 10;
+#X msg 72 551 strike 0 0;
+#X obj 321 533 *~ 50000;
+#X obj 138 429 impact~ hammerro objectro 2;
+#X obj 50 618 inertial hammerro;
+#X obj 338 618 modal objectro 3 1;
+#X msg 556 199 \; hammerro fragmentSize 1 \; objectro freqs 500 1300
+1700 \; objectro decays 0.03 0.02 0.01 \; objectro pickup 0 100 100
+100 \; objectro activeModes 3 \; objectro fragmentSize 1 \; ro stiffness
+1e+08 \; ro dissipation 0.8 \; ro shape 1.5 \; ro contact0 0 \; ro
+contact1 0 \; mass 0.01 \; velocity 2 \; grain 0.001 \; depth 100 \;
+gain 50000 \;;
+#X text 48 3 rolling~ - Generates a stochastic sequence of impacts
+to form a rolling sound, f 77;
+#X connect 5 0 9 0;
+#X connect 6 0 8 0;
+#X connect 7 0 10 0;
+#X connect 8 0 27 0;
+#X connect 9 0 25 0;
+#X connect 10 0 23 0;
+#X connect 11 0 12 0;
+#X connect 12 0 13 0;
+#X connect 13 0 37 0;
+#X connect 14 0 37 0;
+#X connect 15 0 33 1;
+#X connect 16 0 34 0;
+#X connect 17 0 34 0;
+#X connect 18 0 16 0;
+#X connect 18 0 35 0;
+#X connect 19 0 35 0;
+#X connect 20 0 36 0;
+#X connect 21 0 22 0;
+#X connect 22 0 18 0;
+#X connect 23 0 16 0;
+#X connect 25 0 16 0;
+#X connect 27 0 16 0;
+#X connect 29 0 30 0;
+#X connect 30 0 31 0;
+#X connect 31 0 16 0;
+#X connect 32 0 35 0;
+#X connect 33 0 0 0;
+#X connect 33 0 0 1;
+#X connect 34 1 33 0;

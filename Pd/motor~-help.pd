@@ -1,0 +1,146 @@
+#N canvas 139 75 1074 848 10;
+#X floatatom 69 224 5 0 0 0 - - -, f 5;
+#X floatatom 12 225 5 0 0 0 - - -, f 5;
+#X floatatom 213 224 5 0 0 0 - - -, f 5;
+#X floatatom 759 224 5 0 0 0 - - -, f 5;
+#X floatatom 613 224 5 0 0 0 - - -, f 5;
+#X floatatom 214 482 5 0 0 0 - - -, f 5;
+#X floatatom 326 483 5 0 0 0 - - -, f 5;
+#X floatatom 447 481 5 0 0 0 - - -, f 5;
+#X floatatom 557 482 5 0 0 0 - - -, f 5;
+#X floatatom 687 483 5 0 0 0 - - -, f 5;
+#X floatatom 811 482 5 0 0 0 - - -, f 5;
+#X obj 115 818 dac~;
+#X obj 811 315 vsl 15 128 0 1 0 0 empty outletSize empty 0 -9 0 10
+-262144 -1 -1 127 1;
+#X obj 613 58 vsl 15 128 0 0.1 0 0 empty sparkTime empty 0 -9 0 10
+-262144 -1 -1 1905 1;
+#X obj 213 57 vsl 15 128 1 12 0 0 empty nCylinders empty 0 -9 0 10
+-262144 -1 -1 3464 1;
+#X obj 759 59 vsl 15 128 0 1 0 0 empty asymmetry empty 0 -9 0 10 -262144
+-1 -1 1905 1;
+#X obj 213 197 int;
+#X obj 125 787 hip~ 10;
+#X msg 850 10 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 12 58 vsl 15 128 800 20000 1 0 empty RPM empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 69 57 vsl 15 128 0 1 0 0 empty load empty 0 -9 0 10 -262144
+-1 -1 1905 1;
+#X text 8 35 RPM;
+#X text 61 34 Load;
+#X obj 932 510 r pd;
+#X obj 932 534 route dsp;
+#X obj 932 558 select 1;
+#X obj 972 580 loadbang;
+#X text 46 4 motor~ - Combustion engine model;
+#X obj 12 548 motor~;
+#X msg 213 247 nCylinders \$1;
+#X msg 613 247 sparkTime \$1;
+#X msg 214 506 intakeSize \$1;
+#X msg 326 506 extractorSize \$1;
+#X msg 447 506 exhaustSize \$1;
+#X msg 557 506 mufflerSize \$1;
+#X msg 687 506 mufflerFeedback \$1;
+#X msg 811 506 outletSize \$1;
+#X msg 759 247 asymmetry \$1;
+#X floatatom 326 224 5 0 0 0 - - -, f 5;
+#X obj 326 59 vsl 15 128 0 3000 0 0 empty cylinderSize empty 0 -9 0
+10 -262144 -1 -1 1693 1;
+#X msg 326 247 cylinderSize \$1;
+#X floatatom 446 224 5 0 0 0 - - -, f 5;
+#X obj 446 59 vsl 15 128 5 20 0 0 empty compressionRatio empty 0 -9
+0 10 -262144 -1 -1 4233 1;
+#X msg 446 247 compressionRatio \$1;
+#X obj 12 742 *~ 0.33;
+#X obj 125 742 *~ 0.33;
+#X obj 256 742 *~ 0.33;
+#X obj 295 605 vsl 15 128 0 1 0 0 empty outletGain empty 0 -9 0 10
+-262144 -1 -1 12700 1;
+#X text 174 34 N. of cylinders;
+#X text 295 34 Cyl. size (cc);
+#X text 419 34 Compression;
+#X text 589 34 Spark time;
+#X text 738 34 Asymmetry;
+#X text 638 292 Muffler efficiency;
+#X text 178 292 Intake size (m);
+#X text 282 292 Extractor size (m);
+#X text 411 292 Exhaust size (m);
+#X text 521 292 Muffler size (m);
+#X text 775 292 Outlet size (m);
+#X text 23 582 Intake noise;
+#X text 121 582 Vibrations noise;
+#X text 261 582 Exhaust noise;
+#X obj 51 606 vsl 15 128 0 1 0 0 empty intakeGain empty 0 -9 0 10 -262144
+-1 -1 3810 1;
+#X obj 164 606 vsl 15 128 0 1 0 0 empty vibrationsGain empty 0 -9 0
+10 -262144 -1 -1 7620 1;
+#X obj 214 315 vsl 15 128 0 1 0 0 empty intakeSize empty 0 -9 0 10
+-262144 -1 -1 3175 1;
+#X obj 326 316 vsl 15 128 0 1 0 0 empty extractorSize empty 0 -9 0
+10 -262144 -1 -1 5080 1;
+#X obj 447 316 vsl 15 128 0 10 0 0 empty exhaustSize empty 0 -9 0 10
+-262144 -1 -1 3175 1;
+#X obj 557 317 vsl 15 128 0 1 0 0 empty mufflerSize empty 0 -9 0 10
+-262144 -1 -1 6350 1;
+#X obj 687 316 vsl 15 128 0 1 0 0 empty mufflerFeedback empty 0 -9
+0 10 -262144 -1 -1 6350 1;
+#X msg 932 603 \; RPM 800 \; load 0.15 \; nCylinders 4 \; cylinderSize
+400 \; compressionRatio 10 \; sparkTime 0.015 \; asymmetry 0.15 \;
+intakeSize 0.25 \; extractorSize 0.4 \; exhaustSize 2.5 \; mufflerSize
+0.5 \; mufflerFeedback 0.5 \; outletSize 0.01 \; intakeGain 0.3 \;
+vibrationsGain 0.6 \; outletGain 1 \;;
+#X connect 0 0 28 1;
+#X connect 1 0 28 0;
+#X connect 2 0 29 0;
+#X connect 3 0 37 0;
+#X connect 4 0 30 0;
+#X connect 5 0 31 0;
+#X connect 6 0 32 0;
+#X connect 7 0 33 0;
+#X connect 8 0 34 0;
+#X connect 9 0 35 0;
+#X connect 10 0 36 0;
+#X connect 12 0 10 0;
+#X connect 13 0 4 0;
+#X connect 14 0 16 0;
+#X connect 15 0 3 0;
+#X connect 16 0 2 0;
+#X connect 17 0 11 0;
+#X connect 17 0 11 1;
+#X connect 19 0 1 0;
+#X connect 20 0 0 0;
+#X connect 23 0 24 0;
+#X connect 24 0 25 0;
+#X connect 25 0 69 0;
+#X connect 26 0 69 0;
+#X connect 28 0 44 0;
+#X connect 28 1 45 0;
+#X connect 28 2 46 0;
+#X connect 29 0 28 0;
+#X connect 30 0 28 0;
+#X connect 31 0 28 0;
+#X connect 32 0 28 0;
+#X connect 33 0 28 0;
+#X connect 34 0 28 0;
+#X connect 35 0 28 0;
+#X connect 36 0 28 0;
+#X connect 37 0 28 0;
+#X connect 38 0 40 0;
+#X connect 39 0 38 0;
+#X connect 40 0 28 0;
+#X connect 41 0 43 0;
+#X connect 42 0 41 0;
+#X connect 43 0 28 0;
+#X connect 44 0 17 0;
+#X connect 45 0 17 0;
+#X connect 46 0 17 0;
+#X connect 47 0 46 1;
+#X connect 62 0 44 1;
+#X connect 63 0 45 1;
+#X connect 64 0 5 0;
+#X connect 65 0 6 0;
+#X connect 66 0 7 0;
+#X connect 67 0 8 0;
+#X connect 68 0 9 0;

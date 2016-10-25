@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 1,
-			"revision" : 0,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -39,13 +39,14 @@
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-39",
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 318.5, 331.0, 50.0, 20.0 ],
+					"patching_rect" : [ 318.5, 331.0, 50.0, 32.0 ],
 					"style" : "",
-					"text" : "3.823529"
+					"text" : "17.058823"
 				}
 
 			}
@@ -240,8 +241,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -768,8 +769,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 1,
-							"revision" : 0,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1276,7 +1277,7 @@
 					"id" : "obj-16",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 2,
+					"numinlets" : 6,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 42.0, 497.0, 530.0, 47.0 ],
@@ -1312,7 +1313,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 42.0, 557.5, 501.0, 85.0 ],
+					"patching_rect" : [ 42.0, 557.5, 506.0, 85.0 ],
 					"style" : "",
 					"text" : "sdt.modal modalbutton 8 1 @freqs 2000. 3000. 5000. 7000. 11000. 13000. 17000. 19000. @decays 0.001 0.001 0.001 0.001 0.001 0.001 0.001 0.001 @pickup0 8000. 7000. 6000. 5000. 4000. 3000. 2000. 1000. @activeModes 8"
 				}
@@ -1633,10 +1634,9 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-16", 1 ],
+					"destination" : [ "obj-16", 3 ],
 					"disabled" : 0,
 					"hidden" : 0,
-					"midpoints" : [ 427.5, 491.5, 562.5, 491.5 ],
 					"source" : [ "obj-73", 0 ]
 				}
 

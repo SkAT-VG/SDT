@@ -46,12 +46,10 @@ void explosion_free(t_explosion *x)  {
 void explosion_assist(t_explosion *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
     sprintf(s, "(bang): Triggers an explosion\n"
-               "blastTime (float): Blast duration, in s\n"
-               "turbulenceTime (float): Turbulence duration, in s\n"
-               "distance (float): Explosion distance, in m\n");
+               "Object attributes and messages (see help patch)");
   } 
   else {
-    sprintf(s, "(signal): Output");
+    sprintf(s, "(signal): Output sound");
   }
 }
 

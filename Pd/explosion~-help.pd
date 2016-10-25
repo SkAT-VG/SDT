@@ -1,0 +1,86 @@
+#N canvas 176 160 882 520 10;
+#X msg 94 305 blastTime \$1;
+#X msg 196 305 scatterTime \$1;
+#X msg 311 305 dispersion \$1;
+#X msg 407 305 distance \$1;
+#X msg 520 305 waveSpeed \$1;
+#X msg 637 305 windSpeed \$1;
+#X floatatom 94 279 5 0 0 0 - - -, f 5;
+#X floatatom 196 280 5 0 0 0 - - -, f 5;
+#X floatatom 311 280 5 0 0 0 - - -, f 5;
+#X floatatom 407 280 5 0 0 0 - - -, f 5;
+#X floatatom 520 280 5 0 0 0 - - -, f 5;
+#X floatatom 637 280 5 0 0 0 - - -, f 5;
+#X obj 7 143 bng 32 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 7 494 dac~;
+#X obj 311 144 vsl 15 128 0 1 0 0 empty dispersion empty 0 -9 0 10
+-262144 -1 -1 6350 1;
+#X obj 520 144 vsl 15 128 0 1000 0 0 empty waveSpeed empty 0 -9 0 10
+-262144 -1 -1 4321 1;
+#X obj 637 144 vsl 15 128 0 1000 0 0 empty windSpeed empty 0 -9 0 10
+-262144 -1 -1 7620 1;
+#X obj 407 144 vsl 15 128 0 1000 0 0 empty distance empty 0 -9 0 10
+-262144 -1 -1 127 1;
+#X obj 196 144 vsl 15 128 0.1 100 0 0 empty scatterTime empty 0 -9
+0 10 -262144 -1 -1 496 1;
+#X obj 94 143 vsl 15 128 0.01 1 1 0 empty blastTime empty 0 -9 0 10
+-262144 -1 -1 6350 1;
+#X text 60 123 Blast time (s);
+#X text 159 123 Scatter time (s);
+#X text 277 123 Scatter amount;
+#X text 383 123 Distance (m);
+#X text 6 123 BOOM!;
+#X obj 166 432 *~ 0.5;
+#X obj 7 432 *~ 0.5;
+#X floatatom 40 411 5 0 1 0 - - -, f 5;
+#X text 12 392 Shock gain;
+#X floatatom 199 411 5 0 1 0 - - -, f 5;
+#X text 177 393 Wind gain;
+#X obj 7 462 hip~ 10;
+#X msg 656 10 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X text 46 4 explosion~ - Explosion model;
+#X msg 757 226 \; blastTime 0.1 \; scatterTime 4 \; dispersion 0.5
+\; distance 10 \; waveSpeed 340.27 \; windSpeed 600 \;;
+#X text 476 123 Shock speed (m/s);
+#X text 602 123 Wind speed (m/s);
+#X obj 757 162 r pd;
+#X obj 757 183 route dsp;
+#X obj 757 204 select 1;
+#X obj 814 204 loadbang;
+#X text 194 356 Args: Reverb buffer length \, delay buffer length;
+#X text 193 368 (set them large for long reverbs and distances);
+#X obj 7 359 explosion~ 44100 441000;
+#X connect 0 0 43 0;
+#X connect 1 0 43 0;
+#X connect 2 0 43 0;
+#X connect 3 0 43 0;
+#X connect 4 0 43 0;
+#X connect 5 0 43 0;
+#X connect 6 0 0 0;
+#X connect 7 0 1 0;
+#X connect 8 0 2 0;
+#X connect 9 0 3 0;
+#X connect 10 0 4 0;
+#X connect 11 0 5 0;
+#X connect 12 0 43 0;
+#X connect 14 0 8 0;
+#X connect 15 0 10 0;
+#X connect 16 0 11 0;
+#X connect 17 0 9 0;
+#X connect 18 0 7 0;
+#X connect 19 0 6 0;
+#X connect 25 0 31 0;
+#X connect 26 0 31 0;
+#X connect 27 0 26 1;
+#X connect 29 0 25 1;
+#X connect 31 0 13 0;
+#X connect 31 0 13 1;
+#X connect 37 0 38 0;
+#X connect 38 0 39 0;
+#X connect 39 0 34 0;
+#X connect 40 0 34 0;
+#X connect 43 0 26 0;
+#X connect 43 1 25 0;

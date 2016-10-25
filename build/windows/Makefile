@@ -19,22 +19,20 @@ MAXSDKVERSION=6.1.4
 
 PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
-PDOBJS=$(patsubst %.c,%.dll,$(PDSRCS))
+PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
 
 PDSDKDIR=../../3rdparty/Pd
-PDSDKVERSION=0.43.4
+PDSDKVERSION=0.41.4
 
-all: sdt max pd
+all: core max pd
 
-pd: sdt $(PDOBJS)
-
-$(PDDIR)/%.dll: $(PDDIR)/%.o
-	$(CC) $(LDFLAGS) -L$(SDTDIR) -L$(PDSDKDIR) $< -o $@ -lSDT -lpd
+pd: $(SDTOBJS) $(PDOBJS)
+	$(CC) $(LDFLAGS) -L$(SDTDIR) -L$(PDSDKDIR) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.dll -lSDT -lpd
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -c $< -o $@
 
-max: sdt $(MAXOBJS)
+max: core $(MAXOBJS)
 
 $(MAXDIR)/%.mxe: EXTNAME=$(patsubst $(MAXDIR)/%.mxe,%,$@)
 $(MAXDIR)/%.mxe: $(MAXDIR)/%.o
@@ -49,24 +47,50 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
 	-I$(SRCDIR) -c $< -o $@
 
-sdt: $(SDTOBJS)
+core: $(SDTOBJS)
 	$(CC) $(LDFLAGS) $(SDTOBJS) -o $(SDTDIR)/libSDT.dll
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-install:
-	mkdir -p "$(DSTDIR)"/SoundDesignToolkit/{externals,support}
-	cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SoundDesignToolkit/support
-	cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/SoundDesignToolkit/externals
-	cp -a ../../Max6/* "$(DSTDIR)"/SoundDesignToolkit
+install_max:
+	@if [ -z "$(DSTDIR)" ]; \
+	then echo "Usage: make install_max DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; \
+	then echo "Error: installation path does not exist or is not a directory"; \
+	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
+	     cp -a ../../Max6/* "$(DSTDIR)"/SDT && \
+	     cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT/support && \
+	     cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/SDT/externals && \
+	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
+	fi
+	
+install_pd:
+	@if [ -z "$(DSTDIR)" ]; \
+        then echo "Usage: make install_pd DSTDIR=<installation_path>"; \
+        elif [ ! -d "$(DSTDIR)" ]; \
+        then echo "Error: installation path does not exist or is not a directory"; \
+	else mkdir -p "$(DSTDIR)"/SDT && \
+	     cp -a ../../Pd/* "$(DSTDIR)"/SDT && \
+	     cp -a $(PDDIR)/SDT.dll "$(DSTDIR)"/SDT && \
+	     echo "Sound Design Toolkit for PureData installed in $(DSTDIR)"; \
+	fi
 
-uninstall:
-	rm -rf "$(DSTDIR)"/SoundDesignToolkit
+install_core:
+	@if [ -z "$(DSTDIR)" ]; \
+		then echo "Usage: make install_core DSTDIR=<installation_path>"; \
+		elif [ ! -d "$(DSTDIR)" ]; \
+		then echo "Error: installation path does not exist or is not a directory"; \
+	else mkdir -p "$(DSTDIR)"/SDT && \
+		cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT && \
+		echo "Sound Design Toolkit core library installed in $(DSTDIR)"; \
+	fi
 
 clean:
 	rm -rf $(SDTDIR)/libSDT.dll
 	rm -rf $(SDTDIR)/*.o
 	rm -rf $(MAXDIR)/*.mxe
 	rm -rf $(MAXDIR)/*.def
+	rm -rf $(MAXDIR)/*.o
 	rm -rf $(PDDIR)/*.dll
+	rm -rf $(PDDIR)/*.o

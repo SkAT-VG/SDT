@@ -36,7 +36,7 @@ void rolling_assist(t_rolling *x, void *b, long m, long a, char *s) {
                "Object attributes and messages (see help patch)");
   } 
   else {
-    sprintf(s, "(signal): Striker velocity");
+    sprintf(s, "(signal): Applied force on resonator");
   }
 }
 

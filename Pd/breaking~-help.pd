@@ -1,0 +1,82 @@
+#N canvas 521 48 823 626 10;
+#X obj 195 536 dac~;
+#X text 145 589 Args: object ID;
+#X text 438 588 Args: object ID \, n. of modes \, n. of pickups;
+#X text 214 399 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
+#X msg 598 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 377 97 vsl 15 128 0.001 0.1 0 0 empty granularity empty 0 -9
+0 10 -262144 -1 -1 1155 1;
+#X obj 489 97 vsl 15 128 0 1 0 0 empty fragmentation empty 0 -9 0 10
+-262144 -1 -1 6350 1;
+#X obj 248 96 vsl 15 128 0 10 0 0 empty crushingEnergy empty 0 -9 0
+10 -262144 -1 -1 3810 1;
+#X floatatom 489 233 5 0 0 0 - - -, f 5;
+#X floatatom 377 233 5 0 0 0 - - -, f 5;
+#X floatatom 248 233 5 0 0 0 - - -, f 5;
+#X msg 248 252 crushingEnergy \$1;
+#X msg 377 252 granularity \$1;
+#X msg 489 252 fragmentation \$1;
+#X obj 616 121 r pd;
+#X obj 616 148 route dsp;
+#X obj 616 173 select 1;
+#X text 373 59 granularity;
+#X text 484 60 fragmentation;
+#X text 245 60 crushing energy;
+#X obj 677 173 loadbang;
+#X obj 48 325 *~ -1;
+#X obj 234 428 vsl 30 64 100 10000 0 0 empty empty empty 0 -9 0 10
+-262144 -1 -1 0 1;
+#X obj 120 97 vsl 15 128 0 1000 0 0 empty storedEnergy empty 0 -9 0
+10 -262144 -1 -1 3175 1;
+#X floatatom 120 234 5 0 0 0 - - -, f 5;
+#X text 117 61 stored energy;
+#X obj 10 561 r hammerbr;
+#X obj 298 561 r objectbr;
+#X obj 10 588 inertial hammerbr;
+#X obj 298 588 modal objectbr 3 1;
+#X obj 12 373 r br;
+#X msg 120 253 storedEnergy \$1;
+#X obj 48 96 bng 32 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 46 61 Break!;
+#X obj 12 399 impact~ hammerbr objectbr 2;
+#X obj 48 295 breaking~;
+#X obj 195 503 *~ 1000;
+#X msg 616 199 \; hammerbr mass 0.01 \; hammerbr fragmentSize 1 \;
+objectbr freqs 500 1300 1700 \; objectbr decays 0.03 0.02 0.01 \; objectbr
+pickup 0 100 100 100 \; objectbr activeModes 3 \; objectbr fragmentSize
+1 \; br stiffness 1e+07 \; br dissipation 0.001 \; br shape 1.5 \;
+br contact0 0 \; br contact1 0 \; storedEnergy 250 \; crushingEnergy
+5 \; granularity 0.05 \; fragmentation 0.5 \;;
+#X text 48 4 breaking~ - Generates a stochastic sequence of impacts
+to form a breaking sound, f 79;
+#X connect 5 0 9 0;
+#X connect 6 0 8 0;
+#X connect 7 0 10 0;
+#X connect 8 0 13 0;
+#X connect 9 0 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 35 0;
+#X connect 12 0 35 0;
+#X connect 13 0 35 0;
+#X connect 14 0 15 0;
+#X connect 15 0 16 0;
+#X connect 16 0 37 0;
+#X connect 20 0 37 0;
+#X connect 21 0 34 1;
+#X connect 22 0 36 1;
+#X connect 23 0 24 0;
+#X connect 24 0 31 0;
+#X connect 26 0 28 0;
+#X connect 27 0 29 0;
+#X connect 30 0 34 0;
+#X connect 31 0 35 0;
+#X connect 32 0 35 0;
+#X connect 34 1 36 0;
+#X connect 35 0 21 0;
+#X connect 35 1 34 2;
+#X connect 35 1 34 5;
+#X connect 36 0 0 0;
+#X connect 36 0 0 1;

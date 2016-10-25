@@ -1,0 +1,67 @@
+#N canvas 243 92 759 648 10;
+#X obj 138 566 dac~;
+#X text 478 618 Args: object ID \, n. of modes \, n. of pickups;
+#X text 340 429 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
+#X msg 538 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 267 97 vsl 15 128 1e-05 1 1 0 empty grain empty 0 -9 0 10 -262144
+-1 -1 5080 1;
+#X obj 379 97 vsl 15 128 0 200 0 0 empty force empty 0 -9 0 10 -262144
+-1 -1 127 1;
+#X obj 138 96 vsl 15 128 0 10 0 0 empty velocity empty 0 -9 0 10 -262144
+-1 -1 1270 1;
+#X floatatom 379 233 5 0 0 0 - - -, f 5;
+#X floatatom 267 233 6 0 0 0 - - -, f 6;
+#X floatatom 138 233 5 0 0 0 - - -, f 5;
+#X obj 556 121 r pd;
+#X obj 556 148 route dsp;
+#X obj 556 173 select 1;
+#X obj 617 173 loadbang;
+#X obj 183 458 vsl 30 64 1000 100000 0 0 empty gain empty 0 -9 0 10
+-262144 -1 -1 3118 1;
+#X msg 138 252 velocity \$1;
+#X msg 267 252 grain \$1;
+#X text 243 59 Surface grain;
+#X obj 77 286 noise~;
+#X obj 77 313 lop~ 20;
+#X obj 77 341 *~ 10;
+#X obj 138 533 *~ 50000;
+#X obj 138 429 impact~ objectsc none 1;
+#X obj 338 618 modal objectsc 3 1;
+#X obj 138 374 scraping~;
+#X obj 179 401 r sc;
+#X obj 338 591 r objectsc;
+#X msg 379 252 force \$1;
+#X text 339 60 Perpendicular force (N);
+#X text 78 59 Scraping velocity (m/s);
+#X msg 556 199 \; objectsc freqs 500 1300 1700 \; objectsc decays 0.03
+0.02 0.01 \; objectsc pickup 0 100 100 100 \; objectsc activeModes
+3 \; objectsc fragmentSize 1 \; sc stiffness 1e+08 \; sc dissipation
+0.8 \; sc shape 1.5 \; sc contact0 0 \; sc contact1 0 \; velocity 1
+\; grain 0.001 \; force 2 \; gain 50000 \;;
+#X text 48 4 scraping~ - Generates a stochastic sequence of impacts
+to form a scraping sound, f 79;
+#X connect 4 0 8 0;
+#X connect 5 0 7 0;
+#X connect 6 0 9 0;
+#X connect 7 0 27 0;
+#X connect 8 0 16 0;
+#X connect 9 0 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 12 0 30 0;
+#X connect 13 0 30 0;
+#X connect 14 0 21 1;
+#X connect 15 0 24 0;
+#X connect 16 0 24 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 20 0 24 0;
+#X connect 21 0 0 0;
+#X connect 21 0 0 1;
+#X connect 22 0 21 0;
+#X connect 24 0 22 0;
+#X connect 25 0 22 0;
+#X connect 26 0 23 0;
+#X connect 27 0 24 0;

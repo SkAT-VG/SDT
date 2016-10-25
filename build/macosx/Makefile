@@ -2,7 +2,7 @@ SHELL=/bin/bash
 
 CC=clang
 MACARCH=-arch i386 -arch x86_64
-MACVERSION=-mmacosx-version-min=10.6
+MACVERSION=-isysroot ../../3rdparty/MacOSX10.6.sdk -mmacosx-version-min=10.6
 CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib -headerpad_max_install_names
 SRCDIR=../../src
@@ -20,14 +20,14 @@ MAXSDKVERSION=6.1.4
 
 PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
-PDOBJS=$(patsubst %.c,%.pd_darwin,$(PDSRCS))
+PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
 
 PDSDKDIR=../../3rdparty/Pd
-PDVERSION=0.41.4
+PDVERSION=0.43.4
 
-all: sdt max pd
+all: core max pd
 
-max: sdt $(MAXOBJS)
+max: core $(MAXOBJS)
 
 $(MAXDIR)/%.mxo: EXTNAME=$(patsubst $(MAXDIR)/%.mxo,%,$@)
 $(MAXDIR)/%.mxo: RFC1034=$(patsubst %~,%-,$(EXTNAME))
@@ -52,16 +52,13 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch -c $< -o $@
 
-pd: sdt $(PDOBJS)
-
-$(PDDIR)/%.pd_darwin: $(PDDIR)/%.o
-	$(CC) $(LDFLAGS) -undefined dynamic_lookup -F$(SDTDIR) -framework SDT $< -o $@
-	install_name_tool -change SDT @loader_path/SDT.framework/SDT $@
+pd: $(SDTOBJS) $(PDOBJS)
+	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -F$(SDTDIR) -c $< -o $@
 
-sdt: $(SDTOBJS)
+core: $(SDTOBJS)
 	rm -rf $(SDTDIR)/SDT.framework
 	cp -a SDT.framework $(SDTDIR)
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
@@ -72,46 +69,37 @@ sdt: $(SDTOBJS)
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-install:
+install_max:
 	@if [ -z "$(DSTDIR)" ]; \
-	then echo "Usage: make install DSTDIR=<installation_path>"; \
+	then echo "Usage: make install_max DSTDIR=<installation_path>"; \
 	elif [ ! -d "$(DSTDIR)" ]; \
 	then echo "Error: installation path does not exist or is not a directory"; \
-	else mkdir -p "$(DSTDIR)"/SoundDesignToolkit/{externals,support} && \
-	     cp -a ../../Max6/* "$(DSTDIR)"/SoundDesignToolkit && \
-	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SoundDesignToolkit/support && \
-	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SoundDesignToolkit/externals && \
+	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
+	     cp -a ../../Max6/* "$(DSTDIR)"/SDT && \
+	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT/support && \
+	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SDT/externals && \
 	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
 	fi
 	
 install_pd:
 	@if [ -z "$(DSTDIR)" ]; \
-        then echo "Usage: make install DSTDIR=<installation_path>"; \
+        then echo "Usage: make install_pd DSTDIR=<installation_path>"; \
         elif [ ! -d "$(DSTDIR)" ]; \
         then echo "Error: installation path does not exist or is not a directory"; \
 	else mkdir -p "$(DSTDIR)"/SDT && \
 	     cp -a ../../Pd/* "$(DSTDIR)"/SDT && \
-	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT && \
 	     cp -a $(PDDIR)/*.pd_darwin "$(DSTDIR)"/SDT && \
 	     echo "Sound Design Toolkit for PureData installed in $(DSTDIR)"; \
 	fi
 
-uninstall:
+install_core:
 	@if [ -z "$(DSTDIR)" ]; \
-	then echo "Usage: make uninstall DSTDIR=<installation_path>"; \
-	elif [ ! -d "$(DSTDIR)" ]; \
-	then echo "Error: installation path does not exist or is not a directory"; \
-	else rm -r "$(DSTDIR)"/SoundDesignToolkit && \
-	     echo "Sound Design Toolkit uninstalled from $(DSTDIR)"; \
-	fi
-
-uninstall_pd:
-	@if [ -z "$(DSTDIR)" ]; \
-	then echo "Usage: make uninstall DSTDIR=<installation_path>"; \
-	elif [ ! -d "$(DSTDIR)" ]; \
-	then echo "Error: installation path does not exist or is not a directory"; \
-	else rm -r "$(DSTDIR)"/SDT && \
-	     echo "Sound Design Toolkit for PureData uninstalled from $(DSTDIR)"; \
+		then echo "Usage: make install_core DSTDIR=<installation_path>"; \
+		elif [ ! -d "$(DSTDIR)" ]; \
+		then echo "Error: installation path does not exist or is not a directory"; \
+	else mkdir -p "$(DSTDIR)"/SDT && \
+		cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT && \
+		echo "Sound Design Toolkit core library installed in $(DSTDIR)"; \
 	fi	
 
 clean:

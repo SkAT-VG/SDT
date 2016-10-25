@@ -1,0 +1,70 @@
+#N canvas 243 92 760 617 10;
+#X obj 195 536 dac~;
+#X text 145 589 Args: object ID;
+#X text 438 588 Args: object ID \, n. of modes \, n. of pickups;
+#X text 214 399 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
+#X msg 538 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 177 97 vsl 15 128 0.001 0.1 0 0 empty granularity empty 0 -9
+0 10 -262144 -1 -1 1155 1;
+#X obj 289 97 vsl 15 128 0 1 0 0 empty fragmentation empty 0 -9 0 10
+-262144 -1 -1 6350 1;
+#X obj 48 96 vsl 15 128 0 10 0 0 empty crushingEnergy empty 0 -9 0
+10 -262144 -1 -1 3810 1;
+#X floatatom 289 233 5 0 0 0 - - -, f 5;
+#X floatatom 177 233 5 0 0 0 - - -, f 5;
+#X floatatom 48 233 5 0 0 0 - - -, f 5;
+#X msg 48 252 crushingEnergy \$1;
+#X msg 177 252 granularity \$1;
+#X msg 289 252 fragmentation \$1;
+#X obj 556 121 r pd;
+#X obj 556 148 route dsp;
+#X obj 556 173 select 1;
+#X text 173 59 granularity;
+#X text 284 60 fragmentation;
+#X text 45 60 crushing energy;
+#X obj 617 173 loadbang;
+#X obj 48 295 crumpling~;
+#X obj 48 325 *~ -1;
+#X obj 228 428 vsl 30 64 100 10000 0 0 empty empty empty 0 -9 0 10
+-262144 -1 -1 0 1;
+#X obj 12 399 impact~ hammercr objectcr 2;
+#X obj 10 588 inertial hammercr;
+#X obj 298 588 modal objectcr 3 1;
+#X obj 10 561 r hammercr;
+#X obj 298 561 r objectcr;
+#X obj 12 373 r cr;
+#X obj 195 503 *~ 100;
+#X msg 556 199 \; hammercr mass 0.01 \; hammercr fragmentSize 1 \;
+objectcr freqs 500 1300 1700 \; objectcr decays 0.03 0.02 0.01 \; objectcr
+pickup 0 100 100 100 \; objectcr activeModes 3 \; objectcr fragmentSize
+1 \; cr stiffness 1e+07 \; cr dissipation 0.001 \; cr shape 1.5 \;
+cr contact0 0 \; cr contact1 0 \; crushingEnergy 3 \; granularity 0.01
+\; fragmentation 0.5 \;;
+#X text 48 3 crumpling~ - Generates a stochastic sequence of impacts
+to form a crushing sound, f 80;
+#X connect 5 0 9 0;
+#X connect 6 0 8 0;
+#X connect 7 0 10 0;
+#X connect 8 0 13 0;
+#X connect 9 0 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 21 0;
+#X connect 12 0 21 0;
+#X connect 13 0 21 0;
+#X connect 14 0 15 0;
+#X connect 15 0 16 0;
+#X connect 16 0 31 0;
+#X connect 20 0 31 0;
+#X connect 21 0 22 0;
+#X connect 21 1 24 2;
+#X connect 21 1 24 5;
+#X connect 22 0 24 1;
+#X connect 23 0 30 1;
+#X connect 24 1 30 0;
+#X connect 27 0 25 0;
+#X connect 28 0 26 0;
+#X connect 29 0 24 0;
+#X connect 30 0 0 0;
+#X connect 30 0 0 1;

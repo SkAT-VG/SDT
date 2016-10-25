@@ -1,0 +1,143 @@
+\hypertarget{group__myoelastic}{}\section{Myoelastic features extractor}
+\label{group__myoelastic}\index{Myoelastic features extractor@{Myoelastic features extractor}}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{}typedef struct \hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} \hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic}\label{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for a myoelastic feature extractor object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$ \hyperlink{group__myoelastic_ga9b10fe4d528fa1b5a19ea619a3de4601}{S\+D\+T\+Myoelastic\+\_\+new} (unsigned int size)
+\begin{DoxyCompactList}\small\item\em Instantiates a myoelastic feature extractor. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_ga98a69e569953c88684003bf467d87263}{S\+D\+T\+Myoelastic\+\_\+free} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Destroys a myoelastic feature extractor. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_gafb33a8f68eddfbdb2e190c1b8ee6d6a9}{S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the low frequency cutoff. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_gafba72e2959eea8451c07411b992fa96e}{S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the high frequency cutoff. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_gae209925f758db266b9f9c5f70443b0f3}{S\+D\+T\+Myoelastic\+\_\+set\+Threshold} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amplitude threshold of the input gate. Myoelastic activity is not computed for signals whose amplitude is below this thresold. \end{DoxyCompactList}\item 
+void \hyperlink{group__myoelastic_ga2ad77892da5bfe3df69088504a8ad19a}{S\+D\+T\+Myoelastic\+\_\+dsp} (\hyperlink{group__myoelastic_gaaaf3320e161f43bf74a8c802519e5c3e}{S\+D\+T\+Myoelastic} $\ast$x, double $\ast$outs, double in)
+\begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to perform signal analysis. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Extracts amount and frequency of slow amplitude variations in the signal. Specifically designed for the detection of myoelastic activity in vocal input. 
+
+\subsection{Function Documentation}
+\hypertarget{group__myoelastic_ga2ad77892da5bfe3df69088504a8ad19a}{}\index{Myoelastic features extractor@{Myoelastic features extractor}!S\+D\+T\+Myoelastic\+\_\+dsp@{S\+D\+T\+Myoelastic\+\_\+dsp}}
+\index{S\+D\+T\+Myoelastic\+\_\+dsp@{S\+D\+T\+Myoelastic\+\_\+dsp}!Myoelastic features extractor@{Myoelastic features extractor}}
+\subsubsection[{S\+D\+T\+Myoelastic\+\_\+dsp(\+S\+D\+T\+Myoelastic $\ast$x, double $\ast$outs, double in)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Myoelastic\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Myoelastic} $\ast$}]{x, }
+\item[{double $\ast$}]{outs, }
+\item[{double}]{in}
+\end{DoxyParamCaption}
+)}\label{group__myoelastic_ga2ad77892da5bfe3df69088504a8ad19a}
+
+
+Signal processing routine. Call this function at sample rate to perform signal analysis. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt out}  & {\em outs} & Pointer to an array of two doubles containing the algorithm output (amount and frequency) \\
+\hline
+\mbox{\tt in}  & {\em in} & Input sample \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__myoelastic_ga98a69e569953c88684003bf467d87263}{}\index{Myoelastic features extractor@{Myoelastic features extractor}!S\+D\+T\+Myoelastic\+\_\+free@{S\+D\+T\+Myoelastic\+\_\+free}}
+\index{S\+D\+T\+Myoelastic\+\_\+free@{S\+D\+T\+Myoelastic\+\_\+free}!Myoelastic features extractor@{Myoelastic features extractor}}
+\subsubsection[{S\+D\+T\+Myoelastic\+\_\+free(\+S\+D\+T\+Myoelastic $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Myoelastic\+\_\+free (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Myoelastic} $\ast$}]{x}
+\end{DoxyParamCaption}
+)}\label{group__myoelastic_ga98a69e569953c88684003bf467d87263}
+
+
+Destroys a myoelastic feature extractor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__myoelastic_ga9b10fe4d528fa1b5a19ea619a3de4601}{}\index{Myoelastic features extractor@{Myoelastic features extractor}!S\+D\+T\+Myoelastic\+\_\+new@{S\+D\+T\+Myoelastic\+\_\+new}}
+\index{S\+D\+T\+Myoelastic\+\_\+new@{S\+D\+T\+Myoelastic\+\_\+new}!Myoelastic features extractor@{Myoelastic features extractor}}
+\subsubsection[{S\+D\+T\+Myoelastic\+\_\+new(unsigned int size)}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Myoelastic}$\ast$ S\+D\+T\+Myoelastic\+\_\+new (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{size}
+\end{DoxyParamCaption}
+)}\label{group__myoelastic_ga9b10fe4d528fa1b5a19ea619a3de4601}
+
+
+Instantiates a myoelastic feature extractor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Size of the analysis window, in samples \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the new instance 
+\end{DoxyReturn}
+\hypertarget{group__myoelastic_gafba72e2959eea8451c07411b992fa96e}{}\index{Myoelastic features extractor@{Myoelastic features extractor}!S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency@{S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency}}
+\index{S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency@{S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency}!Myoelastic features extractor@{Myoelastic features extractor}}
+\subsubsection[{S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency(\+S\+D\+T\+Myoelastic $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Myoelastic\+\_\+set\+High\+Frequency (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Myoelastic} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__myoelastic_gafba72e2959eea8451c07411b992fa96e}
+
+
+Sets the high frequency cutoff. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & High frequency cutoff, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__myoelastic_gafb33a8f68eddfbdb2e190c1b8ee6d6a9}{}\index{Myoelastic features extractor@{Myoelastic features extractor}!S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency@{S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency}}
+\index{S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency@{S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency}!Myoelastic features extractor@{Myoelastic features extractor}}
+\subsubsection[{S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency(\+S\+D\+T\+Myoelastic $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Myoelastic\+\_\+set\+Low\+Frequency (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Myoelastic} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__myoelastic_gafb33a8f68eddfbdb2e190c1b8ee6d6a9}
+
+
+Sets the low frequency cutoff. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Low frequency cutoff, in Hz \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__myoelastic_gae209925f758db266b9f9c5f70443b0f3}{}\index{Myoelastic features extractor@{Myoelastic features extractor}!S\+D\+T\+Myoelastic\+\_\+set\+Threshold@{S\+D\+T\+Myoelastic\+\_\+set\+Threshold}}
+\index{S\+D\+T\+Myoelastic\+\_\+set\+Threshold@{S\+D\+T\+Myoelastic\+\_\+set\+Threshold}!Myoelastic features extractor@{Myoelastic features extractor}}
+\subsubsection[{S\+D\+T\+Myoelastic\+\_\+set\+Threshold(\+S\+D\+T\+Myoelastic $\ast$x, double f)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Myoelastic\+\_\+set\+Threshold (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Myoelastic} $\ast$}]{x, }
+\item[{double}]{f}
+\end{DoxyParamCaption}
+)}\label{group__myoelastic_gae209925f758db266b9f9c5f70443b0f3}
+
+
+Sets the amplitude threshold of the input gate. Myoelastic activity is not computed for signals whose amplitude is below this thresold. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em x} & Pointer to the instance \\
+\hline
+\mbox{\tt in}  & {\em f} & Amplitude threshold \\
+\hline
+\end{DoxyParams}

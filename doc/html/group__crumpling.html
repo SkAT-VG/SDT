@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Sound Design Toolkit
-   &#160;<span id="projectnumber">074</span>
+   &#160;<span id="projectnumber">075</span>
    </div>
    <div id="projectbrief">Physically informed sound synthesis for everyday sounds</div>
   </td>
@@ -129,31 +129,21 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga813d36c8f3c981a70c2f2e24059da618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the event density of the crumpling process.  <a href="#ga813d36c8f3c981a70c2f2e24059da618">More...</a><br /></td></tr>
 <tr class="separator:ga813d36c8f3c981a70c2f2e24059da618"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1be320d8744d98d47de5f9e0150d55a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__crumpling.html#ga1be320d8744d98d47de5f9e0150d55a2">SDTCrumpling_setFragmentation</a> (<a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *x, double f)</td></tr>
-<tr class="memdesc:ga1be320d8744d98d47de5f9e0150d55a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the amount of progressive fragmentation of the object during the process.  <a href="#ga1be320d8744d98d47de5f9e0150d55a2">More...</a><br /></td></tr>
+<tr class="memdesc:ga1be320d8744d98d47de5f9e0150d55a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the amount of fragmentation of the object during the process.  <a href="#ga1be320d8744d98d47de5f9e0150d55a2">More...</a><br /></td></tr>
 <tr class="separator:ga1be320d8744d98d47de5f9e0150d55a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7ac34fe60e07176b4da089f511e94648"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7ac34fe60e07176b4da089f511e94648"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__crumpling.html#ga7ac34fe60e07176b4da089f511e94648">SDTCrumpling_reset</a> (<a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *x)</td></tr>
-<tr class="memdesc:ga7ac34fe60e07176b4da089f511e94648"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the crumpling process, restoring its initial energy. <br /></td></tr>
-<tr class="separator:ga7ac34fe60e07176b4da089f511e94648"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b5488ac7dcb7a58f67dfb38bd89315a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__crumpling.html#ga7b5488ac7dcb7a58f67dfb38bd89315a">SDTCrumpling_discrete</a> (<a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *x, double *size, double *energy)</td></tr>
-<tr class="memdesc:ga7b5488ac7dcb7a58f67dfb38bd89315a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single iteration of a discrete crumpling process. Call this routine in a loop to simulate a discrete crumpling process. The loop should end when <a class="el" href="group__crumpling.html#ga7d5c2d51daf736d9821d4904ee1f4d74" title="Checks if the crumpling process is finished, i.e. if the remaining energy is 0. ">SDTCrumpling_hasFinished()</a> returns true.  <a href="#ga7b5488ac7dcb7a58f67dfb38bd89315a">More...</a><br /></td></tr>
-<tr class="separator:ga7b5488ac7dcb7a58f67dfb38bd89315a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8577606d934a6c80db0833a35a17021b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__crumpling.html#ga8577606d934a6c80db0833a35a17021b">SDTCrumpling_continuous</a> (<a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *x, double *size, double *energy)</td></tr>
-<tr class="memdesc:ga8577606d934a6c80db0833a35a17021b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single iteration of a continuous crumpling process. Call this routine in a loop to simulate a continuous crumpling process. Unlike in the discrete crumpling, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted.  <a href="#ga8577606d934a6c80db0833a35a17021b">More...</a><br /></td></tr>
-<tr class="separator:ga8577606d934a6c80db0833a35a17021b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7d5c2d51daf736d9821d4904ee1f4d74"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__crumpling.html#ga7d5c2d51daf736d9821d4904ee1f4d74">SDTCrumpling_hasFinished</a> (<a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *x)</td></tr>
-<tr class="memdesc:ga7d5c2d51daf736d9821d4904ee1f4d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the crumpling process is finished, i.e. if the remaining energy is 0.  <a href="#ga7d5c2d51daf736d9821d4904ee1f4d74">More...</a><br /></td></tr>
-<tr class="separator:ga7d5c2d51daf736d9821d4904ee1f4d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaafe4f3122ded1b386260c9f67839e453"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__crumpling.html#gaafe4f3122ded1b386260c9f67839e453">SDTCrumpling_dsp</a> (<a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *x, double *outs)</td></tr>
+<tr class="memdesc:gaafe4f3122ded1b386260c9f67839e453"><td class="mdescLeft">&#160;</td><td class="mdescRight">Single iteration of a crumpling process. Call this routine in a loop to simulate a crumpling process. Unlike in the breaking algorithm, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted.  <a href="#gaafe4f3122ded1b386260c9f67839e453">More...</a><br /></td></tr>
+<tr class="separator:gaafe4f3122ded1b386260c9f67839e453"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Control layer for the impact model, generating crumpling and breaking sonic textures. Two main outputs are exposed: size and energy. The former should be used to control the size of the resonators, the latter should be used to control the impact velocity. </p>
+<p>Control layer for the impact model, generating crumpling sonic textures. Two main outputs are exposed: energy and size. The former should be used to control the impact velocity, the latter should be used to control the size of the resonators. </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga8577606d934a6c80db0833a35a17021b"></a>
+<a class="anchor" id="gaafe4f3122ded1b386260c9f67839e453"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SDTCrumpling_continuous </td>
+          <td class="memname">void SDTCrumpling_dsp </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -162,13 +152,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>energy</em>&#160;</td>
+          <td class="paramname"><em>outs</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -178,52 +162,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
       </table>
 </div><div class="memdoc">
 
-<p>Single iteration of a continuous crumpling process. Call this routine in a loop to simulate a continuous crumpling process. Unlike in the discrete crumpling, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. </p>
+<p>Single iteration of a crumpling process. Call this routine in a loop to simulate a crumpling process. Unlike in the breaking algorithm, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Size of the object fragment </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">energy</td><td>Energy of the micro-impact </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7b5488ac7dcb7a58f67dfb38bd89315a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void SDTCrumpling_discrete </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>size</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double *&#160;</td>
-          <td class="paramname"><em>energy</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Single iteration of a discrete crumpling process. Call this routine in a loop to simulate a discrete crumpling process. The loop should end when <a class="el" href="group__crumpling.html#ga7d5c2d51daf736d9821d4904ee1f4d74" title="Checks if the crumpling process is finished, i.e. if the remaining energy is 0. ">SDTCrumpling_hasFinished()</a> returns true. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">size</td><td>Size of the object fragment </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">energy</td><td>Energy of the micro-impact </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">outs</td><td>Pointer to the output array: impact energy and fragment size </td></tr>
   </table>
   </dd>
 </dl>
@@ -251,25 +193,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="ga7d5c2d51daf736d9821d4904ee1f4d74"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int SDTCrumpling_hasFinished </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="group__crumpling.html#ga1d5c6cf3fe003cd4d993dcfe0a39f72e">SDTCrumpling</a> *&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Checks if the crumpling process is finished, i.e. if the remaining energy is 0. </p>
-<dl class="section return"><dt>Returns</dt><dd>1 (true) if the remaining energy is &lt;= 0, 0 (false) otherwise. </dd></dl>
 
 </div>
 </div>
@@ -349,7 +272,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="grou
       </table>
 </div><div class="memdoc">
 
-<p>Sets the amount of progressive fragmentation of the object during the process. </p>
+<p>Sets the amount of fragmentation of the object during the process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">f</td><td>Object fragmentation [0, 1] </td></tr>

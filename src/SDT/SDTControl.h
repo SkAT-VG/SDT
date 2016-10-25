@@ -7,10 +7,103 @@ to simulate complex textures, evolving patterns and compound sound events.
 #ifndef SDT_CONTROL_H
 #define SDT_CONTROL_H
 
+/** @defgroup bouncing Bouncing
+Control layer for the impact model, generating (irregular) bouncing sonic textures.
+The output should be used to control the impact velocity between two resonators. 
+@{ */
+
+/** @brief Opaque data structure for the crumpling object. */
+typedef struct SDTBouncing SDTBouncing;
+
+/** @brief Object constructor.
+@return Pointer to the new instance */
+extern SDTBouncing *SDTBouncing_new();
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTBouncing_free(SDTBouncing *x);
+
+/** @brief Sets the coefficient of restitution.
+@param[in] f Coefficient of restitution of the bouncing process */
+extern void SDTBouncing_setRestitution(SDTBouncing *x, double f);
+
+/** @brief Sets the initial height of the falling object.
+@param[in] f Object height, in m. */
+extern void SDTBouncing_setHeight(SDTBouncing *x, double f);
+
+/** @brief Sets the irregularity of the shape of the object.
+@param[in] f Object shape irregularity (deviation from a spherical shape) [0,1] */
+extern void SDTBouncing_setIrregularity(SDTBouncing *x, double f);
+
+/** @brief Resets the bouncing process, restoring its initial energy */
+extern void SDTBouncing_reset(SDTBouncing *x);
+
+/** @brief Single iteration of the whole buncing process.
+Call this routine in a loop to simulate the bouncing process.
+The loop should end when SDTBouncing_hasFinished() returns true.
+@return Impact velocity of the bounce */
+extern double SDTBouncing_dsp(SDTBouncing *x);
+                                    
+/** @brief Checks if the bouncing process is finished, i.e. if the remaining energy is 0.
+@return 1 (true) if the remaining energy is <= 0, 0 (false) otherwise. */
+extern int SDTBouncing_hasFinished(SDTBouncing *x);
+
+/** @} */
+
+/** @defgroup breaking Breaking
+Control layer for the impact model, generating breaking sonic textures.
+Two main outputs are exposed: energy and size. The former should be used to control the
+impact velocity, the latter should be used to control the size of the resonators. 
+@{ */
+
+/** @brief Opaque data structure for the breaking object. */
+typedef struct SDTBreaking SDTBreaking;
+
+/** @brief Object constructor.
+@return Pointer to the new instance */
+extern SDTBreaking *SDTBreaking_new();
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTBreaking_free(SDTBreaking *x);
+
+/** @brief Sets the total energy stored in the object.
+@param[in] f Total stored energy consumed by the micro impacts, in N */
+extern void SDTBreaking_setStoredEnergy(SDTBreaking *x, double f);
+
+/** @brief Sets the crushing energy.
+@param[in] f Average energy of the micro impacts, compared to the global energy of the process, in N */
+extern void SDTBreaking_setCrushingEnergy(SDTBreaking *x, double f);
+
+/** @brief Sets the event density of the crumpling process.
+@param[in] f Event density [0, 1] */
+extern void SDTBreaking_setGranularity(SDTBreaking *x, double f);
+
+/** @brief Sets the amount of progressive fragmentation of the object during the process.
+@param[in] f Object fragmentation [0, 1] */
+extern void SDTBreaking_setFragmentation(SDTBreaking *x, double f);
+
+/** @brief Resets the crumpling process, restoring its initial energy
+and triggering the first micro impact.
+@param[out] outs Pointer to the output array: impact energy and fragment size */
+extern void SDTBreaking_reset(SDTBreaking *x);
+
+/** @brief Single iteration of the whole breaking process.
+Call this routine in a loop to simulate a breaking process.
+The loop should end when SDTBreaking_hasFinished() returns true.
+@param[out] outs Pointer to the output array: impact energy and fragment size */
+extern void SDTBreaking_dsp(SDTBreaking *x, double *outs);
+                                    
+/** @brief Checks if the breaking process is finished, i.e. if the remaining energy is 0.
+@return 1 (true) if the remaining energy is <= 0, 0 (false) otherwise. */
+extern int SDTBreaking_hasFinished(SDTBreaking *x);
+
+/** @} */
+
 /** @defgroup crumpling Crumpling
-Control layer for the impact model, generating crumpling and breaking sonic textures.
-Two main outputs are exposed: size and energy. The former should be used to control
-the size of the resonators, the latter should be used to control the impact velocity. 
+Control layer for the impact model, generating crumpling sonic textures.
+Two main outputs are exposed: energy and size. The former should be used to control the
+impact velocity, the latter should be used to control the size of the resonators. 
 @{ */
 
 /** @brief Opaque data structure for the crumpling object. */
@@ -32,31 +125,16 @@ extern void SDTCrumpling_setCrushingEnergy(SDTCrumpling *x, double f);
 @param[in] f Event density [0, 1] */
 extern void SDTCrumpling_setGranularity(SDTCrumpling *x, double f);
 
-/** @brief Sets the amount of progressive fragmentation of the object during the process.
+/** @brief Sets the amount of fragmentation of the object during the process.
 @param[in] f Object fragmentation [0, 1] */
 extern void SDTCrumpling_setFragmentation(SDTCrumpling *x, double f);
-
-/** @brief Resets the crumpling process, restoring its initial energy. */
-extern void SDTCrumpling_reset(SDTCrumpling *x);
-
-/** @brief Single iteration of a discrete crumpling process.
-Call this routine in a loop to simulate a discrete crumpling process.
-The loop should end when SDTCrumpling_hasFinished() returns true.
-@param[out] size Size of the object fragment
-@param[out] energy Energy of the micro-impact */
-extern void SDTCrumpling_discrete(SDTCrumpling *x, double *size, double *energy);
                                   
-/** @brief Single iteration of a continuous crumpling process.
-Call this routine in a loop to simulate a continuous crumpling process.
-Unlike in the discrete crumpling, iterations do not cause energy loss and the process
+/** @brief Single iteration of a crumpling process.
+Call this routine in a loop to simulate a crumpling process.
+Unlike in the breaking algorithm, iterations do not cause energy loss and the process
 can continue indefinitely until explicitly interrupted.
-@param[out] size Size of the object fragment
-@param[out] energy Energy of the micro-impact */
-extern void SDTCrumpling_continuous(SDTCrumpling *x, double *size, double *energy);
-                                    
-/** @brief Checks if the crumpling process is finished, i.e. if the remaining energy is 0.
-@return 1 (true) if the remaining energy is <= 0, 0 (false) otherwise. */
-extern int SDTCrumpling_hasFinished(SDTCrumpling *x);
+@param[out] outs Pointer to the output array: impact energy and fragment size */
+extern void SDTCrumpling_dsp(SDTCrumpling *x, double *outs);
 
 /** @} */
 

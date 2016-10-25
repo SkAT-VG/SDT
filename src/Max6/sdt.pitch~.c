@@ -21,10 +21,10 @@ void pitch_assist(t_pitch *x, void *b, long m, long a, char *s) {
   else {
     switch (a) {
       case 0:
-        sprintf(s, "(float): Estimated pitch in Hz");
+        sprintf(s, "(float): Estimated pitch (Hz)");
         break;
       case 1:
-        sprintf(s, "(float): Pitch clarity");
+        sprintf(s, "(float): Pitch clarity [0,1]");
         break;
     }
   }

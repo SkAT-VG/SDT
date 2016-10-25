@@ -42,7 +42,7 @@ void windcavity_assist(t_windcavity *x, void *b, long m, long a, char *s) {
                "Object attributes and messages (see help patch)");
   } 
   else {
-    sprintf(s, "(signal): Output");
+    sprintf(s, "(signal): Output sound");
   }
 }
 

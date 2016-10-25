@@ -1,0 +1,73 @@
+#N canvas 118 131 860 415 10;
+#X obj 91 290 reverb~;
+#X msg 156 240 ySize \$1;
+#X msg 91 240 xSize \$1;
+#X msg 223 240 zSize \$1;
+#X msg 343 240 randomness \$1;
+#X msg 468 239 time \$1;
+#X msg 547 238 time1k \$1;
+#X floatatom 91 216 5 0 0 0 - - -, f 5;
+#X floatatom 156 215 5 0 0 0 - - -, f 5;
+#X floatatom 223 215 5 0 0 0 - - -, f 5;
+#X floatatom 343 216 5 0 0 0 - - -, f 5;
+#X floatatom 468 218 5 0 0 0 - - -, f 5;
+#X floatatom 547 218 5 0 0 0 - - -, f 5;
+#X obj 19 75 adc~;
+#X obj 19 386 dac~;
+#X obj 343 78 vsl 15 128 0 1 0 0 empty randomness empty 0 -9 0 10 -262144
+-1 -1 4191 1;
+#X obj 156 77 vsl 15 128 0 40 0 0 empty ySize empty 0 -9 0 10 -262144
+-1 -1 2857 1;
+#X obj 468 80 vsl 15 128 0 60 0 0 empty time empty 0 -9 0 10 -262144
+-1 -1 1270 1;
+#X obj 547 80 vsl 15 128 0 60 0 0 empty time1k empty 0 -9 0 10 -262144
+-1 -1 1058 1;
+#X obj 91 77 vsl 15 128 0 40 0 0 empty xSize empty 0 -9 0 10 -262144
+-1 -1 2222 1;
+#X obj 223 77 vsl 15 128 0 40 0 0 empty zSize empty 0 -9 0 10 -262144
+-1 -1 3492 1;
+#X text 70 49 Room width \, height and depth (m);
+#X text 305 49 Room irregularity;
+#X text 452 50 T60 (s);
+#X text 518 51 T60 @ 1kHz (s);
+#X obj 91 350 *~ 0.5;
+#X obj 19 350 *~ 0.5;
+#X floatatom 124 328 5 0 1 0 - - -, f 5;
+#X floatatom 52 328 5 0 1 0 - - -, f 5;
+#X text 50 310 Dry;
+#X text 123 311 Wet;
+#X text 45 4 reverb~ - Signal reverberator;
+#X msg 632 10 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X msg 741 300 \; xSize 7 \; ySize 9 \; zSize 11 \; randomness 0.33
+\; time 6 \; time1k 5 \;;
+#X obj 741 274 loadbang;
+#X connect 0 0 25 0;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X connect 3 0 0 0;
+#X connect 4 0 0 0;
+#X connect 5 0 0 0;
+#X connect 6 0 0 0;
+#X connect 7 0 2 0;
+#X connect 8 0 1 0;
+#X connect 9 0 3 0;
+#X connect 10 0 4 0;
+#X connect 11 0 5 0;
+#X connect 12 0 6 0;
+#X connect 13 0 0 0;
+#X connect 13 0 26 0;
+#X connect 15 0 10 0;
+#X connect 16 0 8 0;
+#X connect 17 0 11 0;
+#X connect 18 0 12 0;
+#X connect 19 0 7 0;
+#X connect 20 0 9 0;
+#X connect 25 0 14 1;
+#X connect 25 0 14 0;
+#X connect 26 0 14 0;
+#X connect 26 0 14 1;
+#X connect 27 0 25 1;
+#X connect 28 0 26 1;
+#X connect 34 0 33 0;

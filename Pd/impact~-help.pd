@@ -1,0 +1,69 @@
+#N canvas 28 199 1089 512 10;
+#X obj 243 472 dac~;
+#X msg 860 17 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 878 149 r pd;
+#X obj 878 176 route dsp;
+#X obj 878 201 select 1;
+#X obj 939 201 loadbang;
+#X msg 48 279 stiffness \$1;
+#X msg 183 278 dissipation \$1;
+#X obj 323 119 vsl 15 128 1 4 0 0 empty shape empty 0 -9 0 10 -262144
+-1 -1 2117 1;
+#X obj 183 119 vsl 15 128 0 40 0 0 empty dissipation empty 0 -9 0 10
+-262144 -1 -1 317 1;
+#X obj 48 121 vsl 15 128 1000 1e+08 1 0 empty stiffness empty 0 -9
+0 10 -262144 -1 -1 10160 1;
+#X floatatom 48 259 10 0 0 0 - - -, f 10;
+#X floatatom 183 257 5 0 0 0 - - -, f 5;
+#X floatatom 323 257 5 0 0 0 - - -, f 5;
+#X text 260 328 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
+#X text 573 210 Args: object ID;
+#X text 581 275 Args: object ID \, n. of modes \, n. of pickups;
+#X obj 48 327 impact~ hammerimp objectimp 2;
+#X text 6 98 Impact stiffness;
+#X text 136 97 Impact dissipation;
+#X msg 323 278 shape \$1;
+#X obj 492 183 r hammerimp;
+#X obj 429 250 r objectimp;
+#X obj 428 210 inertial hammerimp;
+#X obj 429 275 modal objectimp 3 1;
+#X obj 9 303 r imp;
+#X msg 878 227 \; hammerimp mass 0.01 \; hammerimp fragmentSize 1 \;
+objectimp freqs 500 1300 1700 \; objectimp decays 1 0.5 0.25 \; objectimp
+pickup 0 100 100 100 \; objectimp activeModes 3 \; objectimp fragmentSize
+1 \; imp contact0 0 \; imp contact1 0 \; stiffness 1e+07 \; dissipation
+1 \; shape 1.5 \;;
+#X msg 428 157 strike 0 -3;
+#X obj 428 118 bng 32 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 291 97 Contact shape;
+#X text 426 98 Strike!;
+#X text 48 4 impact~ - Simulates an impact between two solid objects
+;
+#X obj 243 441 *~ 1000;
+#X obj 282 357 vsl 30 60 100 10000 0 0 empty empty empty 0 -9 0 10
+-262144 -1 -1 0 1;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 26 0;
+#X connect 5 0 26 0;
+#X connect 6 0 17 0;
+#X connect 7 0 17 0;
+#X connect 8 0 13 0;
+#X connect 9 0 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 6 0;
+#X connect 12 0 7 0;
+#X connect 13 0 20 0;
+#X connect 17 1 32 0;
+#X connect 20 0 17 0;
+#X connect 21 0 23 0;
+#X connect 22 0 24 0;
+#X connect 25 0 17 0;
+#X connect 27 0 23 0;
+#X connect 28 0 27 0;
+#X connect 32 0 0 0;
+#X connect 32 0 0 1;
+#X connect 33 0 32 1;

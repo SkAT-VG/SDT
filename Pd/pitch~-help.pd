@@ -1,0 +1,20 @@
+#N canvas 434 339 536 192 10;
+#X floatatom 13 125 5 0 0 0 - - -, f 5;
+#X floatatom 100 124 5 0 0 0 - - -, f 5;
+#X obj 78 49 adc~;
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X msg 306 137 \; pitch overlap 0.5 \; pitch tolerance 0.1 \;;
+#X obj 13 49 r pitch;
+#X text 48 4 pitch~ - Fundamental Frequency estimator;
+#X text 11 143 Pitch (Hz);
+#X text 98 142 Pitch clarity [0 \, 1];
+#X text 117 87 Args: analysis window size;
+#X obj 13 87 pitch~ 2048;
+#X obj 306 112 loadbang;
+#X connect 2 0 10 0;
+#X connect 5 0 10 0;
+#X connect 10 0 0 0;
+#X connect 10 1 1 0;
+#X connect 11 0 4 0;

@@ -3,10 +3,10 @@
 \subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{group__common_gab6e61b5e260d784833e230a33efc6a48}{}\#define \hyperlink{group__common_gab6e61b5e260d784833e230a33efc6a48}{S\+D\+T\+\_\+ver}~074\label{group__common_gab6e61b5e260d784833e230a33efc6a48}
+\hypertarget{group__common_gab6e61b5e260d784833e230a33efc6a48}{}\#define \hyperlink{group__common_gab6e61b5e260d784833e230a33efc6a48}{S\+D\+T\+\_\+ver}~075\label{group__common_gab6e61b5e260d784833e230a33efc6a48}
 
 \begin{DoxyCompactList}\small\item\em S\+D\+T version number. \end{DoxyCompactList}\item 
-\hypertarget{group__common_gaf8d98d86bcb77f3f61403b29483527d5}{}\#define \hyperlink{group__common_gaf8d98d86bcb77f3f61403b29483527d5}{S\+D\+T\+\_\+ver\+\_\+str}~\char`\"{}074\char`\"{}\label{group__common_gaf8d98d86bcb77f3f61403b29483527d5}
+\hypertarget{group__common_gaf8d98d86bcb77f3f61403b29483527d5}{}\#define \hyperlink{group__common_gaf8d98d86bcb77f3f61403b29483527d5}{S\+D\+T\+\_\+ver\+\_\+str}~\char`\"{}075\char`\"{}\label{group__common_gaf8d98d86bcb77f3f61403b29483527d5}
 
 \begin{DoxyCompactList}\small\item\em S\+D\+T version string. \end{DoxyCompactList}\item 
 \hypertarget{group__common_ga292e893120950fc4c58e10d6a56beeb9}{}\#define \hyperlink{group__common_ga292e893120950fc4c58e10d6a56beeb9}{S\+D\+T\+\_\+\+P\+I}~3.\+141592653589793\label{group__common_ga292e893120950fc4c58e10d6a56beeb9}
@@ -52,12 +52,18 @@ double \hyperlink{group__common_ga015a2fb5c63e23e144556220011c9e54}{S\+D\+T\+\_\
 \begin{DoxyCompactList}\small\item\em Computes earth gravity force. Computes the earth gravity force acting on an object of a given mass. \end{DoxyCompactList}\item 
 void \hyperlink{group__common_gac20498f9e20eb14941b1e6f9a076e5e7}{S\+D\+T\+\_\+hanning} (double $\ast$sig, int n)
 \begin{DoxyCompactList}\small\item\em Applies a Hanning window to a chunk of samples. Applies a Hanning window to a chunk of samples. \end{DoxyCompactList}\item 
+void \hyperlink{group__common_gadc035ed90d7b62000e8f6467426cdb1a}{S\+D\+T\+\_\+haar} (double $\ast$sig, long n)
+\begin{DoxyCompactList}\small\item\em Computes a direct Haar Wavelet Transform of the incoming signal (in place). \end{DoxyCompactList}\item 
+void \hyperlink{group__common_ga1a5c0c361f29d6b5bc5612af94a33d86}{S\+D\+T\+\_\+ihaar} (double $\ast$sig, long n)
+\begin{DoxyCompactList}\small\item\em Computes an inverse Haar Wavelet Transform of the incoming signal (in place). \end{DoxyCompactList}\item 
 double \hyperlink{group__common_gaeb3c9a2b73924440e53d81cce514db7e}{S\+D\+T\+\_\+kinetic} (double mass, double velocity)
 \begin{DoxyCompactList}\small\item\em Computes kinetic energy. Computes the kinetic energy of an object, given its mass and velocity. \end{DoxyCompactList}\item 
 unsigned int \hyperlink{group__common_gac19518462fef4a36e23307b17a1ae91b}{S\+D\+T\+\_\+next\+Pow2} (unsigned int u)
 \begin{DoxyCompactList}\small\item\em Returns the smallest power of 2 greater or equal than u. \end{DoxyCompactList}\item 
 double \hyperlink{group__common_ga526be81b39dff106d6f7026d807b90aa}{S\+D\+T\+\_\+normalize} (double x, double min, double max)
 \begin{DoxyCompactList}\small\item\em Rescales a value of known range into the \mbox{[}0.\+0, 1.\+0\mbox{]} interval. Rescales a value of known range into the \mbox{[}0.\+0, 1.\+0\mbox{]} interval. \end{DoxyCompactList}\item 
+void \hyperlink{group__common_gaceddebee5e10ac7eeab53e4a75033ea4}{S\+D\+T\+\_\+normalize\+Window} (double $\ast$sig, int n)
+\begin{DoxyCompactList}\small\item\em Normalizes samples in a window so that their sum is equal to 1. \end{DoxyCompactList}\item 
 double \hyperlink{group__common_ga8d76fd517483f6044bef411ae830aea2}{S\+D\+T\+\_\+samples\+In\+Air} (double length)
 \begin{DoxyCompactList}\small\item\em Time needed to travel the given distance at Mach 1. Computes the amount of time, in samples, needed by a sound wave propagating in air to travel a given distance. Particularly useful to set the delay times of comb filters and/or digital waveguides representing hollow cavities. \end{DoxyCompactList}\item 
 double \hyperlink{group__common_gaefd9c7447cc1aef51100da1e409755a0}{S\+D\+T\+\_\+scale} (double x, double src\+Min, double src\+Max, double dst\+Min, double dst\+Max, double gamma)
@@ -203,6 +209,25 @@ Computes earth gravity force. Computes the earth gravity force acting on an obje
 \begin{DoxyReturn}{Returns}
 Earth gravity force (N) 
 \end{DoxyReturn}
+\hypertarget{group__common_gadc035ed90d7b62000e8f6467426cdb1a}{}\index{S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}!S\+D\+T\+\_\+haar@{S\+D\+T\+\_\+haar}}
+\index{S\+D\+T\+\_\+haar@{S\+D\+T\+\_\+haar}!S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}}
+\subsubsection[{S\+D\+T\+\_\+haar(double $\ast$sig, long n)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+\_\+haar (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{sig, }
+\item[{long}]{n}
+\end{DoxyParamCaption}
+)}\label{group__common_gadc035ed90d7b62000e8f6467426cdb1a}
+
+
+Computes a direct Haar Wavelet Transform of the incoming signal (in place). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em sig} & incoming signals \\
+\hline
+\mbox{\tt in}  & {\em n} & window size \\
+\hline
+\end{DoxyParams}
 \hypertarget{group__common_gac20498f9e20eb14941b1e6f9a076e5e7}{}\index{S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}!S\+D\+T\+\_\+hanning@{S\+D\+T\+\_\+hanning}}
 \index{S\+D\+T\+\_\+hanning@{S\+D\+T\+\_\+hanning}!S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}}
 \subsubsection[{S\+D\+T\+\_\+hanning(double $\ast$sig, int n)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+\_\+hanning (
@@ -217,9 +242,28 @@ Applies a Hanning window to a chunk of samples. Applies a Hanning window to a ch
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in,out}  & {\em samples} & to window \\
+\mbox{\tt in,out}  & {\em sig} & samples to window \\
 \hline
- & {\em } & \\
+\mbox{\tt in}  & {\em n} & window size \\
+\hline
+\end{DoxyParams}
+\hypertarget{group__common_ga1a5c0c361f29d6b5bc5612af94a33d86}{}\index{S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}!S\+D\+T\+\_\+ihaar@{S\+D\+T\+\_\+ihaar}}
+\index{S\+D\+T\+\_\+ihaar@{S\+D\+T\+\_\+ihaar}!S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}}
+\subsubsection[{S\+D\+T\+\_\+ihaar(double $\ast$sig, long n)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+\_\+ihaar (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{sig, }
+\item[{long}]{n}
+\end{DoxyParamCaption}
+)}\label{group__common_ga1a5c0c361f29d6b5bc5612af94a33d86}
+
+
+Computes an inverse Haar Wavelet Transform of the incoming signal (in place). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em sig} & incoming signals \\
+\hline
+\mbox{\tt in}  & {\em n} & window size \\
 \hline
 \end{DoxyParams}
 \hypertarget{group__common_gaeb3c9a2b73924440e53d81cce514db7e}{}\index{S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}!S\+D\+T\+\_\+kinetic@{S\+D\+T\+\_\+kinetic}}
@@ -288,6 +332,25 @@ Rescales a value of known range into the \mbox{[}0.\+0, 1.\+0\mbox{]} interval. 
 \begin{DoxyReturn}{Returns}
 Value rescaled from \mbox{[}min, max\mbox{]} to \mbox{[}0.\+0, 1.\+0\mbox{]} 
 \end{DoxyReturn}
+\hypertarget{group__common_gaceddebee5e10ac7eeab53e4a75033ea4}{}\index{S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}!S\+D\+T\+\_\+normalize\+Window@{S\+D\+T\+\_\+normalize\+Window}}
+\index{S\+D\+T\+\_\+normalize\+Window@{S\+D\+T\+\_\+normalize\+Window}!S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}}
+\subsubsection[{S\+D\+T\+\_\+normalize\+Window(double $\ast$sig, int n)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+\_\+normalize\+Window (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{sig, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)}\label{group__common_gaceddebee5e10ac7eeab53e4a75033ea4}
+
+
+Normalizes samples in a window so that their sum is equal to 1. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in,out}  & {\em sig} & window to normalize \\
+\hline
+\mbox{\tt in}  & {\em n} & window size \\
+\hline
+\end{DoxyParams}
 \hypertarget{group__common_ga8d76fd517483f6044bef411ae830aea2}{}\index{S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}!S\+D\+T\+\_\+samples\+In\+Air@{S\+D\+T\+\_\+samples\+In\+Air}}
 \index{S\+D\+T\+\_\+samples\+In\+Air@{S\+D\+T\+\_\+samples\+In\+Air}!S\+D\+T\+Common.\+h\+: Common variables and functions@{S\+D\+T\+Common.\+h\+: Common variables and functions}}
 \subsubsection[{S\+D\+T\+\_\+samples\+In\+Air(double length)}]{\setlength{\rightskip}{0pt plus 5cm}double S\+D\+T\+\_\+samples\+In\+Air (

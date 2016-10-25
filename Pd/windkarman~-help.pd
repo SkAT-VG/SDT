@@ -1,0 +1,34 @@
+#N canvas 141 324 553 354 10;
+#X msg 155 261 diameter \$1;
+#X obj 39 79 vsl 15 128 0 1 0 0 empty speed empty 0 -9 0 10 -262144
+-1 -1 5080 1;
+#X floatatom 39 218 5 0 0 0 - - -, f 5;
+#X obj 155 79 vsl 15 128 0 40 0 0 empty diameter empty 0 -9 0 10 -262144
+-1 -1 1587 1;
+#X floatatom 155 218 5 0 0 0 - - -, f 5;
+#X text 15 55 Wind speed;
+#X obj 39 322 dac~;
+#X msg 328 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 488 276 loadbang;
+#X text 103 55 Object diameter (mm);
+#X obj 155 238 * 0.001;
+#X msg 430 298 \; speed 0.4 \; diameter 5 \;;
+#X text 45 4 windkarman~ - Wind across thin objects;
+#X obj 39 292 windkarman~;
+#X obj 430 232 r pd;
+#X obj 430 254 route dsp;
+#X obj 430 276 select 1;
+#X connect 0 0 13 0;
+#X connect 1 0 2 0;
+#X connect 2 0 13 0;
+#X connect 3 0 4 0;
+#X connect 4 0 10 0;
+#X connect 8 0 11 0;
+#X connect 10 0 0 0;
+#X connect 13 0 6 0;
+#X connect 13 0 6 1;
+#X connect 14 0 15 0;
+#X connect 15 0 16 0;
+#X connect 16 0 11 0;

@@ -52,7 +52,7 @@ void dcmotor_assist(t_dcmotor *x, void *b, long m, long a, char *s) {
     }
   } 
   else {
-    sprintf(s, "(signal): Output");
+    sprintf(s, "(signal): Output sound");
   }
 }
 

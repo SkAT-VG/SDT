@@ -20,8 +20,7 @@ void \hyperlink{group__interactor_ga0f55a3259e515011bc56039fe9d59277}{S\+D\+T\+I
 \hypertarget{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}{}double \hyperlink{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}{S\+D\+T\+Interactor\+\_\+compute\+Force} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x)\label{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}
 
 \begin{DoxyCompactList}\small\item\em Computes a force to apply to the contact points, based on the resonators\textquotesingle{} state at the chosen pickups. \end{DoxyCompactList}\item 
-\hypertarget{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}{}void \hyperlink{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}{S\+D\+T\+Interactor\+\_\+dsp} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f0, double f1, double $\ast$outs)\label{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}
-
+void \hyperlink{group__interactor_ga78d5eab4115c38199cce2f45856d7fce}{S\+D\+T\+Interactor\+\_\+dsp} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f0, double v0, double s0, double f1, double v1, double s1, double $\ast$outs)
 \begin{DoxyCompactList}\small\item\em Signal processing routine. Convenience method to compute the interaction force, apply it to the resonators and update their state. This method already calls the D\+S\+P routines of the two resonators, so be sure not to call them if you use this method. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -29,6 +28,41 @@ void \hyperlink{group__interactor_ga0f55a3259e515011bc56039fe9d59277}{S\+D\+T\+I
 This abstract object acts as a generic interface implemented by all interactors. It contains two pointers to the interacting objects, information on the chosen contact points, and an algorithm that, after reading the state of the objects (displacement and velocity) at the specified contact points, accordingly computes a force to apply to those contact points. The generic interactor should never be directly instantiated, instead it should be obtained through the specific S\+D\+T\+Impact and S\+D\+T\+Friction constructors. 
 
 \subsection{Function Documentation}
+\hypertarget{group__interactor_ga78d5eab4115c38199cce2f45856d7fce}{}\index{Interactor interface@{Interactor interface}!S\+D\+T\+Interactor\+\_\+dsp@{S\+D\+T\+Interactor\+\_\+dsp}}
+\index{S\+D\+T\+Interactor\+\_\+dsp@{S\+D\+T\+Interactor\+\_\+dsp}!Interactor interface@{Interactor interface}}
+\subsubsection[{S\+D\+T\+Interactor\+\_\+dsp(\+S\+D\+T\+Interactor $\ast$x, double f0, double v0, double s0, double f1, double v1, double s1, double $\ast$outs)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Interactor\+\_\+dsp (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Interactor} $\ast$}]{x, }
+\item[{double}]{f0, }
+\item[{double}]{v0, }
+\item[{double}]{s0, }
+\item[{double}]{f1, }
+\item[{double}]{v1, }
+\item[{double}]{s1, }
+\item[{double $\ast$}]{outs}
+\end{DoxyParamCaption}
+)}\label{group__interactor_ga78d5eab4115c38199cce2f45856d7fce}
+
+
+Signal processing routine. Convenience method to compute the interaction force, apply it to the resonators and update their state. This method already calls the D\+S\+P routines of the two resonators, so be sure not to call them if you use this method. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em f0} & Applied force to the first resonator \\
+\hline
+\mbox{\tt in}  & {\em v0} & Applied velocity to the first resonator (resets position to 0) \\
+\hline
+\mbox{\tt in}  & {\em s0} & Fragment size of the first resonator \\
+\hline
+\mbox{\tt in}  & {\em f1} & Applied force to the second resonator \\
+\hline
+\mbox{\tt in}  & {\em v1} & Applied velocity to the second resonator (resets position to 0) \\
+\hline
+\mbox{\tt in}  & {\em s1} & Fragment size of the second resonator \\
+\hline
+\mbox{\tt out}  & {\em outs} & Displacement of the resonators at their pickup points \\
+\hline
+\end{DoxyParams}
 \hypertarget{group__interactor_ga96b6bb2e7608f4ec80e569634758303c}{}\index{Interactor interface@{Interactor interface}!S\+D\+T\+Interactor\+\_\+set\+First\+Point@{S\+D\+T\+Interactor\+\_\+set\+First\+Point}}
 \index{S\+D\+T\+Interactor\+\_\+set\+First\+Point@{S\+D\+T\+Interactor\+\_\+set\+First\+Point}!Interactor interface@{Interactor interface}}
 \subsubsection[{S\+D\+T\+Interactor\+\_\+set\+First\+Point(\+S\+D\+T\+Interactor $\ast$x, long l)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Interactor\+\_\+set\+First\+Point (

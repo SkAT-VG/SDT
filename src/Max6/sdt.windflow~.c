@@ -32,7 +32,7 @@ void windflow_assist(t_windflow *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Wind speed [0.0 ~ 1.0]");
   } 
   else {
-    sprintf(s, "(signal): Output");
+    sprintf(s, "(signal): Output sound");
   }
 }
 

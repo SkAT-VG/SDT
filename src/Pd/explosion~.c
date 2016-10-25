@@ -10,36 +10,36 @@ static t_class *explosion_class;
 
 typedef struct _explosion {
   t_object obj;
-  SDTExplosion *blow;
+  SDTExplosion *explosion;
   t_outlet *out0, *out1;
 } t_explosion;
 
 void explosion_blastTime(t_explosion *x, t_float f) {
-  SDTExplosion_setBlastTime(x->blow, f);
+  SDTExplosion_setBlastTime(x->explosion, f);
 }
 
 void explosion_scatterTime(t_explosion *x, t_float f) {
-  SDTExplosion_setScatterTime(x->blow, f);
+  SDTExplosion_setScatterTime(x->explosion, f);
 }
 
 void explosion_dispersion(t_explosion *x, t_float f) {
-  SDTExplosion_setDispersion(x->blow, f);
+  SDTExplosion_setDispersion(x->explosion, f);
 }
 
 void explosion_distance(t_explosion *x, t_float f) {
-  SDTExplosion_setDistance(x->blow, f);
+  SDTExplosion_setDistance(x->explosion, f);
 }
 
 void explosion_waveSpeed(t_explosion *x, t_float f) {
-  SDTExplosion_setWaveSpeed(x->blow, f);
+  SDTExplosion_setWaveSpeed(x->explosion, f);
 }
 
 void explosion_windSpeed(t_explosion *x, t_float f) {
-  SDTExplosion_setWindSpeed(x->blow, f);
+  SDTExplosion_setWindSpeed(x->explosion, f);
 }
 
 void explosion_update(t_explosion *x) {
-  SDTExplosion_update(x->blow);
+  SDTExplosion_update(x->explosion);
 }
 
 static t_int *explosion_perform(t_int *w) { 
@@ -49,7 +49,7 @@ static t_int *explosion_perform(t_int *w) {
   int n = (int)(w[4]);
   double tmpOuts[2];
   while (n--) {
-    SDTExplosion_dsp(x->blow, tmpOuts);
+    SDTExplosion_dsp(x->explosion, tmpOuts);
     *out0++ = tmpOuts[0];
     *out1++ = tmpOuts[1];
   }
@@ -67,25 +67,25 @@ static void *explosion_new(t_symbol *s, int argc, t_atom *argv) {
   x->out0 = outlet_new(&x->obj, gensym("signal"));
   x->out1 = outlet_new(&x->obj, gensym("signal"));
   if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    maxScatter = atom_getfloat(argv);
+    maxScatter = atom_getfloat(&argv[0]);
   }
   else {
     maxScatter = 44100.0;
   }
   if (argc > 1 && argv[1].a_type == A_FLOAT) {
-    maxDelay = atom_getfloat(argv);
+    maxDelay = atom_getfloat(&argv[1]);
   }
   else {
-    maxDelay = 4410000.0;
+    maxDelay = 441000.0;
   }
-  x->blow = SDTExplosion_new(maxScatter, maxDelay);
+  x->explosion = SDTExplosion_new(maxScatter, maxDelay);
   return (x);
 }
 
 static void explosion_free(t_explosion *x) {
   outlet_free(x->out0);
   outlet_free(x->out1);
-  SDTExplosion_free(x->blow);
+  SDTExplosion_free(x->explosion);
 }
 
 void explosion_tilde_setup(void) {

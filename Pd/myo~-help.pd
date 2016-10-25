@@ -1,0 +1,27 @@
+#N canvas 434 339 532 258 10;
+#X floatatom 13 175 6 0 0 0 - - -, f 6;
+#X floatatom 94 174 6 0 0 0 - - -, f 6;
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 433 166 loadbang;
+#X text 48 4 myo~ - Myoelastic vocal activity detector;
+#X obj 13 99 r myo;
+#X text 117 137 Args: buffer size;
+#X text 11 193 Activity;
+#X text 92 192 Frequency;
+#X obj 376 126 r pd;
+#X obj 376 146 route dsp;
+#X obj 376 166 select 1;
+#X msg 376 187 \; myo lowFrequency 20 \; myo highFrequency 100 \; myo
+threshold 0.001 \;;
+#X obj 13 137 myo~ 44100;
+#X obj 78 99 adc~;
+#X connect 3 0 12 0;
+#X connect 5 0 13 0;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 13 0 0 0;
+#X connect 13 1 1 0;
+#X connect 14 0 13 0;

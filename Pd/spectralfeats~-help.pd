@@ -1,0 +1,32 @@
+#N canvas 219 191 556 220 10;
+#X obj 11 98 adc~;
+#X floatatom 11 195 6 0 0 0 - - -, f 6;
+#X floatatom 54 195 6 0 0 0 - - -, f 6;
+#X floatatom 97 195 6 0 0 0 - - -, f 6;
+#X floatatom 140 195 6 0 0 0 - - -, f 6;
+#X floatatom 183 195 6 0 0 0 - - -, f 6;
+#X obj 11 152 route magnitude centroid spread skewness kurtosis flatness
+flux onset;
+#X floatatom 226 195 6 0 0 0 - - -, f 6;
+#X floatatom 269 195 6 0 0 0 - - -, f 6;
+#X floatatom 312 195 6 0 0 0 - - -, f 6;
+#X msg 335 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X msg 56 98 overlap 0.5;
+#X text 163 121 Args: analysis window size;
+#X obj 11 121 spectralfeats~ 2048;
+#X obj 56 74 loadbang;
+#X text 50 4 spectralfeats~ - Spectral features extractor;
+#X connect 0 0 13 0;
+#X connect 6 0 1 0;
+#X connect 6 1 2 0;
+#X connect 6 2 3 0;
+#X connect 6 3 4 0;
+#X connect 6 4 5 0;
+#X connect 6 5 7 0;
+#X connect 6 6 8 0;
+#X connect 6 7 9 0;
+#X connect 11 0 13 0;
+#X connect 13 0 6 0;
+#X connect 14 0 11 0;

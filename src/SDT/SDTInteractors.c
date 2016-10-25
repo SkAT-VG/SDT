@@ -8,7 +8,7 @@
 
 struct SDTInteractor {
   SDTResonator *obj0, *obj1;
-  long p0, p1;
+  long contact0, contact1;
   void *state;
   double (*computeForce)(SDTInteractor *x);
 };
@@ -19,8 +19,8 @@ SDTInteractor *SDTInteractor_new() {
   x = (SDTInteractor *)malloc(sizeof(SDTInteractor));
   x->obj0 = NULL;
   x->obj1 = NULL;
-  x->p0 = 0;
-  x->p1 = 0;
+  x->contact0 = 0;
+  x->contact1 = 0;
   x->state = NULL;
   x->computeForce = NULL;
   return x;
@@ -39,42 +39,61 @@ void SDTInteractor_setSecondResonator(SDTInteractor *x, SDTResonator *p) {
 }
 
 void SDTInteractor_setFirstPoint(SDTInteractor *x, long l) {
-  x->p0 = l;
+  x->contact0 = l;
 }
 
 void SDTInteractor_setSecondPoint(SDTInteractor *x, long l) {
-  x->p1 = l;
+  x->contact1 = l;
 }
 
 double SDTInteractor_computeForce(SDTInteractor *x) {
   return x->computeForce(x);
 }
 
-void SDTInteractor_dsp(SDTInteractor *x, double f0, double f1, double *outs) {
-  double f;
-  int i, n0, n1;
+void SDTInteractor_dsp(SDTInteractor *x, double f0, double v0, double s0,
+                       double f1, double v1, double s1, double *outs) {
+  double f, p;
+  long pickup, mode, nModes0, nModes1, nPickups0, nPickups1;
   
   if (x->obj0 && x->obj1) {
     f = x->computeForce(x);
-    SDTResonator_applyForce(x->obj0, x->p0, f);
-    SDTResonator_applyForce(x->obj1, x->p1, -f);
+    SDTResonator_applyForce(x->obj0, x->contact0, f);
+    SDTResonator_applyForce(x->obj1, x->contact1, -f);
   }
-  n0 = 0;
-  n1 = 0;
+  nPickups0 = 0;
+  nPickups1 = 0;
   if (x->obj0) {
-    SDTResonator_applyForce(x->obj0, x->p0, f0);
+    SDTResonator_applyForce(x->obj0, x->contact0, f0);
+    if (v0) {
+      p = x->obj1 ? SDTResonator_getPosition(x->obj1, x->contact1) : 0.0;
+      nModes0 = SDTResonator_getNModes(x->obj0);
+      for (mode = 0; mode < nModes0; mode++) {
+        SDTResonator_setPosition(x->obj0, x->contact0, mode, p);
+        SDTResonator_setVelocity(x->obj0, x->contact0, mode, v0);
+      }
+    }
+    if (s0) SDTResonator_setFragmentSize(x->obj0, s0);
     SDTResonator_dsp(x->obj0);
-    n0 = SDTResonator_getNPickups(x->obj0);
-    for (i = 0; i < n0; i++) {
-      outs[i] = SDTResonator_getPosition(x->obj0, i);
+    nPickups0 = SDTResonator_getNPickups(x->obj0);
+    for (pickup = 0; pickup < nPickups0; pickup++) {
+      outs[pickup] = SDTResonator_getPosition(x->obj0, pickup);
     }
   }
   if (x->obj1) {
-    SDTResonator_applyForce(x->obj1, x->p1, f1);
+    SDTResonator_applyForce(x->obj1, x->contact1, f1);
+    if (v1) {
+      p = x->obj0 ? SDTResonator_getPosition(x->obj0, x->contact0) : 0.0;
+      nModes1 = SDTResonator_getNModes(x->obj1);
+      for (mode = 0; mode < nModes1; mode++) {
+        SDTResonator_setPosition(x->obj1, x->contact1, mode, p);
+        SDTResonator_setVelocity(x->obj1, x->contact1, mode, v1);
+      }
+    }
+    if (s1) SDTResonator_setFragmentSize(x->obj1, s1);
     SDTResonator_dsp(x->obj1);
-    n1 = SDTResonator_getNPickups(x->obj1);
-    for (i = 0; i < n1; i++) {
-      outs[n0 + i] = SDTResonator_getPosition(x->obj1, i);
+    nPickups1 = SDTResonator_getNPickups(x->obj1);
+    for (pickup = 0; pickup < nPickups1; pickup++) {
+      outs[nPickups0 + pickup] = SDTResonator_getPosition(x->obj1, pickup);
     }
   }
 }
@@ -89,9 +108,9 @@ double SDTImpact_Baldan(SDTInteractor *x) {
   SDTImpact *s = x->state;
   double p, v, f, restitution;
   
-  p = SDTResonator_getPosition(x->obj1, x->p1) - SDTResonator_getPosition(x->obj0, x->p0);
+  p = SDTResonator_getPosition(x->obj1, x->contact1) - SDTResonator_getPosition(x->obj0, x->contact0);
   if (p <= 0.0) return 0.0;
-  v = SDTResonator_getVelocity(x->obj1, x->p1) - SDTResonator_getVelocity(x->obj0, x->p0);
+  v = SDTResonator_getVelocity(x->obj1, x->contact1) - SDTResonator_getVelocity(x->obj0, x->contact0);
   f = s->stiffness * pow(p, s->shape);
   if (v < 0.0) {
     restitution = 1.0 - s->dissipation;
@@ -104,9 +123,9 @@ double SDTImpact_MarhefkaOrin(SDTInteractor *x) {
   SDTImpact *s = x->state;
   double p, v, f;
   
-  p = SDTResonator_getPosition(x->obj1, x->p1) - SDTResonator_getPosition(x->obj0, x->p0);
+  p = SDTResonator_getPosition(x->obj1, x->contact1) - SDTResonator_getPosition(x->obj0, x->contact0);
   if (p <= 0.0) return 0.0;
-  v = SDTResonator_getVelocity(x->obj1, x->p1) - SDTResonator_getVelocity(x->obj0, x->p0);
+  v = SDTResonator_getVelocity(x->obj1, x->contact1) - SDTResonator_getVelocity(x->obj0, x->contact0);
   f = s->stiffness * pow(p, s->shape) * (1.0 + s->dissipation * v);
   return f;
 }
@@ -154,7 +173,7 @@ double SDTFriction_ElastoPlastic(SDTInteractor *x) {
   SDTFriction *s = (SDTFriction *)x->state;
   double v, vRatio, vSgn, zSgn, zss, zba, alpha, dz, w, f;
   
-  v = SDTResonator_getVelocity(x->obj1, x->p1) - SDTResonator_getVelocity(x->obj0, x->p0);
+  v = SDTResonator_getVelocity(x->obj1, x->contact1) - SDTResonator_getVelocity(x->obj0, x->contact0);
   if (s->fn <= 0.0) {
     s->z = 0.0;
     return 0.0;

@@ -57,9 +57,9 @@ SDTCommon.h should always be included when using other SDT modules.
 #define SDT_COMMON_H
 
 /** @brief SDT version number */
-#define SDT_ver          074
+#define SDT_ver          075
 /** @brief SDT version string */
-#define SDT_ver_str     "074"
+#define SDT_ver_str     "075"
 /** @brief Value of Pi */
 #define SDT_PI           3.141592653589793
 /** @brief Value of 2 * Pi */
@@ -79,6 +79,7 @@ SDTCommon.h should always be included when using other SDT modules.
 
 /** @brief Sampling frequency (Hz) */
 extern double SDT_sampleRate;
+
 /** @brief Sampling period (s) */
 extern double SDT_timeStep;
 
@@ -127,9 +128,19 @@ extern double SDT_gravity(double mass);
 
 /** @brief Applies a Hanning window to a chunk of samples.
 Applies a Hanning window to a chunk of samples.
-@param[in,out] samples to window
-@param[n] window size */
+@param[in,out] sig samples to window
+@param[in] n window size */
 extern void SDT_hanning(double *sig, int n);
+
+/** @brief Computes a direct Haar Wavelet Transform of the incoming signal (in place).
+@param[in,out] sig incoming signals
+@param[in] n window size */ 
+extern void SDT_haar(double *sig, long n);
+
+/** @brief Computes an inverse Haar Wavelet Transform of the incoming signal (in place).
+@param[in,out] sig incoming signals
+@param[in] n window size */ 
+extern void SDT_ihaar(double *sig, long n);
 
 /** @brief Computes kinetic energy.
 Computes the kinetic energy of an object, given its mass and velocity.
@@ -150,6 +161,11 @@ Rescales a value of known range into the [0.0, 1.0] interval.
 @param[in] max Upper bound
 @return Value rescaled from [min, max] to [0.0, 1.0] */
 extern double SDT_normalize(double x, double min, double max);
+
+/** @brief Normalizes samples in a window so that their sum is equal to 1.
+@param[in,out] sig window to normalize
+@param[in] n window size */
+extern void SDT_normalizeWindow(double *sig, int n);
 
 /** @brief Time needed to travel the given distance at Mach 1.
 Computes the amount of time, in samples, needed by a sound wave propagating in air

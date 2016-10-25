@@ -42,7 +42,7 @@ void reverb_assist(t_reverb *x, void *b, long m, long a, char *s) {
                "Object attributes and messages (see help patch)");
   } 
   else {
-    sprintf(s, "(signal): Reverberated output");
+    sprintf(s, "(signal): Output sound");
   }
 }
 

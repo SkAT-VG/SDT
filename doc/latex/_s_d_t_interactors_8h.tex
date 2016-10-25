@@ -1,5 +1,5 @@
-\hypertarget{_s_d_t_interactors_8h}{}\section{src/\+S\+D\+T/\+S\+D\+T\+Interactors.h File Reference}
-\label{_s_d_t_interactors_8h}\index{src/\+S\+D\+T/\+S\+D\+T\+Interactors.\+h@{src/\+S\+D\+T/\+S\+D\+T\+Interactors.\+h}}
+\hypertarget{_s_d_t_interactors_8h}{}\section{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Interactors.h File Reference}
+\label{_s_d_t_interactors_8h}\index{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Interactors.\+h@{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Interactors.\+h}}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
@@ -26,8 +26,7 @@ void \hyperlink{group__interactor_ga0f55a3259e515011bc56039fe9d59277}{S\+D\+T\+I
 \hypertarget{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}{}double \hyperlink{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}{S\+D\+T\+Interactor\+\_\+compute\+Force} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x)\label{group__interactor_ga2fe376e241510db2619051e5d7b0ffa6}
 
 \begin{DoxyCompactList}\small\item\em Computes a force to apply to the contact points, based on the resonators\textquotesingle{} state at the chosen pickups. \end{DoxyCompactList}\item 
-\hypertarget{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}{}void \hyperlink{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}{S\+D\+T\+Interactor\+\_\+dsp} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f0, double f1, double $\ast$outs)\label{group__interactor_ga46f8a2ada4f8c81515abba9bd4222bb3}
-
+void \hyperlink{group__interactor_ga78d5eab4115c38199cce2f45856d7fce}{S\+D\+T\+Interactor\+\_\+dsp} (\hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$x, double f0, double v0, double s0, double f1, double v1, double s1, double $\ast$outs)
 \begin{DoxyCompactList}\small\item\em Signal processing routine. Convenience method to compute the interaction force, apply it to the resonators and update their state. This method already calls the D\+S\+P routines of the two resonators, so be sure not to call them if you use this method. \end{DoxyCompactList}\item 
 \hyperlink{group__interactor_gacd68aba5c96532193d9cbc8dfa8f1c8c}{S\+D\+T\+Interactor} $\ast$ \hyperlink{group__impact_gadf0b4c5f0d17362aa5ae3f33c21978c1}{S\+D\+T\+Impact\+\_\+new} ()
 \begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 

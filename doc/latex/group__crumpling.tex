@@ -18,60 +18,30 @@ void \hyperlink{group__crumpling_ga41986a18797f97a5f27554a702979c08}{S\+D\+T\+Cr
 void \hyperlink{group__crumpling_ga813d36c8f3c981a70c2f2e24059da618}{S\+D\+T\+Crumpling\+\_\+set\+Granularity} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double f)
 \begin{DoxyCompactList}\small\item\em Sets the event density of the crumpling process. \end{DoxyCompactList}\item 
 void \hyperlink{group__crumpling_ga1be320d8744d98d47de5f9e0150d55a2}{S\+D\+T\+Crumpling\+\_\+set\+Fragmentation} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double f)
-\begin{DoxyCompactList}\small\item\em Sets the amount of progressive fragmentation of the object during the process. \end{DoxyCompactList}\item 
-\hypertarget{group__crumpling_ga7ac34fe60e07176b4da089f511e94648}{}void \hyperlink{group__crumpling_ga7ac34fe60e07176b4da089f511e94648}{S\+D\+T\+Crumpling\+\_\+reset} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x)\label{group__crumpling_ga7ac34fe60e07176b4da089f511e94648}
-
-\begin{DoxyCompactList}\small\item\em Resets the crumpling process, restoring its initial energy. \end{DoxyCompactList}\item 
-void \hyperlink{group__crumpling_ga7b5488ac7dcb7a58f67dfb38bd89315a}{S\+D\+T\+Crumpling\+\_\+discrete} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double $\ast$size, double $\ast$energy)
-\begin{DoxyCompactList}\small\item\em Single iteration of a discrete crumpling process. Call this routine in a loop to simulate a discrete crumpling process. The loop should end when \hyperlink{group__crumpling_ga7d5c2d51daf736d9821d4904ee1f4d74}{S\+D\+T\+Crumpling\+\_\+has\+Finished()} returns true. \end{DoxyCompactList}\item 
-void \hyperlink{group__crumpling_ga8577606d934a6c80db0833a35a17021b}{S\+D\+T\+Crumpling\+\_\+continuous} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double $\ast$size, double $\ast$energy)
-\begin{DoxyCompactList}\small\item\em Single iteration of a continuous crumpling process. Call this routine in a loop to simulate a continuous crumpling process. Unlike in the discrete crumpling, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. \end{DoxyCompactList}\item 
-int \hyperlink{group__crumpling_ga7d5c2d51daf736d9821d4904ee1f4d74}{S\+D\+T\+Crumpling\+\_\+has\+Finished} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x)
-\begin{DoxyCompactList}\small\item\em Checks if the crumpling process is finished, i.\+e. if the remaining energy is 0. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Sets the amount of fragmentation of the object during the process. \end{DoxyCompactList}\item 
+void \hyperlink{group__crumpling_gaafe4f3122ded1b386260c9f67839e453}{S\+D\+T\+Crumpling\+\_\+dsp} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double $\ast$outs)
+\begin{DoxyCompactList}\small\item\em Single iteration of a crumpling process. Call this routine in a loop to simulate a crumpling process. Unlike in the breaking algorithm, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-Control layer for the impact model, generating crumpling and breaking sonic textures. Two main outputs are exposed\+: size and energy. The former should be used to control the size of the resonators, the latter should be used to control the impact velocity. 
+Control layer for the impact model, generating crumpling sonic textures. Two main outputs are exposed\+: energy and size. The former should be used to control the impact velocity, the latter should be used to control the size of the resonators. 
 
 \subsection{Function Documentation}
-\hypertarget{group__crumpling_ga8577606d934a6c80db0833a35a17021b}{}\index{Crumpling@{Crumpling}!S\+D\+T\+Crumpling\+\_\+continuous@{S\+D\+T\+Crumpling\+\_\+continuous}}
-\index{S\+D\+T\+Crumpling\+\_\+continuous@{S\+D\+T\+Crumpling\+\_\+continuous}!Crumpling@{Crumpling}}
-\subsubsection[{S\+D\+T\+Crumpling\+\_\+continuous(\+S\+D\+T\+Crumpling $\ast$x, double $\ast$size, double $\ast$energy)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Crumpling\+\_\+continuous (
+\hypertarget{group__crumpling_gaafe4f3122ded1b386260c9f67839e453}{}\index{Crumpling@{Crumpling}!S\+D\+T\+Crumpling\+\_\+dsp@{S\+D\+T\+Crumpling\+\_\+dsp}}
+\index{S\+D\+T\+Crumpling\+\_\+dsp@{S\+D\+T\+Crumpling\+\_\+dsp}!Crumpling@{Crumpling}}
+\subsubsection[{S\+D\+T\+Crumpling\+\_\+dsp(\+S\+D\+T\+Crumpling $\ast$x, double $\ast$outs)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Crumpling\+\_\+dsp (
 \begin{DoxyParamCaption}
 \item[{{\bf S\+D\+T\+Crumpling} $\ast$}]{x, }
-\item[{double $\ast$}]{size, }
-\item[{double $\ast$}]{energy}
+\item[{double $\ast$}]{outs}
 \end{DoxyParamCaption}
-)}\label{group__crumpling_ga8577606d934a6c80db0833a35a17021b}
+)}\label{group__crumpling_gaafe4f3122ded1b386260c9f67839e453}
 
 
-Single iteration of a continuous crumpling process. Call this routine in a loop to simulate a continuous crumpling process. Unlike in the discrete crumpling, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. 
+Single iteration of a crumpling process. Call this routine in a loop to simulate a crumpling process. Unlike in the breaking algorithm, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. 
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em size} & Size of the object fragment \\
-\hline
-\mbox{\tt out}  & {\em energy} & Energy of the micro-\/impact \\
-\hline
-\end{DoxyParams}
-\hypertarget{group__crumpling_ga7b5488ac7dcb7a58f67dfb38bd89315a}{}\index{Crumpling@{Crumpling}!S\+D\+T\+Crumpling\+\_\+discrete@{S\+D\+T\+Crumpling\+\_\+discrete}}
-\index{S\+D\+T\+Crumpling\+\_\+discrete@{S\+D\+T\+Crumpling\+\_\+discrete}!Crumpling@{Crumpling}}
-\subsubsection[{S\+D\+T\+Crumpling\+\_\+discrete(\+S\+D\+T\+Crumpling $\ast$x, double $\ast$size, double $\ast$energy)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Crumpling\+\_\+discrete (
-\begin{DoxyParamCaption}
-\item[{{\bf S\+D\+T\+Crumpling} $\ast$}]{x, }
-\item[{double $\ast$}]{size, }
-\item[{double $\ast$}]{energy}
-\end{DoxyParamCaption}
-)}\label{group__crumpling_ga7b5488ac7dcb7a58f67dfb38bd89315a}
-
-
-Single iteration of a discrete crumpling process. Call this routine in a loop to simulate a discrete crumpling process. The loop should end when \hyperlink{group__crumpling_ga7d5c2d51daf736d9821d4904ee1f4d74}{S\+D\+T\+Crumpling\+\_\+has\+Finished()} returns true. 
-
-
-\begin{DoxyParams}[1]{Parameters}
-\mbox{\tt out}  & {\em size} & Size of the object fragment \\
-\hline
-\mbox{\tt out}  & {\em energy} & Energy of the micro-\/impact \\
+\mbox{\tt out}  & {\em outs} & Pointer to the output array\+: impact energy and fragment size \\
 \hline
 \end{DoxyParams}
 \hypertarget{group__crumpling_ga5dbe175da229d809f2e92482a72ea1bb}{}\index{Crumpling@{Crumpling}!S\+D\+T\+Crumpling\+\_\+free@{S\+D\+T\+Crumpling\+\_\+free}}
@@ -90,20 +60,6 @@ Object destructor.
 \mbox{\tt in}  & {\em x} & Pointer to the instance to destroy \\
 \hline
 \end{DoxyParams}
-\hypertarget{group__crumpling_ga7d5c2d51daf736d9821d4904ee1f4d74}{}\index{Crumpling@{Crumpling}!S\+D\+T\+Crumpling\+\_\+has\+Finished@{S\+D\+T\+Crumpling\+\_\+has\+Finished}}
-\index{S\+D\+T\+Crumpling\+\_\+has\+Finished@{S\+D\+T\+Crumpling\+\_\+has\+Finished}!Crumpling@{Crumpling}}
-\subsubsection[{S\+D\+T\+Crumpling\+\_\+has\+Finished(\+S\+D\+T\+Crumpling $\ast$x)}]{\setlength{\rightskip}{0pt plus 5cm}int S\+D\+T\+Crumpling\+\_\+has\+Finished (
-\begin{DoxyParamCaption}
-\item[{{\bf S\+D\+T\+Crumpling} $\ast$}]{x}
-\end{DoxyParamCaption}
-)}\label{group__crumpling_ga7d5c2d51daf736d9821d4904ee1f4d74}
-
-
-Checks if the crumpling process is finished, i.\+e. if the remaining energy is 0. 
-
-\begin{DoxyReturn}{Returns}
-1 (true) if the remaining energy is $<$= 0, 0 (false) otherwise. 
-\end{DoxyReturn}
 \hypertarget{group__crumpling_ga5c4f19df719468828791ac6ee92fd3ee}{}\index{Crumpling@{Crumpling}!S\+D\+T\+Crumpling\+\_\+new@{S\+D\+T\+Crumpling\+\_\+new}}
 \index{S\+D\+T\+Crumpling\+\_\+new@{S\+D\+T\+Crumpling\+\_\+new}!Crumpling@{Crumpling}}
 \subsubsection[{S\+D\+T\+Crumpling\+\_\+new()}]{\setlength{\rightskip}{0pt plus 5cm}{\bf S\+D\+T\+Crumpling}$\ast$ S\+D\+T\+Crumpling\+\_\+new (
@@ -145,7 +101,7 @@ Sets the crushing energy.
 )}\label{group__crumpling_ga1be320d8744d98d47de5f9e0150d55a2}
 
 
-Sets the amount of progressive fragmentation of the object during the process. 
+Sets the amount of fragmentation of the object during the process. 
 
 
 \begin{DoxyParams}[1]{Parameters}

@@ -41,6 +41,10 @@ extern double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup);
 @return Object momentum, in Kg * m/s */
 extern double SDTResonator_getMomentum(SDTResonator *x);
 
+/** @brief Gets the number of resonance modes
+@return Number of resonance modes */
+extern double SDTResonator_getNModes(SDTResonator *x);
+
 /** @brief Gets the number of pickup points
 @return Number of pickup points */
 extern double SDTResonator_getNPickups(SDTResonator *x);

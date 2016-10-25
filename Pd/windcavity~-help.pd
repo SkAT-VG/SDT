@@ -1,0 +1,39 @@
+#N canvas 141 324 563 336 10;
+#X obj 39 272 windcavity~;
+#X msg 225 241 diameter \$1;
+#X msg 139 242 length \$1;
+#X obj 39 79 vsl 15 128 0 1 0 0 empty speed empty 0 -9 0 10 -262144
+-1 -1 5080 1;
+#X floatatom 39 218 5 0 0 0 - - -, f 5;
+#X obj 225 79 vsl 15 128 0 1 0 0 empty diameter empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X floatatom 225 218 5 0 0 0 - - -, f 5;
+#X obj 139 79 vsl 15 128 0 1 0 0 empty length empty 0 -9 0 10 -262144
+-1 -1 8890 1;
+#X floatatom 139 218 5 0 0 0 - - -, f 5;
+#X text 15 55 Wind speed;
+#X text 103 55 Cavity length and diameter (m);
+#X obj 39 302 dac~;
+#X msg 437 263 \; speed 0.4 \; length 0.7 \; diameter 0.25 \;;
+#X text 45 4 windcavity~ - Wind through cavities;
+#X msg 328 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 498 239 loadbang;
+#X obj 437 192 r pd;
+#X obj 437 216 route dsp;
+#X obj 437 239 select 1;
+#X connect 0 0 11 0;
+#X connect 0 0 11 1;
+#X connect 1 0 0 0;
+#X connect 2 0 0 0;
+#X connect 3 0 4 0;
+#X connect 4 0 0 0;
+#X connect 5 0 6 0;
+#X connect 6 0 1 0;
+#X connect 7 0 8 0;
+#X connect 8 0 2 0;
+#X connect 15 0 12 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 18 0 12 0;

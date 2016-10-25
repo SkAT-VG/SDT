@@ -20,7 +20,7 @@ var _s_d_t_interactors_8h =
     [ "SDTImpact_setShape", "group__impact.html#gaff2728768b2dec2ebe36ddb3f6e2105d", null ],
     [ "SDTImpact_setStiffness", "group__impact.html#ga2285e78c4be49f6d45b4add33dc5366b", null ],
     [ "SDTInteractor_computeForce", "group__interactor.html#ga2fe376e241510db2619051e5d7b0ffa6", null ],
-    [ "SDTInteractor_dsp", "group__interactor.html#ga46f8a2ada4f8c81515abba9bd4222bb3", null ],
+    [ "SDTInteractor_dsp", "group__interactor.html#ga78d5eab4115c38199cce2f45856d7fce", null ],
     [ "SDTInteractor_setFirstPoint", "group__interactor.html#ga96b6bb2e7608f4ec80e569634758303c", null ],
     [ "SDTInteractor_setFirstResonator", "group__interactor.html#ga73c9ca147996c7ff9994ddc26ff19d00", null ],
     [ "SDTInteractor_setSecondPoint", "group__interactor.html#ga0f55a3259e515011bc56039fe9d59277", null ],

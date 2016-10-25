@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTFilters.h"
+#include "SDTStructs.h"
 
 struct SDTOnePole {
   double b0, a1, y1;
@@ -187,7 +188,7 @@ double SDTTwoPoles_dsp(SDTTwoPoles *x, double in) {
 
 struct SDTAverage {
   double *buf, sum;
-  long size, curr;
+  long size, window, curr, last;
 };
 
 SDTAverage *SDTAverage_new(long size) {
@@ -202,7 +203,9 @@ SDTAverage *SDTAverage_new(long size) {
   }
   x->sum = 0.0;
   x->size = size;
+  x->window = size;
   x->curr = 0;
+  x->last = 0;
   return x;
 }
 
@@ -211,12 +214,29 @@ void SDTAverage_free(SDTAverage *x) {
   free(x);
 }
 
+void SDTAverage_setWindow(SDTAverage *x, unsigned int i) {
+  int j, k;
+  
+  i = SDT_clip(i, 1, x->size);
+  for (j = i; j > x->window; j--) {
+    k = (x->curr + x->size - j) % x->size;
+    x->sum += x->buf[k];
+  }
+  for (j = x->window; j < i; j++) {
+    k = (x->curr + x->size - j) % x->size;
+    x->sum -= x->buf[k];
+  }
+  x->window = i;
+  x->last = (x->curr + x->size - i) % x->size; 
+}
+
 double SDTAverage_dsp(SDTAverage *x, double in) {
-  x->sum -= x->buf[x->curr];
+  x->sum -= x->buf[x->last];
   x->buf[x->curr] = in;
   x->sum += x->buf[x->curr];
   x->curr = (x->curr + 1) % x->size;
-  return x->sum / x->size;
+  x->last = (x->last + 1) % x->size;
+  return x->sum / x->window;
 }
 
 //-------------------------------------------------------------------------------------//

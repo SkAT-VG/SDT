@@ -15,6 +15,7 @@ var _s_d_t_filters_8h =
     [ "SDTAverage_dsp", "group__average.html#gae1164660f6d50d9f193b6e7dad522961", null ],
     [ "SDTAverage_free", "group__average.html#ga53871e87b5c502963e39f29cab8bb8cd", null ],
     [ "SDTAverage_new", "group__average.html#ga561a3d79fca7959e8e185a323beb2551", null ],
+    [ "SDTAverage_setWindow", "group__average.html#ga2fc1886e89f08ebfbe21281c6ee4f091", null ],
     [ "SDTComb_dsp", "group__comb.html#ga476a303de520ccd185979a3ff10c9214", null ],
     [ "SDTComb_free", "group__comb.html#ga310930d194e1fd84d1ed68054aa54cef", null ],
     [ "SDTComb_new", "group__comb.html#ga92ff713863bef8b57bc434787634afd6", null ],

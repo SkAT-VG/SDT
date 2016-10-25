@@ -1,8 +1,15 @@
 var _s_d_t_analysis_8h =
 [
+    [ "SDTMyoelastic", "group__myoelastic.html#gaaaf3320e161f43bf74a8c802519e5c3e", null ],
     [ "SDTPitch", "group__pitch.html#ga93a04dd02784981e8efabae71a248942", null ],
     [ "SDTSpectralFeats", "group__spectralfeats.html#ga92a20692ab1920ebf580c87a45285d4b", null ],
     [ "SDTZeroCrossing", "group__zerocrossing.html#gae3cf5e0effced03712240753a4a60d06", null ],
+    [ "SDTMyoelastic_dsp", "group__myoelastic.html#ga2ad77892da5bfe3df69088504a8ad19a", null ],
+    [ "SDTMyoelastic_free", "group__myoelastic.html#ga98a69e569953c88684003bf467d87263", null ],
+    [ "SDTMyoelastic_new", "group__myoelastic.html#ga9b10fe4d528fa1b5a19ea619a3de4601", null ],
+    [ "SDTMyoelastic_setHighFrequency", "group__myoelastic.html#gafba72e2959eea8451c07411b992fa96e", null ],
+    [ "SDTMyoelastic_setLowFrequency", "group__myoelastic.html#gafb33a8f68eddfbdb2e190c1b8ee6d6a9", null ],
+    [ "SDTMyoelastic_setThreshold", "group__myoelastic.html#gae209925f758db266b9f9c5f70443b0f3", null ],
     [ "SDTPitch_dsp", "group__pitch.html#gacf5aaf510204ed203896e00aa2e9022d", null ],
     [ "SDTPitch_free", "group__pitch.html#ga2389738427ae0e00c78cccb293683c18", null ],
     [ "SDTPitch_new", "group__pitch.html#ga14f1ce31f420c7d3467967c1ada751ab", null ],

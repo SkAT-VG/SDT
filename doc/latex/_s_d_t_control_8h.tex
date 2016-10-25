@@ -1,8 +1,14 @@
-\hypertarget{_s_d_t_control_8h}{}\section{src/\+S\+D\+T/\+S\+D\+T\+Control.h File Reference}
-\label{_s_d_t_control_8h}\index{src/\+S\+D\+T/\+S\+D\+T\+Control.\+h@{src/\+S\+D\+T/\+S\+D\+T\+Control.\+h}}
+\hypertarget{_s_d_t_control_8h}{}\section{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Control.h File Reference}
+\label{_s_d_t_control_8h}\index{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Control.\+h@{/\+Users/\+Shared/skatvg\+\_\+svn/\+Code/\+Sound\+Design\+Toolkit/src/\+S\+D\+T/\+S\+D\+T\+Control.\+h}}
 \subsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
+\hypertarget{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{}typedef struct \hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} \hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing}\label{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for the crumpling object. \end{DoxyCompactList}\item 
+\hypertarget{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{}typedef struct \hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} \hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking}\label{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}
+
+\begin{DoxyCompactList}\small\item\em Opaque data structure for the breaking object. \end{DoxyCompactList}\item 
 \hypertarget{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{}typedef struct \hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} \hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling}\label{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}
 
 \begin{DoxyCompactList}\small\item\em Opaque data structure for the crumpling object. \end{DoxyCompactList}\item 
@@ -15,6 +21,41 @@
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
+\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$ \hyperlink{group__bouncing_ga114e29abaede43bdc471c79a657c1fb8}{S\+D\+T\+Bouncing\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_gabfaffe0eaf93138631e284fe5ed798c7}{S\+D\+T\+Bouncing\+\_\+free} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_ga5165a72d3db90defcceb2b5497278f8c}{S\+D\+T\+Bouncing\+\_\+set\+Restitution} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the coefficient of restitution. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_gaf52e4153995574ea3c5f911af0c91ae4}{S\+D\+T\+Bouncing\+\_\+set\+Height} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the initial height of the falling object. \end{DoxyCompactList}\item 
+void \hyperlink{group__bouncing_ga2f97eb41d869310dca1422a3ee8ff5ca}{S\+D\+T\+Bouncing\+\_\+set\+Irregularity} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the irregularity of the shape of the object. \end{DoxyCompactList}\item 
+\hypertarget{group__bouncing_ga3ecf14685e79e027cda2cfeeab44e6e6}{}void \hyperlink{group__bouncing_ga3ecf14685e79e027cda2cfeeab44e6e6}{S\+D\+T\+Bouncing\+\_\+reset} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)\label{group__bouncing_ga3ecf14685e79e027cda2cfeeab44e6e6}
+
+\begin{DoxyCompactList}\small\item\em Resets the bouncing process, restoring its initial energy. \end{DoxyCompactList}\item 
+double \hyperlink{group__bouncing_ga88e82a64cd061694977c69b13c52521c}{S\+D\+T\+Bouncing\+\_\+dsp} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Single iteration of the whole buncing process. Call this routine in a loop to simulate the bouncing process. The loop should end when \hyperlink{group__bouncing_gaad83fdd39bd35c1b8fd315b5804135db}{S\+D\+T\+Bouncing\+\_\+has\+Finished()} returns true. \end{DoxyCompactList}\item 
+int \hyperlink{group__bouncing_gaad83fdd39bd35c1b8fd315b5804135db}{S\+D\+T\+Bouncing\+\_\+has\+Finished} (\hyperlink{group__bouncing_gaab51e1dac97a045a7e339645c7ef84e8}{S\+D\+T\+Bouncing} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Checks if the bouncing process is finished, i.\+e. if the remaining energy is 0. \end{DoxyCompactList}\item 
+\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$ \hyperlink{group__breaking_ga39727589c894fa0bbddfa84330c49768}{S\+D\+T\+Breaking\+\_\+new} ()
+\begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga22047c794361f1c91df0f8665786d58e}{S\+D\+T\+Breaking\+\_\+free} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga9c62b00b5e6b52a3ba591c987a3afe04}{S\+D\+T\+Breaking\+\_\+set\+Stored\+Energy} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the total energy stored in the object. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga2b8e7a030bbca5807ee047d078067233}{S\+D\+T\+Breaking\+\_\+set\+Crushing\+Energy} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the crushing energy. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_gab5b53d06e7b1a144ca755ad51768d93f}{S\+D\+T\+Breaking\+\_\+set\+Granularity} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the event density of the crumpling process. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_gad80e128f84e8aab1b403a94e53216d0f}{S\+D\+T\+Breaking\+\_\+set\+Fragmentation} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double f)
+\begin{DoxyCompactList}\small\item\em Sets the amount of progressive fragmentation of the object during the process. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga4fa0c4311c67d886798cce4c97a97146}{S\+D\+T\+Breaking\+\_\+reset} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Resets the crumpling process, restoring its initial energy and triggering the first micro impact. \end{DoxyCompactList}\item 
+void \hyperlink{group__breaking_ga0d441bf8dd961599eb3a58f1da1fb020}{S\+D\+T\+Breaking\+\_\+dsp} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x, double $\ast$outs)
+\begin{DoxyCompactList}\small\item\em Single iteration of the whole breaking process. Call this routine in a loop to simulate a breaking process. The loop should end when \hyperlink{group__breaking_ga4712157447efae292a131e389beb265a}{S\+D\+T\+Breaking\+\_\+has\+Finished()} returns true. \end{DoxyCompactList}\item 
+int \hyperlink{group__breaking_ga4712157447efae292a131e389beb265a}{S\+D\+T\+Breaking\+\_\+has\+Finished} (\hyperlink{group__breaking_gaf66ba3e9569d061a0d6337a24bce1dc5}{S\+D\+T\+Breaking} $\ast$x)
+\begin{DoxyCompactList}\small\item\em Checks if the breaking process is finished, i.\+e. if the remaining energy is 0. \end{DoxyCompactList}\item 
 \hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$ \hyperlink{group__crumpling_ga5c4f19df719468828791ac6ee92fd3ee}{S\+D\+T\+Crumpling\+\_\+new} ()
 \begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
 void \hyperlink{group__crumpling_ga5dbe175da229d809f2e92482a72ea1bb}{S\+D\+T\+Crumpling\+\_\+free} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x)
@@ -24,16 +65,9 @@ void \hyperlink{group__crumpling_ga41986a18797f97a5f27554a702979c08}{S\+D\+T\+Cr
 void \hyperlink{group__crumpling_ga813d36c8f3c981a70c2f2e24059da618}{S\+D\+T\+Crumpling\+\_\+set\+Granularity} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double f)
 \begin{DoxyCompactList}\small\item\em Sets the event density of the crumpling process. \end{DoxyCompactList}\item 
 void \hyperlink{group__crumpling_ga1be320d8744d98d47de5f9e0150d55a2}{S\+D\+T\+Crumpling\+\_\+set\+Fragmentation} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double f)
-\begin{DoxyCompactList}\small\item\em Sets the amount of progressive fragmentation of the object during the process. \end{DoxyCompactList}\item 
-\hypertarget{group__crumpling_ga7ac34fe60e07176b4da089f511e94648}{}void \hyperlink{group__crumpling_ga7ac34fe60e07176b4da089f511e94648}{S\+D\+T\+Crumpling\+\_\+reset} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x)\label{group__crumpling_ga7ac34fe60e07176b4da089f511e94648}
-
-\begin{DoxyCompactList}\small\item\em Resets the crumpling process, restoring its initial energy. \end{DoxyCompactList}\item 
-void \hyperlink{group__crumpling_ga7b5488ac7dcb7a58f67dfb38bd89315a}{S\+D\+T\+Crumpling\+\_\+discrete} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double $\ast$size, double $\ast$energy)
-\begin{DoxyCompactList}\small\item\em Single iteration of a discrete crumpling process. Call this routine in a loop to simulate a discrete crumpling process. The loop should end when \hyperlink{group__crumpling_ga7d5c2d51daf736d9821d4904ee1f4d74}{S\+D\+T\+Crumpling\+\_\+has\+Finished()} returns true. \end{DoxyCompactList}\item 
-void \hyperlink{group__crumpling_ga8577606d934a6c80db0833a35a17021b}{S\+D\+T\+Crumpling\+\_\+continuous} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double $\ast$size, double $\ast$energy)
-\begin{DoxyCompactList}\small\item\em Single iteration of a continuous crumpling process. Call this routine in a loop to simulate a continuous crumpling process. Unlike in the discrete crumpling, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. \end{DoxyCompactList}\item 
-int \hyperlink{group__crumpling_ga7d5c2d51daf736d9821d4904ee1f4d74}{S\+D\+T\+Crumpling\+\_\+has\+Finished} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x)
-\begin{DoxyCompactList}\small\item\em Checks if the crumpling process is finished, i.\+e. if the remaining energy is 0. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Sets the amount of fragmentation of the object during the process. \end{DoxyCompactList}\item 
+void \hyperlink{group__crumpling_gaafe4f3122ded1b386260c9f67839e453}{S\+D\+T\+Crumpling\+\_\+dsp} (\hyperlink{group__crumpling_ga1d5c6cf3fe003cd4d993dcfe0a39f72e}{S\+D\+T\+Crumpling} $\ast$x, double $\ast$outs)
+\begin{DoxyCompactList}\small\item\em Single iteration of a crumpling process. Call this routine in a loop to simulate a crumpling process. Unlike in the breaking algorithm, iterations do not cause energy loss and the process can continue indefinitely until explicitly interrupted. \end{DoxyCompactList}\item 
 \hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$ \hyperlink{group__rolling_ga8a04949ff0e9034761cb3ed0634c7014}{S\+D\+T\+Rolling\+\_\+new} ()
 \begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
 void \hyperlink{group__rolling_ga4b159394b13ddd09edeaceaa17f98982}{S\+D\+T\+Rolling\+\_\+free} (\hyperlink{group__rolling_ga0a20b598aea5fdc9789aa77fdb4852b1}{S\+D\+T\+Rolling} $\ast$x)

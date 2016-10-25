@@ -41,6 +41,48 @@ extern int SDTZeroCrossing_dsp(SDTZeroCrossing *x, double *out, double in);
 
 /** @} */
 
+/** @defgroup myoelastic Myoelastic features extractor
+Extracts amount and frequency of slow amplitude variations in the signal.
+Specifically designed for the detection of myoelastic activity in vocal input.
+@{ */
+
+/** @brief Opaque data structure for a myoelastic feature extractor object. */
+typedef struct SDTMyoelastic SDTMyoelastic;
+
+/** @brief Instantiates a myoelastic feature extractor.
+@param[in] size Size of the analysis window, in samples
+@return Pointer to the new instance */
+extern SDTMyoelastic *SDTMyoelastic_new(unsigned int size);
+
+/** @brief Destroys a myoelastic feature extractor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTMyoelastic_free(SDTMyoelastic *x);
+
+/** @brief Sets the low frequency cutoff.
+@param[in] x Pointer to the instance
+@param[in] f Low frequency cutoff, in Hz */
+extern void SDTMyoelastic_setLowFrequency(SDTMyoelastic *x, double f);
+
+/** @brief Sets the high frequency cutoff.
+@param[in] x Pointer to the instance
+@param[in] f High frequency cutoff, in Hz */
+extern void SDTMyoelastic_setHighFrequency(SDTMyoelastic *x, double f);
+
+/** @brief Sets the amplitude threshold of the input gate.
+Myoelastic activity is not computed for signals whose amplitude is below this thresold.
+@param[in] x Pointer to the instance
+@param[in] f Amplitude threshold */
+extern void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f);
+
+/** @brief Signal processing routine.
+Call this function at sample rate to perform signal analysis.
+@param[in] x Pointer to the instance
+@param[out] outs Pointer to an array of two doubles containing the algorithm output (amount and frequency)
+@param[in] in Input sample */
+extern void SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
+
+/** @} */
+
 /** @defgroup spectralfeats Spectral audio descriptors
 Spectral features extractor: statistical moments (centroid, spread, skewness, kurtosis),
 spectral flatness, spectral flux and an onset detection function based on rectified,

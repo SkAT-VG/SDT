@@ -1,0 +1,16 @@
+#N canvas 523 170 531 158 10;
+#X floatatom 13 114 5 0 0 0 - - -, f 5;
+#X obj 13 64 adc~;
+#X msg 51 64 overlap 0.5;
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X text 48 6 zerox~ - Zero crossing rate detector;
+#X text 11 132 Normalized zero crossing rate [0 \, 1];
+#X obj 13 89 zerox~ 2048;
+#X obj 51 40 loadbang;
+#X text 118 88 Args: analysis window size;
+#X connect 1 0 6 0;
+#X connect 2 0 6 0;
+#X connect 6 0 0 0;
+#X connect 7 0 2 0;

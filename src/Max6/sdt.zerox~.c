@@ -19,7 +19,7 @@ void zerocrossing_assist(t_zerocrossing *x, void *b, long m, long a, char *s) {
                "Object attributes and messages (see help patch)");
   } 
   else {
-    sprintf(s, "(float): Normalized zero crossing rate");
+    sprintf(s, "(float): Normalized zero crossing rate [0,1]");
   }
 }
 

@@ -5,6 +5,7 @@ var group__resonators =
     [ "SDTResonator_dsp", "group__resonators.html#ga5aff90f4cf699af25c1b30b81a05f693", null ],
     [ "SDTResonator_free", "group__resonators.html#ga0b7fd515fd2eb17e061cbfcada75d397", null ],
     [ "SDTResonator_getMomentum", "group__resonators.html#ga76167015f454008ea539678863ef4196", null ],
+    [ "SDTResonator_getNModes", "group__resonators.html#gaf67b81e1a9672e525deca61fafd05c14", null ],
     [ "SDTResonator_getNPickups", "group__resonators.html#ga15e4a46f0159847ab398fbd07724765d", null ],
     [ "SDTResonator_getPosition", "group__resonators.html#ga0663f869ee1b568cc2fe036d9bb792b8", null ],
     [ "SDTResonator_getVelocity", "group__resonators.html#ga110d43ebf6d69058d2532b1afa5b28f3", null ],

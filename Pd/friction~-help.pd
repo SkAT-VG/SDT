@@ -1,0 +1,107 @@
+#N canvas 28 199 1275 480 10;
+#X obj 225 432 dac~;
+#X floatatom 48 298 5 0 0 0 - - -, f 5;
+#X obj 225 401 *~ 10000;
+#X msg 1040 17 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 1058 129 r pd;
+#X obj 1058 156 route dsp;
+#X obj 1058 181 select 1;
+#X obj 1119 181 loadbang;
+#X obj 371 430 inertial bowfr;
+#X obj 371 405 r bowfr;
+#X obj 627 406 r objectfr;
+#X obj 627 431 modal objectfr 3 1;
+#X obj 48 367 friction~ bowfr objectfr 2;
+#X msg 191 318 force \$1;
+#X msg 323 317 kStatic \$1;
+#X msg 408 317 kDynamic \$1;
+#X msg 500 317 stiffness \$1;
+#X msg 603 318 dissipation \$1;
+#X msg 713 318 viscosity \$1;
+#X msg 815 318 noisiness \$1;
+#X msg 910 318 breakAway \$1;
+#X obj 815 159 vsl 15 128 0 1 0 0 empty noisiness empty 0 -9 0 10 -262144
+-1 -1 6350 1;
+#X obj 713 159 vsl 15 128 0 40 0 0 empty viscosity empty 0 -9 0 10
+-262144 -1 -1 4445 1;
+#X obj 603 159 vsl 15 128 0 40 0 0 empty dissipation empty 0 -9 0 10
+-262144 -1 -1 317 1;
+#X obj 500 159 vsl 15 128 0 10000 0 0 empty stiffness empty 0 -9 0
+10 -262144 -1 -1 12700 1;
+#X obj 408 159 vsl 15 128 0 1 0 0 empty kDynamic empty 0 -9 0 10 -262144
+-1 -1 1905 1;
+#X obj 323 159 vsl 15 128 0 1 0 0 empty kStatic empty 0 -9 0 10 -262144
+-1 -1 12065 1;
+#X obj 191 159 vsl 15 128 0 3 0 0 empty force empty 0 -9 0 10 -262144
+-1 -1 8467 1;
+#X obj 910 159 vsl 15 128 0 1 0 0 empty breakAway empty 0 -9 0 10 -262144
+-1 -1 2540 1;
+#X floatatom 191 298 5 0 0 0 - - -, f 5;
+#X floatatom 323 297 5 0 0 0 - - -, f 5;
+#X floatatom 408 297 5 0 0 0 - - -, f 5;
+#X floatatom 500 297 5 0 0 0 - - -, f 5;
+#X floatatom 603 297 5 0 0 0 - - -, f 5;
+#X floatatom 713 297 5 0 0 0 - - -, f 5;
+#X floatatom 910 297 5 0 0 0 - - -, f 5;
+#X floatatom 815 297 5 0 0 0 - - -, f 5;
+#X obj 48 159 vsl 15 128 -3 3 0 0 empty lateralForce empty 0 -9 0 10
+-262144 -1 -1 6350 1;
+#X text 10 136 Lateral force (N);
+#X text 134 136 Perpendicular force (N);
+#X text 306 137 Static K;
+#X text 386 137 Dynamic K;
+#X text 457 137 Surface stiffness;
+#X text 576 137 Dissipation;
+#X text 666 137 Surface viscosity;
+#X text 794 137 Noisiness;
+#X text 873 137 Break away velocity;
+#X msg 1058 207 \; bowfr mass 0.01 \; bowfr fragmentSize 1 \; objectfr
+freqs 500 1300 1700 \; objectfr decays 0.03 0.02 0.01 \; objectfr pickup
+0 100 100 100 \; objectfr activeModes 3 \; objectfr fragmentSize 1
+\; fr contact0 0 \; fr contact1 0 \; lateralForce 0 \; force 0.5 \;
+kStatic 0.95 \; kDynamic 0.15 \; stiffness 500 \; dissipation 20 \;
+viscosity 14 \; noisiness 0.5 \; breakAway 0.2 \;;
+#X text 48 5 friction~ - Simulates friction between two solid objects
+;
+#X text 240 368 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
+#X text 494 431 Args: object ID;
+#X text 771 431 Args: object ID \, n. of modes \, n. of pickups;
+#X obj 13 339 r fr;
+#X connect 1 0 12 0;
+#X connect 2 0 0 0;
+#X connect 2 0 0 1;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 47 0;
+#X connect 7 0 47 0;
+#X connect 9 0 8 0;
+#X connect 10 0 11 0;
+#X connect 12 1 2 0;
+#X connect 13 0 12 0;
+#X connect 14 0 12 0;
+#X connect 15 0 12 0;
+#X connect 16 0 12 0;
+#X connect 17 0 12 0;
+#X connect 18 0 12 0;
+#X connect 19 0 12 0;
+#X connect 20 0 12 0;
+#X connect 21 0 36 0;
+#X connect 22 0 34 0;
+#X connect 23 0 33 0;
+#X connect 24 0 32 0;
+#X connect 25 0 31 0;
+#X connect 26 0 30 0;
+#X connect 27 0 29 0;
+#X connect 28 0 35 0;
+#X connect 29 0 13 0;
+#X connect 30 0 14 0;
+#X connect 31 0 15 0;
+#X connect 32 0 16 0;
+#X connect 33 0 17 0;
+#X connect 34 0 18 0;
+#X connect 35 0 20 0;
+#X connect 36 0 19 0;
+#X connect 37 0 1 0;
+#X connect 52 0 12 0;

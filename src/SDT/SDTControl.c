@@ -10,9 +10,136 @@ double SDT_groundDecay(double grain, double velocity) {
   return SDT_fclip(2.0 * grain * fabs(velocity), 0.0, 2.0);
 }
 
-struct SDTCrumpling {
-  double crushingEnergy, granularity, fragmentation,
+struct SDTBouncing {
+  double restitution, height, irregularity, targetVelocity, currentVelocity;
+};
+
+SDTBouncing *SDTBouncing_new() {
+  SDTBouncing *x;
+  
+  x = (SDTBouncing *)malloc(sizeof(SDTBouncing));
+  x->restitution = 0.0;
+  x->height = 0.0;
+  x->irregularity = 0.0;
+  x->targetVelocity = 0.0;
+  x->currentVelocity = 0.0;
+  return x;
+}
+
+void SDTBouncing_free(SDTBouncing *x) {
+  free(x);
+}
+
+void SDTBouncing_setRestitution(SDTBouncing *x, double f) {
+  x->restitution = SDT_fclip(f, 0.0, 1.0);
+}
+
+void SDTBouncing_setHeight(SDTBouncing *x, double f) {
+  x->height = fmax(f, 0.0);
+}
+
+void SDTBouncing_setIrregularity(SDTBouncing *x, double f) {
+  x->irregularity = SDT_fclip(f, 0.0, 1.0);
+}
+
+void SDTBouncing_reset(SDTBouncing *x) {
+  x->targetVelocity = sqrt(2.0 * x->height * SDT_EARTH);
+  x->currentVelocity = 0.0;
+}
+
+double SDTBouncing_dsp(SDTBouncing *x) {
+  double v;
+  
+  v = 0.0;
+  if (x->targetVelocity > SDT_MICRO) {
+    x->currentVelocity += SDT_timeStep * SDT_EARTH;
+    if (x->currentVelocity > x->targetVelocity) {
+      v = x->targetVelocity;
+      x->targetVelocity *= x->restitution * (1.0 - x->irregularity * SDT_frand());
+      x->currentVelocity -= v + x->targetVelocity;
+    }
+  }
+  return v;
+}
+
+int SDTBouncing_hasFinished(SDTBouncing *x) {
+  return x->targetVelocity <= 0.0;
+}
+
+//-------------------------------------------------------------------------------------//
+
+struct SDTBreaking {
+  double storedEnergy, crushingEnergy, granularity, fragmentation,
          remainingEnergy;
+};
+
+SDTBreaking *SDTBreaking_new() {
+  SDTBreaking *x;
+  
+  x = (SDTBreaking *)malloc(sizeof(SDTBreaking));
+  x->storedEnergy = 0.0;
+  x->crushingEnergy = 0.0;
+  x->granularity = 0.0;
+  x->fragmentation = 0.0;
+  x->remainingEnergy = 0.0;
+  return x;
+}
+
+void SDTBreaking_free(SDTBreaking *x) {
+  free(x);
+}
+
+void SDTBreaking_setStoredEnergy(SDTBreaking *x, double f) {
+  x->storedEnergy = fmax(SDT_MICRO, f);
+}
+
+void SDTBreaking_setCrushingEnergy(SDTBreaking *x, double f) {
+  x->crushingEnergy = fmax(SDT_MICRO, f);
+}
+
+void SDTBreaking_setGranularity(SDTBreaking *x, double f) {
+  x->granularity = SDT_fclip(f, 0.0, 1.0);
+}
+
+void SDTBreaking_setFragmentation(SDTBreaking *x, double f) {
+  x->fragmentation = SDT_fclip(f, 0.0, 1.0);
+}
+
+void SDTBreaking_reset(SDTBreaking *x) {
+  x->remainingEnergy = 1.0;
+}
+
+int SDTBreaking_hasFinished(SDTBreaking *x) {
+  return x->remainingEnergy <= x->crushingEnergy / x->storedEnergy;
+}
+
+void SDTBreaking_dsp(SDTBreaking *x, double *outs) {
+  double success, fragment, energy, size;
+  
+  energy = 0.0;
+  size = 0.0;
+  if (!SDTBreaking_hasFinished(x)) {
+    success = x->granularity * x->remainingEnergy;
+    if (SDT_frand() < success) {
+      fragment = 1.0 - x->fragmentation + x->fragmentation * x->remainingEnergy;
+      energy = x->crushingEnergy * x->remainingEnergy * SDT_fclip(SDT_expRand(1.45), UNDERSHOOT, OVERSHOOT);
+      size = fmax(SDT_MICRO, fragment * (0.5 + 0.5 * SDT_frand()));
+      x->remainingEnergy -= energy / x->storedEnergy;
+    }
+  }
+  else {
+    x->remainingEnergy = 0.0;
+  }
+  outs[0] = energy;
+  outs[1] = size;
+}
+
+
+
+//-------------------------------------------------------------------------------------//
+
+struct SDTCrumpling {
+  double crushingEnergy, granularity, fragmentation;
 };
 
 SDTCrumpling *SDTCrumpling_new() {
@@ -22,7 +149,6 @@ SDTCrumpling *SDTCrumpling_new() {
   x->crushingEnergy = 0.0;
   x->granularity = 0.0;
   x->fragmentation = 0.0;
-  x->remainingEnergy = 0.0;
   return x;
 }
 
@@ -31,7 +157,7 @@ void SDTCrumpling_free(SDTCrumpling *x) {
 }
 
 void SDTCrumpling_setCrushingEnergy(SDTCrumpling *x, double f) {
-  x->crushingEnergy = SDT_fclip(f, SDT_MICRO, 1.0);
+  x->crushingEnergy = fmax(SDT_MICRO, f);
 }
 
 void SDTCrumpling_setGranularity(SDTCrumpling *x, double f) {
@@ -42,41 +168,19 @@ void SDTCrumpling_setFragmentation(SDTCrumpling *x, double f) {
   x->fragmentation = SDT_fclip(f, 0.0, 1.0);
 }
 
-void SDTCrumpling_reset(SDTCrumpling *x) {
-  x->remainingEnergy = 1.0;
-}
-
-void SDTCrumpling_discrete(SDTCrumpling *x, double *size, double *energy) {
-  double success, fragment;
+void SDTCrumpling_dsp(SDTCrumpling *x, double *outs) {
+  double success, fragment, energy, size;
   
-  *size = 0.0;
-  *energy = 0.0;
-  if (x->remainingEnergy > 0.0) {
-    success = x->granularity * x->remainingEnergy;
-    if (SDT_frand() < success) {
-      fragment = 1.0 - x->fragmentation + x->fragmentation * x->remainingEnergy;
-      *size = fmax(SDT_MICRO, fragment * (0.5 + 0.5 * SDT_frand()));
-      *energy = x->crushingEnergy * SDT_fclip(SDT_expRand(1.0), UNDERSHOOT, OVERSHOOT);
-      x->remainingEnergy -= *energy;
-    }
-  }
-}
-
-void SDTCrumpling_continuous(SDTCrumpling *x, double *size, double *energy) {
-  double success, fragment;
-  
-  *size = 0.0;
-  *energy = 0.0;
+  energy = 0.0;
+  size = 0.0;
   success = x->granularity;
   if (SDT_frand() < success) {
     fragment = 1.0 - x->fragmentation + x->fragmentation * SDT_frand();
-    *size = fmax(SDT_MICRO, fragment * (0.5 + 0.5 * SDT_frand()));
-    *energy = x->crushingEnergy * SDT_fclip(SDT_expRand(1.0), UNDERSHOOT, OVERSHOOT);
+    energy = x->crushingEnergy * SDT_fclip(SDT_expRand(1.45), UNDERSHOOT, OVERSHOOT);
+    size = fmax(SDT_MICRO, fragment * (0.5 + 0.5 * SDT_frand()));
   }
-}
-
-int SDTCrumpling_hasFinished(SDTCrumpling *x) {
-  return x->remainingEnergy <= 0.0;
+  outs[0] = energy;
+  outs[1] = size;
 }
 
 //-------------------------------------------------------------------------------------//

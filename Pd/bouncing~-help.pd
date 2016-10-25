@@ -1,0 +1,72 @@
+#N canvas 243 92 822 614 10;
+#X obj 195 536 dac~;
+#X text 145 589 Args: object ID;
+#X text 438 588 Args: object ID \, n. of modes \, n. of pickups;
+#X text 214 399 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
+#X msg 598 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 307 97 vsl 15 128 0 1 0 0 empty restitution empty 0 -9 0 10
+-262144 -1 -1 10160 1;
+#X obj 459 97 vsl 15 128 0 1 0 0 empty irregularity empty 0 -9 0 10
+-262144 -1 -1 3175 1;
+#X obj 168 96 vsl 15 128 0 10 0 0 empty height empty 0 -9 0 10 -262144
+-1 -1 1270 1;
+#X floatatom 459 233 5 0 0 0 - - -, f 5;
+#X floatatom 307 233 5 0 0 0 - - -, f 5;
+#X floatatom 168 233 5 0 0 0 - - -, f 5;
+#X obj 596 121 r pd;
+#X obj 596 148 route dsp;
+#X obj 596 173 select 1;
+#X obj 657 173 loadbang;
+#X obj 48 325 *~ -1;
+#X obj 228 428 vsl 30 64 100 10000 0 0 empty empty empty 0 -9 0 10
+-262144 -1 -1 0 1;
+#X obj 195 503 *~ 100;
+#X obj 48 96 bng 32 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 127 60 Object height (m);
+#X msg 168 252 height \$1;
+#X text 253 59 Restitution coefficient;
+#X msg 307 252 restitution \$1;
+#X msg 459 252 irregularity \$1;
+#X text 414 60 Object irregularity;
+#X text 46 61 Drop!;
+#X obj 48 295 bouncing~;
+#X obj 12 373 r bo;
+#X msg 596 199 \; hammerbo mass 0.01 \; hammerbo fragmentSize 1 \;
+objectbo freqs 500 1300 1700 \; objectbo decays 0.01 0.005 0.0025 \;
+objectbo pickup 0 100 100 100 \; objectbo activeModes 3 \; objectbo
+fragmentSize 1 \; bo stiffness 1e+07 \; bo dissipation 0.001 \; bo
+shape 1.5 \; bo contact0 0 \; bo contact1 0 \; height 1 \; restitution
+0.8 \; irregularity 0.25 \;;
+#X obj 10 588 inertial hammerbo;
+#X obj 298 588 modal objectbo 3 1;
+#X obj 298 561 r objectbo;
+#X obj 10 561 r hammerbo;
+#X obj 12 399 impact~ hammerbo objectbo 2;
+#X text 48 4 bouncing~ - Generates a stochastic sequence of impacts
+to form a bouncing sound, f 79;
+#X connect 5 0 9 0;
+#X connect 6 0 8 0;
+#X connect 7 0 10 0;
+#X connect 8 0 23 0;
+#X connect 9 0 22 0;
+#X connect 10 0 20 0;
+#X connect 11 0 12 0;
+#X connect 12 0 13 0;
+#X connect 13 0 28 0;
+#X connect 14 0 28 0;
+#X connect 15 0 33 1;
+#X connect 16 0 17 1;
+#X connect 17 0 0 0;
+#X connect 17 0 0 1;
+#X connect 18 0 26 0;
+#X connect 20 0 26 0;
+#X connect 22 0 26 0;
+#X connect 23 0 26 0;
+#X connect 26 0 15 0;
+#X connect 27 0 33 0;
+#X connect 31 0 30 0;
+#X connect 32 0 29 0;
+#X connect 33 1 17 0;

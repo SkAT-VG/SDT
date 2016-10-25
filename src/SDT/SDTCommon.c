@@ -51,31 +51,39 @@ void SDT_hanning(double *sig, int n) {
 
   for (i = 0; i < n / 2; i++) {
     j = n - i - 1;
-    scale = 0.5 * (1 - cos(SDT_TWOPI * i / (n - 1)));
+    scale = 0.5 - 0.5 * cos(SDT_TWOPI * i / (n - 1));
     sig[i] *= scale;
     sig[j] *= scale;
   }
 }
 
-void SDT_haar(double *sig, long n, char verse) {
+void SDT_haar(double *sig, long n) {
   double tmp[n];
   long x, i, j, k, l;
   
   memcpy(tmp, sig, n * sizeof(double)); 
   n /= 2;
   for (x = 0; x < n; x++) {
-    if (verse == 0) {
-      i = x;
-      j = i + n;
-      k = 2 * x;
-      l = k + 1;
-    }
-    else {
-      i = 2 * x;
-      j = i + 1;
-      k = x;
-      l = k + n;
-    }
+    i = x;
+    j = i + n;
+    k = 2 * x;
+    l = k + 1;
+    sig[i] = (tmp[k] + tmp[l]) / SDT_SQRT2;
+    sig[j] = (tmp[k] - tmp[l]) / SDT_SQRT2;
+  }
+}
+
+void SDT_ihaar(double *sig, long n) {
+  double tmp[n];
+  long x, i, j, k, l;
+  
+  memcpy(tmp, sig, n * sizeof(double)); 
+  n /= 2;
+  for (x = 0; x < n; x++) {
+    i = 2 * x;
+    j = i + 1;
+    k = x;
+    l = k + n;
     sig[i] = (tmp[k] + tmp[l]) / SDT_SQRT2;
     sig[j] = (tmp[k] - tmp[l]) / SDT_SQRT2;
   }
@@ -91,6 +99,19 @@ unsigned int SDT_nextPow2(unsigned int u) {
 
 double SDT_normalize(double x, double min, double max) {
   return (x - min) / (max - min);
+}
+
+void SDT_normalizeWindow(double *sig, int n) {
+  double sum;
+  int i;
+  
+  sum = 0.0;
+  for (i = 0; i < n; i++) {
+    sum += sig[i];
+  }
+  for (i = 0; i < n; i++) {
+    sig[i] /= sum;
+  }
 }
 
 double SDT_samplesInAir(double length) {

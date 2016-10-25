@@ -36,7 +36,7 @@ void envelope_assist(t_envelope *x, void *b, long m, long a, char *s) {
                "Object attributes and messages (see help patch)");
   } 
   else {
-      sprintf(s, "(signal): Signal envelope");
+      sprintf(s, "(signal): Amplitude envelope");
   }
 }
 

@@ -3,6 +3,8 @@
 #include "SDTCommon.h"
 #include "SDTResonators.h"
 
+#define MAX_POS 10000
+
 struct SDTResonator {
   double *ps[2], *vs, *fs, *freqs, *decays, **weights, fragmentSize;
   int nModes, nPickups, activeModes;
@@ -58,16 +60,23 @@ void SDTResonator_free(SDTResonator *x) {
 }
 
 double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup) {
-  double out;
+  double out, limit, p;
   int mode;
   
   out = 0.0;
-  if (pickup < x->nPickups) { 
+  if (x->fragmentSize > 0.0 && pickup < x->nPickups) { 
     for (mode = 0; mode < x->activeModes; mode++) {
-      out += x->ps[0][mode] * x->weights[pickup][mode];
+      limit = MAX_POS * x->fragmentSize / x->weights[pickup][mode];
+      p = SDT_fclip(x->ps[0][mode], -limit, limit);
+      if (p != x->ps[0][mode]) {
+        x->ps[0][mode] = p;
+        x->ps[1][mode] = p;
+        x->vs[mode] = 0.0;
+      }
+      out += p * x->weights[pickup][mode];
     }
+    out /= x->fragmentSize;
   }
-  if (x->fragmentSize > 0.0) out /= x->fragmentSize;
   return out;
 }
 
@@ -107,6 +116,10 @@ double SDTResonator_getMomentum(SDTResonator *x) {
     out += x->vs[mode];
   }
   return out;
+}
+
+double SDTResonator_getNModes(SDTResonator *x) {
+  return x->nModes;
 }
 
 double SDTResonator_getNPickups(SDTResonator *x) {

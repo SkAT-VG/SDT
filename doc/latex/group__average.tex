@@ -13,6 +13,8 @@
 \begin{DoxyCompactList}\small\item\em Object constructor. \end{DoxyCompactList}\item 
 void \hyperlink{group__average_ga53871e87b5c502963e39f29cab8bb8cd}{S\+D\+T\+Average\+\_\+free} (\hyperlink{group__average_ga59d09dcb18c4d483a1577d87ad90d1c3}{S\+D\+T\+Average} $\ast$x)
 \begin{DoxyCompactList}\small\item\em Object destructor. \end{DoxyCompactList}\item 
+void \hyperlink{group__average_ga2fc1886e89f08ebfbe21281c6ee4f091}{S\+D\+T\+Average\+\_\+set\+Window} (\hyperlink{group__average_ga59d09dcb18c4d483a1577d87ad90d1c3}{S\+D\+T\+Average} $\ast$x, unsigned int i)
+\begin{DoxyCompactList}\small\item\em Sets the averaging window. \end{DoxyCompactList}\item 
 double \hyperlink{group__average_gae1164660f6d50d9f193b6e7dad522961}{S\+D\+T\+Average\+\_\+dsp} (\hyperlink{group__average_ga59d09dcb18c4d483a1577d87ad90d1c3}{S\+D\+T\+Average} $\ast$x, double in)
 \begin{DoxyCompactList}\small\item\em Signal processing routine. Call this function at sample rate to compute the filtered signal. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -70,9 +72,26 @@ Object constructor.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\tt in}  & {\em size} & Moving average window size \\
+\mbox{\tt in}  & {\em size} & Moving average buffer size \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Pointer to the new instance 
 \end{DoxyReturn}
+\hypertarget{group__average_ga2fc1886e89f08ebfbe21281c6ee4f091}{}\index{Moving average@{Moving average}!S\+D\+T\+Average\+\_\+set\+Window@{S\+D\+T\+Average\+\_\+set\+Window}}
+\index{S\+D\+T\+Average\+\_\+set\+Window@{S\+D\+T\+Average\+\_\+set\+Window}!Moving average@{Moving average}}
+\subsubsection[{S\+D\+T\+Average\+\_\+set\+Window(\+S\+D\+T\+Average $\ast$x, unsigned int i)}]{\setlength{\rightskip}{0pt plus 5cm}void S\+D\+T\+Average\+\_\+set\+Window (
+\begin{DoxyParamCaption}
+\item[{{\bf S\+D\+T\+Average} $\ast$}]{x, }
+\item[{unsigned int}]{i}
+\end{DoxyParamCaption}
+)}\label{group__average_ga2fc1886e89f08ebfbe21281c6ee4f091}
+
+
+Sets the averaging window. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em size} & Moving average window size \mbox{[}1,buffer\+Size\mbox{]} \\
+\hline
+\end{DoxyParams}

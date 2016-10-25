@@ -145,13 +145,17 @@ Moving average filter, producing as output the average of the last input samples
 typedef struct SDTAverage SDTAverage;
 
 /** @brief Object constructor.
-@param[in] size Moving average window size
+@param[in] size Moving average buffer size
 @return Pointer to the new instance */
 extern SDTAverage *SDTAverage_new(long size);
 
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTAverage_free(SDTAverage *x);
+
+/** @brief Sets the averaging window.
+@param[in] size Moving average window size [1,bufferSize] */
+extern void SDTAverage_setWindow(SDTAverage *x, unsigned int i);
 
 /** @brief Signal processing routine.
 Call this function at sample rate to compute the filtered signal.

@@ -13,14 +13,12 @@ SDTOBJS=$(patsubst %.c,%.o,$(SDTSRCS))
 
 PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
-PDOBJS=$(patsubst %.c,%.pd_linux,$(PDSRCS))
+PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
 
 all: sdt pd
 
 pd: sdt $(PDOBJS)
-
-$(PDDIR)/%.pd_linux: $(PDDIR)/%.o
-	$(CC) $(LDFLAGS) -L$(SDTDIR) $< -o $@ -lc -lm -lSDT
+	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -c $< -o $@

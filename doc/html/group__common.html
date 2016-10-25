@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Sound Design Toolkit
-   &#160;<span id="projectnumber">074</span>
+   &#160;<span id="projectnumber">075</span>
    </div>
    <div id="projectbrief">Physically informed sound synthesis for everyday sounds</div>
   </td>
@@ -111,11 +111,11 @@ $(document).ready(function(){initNavTree('group__common.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:gab6e61b5e260d784833e230a33efc6a48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab6e61b5e260d784833e230a33efc6a48"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gab6e61b5e260d784833e230a33efc6a48">SDT_ver</a>&#160;&#160;&#160;074</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gab6e61b5e260d784833e230a33efc6a48">SDT_ver</a>&#160;&#160;&#160;075</td></tr>
 <tr class="memdesc:gab6e61b5e260d784833e230a33efc6a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDT version number. <br /></td></tr>
 <tr class="separator:gab6e61b5e260d784833e230a33efc6a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf8d98d86bcb77f3f61403b29483527d5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf8d98d86bcb77f3f61403b29483527d5"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gaf8d98d86bcb77f3f61403b29483527d5">SDT_ver_str</a>&#160;&#160;&#160;&quot;074&quot;</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gaf8d98d86bcb77f3f61403b29483527d5">SDT_ver_str</a>&#160;&#160;&#160;&quot;075&quot;</td></tr>
 <tr class="memdesc:gaf8d98d86bcb77f3f61403b29483527d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">SDT version string. <br /></td></tr>
 <tr class="separator:gaf8d98d86bcb77f3f61403b29483527d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga292e893120950fc4c58e10d6a56beeb9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga292e893120950fc4c58e10d6a56beeb9"></a>
@@ -177,6 +177,12 @@ Functions</h2></td></tr>
 <tr class="memitem:gac20498f9e20eb14941b1e6f9a076e5e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gac20498f9e20eb14941b1e6f9a076e5e7">SDT_hanning</a> (double *sig, int n)</td></tr>
 <tr class="memdesc:gac20498f9e20eb14941b1e6f9a076e5e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a Hanning window to a chunk of samples. Applies a Hanning window to a chunk of samples.  <a href="#gac20498f9e20eb14941b1e6f9a076e5e7">More...</a><br /></td></tr>
 <tr class="separator:gac20498f9e20eb14941b1e6f9a076e5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadc035ed90d7b62000e8f6467426cdb1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gadc035ed90d7b62000e8f6467426cdb1a">SDT_haar</a> (double *sig, long n)</td></tr>
+<tr class="memdesc:gadc035ed90d7b62000e8f6467426cdb1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a direct Haar Wavelet Transform of the incoming signal (in place).  <a href="#gadc035ed90d7b62000e8f6467426cdb1a">More...</a><br /></td></tr>
+<tr class="separator:gadc035ed90d7b62000e8f6467426cdb1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a5c0c361f29d6b5bc5612af94a33d86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#ga1a5c0c361f29d6b5bc5612af94a33d86">SDT_ihaar</a> (double *sig, long n)</td></tr>
+<tr class="memdesc:ga1a5c0c361f29d6b5bc5612af94a33d86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an inverse Haar Wavelet Transform of the incoming signal (in place).  <a href="#ga1a5c0c361f29d6b5bc5612af94a33d86">More...</a><br /></td></tr>
+<tr class="separator:ga1a5c0c361f29d6b5bc5612af94a33d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaeb3c9a2b73924440e53d81cce514db7e"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gaeb3c9a2b73924440e53d81cce514db7e">SDT_kinetic</a> (double mass, double velocity)</td></tr>
 <tr class="memdesc:gaeb3c9a2b73924440e53d81cce514db7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes kinetic energy. Computes the kinetic energy of an object, given its mass and velocity.  <a href="#gaeb3c9a2b73924440e53d81cce514db7e">More...</a><br /></td></tr>
 <tr class="separator:gaeb3c9a2b73924440e53d81cce514db7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,6 +192,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga526be81b39dff106d6f7026d807b90aa"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#ga526be81b39dff106d6f7026d807b90aa">SDT_normalize</a> (double x, double min, double max)</td></tr>
 <tr class="memdesc:ga526be81b39dff106d6f7026d807b90aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rescales a value of known range into the [0.0, 1.0] interval. Rescales a value of known range into the [0.0, 1.0] interval.  <a href="#ga526be81b39dff106d6f7026d807b90aa">More...</a><br /></td></tr>
 <tr class="separator:ga526be81b39dff106d6f7026d807b90aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaceddebee5e10ac7eeab53e4a75033ea4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#gaceddebee5e10ac7eeab53e4a75033ea4">SDT_normalizeWindow</a> (double *sig, int n)</td></tr>
+<tr class="memdesc:gaceddebee5e10ac7eeab53e4a75033ea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalizes samples in a window so that their sum is equal to 1.  <a href="#gaceddebee5e10ac7eeab53e4a75033ea4">More...</a><br /></td></tr>
+<tr class="separator:gaceddebee5e10ac7eeab53e4a75033ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8d76fd517483f6044bef411ae830aea2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__common.html#ga8d76fd517483f6044bef411ae830aea2">SDT_samplesInAir</a> (double length)</td></tr>
 <tr class="memdesc:ga8d76fd517483f6044bef411ae830aea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time needed to travel the given distance at Mach 1. Computes the amount of time, in samples, needed by a sound wave propagating in air to travel a given distance. Particularly useful to set the delay times of comb filters and/or digital waveguides representing hollow cavities.  <a href="#ga8d76fd517483f6044bef411ae830aea2">More...</a><br /></td></tr>
 <tr class="separator:ga8d76fd517483f6044bef411ae830aea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -400,6 +409,41 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 
 </div>
 </div>
+<a class="anchor" id="gadc035ed90d7b62000e8f6467426cdb1a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SDT_haar </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>sig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes a direct Haar Wavelet Transform of the incoming signal (in place). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">sig</td><td>incoming signals </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>window size </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="gac20498f9e20eb14941b1e6f9a076e5e7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -427,8 +471,43 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 <p>Applies a Hanning window to a chunk of samples. Applies a Hanning window to a chunk of samples. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">samples</td><td>to window </td></tr>
-    <tr><td class="paramdir"></td><td class="paramname"></td><td></td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">sig</td><td>samples to window </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>window size </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ga1a5c0c361f29d6b5bc5612af94a33d86"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SDT_ihaar </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>sig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes an inverse Haar Wavelet Transform of the incoming signal (in place). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">sig</td><td>incoming signals </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>window size </td></tr>
   </table>
   </dd>
 </dl>
@@ -536,6 +615,41 @@ double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Value rescaled from [min, max] to [0.0, 1.0] </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaceddebee5e10ac7eeab53e4a75033ea4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SDT_normalizeWindow </td>
+          <td>(</td>
+          <td class="paramtype">double *&#160;</td>
+          <td class="paramname"><em>sig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Normalizes samples in a window so that their sum is equal to 1. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">sig</td><td>window to normalize </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>window size </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
