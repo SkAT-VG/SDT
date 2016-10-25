@@ -17,20 +17,18 @@ COMPILING FROM SOURCE
 
 **MAC OS X**
 
-1. In a terminal, type the following commands:
+1. In a terminal, type the following commands to compile the software in all its flavors
+(Max package, Pd library, Apple framework):
 
         cd build/macosx
         make
-	
-to compile the software in all its flavors (Max package, Pd library, Apple framework).
 
-2. Install one or more products:
+2. Install one or more products. The script will install the desired product in the given
+<path>, creating a SDT subfolder:
 
         make install_max DSTDIR=<path>
         make install_pd DSTDIR=<path>
         make install_core DSTDIR=<path>
-
-The script will install the desired product in the given <path>, creating a SDT subfolder.
 
 3. To clean the source directories after compilation:
 
@@ -43,20 +41,17 @@ GNU C Compiler and a UNIX style shell, as provided in MinGW + MSYS
 (http://www.mingw.org, recommended) or Cygwin (http://www.cygwin.com).
 
 1. Once the compilation environment is installed, open its shell and issue the following
-commands:
+commands to compile the software in all its flavors (Max package, Pd library, Shared DLL):
 
         cd build/windows
         make
 
-to compile the software in all its flavors (Max package, Pd library, Shared DLL).
-
-2. Install the desired products:
+2. Install the desired products. The script will install the desired product in the given
+<path>, creating a SDT subfolder:
 
         make install_max DSTDIR=<path>
         make install_pd DSTDIR=<path>
         make install_core DSTDIR=<path>
-
-The script will install the desired product in the given <path>, creating a SDT subfolder.
 
 3. To clean the source directories after compilation:
 
@@ -64,18 +59,19 @@ The script will install the desired product in the given <path>, creating a SDT 
 	
 **LINUX**
 
-1. In a terminal, type the following commands:
+1. In a terminal, type the following commands to build the SDT:
 
         cd build/linux
         make
+        
+2. Install the SDT. By default, the building environment will install a shared library in
+/usr/lib and a collection of PureData externals and patches in /usr/lib/pd/extras/SDT.
+Root privileges may be required to access the default install path. If you want to change
+the install path, provide a PREFIX argument:
+        
         make install
-	
-By default, the building environment will install the SDT shared library in /usr/lib and
-the PureData externals and patches in /usr/lib/pd/extras/SDT (might require root
-privileges). If you want to change the install location:
-
         make install PREFIX=<path>
 	
-2. To clean the source directories after compilation:
+3. To clean the source directories after compilation:
 
         make clean
