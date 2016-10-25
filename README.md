@@ -28,9 +28,9 @@ to compile the software in all its flavors (Max package, Pd library, Apple frame
 2. Install the desired products:
 
 	make install_max DSTDIR=<path>
-	
+
 	make install_pd DSTDIR=<path>
-	
+
 	make install_core DSTDIR=<path>
 
 The script will install the desired product in the given <path>, creating a SDT subfolder.
@@ -49,17 +49,17 @@ GNU C Compiler and a UNIX style shell, as provided in MinGW + MSYS
 commands:
 
 	cd build/windows
-	
+
 	make
-	
+
 to compile the software in all its flavors (Max package, Pd library, Shared DLL).
 
 2. Install the desired products:
 
 	make install_max DSTDIR=<path>
-	
+
 	make install_pd DSTDIR=<path>
-	
+
 	make install_core DSTDIR=<path>
 
 The script will install the desired product in the given <path>, creating a SDT subfolder.
@@ -73,9 +73,9 @@ The script will install the desired product in the given <path>, creating a SDT 
 1. In a terminal, type the following commands:
 
 	cd build/linux
-	
+
 	make
-	
+
 	make install
 	
 By default, the building environment will install the SDT shared library in /usr/lib and
