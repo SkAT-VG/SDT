@@ -19,25 +19,22 @@ COMPILING FROM SOURCE
 
 1. In a terminal, type the following commands:
 
-	cd build/macosx
-	
-	make
+        cd build/macosx
+        make
 	
 to compile the software in all its flavors (Max package, Pd library, Apple framework).
 
-2. Install the desired products:
+2. Install one or more products:
 
-	make install_max DSTDIR=<path>
-
-	make install_pd DSTDIR=<path>
-
-	make install_core DSTDIR=<path>
+        make install_max DSTDIR=<path>
+        make install_pd DSTDIR=<path>
+        make install_core DSTDIR=<path>
 
 The script will install the desired product in the given <path>, creating a SDT subfolder.
 
 3. To clean the source directories after compilation:
 
-	make clean
+        make clean
 	
 **WINDOWS**
 
@@ -48,42 +45,37 @@ GNU C Compiler and a UNIX style shell, as provided in MinGW + MSYS
 1. Once the compilation environment is installed, open its shell and issue the following
 commands:
 
-	cd build/windows
-
-	make
+        cd build/windows
+        make
 
 to compile the software in all its flavors (Max package, Pd library, Shared DLL).
 
 2. Install the desired products:
 
-	make install_max DSTDIR=<path>
-
-	make install_pd DSTDIR=<path>
-
-	make install_core DSTDIR=<path>
+        make install_max DSTDIR=<path>
+        make install_pd DSTDIR=<path>
+        make install_core DSTDIR=<path>
 
 The script will install the desired product in the given <path>, creating a SDT subfolder.
 
 3. To clean the source directories after compilation:
 
-	make clean
+        make clean
 	
 **LINUX**
 
 1. In a terminal, type the following commands:
 
-	cd build/linux
-
-	make
-
-	make install
+        cd build/linux
+        make
+        make install
 	
 By default, the building environment will install the SDT shared library in /usr/lib and
 the PureData externals and patches in /usr/lib/pd/extras/SDT (might require root
 privileges). If you want to change the install location:
 
-	make install PREFIX=<path>
+        make install PREFIX=<path>
 	
 2. To clean the source directories after compilation:
 
-	make clean
+        make clean
