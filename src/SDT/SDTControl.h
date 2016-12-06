@@ -7,6 +7,10 @@ to simulate complex textures, evolving patterns and compound sound events.
 #ifndef SDT_CONTROL_H
 #define SDT_CONTROL_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @defgroup bouncing Bouncing
 Control layer for the impact model, generating (irregular) bouncing sonic textures.
 The output should be used to control the impact velocity between two resonators. 
@@ -224,6 +228,10 @@ Call this function at sample rate to compute the force acting on the scraped sur
 extern double SDTScraping_dsp(SDTScraping *x, double in);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

@@ -5,6 +5,10 @@
 #ifndef SDT_STRUCTS_H
 #define SDT_STRUCTS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Opaque data structure for a hashmap object */
 typedef struct SDTHashmap SDTHashmap;
 
@@ -35,6 +39,10 @@ extern int SDTHashmap_del(SDTHashmap *x, char *key);
 
 /** @brief Deletes all the entries in the hashmap. */
 extern void SDTHashmap_clear(SDTHashmap *x);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

@@ -23,6 +23,10 @@ and a Feedback Delay Network reverb to simulate scattering.
 #ifndef SDT_GASES_H
 #define SDT_GASES_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @defgroup windflow Turbulence against solid objects
 One of the possible sources of turbulence is the impact on a large solid surface.
 In this case, turbulence is generated due to the impact of the air molecules on the surface
@@ -195,6 +199,10 @@ Call this function at sample rate to synthesize an explosion sound.
 extern void SDTExplosion_dsp(SDTExplosion *x, double *outs);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

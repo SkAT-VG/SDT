@@ -11,6 +11,10 @@ for the transformation of real-valued signals.
 #ifndef SDT_FFT_H
 #define SDT_FFT_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Opaque data structure, representing a FFT object. */
 typedef struct SDTFFT SDTFFT;
 
@@ -40,6 +44,10 @@ extern void SDTFFT_fftr(SDTFFT *x, double *in, SDTComplex *out);
 @param[out] out Reconstructed signal. Divide every sample by n
 to obtain the original signal */
 extern void SDTFFT_ifftr(SDTFFT *x, SDTComplex *in, double *out);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

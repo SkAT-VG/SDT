@@ -7,6 +7,10 @@ basic operations with complex numbers.
 #ifndef SDT_COMPLEX_H
 #define SDT_COMPLEX_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Data structure containing the real and imaginary part of a complex number. */
 typedef struct SDTComplex {
   double r, i;
@@ -92,6 +96,10 @@ extern SDTComplex SDTComplex_divReal(SDTComplex a, double b);
 @param[in] b Complex operand
 @return a divided by b */
 extern SDTComplex SDTComplex_realDiv(double a, SDTComplex b);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

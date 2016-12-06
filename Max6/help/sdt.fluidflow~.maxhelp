@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -819,7 +819,7 @@
 					"patching_rect" : [ 204.0, 202.5, 81.0, 18.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 132.75, 147.5, 40.5, 30.0 ],
+					"presentation_rect" : [ 132.75, 147.5, 41.0, 30.0 ],
 					"style" : "",
 					"text" : "max radius "
 				}
@@ -981,13 +981,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 908.0, 45.0, 587.0, 489.0 ],
+						"rect" : [ 819.0, 79.0, 587.0, 489.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
@@ -1025,7 +1025,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 7.0, 6.0, 544.0, 210.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n\nATTRIBUTES:\n- avgRate (float): Average n. of bubbles per second [0.0 ~ 100000.0]\n- minRadius (float): Minimum bubble radius [0.15 ~ 150.0]\n- maxRadius (float): Maximum bubble radius [0.15 ~ 150.0]\n- expRadius (float): Bubble radius gamma factor [0.0 ~ 10.0]\n- minDepth (float): Minimum bubble elevation [0.0 ~ 1.0]\n- maxDepth (float): Maximum bubble elevation [0.0 ~ 1.0]\n- expDepth (float): Bubble depth gamma factor [0.0 ~ 10.0]\n- riseFactor (float): Noticeable rise in frequency [0.0 ~ 3.0]\n- riseCutoff (float): Bubbles below this elevation do not change frequency [0.0 ~ 1.0]"
+									"text" : "INPUT\n- messages\n\nATTRIBUTES:\n- avgRate (float): Average n. of bubbles per second [0.0, 100000.0]\n- minRadius (float): Minimum bubble radius [0.15, 150.0]\n- maxRadius (float): Maximum bubble radius [0.15, 150.0]\n- expRadius (float): Bubble radius gamma factor [0.0, 10.0]\n- minDepth (float): Minimum bubble elevation [0.0, 1.0]\n- maxDepth (float): Maximum bubble elevation [0.0, 1.0]\n- expDepth (float): Bubble depth gamma factor [0.0, 10.0]\n- riseFactor (float): Noticeable rise in frequency [0.0, 3.0]\n- riseCutoff (float): Bubbles below this elevation do not change frequency [0.0, 1.0]"
 								}
 
 							}
@@ -1153,8 +1153,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1263,8 +1263,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -1811,7 +1811,7 @@
 					"patching_rect" : [ 75.5, 528.0, 458.0, 25.0 ],
 					"presentation" : 1,
 					"presentation_linecount" : 2,
-					"presentation_rect" : [ 539.5, 147.5, 233.0, 42.0 ],
+					"presentation_rect" : [ 539.5, 147.5, 236.0, 42.0 ],
 					"style" : "",
 					"text" : "sdt.fluidflow~ 128 @avgRate 1000 @minRadius 0.15 @maxRadius 5."
 				}
@@ -2208,7 +2208,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -2217,7 +2217,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

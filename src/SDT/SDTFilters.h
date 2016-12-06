@@ -8,6 +8,10 @@ Extensively used in many other SDT modules.
 #ifndef SDT_FILTERS_H
 #define SDT_FILTERS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @defgroup onepole One pole filter
 Simple one pole filter.
 @{ */
@@ -313,6 +317,10 @@ SDTWaveguide_getFwdOut() and SDTWaveguide_getRevOut().
 extern void SDTWaveguide_dsp(SDTWaveguide *x, double fwdIn, double revIn);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

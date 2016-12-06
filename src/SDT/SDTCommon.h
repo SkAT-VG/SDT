@@ -9,7 +9,7 @@
  * 2001-2003 'SOb' http://www.soundobject.org/
  * 2006-2009 'CLOSED' http://closed.ircam.fr/
  * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG http://www.skatvg.eu/
+ * 2014-2017 'SkAT-VG' http://www.skatvg.eu/
  *
  * Contacts: 
  * 	stefano.papetti@zhdk.ch
@@ -57,9 +57,9 @@ SDTCommon.h should always be included when using other SDT modules.
 #define SDT_COMMON_H
 
 /** @brief SDT version number */
-#define SDT_ver          075
+#define SDT_ver          076
 /** @brief SDT version string */
-#define SDT_ver_str     "075"
+#define SDT_ver_str     "076"
 /** @brief Value of Pi */
 #define SDT_PI           3.141592653589793
 /** @brief Value of 2 * Pi */
@@ -76,6 +76,10 @@ SDTCommon.h should always be included when using other SDT modules.
 #define SDT_MICRO        0.000001
 /** @brief Gain factor roughly corresponding to a -90dB attenuation */
 #define SDT_QUIET         0.00003
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** @brief Sampling frequency (Hz) */
 extern double SDT_sampleRate;
@@ -192,6 +196,10 @@ Computes the signum function.
 @param[in] x Input value
 @return Signum of x */
 extern int SDT_signum(double x);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

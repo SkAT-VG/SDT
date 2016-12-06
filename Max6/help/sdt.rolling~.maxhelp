@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 7,
 			"minor" : 2,
-			"revision" : 1,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -49,7 +49,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -603,7 +603,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2129,12 +2129,12 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 122.0, 125.0, 920.0, 733.0 ],
+						"rect" : [ 122.0, 79.0, 1030.0, 748.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
@@ -2211,13 +2211,13 @@
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 14.0,
 									"id" : "obj-5",
-									"linecount" : 23,
+									"linecount" : 25,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 430.0, 34.0, 483.0, 381.0 ],
+									"patching_rect" : [ 430.0, 34.0, 598.0, 414.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n- signal: external force on hammer (in Newton)\n\nATTRIBUTES\n- stiffness (float): stiffness (k)\n- shape (float): contact's shape (alpha)\n- dissipation (float): dissipation coefficient (mu)\n- contact0 (int): pickup index of the contact point for the first object\n- contact1 (int): pickup index of the contact point for the second object\n\nOUTPUT\n- outlet 1 (signal): velocity of the object 1 (rubber)\n- outlets >1 (signal): as many signal outlets as the number of pickup points. Modal object's displacement at each specified pickup points.\n\nARGUMENTS\nArguments are mandatory\n- unique ID name set for the sdt.inertial~ object\n- unique ID name set for the sdt.modal~ object\n- max number of signal outlets (int): if greater than the number of pickup points, the unused outlets are disabled; if lower than the number of pickup points, only the first ones are output, always starting from pickup0"
+									"text" : "INPUT\n- inlet 1 (messages)\n- inlet 1 / 4 (signal): external force on hammer / object (in Newton)\n- inlet 2 / 5 (signal): if ≠ 0, sets hammer / object velocity (in m/s) and puts them in contact\n- inlet 3 / 6 (signal): fragment size of hammer / object [0.0, 1.0]\n\nATTRIBUTES\n- stiffness (float): stiffness (k)\n- shape (float): contact's shape (alpha)\n- dissipation (float): dissipation coefficient (mu)\n- contact0 (int): pickup index of the contact point for the first object\n- contact1 (int): pickup index of the contact point for the second object\n\nOUTPUT\n- outlet 1 (signal): velocity of the object 1 (rubber)\n- outlets >1 (signal): as many signal outlets as the number of pickup points. Modal object's displacement at each specified pickup points.\n\nARGUMENTS\nArguments are mandatory\n- unique ID name set for the sdt.inertial object\n- unique ID name set for the sdt.modal object\n- max number of signal outlets (int): if greater than the number of pickup points, the unused outlets are disabled; if lower than the number of pickup points, only the first ones are output, always starting from pickup0"
 								}
 
 							}
@@ -2260,7 +2260,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 430.0, 421.5, 483.0, 28.0 ],
+									"patching_rect" : [ 430.0, 450.0, 483.0, 28.0 ],
 									"style" : "",
 									"text" : "sdt.rolling~ "
 								}
@@ -2275,9 +2275,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 430.0, 451.5, 483.0, 267.0 ],
+									"patching_rect" : [ 430.0, 480.0, 483.0, 267.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n- signal: surface profile\n\nATTRIBUTES\n- depth (float): depth of the surface irregularities, affects the amplitude of the micro-impacts\n- grain (float): surface granularity, affects the density of the micro-impacts\n- mass (float): mass of the rolling object\n- velocity (float): rolling velocity, in m/s\n\nOUTPUT\n- signal\n\nARGUMENTS\n-none"
+									"text" : "INPUT\n- messages\n- signal: surface profile\n\nATTRIBUTES\n- depth (float): depth of the surface irregularities, affects the amplitude of the micro-impacts\n- grain (float): surface granularity, affects the density of the micro-impacts\n- mass (float): mass of the rolling object\n- velocity (float): rolling velocity, in m/s\n\nOUTPUT\n- signal: bounces on the surface\n\nARGUMENTS\n-none"
 								}
 
 							}
@@ -2439,7 +2439,7 @@
 					"id" : "obj-63",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 2,
+					"numinlets" : 6,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 733.0, 636.0, 336.0625, 59.0 ],
@@ -2958,7 +2958,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -3399,7 +3399,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -3839,7 +3839,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -4761,7 +4761,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 13.25, 73.0, 396.0, 23.0 ],
 					"style" : "",
-					"text" : "The rolling model simulates a ball rolling on a smooth surface"
+					"text" : "The rolling model simulates a ball rolling on a surface"
 				}
 
 			}
@@ -4823,7 +4823,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -4933,7 +4933,7 @@
 										"appversion" : 										{
 											"major" : 7,
 											"minor" : 2,
-											"revision" : 1,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -6600,7 +6600,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}

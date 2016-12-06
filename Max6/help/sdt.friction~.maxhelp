@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 7,
 			"minor" : 2,
-			"revision" : 1,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -49,7 +49,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -655,12 +655,12 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 327.0, 79.0, 1012.0, 684.0 ],
+						"rect" : [ 306.0, 132.0, 1012.0, 684.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
@@ -767,13 +767,13 @@
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 14.0,
 									"id" : "obj-5",
-									"linecount" : 29,
+									"linecount" : 32,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 497.0, 37.0, 496.0, 479.0 ],
+									"patching_rect" : [ 497.0, 37.0, 511.0, 528.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n- signal: external rubbing force (in Newton)\n\nATTRIBUTES\n- stiffness (float): bristle stiffness (sigma0)\n- dissipation (float): bristle dissipation (sigma1)\n- viscosity (float): bristle viscosity (sigma2)\n- noisiness (float): Amount of sliding noise\n- kDynamic (float): dynamic-friction coefficient (mu_d)\n- kStatic (float): static-friction coefficient (mu_s)\n- breakaway (float): break-away coefficient\n- stribeck (float): Stribeck velocity (v_s)\n- force (float): normal force on rubber, in Newton\n- contact0 (int): pickup index of object 1, used as contact point\n- contact1 (int): pickup index of object 2, used as contact point\n\nOUTPUT\n- outlet 1 (signal): velocity of the object 1 (rubber)\n- outlets >1 (signal): as many signal outlets as the number of pickup points. Modal object's displacement at each specified pickup points.\n\nARGUMENTS\nArguments are mandatory\n- unique ID name set for the sdt.inertial~ object\n- unique ID name set for the sdt.modal~ object\n- max number of signal outlets (int): if greater than the number of pickup points, the unused outlets are disabled; if lower than the number of pickup points, only the first ones are output, always starting from pickup0"
+									"text" : "INPUT\n- inlet 1 (messages)\n- inlet 1 / 4 (signal): external force on probe / object (in Newton)\n- inlet 2 / 5 (signal): if ≠ 0, sets probe / object velocity (in m/s) and puts them in contact\n- inlet 3 / 6 (signal): fragment size of probe / object [0.0, 1.0]\n\nATTRIBUTES\n- stiffness (float): bristle stiffness (sigma0)\n- dissipation (float): bristle dissipation (sigma1)\n- viscosity (float): bristle viscosity (sigma2)\n- noisiness (float): Amount of sliding noise\n- kDynamic (float): dynamic-friction coefficient (mu_d)\n- kStatic (float): static-friction coefficient (mu_s)\n- breakaway (float): break-away coefficient\n- stribeck (float): Stribeck velocity (v_s)\n- force (float): normal force on rubber, in Newton\n- contact0 (int): pickup index of object 1, used as contact point\n- contact1 (int): pickup index of object 2, used as contact point\n\nOUTPUT\n- outlet 1 (signal): velocity of the object 1 (rubber)\n- outlets >1 (signal): as many signal outlets as the number of pickup points. Modal object's displacement at each specified pickup points.\n\nARGUMENTS\nArguments are mandatory\n- unique ID name set for the sdt.inertial object\n- unique ID name set for the sdt.modal object\n- max number of signal outlets (int): if greater than the number of pickup points, the unused outlets are disabled; if lower than the number of pickup points, only the first ones are output, always starting from pickup0"
 								}
 
 							}
@@ -1057,7 +1057,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1498,7 +1498,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1938,7 +1938,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2908,7 +2908,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -3223,7 +3223,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -3333,7 +3333,7 @@
 										"appversion" : 										{
 											"major" : 7,
 											"minor" : 2,
-											"revision" : 1,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -4646,7 +4646,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 181.0, 320.0, 52.0, 19.0 ],
 					"style" : "",
-					"text" : "0.3433"
+					"text" : "0.37315"
 				}
 
 			}
@@ -4664,7 +4664,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 105.5, 320.0, 58.0, 19.0 ],
 					"style" : "",
-					"text" : "0.96"
+					"text" : "-1.86"
 				}
 
 			}
@@ -5213,7 +5213,7 @@
 					"id" : "obj-208",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 2,
+					"numinlets" : 6,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 346.0, 684.5, 568.0, 59.0 ],
@@ -6343,7 +6343,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}

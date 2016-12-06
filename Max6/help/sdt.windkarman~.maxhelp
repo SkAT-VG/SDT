@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -295,7 +295,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 44.0, 319.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.64"
+					"text" : "0.67"
 				}
 
 			}
@@ -558,13 +558,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 668.0, 46.0, 429.0, 290.0 ],
+						"rect" : [ 668.0, 79.0, 429.0, 290.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
@@ -602,7 +602,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 7.0, 6.0, 345.0, 100.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n- signal, wind speed [0.0 - 1.0]\n\nATTRIBUTES:\n- diameter (float): Object diameter, in mm"
+									"text" : "INPUT\n- messages\n- signal, wind speed [0.0, 1.0]\n\nATTRIBUTES:\n- diameter (float): Object diameter, in mm"
 								}
 
 							}
@@ -713,8 +713,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -823,8 +823,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -1583,11 +1583,17 @@
 			}
  ],
 		"dependency_cache" : [ 			{
+				"name" : "_SDT_label2016.maxpat",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "sdt.windkarman~.mxo",
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

@@ -8,6 +8,10 @@ and the vocal control of SDT models in the SkAT-VG project.
 #ifndef SDT_ANALYSIS_H
 #define SDT_ANALYSIS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @defgroup zerocrossing Zero crossing rate
 Zero crossing rate signal analyzer. 
 @{ */
@@ -190,6 +194,10 @@ Array members represent the following information respectively:
 extern int SDTPitch_dsp(SDTPitch *x, double *outs, double in);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

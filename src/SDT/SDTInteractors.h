@@ -7,6 +7,10 @@ between two resonators: impacts and friction.
 #ifndef SDT_INTERACTORS_H
 #define SDT_INTERACTORS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @defgroup interactor Interactor interface
 This abstract object acts as a generic interface implemented by all interactors.
 It contains two pointers to the interacting objects, information
@@ -45,10 +49,10 @@ Convenience method to compute the interaction force, apply it to the resonators
 and update their state. This method already calls the DSP routines of the two
 resonators, so be sure not to call them if you use this method.
 @param[in] f0 Applied force to the first resonator
-@param[in] v0 Applied velocity to the first resonator (resets position to 0)
+@param[in] v0 Applied velocity to the first resonator (resets position to 0, or to make contact with second object if present)
 @param[in] s0 Fragment size of the first resonator
 @param[in] f1 Applied force to the second resonator
-@param[in] v1 Applied velocity to the second resonator (resets position to 0)
+@param[in] v1 Applied velocity to the second resonator (resets position to 0, or to make contact with first object if present)
 @param[in] s1 Fragment size of the second resonator
 @param[out] outs Displacement of the resonators at their pickup points */
 extern void SDTInteractor_dsp(SDTInteractor *x, double f0, double v0, double s0,
@@ -157,6 +161,10 @@ extern void SDTFriction_setViscosity(SDTInteractor *x, double f);
 extern void SDTFriction_setNoisiness(SDTInteractor *x, double f);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

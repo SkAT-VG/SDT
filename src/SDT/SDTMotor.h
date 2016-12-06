@@ -19,6 +19,10 @@ in the hotter parts of the exhaust system.
 #ifndef SDT_MOTOR_H
 #define SDT_MOTOR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Opaque data structure representing a combustion engine object */
 typedef struct SDTMotor SDTMotor;
 
@@ -116,5 +120,9 @@ output represents the sound coming from the exhaust outlet, towards the rear of 
 extern void SDTMotor_dsp(SDTMotor *x, double *outs);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif

@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -927,13 +927,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 1474.0, 79.0, 517.0, 290.0 ],
+						"rect" : [ 889.0, 79.0, 517.0, 290.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
@@ -960,6 +960,7 @@
 						"tags" : "",
 						"style" : "",
 						"subpatcher_template" : "",
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"fontname" : "Arial",
@@ -971,7 +972,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 7.0, 6.0, 463.0, 163.0 ],
 									"style" : "",
-									"text" : "INPUT\n- signal\n\nATTRIBUTES:\n- xSize (float): room width, in m\n- ySize (float): room height, in m\n- zSize (float): room depth, in m\n- randomness (float): shape deviation from a rectangular room [0.0 ~ 1.0]\n- time (float): Global reverberation time, in s\n- time1k (float): Reverberation time at 1 kHz, in s"
+									"text" : "INPUT\n- signal\n\nATTRIBUTES:\n- xSize (float): room width, in m\n- ySize (float): room height, in m\n- zSize (float): room depth, in m\n- randomness (float): shape deviation from a rectangular room [0.0, 1.0]\n- time (float): Global reverberation time, in s\n- time1k (float): Reverberation time at 1 kHz, in s"
 								}
 
 							}
@@ -1082,8 +1083,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1192,8 +1193,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -2248,7 +2249,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -2257,7 +2258,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

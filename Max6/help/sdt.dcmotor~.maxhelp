@@ -3,13 +3,13 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 1673.0, 95.0, 668.0, 547.0 ],
+		"rect" : [ 772.0, 95.0, 668.0, 547.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 9.0,
@@ -209,8 +209,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -551,7 +551,7 @@
 			}
 , 			{
 				"box" : 				{
-					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 104.484108, 15.671641, 0, -0.15, 866.05719, 15.671641, 0, 0.7, 1000.0, 0.0, 0, -0.1 ],
+					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 174.202133, 90.666664, 0, -0.15, 828.907288, 83.67347, 0, -0.25, 1000.0, 0.0, 0, 0.0 ],
 					"id" : "obj-107",
 					"linecolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"maxclass" : "function",
@@ -651,8 +651,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -695,7 +695,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 288.0, 12.0, 306.0, 169.0 ],
 									"style" : "",
-									"text" : "ATTRIBUTES\n- coils: number of coils\n- airGain: amount of air noise [0. - 1.]\n- brushGain: amount of brush noise [0. - 1.]\n- gearGain: amount of gear noise [0. - 1.]\n- gearRatio: gear ratio\n- harshness: spectral density [0. - 1.]\n- reson: amount of body resonance [0. - 1.]\n- rotorGain: amount of rotor noise [0. - 1.]\n- size: size of the chassis in m"
+									"text" : "ATTRIBUTES\n- coils: number of coils\n- airGain: amount of air noise [0.0, 1.0]\n- brushGain: amount of brush noise [0.0, 1.0]\n- gearGain: amount of gear noise [0.0, 1.0]\n- gearRatio: gear ratio\n- harshness: spectral density [0.0, 1.0]\n- reson: amount of body resonance [0.0, 1.0]\n- rotorGain: amount of rotor noise [0.0, 1.0]\n- size: size of the chassis (in m)"
 								}
 
 							}
@@ -838,13 +838,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 2111.0, 102.0, 210.0, 110.0 ],
+						"rect" : [ 1210.0, 102.0, 210.0, 110.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
@@ -948,8 +948,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -1493,7 +1493,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 172.25, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.240976"
+					"text" : "0.082293"
 				}
 
 			}
@@ -1570,7 +1570,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 520.75, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.544"
+					"text" : "0.512195"
 				}
 
 			}
@@ -1708,7 +1708,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 7.375, 306.75, 47.0, 19.0 ],
 					"style" : "",
-					"text" : "4568"
+					"text" : "0"
 				}
 
 			}
@@ -1783,7 +1783,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 61.0, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.248"
+					"text" : "0.674797"
 				}
 
 			}
@@ -1876,7 +1876,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 237.25, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.352"
+					"text" : "0.130081"
 				}
 
 			}
@@ -1952,7 +1952,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 578.5, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.6"
+					"text" : "0.731707"
 				}
 
 			}
@@ -2012,7 +2012,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 464.0, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "3.44"
+					"text" : "6.341464"
 				}
 
 			}
@@ -2073,7 +2073,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 406.25, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.792"
+					"text" : "0.121951"
 				}
 
 			}
@@ -2134,7 +2134,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 348.5, 306.75, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.648"
+					"text" : "0.268293"
 				}
 
 			}
@@ -2195,7 +2195,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 292.25, 306.75, 53.0, 19.0 ],
 					"style" : "",
-					"text" : "0."
+					"text" : "0.162602"
 				}
 
 			}
@@ -3002,7 +3002,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -3011,7 +3011,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

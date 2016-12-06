@@ -7,6 +7,10 @@ dripping, filling, gushing etc.
 #ifndef SDT_LIQUIDS_H
 #define SDT_LIQUIDS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @defgroup bubbles Bubbles
 The main responsible for acoustic emission in water and other liquids,
 rather than the liquid mass on its own, is the gas trapped inside emerging
@@ -122,6 +126,10 @@ Call this function at sample rate to obtain a liquid sound.
 extern double SDTFluidFlow_dsp(SDTFluidFlow *x);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

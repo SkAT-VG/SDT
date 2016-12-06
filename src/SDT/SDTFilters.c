@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTFilters.h"
-#include "SDTStructs.h"
 
 struct SDTOnePole {
   double b0, a1, y1;

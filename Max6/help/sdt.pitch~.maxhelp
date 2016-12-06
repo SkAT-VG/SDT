@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -190,8 +190,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -300,8 +300,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -823,7 +823,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 335.0, 140.0, 241.0, 188.0 ],
 					"style" : "",
-					"text" : "ARGUMENTS:\n1. Window size, in samples (default 4096)\n\nINLETS:\n1. (signal): Input\n\nATTRIBUTES:\noverlap (float): Window overlap ratio\ntolerance (float): Peak tolerance [0.0 ~ 1.0]\n\nOUTLETS:\n1. (signal): Detected pitch, in Hz\n2. (signal): Pitch clarity [0.0 ~ 1.0]"
+					"text" : "ARGUMENTS:\n1. Window size, in samples (default 4096)\n\nINLETS:\n1. (signal): Input\n\nATTRIBUTES:\noverlap (float): Window overlap ratio\ntolerance (float): Peak tolerance [0.0, 1.0]\n\nOUTLETS:\n1. (signal): Detected pitch, in Hz\n2. (signal): Pitch clarity [0.0, 1.0]"
 				}
 
 			}
@@ -893,7 +893,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -902,7 +902,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

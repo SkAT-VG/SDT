@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 7,
 			"minor" : 2,
-			"revision" : 1,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -125,7 +125,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -168,7 +168,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 6.0, 4.0, 379.0, 104.0 ],
 									"style" : "",
-									"text" : "INPUT\n- bang, triggers a bubble\n\nATTRIBUTES\n- radius (float): Bubble radius, in mm [0.15 ~ 150.0]\n- riseFactor (float): Audible rise in frequency [0.0 ~ 3.0]"
+									"text" : "INPUT\n- bang, triggers a bubble\n\nATTRIBUTES\n- radius (float): Bubble radius, in mm [0.15, 150.0]\n- riseFactor (float): Audible rise in frequency [0.0, 3.0]"
 								}
 
 							}
@@ -545,7 +545,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -655,7 +655,7 @@
 										"appversion" : 										{
 											"major" : 7,
 											"minor" : 2,
-											"revision" : 1,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -1375,7 +1375,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}

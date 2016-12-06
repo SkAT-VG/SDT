@@ -58,7 +58,7 @@
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 56.0, 79.0, 969.0, 750.0 ],
+						"rect" : [ 235.0, 79.0, 1031.0, 783.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -87,6 +87,21 @@
 						"subpatcher_template" : "",
 						"boxes" : [ 							{
 								"box" : 								{
+									"fontname" : "Helvetica Neue",
+									"fontsize" : 14.0,
+									"id" : "obj-5",
+									"linecount" : 25,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 430.0, 37.0, 590.0, 414.0 ],
+									"style" : "",
+									"text" : "INPUT\n- inlet 1 (messages)\n- inlet 1 / 4 (signal): external force on hammer / object (in Newton)\n- inlet 2 / 5 (signal): if ≠ 0, sets hammer / object velocity (in m/s) and puts them in contact\n- inlet 3 / 6 (signal): fragment size of hammer / object [0.0, 1.0]\n\nATTRIBUTES\n- stiffness (float): stiffness (k)\n- shape (float): contact's shape (alpha)\n- dissipation (float): dissipation coefficient (mu)\n- contact0 (int): pickup index of the contact point for the first object\n- contact1 (int): pickup index of the contact point for the second object\n\nOUTPUT\n- outlet 1 (signal): velocity of the object 1 (rubber)\n- outlets >1 (signal): as many signal outlets as the number of pickup points. Modal object's displacement at each specified pickup points.\n\nARGUMENTS\nArguments are mandatory\n- unique ID name set for the sdt.inertial object\n- unique ID name set for the sdt.modal object\n- max number of signal outlets (int): if greater than the number of pickup points, the unused outlets are disabled; if lower than the number of pickup points, only the first ones are output, always starting from pickup0"
+								}
+
+							}
+, 							{
+								"box" : 								{
 									"fontface" : 3,
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 18.0,
@@ -94,9 +109,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 430.0, 419.5, 483.0, 28.0 ],
+									"patching_rect" : [ 430.0, 454.5, 483.0, 28.0 ],
 									"style" : "",
-									"text" : "sdt.crumpling "
+									"text" : "sdt.bouncing~ "
 								}
 
 							}
@@ -105,13 +120,13 @@
 									"fontname" : "Helvetica Neue",
 									"fontsize" : 14.0,
 									"id" : "obj-3",
-									"linecount" : 18,
+									"linecount" : 13,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 430.0, 449.5, 537.0, 300.0 ],
+									"patching_rect" : [ 430.0, 484.5, 537.0, 218.0 ],
 									"style" : "",
-									"text" : "INPUT\n- bang, triggers a discrete crumpling event,\n- int, 1 starts a continuous crumpling event, 0 stops it\n- start, starts a continuous crumpling event\n- stop, stops a continuous crumpling event\n\nATTRIBUTES\n- crushingEnergy (float): energy of the micro-impacts [0.0, 1.0]\n- granularity (float): crumpling granularity [0.0, 1.0]\n- fragmentation (float): tendency of the object to break into smaller pieces [0.0, 1.0]. \n\nOUTPUT\n- outlet 1 (float): fragment size, compared to the whole object size [0.0, 1.0]\n- outlet 2 (float): energy of the single event (fragment), compared to the global energy of the process [0.0, 1.0]\n\nARGUMENTS\n-none"
+									"text" : "INPUT\n- bang: triggers a bouncing event\n\nATTRIBUTES\n- restitution (float): restitution coefficient [0.0, 1.0]\n- height (float): initial height of the falling object, in m\n- irregularity (float): deviation from a spherical shape [0.0, 1.0]. \n\nOUTPUT\n- outlet 1 (signal): Impact velocity, in m/s\n\nARGUMENTS\n-none"
 								}
 
 							}
@@ -157,21 +172,6 @@
 									"patching_rect" : [ 430.0, 7.0, 483.0, 28.0 ],
 									"style" : "",
 									"text" : "sdt.impact~ (interactor)"
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontname" : "Helvetica Neue",
-									"fontsize" : 14.0,
-									"id" : "obj-5",
-									"linecount" : 23,
-									"maxclass" : "comment",
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 430.0, 37.0, 524.0, 381.0 ],
-									"style" : "",
-									"text" : "INPUT\n- messages\n- signal: external force on hammer (in Newton)\n\nATTRIBUTES\n- stiffness (float): stiffness (k)\n- shape (float): contact's shape (alpha)\n- dissipation (float): dissipation coefficient (mu)\n- contact0 (int): pickup index of the contact point for the first object\n- contact1 (int): pickup index of the contact point for the second object\n\nOUTPUT\n- outlet 1 (signal): velocity of the object 1 (rubber)\n- outlets >1 (signal): as many signal outlets as the number of pickup points. Modal object's displacement at each specified pickup points.\n\nARGUMENTS\nArguments are mandatory\n- unique ID name set for the sdt.inertial~ object\n- unique ID name set for the sdt.modal~ object\n- max number of signal outlets (int): if greater than the number of pickup points, the unused outlets are disabled; if lower than the number of pickup points, only the first ones are output, always starting from pickup0"
 								}
 
 							}

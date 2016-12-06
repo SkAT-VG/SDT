@@ -729,7 +729,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 497.8125, 49.75, 108.0, 21.0 ],
 					"style" : "",
-					"text" : "v 0.75",
+					"text" : "v 0.76",
 					"textcolor" : [ 1.0, 1.0, 1.0, 1.0 ]
 				}
 

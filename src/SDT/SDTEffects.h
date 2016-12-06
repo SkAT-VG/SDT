@@ -6,6 +6,10 @@ Algorithms for audio post-processing, such as reverberation and pitch shifting
 #ifndef SDT_EFFECTS_H
 #define SDT_EFFECTS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @defgroup reverb Reverb
 Artificial reverberator based on Feedback Delay Networks, as found in
 D. Rocchesso, "Maximally diffusive yet efficient feedback delay networks
@@ -89,6 +93,10 @@ Call this function at sample rate to compute the pitch shifted signal.
 extern double SDTPitchShift_dsp(SDTPitchShift *x, double in);
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

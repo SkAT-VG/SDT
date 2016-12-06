@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -47,8 +47,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -224,8 +224,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1196,13 +1196,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 908.0, 45.0, 587.0, 489.0 ],
+						"rect" : [ 819.0, 79.0, 587.0, 489.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 9.0,
@@ -1240,7 +1240,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 7.0, 6.0, 544.0, 319.0 ],
 									"style" : "",
-									"text" : "INPUT\n- bang: triggers an explosion\n- messages\n\nATTRIBUTES:\n- blastTime (float): Duration of the initial pressure peak, in seconds\n- scatterTime (float): Duration of the turbulence tail, in seconds\n- dispersion (float): Amount of turbulence [0.0 ~ 1.0]\n- distance (float): Distance of the explosion from the listener, in meters\n- waveSpeed (float): Propagation speed of the blast wave, in meters per second\n- windSpeed (float): Propagation speed of the blast wind, in meters per second\n\nOUTPUT\n\n- (signal): Blast wave\n- (signal): Blast wind\n\nARGUMENTS\n- Size of the scattering delay lines, in samples (default 44100)\n- Size of the wave propagation delay lines, in samples (default 4410000)"
+									"text" : "INPUT\n- bang: triggers an explosion\n- messages\n\nATTRIBUTES:\n- blastTime (float): Duration of the initial pressure peak, in seconds\n- scatterTime (float): Duration of the turbulence tail, in seconds\n- dispersion (float): Amount of turbulence [0.0, 1.0]\n- distance (float): Distance of the explosion from the listener, in meters\n- waveSpeed (float): Propagation speed of the blast wave, in meters per second\n- windSpeed (float): Propagation speed of the blast wind, in meters per second\n\nOUTPUT\n\n- (signal): Blast wave\n- (signal): Blast wind\n\nARGUMENTS\n- Size of the scattering delay lines, in samples (default 44100)\n- Size of the wave propagation delay lines, in samples (default 4410000)"
 								}
 
 							}
@@ -1338,13 +1338,13 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
 ,
-						"rect" : [ 419.0, -212.0, 215.0, 106.0 ],
+						"rect" : [ 469.0, 114.0, 211.0, 113.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
@@ -1448,8 +1448,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -2377,7 +2377,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -2386,7 +2386,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

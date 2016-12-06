@@ -16,7 +16,7 @@ typedef struct _inertial {
 } t_inertial;
 
 void inertial_mass(t_inertial *x, t_float f) {
-  SDTResonator_setMass(x->inertial, 0, 0, f);
+  SDTResonator_setWeight(x->inertial, 0, f);
 }
 
 void inertial_fragmentSize(t_inertial *x, t_float f) {
@@ -24,12 +24,18 @@ void inertial_fragmentSize(t_inertial *x, t_float f) {
 }
 
 void inertial_strike(t_inertial *x, t_float p, t_float v) {
-  SDTResonator_setPosition(x->inertial, 0, 0, p);
-  SDTResonator_setVelocity(x->inertial, 0, 0, v);
+  SDTResonator_setPosition(x->inertial, 0, p);
+  SDTResonator_setVelocity(x->inertial, 0, v);
 }
 
 void inertial_dsp(t_inertial *x, t_signal **sp) {
   SDT_setSampleRate(sp[0]->s_sr);
+  SDTResonator_setFrequency(x->inertial, 0, 0.0);
+  SDTResonator_setDecay(x->inertial, 0, 0.0);
+  SDTResonator_setWeight(x->inertial, 0, 1.0);
+  SDTResonator_setGain(x->inertial, 0, 0, 1.0);
+  SDTResonator_setFragmentSize(x->inertial, 1.0);
+  SDTResonator_setActiveModes(x->inertial, 1);
 }
 
 void *inertial_new(t_symbol *s, long argc, t_atom *argv) {

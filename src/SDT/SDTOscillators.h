@@ -6,6 +6,10 @@ Simple, commonly used sound generators.
 #ifndef SDT_OSCILLATORS_H
 #define SDT_OSCILLATORS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Opaque data structure for a pink noise generator */
 typedef struct SDTPinkNoise SDTPinkNoise;
 
@@ -27,5 +31,9 @@ Call this function at sample rate to generate white noise */
 extern double SDT_whiteNoise();
 
 /** @} */
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif

@@ -22,6 +22,10 @@ with bandpass-filtered white noise, exactly like in the gas model.
 #ifndef SDT_DCMOTOR_H
 #define SDT_DCMOTOR_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Opaque data structure for the electric motor synthesis model. */
 typedef struct SDTDCMotor SDTDCMotor;
 
@@ -88,6 +92,10 @@ extern void SDTDCMotor_setAirGain(SDTDCMotor *x, double f);
 Call this function at sample rate to synthesize an electric motor sound.
 @return Computed audio sample */
 extern double SDTDCMotor_dsp(SDTDCMotor *x);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

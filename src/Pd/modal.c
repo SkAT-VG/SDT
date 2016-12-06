@@ -12,6 +12,7 @@ typedef struct _modal {
   t_object obj;
   SDTResonator *modal;
   char *key;
+  int nModes, nPickups;
   t_sample f;
 } t_modal;
 
@@ -36,7 +37,7 @@ void modal_pickup(t_modal *x, void *attr, long ac, t_atom *av) {
   
   pickup = atom_getint(av);
   for (mode = 1; mode < ac; mode++) {
-    SDTResonator_setWeight(x->modal, pickup, mode - 1, atom_getfloat(av + mode));
+    SDTResonator_setGain(x->modal, pickup, mode - 1, atom_getfloat(av + mode));
   }
 }
 
@@ -49,7 +50,19 @@ void modal_activeModes(t_modal *x, t_float f) {
 }
 
 void modal_dsp(t_modal *x, t_signal **sp) {
+  int pickup, mode;
+  
   SDT_setSampleRate(sp[0]->s_sr);
+  for (mode = 0; mode < x->nModes; mode++) {
+    SDTResonator_setFrequency(x->modal, mode, 0.0);
+    SDTResonator_setDecay(x->modal, mode, 0.0);
+    SDTResonator_setWeight(x->modal, mode, 1.0);
+    for (pickup = 0; pickup < x->nPickups; pickup++) {
+      SDTResonator_setGain(x->modal, pickup, mode, 1.0);
+    }
+  }
+  SDTResonator_setFragmentSize(x->modal, 1.0);
+  SDTResonator_setActiveModes(x->modal, x->nModes);
 }
 
 void *modal_new(t_symbol *s, long argc, t_atom *argv) {
@@ -64,6 +77,8 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
   x = (t_modal *)pd_new(modal_class);
   x->modal = SDTResonator_new(atom_getint(argv + 1), atom_getint(argv + 2));
   x->key = atom_getsymbol(argv)->s_name;
+  x->nModes = atom_getint(argv + 1);
+  x->nPickups = atom_getint(argv + 2);
   if (SDT_registerResonator(x->modal, x->key)) {
     error("sdt.modal: Error registering the resonator. Probably a duplicate id?");
     SDTResonator_free(x->modal);

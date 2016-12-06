@@ -14,6 +14,10 @@ is generally asynchronous.
 #define SDT_MAX_MODES 16
 #define SDT_MAX_PICKUPS 16
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** @brief Registers a resonator into the resonators list with a unique ID.
 If an interactor with the same ID is present, the resonator is bound to the interactor.
 @param[in] x Resonator instance to register
@@ -38,6 +42,10 @@ If an interactor with the given IDs is present, it is unregistered from the list
 @param[in] key0 Unique ID of the first resonator
 @param[in] key1 Unique ID of the second resonator */
 extern int SDT_unregisterInteractor(char *key0, char *key1);
+
+#ifdef __cplusplus
+};
+#endif
 
 #endif
 

@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -45,9 +45,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 392.0, 150.0, 167.0, 169.0 ],
+					"patching_rect" : [ 392.0, 150.0, 173.0, 169.0 ],
 					"style" : "",
-					"text" : "INPUT\n- signal\n\nATTRIBUTES:\n- overlap (float): [0. - 1.]\n\nOUTPUT\n\n- float, normalized zero crossing rate"
+					"text" : "INPUT\n- signal\n\nATTRIBUTES:\n- overlap (float): [0.0, 1.0]\n\nOUTPUT\n\n- float, normalized zero crossing rate"
 				}
 
 			}
@@ -131,8 +131,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -240,8 +240,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -799,11 +799,17 @@
 			}
  ],
 		"dependency_cache" : [ 			{
+				"name" : "_SDT_label2016.maxpat",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "sdt.zerox~.mxo",
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

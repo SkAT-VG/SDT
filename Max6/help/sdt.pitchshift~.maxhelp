@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -102,7 +102,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 17.0, 76.625, 316.0, 23.0 ],
 					"style" : "",
-					"text" : "Time domain pitch shifter"
+					"text" : "Simple time domain pitch shifter"
 				}
 
 			}
@@ -159,8 +159,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -269,8 +269,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -965,11 +965,17 @@
 			}
  ],
 		"dependency_cache" : [ 			{
+				"name" : "_SDT_label2016.maxpat",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
+				"type" : "JSON",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "sdt.pitchshift~.mxo",
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }

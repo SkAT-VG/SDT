@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.10"/>
-<title>Sound Design Toolkit: /Users/Shared/skatvg_svn/Code/SoundDesignToolkit/src/SDT/SDTStructs.h Source File</title>
+<title>Sound Design Toolkit: src/SDT/SDTStructs.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -32,7 +32,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Sound Design Toolkit
-   &#160;<span id="projectnumber">075</span>
+   &#160;<span id="projectnumber">076</span>
    </div>
    <div id="projectbrief">Physically informed sound synthesis for everyday sounds</div>
   </td>
@@ -113,26 +113,34 @@ $(document).ready(function(){initNavTree('_s_d_t_structs_8h_source.html','');});
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef SDT_STRUCTS_H</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define SDT_STRUCTS_H</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">    9</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> <a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a>;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *<a class="code" href="group__structs.html#ga80b88bc1e13aeeed73863c3a5855baa1">SDTHashmap_new</a>(<span class="keywordtype">int</span> size);</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__structs.html#ga2d8f81e03ba59b433fa1fe0ff760ec82">SDTHashmap_free</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x);</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">   13</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> <a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a>;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">extern</span> <a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *<a class="code" href="group__structs.html#ga80b88bc1e13aeeed73863c3a5855baa1">SDTHashmap_new</a>(<span class="keywordtype">int</span> size);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> *<a class="code" href="group__structs.html#ga2e7b98637480590ed4c7f873200d8db7">SDTHashmap_get</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x, <span class="keywordtype">char</span> *key);</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="group__structs.html#gaeb73501a575fbc9c4d8603456a05b204">SDTHashmap_put</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x, <span class="keywordtype">char</span> *key, <span class="keywordtype">void</span> *value);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="group__structs.html#gac8c9b9ea95106b84ff6990e9a67ebcf7">SDTHashmap_del</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x, <span class="keywordtype">char</span> *key);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__structs.html#gae537b6cca07a0106a788e6d8a0f53958">SDTHashmap_clear</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__structs.html#ga2d8f81e03ba59b433fa1fe0ff760ec82">SDTHashmap_free</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x);</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> *<a class="code" href="group__structs.html#ga2e7b98637480590ed4c7f873200d8db7">SDTHashmap_get</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x, <span class="keywordtype">char</span> *key);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="group__structs.html#gaeb73501a575fbc9c4d8603456a05b204">SDTHashmap_put</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x, <span class="keywordtype">char</span> *key, <span class="keywordtype">void</span> *value);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">int</span> <a class="code" href="group__structs.html#gac8c9b9ea95106b84ff6990e9a67ebcf7">SDTHashmap_del</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x, <span class="keywordtype">char</span> *key);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="group__structs.html#gae537b6cca07a0106a788e6d8a0f53958">SDTHashmap_clear</a>(<a class="code" href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a> *x);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#ifdef __cplusplus</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
 <div class="ttc" id="group__structs_html_ga2e7b98637480590ed4c7f873200d8db7"><div class="ttname"><a href="group__structs.html#ga2e7b98637480590ed4c7f873200d8db7">SDTHashmap_get</a></div><div class="ttdeci">void * SDTHashmap_get(SDTHashmap *x, char *key)</div><div class="ttdoc">Looks for an entry with the given key in the hashmap. </div></div>
 <div class="ttc" id="group__structs_html_gaeb73501a575fbc9c4d8603456a05b204"><div class="ttname"><a href="group__structs.html#gaeb73501a575fbc9c4d8603456a05b204">SDTHashmap_put</a></div><div class="ttdeci">int SDTHashmap_put(SDTHashmap *x, char *key, void *value)</div><div class="ttdoc">Inserts a key/value pair in the hashmap. </div></div>
 <div class="ttc" id="group__structs_html_ga80b88bc1e13aeeed73863c3a5855baa1"><div class="ttname"><a href="group__structs.html#ga80b88bc1e13aeeed73863c3a5855baa1">SDTHashmap_new</a></div><div class="ttdeci">SDTHashmap * SDTHashmap_new(int size)</div><div class="ttdoc">Object constructor. </div></div>
-<div class="ttc" id="group__structs_html_gaf9aa86ada58e2863bd06d6feb4fdf07c"><div class="ttname"><a href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a></div><div class="ttdeci">struct SDTHashmap SDTHashmap</div><div class="ttdoc">Opaque data structure for a hashmap object. </div><div class="ttdef"><b>Definition:</b> SDTStructs.h:9</div></div>
+<div class="ttc" id="group__structs_html_gaf9aa86ada58e2863bd06d6feb4fdf07c"><div class="ttname"><a href="group__structs.html#gaf9aa86ada58e2863bd06d6feb4fdf07c">SDTHashmap</a></div><div class="ttdeci">struct SDTHashmap SDTHashmap</div><div class="ttdoc">Opaque data structure for a hashmap object. </div><div class="ttdef"><b>Definition:</b> SDTStructs.h:13</div></div>
 <div class="ttc" id="group__structs_html_ga2d8f81e03ba59b433fa1fe0ff760ec82"><div class="ttname"><a href="group__structs.html#ga2d8f81e03ba59b433fa1fe0ff760ec82">SDTHashmap_free</a></div><div class="ttdeci">void SDTHashmap_free(SDTHashmap *x)</div><div class="ttdoc">Object destructor. </div></div>
 <div class="ttc" id="group__structs_html_gac8c9b9ea95106b84ff6990e9a67ebcf7"><div class="ttname"><a href="group__structs.html#gac8c9b9ea95106b84ff6990e9a67ebcf7">SDTHashmap_del</a></div><div class="ttdeci">int SDTHashmap_del(SDTHashmap *x, char *key)</div><div class="ttdoc">Deletes a key/value pair from the hashmap. </div></div>
 <div class="ttc" id="group__structs_html_gae537b6cca07a0106a788e6d8a0f53958"><div class="ttname"><a href="group__structs.html#gae537b6cca07a0106a788e6d8a0f53958">SDTHashmap_clear</a></div><div class="ttdeci">void SDTHashmap_clear(SDTHashmap *x)</div><div class="ttdoc">Deletes all the entries in the hashmap. </div></div>
@@ -141,7 +149,7 @@ $(document).ready(function(){initNavTree('_s_d_t_structs_8h_source.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_6a9c4ec747817be79b1dead9a4eb7c2f.html">Shared</a></li><li class="navelem"><a class="el" href="dir_5ba4e257a031d4a1cf51e5b1293840f9.html">skatvg_svn</a></li><li class="navelem"><a class="el" href="dir_435e44344eeb333fcb7bcaea0e419137.html">Code</a></li><li class="navelem"><a class="el" href="dir_1c0498e5f1064cffb2abcef72dae12d7.html">SoundDesignToolkit</a></li><li class="navelem"><a class="el" href="dir_63083b5ec5b6d96de11e301e71aa26da.html">src</a></li><li class="navelem"><a class="el" href="dir_cad75c80c34158cfad7fb6e63f9dfd1a.html">SDT</a></li><li class="navelem"><b>SDTStructs.h</b></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1c3113847d98d4e47111a3aa448558eb.html">SDT</a></li><li class="navelem"><b>SDTStructs.h</b></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.10 </li>

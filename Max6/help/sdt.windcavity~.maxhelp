@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 7,
 			"minor" : 2,
-			"revision" : 1,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -367,7 +367,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 30.5, 338.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.61"
+					"text" : "0.55"
 				}
 
 			}
@@ -472,7 +472,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 109.5, 338.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "1.356127"
+					"text" : "0.410237"
 				}
 
 			}
@@ -489,7 +489,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 200.5, 338.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.695825"
+					"text" : "0.323862"
 				}
 
 			}
@@ -631,7 +631,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -674,7 +674,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 7.0, 6.0, 345.0, 116.0 ],
 									"style" : "",
-									"text" : "INPUT\n- messages\n- signal, wind speed [0.0 - 1.0]\n\nATTRIBUTES:\n- length (float): Cavity length, in m\n- diameter (float): Cavity diameter, in m"
+									"text" : "INPUT\n- messages\n- signal, wind speed [0.0, 1.0]\n\nATTRIBUTES:\n- length (float): Cavity length, in m\n- diameter (float): Cavity diameter, in m"
 								}
 
 							}
@@ -805,7 +805,7 @@
 						"appversion" : 						{
 							"major" : 7,
 							"minor" : 2,
-							"revision" : 1,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -915,7 +915,7 @@
 										"appversion" : 										{
 											"major" : 7,
 											"minor" : 2,
-											"revision" : 1,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -1711,7 +1711,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}

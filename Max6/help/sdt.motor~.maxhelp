@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -92,8 +92,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -771,7 +771,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 6.75, 304.0, 40.75, 19.0 ],
 					"style" : "",
-					"text" : "802"
+					"text" : "976"
 				}
 
 			}
@@ -847,7 +847,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 68.75, 304.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.357724"
+					"text" : "0.112001"
 				}
 
 			}
@@ -940,7 +940,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 530.25, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.03252"
+					"text" : "0."
 				}
 
 			}
@@ -1016,7 +1016,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 454.5, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.090112"
+					"text" : "0.579765"
 				}
 
 			}
@@ -1094,7 +1094,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 375.5, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.121951"
+					"text" : "0.664"
 				}
 
 			}
@@ -1172,7 +1172,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 298.0, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.09747"
+					"text" : "0.109042"
 				}
 
 			}
@@ -1234,7 +1234,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 213.75, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.219512"
+					"text" : "0.464"
 				}
 
 			}
@@ -1312,7 +1312,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 138.75, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.09747"
+					"text" : "0.246229"
 				}
 
 			}
@@ -1374,7 +1374,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 68.75, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.080114"
+					"text" : "0.323278"
 				}
 
 			}
@@ -1436,7 +1436,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 1.0, 523.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.083316"
+					"text" : "0.25599"
 				}
 
 			}
@@ -1498,7 +1498,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 454.5, 304.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.756098"
+					"text" : "0.176"
 				}
 
 			}
@@ -1576,7 +1576,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 375.5, 304.0, 50.0, 19.0 ],
 					"style" : "",
-					"text" : "0.041837"
+					"text" : "0.224995"
 				}
 
 			}
@@ -1638,7 +1638,7 @@
 					"presentation" : 1,
 					"presentation_rect" : [ 298.0, 303.5, 53.0, 19.0 ],
 					"style" : "",
-					"text" : "5.731708"
+					"text" : "9.56"
 				}
 
 			}
@@ -1972,8 +1972,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2014,9 +2014,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 288.0, 12.0, 537.0, 251.0 ],
+									"patching_rect" : [ 288.0, 12.0, 537.0, 267.0 ],
 									"style" : "",
-									"text" : "ATTRIBUTES\n- cycle (int): 0 = four-stroke, 1 = two-stroke\n- nCylinders (int): Number of cylinders [1 ~ 12]\n- cylinderSize (float): Volume of each cylinder, in cc\n- compressionRatio (float): Compression ratio [5.0 ~ 20.0]\n- sparkTime (float): Fuel ignition time [0.000001 ~ 1.0]\n- asymmetry (float): Engine eccentricity [0.0 ~ 1.0]\n- backfire (float): Amount of backfiring when revving down [0.0 ~ 1.0]\n- intakeSize (float): Average length of intake collectors, in m\n- extractorSize (float): Average length of exhaust collectors, in m\n- exhaustSize (float): Length of the main exhaust pipe, in m\n- mufflerSize (float): Average length of muffler resonators, in m\n- outletSize (float): Length of the exhaust outlet, in m\n- expansion (float): Impedance mismatch between collectors and exhaust [0.0 ~ 1.0]\n- mufflerFeedback (float): Muffler efficiency [0.0 ~ 1.0]\n"
+									"text" : "ATTRIBUTES\n- cycle (int): 0 = four-stroke, 1 = two-stroke\n- nCylinders (int): Number of cylinders [1, 12]\n- cylinderSize (float): Volume of each cylinder, in cc\n- compressionRatio (float): Compression ratio [5.0, 20.0]\n- sparkTime (float): Fuel ignition time [0.000001, 1.0]\n- asymmetry (float): Engine eccentricity [0.0, 1.0]\n- backfire (float): Amount of backfiring when revving down [0.0, 1.0]\n- intakeSize (float): Average length of intake collectors, in m\n- extractorSize (float): Average length of exhaust collectors, in m\n- exhaustSize (float): Length of the main exhaust pipe, in m\n- mufflerSize (float): Average length of muffler resonators, in m\n- outletSize (float): Length of the exhaust outlet, in m\n- expansion (float): Impedance mismatch between collectors and exhaust [0.0, 1.0]\n- mufflerFeedback (float): Muffler efficiency [0.0, 1.0]\n"
 								}
 
 							}
@@ -2160,8 +2160,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -2270,8 +2270,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 7,
-											"minor" : 0,
-											"revision" : 6,
+											"minor" : 2,
+											"revision" : 4,
 											"architecture" : "x86",
 											"modernui" : 1
 										}
@@ -3806,7 +3806,7 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "_SDT_label2016.maxpat",
-				"bootpath" : "~/Documents/Max 7/Packages/SoundDesignToolkit/misc",
+				"bootpath" : "~/Documents/Max 7/Packages/SDT/misc",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -3815,7 +3815,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }
