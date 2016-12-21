@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 7,
-			"minor" : 0,
-			"revision" : 6,
+			"minor" : 2,
+			"revision" : 4,
 			"architecture" : "x86",
 			"modernui" : 1
 		}
@@ -154,8 +154,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1014,8 +1014,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1304,15 +1304,15 @@
 					"patching_rect" : [ 634.75, 252.0, 84.0, 51.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
-							"data" : [ 5, "obj-13", "number~", "list", 0.0, 4, "obj-78", "function", "clear", 8, "obj-78", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-78", "function", "add_with_curve", 219.533279, 94.666664, 0, -0.45, 8, "obj-78", "function", "add_with_curve", 475.36734, 0.0, 0, 0.55, 8, "obj-78", "function", "add_with_curve", 658.599854, 100.0, 0, -0.395, 8, "obj-78", "function", "add_with_curve", 1000.0, 0.0, 0, 0.45, 5, "obj-78", "function", "domain", 1000.0, 6, "obj-78", "function", "range", 0.0, 100.0, 5, "obj-78", "function", "mode", 1, 5, "obj-126", "toggle", "int", 1, 5, "obj-77", "number", "int", 1000, 5, "obj-19", "multislider", "list", 1.0, 5, "obj-24", "flonum", "float", 1.833425, 7, "obj-32", "multislider", "list", 2575.0, 5650.0, 7675.0, 7, "obj-33", "multislider", "list", 0.000286, 0.000434, 0.000694, 5, "obj-35", "multislider", "list", 0.001232, 7, "obj-47", "multislider", "list", 48.484848, 100.0, 100.0, 5, "obj-52", "multislider", "list", 1.640152, 5, "obj-54", "multislider", "list", 3500.0 ]
+							"data" : [ 5, "obj-13", "number~", "list", 0.0, 4, "obj-78", "function", "clear", 8, "obj-78", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-78", "function", "add_with_curve", 240.276581, 40.0, 0, -0.5, 8, "obj-78", "function", "add_with_curve", 364.736389, 0.0, 0, 0.25, 8, "obj-78", "function", "add_with_curve", 703.54364, 74.666664, 0, -0.045, 8, "obj-78", "function", "add_with_curve", 1000.0, 0.0, 0, 0.4, 5, "obj-78", "function", "domain", 1000.0, 6, "obj-78", "function", "range", 0.0, 100.0, 5, "obj-78", "function", "mode", 1, 5, "obj-126", "toggle", "int", 1, 5, "obj-77", "number", "int", 450, 5, "obj-19", "multislider", "list", 1.0, 5, "obj-24", "flonum", "float", 2.000785, 7, "obj-32", "multislider", "list", 625.0, 1000.0, 5650.0, 7, "obj-33", "multislider", "list", 0.001548, 0.001808, 0.001028, 5, "obj-35", "multislider", "list", 0.000666, 7, "obj-47", "multislider", "list", 64.393936, 100.0, 100.0, 5, "obj-52", "multislider", "list", 3.549242, 5, "obj-54", "multislider", "list", 3500.0 ]
 						}
 , 						{
 							"number" : 2,
-							"data" : [ 5, "obj-13", "number~", "list", 0.0, 4, "obj-78", "function", "clear", 8, "obj-78", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-78", "function", "add_with_curve", 219.533279, 100.0, 0, -0.3, 8, "obj-78", "function", "add_with_curve", 551.426086, 0.0, 0, 0.6, 8, "obj-78", "function", "add_with_curve", 786.516846, 82.666664, 0, -0.595, 8, "obj-78", "function", "add_with_curve", 1000.0, 0.0, 0, 0.7, 5, "obj-78", "function", "domain", 1000.0, 6, "obj-78", "function", "range", 0.0, 100.0, 5, "obj-78", "function", "mode", 1, 5, "obj-126", "toggle", "int", 1, 5, "obj-77", "number", "int", 600, 5, "obj-19", "multislider", "list", 0.989583, 5, "obj-24", "flonum", "float", 2.456916, 7, "obj-32", "multislider", "list", 1000.0, 2875.0, 6550.0, 7, "obj-33", "multislider", "list", 0.000731, 0.000471, 0.000248, 5, "obj-35", "multislider", "list", 0.000666, 7, "obj-47", "multislider", "list", 61.363636, 71.21212, 86.36364, 5, "obj-52", "multislider", "list", 3.443182, 5, "obj-54", "multislider", "list", 2340.90918 ]
+							"data" : [ 5, "obj-13", "number~", "list", 0.0, 4, "obj-78", "function", "clear", 8, "obj-78", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-78", "function", "add_with_curve", 219.533279, 100.0, 0, -0.3, 8, "obj-78", "function", "add_with_curve", 551.426086, 0.0, 0, 0.6, 8, "obj-78", "function", "add_with_curve", 786.516846, 82.666664, 0, -0.595, 8, "obj-78", "function", "add_with_curve", 1000.0, 0.0, 0, 0.7, 5, "obj-78", "function", "domain", 1000.0, 6, "obj-78", "function", "range", 0.0, 100.0, 5, "obj-78", "function", "mode", 1, 5, "obj-126", "toggle", "int", 1, 5, "obj-77", "number", "int", 450, 5, "obj-19", "multislider", "list", 0.989583, 5, "obj-24", "flonum", "float", 2.476359, 7, "obj-32", "multislider", "list", 1000.0, 1675.0, 2725.0, 7, "obj-33", "multislider", "list", 0.001288, 0.000508, 0.00036, 5, "obj-35", "multislider", "list", 0.002552, 7, "obj-47", "multislider", "list", 89.393936, 71.21212, 56.060608, 5, "obj-52", "multislider", "list", 1.666667, 5, "obj-54", "multislider", "list", 3500.0 ]
 						}
 , 						{
 							"number" : 3,
-							"data" : [ 5, "obj-13", "number~", "list", 0.0, 4, "obj-78", "function", "clear", 8, "obj-78", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-78", "function", "add_with_curve", 219.533279, 100.0, 0, -0.3, 8, "obj-78", "function", "add_with_curve", 551.426086, 0.0, 0, 0.6, 8, "obj-78", "function", "add_with_curve", 786.516846, 82.666664, 0, -0.595, 8, "obj-78", "function", "add_with_curve", 1000.0, 0.0, 0, 0.7, 5, "obj-78", "function", "domain", 1000.0, 6, "obj-78", "function", "range", 0.0, 100.0, 5, "obj-78", "function", "mode", 1, 5, "obj-126", "toggle", "int", 1, 5, "obj-77", "number", "int", 650, 5, "obj-19", "multislider", "list", 0.989583, 5, "obj-24", "flonum", "float", 2.723064, 7, "obj-32", "multislider", "list", 475.0, 4525.0, 8425.0, 7, "obj-33", "multislider", "list", 0.001362, 0.000397, 0.000768, 5, "obj-35", "multislider", "list", 0.000666, 7, "obj-47", "multislider", "list", 46.969696, 56.81818, 86.36364, 5, "obj-52", "multislider", "list", 1.931818, 5, "obj-54", "multislider", "list", 1659.090942 ]
+							"data" : [ 5, "obj-13", "number~", "list", 0.0, 4, "obj-78", "function", "clear", 8, "obj-78", "function", "add_with_curve", 0.0, 0.0, 0, 0.0, 8, "obj-78", "function", "add_with_curve", 219.533279, 100.0, 0, -0.3, 8, "obj-78", "function", "add_with_curve", 551.426086, 0.0, 0, 0.6, 8, "obj-78", "function", "add_with_curve", 786.516846, 82.666664, 0, -0.595, 8, "obj-78", "function", "add_with_curve", 1000.0, 0.0, 0, 0.7, 5, "obj-78", "function", "domain", 1000.0, 6, "obj-78", "function", "range", 0.0, 100.0, 5, "obj-78", "function", "mode", 1, 5, "obj-126", "toggle", "int", 1, 5, "obj-77", "number", "int", 650, 5, "obj-19", "multislider", "list", 0.989583, 5, "obj-24", "flonum", "float", 2.723064, 7, "obj-32", "multislider", "list", 475.0, 850.0, 1600.0, 7, "obj-33", "multislider", "list", 0.001585, 0.000397, 0.001102, 5, "obj-35", "multislider", "list", 0.000477, 7, "obj-47", "multislider", "list", 90.909088, 93.939392, 100.0, 5, "obj-52", "multislider", "list", 1.984848, 5, "obj-54", "multislider", "list", 3000.0 ]
 						}
  ],
 					"style" : ""
@@ -1499,8 +1499,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 7,
-							"minor" : 0,
-							"revision" : 6,
+							"minor" : 2,
+							"revision" : 4,
 							"architecture" : "x86",
 							"modernui" : 1
 						}
@@ -1818,7 +1818,7 @@
 			}
 , 			{
 				"box" : 				{
-					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 219.533279, 94.666664, 0, -0.45, 475.36734, 0.0, 0, 0.55, 658.599854, 100.0, 0, -0.395, 1000.0, 0.0, 0, 0.45 ],
+					"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 240.276581, 40.0, 0, -0.5, 364.736389, 0.0, 0, 0.25, 703.54364, 74.666664, 0, -0.045, 1000.0, 0.0, 0, 0.4 ],
 					"id" : "obj-78",
 					"linecolor" : [ 0.0, 0.8, 1.0, 1.0 ],
 					"maxclass" : "function",
@@ -1956,7 +1956,7 @@
 					"id" : "obj-1",
 					"linecount" : 4,
 					"maxclass" : "newobj",
-					"numinlets" : 2,
+					"numinlets" : 6,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 12.0, 647.0, 393.0, 85.0 ],
@@ -2201,9 +2201,10 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-1", 1 ],
+					"destination" : [ "obj-1", 3 ],
 					"disabled" : 0,
 					"hidden" : 0,
+					"midpoints" : [ 395.5, 639.0, 245.899994, 639.0 ],
 					"source" : [ "obj-4", 0 ]
 				}
 
@@ -2429,7 +2430,7 @@
 				"type" : "iLaX"
 			}
  ],
-		"embedsnapshot" : 0
+		"autosave" : 0
 	}
 
 }
