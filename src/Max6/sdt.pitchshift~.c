@@ -7,14 +7,14 @@
 typedef struct _pitchshift {
 	t_pxobject ob;
 	SDTPitchShift *shift;
-	double ratio;
+	double ratio, overlap;
 } t_pitchshift;
 
 static t_class *pitchshift_class = NULL;
 
 void *pitchshift_new(t_symbol *s, long argc, t_atom *argv) {
   t_pitchshift *x = (t_pitchshift *)object_alloc(pitchshift_class);
-  long size;
+  long size, oversample;
   
   if (x) {
     dsp_setup((t_pxobject *)x, 1);
@@ -23,9 +23,15 @@ void *pitchshift_new(t_symbol *s, long argc, t_atom *argv) {
       size = atom_getlong(&argv[0]);
     }
     else {
-      size = 4096;
+      size = 2048;
     }
-    x->shift = SDTPitchShift_new(size);
+    if (argc > 1 && atom_gettype(&argv[1]) == A_LONG) {
+      oversample = atom_getlong(&argv[1]);
+    }
+    else {
+      oversample = 4;
+    }
+    x->shift = SDTPitchShift_new(size, oversample);
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -51,12 +57,17 @@ void pitchshift_ratio(t_pitchshift *x, void *attr, long ac, t_atom *av) {
   SDTPitchShift_setRatio(x->shift, x->ratio);
 }
 
+void pitchshift_overlap(t_pitchshift *x, void *attr, long ac, t_atom *av) {
+  x->overlap = atom_getfloat(av);
+  SDTPitchShift_setOverlap(x->shift, x->overlap);
+}
+
 t_int *pitchshift_perform(t_int *w) {
   t_pitchshift *x = (t_pitchshift *)(w[1]);
   t_float *in = (t_float *)(w[2]);
   t_float *out = (t_float *)(w[3]);
   int n = (int)w[4];
-
+  
   while (n--) {
     *out++ = (float)SDTPitchShift_dsp(x->shift, *in++);
   }
@@ -73,7 +84,7 @@ void pitchshift_perform64(t_pitchshift *x, t_object *dsp64, double **ins, long n
   t_double *in = ins[0];
   t_double *out = outs[0];
   int n = sampleframes;
-	
+  
   while (n--) {
     *out++ = SDTPitchShift_dsp(x->shift, *in++);
   }
@@ -92,8 +103,14 @@ int C74_EXPORT main(void) {
   class_addmethod(c, (method)pitchshift_assist, "assist", A_CANT, 0);
 
   CLASS_ATTR_DOUBLE(c, "ratio", 0, t_pitchshift, ratio);
+  CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitchshift, overlap);
+  
+  CLASS_ATTR_FILTER_CLIP(c, "ratio", 0.125, 8.0);
+  CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.5, 0.875);
+  
   CLASS_ATTR_ACCESSORS(c, "ratio", NULL, (method)pitchshift_ratio);
-
+  CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)pitchshift_overlap);
+  
   class_dspinit(c);
   class_register(CLASS_BOX, c);
   pitchshift_class = c;

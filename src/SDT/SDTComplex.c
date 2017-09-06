@@ -3,7 +3,7 @@
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 
-SDTComplex SDTComplex_cart(double real, double imag) {
+SDTComplex SDTComplex_car(double real, double imag) {
   SDTComplex x;
   
   x.r = real;
@@ -19,18 +19,25 @@ SDTComplex SDTComplex_exp(double phase) {
   return x;
 }
 
+double SDTComplex_abs(SDTComplex a) {
+  double x;
+  
+  x = sqrt(a.r * a.r + a.i * a.i);
+  return x;
+}
+
+double SDTComplex_angle(SDTComplex a) {
+  double x;
+  
+  x = atan2(a.i, a.r);
+  return x;
+}
+
 SDTComplex SDTComplex_conj(SDTComplex a) {
   SDTComplex x;
   
   x.r = a.r;
   x.i = -a.i;
-  return x;
-}
-
-double SDTComplex_abs(SDTComplex a) {
-  double x;
-  
-  x = sqrt(a.r * a.r + a.i * a.i);
   return x;
 }
 

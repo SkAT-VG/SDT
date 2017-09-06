@@ -152,7 +152,7 @@ void SDTTwoPoles_lowpass(SDTTwoPoles *x, double fc) {
   d = -exp(-SDT_TWOPI * SDT_fclip(fc * SDT_timeStep, 0.0, 0.5));
   x->a1 = 2.0 * d;
   x->a2 = d * d;
-  x->b0 = (1.0 + d) * (1.0 + d);
+  x->b0 = 1.0 + x->a2 + x->a1;
 }
 
 void SDTTwoPoles_highpass(SDTTwoPoles *x, double fc) {
@@ -161,17 +161,17 @@ void SDTTwoPoles_highpass(SDTTwoPoles *x, double fc) {
   d = exp(-SDT_TWOPI * (0.5 - SDT_fclip(fc * SDT_timeStep, 0.0, 0.5)));
   x->a1 = 2.0 * d;
   x->a2 = d * d; 
-  x->b0 = (1.0 - d) * (1.0 - d);
+  x->b0 = 1.0 + x->a2 - x->a1;
 }
 
 void SDTTwoPoles_resonant(SDTTwoPoles *x, double fc, double q) {
   double w, r;
   
   w = SDT_TWOPI * SDT_fclip(fc * SDT_timeStep, 0.0, 0.5);
-  r = 1.0 - 0.5 / fmax(0.5, q);
+  r = SDT_fclip(exp(-0.5 * w / q), 0.0, 0.9995);
   x->a1 = -2.0 * r * cos(w);
   x->a2 = r * r;
-  x->b0 = (1.0 - r) * sqrt(1.0 - 2 * r * cos(2.0 * w) + r * r);
+  x->b0 = (1.0 - r) * sqrt(1 - 2.0 * r * cos(2 * w) + r * r);
 }
 
 double SDTTwoPoles_dsp(SDTTwoPoles *x, double in) {

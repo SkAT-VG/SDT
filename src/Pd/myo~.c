@@ -12,7 +12,7 @@ typedef struct _myo {
   t_object obj;
   SDTMyoelastic *myo;
   t_float f;
-  t_outlet *out0, *out1;
+  t_outlet *out0, *out1, *out2, *out3;
   double time;
 } t_myo;
 
@@ -32,13 +32,15 @@ t_int *myo_perform(t_int *w) {
   t_myo *x = (t_myo *)(w[1]);
   t_float *in = (t_float *)(w[2]);
   int n = (int)w[3];
-  double tmpOuts[2];
+  double tmpOuts[4];
   
   while (n--) {
     SDTMyoelastic_dsp(x->myo, tmpOuts, *in++);
     if (x->time != sys_getrealtime()) {
       outlet_float(x->out0, (t_float)tmpOuts[0]);
       outlet_float(x->out1, (t_float)tmpOuts[1]);
+      outlet_float(x->out2, (t_float)tmpOuts[2]);
+      outlet_float(x->out3, (t_float)tmpOuts[3]);
       x->time = sys_getrealtime();
     }
   }
@@ -63,6 +65,8 @@ void *myo_new(t_symbol *s, long argc, t_atom *argv) {
   x->myo = SDTMyoelastic_new(windowSize);
   x->out0 = outlet_new(&x->obj, gensym("float"));
   x->out1 = outlet_new(&x->obj, gensym("float"));
+  x->out2 = outlet_new(&x->obj, gensym("float"));
+  x->out3 = outlet_new(&x->obj, gensym("float"));
   x->time = 0.0;
   return (x);
 }
@@ -70,6 +74,8 @@ void *myo_new(t_symbol *s, long argc, t_atom *argv) {
 void myo_free(t_myo *x) {
   outlet_free(x->out0);
   outlet_free(x->out1);
+  outlet_free(x->out2);
+  outlet_free(x->out3);
   SDTMyoelastic_free(x->myo);
 }
 

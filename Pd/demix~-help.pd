@@ -1,0 +1,51 @@
+#N canvas 422 327 829 400 10;
+#X msg 596 9 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 11 83 adc~;
+#X obj 83 361 dac~;
+#X floatatom 56 83 5 0.5 1 0 - overlap -, f 5;
+#X obj 675 296 loadbang;
+#X obj 56 139 demix~ 2048 4;
+#X text 150 139 Args: window size \, smoothing radius;
+#X text 8 4 demix~ - Transient / tonal / residual component separator
+;
+#X obj 131 311 *~;
+#X obj 93 311 *~;
+#X obj 56 311 *~;
+#X obj 71 175 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X obj 146 174 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 108 174 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 12700 1;
+#X msg 675 322 \; overlap 0.75 \; noiseThreshold 0.1 \; tonalThreshold
+0.8 \;;
+#X floatatom 372 81 5 0 1 0 - tonalThreshold -, f 5;
+#X floatatom 219 82 5 0 1 0 - noiseThreshold -, f 5;
+#X msg 56 104 overlap \$1;
+#X text 55 64 Window overlap factor;
+#X msg 219 104 noiseThreshold \$1;
+#X text 217 64 Amount of residual;
+#X msg 372 103 tonalThreshold \$1;
+#X text 369 64 Amount of tonal non-residual;
+#X connect 1 0 5 0;
+#X connect 3 0 17 0;
+#X connect 4 0 14 0;
+#X connect 5 0 10 0;
+#X connect 5 1 9 0;
+#X connect 5 2 8 0;
+#X connect 8 0 2 0;
+#X connect 8 0 2 1;
+#X connect 9 0 2 0;
+#X connect 9 0 2 1;
+#X connect 10 0 2 0;
+#X connect 10 0 2 1;
+#X connect 11 0 10 1;
+#X connect 12 0 8 1;
+#X connect 13 0 9 1;
+#X connect 15 0 21 0;
+#X connect 16 0 19 0;
+#X connect 17 0 5 0;
+#X connect 19 0 5 0;
+#X connect 21 0 5 0;

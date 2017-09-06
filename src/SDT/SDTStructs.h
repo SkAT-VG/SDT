@@ -1,4 +1,4 @@
-/**
+/** @file SDTStructs.h
 @defgroup structs SDTStructs.h: Common data structures 
 @{ */
 

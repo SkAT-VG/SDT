@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 /** @defgroup zerocrossing Zero crossing rate
-Zero crossing rate signal analyzer. 
+Zero crossing rate signal analyzer.
 @{ */
 
 /** @brief Opaque data structure for a zero crossing rate detector object. */
@@ -54,9 +54,8 @@ Specifically designed for the detection of myoelastic activity in vocal input.
 typedef struct SDTMyoelastic SDTMyoelastic;
 
 /** @brief Instantiates a myoelastic feature extractor.
-@param[in] size Size of the analysis window, in samples
 @return Pointer to the new instance */
-extern SDTMyoelastic *SDTMyoelastic_new(unsigned int size);
+extern SDTMyoelastic *SDTMyoelastic_new();
 
 /** @brief Destroys a myoelastic feature extractor.
 @param[in] x Pointer to the instance to destroy */
@@ -81,9 +80,11 @@ extern void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f);
 /** @brief Signal processing routine.
 Call this function at sample rate to perform signal analysis.
 @param[in] x Pointer to the instance
-@param[out] outs Pointer to an array of two doubles containing the algorithm output (amount and frequency)
-@param[in] in Input sample */
-extern void SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
+@param[out] outs Pointer to an array of four doubles containing the algorithm output
+            (slow myoelastic amount and frequency, fast myoelastic amount and frequency)
+@param[in] in Input sample
+@return 1 if output available, 0 otherwise */
+extern int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
 
 /** @} */
 

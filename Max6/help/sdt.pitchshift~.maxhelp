@@ -9,7 +9,7 @@
 			"modernui" : 1
 		}
 ,
-		"rect" : [ 34.0, 136.0, 575.0, 443.0 ],
+		"rect" : [ 34.0, 136.0, 590.0, 483.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -38,44 +38,12 @@
 		"subpatcher_template" : "",
 		"boxes" : [ 			{
 				"box" : 				{
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 12.0,
-					"hidden" : 1,
-					"id" : "obj-10",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 147.5, 83.0, 22.0 ],
-					"style" : "",
-					"text" : "prepend ratio"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontname" : "Helvetica Neue",
-					"fontsize" : 12.0,
-					"hidden" : 1,
-					"id" : "obj-9",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 1,
-					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 122.0, 82.0, 22.0 ],
-					"style" : "",
-					"text" : "loadmess 1.5"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-8",
 					"maxclass" : "meter~",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "float" ],
-					"patching_rect" : [ 57.5, 248.0, 21.0, 96.0 ],
+					"patching_rect" : [ 57.5, 289.0, 21.0, 96.0 ],
 					"style" : "default"
 				}
 
@@ -87,7 +55,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "float" ],
-					"patching_rect" : [ 127.5, 248.0, 21.0, 96.0 ],
+					"patching_rect" : [ 143.25, 289.0, 21.0, 96.0 ],
 					"style" : "default"
 				}
 
@@ -102,7 +70,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 17.0, 76.625, 316.0, 23.0 ],
 					"style" : "",
-					"text" : "Simple time domain pitch shifter"
+					"text" : "Frequency domain pitch shifter"
 				}
 
 			}
@@ -758,13 +726,13 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 12.0,
 					"id" : "obj-43",
-					"linecount" : 11,
+					"linecount" : 12,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 335.5, 183.0, 233.0, 160.0 ],
+					"patching_rect" : [ 333.5, 288.0, 233.0, 174.0 ],
 					"style" : "",
-					"text" : "ARGUMENTS:\n1. Window size, in samples (default 4096)\n\nINLETS:\n1. (signal): Input\n\nATTRIBUTES:\nratio (float): Pitch shifting ratio\n\nOUTLETS:\n1. (signal): Pitch shifted signal"
+					"text" : "ARGUMENTS:\n1. Window size, in samples (default 4096)\n\nINLETS:\n1. (signal): Input\n\nATTRIBUTES:\noverlap (float): Window overlap factor\nratio (float): Pitch shifting ratio\n\nOUTLETS:\n1. (signal): Pitch shifted signal"
 				}
 
 			}
@@ -778,7 +746,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 80.5, 248.0, 31.5, 96.0 ],
+					"patching_rect" : [ 80.5, 289.0, 31.5, 96.0 ],
 					"style" : "default"
 				}
 
@@ -793,7 +761,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 153.0, 248.0, 31.5, 96.0 ],
+					"patching_rect" : [ 168.75, 289.0, 31.5, 96.0 ],
 					"style" : "default"
 				}
 
@@ -821,7 +789,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 183.0, 150.0, 22.0 ],
+					"patching_rect" : [ 168.75, 164.0, 150.0, 22.0 ],
 					"style" : ""
 				}
 
@@ -832,7 +800,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 80.5, 364.0, 57.0, 57.0 ],
+					"patching_rect" : [ 80.5, 405.0, 57.0, 57.0 ],
 					"style" : ""
 				}
 
@@ -844,13 +812,14 @@
 					"fontname" : "Helvetica Neue",
 					"fontsize" : 14.0,
 					"id" : "obj-1",
+					"linecount" : 2,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 153.0, 215.0, 145.0, 25.0 ],
+					"patching_rect" : [ 168.75, 213.0, 171.0, 42.0 ],
 					"style" : "",
-					"text" : "sdt.pitchshift~ 4096"
+					"text" : "sdt.pitchshift~ 4096 @overlap 0.75 @ratio 1.5"
 				}
 
 			}
@@ -861,15 +830,6 @@
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-1", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-1", 0 ],
-					"disabled" : 0,
-					"hidden" : 1,
-					"source" : [ "obj-10", 0 ]
 				}
 
 			}
@@ -951,15 +911,6 @@
 					"disabled" : 0,
 					"hidden" : 0,
 					"source" : [ "obj-5", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-10", 0 ],
-					"disabled" : 0,
-					"hidden" : 1,
-					"source" : [ "obj-9", 0 ]
 				}
 
 			}

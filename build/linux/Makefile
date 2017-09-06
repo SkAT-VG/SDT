@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
 CC=gcc
-CFLAGS=-fPIC -Wall -Wno-unknown-pragmas -Werror
+CFLAGS=-fPIC -Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=-shared
 SRCDIR=../../src
 PREFIX=/usr/lib

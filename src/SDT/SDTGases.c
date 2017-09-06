@@ -7,7 +7,7 @@
 #include "SDTGases.h"
 
 struct SDTWindFlow {
-  SDTTwoPoles *reso1, *reso2;
+  SDTTwoPoles *reso;
   double windSpeed;
 };
 
@@ -15,21 +15,18 @@ SDTWindFlow *SDTWindFlow_new() {
   SDTWindFlow *x;
   
   x = (SDTWindFlow *)malloc(sizeof(SDTWindFlow));
-  x->reso1 = SDTTwoPoles_new();
-  x->reso2 = SDTTwoPoles_new();
+  x->reso = SDTTwoPoles_new();
   x->windSpeed = 0.0;
   return x;
 }
 
 extern void SDTWindFlow_free(SDTWindFlow *x) {
-  SDTTwoPoles_free(x->reso1);
-  SDTTwoPoles_free(x->reso2);
+  SDTTwoPoles_free(x->reso);
   free(x);
 }
 
 void SDTWindFlow_setFilters(SDTWindFlow *x) {
-  SDTTwoPoles_resonant(x->reso1, 800.0, 3);
-  SDTTwoPoles_resonant(x->reso2, 800.0, 3);
+  SDTTwoPoles_resonant(x->reso, 800.0, 1.0);
 }
 
 void SDTWindFlow_setWindSpeed(SDTWindFlow *x, double f) {
@@ -40,8 +37,7 @@ double SDTWindFlow_dsp(SDTWindFlow *x) {
   double out;
   
   out = x->windSpeed * SDT_whiteNoise();
-  out = SDTTwoPoles_dsp(x->reso1, out);
-  out = SDTTwoPoles_dsp(x->reso2, out);
+  out = SDTTwoPoles_dsp(x->reso, out);
   return out;
 }
 
@@ -49,8 +45,8 @@ double SDTWindFlow_dsp(SDTWindFlow *x) {
 
 struct SDTWindCavity {
   SDTComb *comb;
-  SDTTwoPoles *reso1, *reso2;
-  double length, diameter, windSpeed, harmonics, freq, delay, q;
+  SDTTwoPoles *reso;
+  double length, diameter, windSpeed, harmonics, freq, delay;
 };
 
 void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
@@ -59,7 +55,6 @@ void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
   x->harmonics = x->length / x->diameter;
   x->freq = SDT_MACH1 / (2.0 * x->length + 1.6 * x->diameter);
   x->delay = SDT_sampleRate / x->freq;
-  x->q = fmin(100.0, 0.5 * x->delay);
   gain = 1.0 - SDT_fclip(x->diameter / x->length, 0.1, 1.0);
   SDTComb_setXDelay(x->comb, x->delay);
   SDTComb_setYDelay(x->comb, x->delay);
@@ -68,11 +63,11 @@ void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
 }
 
 void SDTWindCavity_updateResonance(SDTWindCavity *x) {
-  double fc;
+  double q, fc;
   
   fc = x->freq * x->windSpeed * x->harmonics;
-  SDTTwoPoles_resonant(x->reso1, 800.0, 3.0);
-  SDTTwoPoles_resonant(x->reso2, fc, x->q);
+  q = 10.0 * x->windSpeed * x->harmonics;
+  SDTTwoPoles_resonant(x->reso, fc, q);
 }
 
 SDTWindCavity *SDTWindCavity_new(int maxDelay) {
@@ -80,8 +75,7 @@ SDTWindCavity *SDTWindCavity_new(int maxDelay) {
   
   x = (SDTWindCavity *)calloc(1, sizeof(SDTWindCavity));
   x->comb = SDTComb_new(maxDelay, maxDelay);
-  x->reso1 = SDTTwoPoles_new();
-  x->reso2 = SDTTwoPoles_new();
+  x->reso = SDTTwoPoles_new();
   x->length = 1.0;
   x->diameter = 1.0;
   SDTWindCavity_updateGeometry(x);
@@ -91,8 +85,7 @@ SDTWindCavity *SDTWindCavity_new(int maxDelay) {
 
 void SDTWindCavity_free(SDTWindCavity *x) {
   SDTComb_free(x->comb);
-  SDTTwoPoles_free(x->reso1);
-  SDTTwoPoles_free(x->reso2);
+  SDTTwoPoles_free(x->reso);
   free(x);
 }
 
@@ -118,15 +111,14 @@ double SDTWindCavity_dsp(SDTWindCavity *x) {
   
   out = x->windSpeed * SDT_whiteNoise();
   out = SDTComb_dsp(x->comb, out);
-  out = SDTTwoPoles_dsp(x->reso1, out);
-  out = SDTTwoPoles_dsp(x->reso2, out);
+  out = SDTTwoPoles_dsp(x->reso, out);
   return out;
 }
 
 //-------------------------------------------------------------------------------------//
 
 struct SDTWindKarman {
-  SDTTwoPoles *reso1, *reso2;
+  SDTTwoPoles *reso;
   double windSpeed, diameter;
 };
 
@@ -134,24 +126,21 @@ void SDTWindKarman_updateResonance(SDTWindKarman *x) {
   double fc;
   
   fc = 8.0 * x->windSpeed / x->diameter;
-  SDTTwoPoles_resonant(x->reso1, fc, 60);
-  SDTTwoPoles_resonant(x->reso2, fc, 60);
+  SDTTwoPoles_resonant(x->reso, fc, 30.0);
 }
 
 SDTWindKarman *SDTWindKarman_new() {
   SDTWindKarman *x;
   
   x = (SDTWindKarman *)calloc(1, sizeof(SDTWindKarman));
-  x->reso1 = SDTTwoPoles_new();
-  x->reso2 = SDTTwoPoles_new();
+  x->reso = SDTTwoPoles_new();
   x->diameter = 0.001;
   SDTWindKarman_updateResonance(x);
   return x;
 }
 
 extern void SDTWindKarman_free(SDTWindKarman *x) {
-  SDTTwoPoles_free(x->reso1);
-  SDTTwoPoles_free(x->reso2);
+  SDTTwoPoles_free(x->reso);
   free(x);
 }
 
@@ -169,8 +158,7 @@ double SDTWindKarman_dsp(SDTWindKarman *x) {
   double out;
   
   out = x->windSpeed * SDT_whiteNoise();
-  out = SDTTwoPoles_dsp(x->reso1, out);
-  out = SDTTwoPoles_dsp(x->reso2, out);
+  out = SDTTwoPoles_dsp(x->reso, out);
   return out;
 }
 
@@ -255,7 +243,7 @@ void SDTExplosion_update(SDTExplosion *x) {
   SDTReverb_setTime1k(x->scatter, 0.9 * x->scatterTime);
   SDTReverb_update(x->scatter);
   SDTTwoPoles_lowpass(x->wave, fmin(20000.0, 20000.0 / sqrt(x->distance)));
-  SDTTwoPoles_resonant(x->wind, 800.0, 10.0);
+  SDTTwoPoles_resonant(x->wind, 800.0, 1.0);
   x->waveDelay = fmin(x->distance * SDT_sampleRate / x->waveSpeed, x->size);
   x->windDelay = fmin(x->distance * SDT_sampleRate / x->windSpeed, x->size);
   x->time = 0.0;

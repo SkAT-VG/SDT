@@ -17,6 +17,7 @@ void breaking_tilde_setup(void);
 void bubble_tilde_setup(void);
 void crumpling_tilde_setup(void);
 void dcmotor_tilde_setup(void);
+void demix_tilde_setup(void);
 void envelope_tilde_setup(void);
 void explosion_tilde_setup(void);
 void fluidflow_tilde_setup(void);
@@ -44,6 +45,7 @@ void SDT_setup() {
   bubble_tilde_setup();
   crumpling_tilde_setup();
   dcmotor_tilde_setup();
+  demix_tilde_setup();
   envelope_tilde_setup();
   explosion_tilde_setup();
   fluidflow_tilde_setup();
@@ -72,7 +74,7 @@ void SDT_setup() {
   post("Project SkAT-VG - http://skatvg.eu");
   post("");
   post("Included externals:");
-  post("bouncing~ breaking~ bubble~ crumpling~ dcmotor~ envelope~");
+  post("bouncing~ breaking~ bubble~ crumpling~ dcmotor~ demix~ envelope~");
   post("explosion~ fluidflow~ friction~ impact~ inertial modal");
   post("motor~ myo~ pitch~ pitchshift~ reverb~ rolling~");
   post("scraping~ spectralfeats~ windcavity~ windflow~ windkarman~ zerox~");

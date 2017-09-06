@@ -57,9 +57,9 @@ SDTCommon.h should always be included when using other SDT modules.
 #define SDT_COMMON_H
 
 /** @brief SDT version number */
-#define SDT_ver          076
+#define SDT_ver          077
 /** @brief SDT version string */
-#define SDT_ver_str     "076"
+#define SDT_ver_str     "077"
 /** @brief Value of Pi */
 #define SDT_PI           3.141592653589793
 /** @brief Value of 2 * Pi */
@@ -124,6 +124,15 @@ Generates random numbers, following a uniform distribution.
 @return Randomly generated value [0.0, 1.0] */
 extern double SDT_frand();
 
+/** @brief One-dimensional Gaussian kernel.
+One-dimensional Gaussian kernel. The Gaussian function is computed in the [-1,1] interval
+with 0 mean and the given standard deviation. The output is normalized so that the sum of
+all samples is equal to 1.
+@param[out] x pointer to the kernel samples
+@param[in] sigma standard deviation of the Gaussian function
+@param[in] n kernel size */
+extern void SDT_gaussian1D(double *x, double sigma, int n);
+
 /** @brief Computes earth gravity force.
 Computes the earth gravity force acting on an object of a given mass.
 @param[in] mass Mass of the object (Kg)
@@ -171,6 +180,29 @@ extern double SDT_normalize(double x, double min, double max);
 @param[in] n window size */
 extern void SDT_normalizeWindow(double *sig, int n);
 
+/** @brief Fills a buffer with ones.
+Fills a buffer with ones.
+@param[in,out] sig pointer to the buffer
+@param[in] n buffer size */
+extern void SDT_ones(double *sig, int n);
+
+/** @brief Finds the kth smallest value in the input array.
+Finds the kth smallest value in the input array.
+@param[in] x input array
+@param[in] n array size
+@param[in] k item rank
+@return kth smallest value in the array */
+extern double SDT_rank(double *x, int n, int k);
+
+/** @brief Finds regions of influence (local maxima and minima) in a buffer.
+Finds regions of influence (local maxima and minima) in a buffer.
+@param[in] sig pointer to the buffer
+@param[out] peaks indexes of the local maxima in the buffer
+@param[out] bounds indexes of the local minima in the buffer
+@param[i] d samples have to be greater than d neighbors to the left and to the right to be considered local maxima
+@param[in] n buffer size */
+extern int SDT_roi(double *sig, int *peaks, int *bounds, int d, int n);
+
 /** @brief Time needed to travel the given distance at Mach 1.
 Computes the amount of time, in samples, needed by a sound wave propagating in air
 to travel a given distance. Particularly useful to set the delay times of comb filters
@@ -196,6 +228,39 @@ Computes the signum function.
 @param[in] x Input value
 @return Signum of x */
 extern int SDT_signum(double x);
+
+/** @brief Applies a sinc window (sin(wt)/(wt)) to a chunk of samples.
+Applies a sinc window (sin(wt)/(wt)) to a chunk of samples.
+@param[in,out] sig samples to window
+@param[in] w sinc parameter
+@param[in] n window size */
+extern void SDT_sinc(double *sig, double w, int n);
+
+/** @brief Performs quadratic interpolation to estimate the true position of a peak.
+Performs quadratic interpolation to estimate the true position of a peak.
+@param[in] sig signal buffer
+@param[in] peak index of a local maximum
+@return true peak position */
+extern double SDT_truePeakPos(double *sig, int peak);
+
+/** @brief Performs quadratic interpolation to estimate the true amplitude value of a peak.
+Performs quadratic interpolation to estimate the true amplitude value of a peak.
+@param[in] sig signal buffer
+@param[in] peak index of a local maximum
+@return true peak value */
+extern double SDT_truePeakValue(double *sig, int peak);
+
+/** @brief Wraps a phase in the range -pi/pi.
+Wraps a phase in the range -pi/pi.
+@param[x] unwrapped phase
+return wrapped phase */
+extern double SDT_wrap(double x);
+
+/** @brief Fills a buffer with zeros.
+Fills a buffer with zeros.
+@param[in,out] sig pointer to the buffer
+@param[in] n buffer size */
+extern void SDT_zeros(double *sig, int n);
 
 #ifdef __cplusplus
 };

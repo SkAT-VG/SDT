@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "SDTCommon.h"
+#include "SDTComplex.h"
 #include "SDTFilters.h"
+#include "SDTFFT.h"
 #include "SDTEffects.h"
 
 double modes[15][3] = {{1,0,0},{0,2,1},{1,0,1},
@@ -118,55 +120,143 @@ double SDTReverb_dsp(SDTReverb *x, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTPitchShift {
-  double *buf, *win, ratio, r;
-  long size, w;
+  double *buf, *win, *dWin, *pow, *fqs,
+         *aFrame, *dFrame, *sFrame, *phs, *out,
+	     ratio, gain;
+  SDTComplex *aFFT, *dFFT, *sFFT;
+  SDTFFT *fftPlan;
+  int i, j, size, winSize, fftSize, hopSize;
 };
 
-SDTPitchShift *SDTPitchShift_new(long size) {
+SDTPitchShift *SDTPitchShift_new(int size, int oversample) {
   SDTPitchShift *x;
-  long i;
+  int i, winSize, fftSize;
 
-  size = fmax(3, size + (size % 3));
+  winSize = size * oversample;
+  fftSize = winSize / 2 + 1;
   x = (SDTPitchShift *)malloc(sizeof(SDTPitchShift));
   x->buf = (double *)malloc(size * sizeof(double));
   x->win = (double *)malloc(size * sizeof(double));
+  x->dWin = (double *)malloc(size * sizeof(double));
+  x->pow = (double *)malloc(fftSize * sizeof(double));
+  x->fqs = (double *)malloc(fftSize * sizeof(double));
+  x->aFrame = (double *)malloc(winSize * sizeof(double));
+  x->dFrame = (double *)malloc(winSize * sizeof(double));
+  x->sFrame = (double *)malloc(winSize * sizeof(double));
+  x->phs = (double *)malloc(fftSize * sizeof(double));
+  x->out = (double *)malloc(size * sizeof(double));
+  x->aFFT = (SDTComplex *)malloc(fftSize * sizeof(SDTComplex));
+  x->dFFT = (SDTComplex *)malloc(fftSize * sizeof(SDTComplex));
+  x->sFFT = (SDTComplex *)malloc(fftSize * sizeof(SDTComplex));
   for (i = 0; i < size; i++) {
     x->buf[i] = 0.0;
-    x->win[i] = sin(SDT_TWOPI * i / size);
+    x->win[i] = 0.5 - 0.5 * cos(SDT_TWOPI * i / size);
+    x->dWin[i] = SDT_PI / size * sin(SDT_TWOPI * i / size);
+    x->out[i] = 0.0;
+  }
+  for (i = 0; i < winSize; i++) {
+    x->aFrame[i] = 0.0;
+    x->dFrame[i] = 0.0;
+    x->sFrame[i] = 0.0;
+  }
+  for (i = 0; i < fftSize; i++) {
+    x->pow[i] = 0.0;
+    x->fqs[i] = SDT_TWOPI * i / winSize;
+    x->phs[i] = 0.0;
+    x->aFFT[i].r = 0.0;
+    x->aFFT[i].i = 0.0;
+    x->dFFT[i].r = 0.0;
+    x->dFFT[i].i = 0.0;
+    x->sFFT[i].r = 0.0;
+    x->sFFT[i].i = 0.0;
   }
   x->ratio = 1.0;
-  x->r = 0.0;
+  x->gain = 0.0;
+  x->fftPlan = SDTFFT_new(fftSize - 1);
+  x->i = 0;
+  x->j = 0;
   x->size = size;
-  x->w = 0;
+  x->winSize = winSize;
+  x->fftSize = fftSize;
+  x->hopSize = size / 4;
   return x;
 }
 
 void SDTPitchShift_free(SDTPitchShift *x) {
   free(x->buf);
   free(x->win);
+  free(x->dWin);
+  free(x->out);
+  free(x->aFrame);
+  free(x->dFrame);
+  free(x->sFrame);
+  free(x->pow);
+  free(x->fqs);
+  free(x->aFFT);
+  free(x->dFFT);
+  free(x->sFFT);
+  free(x->phs);
+  SDTFFT_free(x->fftPlan);
   free(x);
 }
 
 void SDTPitchShift_setRatio(SDTPitchShift *x, double f) {
-  while (f < 0) f += x->size;
-  x->ratio = f;
+  x->ratio = fmax(f, 0.0);
+}
+
+void SDTPitchShift_setOverlap(SDTPitchShift *x, double f) {
+  x->hopSize = SDT_fclip(x->size * (1.0 - f), 1.0, x->size);
+  x->gain = 4.0 * x->hopSize / (SDT_SQRT2 * x->size);
 }
 
 double SDTPitchShift_dsp(SDTPitchShift *x, double in) {
-  double out;
-  long r0, r1, r2, d0, d1, d2;
-
-  x->buf[x->w] = in;
-  r0 = (long)x->r;
-  r1 = (r0 + x->size / 3) % x->size;
-  r2 = (r0 + 2 * x->size / 3) % x->size;
-  d0 = (x->size + r0 - x->w) % x->size;
-  d1 = (x->size + r1 - x->w) % x->size;
-  d2 = (x->size + r2 - x->w) % x->size;
-  out = (x->win[d0] * x->buf[r0] + x->win[d0]) + 
-        (x->win[d1] * x->buf[r1] + x->win[d1]) +
-        (x->win[d2] * x->buf[r2] + x->win[d2]);
-  x->w = (x->w + 1) % x->size;
-  x->r = fmod(x->r + x->ratio, x->size);
-  return out;
+  double power, diff, freq, dFreq, shift;
+  SDTComplex w;
+  int i, j, k;
+  
+  x->buf[x->i] = in;
+  x->i = (x->i + 1) % x->size;
+  x->j = (x->j + 1) % x->hopSize;
+  if (!x->j) {
+    for (i = 0; i < x->size; i++) {
+      j = (x->i + i) % x->size;
+      k = (x->winSize - x->size / 2 + i) % x->winSize;
+      x->aFrame[k] = x->buf[j] * x->win[i];
+      x->dFrame[k] = x->buf[j] * x->dWin[i];
+    }
+    SDTFFT_fftr(x->fftPlan, x->aFrame, x->aFFT);
+    SDTFFT_fftr(x->fftPlan, x->dFrame, x->dFFT);
+    for (i = 0; i < x->fftSize; i++) {
+      x->sFFT[i].r = 0.0;
+      x->sFFT[i].i = 0.0;
+    }
+    for (i = 0; i < x->fftSize; i++) {
+      power = x->aFFT[i].r * x->aFFT[i].r + x->aFFT[i].i * x->aFFT[i].i;
+      if (power > 4.0 * x->pow[i]) x->phs[i] = 0.0;
+      x->pow[i] = power;
+      diff = power > 0.0 ? (x->dFFT[i].i * x->aFFT[i].r - x->dFFT[i].r * x->aFFT[i].i) / power : 0.0;
+      freq = x->fqs[i] - diff;
+      dFreq = freq * (x->ratio - 1.0);
+      shift = dFreq * x->winSize / SDT_TWOPI;
+      x->phs[i] = fmod(x->phs[i] + dFreq * x->hopSize, SDT_TWOPI);
+      k = round(i + shift);
+      if (k >= 0 && k < x->fftSize) {
+        w.r = cos(x->phs[i]);
+        w.i = sin(x->phs[i]);
+        x->sFFT[k].r += x->aFFT[i].r * w.r - x->aFFT[i].i * w.i;
+        x->sFFT[k].i += x->aFFT[i].r * w.i + x->aFFT[i].i * w.r;
+      }
+    }
+    SDTFFT_ifftr(x->fftPlan, x->sFFT, x->sFrame);
+    for (i = 1; i <= x->hopSize; i++) {
+      j = (x->size + x->i - i) % x->size;
+      x->out[j] = 0.0;
+    }
+    for (i = 0; i < x->size; i++) {
+      j = (x->i + i) % x->size;
+      k = (x->winSize - x->size / 2 + i) % x->winSize;
+      x->out[j] += x->gain * x->sFrame[k] * x->win[i] / x->winSize;
+    }
+  }
+  return x->out[x->i];
 }

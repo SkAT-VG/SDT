@@ -6,6 +6,8 @@
 #include "SDTFilters.h"
 #include "SDTAnalysis.h"
 
+#define MYO_SR 1024
+
 struct SDTZeroCrossing {
   double *in, *win;
   int i, j, size, skip;
@@ -14,7 +16,7 @@ struct SDTZeroCrossing {
 SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   SDTZeroCrossing *x;
   int i;
-  
+
   x = (SDTZeroCrossing *)malloc(sizeof(SDTZeroCrossing));
   x->in = (double *)malloc(2 * size * sizeof(double));
   x->win = (double *)malloc(size * sizeof(double));
@@ -51,7 +53,7 @@ int SDTZeroCrossing_dsp(SDTZeroCrossing *x, double *out, double in) {
   x->win[0] = x->in[x->i];
   for (i = 1; i < x->size; i++) {
     x->win[i] = x->in[x->i + i];
-    zerox += (x->win[i-1] >= 0.0 && x->win[i] < 0.0) || (x->win[i-1] <= 0.0 && x->win[i] > 0.0); 
+    zerox += (x->win[i-1] >= 0.0 && x->win[i] < 0.0) || (x->win[i-1] <= 0.0 && x->win[i] > 0.0);
   }
   out[0] = (double)zerox / (double)x->size;
   return 1;
@@ -60,124 +62,172 @@ int SDTZeroCrossing_dsp(SDTZeroCrossing *x, double *out, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTMyoelastic {
-  SDTAverage *slow, *fast, *smooth;
-  SDTDelay *delay;
-  SDTTwoPoles *low, *high;
-  double threshold, myo, activity, frequency;
-  int slowWin, fastWin, count, size;
+  double *rms, *slowMyo, *fastMyo,
+         *baseWin, *slowWin, *fastWin,
+         slowAct, fastAct, slowFreq, fastFreq,
+         threshold, sum;
+  int i, j, skip, count, slowCount, fastCount, fastSize;
 };
 
-SDTMyoelastic *SDTMyoelastic_new(unsigned int size) {
+SDTMyoelastic *SDTMyoelastic_new() {
   SDTMyoelastic *x;
-  
+  int i;
+
   x = (SDTMyoelastic *)malloc(sizeof(SDTMyoelastic));
-  x->slow = SDTAverage_new(size);
-  x->fast = SDTAverage_new(size);
-  x->smooth = SDTAverage_new(size);
-  x->delay = SDTDelay_new(size);
-  x->low = SDTTwoPoles_new();
-  x->high = SDTTwoPoles_new();
+  x->rms = (double *)malloc(MYO_SR * sizeof(double));
+  x->slowMyo = (double *)malloc(MYO_SR * sizeof(double));
+  x->fastMyo = (double *)malloc(MYO_SR * sizeof(double));
+  x->baseWin = (double *)malloc(MYO_SR * sizeof(double));
+  x->slowWin = (double *)malloc(MYO_SR * sizeof(double));
+  x->fastWin = (double *)malloc(MYO_SR * sizeof(double));
+  for (i = 0; i < MYO_SR; i++) {
+    x->rms[i] = 0.0;
+    x->slowMyo[i] = 0.0;
+    x->fastMyo[i] = 0.0;
+    x->baseWin[i] = 1.0;
+    x->slowWin[i] = 0.0;
+    x->fastWin[i] = 0.0;
+  }
+  SDT_sinc(x->baseWin, 1.0 / MYO_SR, MYO_SR);
+  SDT_hanning(x->baseWin, MYO_SR);
+  SDT_normalizeWindow(x->baseWin, MYO_SR);
+  x->slowAct = 0.0;
+  x->fastAct = 0.0;
+  x->slowFreq = 0.0;
+  x->fastFreq = 0.0;
   x->threshold = 0.0;
-  x->myo = 0.0;
-  x->activity = 0.0;
-  x->frequency = 0.0;
-  x->slowWin = 0;
-  x->fastWin = 0;
+  x->sum = 0.0;
+  x->i = 0;
+  x->j = 0;
+  x->skip = 0;
   x->count = 0;
-  x->size = size;
+  x->slowCount = 0;
+  x->fastCount = 0;
+  x->fastSize = 0;
   return x;
 }
 
 void SDTMyoelastic_free(SDTMyoelastic *x) {
-  SDTAverage_free(x->slow);
-  SDTAverage_free(x->fast);
-  SDTDelay_free(x->delay);
-  SDTTwoPoles_free(x->low);
-  SDTTwoPoles_free(x->high);
+  free(x->rms);
+  free(x->slowMyo);
+  free(x->fastMyo);
+  free(x->baseWin);
+  free(x->slowWin);
+  free(x->fastWin);
   free(x);
 }
 
 void SDTMyoelastic_setLowFrequency(SDTMyoelastic *x, double f) {
-  x->slowWin = SDT_clip(SDT_sampleRate / f, 1, x->size);
-  SDTAverage_setWindow(x->slow, x->slowWin);
-  SDTAverage_setWindow(x->smooth, x->slowWin);
-  SDTDelay_setDelay(x->delay, 0.5 * (x->slowWin - x->fastWin));
-  SDTTwoPoles_lowpass(x->low, f);
+  f = SDT_fclip(f, 1.0, 0.5 * MYO_SR);
+  x->fastSize = MYO_SR / f + 0.5;
+  SDT_ones(x->slowWin, MYO_SR);
+  SDT_sinc(x->slowWin, f / MYO_SR, MYO_SR);
+  SDT_hanning(x->slowWin, MYO_SR);
+  SDT_normalizeWindow(x->slowWin, MYO_SR);
 }
 
 void SDTMyoelastic_setHighFrequency(SDTMyoelastic *x, double f) {
-  x->fastWin = SDT_clip(SDT_sampleRate / f, 1, x->size);
-  SDTAverage_setWindow(x->fast, x->fastWin);
-  SDTDelay_setDelay(x->delay, 0.5 * (x->slowWin - x->fastWin));
-  SDTTwoPoles_lowpass(x->high, f);
+  f = SDT_fclip(f, 1.0, 0.5 * MYO_SR);
+  SDT_ones(x->fastWin, MYO_SR);
+  SDT_sinc(x->fastWin, f / MYO_SR, MYO_SR);
+  SDT_hanning(x->fastWin, MYO_SR);
+  SDT_normalizeWindow(x->fastWin, MYO_SR);
 }
 
 void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f) {
-  x->threshold = fmax(f, 0.0);
+  x->threshold = fmax(0.0, f);
 }
 
-void SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
-  double squaredIn, fastRMS, slowRMS, myo;
-  
-  squaredIn = in * in;
-  fastRMS = sqrt(SDTAverage_dsp(x->fast, squaredIn));
-  fastRMS = fmax(fastRMS, x->threshold);
-  fastRMS = SDTDelay_dsp(x->delay, fastRMS);
-  slowRMS = sqrt(SDTAverage_dsp(x->slow, squaredIn));
-  slowRMS = fmax(slowRMS, x->threshold);
-  myo = fmax(fastRMS / slowRMS, 0.0);
-  myo = SDTTwoPoles_dsp(x->high, myo);
-  myo = myo - SDTTwoPoles_dsp(x->low, myo);
-  x->activity = sqrt(SDTAverage_dsp(x->smooth, myo * myo));
-  x->activity = fmax(x->activity, 0.0);
-  if (myo * x->myo < 0.0) {
-    x->frequency = 0.5 * SDT_sampleRate / x->count;
-    x->count = 0;
+int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
+  double baseRMS, slowRMS, fastRMS;
+  int i, j;
+
+  x->skip = SDT_sampleRate / MYO_SR;
+  x->sum += in * in;
+  x->count = (x->count + 1) % x->skip;
+  if (x->count) return 0;
+  x->rms[x->i] = sqrt(x->sum / x->skip);
+  x->sum = 0.0;
+  baseRMS = 0.0;
+  slowRMS = 0.0;
+  fastRMS = 0.0;
+  for (i = 0; i < MYO_SR; i++) {
+    j = (x->i + i + 1) % MYO_SR;
+    baseRMS += x->rms[j] * x->baseWin[i];
+    slowRMS += x->rms[j] * x->slowWin[i];
+    fastRMS += x->rms[j] * x->fastWin[i];
   }
-  outs[0] = x->activity;
-  outs[1] = x->frequency;
-  x->myo = myo;
-  x->count += 1;
+  if (baseRMS > x->threshold) {
+    x->slowMyo[x->i] = SDT_fclip(slowRMS / baseRMS - 1.0, -1.0, 1.0);
+    x->fastMyo[x->i] = SDT_fclip((fastRMS - slowRMS) / baseRMS, -1.0, 1.0);
+  }
+  else {
+    x->slowMyo[x->i] = 0.0;
+    x->fastMyo[x->i] = 0.0;
+  }
+  x->slowAct = 0.0;
+  for (i = 0; i < MYO_SR; i++) {
+    j = (MYO_SR + x->i - i) % MYO_SR;
+    x->slowAct += x->slowMyo[j] * x->slowMyo[j];
+  }
+  x->slowAct = sqrt(x->slowAct / MYO_SR);
+  x->fastAct = 0.0;
+  for (i = 0; i < x->fastSize; i++) {
+    j = (MYO_SR + x->i - i) % MYO_SR;
+    x->fastAct += x->fastMyo[j] * x->fastMyo[j];
+  }
+  x->fastAct = sqrt(x->fastAct / x->fastSize);
+  i = x->i;
+  j = (MYO_SR + x->i - 1) % MYO_SR;
+  if (x->slowMyo[j] < 0.0 && x->slowMyo[i] >= 0.0) {
+    x->slowFreq = (double)MYO_SR / x->slowCount;
+    x->slowCount = 0;
+  }
+  if (x->fastMyo[j] < 0.0 && x->fastMyo[i] >= 0.0) {
+    x->fastFreq = (double)MYO_SR / x->fastCount;
+    x->fastCount = 0;
+  }
+  outs[0] = x->slowAct;
+  outs[1] = x->slowFreq;
+  outs[2] = x->fastAct;
+  outs[3] = x->fastFreq;
+  x->i = (x->i + 1) % MYO_SR;
+  x->slowCount += 1;
+  x->fastCount += 1;
+  return 1;
 }
 
 //-------------------------------------------------------------------------------------//
 
 struct SDTSpectralFeats {
-  double *in, *win, *currAmp, *prevAmp, *currWhite, *prevWhite, *whitener, alpha,
+  double *in, *win, *currMag, *prevMag,
          magnitude, centroid, spread, skewness, kurtosis, flatness, flux, onset;
   SDTComplex *fft;
   SDTFFT *fftPlan;
-  int i, j, size, sqrtSize, fftSize, skip, min, max, span;
+  int i, j, size, fftSize, skip, min, max, span;
 };
 
 SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
   SDTSpectralFeats *x;
   int i, fftSize;
-  
+
   fftSize = size / 2 + 1;
   x = (SDTSpectralFeats *)malloc(sizeof(SDTSpectralFeats));
   x->in = (double *)malloc(2 * size * sizeof(double));
   x->win = (double *)malloc(size * sizeof(double));
   x->fft = (SDTComplex *)malloc(fftSize * sizeof(SDTComplex));
-  x->currAmp = (double *)malloc(fftSize * sizeof(double));
-  x->prevAmp = (double *)malloc(fftSize * sizeof(double));
-  x->currWhite = (double *)malloc(fftSize * sizeof(double));
-  x->prevWhite = (double *)malloc(fftSize * sizeof(double));
-  x->whitener = (double *)malloc(fftSize * sizeof(double));
+  x->currMag = (double *)malloc(fftSize * sizeof(double));
+  x->prevMag = (double *)malloc(fftSize * sizeof(double));
   for (i = 0; i < size; i++) {
     x->in[i] = 0.0;
     x->in[size + i] = 0.0;
     x->win[i] = 0.0;
   }
   for (i = 0; i < fftSize; i++) {
-    x->fft[i] = SDTComplex_cart(0.0, 0.0);
-    x->currAmp[i] = 0.0;
-    x->prevAmp[i] = 0.0;
-    x->currWhite[i] = 0.0;
-    x->prevWhite[i] = 0.0;
-    x->whitener[i] = 1.0;
+    x->fft[i] = SDTComplex_car(0.0, 0.0);
+    x->currMag[i] = 0.0;
+    x->prevMag[i] = 0.0;
   }
-  x->alpha = 1.0;
   x->centroid = 0.0;
   x->spread = 0.0;
   x->skewness = 0.0;
@@ -189,7 +239,6 @@ SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
   x->i = 0;
   x->j = 0;
   x->size = size;
-  x->sqrtSize = sqrt(size);
   x->fftSize = fftSize;
   x->skip = size;
   x->min = 0;
@@ -202,18 +251,14 @@ void SDTSpectralFeats_free(SDTSpectralFeats *x) {
   free(x->in);
   free(x->win);
   free(x->fft);
-  free(x->currAmp);
-  free(x->prevAmp);
-  free(x->currWhite);
-  free(x->prevWhite);
-  free(x->whitener);
+  free(x->currMag);
+  free(x->prevMag);
   SDTFFT_free(x->fftPlan);
   free(x);
 }
 
 void SDTSpectralFeats_setOverlap(SDTSpectralFeats *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
-  x->alpha = pow(10, -0.12 * SDT_timeStep * x->skip);
 }
 
 void SDTSpectralFeats_setMinFreq(SDTSpectralFeats *x, double f) {
@@ -228,14 +273,15 @@ void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f) {
 }
 
 int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
-  double *swap, sum, logSum, dev;
+  double *swap, sum, logSum, binSum, dev, deltaMag;
   int i;
-  
+
   x->in[x->i] = in;
   x->in[x->size + x->i] = in;
   x->i = (x->i + 1) % x->size;
   x->j = (x->j + 1) % x->skip;
   if (x->j) return 0;
+  x->magnitude = 0.0;
   x->centroid = 0.0;
   x->spread = 0.0;
   x->skewness = 0.0;
@@ -243,12 +289,9 @@ int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   x->flatness = 0.0;
   x->flux = 0.0;
   x->onset = 0.0;
-  swap = x->prevAmp;
-  x->prevAmp = x->currAmp;
-  x->currAmp = swap;
-  swap = x->prevWhite;
-  x->prevWhite = x->currWhite;
-  x->currWhite = swap;
+  swap = x->prevMag;
+  x->prevMag = x->currMag;
+  x->currMag = swap;
   for (i = 0; i < x->size; i++) {
     x->win[i] = 2 * x->in[x->i + i];
   }
@@ -256,30 +299,30 @@ int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   SDTFFT_fftr(x->fftPlan, x->win, x->fft);
   sum = 0.0;
   logSum = 0.0;
+  binSum = 0.0;
   for (i = x->min; i < x->max; i++) {
-    x->currAmp[i] = SDTComplex_abs(x->fft[i]) / x->sqrtSize;
-    x->whitener[i] = fmax(SDT_MICRO, fmax(x->alpha * x->whitener[i], x->currAmp[i]));
-    x->currWhite[i] = x->currAmp[i] / x->whitener[i];
-    sum += x->currAmp[i];
-    logSum += log(x->currAmp[i]);
-    x->centroid += x->currAmp[i] * (i - x->min + 0.5) / x->span;
+    x->currMag[i] = SDTComplex_abs(x->fft[i]);
+    sum += x->currMag[i];
+    logSum += log(x->currMag[i]);
+    binSum += x->currMag[i] * (i - x->min + 0.5);
   }
   x->magnitude = sum / x->span;
-  x->centroid /= sum;
+  x->flatness = exp(logSum / x->span) / x->magnitude;
+  x->centroid = binSum / (sum * x->span);
   for (i = x->min; i < x->max; i++) {
     dev = (i - x->min + 0.5) / x->span - x->centroid;
-    x->spread += pow(dev, 2) * x->currAmp[i];
-    x->skewness += pow(dev, 3) * x->currAmp[i];
-    x->kurtosis += pow(dev, 4) * x->currAmp[i];
-    x->flux += pow(x->currAmp[i] - x->prevAmp[i], 2);
-    x->onset += fmax(0.0, x->currWhite[i] - x->prevWhite[i]);
+    x->spread += pow(dev, 2) * x->currMag[i];
+    x->skewness += pow(dev, 3) * x->currMag[i];
+    x->kurtosis += pow(dev, 4) * x->currMag[i];
+    deltaMag = x->currMag[i] - x->prevMag[i];
+    x->flux += deltaMag * deltaMag;
+    if (deltaMag > 0.0) x->onset += deltaMag;
   }
   x->spread = sqrt(x->spread / sum);
   x->skewness = x->skewness / (pow(x->spread, 3.0) * sum);
   x->kurtosis = x->kurtosis / (pow(x->spread, 4.0) * sum) - 3.0;
-  x->flatness = exp(logSum / x->span) / (sum / x->span);
   x->flux = sqrt(x->flux / x->span);
-  x->onset = x->onset / x->span;
+  x->onset /= x->span;
   outs[0] = x->magnitude;
   outs[1] = x->centroid;
   outs[2] = x->spread;
@@ -303,7 +346,7 @@ struct SDTPitch {
 SDTPitch *SDTPitch_new(unsigned int size) {
   SDTPitch *x;
   int i;
-  
+
   x = (SDTPitch *)malloc(sizeof(SDTPitch));
   x->in = (double *)malloc(2 * size * sizeof(double));
   x->win = (double *)malloc(2 * size * sizeof(double));
@@ -315,12 +358,12 @@ SDTPitch *SDTPitch_new(unsigned int size) {
     x->in[size + i] = 0.0;
     x->win[i] = 0.0;
     x->win[size + i] = 0.0;
-    x->fft[i] = SDTComplex_cart(0.0, 0.0);
+    x->fft[i] = SDTComplex_car(0.0, 0.0);
     x->acf[i] = 0.0;
     x->acf[size + i] = 0.0;
     x->nsdf[i] = 0.0;
   }
-  x->fft[size] = SDTComplex_cart(0.0, 0.0);
+  x->fft[size] = SDTComplex_car(0.0, 0.0);
   x->tol = 0.2;
   x->pitch = 0.0;
   x->clarity = 0.0;
@@ -354,7 +397,7 @@ void SDTPitch_setTolerance(SDTPitch *x, double f) {
 int SDTPitch_dsp(SDTPitch *x, double *outs, double in) {
   double a, b, c, norm, rebias, peakValue, biasValue, maxValue;
   int i, j;
-  
+
   x->in[x->curr] = in;
   x->in[x->curr + x->size] = in;
   x->curr = (x->curr + 1) % x->size;
@@ -373,7 +416,7 @@ int SDTPitch_dsp(SDTPitch *x, double *outs, double in) {
   for (i = 0; i < x->seek; i++) {
     j = x->size - i - 1;
     x->nsdf[i] = x->acf[i] / norm;
-    norm -= (x->win[i] * x->win[i] + x->win[j] * x->win[j]) * x->size; 
+    norm -= (x->win[i] * x->win[i] + x->win[j] * x->win[j]) * x->size;
   }
   for (i = 1; i < x->seek; i++) {
     if (x->nsdf[i] < 0) break;
@@ -389,7 +432,7 @@ int SDTPitch_dsp(SDTPitch *x, double *outs, double in) {
       rebias = 1.0 - (i * x->tol) / x->seek;
       peakValue = b + 0.5 * (0.5 * ((c - a) * (c - a))) / (2 * b - a - c);
       biasValue = rebias * peakValue;
-      if (biasValue > maxValue) { 
+      if (biasValue > maxValue) {
         x->pitch = SDT_sampleRate / (i + (0.5 * (c - a)) / (2 * b - a - c));
         x->clarity = peakValue;
         maxValue = biasValue;

@@ -1,4 +1,4 @@
-/**
+/** @file SDTDCMotor.h
 @defgroup dcmotor SDTDCMotor.h: Electric motors
 Physically informed model for the synthesis of electric motor sounds.
 

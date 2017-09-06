@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
@@ -11,7 +12,7 @@ struct SDTFFT {
 
 SDTFFT *SDTFFT_new(unsigned int n) {
   SDTFFT *x;
-  double log2n;
+  double log2n, cw, rw;
   unsigned int bits, i;
   
   log2n = log2(n);
@@ -24,10 +25,16 @@ SDTFFT *SDTFFT_new(unsigned int n) {
   x->ifftrPhasors = (SDTComplex *)malloc(n * sizeof(SDTComplex));
   x->twiddles = (unsigned int *)malloc(n * sizeof(unsigned int));
   for (i = 0; i < n; i++) {
-	x->fftPhasors[i] = SDTComplex_exp(-SDT_TWOPI * i / n);
-	x->ifftPhasors[i] = SDTComplex_exp(SDT_TWOPI * i / n);
-	x->fftrPhasors[i] = SDTComplex_exp(-SDT_PI * ((double)i / n + 0.5));
-	x->ifftrPhasors[i] = SDTComplex_exp(SDT_PI * ((double)i / n + 0.5));
+    cw = SDT_TWOPI * i / n;
+    rw = SDT_PI * ((double)i / n + 0.5);
+	x->fftPhasors[i].r = cos(-cw);
+	x->fftPhasors[i].i = sin(-cw);
+	x->ifftPhasors[i].r = cos(cw);
+	x->ifftPhasors[i].i = sin(cw);
+	x->fftrPhasors[i].r = cos(-rw);
+	x->fftrPhasors[i].i = sin(-rw);
+	x->ifftrPhasors[i].r = cos(rw);
+	x->ifftrPhasors[i].i = sin(rw);
 	x->twiddles[i] = SDT_bitReverse(i, bits);
   }
   x->n = n;
@@ -45,7 +52,7 @@ void SDTFFT_free(SDTFFT *x) {
 
 void SDTFFT_fft(SDTFFT *x, int inverse, SDTComplex *in, SDTComplex *out) {
   SDTComplex *phasors, factor;
-  unsigned int i, size, halfSize, offset, p, q, r;
+  unsigned int i, size, halfSize, offset, j, p, q;
   
   if (!inverse) phasors = x->fftPhasors;
   else phasors = x->ifftPhasors;
@@ -56,19 +63,22 @@ void SDTFFT_fft(SDTFFT *x, int inverse, SDTComplex *in, SDTComplex *out) {
 	halfSize = size >> 1;
 	for (offset = 0; offset < x->n; offset += size) {
 	  for (i = 0; i < halfSize; i++) {
-		p = i * (x->n / size);
-		q = offset + i;
-		r = q + halfSize;
-		factor = SDTComplex_mult(phasors[p], out[r]);
-		out[r] = SDTComplex_sub(out[q], factor); 
-		out[q] = SDTComplex_add(out[q], factor);
+		j = i * (x->n / size);
+		p = offset + i;
+		q = p + halfSize;
+		factor.r = phasors[j].r * out[q].r - phasors[j].i * out[q].i;
+        factor.i = phasors[j].r * out[q].i + phasors[j].i * out[q].r;
+		out[q].r = out[p].r - factor.r;
+		out[q].i = out[p].i - factor.i;
+		out[p].r = out[p].r + factor.r;
+		out[p].i = out[p].i + factor.i;
 	  }
 	}
   }
 }
 
 void SDTFFT_fftr(SDTFFT *x, double *in, SDTComplex *out) {
-  SDTComplex tmp[x->n], znk, sum, dif, mul, even, odd;
+  SDTComplex tmp[x->n], sum, dif, mul;
   unsigned int i, j;
   
   SDTFFT_fft(x, 0, (SDTComplex *)in, tmp);
@@ -78,33 +88,37 @@ void SDTFFT_fftr(SDTFFT *x, double *in, SDTComplex *out) {
   out[x->n].i = 0.0;
   for (i = 1; i <= x->n / 2; i++) {
 	j = x->n - i;
-	znk = SDTComplex_conj(tmp[j]);
-	sum = SDTComplex_add(tmp[i], znk);
-	dif = SDTComplex_sub(tmp[i], znk);
-	mul = SDTComplex_mult(dif, x->fftrPhasors[i]);
-	even = SDTComplex_add(sum, mul);
-	odd = SDTComplex_sub(sum, mul);
-	out[i] = SDTComplex_multReal(even, 0.5);
-	out[j] = SDTComplex_multReal(odd, 0.5);
-	out[j].i *= -1.0;
+	sum.r = tmp[i].r + tmp[j].r;
+	sum.i = tmp[i].i - tmp[j].i;
+	dif.r = tmp[i].r - tmp[j].r;
+	dif.i = tmp[i].i + tmp[j].i;
+	mul.r = dif.r * x->fftrPhasors[i].r - dif.i * x->fftrPhasors[i].i;
+	mul.i = dif.r * x->fftrPhasors[i].i + dif.i * x->fftrPhasors[i].r;
+	out[i].r = 0.5 * (sum.r + mul.r);
+	out[i].i = 0.5 * (sum.i + mul.i);
+	out[j].r = 0.5 * (sum.r - mul.r);
+	out[j].i = 0.5 * (mul.i - sum.i);
   }
 }
 
 void SDTFFT_ifftr(SDTFFT *x, SDTComplex *in, double *out) {
-  SDTComplex tmp[x->n], znk, sum, dif, mul;
+  SDTComplex tmp[x->n], sum, dif, mul;
   unsigned int i, j;
   
   tmp[0].r = in[0].r + in[x->n].r;
   tmp[0].i = in[0].r - in[x->n].r;
   for (i = 1; i <= x->n / 2; i++) {
     j = x->n - i;
-	znk = SDTComplex_conj(in[j]);
-	sum = SDTComplex_add(in[i], znk);
-	dif = SDTComplex_sub(in[i], znk);
-	mul = SDTComplex_mult(dif, x->ifftrPhasors[i]);
-	tmp[i] = SDTComplex_add(sum, mul);
-	tmp[j] = SDTComplex_sub(sum, mul);
-	tmp[j].i *= -1.0;
+	sum.r = in[i].r + in[j].r;
+	sum.i = in[i].i - in[j].i;
+	dif.r = in[i].r - in[j].r;
+	dif.i = in[i].i + in[j].i;
+	mul.r = dif.r * x->ifftrPhasors[i].r - dif.i * x->ifftrPhasors[i].i;
+	mul.i = dif.r * x->ifftrPhasors[i].i + dif.i * x->ifftrPhasors[i].r;
+	tmp[i].r = sum.r + mul.r;
+	tmp[i].i = sum.i + mul.i;
+	tmp[j].r = sum.r - mul.r;
+	tmp[j].i = mul.i - sum.i;
   }
   SDTFFT_fft(x, 1, tmp, (SDTComplex *)out);
 }

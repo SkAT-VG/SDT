@@ -1,4 +1,4 @@
-/**
+/** @file SDTSolids.h
 @defgroup solids SDTSolids.h: Registering/notifying resonators and interactors 
 Bidirectional observer pattern, implementing a loose coupling between resonator and
 interactor objects. Particularly useful in patcher languages, where object instantiation

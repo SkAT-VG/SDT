@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <limits.h>
 #include <math.h>
 #include <stdlib.h>
@@ -39,6 +40,23 @@ double SDT_fclip(double x, double min, double max) {
 
 double SDT_frand() {
   return rand() / ((double)RAND_MAX + 1);
+}
+
+void SDT_gaussian1D(double *x, double sigma, int n) {
+  double mid, sum, det, num;
+  int i;
+  
+  mid = 0.5 * n;
+  sum = 0.0;
+  det = 2.0 * sigma * sigma * n;
+  for (i = 0; i < n; i++) {
+    num = i - mid + 0.5;
+    x[i] = exp(-num * num / det);
+    sum += x[i];
+  }
+  for (i = 0; i < n; i++) {
+    x[i] /= sum;
+  }
 }
 
 double SDT_gravity(double mass) {
@@ -114,6 +132,79 @@ void SDT_normalizeWindow(double *sig, int n) {
   }
 }
 
+void SDT_ones(double *sig, int n) {
+  int i;
+  
+  for (i = 0; i < n; i++) {
+    sig[i] = 1.0;
+  }
+}
+
+double SDT_rank(double *x, int n, int k) {
+  int i, j, l, r;
+  double a[n], pivot, swap;
+
+  for (i = 0; i < n; i++) {
+    a[i] = x[i];
+  }
+  
+  l = 0;
+  r = n - 1;
+  while (l < r) {
+    pivot = a[k];
+    i = l;
+    j = r;
+    while (1) {
+      while (a[i] < pivot) i++;
+      while (pivot < a[j]) j--;
+      if (i <= j) {
+        swap = a[i];
+        a[i] = a[j];
+        a[j] = swap;
+        i++;
+        j--;
+      }
+      if (i > j) break;
+    }
+    if (j < k) l = i;
+    if (k < i) r = j;
+  }
+  return a[k];
+}
+
+int SDT_roi(double *sig, int *peaks, int *bounds, int d, int n) {
+  int i, j, isPeak, nPeaks;
+  double min;
+  
+  nPeaks = 0;
+  for (i = 0; i < n; i++) {
+    isPeak = 1;
+    for (j = 1; j <= d; j++) {
+      if ((i - j >= 0 && sig[i-j] >= sig[i]) || (i + j < n && sig[i+j] >= sig[i])) {
+        isPeak = 0;
+        break;
+      }
+    }
+    if (isPeak) {
+      peaks[nPeaks] = i;
+      nPeaks += 1;
+    }
+  }
+  bounds[0] = 0;
+  for (i = 1; i < nPeaks; i++) {
+    min = sig[peaks[i - 1]];
+    bounds[i] = peaks[i - 1];
+    for (j = peaks[i - 1] + 1; j < peaks[i]; j++) {
+      if (sig[j] < min) {
+        min = sig[j];
+        bounds[i] = j;
+      }
+    }
+  }
+  bounds[nPeaks] = n;
+  return nPeaks;
+}
+
 double SDT_samplesInAir(double length) {
   return fmax(0.0, length) / SDT_MACH1 * SDT_sampleRate;
 }
@@ -130,4 +221,50 @@ int SDT_signum(double x) {
   else if (x == 0) result = 0;
   else result = 1;
   return result;
+}
+
+void SDT_sinc(double *sig, double w, int n) {
+  int i, j, k;
+  double x, scale;
+    
+  for (i = 0; i < n / 2; i++) {
+    j = n - i - 1;
+    k = n / 2 - i;
+    x = SDT_TWOPI * w * k;
+    scale = sin(x) / x;
+    sig[i] *= scale;
+    sig[j] *= scale;
+  }
+}
+
+double SDT_truePeakPos(double *sig, int peak) {
+  double a, b, c;
+  
+  a = sig[peak - 1];
+  b = sig[peak];
+  c = sig[peak + 1];
+  return peak + 0.5 * (a - c) / (a - 2.0 * b + c);
+}
+
+double SDT_truePeakValue(double *sig, int peak) {
+  double a, b, c;
+  
+  a = sig[peak - 1];
+  b = sig[peak];
+  c = sig[peak + 1];
+  return b + 0.5 * (0.5 * ((c - a) * (c - a))) / (2 * b - a - c);
+}
+
+double SDT_wrap(double x) {
+  x = fmod(x, SDT_TWOPI);
+  if (x < 0.0) x += SDT_TWOPI;
+  return x - SDT_PI;
+}
+
+void SDT_zeros(double *sig, int n) {
+  int i;
+  
+  for (i = 0; i < n; i++) {
+    sig[i] = 0.0;
+  }
 }

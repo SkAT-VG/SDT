@@ -47,8 +47,8 @@ void SDTDCMotor_free(SDTDCMotor *x) {
 void SDTDCMotor_setFilters(SDTDCMotor *x) {
   SDTComb_setYGain(x->chassis, x->reson);
   SDTComb_setYDelay(x->chassis, SDT_samplesInAir(x->size));
-  SDTTwoPoles_resonant(x->brushFilter, 4000.0, 3.0);
-  SDTTwoPoles_resonant(x->airFilter, 800.0, 3.0);
+  SDTTwoPoles_resonant(x->brushFilter, 4000.0, 1.0);
+  SDTTwoPoles_resonant(x->airFilter, 800.0, 1.0);
 }
 
 void SDTDCMotor_setRpm(SDTDCMotor *x, double f) {

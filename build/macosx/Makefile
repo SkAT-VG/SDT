@@ -3,7 +3,7 @@ SHELL=/bin/bash
 CC=clang
 MACARCH=-arch i386 -arch x86_64
 MACVERSION=-isysroot ../../3rdparty/MacOSX10.6.sdk -mmacosx-version-min=10.6
-CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -O3
+CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -g -O3
 LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib -headerpad_max_install_names
 SRCDIR=../../src
 
@@ -23,7 +23,7 @@ PDSRCS=$(wildcard $(PDDIR)/*.c)
 PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
 
 PDSDKDIR=../../3rdparty/Pd
-PDVERSION=0.43.4
+PDVERSION=0.41.4
 
 all: core max pd
 
@@ -42,8 +42,8 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	-L$(MAXSDKDIR)/max-includes -L$(MAXSDKDIR)/msp-includes -L$(MAXSDKDIR)/jit-includes \
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -framework SDT -framework MaxAudioAPI $< -o $@/Contents/MacOS/$(EXTNAME)
-	install_name_tool -change SDT @loader_path/../../../../support/SDT.framework/SDT \
-	$@/Contents/MacOS/$(EXTNAME)
+	install_name_tool -id @rpath/$(EXTNAME) $@/Contents/MacOS/$(EXTNAME)
+	install_name_tool -add_rpath @loader_path/../../../../support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
 
 $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
@@ -64,7 +64,7 @@ core: $(SDTOBJS)
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
 	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
 	$(CC) $(LDFLAGS) $(SDTOBJS) -o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System
-	install_name_tool -id SDT $(SDTDIR)/SDT.framework/SDT
+	install_name_tool -id @rpath/SDT $(SDTDIR)/SDT.framework/SDT
 	
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@

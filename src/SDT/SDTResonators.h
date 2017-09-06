@@ -1,4 +1,4 @@
-/**
+/** @file SDTResonators.h
 @defgroup resonators SDTResonators.h: Solid resonators
 Physical model of a solid resonator, represented as a set of parallel mass-spring-damper
 mechanical oscillators. Each oscillator corresponds to a normal mode of resonance of the

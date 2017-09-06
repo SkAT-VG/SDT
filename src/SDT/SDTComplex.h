@@ -20,22 +20,27 @@ typedef struct SDTComplex {
 @param[in] real Real part
 @param[in] imag Imaginary part
 @return Complex number */
-extern SDTComplex SDTComplex_cart(double real, double imag);
+extern SDTComplex SDTComplex_car(double real, double imag);
 
 /** @brief Returns a complex exponential with base e and given phase.
 @param[in] phase Phase
 @return Complex exponential */
 extern SDTComplex SDTComplex_exp(double phase);
 
-/** @brief Returns the complex conjugate of a complex number.
-@param[in] a Input value
-@return Complex conjugate of input */
-extern SDTComplex SDTComplex_conj(SDTComplex a);
-
 /** @brief Returns the absolute value (magnitude) of a complex number.
 @param[in] a Input value
 @return Absolute value of input */
 extern double SDTComplex_abs(SDTComplex a);
+
+/** @brief Returns the angle (phase) of a complex number.
+@param[in] a Input value
+@return Angle of input */
+extern double SDTComplex_angle(SDTComplex a);
+
+/** @brief Returns the complex conjugate of a complex number.
+@param[in] a Input value
+@return Complex conjugate of input */
+extern SDTComplex SDTComplex_conj(SDTComplex a);
 
 /** @brief Returns the sum of two complex numbers.
 @param[in] a First operand

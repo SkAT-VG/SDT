@@ -7,8 +7,8 @@
 typedef struct _myoelastic {
   t_pxobject ob;
   SDTMyoelastic *myo;
-  void *outlets[2], *send;
-  double lowFrequency, highFrequency, threshold, out[2];
+  void *outlets[4], *send;
+  double lowFrequency, highFrequency, threshold, out[4];
 } t_myoelastic;
 
 static t_class *myoelastic_class = NULL;
@@ -21,10 +21,16 @@ void myoelastic_assist(t_myoelastic *x, void *b, long m, long a, char *s) {
   else {
     switch (a) {
       case 0:
-        sprintf(s, "(float): Myoelastic activity");
+        sprintf(s, "(float): Slow myoelastic activity");
         break;
       case 1:
-        sprintf(s, "(float): Myoelastic frequency (Hz)");
+        sprintf(s, "(float): Slow myoelastic frequency (Hz)");
+        break;
+      case 2:
+        sprintf(s, "(float): Fast myoelastic activity");
+        break;
+      case 3:
+        sprintf(s, "(float): Fast myoelastic frequency (Hz)");
         break;
     }
   }
@@ -48,6 +54,8 @@ void myoelastic_threshold(t_myoelastic *x, void *attr, long ac, t_atom *av) {
 void myoelastic_send(t_myoelastic *x) {
   outlet_float(x->outlets[0], x->out[0]);
   outlet_float(x->outlets[1], x->out[1]);
+  outlet_float(x->outlets[2], x->out[2]);
+  outlet_float(x->outlets[3], x->out[3]);
 }
 
 t_int *myoelastic_perform(t_int *w) {
@@ -90,23 +98,31 @@ void myoelastic_dsp64(t_myoelastic *x, t_object *dsp64, short *count, double sam
 
 void *myoelastic_new(t_symbol *s, long argc, t_atom *argv) {
   t_myoelastic *x;
-  long windowSize;
+  long tmpSize, windowSize;
   
   x = (t_myoelastic *)object_alloc(myoelastic_class);
   if (x) {
     dsp_setup((t_pxobject *)x, 1);
     if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
-      windowSize = atom_getlong(&argv[0]);
+      tmpSize = atom_getlong(&argv[0]);
+      windowSize = SDT_nextPow2(tmpSize);
+      if (tmpSize != windowSize) {
+        post("sdt.myo~: Window size must be a power of 2, setting it to %d", windowSize);
+      }
     }
     else {
-      windowSize = 44100;
+      windowSize = 1024;
     }
     x->myo = SDTMyoelastic_new(windowSize);
+    x->outlets[3] = floatout(x);
+    x->outlets[2] = floatout(x);
     x->outlets[1] = floatout(x);
     x->outlets[0] = floatout(x);
     x->send = qelem_new((t_object *)x, (method)myoelastic_send);
     x->out[0] = 0.0;
     x->out[1] = 0.0;
+    x->out[2] = 0.0;
+    x->out[3] = 0.0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -117,6 +133,8 @@ void myoelastic_free(t_myoelastic *x) {
   SDTMyoelastic_free(x->myo);
   object_free(x->outlets[0]);
   object_free(x->outlets[1]);
+  object_free(x->outlets[2]);
+  object_free(x->outlets[3]);
   qelem_free(x->send);
 }
 

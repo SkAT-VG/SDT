@@ -66,7 +66,7 @@ extern double SDTReverb_dsp(SDTReverb *x, double in);
 /** @} */
 
 /** @defgroup pitchshift Pitch shift
-Time-domain pitch shifter, useful to simulate doppler effect
+Frequency domain pitch shifter, useful to simulate doppler effect
 or other applications requiring pitch shifting.
 @{ */
 
@@ -75,8 +75,9 @@ typedef struct SDTPitchShift SDTPitchShift;
 
 /** @brief Object constructor.
 @param[in] size Internal buffer size, in samples
+@param[in] oversample FFT oversampling rate
 @return Pointer to the new instance */
-extern SDTPitchShift *SDTPitchShift_new(long size);
+extern SDTPitchShift *SDTPitchShift_new(int size, int oversample);
 
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
@@ -85,6 +86,13 @@ extern void SDTPitchShift_free(SDTPitchShift *x);
 /** @brief Sets the pitch shifting ratio.
 @param[in] f New pitch / original pitch ratio */
 extern void SDTPitchShift_setRatio(SDTPitchShift *x, double f);
+
+/** @brief Sets the analysis window overlapping ratio.
+Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap
+and 1.0 meaning total overlap.
+@param[in] x Pointer to the instance
+@param[in] f Overlap ratio [0.0, 1.0] */
+extern void SDTPitchShift_setOverlap(SDTPitchShift *x, double f);
 
 /** @brief Signal processing routine.
 Call this function at sample rate to compute the pitch shifted signal.
