@@ -43,14 +43,14 @@ GNU C Compiler and a UNIX style shell, as provided in MinGW + MSYS
 1. Once the compilation environment is installed, open its shell and issue the following
 commands to compile the software in all its flavors (Max package, Pd library, Shared DLL):
 
-        cd build/windows
+        cd build/win32 (or cd build/win64 for the x64 version)
         make
 
 2. Install the desired products. The script will install the desired product in the given
 <path>, creating a SDT subfolder:
 
         make install_max DSTDIR=<path>
-        make install_pd DSTDIR=<path>
+        make install_pd DSTDIR=<path> (only for 32 bit)
         make install_core DSTDIR=<path>
 
 3. To clean the source directories after compilation:

@@ -141,6 +141,54 @@ extern double SDTTwoPoles_dsp(SDTTwoPoles *x, double in);
 
 /** @} */
 
+/** @defgroup biquad Cascade of biquadratic sections
+Classic cascade of biquad sections, useful to implement a wide variety of filters.
+@{ */
+
+/** @brief Opaque data structure for biquad cascade object. */
+typedef struct SDTBiquad SDTBiquad;
+
+/** @brief Object constructor.
+@param[in] nSections Number of sections in the cascade.
+The order of the resulting filter is twice this value (i.e. nSections = 4 -> order = 8).
+@return Pointer to the new instance */
+extern SDTBiquad *SDTBiquad_new(int nSections);
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTBiquad_free(SDTBiquad *x);
+
+/** @brief Designs a Butterworth lowpass filter, at the given cutoff frequency.
+@param[in] fc Cutoff frequency, in Hz */
+extern void SDTBiquad_butterworthLP(SDTBiquad *x, double fc);
+
+/** @brief Designs a Butterworth highpass filter, at the given cutoff frequency.
+@param[in] fc Cutoff frequency, in Hz */
+extern void SDTBiquad_butterworthHP(SDTBiquad *x, double fc);
+
+
+extern void SDTBiquad_butterworthAP(SDTBiquad *x, double fc);
+
+/** @brief Designs the lowpass part of a Linkwitz-Riley crossover filter,
+    at the given cutoff frequency.
+    WARNING: the filter must have an even number of biquad sections!
+@param[in] fc Cutoff frequency, in Hz */
+extern void SDTBiquad_linkwitzRileyLP(SDTBiquad *x, double fc);
+
+/** @brief Designs the highpass part of a Linkwitz-Riley crossover filter,
+    at the given cutoff frequency.
+    WARNING: the filter must have an even number of biquad sections!
+@param[in] fc Cutoff frequency, in Hz */
+extern void SDTBiquad_linkwitzRileyHP(SDTBiquad *x, double fc);
+
+/** @brief Signal processing routine.
+Call this function at sample rate to compute the filtered signal.
+@param[in] in Input sample
+@return Output sample */
+extern double SDTBiquad_dsp(SDTBiquad *x, double in);
+
+/** @} */
+
 /** @defgroup average Moving average
 Moving average filter, producing as output the average of the last input samples.
 @{ */

@@ -57,9 +57,9 @@ SDTCommon.h should always be included when using other SDT modules.
 #define SDT_COMMON_H
 
 /** @brief SDT version number */
-#define SDT_ver          077
+#define SDT_ver          078
 /** @brief SDT version string */
-#define SDT_ver_str     "077"
+#define SDT_ver_str     "078"
 /** @brief Value of Pi */
 #define SDT_PI           3.141592653589793
 /** @brief Value of 2 * Pi */
@@ -91,11 +91,17 @@ extern double SDT_timeStep;
 @param[in] sampleRate Sample rate (Hz). */
 extern void SDT_setSampleRate(double sampleRate);
 
+/** @brief Applies a Blackman window to a chunk of samples.
+Applies a Blackman window to a chunk of samples.
+@param[in,out] sig samples to window
+@param[in] n window size */
+extern void SDT_blackman(double *sig, int n);
+
 /** @brief Reverses the bit order of an unsigned integer of given bit length.
 @param[in] u Input value
 @param[in] bits Number of bits to reverse
 @return Unsigned integer with reversed bits */
-unsigned int SDT_bitReverse(unsigned int u, unsigned int bits);
+extern unsigned int SDT_bitReverse(unsigned int u, unsigned int bits);
 
 /** @brief Clips an integer value.
 Limits the range of an integer value between a given lower bound and upper bound.
@@ -193,6 +199,11 @@ Finds the kth smallest value in the input array.
 @param[in] k item rank
 @return kth smallest value in the array */
 extern double SDT_rank(double *x, int n, int k);
+
+/** @brief Removes the global average from samples in a window.
+@param[in,out] sig window to remove the average from
+@param[in] n window size */
+extern void SDT_removeDC(double *sig, int n);
 
 /** @brief Finds regions of influence (local maxima and minima) in a buffer.
 Finds regions of influence (local maxima and minima) in a buffer.

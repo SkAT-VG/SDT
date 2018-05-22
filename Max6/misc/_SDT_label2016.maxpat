@@ -443,7 +443,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 9.0, 25.0, 101.0, 17.0 ],
-					"text" : "(C) 2001 - 2016"
+					"text" : "(C) 2001 - 2018"
 				}
 
 			}

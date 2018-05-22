@@ -185,6 +185,159 @@ double SDTTwoPoles_dsp(SDTTwoPoles *x, double in) {
 
 //-------------------------------------------------------------------------------------//
 
+struct SDTBiquad {
+  double *buf, *a0, *a1, *a2, *b0, *b1, *b2,
+         f, w, cosw, sinw, *alpha;
+  int nSections;
+};
+
+SDTBiquad *SDTBiquad_new(int nSections) {
+  SDTBiquad *x;
+  int i, n;
+  
+  n = 2 * nSections + 2;
+  x = (SDTBiquad *)malloc(sizeof(SDTBiquad));
+  x->buf = (double *)malloc(n * sizeof(double));
+  x->a0 = (double *)malloc(nSections * sizeof(double));
+  x->a1 = (double *)malloc(nSections * sizeof(double));
+  x->a2 = (double *)malloc(nSections * sizeof(double));
+  x->b0 = (double *)malloc(nSections * sizeof(double));
+  x->b1 = (double *)malloc(nSections * sizeof(double));
+  x->b2 = (double *)malloc(nSections * sizeof(double));
+  x->alpha = (double *)malloc(nSections * sizeof(double));
+  for (i = 0; i < n; i++) {
+    x->buf[i] = 0.0;
+  }
+  for (i = 0; i < nSections; i++) {
+    x->a0[i] = 1.0;
+    x->a1[i] = 0.0;
+    x->a2[i] = 0.0;
+    x->b0[i] = 1.0;
+    x->b1[i] = 0.0;
+    x->b2[i] = 0.0;
+    x->alpha[i] = 1.0;
+  }
+  x->nSections = nSections;
+  
+  return x;
+}
+
+void SDTBiquad_free(SDTBiquad *x) {
+  free(x->buf);
+  free(x);
+}
+
+void SDTBiquad_common(SDTBiquad *x, int i, double fc, double q) {
+  x->w = 2.0 * SDT_PI * fc * SDT_timeStep;
+  x->cosw = cos(x->w);
+  x->sinw = sin(x->w);
+  x->alpha[i] = x->sinw / (2.0 * q);
+}
+
+void SDTBiquad_butterworthLP(SDTBiquad *x, double fc) {
+  double q;
+  int i;
+  
+  for (i = 0; i < x->nSections; i++) {
+    q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / (2 * x->nSections)));
+    SDTBiquad_common(x, i, fc, q);
+    x->a0[i] = 1.0 + x->alpha[i];
+    x->a1[i] = (-2.0 * x->cosw) / x->a0[i];
+    x->a2[i] = (1.0 - x->alpha[i]) / x->a0[i];
+    x->b0[i] = (0.5 - 0.5 * x->cosw) / x->a0[i];
+    x->b1[i] = (1.0 - x->cosw) / x->a0[i];
+    x->b2[i] = x->b0[i];
+  }
+}
+
+void SDTBiquad_butterworthHP(SDTBiquad *x, double fc) {
+  double q;
+  int i;
+  
+  for (i = 0; i < x->nSections; i++) {
+    q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / (2 * x->nSections)));
+    SDTBiquad_common(x, i, fc, q);
+    x->a0[i] = 1.0 + x->alpha[i];
+    x->a1[i] = (-2.0 * x->cosw) / x->a0[i];
+    x->a2[i] = (1.0 - x->alpha[i]) / x->a0[i];
+    x->b0[i] = (0.5 + 0.5 * x->cosw) / x->a0[i];
+    x->b1[i] = (-1.0 - x->cosw) / x->a0[i];
+    x->b2[i] = x->b0[i];
+  }
+}
+
+void SDTBiquad_butterworthAP(SDTBiquad *x, double fc) {
+  double q;
+  int i;
+  
+  for (i = 0; i < x->nSections; i++) {
+    q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / (2 * x->nSections)));
+    SDTBiquad_common(x, i, fc, q);
+    x->a0[i] = 1.0 + x->alpha[i];
+    x->a1[i] = (-2.0 * x->cosw) / x->a0[i];
+    x->a2[i] = (1.0 - x->alpha[i]) / x->a0[i];
+    x->b0[i] = x->a2[i];
+    x->b1[i] = x->a1[i];
+    x->b2[i] = 1.0;
+  }
+}
+
+void SDTBiquad_linkwitzRileyLP(SDTBiquad *x, double fc) {
+  double q;
+  int i, j;
+  
+  for (i = 0; i < x->nSections / 2; i++) {
+    j = i + x->nSections / 2;
+    q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / x->nSections));
+    SDTBiquad_common(x, i, fc, q);
+    SDTBiquad_common(x, j, fc, q);
+    x->a0[i] = x->a0[j] = 1.0 + x->alpha[i];
+    x->a1[i] = x->a1[j] = (-2.0 * x->cosw) / x->a0[i];
+    x->a2[i] = x->a2[j] = (1.0 - x->alpha[i]) / x->a0[i];
+    x->b0[i] = x->b0[j] = (0.5 - 0.5 * x->cosw) / x->a0[i];
+    x->b1[i] = x->b1[j] = (1.0 - x->cosw) / x->a0[i];
+    x->b2[i] = x->b2[j] = x->b0[i];
+  }
+}
+
+void SDTBiquad_linkwitzRileyHP(SDTBiquad *x, double fc) {
+  double q;
+  int i, j;
+  
+  for (i = 0; i < x->nSections / 2; i++) {
+    j = i + x->nSections / 2;
+    q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / x->nSections));
+    SDTBiquad_common(x, i, fc, q);
+    SDTBiquad_common(x, j, fc, q);
+    x->a0[i] = x->a0[j] = 1.0 + x->alpha[i];
+    x->a1[i] = x->a1[j] = (-2.0 * x->cosw) / x->a0[i];
+    x->a2[i] = x->a2[j] = (1.0 - x->alpha[i]) / x->a0[i];
+    x->b0[i] = x->b0[j] = (0.5 + 0.5 * x->cosw) / x->a0[i];
+    x->b1[i] = x->b1[j] = (-1.0 - x->cosw) / x->a0[i];
+    x->b2[i] = x->b2[j] = x->b0[i];
+  }
+}
+
+double SDTBiquad_dsp(SDTBiquad *x, double in) {
+  double x0, y0;
+  int i, j;
+  
+  y0 = in;
+  for (i = 0; i < x->nSections; i++) {
+    j = 2 * i;
+    x0 = y0;
+    y0 = x->b0[i] * x0 + x->b1[i] * x->buf[j] + x->b2[i] * x->buf[j+1] - x->a1[i] * x->buf[j+2] - x->a2[i] * x->buf[j+3];
+    x->buf[j+1] = x->buf[j];
+    x->buf[j] = x0;
+  }
+  j = 2 * i;
+  x->buf[j+1] = x->buf[j];
+  x->buf[j] = y0;
+  return y0;
+}
+
+//-------------------------------------------------------------------------------------//
+
 struct SDTAverage {
   double *buf, sum;
   long size, window, curr, last;

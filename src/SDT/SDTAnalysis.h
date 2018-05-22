@@ -55,11 +55,16 @@ typedef struct SDTMyoelastic SDTMyoelastic;
 
 /** @brief Instantiates a myoelastic feature extractor.
 @return Pointer to the new instance */
-extern SDTMyoelastic *SDTMyoelastic_new();
+extern SDTMyoelastic *SDTMyoelastic_new(int size);
 
 /** @brief Destroys a myoelastic feature extractor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTMyoelastic_free(SDTMyoelastic *x);
+
+/** @brief Sets the DC offset cutoff.
+@param[in] x Pointer to the instance
+@param[in] f DC offset cutoff, in Hz */
+extern void SDTMyoelastic_setDcFrequency(SDTMyoelastic *x, double f);
 
 /** @brief Sets the low frequency cutoff.
 @param[in] x Pointer to the instance

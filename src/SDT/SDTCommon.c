@@ -22,6 +22,19 @@ unsigned int SDT_bitReverse(unsigned int u, unsigned int bits) {
   return u >> (sizeof(u) * CHAR_BIT - bits);
 }
 
+void SDT_blackman(double *sig, int n) {
+  int i, j;
+  double w, scale;
+
+  for (i = 0; i < n / 2; i++) {
+    j = n - i - 1;
+    w = SDT_TWOPI * i / (n - 1);
+    scale = 0.42 - 0.5 * cos(w) + 0.08 * cos(2 * w);
+    sig[i] *= scale;
+    sig[j] *= scale;
+  }
+}
+
 long SDT_clip(long x, long min, long max) {
   if (x < min) x = min;
   else if (x > max) x = max;
@@ -170,6 +183,20 @@ double SDT_rank(double *x, int n, int k) {
     if (k < i) r = j;
   }
   return a[k];
+}
+
+void SDT_removeDC(double *sig, int n) {
+  double avg;
+  int i;
+  
+  avg = 0.0;
+  for (i = 0; i < n; i++) {
+    avg += sig[i];
+  }
+  avg /= n;
+  for (i = 0; i < n; i++) {
+    sig[i] -= avg;
+  }
 }
 
 int SDT_roi(double *sig, int *peaks, int *bounds, int d, int n) {

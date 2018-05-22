@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
@@ -6,7 +7,8 @@
 #include "SDTFilters.h"
 #include "SDTAnalysis.h"
 
-#define MYO_SR 1024
+#define MYO_SR 1000
+#define MYO_SS 100
 
 struct SDTZeroCrossing {
   double *in, *win;
@@ -62,138 +64,125 @@ int SDTZeroCrossing_dsp(SDTZeroCrossing *x, double *out, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTMyoelastic {
-  double *rms, *slowMyo, *fastMyo,
-         *baseWin, *slowWin, *fastWin,
-         slowAct, fastAct, slowFreq, fastFreq,
-         threshold, sum;
-  int i, j, skip, count, slowCount, fastCount, fastSize;
+  SDTTwoPoles *inRMS, *impRMS, *myoRMS, *restRMS;
+  SDTBiquad *dcHP, *lowLP, *lowHP, *highLP, *highHP;
+  double dcCut, lowCut, highCut, threshold, imp, myo,
+         impAct, myoAct, impFreq, myoFreq;
+  int impCount, myoCount;
 };
 
-SDTMyoelastic *SDTMyoelastic_new() {
+SDTMyoelastic *SDTMyoelastic_new(int bufSize) {
   SDTMyoelastic *x;
-  int i;
+  //int i;
 
   x = (SDTMyoelastic *)malloc(sizeof(SDTMyoelastic));
-  x->rms = (double *)malloc(MYO_SR * sizeof(double));
-  x->slowMyo = (double *)malloc(MYO_SR * sizeof(double));
-  x->fastMyo = (double *)malloc(MYO_SR * sizeof(double));
-  x->baseWin = (double *)malloc(MYO_SR * sizeof(double));
-  x->slowWin = (double *)malloc(MYO_SR * sizeof(double));
-  x->fastWin = (double *)malloc(MYO_SR * sizeof(double));
-  for (i = 0; i < MYO_SR; i++) {
-    x->rms[i] = 0.0;
-    x->slowMyo[i] = 0.0;
-    x->fastMyo[i] = 0.0;
-    x->baseWin[i] = 1.0;
-    x->slowWin[i] = 0.0;
-    x->fastWin[i] = 0.0;
-  }
-  SDT_sinc(x->baseWin, 1.0 / MYO_SR, MYO_SR);
-  SDT_hanning(x->baseWin, MYO_SR);
-  SDT_normalizeWindow(x->baseWin, MYO_SR);
-  x->slowAct = 0.0;
-  x->fastAct = 0.0;
-  x->slowFreq = 0.0;
-  x->fastFreq = 0.0;
+  x->inRMS = SDTTwoPoles_new();
+  x->impRMS = SDTTwoPoles_new();
+  x->myoRMS = SDTTwoPoles_new();
+  x->restRMS = SDTTwoPoles_new();
+  x->dcHP = SDTBiquad_new(4);
+  x->lowLP = SDTBiquad_new(4);
+  x->lowHP = SDTBiquad_new(4);
+  x->highLP = SDTBiquad_new(4);
+  x->highHP = SDTBiquad_new(4);
+  x->dcCut = 1.0;
+  x->lowCut = 1.0;
+  x->highCut = 1.0;
   x->threshold = 0.0;
-  x->sum = 0.0;
-  x->i = 0;
-  x->j = 0;
-  x->skip = 0;
-  x->count = 0;
-  x->slowCount = 0;
-  x->fastCount = 0;
-  x->fastSize = 0;
+  x->imp = 0.0;
+  x->myo = 0.0;
+  x->impAct = 0.0;
+  x->myoAct = 0.0;
+  x->impFreq = 0.0;
+  x->myoFreq = 0.0;
+  x->impCount = 0;
+  x->myoCount = 0;
   return x;
 }
 
 void SDTMyoelastic_free(SDTMyoelastic *x) {
-  free(x->rms);
-  free(x->slowMyo);
-  free(x->fastMyo);
-  free(x->baseWin);
-  free(x->slowWin);
-  free(x->fastWin);
+  SDTTwoPoles_free(x->inRMS);
+  SDTTwoPoles_free(x->impRMS);
+  SDTTwoPoles_free(x->myoRMS);
+  SDTTwoPoles_free(x->restRMS);
+  SDTBiquad_free(x->dcHP);
+  SDTBiquad_free(x->lowLP);
+  SDTBiquad_free(x->lowHP);
+  SDTBiquad_free(x->highLP);
+  SDTBiquad_free(x->highHP);
   free(x);
 }
 
+void SDTMyoelastic_update(SDTMyoelastic *x) {
+  SDTTwoPoles_lowpass(x->inRMS, 1000.0);
+}
+
+void SDTMyoelastic_setDcFrequency(SDTMyoelastic *x, double f) {
+  x->dcCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
+  SDTTwoPoles_lowpass(x->impRMS, x->dcCut);
+  SDTTwoPoles_lowpass(x->myoRMS, x->dcCut);
+  SDTTwoPoles_lowpass(x->restRMS, x->dcCut);
+  SDTBiquad_linkwitzRileyHP(x->dcHP, x->dcCut);
+  SDTMyoelastic_update(x);
+}
+
 void SDTMyoelastic_setLowFrequency(SDTMyoelastic *x, double f) {
-  f = SDT_fclip(f, 1.0, 0.5 * MYO_SR);
-  x->fastSize = MYO_SR / f + 0.5;
-  SDT_ones(x->slowWin, MYO_SR);
-  SDT_sinc(x->slowWin, f / MYO_SR, MYO_SR);
-  SDT_hanning(x->slowWin, MYO_SR);
-  SDT_normalizeWindow(x->slowWin, MYO_SR);
+  x->lowCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
+  SDTBiquad_linkwitzRileyLP(x->lowLP, x->lowCut);
+  SDTBiquad_linkwitzRileyHP(x->lowHP, x->lowCut);
+  SDTMyoelastic_update(x);
 }
 
 void SDTMyoelastic_setHighFrequency(SDTMyoelastic *x, double f) {
-  f = SDT_fclip(f, 1.0, 0.5 * MYO_SR);
-  SDT_ones(x->fastWin, MYO_SR);
-  SDT_sinc(x->fastWin, f / MYO_SR, MYO_SR);
-  SDT_hanning(x->fastWin, MYO_SR);
-  SDT_normalizeWindow(x->fastWin, MYO_SR);
+  x->highCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
+  SDTBiquad_linkwitzRileyLP(x->highLP, x->highCut);
+  SDTBiquad_linkwitzRileyHP(x->highHP, x->highCut);
+  SDTMyoelastic_update(x);
 }
 
 void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f) {
-  x->threshold = fmax(0.0, f);
+  x->threshold = f;
 }
 
 int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
-  double baseRMS, slowRMS, fastRMS;
-  int i, j;
+  double rms, imp, myo, rest, impRMS, myoRMS, restRMS, totRMS;
 
-  x->skip = SDT_sampleRate / MYO_SR;
-  x->sum += in * in;
-  x->count = (x->count + 1) % x->skip;
-  if (x->count) return 0;
-  x->rms[x->i] = sqrt(x->sum / x->skip);
-  x->sum = 0.0;
-  baseRMS = 0.0;
-  slowRMS = 0.0;
-  fastRMS = 0.0;
-  for (i = 0; i < MYO_SR; i++) {
-    j = (x->i + i + 1) % MYO_SR;
-    baseRMS += x->rms[j] * x->baseWin[i];
-    slowRMS += x->rms[j] * x->slowWin[i];
-    fastRMS += x->rms[j] * x->fastWin[i];
+  rms = sqrt(SDTTwoPoles_dsp(x->inRMS, in * in)); 
+  imp = SDTBiquad_dsp(x->dcHP, rms);
+  imp = SDTBiquad_dsp(x->lowLP, imp);
+  myo = SDTBiquad_dsp(x->lowHP, rms);
+  myo = SDTBiquad_dsp(x->highLP, myo);
+  rest = SDTBiquad_dsp(x->highHP, rms);
+  impRMS = sqrt(SDTTwoPoles_dsp(x->impRMS, imp * imp));
+  myoRMS = sqrt(SDTTwoPoles_dsp(x->myoRMS, myo * myo));
+  restRMS = sqrt(SDTTwoPoles_dsp(x->restRMS, rest * rest));
+  totRMS = impRMS + myoRMS + restRMS;
+  x->impCount += 1;
+  x->myoCount += 1;
+  x->impAct = impRMS / totRMS;
+  if (x->imp < 0 && imp >= 0) {
+    x->impFreq = SDT_sampleRate / x->impCount;
+    x->impCount = 0;
   }
-  if (baseRMS > x->threshold) {
-    x->slowMyo[x->i] = SDT_fclip(slowRMS / baseRMS - 1.0, -1.0, 1.0);
-    x->fastMyo[x->i] = SDT_fclip((fastRMS - slowRMS) / baseRMS, -1.0, 1.0);
+  x->myoAct = myoRMS / totRMS;
+  if (x->myo < 0 && myo >= 0) {
+    x->myoFreq = SDT_sampleRate / x->myoCount;
+    x->myoCount = 0;
+  }
+  x->imp = imp;
+  x->myo = myo;
+  if (totRMS > x->threshold) {
+    outs[0] = x->impAct;
+    outs[1] = x->impFreq; 
+    outs[2] = x->myoAct;
+    outs[3] = x->myoFreq; 
   }
   else {
-    x->slowMyo[x->i] = 0.0;
-    x->fastMyo[x->i] = 0.0;
+    outs[0] = 0.0;
+    outs[1] = 0.0;
+    outs[2] = 0.0;
+    outs[3] = 0.0;
   }
-  x->slowAct = 0.0;
-  for (i = 0; i < MYO_SR; i++) {
-    j = (MYO_SR + x->i - i) % MYO_SR;
-    x->slowAct += x->slowMyo[j] * x->slowMyo[j];
-  }
-  x->slowAct = sqrt(x->slowAct / MYO_SR);
-  x->fastAct = 0.0;
-  for (i = 0; i < x->fastSize; i++) {
-    j = (MYO_SR + x->i - i) % MYO_SR;
-    x->fastAct += x->fastMyo[j] * x->fastMyo[j];
-  }
-  x->fastAct = sqrt(x->fastAct / x->fastSize);
-  i = x->i;
-  j = (MYO_SR + x->i - 1) % MYO_SR;
-  if (x->slowMyo[j] < 0.0 && x->slowMyo[i] >= 0.0) {
-    x->slowFreq = (double)MYO_SR / x->slowCount;
-    x->slowCount = 0;
-  }
-  if (x->fastMyo[j] < 0.0 && x->fastMyo[i] >= 0.0) {
-    x->fastFreq = (double)MYO_SR / x->fastCount;
-    x->fastCount = 0;
-  }
-  outs[0] = x->slowAct;
-  outs[1] = x->slowFreq;
-  outs[2] = x->fastAct;
-  outs[3] = x->fastFreq;
-  x->i = (x->i + 1) % MYO_SR;
-  x->slowCount += 1;
-  x->fastCount += 1;
   return 1;
 }
 

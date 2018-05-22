@@ -4,7 +4,7 @@ CC=gcc
 CFLAGS=-fPIC -Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=-shared
 SRCDIR=../../src
-PREFIX=/usr/lib
+PREFIX=/usr
 SDTPATH=SDT
 
 SDTDIR=$(SRCDIR)/SDT
@@ -30,14 +30,17 @@ $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 	
 install:
-	mkdir -p $(PREFIX)/pd/extra/$(SDTPATH)
-	cp -a $(SDTDIR)/libSDT.so $(PREFIX)
-	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/pd/extra/$(SDTPATH)
-	cp -a ../../Pd/* $(PREFIX)/pd/extra/$(SDTPATH)
+	mkdir -p $(PREFIX)/lib/pd/extra/$(SDTPATH)
+	mkdir -p $(PREFIX)/include/$(SDTPATH)
+	cp -a $(SDTDIR)/libSDT.so $(PREFIX)/lib
+	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/lib/pd/extra/$(SDTPATH)
+	cp -a ../../Pd/* $(PREFIX)/lib/pd/extra/$(SDTPATH)
+	cp -a $(SDTDIR)/*.h $(PREFIX)/include/$(SDTPATH)
 
 uninstall:
-	rm -f $(PREFIX)/libSDT.so
-	rm -rf $(PREFIX)/pd/extra/$(SDTPATH)
+	rm -f $(PREFIX)/lib/libSDT.so
+	rm -rf $(PREFIX)/lib/pd/extra/$(SDTPATH)
+	rm -rf $(PREFIX)/include/$(SDTPATH)
 
 clean:
 	rm -rf $(SDTDIR)/*.so

@@ -16,6 +16,10 @@ typedef struct _myo {
   double time;
 } t_myo;
 
+void myo_dcFrequency(t_myo *x, t_float f) {
+  SDTMyoelastic_setDcFrequency(x->myo, f);
+}
+
 void myo_lowFrequency(t_myo *x, t_float f) {
   SDTMyoelastic_setLowFrequency(x->myo, f);
 }
@@ -60,7 +64,7 @@ void *myo_new(t_symbol *s, long argc, t_atom *argv) {
     windowSize = atom_getfloat(&argv[0]);
   }
   else {
-    windowSize = 44100;
+    windowSize = 4096;
   }
   x->myo = SDTMyoelastic_new(windowSize);
   x->out0 = outlet_new(&x->obj, gensym("float"));
@@ -82,6 +86,7 @@ void myo_free(t_myo *x) {
 void myo_tilde_setup(void) {	
   myo_class = class_new(gensym("myo~"), (t_newmethod)myo_new, (t_method)myo_free, sizeof(t_myo), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(myo_class, t_myo, f);
+  class_addmethod(myo_class, (t_method)myo_dcFrequency, gensym("dcFrequency"), A_FLOAT, 0);
   class_addmethod(myo_class, (t_method)myo_lowFrequency, gensym("lowFrequency"), A_FLOAT, 0);
   class_addmethod(myo_class, (t_method)myo_highFrequency, gensym("highFrequency"), A_FLOAT, 0);
   class_addmethod(myo_class, (t_method)myo_threshold, gensym("threshold"), A_FLOAT, 0);

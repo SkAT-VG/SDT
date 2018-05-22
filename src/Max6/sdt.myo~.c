@@ -8,7 +8,7 @@ typedef struct _myoelastic {
   t_pxobject ob;
   SDTMyoelastic *myo;
   void *outlets[4], *send;
-  double lowFrequency, highFrequency, threshold, out[4];
+  double dcFrequency, lowFrequency, highFrequency, threshold, out[4];
 } t_myoelastic;
 
 static t_class *myoelastic_class = NULL;
@@ -34,6 +34,11 @@ void myoelastic_assist(t_myoelastic *x, void *b, long m, long a, char *s) {
         break;
     }
   }
+}
+
+void myoelastic_dcFrequency(t_myoelastic *x, void *attr, long ac, t_atom *av) {
+  x->dcFrequency = atom_getfloat(av);
+  SDTMyoelastic_setDcFrequency(x->myo, x->dcFrequency);
 }
 
 void myoelastic_lowFrequency(t_myoelastic *x, void *attr, long ac, t_atom *av) {
@@ -73,6 +78,7 @@ t_int *myoelastic_perform(t_int *w) {
 
 void myoelastic_dsp(t_myoelastic *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
+  SDTMyoelastic_setDcFrequency(x->myo, x->dcFrequency);
   SDTMyoelastic_setLowFrequency(x->myo, x->lowFrequency);
   SDTMyoelastic_setHighFrequency(x->myo, x->highFrequency);
   SDTMyoelastic_setThreshold(x->myo, x->threshold);
@@ -84,13 +90,14 @@ void myoelastic_perform64(t_myoelastic *x, t_object *dsp64, double **ins, long n
   int n = sampleframes;
   
   while (n--) {
-    SDTMyoelastic_dsp(x->myo, x->out, *in++);
+    if (SDTMyoelastic_dsp(x->myo, x->out, *in++)) qelem_set(x->send);
   }
-  qelem_set(x->send);
+  
 }
 
 void myoelastic_dsp64(t_myoelastic *x, t_object *dsp64, short *count, double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
+  SDTMyoelastic_setDcFrequency(x->myo, x->dcFrequency);
   SDTMyoelastic_setLowFrequency(x->myo, x->lowFrequency);
   SDTMyoelastic_setHighFrequency(x->myo, x->highFrequency);
   object_method(dsp64, gensym("dsp_add64"), x, myoelastic_perform64, 0, NULL);
@@ -111,7 +118,7 @@ void *myoelastic_new(t_symbol *s, long argc, t_atom *argv) {
       }
     }
     else {
-      windowSize = 1024;
+      windowSize = 4096;
     }
     x->myo = SDTMyoelastic_new(windowSize);
     x->outlets[3] = floatout(x);
@@ -145,14 +152,17 @@ int C74_EXPORT main(void) {
   class_addmethod(c, (method)myoelastic_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)myoelastic_assist, "assist", A_CANT, 0);
   
+  CLASS_ATTR_DOUBLE(c, "dcFrequency", 0, t_myoelastic, dcFrequency);
   CLASS_ATTR_DOUBLE(c, "lowFrequency", 0, t_myoelastic, lowFrequency);
   CLASS_ATTR_DOUBLE(c, "highFrequency", 0, t_myoelastic, highFrequency);
   CLASS_ATTR_DOUBLE(c, "threshold", 0, t_myoelastic, threshold);
   
+  CLASS_ATTR_FILTER_MIN(c, "dcFrequency", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "lowFrequency", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "highFrequency", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "threshold", 0.0);
   
+  CLASS_ATTR_ACCESSORS(c, "dcFrequency", NULL, (method)myoelastic_dcFrequency);
   CLASS_ATTR_ACCESSORS(c, "lowFrequency", NULL, (method)myoelastic_lowFrequency);
   CLASS_ATTR_ACCESSORS(c, "highFrequency", NULL, (method)myoelastic_highFrequency);
   CLASS_ATTR_ACCESSORS(c, "threshold", NULL, (method)myoelastic_threshold);
