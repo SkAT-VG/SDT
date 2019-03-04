@@ -10,23 +10,23 @@ struct SDTTrackModes {
   double *buffer, *window, *spectrum, *tracks;
   SDTComplex *fft;
   SDTFFT *fftPlan;
-  int i, bufferSize, winSize, fftSize, skip;
+  int i, skip, nFrames, bufferSize, winSize, fftSize, imgSize;
 };
 
 void _createTracks(SDTTrackModes *x) {
   double *currSpectrum, *prevTrack, *currTrack, maxTrack;
-  unsigned int i, frameIndex, nFrames, imgSize;
+  unsigned int i, frameIndex;
   
-  nFrames = x->i / x->skip;
-  if (x->i % x->skip != 0 && x->i + x->skip <= x->bufferSize) nFrames += 1;
-  imgSize = x->fftSize * nFrames;
+  x->nFrames = x->i / x->skip;
+  if (x->i % x->skip != 0 && x->i + x->skip <= x->bufferSize) x->nFrames++;
+  x->imgSize = x->fftSize * x->nFrames;
 
   if (x->spectrum) free(x->spectrum);
   if (x->tracks) free(x->tracks);
-  x->spectrum = (double *)calloc(imgSize, sizeof(double));
-  x->tracks = (double *)calloc(imgSize, sizeof(double));
-  for (frameIndex = 0; frameIndex < nFrames; frameIndex++) {
-    memcpy(x->window, &x->buffer[frameIndex * x->skip], x->winSize);
+  x->spectrum = (double *)calloc(x->imgSize, sizeof(double));
+  x->tracks = (double *)calloc(x->imgSize, sizeof(double));
+  for (frameIndex = 0; frameIndex < x->nFrames; frameIndex++) {
+    memcpy(x->window, &x->buffer[frameIndex * x->skip], x->winSize * sizeof(double));
     SDT_hanning(x->window, x->winSize);
     SDTFFT_fftr(x->fftPlan, x->window, x->fft);
     currSpectrum = &x->spectrum[frameIndex * x->fftSize];
@@ -90,11 +90,43 @@ int SDTTrackModes_readSamples(SDTTrackModes *x, double *in, unsigned int n) {
   end = SDT_clip(start + n, start, x->bufferSize);
   if (start == end) return 0;
   span = end - start;
-  memcpy(&x->buffer[start], in, span);
+  memcpy(&x->buffer[start], in, span * sizeof(double));
   x->i = end;
   return span;
 }
 
 void SDTTrackModes_static(SDTTrackModes *x, unsigned int nModes) {
+  double *tracks, *trackMags, maxTrack, maxMag;
+  unsigned int *trackBins, i, bin, trackLength;
+
   _createTracks(x);
+  tracks = (double *)malloc(x->imgSize * sizeof(double));
+  trackMags = (unsigned int *)malloc(x->nFrames * sizeof(unsigned int));
+  trackBins = (unsigned int *)malloc(x->nFrames * sizeof(unsigned int));
+  memcpy(tracks, x->tracks, imgSize * sizeof(double));
+  maxTrack = tracks[0];
+  bin = 0;
+  for (i = 1; i < x->imgSize; i++) {
+    if (tracks[i] > maxTrack) {
+      maxTrack = tracks[i];
+      bin = i;
+    }
+  }
+  tracks[bin] = 0;
+  trackMags[0] = x->spectrum[bin];
+  trackBins[0] = bin % fftSize;
+  trackLength = 1;
+  while (true) {
+    bin -= fftSize;
+    if (bin < 1) break;
+    if (tracks[bin - 1] > tracks[bin] && tracks[bin - 1] > tracks[bin + 1]) bin--;
+    else if (tracks[bin + 1] > tracks[bin] && tracks[bin + 1] > tracks[bin - 1]) bin++;
+    if (tracks[bin] == 0) break;
+    tracks[bin] = 0;
+    trackMags[trackLength] = x->spectrum[bin];
+    trackBins[trackLength] = bin % fftSize;
+    trackLength++;
+  }
+  free(tracks);
+  free(trackBins);
 }
