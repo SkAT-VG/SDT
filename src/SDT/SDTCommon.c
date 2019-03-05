@@ -13,6 +13,36 @@ void SDT_setSampleRate(double sampleRate) {
   SDT_timeStep = 1.0 / sampleRate;
 }
 
+unsigned int SDT_argMax(double *x, unsigned int n) {
+  double max;
+  unsigned int i, argMax;
+
+  max = x[0];
+  argMax = 0;
+  for (i = 1; i < n; i++) {
+    if (x[i] > max) {
+      max = x[i];
+      argMax = i;
+    }
+  }
+  return argMax;
+}
+
+unsigned int SDT_argMin(double *x, unsigned int n) {
+  double min;
+  unsigned int i, argMin;
+
+  min = x[0];
+  argMin = 0;
+  for (i = 1; i < n; i++) {
+    if (x[i] < min) {
+      min = x[i];
+      argMin = i;
+    }
+  }
+  return argMin;
+}
+
 unsigned int SDT_bitReverse(unsigned int u, unsigned int bits) {
   u = ((u >> 0x01) & 0x55555555) | ((u & 0x55555555) << 0x01);
   u = ((u >> 0x02) & 0x33333333) | ((u & 0x33333333) << 0x02); 
@@ -120,8 +150,54 @@ void SDT_ihaar(double *sig, long n) {
   }
 }
 
+int SDT_isHole(double *x, unsigned int index, unsigned int radius) {
+  int i;
+
+  for (i = 1; i <= radius; i++) {
+    if (x[index - i] <= x[index]) return 0;
+    if (x[index + i] < x[index]) return 0;
+  }
+  return 1;
+}
+
+int SDT_isPeak(double *x, unsigned int index, unsigned int radius) {
+  int i;
+
+  for (i = 1; i <= radius; i++) {
+    if (x[index - i] >= x[index]) return 0;
+    if (x[index + i] > x[index]) return 0;
+  }
+  return 1;
+}
+
 double SDT_kinetic(double mass, double velocity) {
   return 0.5 * mass * velocity * velocity;
+}
+
+double SDT_max(double *x, unsigned int n) {
+  double max;
+  unsigned int i;
+
+  max = x[0];
+  for (i = 1; i < n; i++) {
+    if (x[i] > max) {
+      max = x[i];
+    }
+  }
+  return max;
+}
+
+double SDT_min(double *x, unsigned int n) {
+  double min;
+  unsigned int i;
+
+  min = x[0];
+  for (i = 1; i < n; i++) {
+    if (x[i] < min) {
+      min = x[i];
+    }
+  }
+  return min;
 }
 
 unsigned int SDT_nextPow2(unsigned int u) {
@@ -151,6 +227,24 @@ void SDT_ones(double *sig, int n) {
   for (i = 0; i < n; i++) {
     sig[i] = 1.0;
   }
+}
+
+double SDT_peakPosition(double *x, int i) {
+  double a, b, c;
+
+  a = x[i - 1];
+  b = x[i];
+  c = x[i + 1];
+  return i + (0.5 * (c - a)) / ( 2. * b - a - c);
+}
+
+double SDT_peakValue(double *x, int i) {
+  double a, b, c;
+
+  a = x[i - 1];
+  b = x[i];
+  c = x[i + 1];
+  return b + 0.5 * (0.5 * ((c - a) * (c - a))) / (2 * b - a - c);
 }
 
 double SDT_rank(double *x, int n, int k) {

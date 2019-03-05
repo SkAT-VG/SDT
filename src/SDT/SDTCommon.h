@@ -91,17 +91,29 @@ extern double SDT_timeStep;
 @param[in] sampleRate Sample rate (Hz). */
 extern void SDT_setSampleRate(double sampleRate);
 
-/** @brief Applies a Blackman window to a chunk of samples.
-Applies a Blackman window to a chunk of samples.
-@param[in,out] sig samples to window
-@param[in] n window size */
-extern void SDT_blackman(double *sig, int n);
+/** @brief Returns the index of the maximum value in an array of data
+@param[in] x Pointer to the data array
+@param[in] n Length of the data array
+@return Index of the maximum value in the array */
+extern unsigned int SDT_argMax(double *x, unsigned int n);
+
+/** @brief Returns the index of the minimum value in an array of data
+@param[in] x Pointer to the data array
+@param[in] n Length of the data array
+@return Index of the minimum value in the array */
+extern unsigned int SDT_argMin(double *x, unsigned int n);
 
 /** @brief Reverses the bit order of an unsigned integer of given bit length.
 @param[in] u Input value
 @param[in] bits Number of bits to reverse
 @return Unsigned integer with reversed bits */
 extern unsigned int SDT_bitReverse(unsigned int u, unsigned int bits);
+
+/** @brief Applies a Blackman window to a chunk of samples.
+Applies a Blackman window to a chunk of samples.
+@param[in,out] sig samples to window
+@param[in] n window size */
+extern void SDT_blackman(double *sig, int n);
 
 /** @brief Clips an integer value.
 Limits the range of an integer value between a given lower bound and upper bound.
@@ -161,12 +173,38 @@ extern void SDT_haar(double *sig, long n);
 @param[in] n window size */ 
 extern void SDT_ihaar(double *sig, long n);
 
+/** @brief Checks if the selected value is the minimum among its neighbors.
+@param[in] x Array of data
+@param[in] i Index of the selected value
+@param[in] radius Number of neighbors to check, for each direction
+@return 1 if the selected value is less than its left neighbors, and less than or equal to its right neighbors. 0 otherwise */
+extern int SDT_isHole(double *x, unsigned int i, unsigned int radius);
+
+/** @brief Checks if the selected value is the maximum among its neighbors.
+@param[in] x Array of data
+@param[in] i Index of the selected value
+@param[in] radius Number of neighbors to check, for each direction
+@return 1 if the selected value is greater than its left neighbors, and greater than or equal to its right neighbors. 0 otherwise */ 
+extern int SDT_isPeak(double *x, unsigned int i, unsigned int radius);
+
 /** @brief Computes kinetic energy.
 Computes the kinetic energy of an object, given its mass and velocity.
 @param[in] mass Mass of the object (Kg)
 @param[in] velocity Velocity of the object (m/s)
 @return Kinetic energy (J) */
 extern double SDT_kinetic(double mass, double velocity);
+
+/** @brief Returns the maximum value in an array of data.
+@param[in] x Pointer to the data array
+@param[in] n Length of the data array
+@return Maximum value in the array */
+extern double SDT_max(double *x, unsigned int n);
+
+/** @brief Returns the minimum value in an array of data.
+@param[in] x Pointer to the data array
+@param[in] n Length of the data array
+@return Minimum value in the array */
+extern double SDT_min(double *x, unsigned int n);
 
 /** @brief Returns the smallest power of 2 greater or equal than u.
 @param[in] u Input value
@@ -191,6 +229,18 @@ Fills a buffer with ones.
 @param[in,out] sig pointer to the buffer
 @param[in] n buffer size */
 extern void SDT_ones(double *sig, int n);
+
+/** @brief Improves the precision of a peak position by quadratic interpolation.
+@param[in] x Pointer to the buffer
+@param[in] i Index of the peak value
+@return Fractional peak position */
+extern double SDT_peakPosition(double *x, int i);
+
+/** @brief Improves the precision of a peak value by quadratic interpolation.
+@param[in] x Pointer to the buffer
+@param[in] i Index of the peak value
+@return Fractional peak value */
+extern double SDT_peakValue(double *x, int i);
 
 /** @brief Finds the kth smallest value in the input array.
 Finds the kth smallest value in the input array.

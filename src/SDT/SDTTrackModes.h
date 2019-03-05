@@ -1,7 +1,15 @@
-/** @defgroup trackmodes Modal analyzer
+/** /** @file SDTTrackModes.h
+@defgroup trackmodes Modal analyzer
 This object detects the prominent modal components
 in an audio segment and tracks their temporal evolution across time.
 @{ */
+
+#ifndef SDT_TRACKMODES_H
+#define SDT_TRACKMODES_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** @brief Opaque data structure for a modal analyzer. */
 typedef struct SDTTrackModes SDTTrackModes;
@@ -29,3 +37,11 @@ extern void SDTTrackModes_setOverlap(SDTTrackModes *x, double f);
 @param[in] n Number of samples to read
 @return Number of samples actually stored in the buffer */
 extern int SDTTrackModes_readSamples(SDTTrackModes *x, double *in, unsigned int n);
+
+#ifdef __cplusplus
+};
+#endif
+
+#endif
+
+/** @} */

@@ -6,25 +6,50 @@
 #include "SDTFFT.h"
 #include "SDTTrackModes.h"
 
+typedef struct SDTMode {
+  unsigned int start, duration;
+  double *magnitudes, *frequencies;
+} SDTMode;
+
+SDTMode *SDTMode_new(unsigned int length) {
+  SDTMode *x;
+
+  x = (SDTMode *)malloc(sizeof(SDTMode));
+  x->magnitudes = (double *)calloc(length, sizeof(double));
+  x->frequencies = (double *)calloc(length, sizeof(double));
+  x->start = 0;
+  x->duration = 0;
+}
+
+void SDTMode_free(SDTMode *x) {
+  free(x->magnitudes);
+  free(x->frequencies);
+  free(x);
+}
+
+//-----------------------------------------------------------------------//
+
 struct SDTTrackModes {
   double *buffer, *window, *spectrum, *tracks;
   SDTComplex *fft;
+  SDTMode *modes;
   SDTFFT *fftPlan;
-  int i, skip, nFrames, bufferSize, winSize, fftSize, imgSize;
+  int nSamples, nFrames, nModes, bufferSize, winSize, fftSize, imgSize, skip;
 };
 
-void _createTracks(SDTTrackModes *x) {
-  double *currSpectrum, *prevTrack, *currTrack, maxTrack;
+void _createImages(SDTTrackModes *x) {
+  double *currSpectrum, *prevTrack, *currTrack;
   unsigned int i, frameIndex;
   
-  x->nFrames = x->i / x->skip;
-  if (x->i % x->skip != 0 && x->i + x->skip <= x->bufferSize) x->nFrames++;
+  x->nFrames = x->nSamples / x->skip;
+  if (x->nSamples % x->skip != 0 && x->nSamples + x->skip <= x->bufferSize) x->nFrames++;
   x->imgSize = x->fftSize * x->nFrames;
 
   if (x->spectrum) free(x->spectrum);
   if (x->tracks) free(x->tracks);
   x->spectrum = (double *)calloc(x->imgSize, sizeof(double));
   x->tracks = (double *)calloc(x->imgSize, sizeof(double));
+
   for (frameIndex = 0; frameIndex < x->nFrames; frameIndex++) {
     memcpy(x->window, &x->buffer[frameIndex * x->skip], x->winSize * sizeof(double));
     SDT_hanning(x->window, x->winSize);
@@ -35,22 +60,37 @@ void _createTracks(SDTTrackModes *x) {
     }
     currTrack = &x->tracks[frameIndex * x->fftSize];
     for (i = 2; i < x->fftSize - 2; i++) {
-      if (currSpectrum[i] > currSpectrum[i - 2] && currSpectrum[i] > currSpectrum[i - 1] &&
-          currSpectrum[i] >= currSpectrum[i + 1] && currSpectrum[i] >= currSpectrum[i + 2]) {
-        currTrack[i] = currSpectrum[i];
-      }
+      if (SDT_isPeak(currSpectrum, i, 2)) currTrack[i] = currSpectrum[i];
     }
     if (frameIndex > 0) {
       prevTrack = &x->tracks[(frameIndex - 1) * x->fftSize];
       for (i = 1; i < x->fftSize - 1; i++) {
-        if (currTrack[i] > 0) {
-          maxTrack = prevTrack[i - 1];
-          if (prevTrack[i] > maxTrack) maxTrack = prevTrack[i];
-          if (prevTrack[i + 1] > maxTrack) maxTrack = prevTrack[i + 1]; 
-          currTrack[i] += maxTrack;
-        }
+        if (currTrack[i] > 0) currTrack[i] += SDT_max(&prevTrack[i - 1], 3);
       }
     }
+  }
+}
+
+void _createMode(SDTTrackModes *x) {
+  SDTMode *mode;
+  unsigned int pixel;
+
+  mode = (double *)calloc(x->nFrames, sizeof(double));
+  pixel = SDT_argMax(x->tracks, x->imgSize);
+  
+  if (x->modes[x->nModes]) free(x->modes[x->nModes]);
+
+  mode->duration = 0;
+  while (1) {
+    mode->magnitudes[mode->duration] = SDT_peakValue(x->spectrum, pixel);
+    mode->frequencies[mode->duration] = SDT_sampleRate / SDT_peakPosition(x->spectrum, pixel);
+    mode->start = pixel / x->fftSize;
+    mode->duration++;
+    x->tracks[pixel] = 0;
+    pixel -= x->fftSize - 1;
+    if (pixel < 0) break;
+    pixel += SDT_argMax(&x->tracks[pixel], 3);
+    if (x->tracks[pixel] == 0) break;
   }
 }
 
@@ -66,9 +106,13 @@ SDTTrackModes *SDTTrackModes_new(unsigned int bufferSize, unsigned int winSize) 
   x->tracks = NULL;
   x->fft = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
   x->fftPlan = SDTFFT_new(winSize / 2);
+  x->nSamples = 0;
+  x->nFrames = 0;
+  x->nModes = 0;
   x->bufferSize = bufferSize;
   x->winSize = winSize;
   x->fftSize = fftSize;
+  x->imgSize = 0;
   x->skip = winSize / 2;
   return x;
 }
@@ -86,47 +130,18 @@ void SDTTrackModes_setOverlap(SDTTrackModes *x, double f) {
 int SDTTrackModes_readSamples(SDTTrackModes *x, double *in, unsigned int n) {
   unsigned int start, end, span;
   
-  start = x->i;
+  start = x->nSamples;
   end = SDT_clip(start + n, start, x->bufferSize);
   if (start == end) return 0;
   span = end - start;
   memcpy(&x->buffer[start], in, span * sizeof(double));
-  x->i = end;
+  x->nSamples = end;
   return span;
 }
 
 void SDTTrackModes_static(SDTTrackModes *x, unsigned int nModes) {
-  double *tracks, *trackMags, maxTrack, maxMag;
-  unsigned int *trackBins, i, bin, trackLength;
+  
 
-  _createTracks(x);
-  tracks = (double *)malloc(x->imgSize * sizeof(double));
-  trackMags = (unsigned int *)malloc(x->nFrames * sizeof(unsigned int));
-  trackBins = (unsigned int *)malloc(x->nFrames * sizeof(unsigned int));
-  memcpy(tracks, x->tracks, imgSize * sizeof(double));
-  maxTrack = tracks[0];
-  bin = 0;
-  for (i = 1; i < x->imgSize; i++) {
-    if (tracks[i] > maxTrack) {
-      maxTrack = tracks[i];
-      bin = i;
-    }
-  }
-  tracks[bin] = 0;
-  trackMags[0] = x->spectrum[bin];
-  trackBins[0] = bin % fftSize;
-  trackLength = 1;
-  while (true) {
-    bin -= fftSize;
-    if (bin < 1) break;
-    if (tracks[bin - 1] > tracks[bin] && tracks[bin - 1] > tracks[bin + 1]) bin--;
-    else if (tracks[bin + 1] > tracks[bin] && tracks[bin + 1] > tracks[bin - 1]) bin++;
-    if (tracks[bin] == 0) break;
-    tracks[bin] = 0;
-    trackMags[trackLength] = x->spectrum[bin];
-    trackBins[trackLength] = bin % fftSize;
-    trackLength++;
-  }
-  free(tracks);
-  free(trackBins);
+  _createImages(x);
+  
 }
