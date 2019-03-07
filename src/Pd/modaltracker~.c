@@ -47,7 +47,6 @@ void modaltracker_bang(t_modaltracker *x) {
     SETFLOAT(&magAtoms[i + 1], mags[i]);
     SETFLOAT(&freqAtoms[i], freqs[i]);
     SETFLOAT(&decayAtoms[i], decays[i]);
-    post("Mode %d: Mag %f - Freq %f - Decay %f", i + 1, mags[i], freqs[i], decays[i]);
   }
   outlet_anything(x->out0, gensym("pickup"), x->nModes + 1, magAtoms);
   outlet_anything(x->out0, gensym("freqs"), x->nModes, freqAtoms);

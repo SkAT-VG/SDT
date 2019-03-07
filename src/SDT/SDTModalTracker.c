@@ -138,7 +138,6 @@ void SDTModalTracker_update(SDTModalTracker *x) {
     mode = x->modes[modeIndex];
     peakIndex = SDT_argMax(peaks, imgSize, NULL);
     frameCount = 0;
-    printf("Mags for mode %d: ", modeIndex + 1);
     while (1) {
       frameIndex = peakIndex / x->fftSize;
       binIndex = peakIndex % x->fftSize;
@@ -146,7 +145,6 @@ void SDTModalTracker_update(SDTModalTracker *x) {
       currPeaks = &peaks[frameIndex * x->fftSize];
       mode->mags[frameCount] = SDT_truePeakValue(currMags, binIndex);
       mode->freqs[frameCount] = SDT_truePeakPos(currMags, binIndex) / x->winSize * SDT_sampleRate;
-      printf("%f ", mode->mags[frameCount]);
       mode->start = frameIndex;
       mode->size = ++frameCount;
       peaks[peakIndex] = 0;
@@ -155,7 +153,6 @@ void SDTModalTracker_update(SDTModalTracker *x) {
       peakIndex += SDT_argMax(&peaks[peakIndex], 3, NULL);
       if (peaks[peakIndex] == 0) break;
     }
-    printf("\n");
   }
   free(mags);
   free(peaks);
@@ -170,7 +167,6 @@ void SDTModalTracker_static(SDTModalTracker *x, double *mags, double *freqs, dou
     mode = x->modes[modeIndex];
     if (!mode) continue;
     peakIndex = SDT_argMax(mode->mags, mode->size, &mag);
-    printf("Mode %d: attack at %d, value %f\n", modeIndex + 1, peakIndex, mag);
     freq = SDT_weightedAverage(mode->freqs, mode->mags, peakIndex + 1);
     nAudible = 0;
     for (frameIndex = 0; frameIndex < mode->size; frameIndex++) {

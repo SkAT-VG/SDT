@@ -1,0 +1,86 @@
+#N canvas 2 48 1362 699 10;
+#X obj 470 614 dac~;
+#X msg 860 17 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
+NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
+#X obj 878 149 r pd;
+#X obj 878 176 route dsp;
+#X obj 878 201 select 1;
+#X obj 939 201 loadbang;
+#X msg 298 449 stiffness \$1;
+#X msg 433 448 dissipation \$1;
+#X obj 573 289 vsl 15 128 1 4 0 0 empty shape empty 0 -9 0 10 -262144
+-1 -1 2117 1;
+#X obj 433 289 vsl 15 128 0 40 0 0 empty dissipation empty 0 -9 0 10
+-262144 -1 -1 317 1;
+#X obj 298 291 vsl 15 128 1000 1e+08 1 0 empty stiffness empty 0 -9
+0 10 -262144 -1 -1 10160 1;
+#X floatatom 298 429 10 0 0 0 - - -;
+#X floatatom 433 427 5 0 0 0 - - -;
+#X floatatom 573 427 5 0 0 0 - - -;
+#X obj 298 497 impact~ hammerimp objectimp 2;
+#X text 256 268 Impact stiffness;
+#X text 386 267 Impact dissipation;
+#X msg 573 448 shape \$1;
+#X obj 742 466 r hammerimp;
+#X obj 97 472 r objectimp;
+#X obj 678 493 inertial hammerimp;
+#X obj 259 473 r imp;
+#X msg 678 327 strike 0 -3;
+#X obj 678 288 bng 32 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X text 541 267 Contact shape;
+#X text 676 268 Strike!;
+#X obj 470 583 *~ 1000;
+#X obj 509 499 vsl 30 60 100 10000 0 0 empty empty empty 0 -9 0 10
+-262144 -1 -1 0 1;
+#X obj 443 128 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 245 230 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X msg 80 126 start;
+#X msg 201 125 stop;
+#X msg 323 126 clear;
+#X obj 21 126 adc~;
+#X obj 80 193 modaltracker~ 16 441000 4096;
+#X obj 80 498 modal objectimp 16 1;
+#X msg 878 227 \; hammerimp mass 0.01 \; hammerimp fragmentSize 1 \;
+objectimp activeModes 16 \; objectimp fragmentSize 1 \; imp contact0
+0 \; imp contact1 0 \; stiffness 1e+07 \; dissipation 1 \; shape 1.5
+\;;
+#X text 48 4 modaltracker~ - Extracts prominent modes from audio;
+#X text 78 106 Start recording;
+#X text 198 106 Stop recording;
+#X text 320 106 Clear buffers;
+#X text 439 107 Send parameters through main outlet;
+#X text 261 194 Arguments: n. of modes \, audio buffer size \, analysis
+window size;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 36 0;
+#X connect 5 0 36 0;
+#X connect 6 0 14 0;
+#X connect 7 0 14 0;
+#X connect 8 0 13 0;
+#X connect 9 0 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 6 0;
+#X connect 12 0 7 0;
+#X connect 13 0 17 0;
+#X connect 14 1 26 0;
+#X connect 17 0 14 0;
+#X connect 18 0 20 0;
+#X connect 19 0 35 0;
+#X connect 21 0 14 0;
+#X connect 22 0 20 0;
+#X connect 23 0 22 0;
+#X connect 26 0 0 0;
+#X connect 26 0 0 1;
+#X connect 27 0 26 1;
+#X connect 28 0 34 0;
+#X connect 30 0 34 0;
+#X connect 31 0 34 0;
+#X connect 32 0 34 0;
+#X connect 33 0 34 0;
+#X connect 34 0 35 0;
+#X connect 34 1 29 0;
