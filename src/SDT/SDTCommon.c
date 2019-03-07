@@ -13,7 +13,7 @@ void SDT_setSampleRate(double sampleRate) {
   SDT_timeStep = 1.0 / sampleRate;
 }
 
-unsigned int SDT_argMax(double *x, unsigned int n) {
+unsigned int SDT_argMax(double *x, unsigned int n, double *maxOut) {
   double max;
   unsigned int i, argMax;
 
@@ -25,10 +25,11 @@ unsigned int SDT_argMax(double *x, unsigned int n) {
       argMax = i;
     }
   }
+  if (maxOut) *maxOut = max;
   return argMax;
 }
 
-unsigned int SDT_argMin(double *x, unsigned int n) {
+unsigned int SDT_argMin(double *x, unsigned int n, double *minOut) {
   double min;
   unsigned int i, argMin;
 
@@ -40,7 +41,19 @@ unsigned int SDT_argMin(double *x, unsigned int n) {
       argMin = i;
     }
   }
+  if (minOut) *minOut = min;
   return argMin;
+}
+
+double SDT_average(double *x, unsigned int n) {
+  double sum;
+  unsigned int i;
+
+  sum = 0;
+  for (i = 0; i < n; i++) {
+    sum += x[i];
+  }
+  return sum / n;
 }
 
 unsigned int SDT_bitReverse(unsigned int u, unsigned int bits) {
@@ -164,8 +177,7 @@ int SDT_isPeak(double *x, unsigned int index, unsigned int radius) {
   int i;
 
   for (i = 1; i <= radius; i++) {
-    if (x[index - i] >= x[index]) return 0;
-    if (x[index + i] > x[index]) return 0;
+    if (x[index - i] >= x[index] || x[index + i] > x[index]) return 0;
   }
   return 1;
 }
@@ -227,24 +239,6 @@ void SDT_ones(double *sig, int n) {
   for (i = 0; i < n; i++) {
     sig[i] = 1.0;
   }
-}
-
-double SDT_peakPosition(double *x, int i) {
-  double a, b, c;
-
-  a = x[i - 1];
-  b = x[i];
-  c = x[i + 1];
-  return i + (0.5 * (c - a)) / ( 2. * b - a - c);
-}
-
-double SDT_peakValue(double *x, int i) {
-  double a, b, c;
-
-  a = x[i - 1];
-  b = x[i];
-  c = x[i + 1];
-  return b + 0.5 * (0.5 * ((c - a) * (c - a))) / (2 * b - a - c);
 }
 
 double SDT_rank(double *x, int n, int k) {
@@ -374,6 +368,19 @@ double SDT_truePeakValue(double *sig, int peak) {
   b = sig[peak];
   c = sig[peak + 1];
   return b + 0.5 * (0.5 * ((c - a) * (c - a))) / (2 * b - a - c);
+}
+
+double SDT_weightedAverage(double *values, double *weights, unsigned int n) {
+  double sumValues, sumWeights;
+  unsigned int i;
+
+  sumValues = 0;
+  sumWeights = 0;
+  for (i = 0; i < n; i++) {
+    sumValues += values[i] * weights[i];
+    sumWeights += weights[i];
+  }
+  return sumValues / sumWeights;
 }
 
 double SDT_wrap(double x) {

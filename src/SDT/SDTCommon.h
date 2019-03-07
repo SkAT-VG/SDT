@@ -94,14 +94,22 @@ extern void SDT_setSampleRate(double sampleRate);
 /** @brief Returns the index of the maximum value in an array of data
 @param[in] x Pointer to the data array
 @param[in] n Length of the data array
+@param[out] maxOut If not null, writes the maximum value to the pointed variable
 @return Index of the maximum value in the array */
-extern unsigned int SDT_argMax(double *x, unsigned int n);
+extern unsigned int SDT_argMax(double *x, unsigned int n, double *maxOut);
 
 /** @brief Returns the index of the minimum value in an array of data
 @param[in] x Pointer to the data array
 @param[in] n Length of the data array
+@param[out] minOut If not null, writes the maximum value to the pointed variable
 @return Index of the minimum value in the array */
-extern unsigned int SDT_argMin(double *x, unsigned int n);
+extern unsigned int SDT_argMin(double *x, unsigned int n, double *minOut);
+
+/** @brief Returns the arithmetic mean of an array of values
+@param[in] x Pointer to the data array
+@param[in] n Length of the data array
+@return Arithmetic mean of the array */
+extern double SDT_average(double *x, unsigned int n);
 
 /** @brief Reverses the bit order of an unsigned integer of given bit length.
 @param[in] u Input value
@@ -230,18 +238,6 @@ Fills a buffer with ones.
 @param[in] n buffer size */
 extern void SDT_ones(double *sig, int n);
 
-/** @brief Improves the precision of a peak position by quadratic interpolation.
-@param[in] x Pointer to the buffer
-@param[in] i Index of the peak value
-@return Fractional peak position */
-extern double SDT_peakPosition(double *x, int i);
-
-/** @brief Improves the precision of a peak value by quadratic interpolation.
-@param[in] x Pointer to the buffer
-@param[in] i Index of the peak value
-@return Fractional peak value */
-extern double SDT_peakValue(double *x, int i);
-
 /** @brief Finds the kth smallest value in the input array.
 Finds the kth smallest value in the input array.
 @param[in] x input array
@@ -311,6 +307,12 @@ Performs quadratic interpolation to estimate the true amplitude value of a peak.
 @return true peak value */
 extern double SDT_truePeakValue(double *sig, int peak);
 
+/** @brief Returns the arithmetic mean of an array of values weighted by the weights array
+@param[in] values Pointer to the data array
+@param[in] weights Pointer to the weights array
+@param[in] n Length of the arrays
+@return Arithmetic mean of the values array weighted by the weights array */
+extern double SDT_weightedAverage(double *values, double *weights, unsigned int n);
 /** @brief Wraps a phase in the range -pi/pi.
 Wraps a phase in the range -pi/pi.
 @param[x] unwrapped phase

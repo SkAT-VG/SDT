@@ -83,8 +83,8 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
   }
   x = (t_impact *)pd_new(impact_class);
   x->impact = SDTImpact_new();
-  x->key0 = atom_getsymbol(argv)->s_name;
-  x->key1 = atom_getsymbol(argv + 1)->s_name;
+  x->key0 = (char *)(atom_getsymbol(argv)->s_name);
+  x->key1 = (char *)(atom_getsymbol(argv + 1)->s_name);
   if (SDT_registerInteractor(x->impact, x->key0, x->key1)) {
     error("sdt.impact~: Error registering the interaction. Probably a duplicate id?");
     SDTImpact_free(x->impact);

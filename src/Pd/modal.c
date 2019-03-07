@@ -76,7 +76,7 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
   }
   x = (t_modal *)pd_new(modal_class);
   x->modal = SDTResonator_new(atom_getint(argv + 1), atom_getint(argv + 2));
-  x->key = atom_getsymbol(argv)->s_name;
+  x->key = (char *)(atom_getsymbol(argv)->s_name);
   x->nModes = atom_getint(argv + 1);
   x->nPickups = atom_getint(argv + 2);
   if (SDT_registerResonator(x->modal, x->key)) {

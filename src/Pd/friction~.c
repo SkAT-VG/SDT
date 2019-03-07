@@ -107,8 +107,8 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
   }
   x = (t_friction *)pd_new(friction_class);
   x->friction = SDTFriction_new();
-  x->key0 = atom_getsymbol(argv)->s_name;
-  x->key1 = atom_getsymbol(argv + 1)->s_name;
+  x->key0 = (char *)(atom_getsymbol(argv)->s_name);
+  x->key1 = (char *)(atom_getsymbol(argv + 1)->s_name);
   if (SDT_registerInteractor(x->friction, x->key0, x->key1)) {
     error("sdt.friction~: Error registering the interaction. Probably a duplicate id?");
     SDTFriction_free(x->friction);
