@@ -13,11 +13,15 @@ typedef struct _modaltracker {
   SDTModalTracker *modaltracker;
   t_float f;
   t_outlet *out0, *out1;
-  int nModes, nSamples, isRecording; 
+  int nModes, nSamples, pickup, isRecording; 
 } t_modaltracker;
 
 void modaltracker_overlap(t_modaltracker *x, t_float f) {
   SDTModalTracker_setOverlap(x->modaltracker, f);
+}
+
+void modaltracker_pickup(t_modaltracker *x, t_float f) {
+  x->pickup = SDT_clip(f, 0, x->nModes);
 }
 
 void modaltracker_clear(t_modaltracker *x) {
@@ -42,11 +46,29 @@ void modaltracker_bang(t_modaltracker *x) {
 
   if (x->isRecording) modaltracker_stop(x);
   SDTModalTracker_static(x->modaltracker, mags, freqs, decays);
-  SETFLOAT(&magAtoms[0], 0);
+  SETFLOAT(&magAtoms[0], x->pickup);
   for (i = 0; i < x->nModes; i++) {
     SETFLOAT(&magAtoms[i + 1], mags[i]);
     SETFLOAT(&freqAtoms[i], freqs[i]);
     SETFLOAT(&decayAtoms[i], decays[i]);
+  }
+  outlet_anything(x->out0, gensym("pickup"), x->nModes + 1, magAtoms);
+  outlet_anything(x->out0, gensym("freqs"), x->nModes, freqAtoms);
+  outlet_anything(x->out0, gensym("decays"), x->nModes, decayAtoms);
+}
+
+void modaltracker_float(t_modaltracker *x, t_float f) {
+  double mags[x->nModes], freqs[x->nModes];
+  t_atom magAtoms[x->nModes + 1], freqAtoms[x->nModes], decayAtoms[x->nModes];
+  int i;
+
+  if (x->isRecording) modaltracker_stop(x);
+  SDTModalTracker_dynamic(x->modaltracker, f, mags, freqs);
+  SETFLOAT(&magAtoms[0], x->pickup);
+  for (i = 0; i < x->nModes; i++) {
+    SETFLOAT(&magAtoms[i + 1], mags[i]);
+    SETFLOAT(&freqAtoms[i], freqs[i]);
+    SETFLOAT(&decayAtoms[i], 0.0);
   }
   outlet_anything(x->out0, gensym("pickup"), x->nModes + 1, magAtoms);
   outlet_anything(x->out0, gensym("freqs"), x->nModes, freqAtoms);
@@ -109,9 +131,11 @@ void modaltracker_tilde_setup(void) {
   modaltracker_class = class_new(gensym("modaltracker~"), (t_newmethod)modaltracker_new, (t_method)modaltracker_free, sizeof(t_modaltracker), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(modaltracker_class, t_modaltracker, f);
   class_addmethod(modaltracker_class, (t_method)modaltracker_overlap, gensym("overlap"), A_FLOAT, 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_pickup, gensym("pickup"), A_FLOAT, 0);
   class_addmethod(modaltracker_class, (t_method)modaltracker_clear, gensym("clear"), 0);
   class_addmethod(modaltracker_class, (t_method)modaltracker_start, gensym("start"), 0);
   class_addmethod(modaltracker_class, (t_method)modaltracker_stop, gensym("stop"), 0);
   class_addmethod(modaltracker_class, (t_method)modaltracker_bang, gensym("bang"), 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_float, gensym("float"), A_FLOAT, 0);
   class_addmethod(modaltracker_class, (t_method)modaltracker_dsp, gensym("dsp"), 0);
 }
