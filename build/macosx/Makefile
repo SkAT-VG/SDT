@@ -11,11 +11,11 @@ SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
 SDTOBJS=$(patsubst %.c,%.o,$(SDTSRCS))
 
-MAXDIR=$(SRCDIR)/Max6
+MAXDIR=$(SRCDIR)/Max7
 MAXSRCS = $(wildcard $(MAXDIR)/*.c)
 MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 
-MAXSDKDIR=../../3rdparty/Max6SDK
+MAXSDKDIR=../../3rdparty/Max7SDK
 MAXSDKVERSION=6.1.4
 
 PDDIR=$(SRCDIR)/Pd
@@ -33,7 +33,7 @@ $(MAXDIR)/%.mxo: EXTNAME=$(patsubst $(MAXDIR)/%.mxo,%,$@)
 $(MAXDIR)/%.mxo: RFC1034=$(patsubst %~,%-,$(EXTNAME))
 $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	rm -rf $@
-	cp -a Max6External.mxo $@
+	cp -a Max7External.mxo $@
 	mkdir -p $@/Contents/MacOS
 	sed -i "" s/\$${PRODUCT_NAME}/$(EXTNAME)/g $@/Contents/Info.plist
 	sed -i "" s/\$${PRODUCT_NAME:rfc1034identifier}/$(RFC1034)/g $@/Contents/Info.plist
@@ -75,7 +75,7 @@ install_max:
 	elif [ ! -d "$(DSTDIR)" ]; \
 	then echo "Error: installation path does not exist or is not a directory"; \
 	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
-	     cp -a ../../Max6/* "$(DSTDIR)"/SDT && \
+	     cp -a ../../Max7/* "$(DSTDIR)"/SDT && \
 	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT/support && \
 	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SDT/externals && \
 	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
