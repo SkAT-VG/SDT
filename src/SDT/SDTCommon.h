@@ -1,7 +1,8 @@
 /** @mainpage
  * The 'Sound Design Toolkit' (SDT) is a framework a for education and research
- * in Sonic Interaction Design. It includes a collection of physically informed models,
- * post-processing algorithms and sound analysis routines for interactive sound synthesis.
+ * in Sonic Interaction Design. It includes a collection of physically informed
+ * models, post-processing algorithms and sound analysis routines for 
+ * interactive sound synthesis.
  * It can be considered as a virtual Foley box of sound synthesis algorithms,
  * each representing a specific sound-producing event.
  *
@@ -16,21 +17,22 @@
  * 	stefano.dellemonache@gmail.com
  *  stefanobaldan@iuav.it
  *
- * Complete list of authors (either programmers or designers):
- * 	Federico Avanzini (avanzini@dei.unipd.it)
- *	Nicola Bernardini (nicb@sme-ccppd.org)
+ * Complete list of authors (either programmers or designers) 
+ *  in alphabetical order:
+ * 	Federico Avanzini (federico.avanzini@di.unimi.it)
+ *  Stefano Baldan (stefanobaldan@iuav.it)
+ *	Nicola Bernardini (nicola.bernardini.rome@gmail.com)
  *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@univr.it)
+ *	Carlo Drioli (carlo.drioli@uniud.it)
  *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
  *	Delphine Devallez
  *	Federico Fontana (federico.fontana@uniud.it)
  *	Laura Ottaviani
  *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@univr.it)
+ *	Pietro Polotti (pietro.polotti@conts.it)
  *	Matthias Rath
- *	Davide Rocchesso (roc@iuav.it)
- *	Stefania Serafin (sts@media.aau.dk)
- *  Stefano Baldan (stefanobaldan@iuav.it)
+ *	Davide Rocchesso (davide.rocchesso@unipa.it)
+ *	Stefania Serafin (sts@create.aau.dk)
  *
  * The SDT is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -44,7 +46,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
+ * USA.
  *****************************************************************************/
 
 /** @file SDTCommon.h
