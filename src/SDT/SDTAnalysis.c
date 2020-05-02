@@ -312,14 +312,14 @@ int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   x->kurtosis = x->kurtosis / (pow(x->spread, 4.0) * sum) - 3.0;
   x->flux = sqrt(x->flux / x->span);
   x->onset /= x->span;
-  outs[0] = x->magnitude;
-  outs[1] = x->centroid;
-  outs[2] = x->spread;
-  outs[3] = x->skewness;
-  outs[4] = x->kurtosis;
-  outs[5] = x->flatness;
-  outs[6] = x->flux;
-  outs[7] = x->onset;
+  outs[0] = isnormal(x->magnitude) ? x->magnitude : 0;
+  outs[1] = isnormal(x->centroid) ? x->centroid : 0;
+  outs[2] = isnormal(x->spread) ? x->spread : 0;
+  outs[3] = isnormal(x->skewness) : x->skewness : 0;
+  outs[4] = isnormal(x->kurtosis) : x->kurtosis : 0;
+  outs[5] = isnormal(x->flatness) : x->flatness : 0;
+  outs[6] = isnormal(x->flux) : x->flux : 0;
+  outs[7] = isnormal(x->onset) : x->onset : 0;
   return 1;
 }
 
