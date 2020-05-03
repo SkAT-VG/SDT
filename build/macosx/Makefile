@@ -41,11 +41,11 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	$(CC) $(LDFLAGS) @$(MAXSDKDIR)/max-includes/c74_linker_flags.txt \
 	-L$(MAXSDKDIR)/max-includes -L$(MAXSDKDIR)/msp-includes -L$(MAXSDKDIR)/jit-includes \
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
-	-F$(SDTDIR) -framework SDT -framework MaxAudioAPI $< -o $@/Contents/MacOS/$(EXTNAME)
+	-F$(SDTDIR) -framework SDT -framework MaxAudioAPI $< $(MAXDIR)/SDT_fileusage.o -o $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -id @rpath/$(EXTNAME) $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -add_rpath @loader_path/../../../../support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
 
-$(MAXDIR)/%.o: $(MAXDIR)/%.c $(MAXDIR)/SDT_fileusage/SDT_fileusage.c
+$(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
 	-DMAC_VERSION -DMAC_EXT_VERSION -Dpowerc -fvisibility=hidden \
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
