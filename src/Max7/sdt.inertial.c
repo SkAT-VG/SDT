@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _inertial {
   t_pxobject ob;
@@ -92,15 +93,6 @@ void inertial_dsp64(t_inertial *x, t_object *dsp64, short *count, double sampler
   SDTResonator_setActiveModes(x->inertial, 1);
 }
 
-void inertial_fileusage(t_inertial *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.inertial", (method)inertial_new, (method)inertial_free,
                          (long)sizeof(t_inertial), 0L, A_GIMME, 0);
@@ -108,7 +100,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)inertial_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)inertial_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)inertial_strike, "strike", A_FLOAT, A_FLOAT, 0);
-  class_addmethod(c, (method)inertial_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "mass", 0, t_inertial, mass);
   CLASS_ATTR_DOUBLE(c, "fragmentSize", 0, t_inertial, fragmentSize);

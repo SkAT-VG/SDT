@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _friction {
   t_pxobject ob;
@@ -209,15 +210,6 @@ void friction_dsp64(t_friction *x, t_object *dsp64, short *count, double sampler
   object_method(dsp64, gensym("dsp_add64"), x, friction_perform64, 0, NULL);
 }
 
-void friction_fileusage(t_friction *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.friction~", (method)friction_new, (method)friction_free,
                          (long)sizeof(t_friction), 0L, A_GIMME, 0);
@@ -225,7 +217,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)friction_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)friction_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)friction_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)friction_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   CLASS_ATTR_DOUBLE(c, "force", 0, t_friction, force);
   CLASS_ATTR_DOUBLE(c, "stribeck", 0, t_friction, stribeck);

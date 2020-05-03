@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _explosion {
   t_pxobject ob;
@@ -126,15 +127,6 @@ void explosion_dsp64(t_explosion *x, t_object *dsp64, short *count, double sampl
   object_method(dsp64, gensym("dsp_add64"), x, explosion_perform64, 0, NULL);
 }
 
-void explosion_fileusage(t_explosion *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r)
 {	
   t_class *c = class_new("sdt.explosion~", (method)explosion_new, (method)explosion_free, (long)sizeof(t_explosion), 0L, A_GIMME, 0);
@@ -143,7 +135,7 @@ void C74_EXPORT ext_main(void *r)
   class_addmethod(c, (method)explosion_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)explosion_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)explosion_update, "bang", 0);
-  class_addmethod(c, (method)explosion_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "blastTime", 0, t_explosion, blastTime);
   CLASS_ATTR_DOUBLE(c, "scatterTime", 0, t_explosion, scatterTime);

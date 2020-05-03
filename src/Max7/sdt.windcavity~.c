@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _windcavity {
   t_pxobject ob;
@@ -95,15 +96,6 @@ void windcavity_dsp64(t_windcavity *x, t_object *dsp64, short *count, double sam
   object_method(dsp64, gensym("dsp_add64"), x, windcavity_perform64, 0, NULL);
 }
 
-void windcavity_fileusage(t_windcavity *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r)
 {	
   t_class *c = class_new("sdt.windcavity~", (method)windcavity_new, (method)windcavity_free, (long)sizeof(t_windcavity), 0L, A_GIMME, 0);
@@ -111,7 +103,7 @@ void C74_EXPORT ext_main(void *r)
   class_addmethod(c, (method)windcavity_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)windcavity_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)windcavity_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)windcavity_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "length", 0, t_windcavity, length);
   CLASS_ATTR_DOUBLE(c, "diameter", 0, t_windcavity, diameter);

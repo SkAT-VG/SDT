@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _scraping {
   t_pxobject ob;
@@ -89,22 +90,13 @@ void scraping_dsp64(t_scraping *x, t_object *dsp64, short *count, double sampler
   object_method(dsp64, gensym("dsp_add64"), x, scraping_perform64, 0, NULL);
 }
 
-void scraping_fileusage(t_scraping *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.scraping~", (method)scraping_new, (method)scraping_free, (long)sizeof(t_scraping), 0L, A_GIMME, 0);
 	
   class_addmethod(c, (method)scraping_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)scraping_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)scraping_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)scraping_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "grain", 0, t_scraping, grain);
   CLASS_ATTR_DOUBLE(c, "force", 0, t_scraping, force);

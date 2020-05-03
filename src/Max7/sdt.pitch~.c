@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _pitch {
   t_pxobject ob;
@@ -118,22 +119,13 @@ void pitch_free(t_pitch *x) {
   SDTPitch_free(x->pitch);
 }
 
-void pitch_fileusage(t_pitch *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.pitch~", (method)pitch_new, (method)pitch_free, (long)sizeof(t_pitch), 0L, A_GIMME, 0);
 	
   class_addmethod(c, (method)pitch_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)pitch_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)pitch_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)pitch_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitch, overlap);
   CLASS_ATTR_DOUBLE(c, "tolerance", 0, t_pitch, tolerance);

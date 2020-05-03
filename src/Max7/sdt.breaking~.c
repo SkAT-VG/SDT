@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _breaking {
   t_pxobject ob;
@@ -116,15 +117,6 @@ void breaking_dsp64(t_breaking *x, t_object *dsp64, short *count, double sampler
   object_method(dsp64, gensym("dsp_add64"), x, breaking_perform64, 0, NULL);
 }
 
-void breaking_fileusage(t_breaking *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
 	t_class *c = class_new("sdt.breaking~", (method)breaking_new, (method)breaking_free,
 	                       (long)sizeof(t_breaking), 0L, A_GIMME, 0);
@@ -133,7 +125,7 @@ void C74_EXPORT ext_main(void *r) {
 	class_addmethod(c, (method)breaking_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)breaking_dsp64, "dsp64", A_CANT, 0);
 	class_addmethod(c, (method)breaking_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)breaking_fileusage, "fileusage", A_CANT, 0L);  
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
 	
 	CLASS_ATTR_DOUBLE(c, "storedEnergy", 0, t_breaking, storedEnergy);
 	CLASS_ATTR_DOUBLE(c, "crushingEnergy", 0, t_breaking, crushingEnergy);

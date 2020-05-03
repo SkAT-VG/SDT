@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTModalTracker.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _modaltracker {
   t_pxobject ob;
@@ -171,15 +172,6 @@ void modaltracker_free(t_modaltracker *x) {
   SDTModalTracker_free(x->modaltracker);
 }
 
-void modaltracker_fileusage(t_modaltracker *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.modaltracker~", (method)modaltracker_new, (method)modaltracker_free, (long)sizeof(t_modaltracker), 0L, A_GIMME, 0);
 	
@@ -191,7 +183,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)modaltracker_stop, "stop", 0);
   class_addmethod(c, (method)modaltracker_bang, "bang", 0);
   class_addmethod(c, (method)modaltracker_float, "float", A_FLOAT, 0);
-  class_addmethod(c, (method)modaltracker_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_modaltracker, overlap);
   CLASS_ATTR_LONG(c, "pickup", 0, t_modaltracker, pickup);

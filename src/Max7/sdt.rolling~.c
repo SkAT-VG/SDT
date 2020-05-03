@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _rolling {
   t_pxobject ob;
@@ -93,22 +94,13 @@ void rolling_dsp64(t_rolling *x, t_object *dsp64, short *count, double samplerat
   object_method(dsp64, gensym("dsp_add64"), x, rolling_perform64, 0, NULL);
 }
 
-void rolling_fileusage(t_rolling *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.rolling~", (method)rolling_new, (method)rolling_free, (long)sizeof(t_rolling), 0L, A_GIMME, 0);
 	
   class_addmethod(c, (method)rolling_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)rolling_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)rolling_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)rolling_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "grain", 0, t_rolling, grain);
   CLASS_ATTR_DOUBLE(c, "depth", 0, t_rolling, depth);
