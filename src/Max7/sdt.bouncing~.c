@@ -114,15 +114,15 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
 	
 	CLASS_ATTR_DOUBLE(c, "restitution", 0, t_bouncing, restitution);
-    CLASS_ATTR_DOUBLE(c, "height", 0, t_bouncing, height);
+  CLASS_ATTR_DOUBLE(c, "height", 0, t_bouncing, height);
 	CLASS_ATTR_DOUBLE(c, "irregularity", 0, t_bouncing, irregularity);
 	
 	CLASS_ATTR_FILTER_CLIP(c, "restitution", 0.0, 1.0);
-    CLASS_ATTR_FILTER_MIN(c, "height", 0.0);
+  CLASS_ATTR_FILTER_MIN(c, "height", 0.0);
 	CLASS_ATTR_FILTER_CLIP(c, "irregularity", 0.0, 1.0);
 	
 	CLASS_ATTR_ACCESSORS(c, "restitution", NULL, (method)bouncing_restitution);
-    CLASS_ATTR_ACCESSORS(c, "height", NULL, (method)bouncing_height);
+  CLASS_ATTR_ACCESSORS(c, "height", NULL, (method)bouncing_height);
 	CLASS_ATTR_ACCESSORS(c, "irregularity", NULL, (method)bouncing_irregularity);
 	
 	CLASS_ATTR_ORDER(c, "restitution", 0, "1");
