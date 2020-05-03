@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _windkarman {
 	t_pxobject ob;
@@ -79,22 +80,13 @@ void windkarman_dsp64(t_windkarman *x, t_object *dsp64, short *count, double sam
   object_method(dsp64, gensym("dsp_add64"), x, windkarman_perform64, 0, NULL);
 }
 
-void windkarman_fileusage(t_windkarman *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.windkarman~", (method)windkarman_new, (method)windkarman_free, (long)sizeof(t_windkarman), 0L, A_GIMME, 0);
 
   class_addmethod(c, (method)windkarman_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)windkarman_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)windkarman_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)windkarman_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   CLASS_ATTR_DOUBLE(c, "diameter", 0, t_windkarman, diameter);
   CLASS_ATTR_FILTER_MIN(c, "diameter", 0.001);

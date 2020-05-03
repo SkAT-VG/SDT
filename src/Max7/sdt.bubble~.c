@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _bubble {
 	t_pxobject ob;
@@ -80,15 +81,6 @@ void bubble_dsp64(t_bubble *x, t_object *dsp64, short *count,
 	object_method(dsp64, gensym("dsp_add64"), x, bubble_perform64, 0, NULL);
 }
 
-void bubble_fileusage(t_bubble *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
 	t_class *c = class_new("sdt.bubble~", (method)bubble_new, (method)bubble_free,
 	                       (long)sizeof(t_bubble), 0L, A_GIMME, 0);
@@ -98,7 +90,7 @@ void C74_EXPORT ext_main(void *r) {
 	class_addmethod(c, (method)bubble_dsp, "dsp", A_CANT, 0);
 	class_addmethod(c, (method)bubble_dsp64, "dsp64", A_CANT, 0);
 	class_addmethod(c, (method)bubble_assist, "assist", A_CANT, 0);
-	class_addmethod(c, (method)bubble_fileusage, "fileusage", A_CANT, 0L);  
+	class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
 	
 	CLASS_ATTR_DOUBLE(c, "radius", 0, t_bubble, radius);
   CLASS_ATTR_DOUBLE(c, "riseFactor", 0, t_bubble, riseFactor);

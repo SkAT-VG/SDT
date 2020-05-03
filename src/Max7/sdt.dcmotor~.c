@@ -4,6 +4,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTDCMotor.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _dcmotor {
   t_pxobject ob;
@@ -144,15 +145,6 @@ void dcmotor_dsp64(t_dcmotor *x, t_object *dsp64, short *count, double samplerat
   object_method(dsp64, gensym("dsp_add64"), x, dcmotor_perform64, 0, NULL);
 }
 
-void dcmotor_fileusage(t_dcmotor *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r)
 {  
   t_class *c = class_new("sdt.dcmotor~", (method)dcmotor_new, (method)dcmotor_free, (long)sizeof(t_dcmotor), 0L, A_GIMME, 0);
@@ -160,7 +152,7 @@ void C74_EXPORT ext_main(void *r)
   class_addmethod(c, (method)dcmotor_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)dcmotor_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)dcmotor_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)dcmotor_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_LONG(c, "coils", 0, t_dcmotor, coils);
   CLASS_ATTR_DOUBLE(c, "size", 0, t_dcmotor, size);

@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _zerocrossing {
   t_pxobject ob;
@@ -98,22 +99,13 @@ void zerocrossing_free(t_zerocrossing *x) {
   qelem_free(x->send);
 }
 
-void zerocrossing_fileusage(t_zerocrossing *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.zerox~", (method)zerocrossing_new, (method)zerocrossing_free, (long)sizeof(t_zerocrossing), 0L, A_GIMME, 0);
 	
   class_addmethod(c, (method)zerocrossing_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)zerocrossing_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)zerocrossing_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)zerocrossing_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_zerocrossing, overlap);
   CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);

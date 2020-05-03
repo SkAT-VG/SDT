@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _fluidflow {
   t_pxobject ob;
@@ -128,15 +129,6 @@ void fluidflow_dsp64(t_fluidflow *x, t_object *dsp64, short *count,
   object_method(dsp64, gensym("dsp_add64"), x, fluidflow_perform64, 0, NULL);
 }
 
-void fluidflow_fileusage(t_fluidflow *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.fluidflow~", (method)fluidflow_new,
     (method)fluidflow_free, (long)sizeof(t_fluidflow), 0L, A_GIMME, 0);
@@ -144,7 +136,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)fluidflow_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)fluidflow_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)fluidflow_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)fluidflow_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   CLASS_ATTR_DOUBLE(c, "avgRate", 0, t_fluidflow, avgRate);
   CLASS_ATTR_DOUBLE(c, "minRadius", 0, t_fluidflow, minRadius);

@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _impact {
   t_pxobject ob;
@@ -177,15 +178,6 @@ void impact_dsp64(t_impact *x, t_object *dsp64, short *count, double samplerate,
   object_method(dsp64, gensym("dsp_add64"), x, impact_perform64, 0, NULL);
 }
 
-void impact_fileusage(t_impact *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.impact~", (method)impact_new, (method)impact_free,
                          (long)sizeof(t_impact), 0L, A_GIMME, 0);
@@ -193,7 +185,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)impact_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)impact_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)impact_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)impact_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   CLASS_ATTR_DOUBLE(c, "stiffness", 0, t_impact, stiffness);
   CLASS_ATTR_DOUBLE(c, "dissipation", 0, t_impact, dissipation);

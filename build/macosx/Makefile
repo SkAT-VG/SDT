@@ -27,7 +27,7 @@ PDVERSION=0.41.4
 
 all: core max pd
 
-max: core $(MAXOBJS)
+max: core fileusage $(MAXOBJS)
 
 $(MAXDIR)/%.mxo: EXTNAME=$(patsubst $(MAXDIR)/%.mxo,%,$@)
 $(MAXDIR)/%.mxo: RFC1034=$(patsubst %~,%-,$(EXTNAME))
@@ -45,7 +45,7 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	install_name_tool -id @rpath/$(EXTNAME) $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -add_rpath @loader_path/../../../../support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
 
-$(MAXDIR)/%.o: $(MAXDIR)/%.c
+$(MAXDIR)/%.o: $(MAXDIR)/%.c $(MAXDIR)/SDT_fileusage/SDT_fileusage.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
 	-DMAC_VERSION -DMAC_EXT_VERSION -Dpowerc -fvisibility=hidden \
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
@@ -57,6 +57,14 @@ pd: $(SDTOBJS) $(PDOBJS)
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -F$(SDTDIR) -c $< -o $@
+
+fileusage:
+	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
+	-DMAC_VERSION -DMAC_EXT_VERSION -Dpowerc -fvisibility=hidden \
+	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
+	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
+	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch \
+	-c $(MAXDIR)/SDT_fileusage/SDT_fileusage.c -o $(MAXDIR)/SDT_fileusage.o
 
 core: $(SDTOBJS)
 	rm -rf $(SDTDIR)/SDT.framework

@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _bouncing {
   t_pxobject ob;
@@ -102,15 +103,6 @@ void bouncing_dsp64(t_bouncing *x, t_object *dsp64, short *count, double sampler
   object_method(dsp64, gensym("dsp_add64"), x, bouncing_perform64, 0, NULL);
 }
 
-void bouncing_fileusage(t_bouncing *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
 	t_class *c = class_new("sdt.bouncing~", (method)bouncing_new, (method)bouncing_free,
 	                       (long)sizeof(t_bouncing), 0L, A_GIMME, 0);
@@ -119,7 +111,7 @@ void C74_EXPORT ext_main(void *r) {
 	class_addmethod(c, (method)bouncing_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)bouncing_dsp64, "dsp64", A_CANT, 0);
 	class_addmethod(c, (method)bouncing_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)bouncing_fileusage, "fileusage", A_CANT, 0L);  
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
 	
 	CLASS_ATTR_DOUBLE(c, "restitution", 0, t_bouncing, restitution);
     CLASS_ATTR_DOUBLE(c, "height", 0, t_bouncing, height);

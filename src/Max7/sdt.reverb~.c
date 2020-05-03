@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _reverb {
   t_pxobject ob;
@@ -132,15 +133,6 @@ void reverb_dsp64(t_reverb *x, t_object *dsp64, short *count, double samplerate,
   object_method(dsp64, gensym("dsp_add64"), x, reverb_perform64, 0, NULL);
 }
 
-void reverb_fileusage(t_reverb *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.reverb~", (method)reverb_new, (method)reverb_free,
                          (long)sizeof(t_reverb), 0L, A_GIMME, 0);
@@ -148,7 +140,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)reverb_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)reverb_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)reverb_assist, "assist",	A_CANT, 0);
-  class_addmethod(c, (method)reverb_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   CLASS_ATTR_DOUBLE(c, "xSize", 0, t_reverb, xSize);
   CLASS_ATTR_DOUBLE(c, "ySize", 0, t_reverb, ySize);

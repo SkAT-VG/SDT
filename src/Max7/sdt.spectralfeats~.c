@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _spectralfeats {
   t_pxobject ob;
@@ -132,22 +133,13 @@ void spectralfeats_free(t_spectralfeats *x) {
   SDTSpectralFeats_free(x->feats);
 }
 
-void spectralfeats_fileusage(t_spectralfeats *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.spectralfeats~", (method)spectralfeats_new, (method)spectralfeats_free, (long)sizeof(t_spectralfeats), 0L, A_GIMME, 0);
 	
   class_addmethod(c, (method)spectralfeats_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)spectralfeats_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)spectralfeats_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)spectralfeats_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_spectralfeats, overlap);
   CLASS_ATTR_DOUBLE(c, "minFreq", 0, t_spectralfeats, minFreq);

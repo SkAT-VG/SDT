@@ -3,6 +3,7 @@
 #include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _modal {
   t_pxobject ob;
@@ -159,15 +160,6 @@ void modal_dsp64(t_modal *x, t_object *dsp64, short *count, double samplerate,
   SDTResonator_setActiveModes(x->modal, x->activeModes);
 }
 
-void modal_fileusage(t_modal *x, void *w) {
-  t_atom folder;
-  t_atomarray folders;
-
-  atom_setsym(&folder, gensym("support"));
-  atomarray_appendatom(&folders, &folder);
-  fileusage_addpackage(w, "SDT", (t_object *)&folders);
-}
-
 void C74_EXPORT ext_main(void *r) {	
   t_class *c = class_new("sdt.modal", (method)modal_new, (method)modal_free,
                          (long)sizeof(t_modal), 0L, A_GIMME, 0);
@@ -175,7 +167,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)modal_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)modal_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)modal_dsp64, "dsp64", A_CANT, 0);
-  class_addmethod(c, (method)modal_fileusage, "fileusage", A_CANT, 0L);
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   CLASS_ATTR_DOUBLE_VARSIZE(c, "freqs", 0, t_modal, freqs, nModes, SDT_MAX_MODES);
   CLASS_ATTR_DOUBLE_VARSIZE(c, "decays", 0, t_modal, decays, nModes, SDT_MAX_MODES);
