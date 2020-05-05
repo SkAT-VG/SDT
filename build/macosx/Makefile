@@ -44,6 +44,7 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	-F$(SDTDIR) -framework SDT -framework MaxAudioAPI $< $(MAXDIR)/SDT_fileusage.o -o $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -id @rpath/$(EXTNAME) $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -add_rpath @loader_path/../../../../support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
+	install_name_tool -add_rpath @executable_path/../Resources/C74/packages/SDT/support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
 
 $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
