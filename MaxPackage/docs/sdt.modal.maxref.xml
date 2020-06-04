@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.modal">
+
+	<digest>
+		<m>Solids interaction:</m> Physical model of modal resonator.
+	</digest>
+
+	<description>
+		<o>sdt.modal</o> is a resonator object implemented according to modal synthesis: a set of parallel mass–spring–damper mechanical oscillators, where each oscillator represents a resonant mode of the object.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS
+	<inletlist>
+		<inlet id="0" type="messages to the bouncing object">
+			<digest>messages to the bouncing object.</digest>
+			<description>messages to the bouncing object, bang starts the process.</description>
+		</inlet>
+	</inletlist>-->
+
+	<!--OUTLETS
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Impact velocity.</digest>
+		</outlet>
+	</outletlist>-->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="Unique_ID-obj2" optional="0" type="symbol, required">
+			<digest>Mandatory: Unique ID name set for the sdt.inertial object.</digest>
+		</objarg>
+
+		<objarg name="Modes" optional="0" type="int">
+			<digest>Mandatory: Number of the available modes.</digest>
+		</objarg>
+
+		<objarg name="Pickup-points" optional="0" type="int">
+			<digest>Mandatory: Number of the available pickup points.</digest>
+		</objarg>
+	</objarglist>
+
+	<!--MESSAGES
+	<methodlist>
+		<method name="">
+			<arglist>
+				<arg name="" optional="0" type="" />
+			</arglist>
+			<digest>
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>-->
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="freqs" get="1" set="1" type="float, list" size="1" >
+		    <digest>Frequency of each mode, in Hz.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="decays" get="1" set="1" type="float, list" size="1">
+		    <digest>Decay of each mode, in seconds.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="fragmentSize" get="1" set="1" type="float" size="1">
+				<digest>Fraction of the whole object. Used by control layer algorithms to simulate fragmentation [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="activeModes" get="1" set="1" type="int" size="1">
+				<digest>Number of currently active modes out of all the available ones.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="pickup" get="1" set="1" type="float, list" size="1">
+				<digest>Modal weights for each pickup, in 1/Kg, starting from pickup0, pickup1, ..., pickupN.</digest>
+				<description></description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.inertial"/>
+		<seealso name="sdt.impact~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.scraping~"/>
+		<seealso name="sdt.friction~"/>
+	</seealsolist>
+
+</c74object>

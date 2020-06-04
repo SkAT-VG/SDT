@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.crumpling~">
+
+	<digest>
+		<m>Solids interaction:</m> Stochastic sequence of impacts to form a crushing sound.
+	</digest>
+
+	<description>
+		Compound model for the generation of crumpling phenomena.
+		<br />
+		<o>sdt.crumpling~</o> acts as control layer for the compound impact model <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		<br />
+		Takes three control parameters, the <i> crushing energy </i>, the <i>granularity</i>, and the <i>fragmentation</i>.
+		The output are two audio signals [0.0, 1.0], one representing the impact velocity (left-most outlet), and one representing the fragment size compared to the whole object size (righ-most outlet).
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="messages to the crumpling object">
+			<digest>messages to the crumpling object.</digest>
+			<description>messages to the bouncing object.</description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Impact velocity. </digest>
+		</outlet>
+		<outlet id="1" type="signal">
+			<digest>Audio signal: Fragment size.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS
+	<objarglist>
+		<objarg name="" optional="" type="">
+			<digest></digest>
+		</objarg>
+	</objarglist>-->
+
+	<!--MESSAGES
+	<methodlist>
+		<method name="bang">
+			<arglist>
+				<arg name="bouncing event trigger" optional="0" type="bang" />
+			</arglist>
+			<digest>
+				Bang triggers the bouncing event.
+			</digest>
+			<description>
+				Bangs received by the left-most outlet triggers the bouncing event.
+			</description>
+		</method>
+	</methodlist> -->
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="crushingEnergy" get="1" set="1" type="float" size="1" >
+		    <digest>Energy of the micro-impacts [0.0, 1.0].</digest>
+		    <description>Energy of the micro-impacts, between 0. and 1.</description>
+	  </attribute>
+
+		<attribute name="granularity" get="1" set="1" type="float" size="1">
+		    <digest>Crumpling granularity [0.0, 1.0].</digest>
+		    <description>Crumpling granularity, between 0. and 1.</description>
+	  </attribute>
+
+		<attribute name="fragmentation" get="1" set="1" type="float" size="1" >
+				<digest>Tendency of the object to break in smaller pieces [0.0, 1.0].</digest>
+				<description>Tendency of the object to break in smaller pieces, between 0. and 1.</description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.inertial"/>
+		<seealso name="sdt.modal"/>
+		<seealso name="sdt.impact~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.scraping~"/>
+		<seealso name="sdt.friction~"/>
+	</seealsolist>
+
+</c74object>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.pitchshift~">
+
+	<digest>
+		<m>Sound processor:</m> Frequency domain pitch shifter.
+	</digest>
+
+	<description>
+		<o>sdt.pitchshift~</o> takes two control parameters, the window <i>overlap</i> factor, between 0.5 and 0.9,
+		and the pitch shifting <i>ratio</i>, from 0.125 to 8.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="signal">
+			<digest>Audio signal.</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: pitch shifted signal.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="window-size" optional="1" type="int">
+			<digest>Window size, in samples (default is 4096).</digest>
+		</objarg>
+	</objarglist>
+
+	<!--MESSAGES-
+	<methodlist>
+		<method name="bang">
+			<arglist>
+				<arg name="bouncing event trigger" optional="0" type="bang" />
+			</arglist>
+			<digest>
+				Bang triggers the bouncing event.
+			</digest>
+			<description>
+				Bangs received by the left-most outlet triggers the bouncing event.
+			</description>
+		</method>
+	</methodlist>-->
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="overlap" get="1" set="1" type="float" size="1" >
+		    <digest>Window overlap factor [0.5, 0.9].</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="ratio" get="1" set="1" type="float" size="1">
+		    <digest>Pitch shifting ratio [0.125, 8.].</digest>
+		    <description></description>
+	  </attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.demix~"/>
+		<seealso name="sdt.reverb~"/>
+	</seealsolist>
+
+</c74object>

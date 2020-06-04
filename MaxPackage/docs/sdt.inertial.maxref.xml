@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.inertial">
+
+	<digest>
+		<m>Solids interaction:</m> Physical model of inertial mass.
+	</digest>
+
+	<description>
+		Simulates a simple inertial point mass. Mostly used as exciter for modal resonators.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="strike" >
+			<arglist>
+				<arg name="0." optional="0" type="float, list" />
+				<arg name="v., strike velocity in m/s." optional="0" type="float, list" />
+			</arglist>
+			<digest>
+				The strike message (list) resets displacement and velocity to the given values.
+			</digest>
+			<description>
+				The strike message (list) resets displacement and velocity to the given values.
+			</description>
+		</method>
+	</methodlist>
+
+	<!--OUTLETS
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Impact velocity.</digest>
+		</outlet>
+	</outletlist> -->
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="Unique_ID-obj1" optional="0" type="symbol, required">
+			<digest>Mandatory: Unique ID name set for the sdt.inertial object.</digest>
+		</objarg>
+	</objarglist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="mass" get="1" set="1" type="float" size="1" >
+		    <digest>Mass of the inertial object, in Kg.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="fragmentSize" get="1" set="1" type="float" size="1">
+		    <digest>Fraction of the whole object. Used by control layer algorithms to simulate fragmentation [0.0, 1.0].</digest>
+		    <description></description>
+	  </attribute>
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.modal"/>
+		<seealso name="sdt.impact~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.scraping~"/>
+		<seealso name="sdt.friction~"/>
+	</seealsolist>
+
+</c74object>

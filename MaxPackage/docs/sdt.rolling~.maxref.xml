@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.rolling~">
+
+	<digest>
+		<m>Solids interaction:</m> Impact model controller for rolling sound.
+	</digest>
+
+	<description>
+		Compound model that simulates a ball rolling on a surface.
+		<br />
+		<o>sdt.rolling~</o> acts as control layer for the compound impact model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		<br />
+		Takes four control parameters, the <i> depth </i> and the <i> granularity</i> of the surface, the <i>mass</i> and the <i>velocity</i> of the rolling object.
+		<br />
+		<o>sdt.rolling~</o> is fed by an audio signal, representing the profile surface.
+		The output is an audio signal representing the force applied to the resonator, i.e. the bounces on the surface.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="messages to the rolling object">
+			<digest>messages to the rolling object.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="0" type="signal">
+			<digest>Surface profile, as audio signal.</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Force applied to the first resonator (sdt.inertial).</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS
+	<objarglist>
+		<objarg name="" optional="" type="">
+			<digest></digest>
+		</objarg>
+	</objarglist>-->
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="signal">
+			<digest>
+				Input signal representing the morphology of the surface.
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="depth" get="1" set="1" type="float" size="1" >
+		    <digest>Depth of the surface irregularities, affects the amplitude of the micro-impacts.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="grain" get="1" set="1" type="float" size="1">
+		    <digest>Surface granularity, affects the density of the micro-impacts.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="mass" get="1" set="1" type="float" size="1" >
+				<digest>Mass of the rolling object (shared with the mass of the first resonator, sdt.inertial).</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="velocity" get="1" set="1" type="float" size="1" >
+				<digest>Rolling velocity, in m/s</digest>
+				<description></description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.inertial"/>
+		<seealso name="sdt.modal"/>
+		<seealso name="sdt.impact~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.scraping~"/>
+		<seealso name="sdt.friction~"/>
+	</seealsolist>
+
+	<misc name="Input">
+		<entry name="signal">
+			<description>
+				Inlet 0: Surface profile. The profile of the surface is obtained as a signal input,
+				and it can be either recorded as an audio file or generated in real time.
+				Usually, bandpass filtered noise or fractal noise are two good surface profile generators.
+			</description>
+		</entry>
+	</misc>
+
+	<misc name="Output">
+		<entry name="signal">
+			<description>
+				Outlet 0: Normal force acting on the rolling object, meant to be applied to an inertial mass impacting with another resonator.
+				In addition to the gravity force, when an impact occurs the ball experiences an upward lift,
+				which is assumed to be proportional to the depth of the irregularity and to the kinetic energy of the rolling object.
+			</description>
+		</entry>
+	</misc>
+
+</c74object>

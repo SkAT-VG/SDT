@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.myo~">
+
+	<digest>
+		<m>Sound analysis:</m> Myoelastic vocal activity detector.
+	</digest>
+
+	<description>
+	<o>sdt.myo~</o> is an analysis tool suitable to detect myoelastic vocal phenomena, that is non-voiced sounds
+	produced by the vibration of muscles or parts of the vocal tract, such as vocal fry, palate grind, bilabial trills etc.
+	Myoelastic vibrations are characterized by low frequency amplitude oscillations, in the range of 30-70Hz.
+	To detect these oscillations, the following operations are performed: <br/>
+	1. A band-limited amplitude envelope of the input signal is computed, taking the square of the signal and cutting frequencies above 1 kHz;
+	<br/> <br/>
+	2. The envelope is divided into three different frequency bands: the first going from DC to ∼30 Hz, the second from ∼30 to ∼70 Hz, and the last from ∼70 Hz to Nyquist.
+	The energy in each of these bands should roughly represent the amount of impulsive, myoelastic and non-myoelastic activity respectively;
+	<br/><br/>
+	3. The amounts of impulsive and myoelastic activity are estimated by computing the ratio between the energy in the corresponding bands and the total energy of the signal.
+	The activity indicators are also lowpass-filtered, to avoid abrupt changes in the detection;
+	<br/> <br/>
+	4. The average frequency of both the impulsive and the myoelastic activity is estimated by computing the zero-crossing rate of the signal in the corresponding bands.
+	<br/><br/>
+	<o>sdt.myo~</o> returns four outputs (from left to right):
+	<br/>* The slow myoelastic activity amount;
+	<br/>* The slow myoelastic activity average frequency, in Hz;
+	<br/>* The fast myoelastic activity amount;
+	<br/>* The fast myoelastic activity average frequency, in Hz.
+	<br/><br/>
+	For better results, the vocal sound is meant to be pre-processed with <o>sdt.demix~</o>, in order to feed <o>sdt.myo~</o> with the percussive component only.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="signal">
+			<digest>Audio signal.</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="float">
+			<digest>Slow myoelastic activity.</digest>
+		</outlet>
+	</outletlist>
+
+	<outletlist>
+		<outlet id="1" type="float">
+			<digest>Slow myoelastic frequency, in Hz.</digest>
+		</outlet>
+	</outletlist>
+
+	<outletlist>
+		<outlet id="2" type="float">
+			<digest>Fast myoelastic activity.</digest>
+		</outlet>
+	</outletlist>
+
+	<outletlist>
+		<outlet id="3" type="float">
+			<digest>Fast myoelastic frequency, in Hz.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS
+	<objarglist>
+		<objarg name="" optional="" type="">
+			<digest></digest>
+		</objarg>
+	</objarglist>-->
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="signal">
+			<digest>
+				Input signal.
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="lowFrequency" get="1" set="1" type="float" size="1" >
+		    <digest>Cutoff frequency of the long term amplitude envelope tracking, in Hz.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="highFrequency" get="1" set="1" type="float" size="1">
+		    <digest>Cutoff frequency of the short term amplitude envelope tracking, in Hz.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="threshold" get="1" set="1" type="float" size="1" >
+				<digest>Input signal gate.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="dcFrequency" get="1" set="1" type="float" size="1" >
+				<digest>Dc offset cutoff, in Hz</digest>
+				<description></description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.demix~"/>
+		<seealso name="sdt.spectralfeats~"/>
+		<seealso name="sdt.pitch~"/>
+		<seealso name="sdt.envelope~"/>
+		<seealso name="sdt.zerox~"/>
+	</seealsolist>
+
+	<misc name="Output">
+		<entry name="float">
+			<description>
+				Outlet 0: The slow myoelastic activity amount. <br/><br/>
+				Outlet 1: The slow myoelastic activity average frequency, in Hz. <br/><br/>
+				Outlet 2: The fast myoelastic activity amount. <br/><br/>
+				Outlet 3: The fast myoelastic activity average frequency, in Hz.
+			</description>
+		</entry>
+	</misc>
+
+</c74object>

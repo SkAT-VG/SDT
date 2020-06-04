@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.impact~">
+
+	<digest>
+		<m>Solids interaction:</m> Impact interaction between two solid objects.
+	</digest>
+
+	<description>
+		<o>sdt.impact~</o> simulates the impact between two objects - typically a hammer hitting a resonator - by computing the non-linear force arising from their collision.
+		Such force is made up of an elastic component and a dissipative one: the elastic term is described by the force stiffness (parameter <i>k</i>) and an exponent (parameter <i>alpha</i>) which represents the sharpness of the hammer; the dissipative component is described by a dissipation factor (parameter <i>mu</i>).
+		<br />
+		N.B. <o>sdt.impact~</o> must be used in conjuction with two solid object models (either <o>sdt.inertial~</o> or <o>sdt.modal~</o>) forming a structure "object 1 &#8596; <o>sdt.impact~</o> &#8596; object 2".
+		This is achieved by specifying the two objects' IDs as creation arguments.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">procedural audio</metadata>
+		<metadata name="tag">physics-based synthesis</metadata>
+		<metadata name="tag">sonic interaction design</metadata>
+		<metadata name="tag">impact</metadata>
+		<metadata name="tag">collision</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="message">
+			<digest>test</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="0" type="signal">
+			<digest>External force on hammer / object, in N.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="1" type="signal">
+			<digest>If not equal to 0, sets hammer / object velocity (in m/s) and puts them in contact.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="2" type="signal">
+			<digest>Fragment size of hammer / object [0.0, 1.0]</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="3" type="signal">
+			<digest>External force on hammer / object, in N.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="4" type="signal">
+			<digest>If not equal to 0, sets hammer / object velocity (in m/s) and puts them in contact.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="5" type="signal">
+			<digest>Fragment size of hammer / object [0.0, 1.0].</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Velocity of object 1 (hammer).</digest>
+		</outlet>
+
+		<outlet id="1" type="signal">
+			<digest>Audio signal: Pickup displacement for the modal object.</digest>
+			<description>If there are fewer outlets than pickups,
+				some outputs will not be available. Outlets in excess will constantly output 0.</description>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="Unique_ID-Obj1" optional="0" type="symbol">
+			<digest>Mandatory: Unique ID of object 1 (usually a <o>sdt.inertial</o> object).</digest>
+		</objarg>
+
+		<objarg name="Unique_ID-Obj2" optional="0" type="symbol">
+			<digest>Mandatory: Unique ID of object 2 (<o>sdt.modal</o>).</digest>.
+		</objarg>
+
+		<objarg name="Max-outlets" optional="0" type="int">
+			<digest>Mandatory: They should correspond to the total number of pickups.
+							If greater than the number of pickup points, the unused outlets are disabled;
+							if lower than the number of pickup points, only the first ones are output,
+							always starting from pickup0.
+			</digest>
+		</objarg>
+	</objarglist>
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="messages">
+			<digest>
+				Inlet 0: Messages and attributes to the object.
+			</digest>
+			<description>
+			</description>
+		</method>
+
+		<method name="signal">
+			<digest>
+				Inlet 0: External force on hammer / object 1, in N. <br /><br />
+				Inlet 1: If ≠ 0, sets hammer / object 1 velocity (in m/s) and puts them in contact. <br /><br />
+				Inlet 2: Fragment size of the hammer / object 1 [0.0, 1.0].<br /><br />
+				Inlet 3: External force on object 2, in N. <br /><br />
+				Inlet 4: If ≠ 0, sets object 2 velocity (in m/s) and puts them in contact. <br /><br />
+				Inlet 5: Fragment size of object 2 [0.0, 1.0].
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="stiffness" get="1" set="1" type="float" size="1" >
+				<digest>Impact stiffness.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="dissipation" get="1" set="1" type="float" size="1">
+				<digest>Dissipation coefficient [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="shape" get="1" set="1" type="float" size="1" >
+				<digest>Contact shape factor (1.5 for spherical objects).</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="contact0" get="1" set="1" type="int" size="1" >
+				<digest>Pickup index of the contact point for object 1 (hammer).</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="contact1" get="1" set="1" type="int" size="1" >
+				<digest>Pickup index of the contact point for object 2 (resonator).</digest>
+				<description></description>
+		</attribute>
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.inertial"/>
+		<seealso name="sdt.modal"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.scraping~"/>
+		<seealso name="sdt.friction~"/>
+	</seealsolist>
+
+</c74object>

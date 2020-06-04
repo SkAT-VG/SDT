@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.windkarman~">
+
+	<digest>
+		<m>Gases:</m> Turbulence model of gases across thin objects.
+	</digest>
+
+	<description>
+		<o>sdt.windkarman~</o> simulates Kármán vortices caused by air turbulences across thin objects, such as a tree branch or a suspended wire.
+		Takes two control parameters, the wind <i>speed</i>, and the <i>diameter</i> of the cavity.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="signal">
+			<digest>Wind speed [0.0, 1.0]</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS
+	<objarglist>
+		<objarg name="" optional="" type="">
+			<digest></digest>
+		</objarg>
+	</objarglist>-->
+
+	<!--MESSAGES-->
+	<methodlist>
+	<method name="signal">
+		<digest>
+			Wind speed [0.0, 1.0].
+		</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="diameter" get="1" set="1" type="float" size="1" >
+		    <digest>Object diameter, in mm.</digest>
+		    <description></description>
+	  </attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.windflow~"/>
+		<seealso name="sdt.windcavity~"/>
+		<seealso name="sdt.explosion~"/>
+	</seealsolist>
+
+</c74object>

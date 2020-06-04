@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.spectralfeats~">
+
+	<digest>
+		<m>Sound analysis:</m> Spectral analyzer, extracting several audio descriptors.
+	</digest>
+
+	<description>
+		<o>sdt.spectralfeats~</o> provides statistical moments of the spectrum and other spectral information.
+		Together with the other audio-feature extractors (<o>sdt.pitch~</o>, <o>sdt.envelope~</o>, <o>sdt.zerox~</o>, and <o>sdt.myo~</o>), <o>sdt.spectralfeats~</o> is an analysis tool to support the audio-rate control of the sound synthesis models.
+		<br/><br/>
+		The object routes the following features: <br/>
+		* spectral magnitude <br/>
+		* spectral centroid <br/>
+		* spectral spread <br/>
+		* spectral skewness <br/>
+		* spectral kurtosis <br/>
+		* spectral flatness<br/>
+		* spectral flux <br/>
+		* whitened and rectified spectral flux (onset function). <br/><br/>
+		The output is a list of messages in the form a qualified pair, in which the first element is the name of the descriptor
+		and the second element is the corresponding extracted value. To be used with the <o>route</o> object.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="messages to the sdt.spectralfeats~ object">
+			<digest>messages to the sdt.spectralfeats~ object</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="0" type="signal">
+			<digest>Audio signal.</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="list, symbols, float">
+			<digest>List of messages in the form of a qualified pair - feature, value.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="window-size" optional="1" type="int">
+			<digest>Window size, in samples (default is 1024).</digest>
+		</objarg>
+	</objarglist>
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="signal">
+			<digest>
+				Input signal.
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="minFreq" get="1" set="1" type="float" size="1" >
+		    <digest>Lower frequency threshold, in Hz (0 for DC).</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="maxFreq" get="1" set="1" type="float" size="1">
+		    <digest>Upper frequency threshold, in Hz (0 for Nyquist).</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="overlap" get="1" set="1" type="float" size="1" >
+				<digest>Window overlap ratio [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.pitch~"/>
+		<seealso name="sdt.envelope~"/>
+		<seealso name="sdt.zerox~"/>
+		<seealso name="sdt.myo~"/>
+	</seealsolist>
+
+</c74object>

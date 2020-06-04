@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.reverb~">
+
+	<digest>
+		<m>Sound processor:</m>  A computationally efficient yet maximally diffusive matrix reverb.
+	</digest>
+
+	<description>
+		<o>sdt.reverb~</o> implements a Feedback Delay Network (FDN) reverberator.
+		The reverberation effect is parametrized according to the room size in the three dimensions (width, height, depth), the shape
+		deviation from a rectangular room, the global reverberation time, and the reverberation time at 1 kHz.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="signal">
+			<digest>Dry audio signal</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="o" type="message">
+			<digest>Messages to the sdt.reverb~ object.</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Reverb audio signal.</digest>
+		</outlet>
+
+	</outletlist>
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="Maximum-length-of-delay-lines" optional="1" type="long">
+			<digest>Maximum length of delay lines, in samples (defaul is 44100).</digest>
+		</objarg>
+	</objarglist>
+
+	<!--MESSAGES
+	<methodlist>
+		<method name="">
+			<arglist>
+				<arg name="" optional="0" type="" />
+			</arglist>
+			<digest>
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>-->
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="xSize" get="1" set="1" type="float" size="1" >
+		    <digest>Room width, in m.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="ySize" get="1" set="1" type="float" size="1">
+		    <digest>Room height, in m.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="zSize" get="1" set="1" type="float" size="1" >
+				<digest>Room width, in m.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="randomness" get="1" set="1" type="float" size="1" >
+				<digest>Shape deviation from a rectangular room [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="time" get="1" set="1" type="float" size="1" >
+				<digest>Global reverberation time, in s.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="time1k" get="1" set="1" type="float" size="1" >
+				<digest>Reverberation time at 1kHz, in s.</digest>
+				<description></description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.demix~"/>
+		<seealso name="sdt.pitchshift~"/>
+	</seealsolist>
+
+</c74object>

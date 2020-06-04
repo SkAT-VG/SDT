@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.envelope~">
+
+	<digest>
+		<m>Sound analysis:</m> Envelope follower with different attack and release times.
+	</digest>
+
+	<description>
+		<o>sdt.envelope~</o> is an envelope follower based on a one-pole lowpass filter with different attack and release times.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="signal">
+			<digest>Audio signal.</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Signal envelope.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS
+	<objarglist>
+		<objarg name="" optional="" type="">
+			<digest></digest>
+		</objarg>
+	</objarglist>-->
+
+	<!--MESSAGES
+	<methodlist>
+		<method name="bang">
+			<arglist>
+				<arg name="bouncing event trigger" optional="0" type="bang" />
+			</arglist>
+			<digest>
+				Bang triggers the bouncing event.
+			</digest>
+			<description>
+				Bangs received by the left-most outlet triggers the bouncing event.
+			</description>
+		</method>
+	</methodlist>-->
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="attack" get="1" set="1" type="float" size="1" >
+		    <digest>Attack in milliseconds.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="release" get="1" set="1" type="float" size="1">
+		    <digest>Release in milliseconds.</digest>
+		    <description></description>
+	  </attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.pitch~"/>
+		<seealso name="sdt.spectralfeats~"/>
+		<seealso name="sdt.zerox~"/>
+		<seealso name="sdt.myo~"/>
+	</seealsolist>
+
+</c74object>

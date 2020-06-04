@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.dcmotor~">
+
+	<digest>
+		<m>Machines:</m> Electric motor model.
+	</digest>
+
+	<description>
+		<o>sdt.dcmotor~</o> simulates a DC brushed motor.
+		It takes several control parameters, reflecting the main mechanical components affecting the resulting sound, and essentially the rotor motion (RPM), the friction noise due to contacts between the brushes and the commutator, the gearing system, and the air movement induced by rotations.
+		The output is an audio signal representing the electric motor sound.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="signal">
+			<digest>Rotor Revolution Per Minute (RPM).</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="1" type="signal">
+			<digest>Mechanical load on the rotor [0.0, 1.0].</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Electric motor sound.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="Buffer-size" optional="" type="int">
+			<digest>Buffer size of the internal comb filter, in samples. Default is 44100, which allows for a maximum chassis length of ∼343 m at a sampling rate of 44.1 kHz.</digest>
+		</objarg>
+	</objarglist>
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="signal">
+			<digest>
+				Inlet 0: Rotor Revolutions Per Minute (RPM). <br /><br />
+				Inlet 1: Mechanical load on the rotor [0.0, 1.0].
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="coils" get="1" set="1" type="int" size="1" >
+		    <digest>Number of coils on the rotor.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="harshness" get="1" set="1" type="float" size="1">
+		    <digest>Spectral density [0.0, 1.0].</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="size" get="1" set="1" type="float" size="1" >
+				<digest>Chassis length, in m.</digest>
+				<description>Chassis length, in m. A buffer size of 44100 allows for a maximum chassis length of ∼343 m at a sampling rate of 44.1 kHz.</description>
+		</attribute>
+
+		<attribute name="reson" get="1" set="1" type="float" size="1" >
+				<digest>Chassis resonance [0.1., 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="gearRatio" get="1" set="1" type="float" size="1" >
+				<digest>Gear ratio.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="rotorGain" get="1" set="1" type="float" size="1" >
+				<digest>Amount of noise coming from the rotor [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="brushGain" get="1" set="1" type="float" size="1" >
+				<digest>Amount of noise coming from the brushes [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="gearGain" get="1" set="1" type="float" size="1" >
+				<digest>Amount of noise coming from the gears [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="airGain" get="1" set="1" type="float" size="1" >
+				<digest>Amount of air turbulence caused by the spinning rotor [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.motor~"/>
+	</seealsolist>
+
+</c74object>

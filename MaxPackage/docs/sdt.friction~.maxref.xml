@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.friction~">
+
+	<digest>
+		<m>Solids interaction:</m> Non-linear friction between one inertial and one modal object.
+	</digest>
+
+	<description>
+		<o>sdt.friction~</o> simulates a non-linear friction, by computing the friction force from the relative velocity
+		between the two contact points of the interacting resonators, according to the bidirectional structure <o>sdt.inertial</o> &#8596; <o>sdt.friction~</o> &#8596; <o>sdt.modal</o>.
+		<br />
+		The resulting force is the sum of four components: an elastic term, an internal dissipation term, a viscosity term, and the gain of a pseudo-random function,
+		representing noise related to the surface roughness. More subtle phenomena, such as pre-sliding behavior (gradual increase of the friction force for very small displacements),
+		are parametrized by several other quantities: dynamic and static friction coefficients, break-away coefficient and Stribeck velocity.
+		These phenomena are mostly related to the transients and they are particularly important for a realistic simulation of friction sounds.
+		<br />
+		<br />
+		<m>PHYSICAL TO PHENOMENOLOGICAL DESCRIPTION</m>
+		<br />
+		*Bristle stiffness: affects the evolution of mode lock-in.
+		<br />
+		*Bristle viscosity (dissipation): affects the sound bandwidth.
+		<br />
+		*Linear viscosity: affects the speed of timbre evolution and pitch.
+		<br />
+		*kDynamic friction coefficient: high values reduce the sound bandwidth.
+		<br />
+		*kStatic friction coefficient: affects the smoothness of sound attack.
+		<br />
+		*Break-away coefficient: affects the transients of the elasto-plastic state.
+		<br />
+		*Stribeck velocity: affects the smoothness of the sound attack.
+		<br />
+		*Noisiness: affects the perceived surface roughness.
+
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="message">
+			<digest></digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="0" type="signal">
+			<digest>External force on probe / object, in N.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="1" type="signal">
+			<digest>If not equal to 0, sets probe / object velocity (in m/s) and puts them in contact.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="2" type="signal">
+			<digest>Fragment size of probe / object [0.0, 1.0]</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="3" type="signal">
+			<digest>External force on probe / object, in N.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="4" type="signal">
+			<digest>If not equal to 0, sets probe / object velocity (in m/s) and puts them in contact.</digest>
+			<description></description>
+		</inlet>
+
+		<inlet id="5" type="signal">
+			<digest>Fragment size of probe / object [0.0, 1.0].</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Velocity of object 1 (rubber).</digest>
+		</outlet>
+
+		<outlet id="1" type="signal">
+			<digest>Audio signal: Pickup displacement for the second object.</digest>
+			<description>If there are fewer outlets than pickups,
+				some outputs will not be available. Outlets in excess will constantly output 0.</description>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS-->
+	<objarglist>
+		<objarg name="Unique_ID-Obj1" optional="0" type="symbol, required">
+			<digest>Mandatory: Unique ID name set for the sdt.inertial object.</digest>
+		</objarg>
+
+		<objarg name="Unique_ID-Obj2" optional="0" type="symbol, required">
+			<digest>Mandatory: Unique ID name set for the sdt.modal object.</digest>
+		</objarg>
+
+		<objarg name="Max-outlets" optional="0" type="int, required">
+			<digest>Mandatory: Max number of outlets. They should correspond to the total number of pickups.
+							If greater than the number of pickup points, the unused outlets are disabled;
+							if lower than the number of pickup points, only the first ones are output,
+							always starting from pickup0.
+			</digest>
+		</objarg>
+	</objarglist>
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="messages">
+			<digest>
+				Inlet 0: Messages and attributes to the object.
+			</digest>
+			<description>
+			</description>
+		</method>
+
+		<method name="signal">
+			<digest>
+				Inlet 0: External force on probe / object 1, in N. <br /><br />
+			  Inlet 1: If ≠ 0, sets probe / object 1 velocity (in m/s) and puts them in contact. <br /><br />
+				Inlet 2: Fragment size of the probe / object 1 [0.0, 1.0].<br /><br />
+			  Inlet 3: External force on object 2, in N. <br /><br />
+			  Inlet 4: If ≠ 0, sets object 2 velocity (in m/s) and puts them in contact. <br /><br />
+				Inlet 5: Fragment size of the object 2 [0.0, 1.0].
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="stiffness" get="1" set="1" type="float" size="1" >
+		    <digest>Bristle stiffness.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="dissipation" get="1" set="1" type="float" size="1">
+		    <digest>Bristle dissipation.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="viscosity" get="1" set="1" type="float" size="1" >
+				<digest>Bristle viscosity.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="noisiness" get="1" set="1" type="float" size="1" >
+				<digest>Amount of sliding noise.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="kStatic" get="1" set="1" type="float" size="1" >
+				<digest>Static friction coefficient [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="kDynamic" get="1" set="1" type="float" size="1" >
+				<digest>Dynamic friction coefficient [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="breakAway" get="1" set="1" type="float" size="1" >
+				<digest>Break-away coefficient [0.0, 1.0].</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="stribeck" get="1" set="1" type="float" size="1" >
+				<digest>Stribeck velocity in m/s.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="force" get="1" set="1" type="float" size="1" >
+				<digest>Normal force on rubber, in N.</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="contact0" get="1" set="1" type="int" size="1" >
+				<digest>Pickup index of the contact point for object 1 (rubber).</digest>
+				<description></description>
+		</attribute>
+
+		<attribute name="contact1" get="1" set="1" type="int" size="1" >
+				<digest>Pickup index of the contact point for object 2 (resonator).</digest>
+				<description></description>
+		</attribute>
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.inertial"/>
+		<seealso name="sdt.modal"/>
+		<seealso name="sdt.impact~"/>
+		<seealso name="sdt.scraping~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.rolling~"/>
+	</seealsolist>
+
+</c74object>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml-stylesheet href="./_c74_ref.xsl" type="text/xsl"?>
+
+<c74object name="sdt.scraping~">
+
+	<digest>
+			<m>Solids interaction:</m> control layer for a probe sliding on a surface.
+	</digest>
+
+	<description>
+		Compound model that simulates a probe slliding on a surface.
+		<br />
+		<o>sdt.scraping~</o> acts as control layer for the <o>sdt.modal</o> resonator.
+		<br />
+		Takes three control parameters, the <i> granularity</i> of the surface, that is the probe width, the <i>velocity</i> and the external <i>force</i> on the probe.
+		<br />
+		<o>sdt.scraping~</o> is fed by an audio signal, representing the profile surface.
+		The output is an audio signal representing the normal force in N, applied to the resonator.
+	</description>
+
+	<!--METADATA-->
+	<metadatalist>
+		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="tag">Sound Design Toolkit</metadata>
+		<metadata name="tag">Procedural audio</metadata>
+		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Sonic interaction design</metadata>
+		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
+		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+	</metadatalist>
+
+	<!--INLETS-->
+	<inletlist>
+		<inlet id="0" type="messages to the scraping object">
+			<digest>messages to the bouncing object.</digest>
+			<description>messages to the bouncing object, bang starts the process.</description>
+		</inlet>
+
+		<inlet id="0" type="signal">
+			<digest>Audio signal, representing the surface profile.</digest>
+			<description></description>
+		</inlet>
+	</inletlist>
+
+	<!--OUTLETS-->
+	<outletlist>
+		<outlet id="0" type="signal">
+			<digest>Audio signal: Normal force in N.</digest>
+		</outlet>
+	</outletlist>
+
+	<!--ARGUMENTS
+	<objarglist>
+		<objarg name="" optional="" type="">
+			<digest></digest>
+		</objarg>
+	</objarglist>-->
+
+	<!--MESSAGES-->
+	<methodlist>
+		<method name="signal">
+			<digest>
+				Input signal representing the morphology of the surface.
+			</digest>
+			<description>
+			</description>
+		</method>
+	</methodlist>
+
+	<!--ATTRIBUTES-->
+	<attributelist>
+		<attribute name="grain" get="1" set="1" type="float" size="1" >
+		    <digest>Density of the micro-impacts, that is the probe width [0.0, 1.0].</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="velocity" get="1" set="1" type="float" size="1">
+		    <digest>Velocity of the probe, in m/s.</digest>
+		    <description></description>
+	  </attribute>
+
+		<attribute name="force" get="1" set="1" type="float" size="1" >
+				<digest>External force on probe, in N.</digest>
+				<description></description>
+		</attribute>
+
+	</attributelist>
+
+	<!--SEEALSO-->
+	<seealsolist>
+		<seealso name="sdt.inertial"/>
+		<seealso name="sdt.modal"/>
+		<seealso name="sdt.impact~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.friction~"/>
+	</seealsolist>
+
+	<misc name="Input">
+		<entry name="signal">
+			<description>
+				Inlet 0: Surface profile. The profile of the surface is obtained as a signal input,
+				and it can be either recorded as an audio file or generated in real time.
+				Usually, bandpass filtered noise or fractal noise are two good surface profile generators.
+			</description>
+		</entry>
+	</misc>
+
+	<misc name="Output">
+		<entry name="signal">
+			<description>
+				Outlet 0: Normal force acting on the surface, meant to be directly applied to a resonator.
+				Friction with another object can also simulate rubbing phenomena.
+			</description>
+		</entry>
+	</misc>
+
+</c74object>
