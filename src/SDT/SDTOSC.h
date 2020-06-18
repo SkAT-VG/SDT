@@ -11,6 +11,10 @@ Functions and structures to handle OSC messages for SDT.
 extern "C" {
 #endif
 
+/** @defgroup address OSC Address
+This class represent OSC Addresses to allow ease of manipulation and parsing.
+@{ */
+
 /** @brief Data structure representing an OSC address. */
 typedef struct SDTOSCAddress SDTOSCAddress;
 
@@ -35,6 +39,8 @@ extern unsigned int SDTOSCAddress_getDepth(const SDTOSCAddress *x);
 @param[in] node_idx Depth of the node (container / method) in the OSC address. Index 0 is for the first (non-root) node.
 @return Node name as a C-string */
 extern char *SDTOSCAddress_getNode(const SDTOSCAddress *x, unsigned int node_idx);
+
+/** @} */
 
 #ifdef __cplusplus
 };
