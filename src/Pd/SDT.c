@@ -33,6 +33,7 @@ void pitchshift_tilde_setup(void);
 void reverb_tilde_setup(void);
 void rolling_tilde_setup(void);
 void scraping_tilde_setup(void);
+void sdt_osc_setup(void);
 void spectralfeats_tilde_setup(void);
 void windcavity_tilde_setup(void);
 void windflow_tilde_setup(void);
@@ -62,6 +63,7 @@ void SDT_setup() {
   reverb_tilde_setup();
   rolling_tilde_setup();
   scraping_tilde_setup();
+  sdt_osc_setup();
   spectralfeats_tilde_setup();
   windcavity_tilde_setup();
   windflow_tilde_setup();
@@ -79,5 +81,6 @@ void SDT_setup() {
   post("bouncing~ breaking~ bubble~ crumpling~ dcmotor~ demix~ envelope~");
   post("explosion~ fluidflow~ friction~ impact~ inertial modal");
   post("modaltracker~ motor~ myo~ pitch~ pitchshift~ reverb~ rolling~");
+  post("sdtOSC");
   post("scraping~ spectralfeats~ windcavity~ windflow~ windkarman~ zerox~");
 }
