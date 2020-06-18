@@ -8,7 +8,7 @@ struct SDTOSCAddress {
   char **nodes;
 };
 
-SDTOSCAddress *SDTOSCAddress_new(char *s) {
+SDTOSCAddress *SDTOSCAddress_new(const char *s) {
   if (*s != '/')
     return 0;
 
@@ -60,7 +60,7 @@ void SDTOSCAddress_free(SDTOSCAddress *x) {
   }
 }
 
-char *SDTOSCAddress_str(SDTOSCAddress *x) {
+char *SDTOSCAddress_str(const SDTOSCAddress *x) {
   unsigned int len = 0, j = 0;
   for(unsigned int i = 0 ; i < x->depth ; ++i)
     len += 1 + strlen(x->nodes[i]);
@@ -74,10 +74,10 @@ char *SDTOSCAddress_str(SDTOSCAddress *x) {
   return s;
 }
 
-unsigned int SDTOSCAddress_getDepth(SDTOSCAddress *x) {
+unsigned int SDTOSCAddress_getDepth(const SDTOSCAddress *x) {
   return x->depth;
 }
 
-char *SDTOSCAddress_getNode(SDTOSCAddress *x, unsigned int node_idx) {
+char *SDTOSCAddress_getNode(const SDTOSCAddress *x, unsigned int node_idx) {
   return x->nodes[node_idx];
 }
