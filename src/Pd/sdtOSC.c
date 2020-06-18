@@ -1,4 +1,5 @@
 #include "m_pd.h"
+#include "SDT/SDTOSC.h"
 #include <stdlib.h>
 
 static t_class *sdt_osc_class;
@@ -9,6 +10,20 @@ typedef struct _sdt_osc {
 
 void sdt_osc_echo(t_sdt_osc *x, t_symbol *s, int argc, t_atom *argv) {
   startpost("SDT/OSC [%s]: ", s->s_name);
+  postatom(argc, argv);
+  endpost();
+
+  SDTOSCAddress *a = SDTOSCAddress_new(s->s_name);
+  if (a) {
+    post("  Depth: %d", SDTOSCAddress_getDepth(a));
+    post("  Method: %s", SDTOSCAddress_getNode(a, SDTOSCAddress_getDepth(a) - 1));
+    startpost("  Container: /");
+    for (int i = 0 ; i < ((int) SDTOSCAddress_getDepth(a)) - 1 ; ++i)
+      startpost("%s/", SDTOSCAddress_getNode(a, i));
+    endpost();
+    SDTOSCAddress_free(a);
+  }
+  startpost("  Arguments:");
   postatom(argc, argv);
   endpost();
 }
