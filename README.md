@@ -1,3 +1,4 @@
+[![Ubuntu build status](https://github.com/ChromaticIsobar/SDT/workflows/ubuntu/badge.svg?branch=develop)](https://github.com/ChromaticIsobar/SDT/actions?query=workflow%3Aubuntu)
 # SOUND DESIGN TOOLKIT (SDT)
 
 
