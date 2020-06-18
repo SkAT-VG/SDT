@@ -1,4 +1,5 @@
 #include "m_pd.h"
+#include <stdlib.h>
 
 static t_class *sdt_osc_class;
 
@@ -6,8 +7,10 @@ typedef struct _sdt_osc {
   t_object  obj;
 } t_sdt_osc;
 
-void sdt_osc_bang(t_sdt_osc *x) {
-  post("Hello SDT OSC!!!");
+void sdt_osc_echo(t_sdt_osc *x, t_symbol *s, int argc, t_atom *argv) {
+  startpost("SDT/OSC [%s]: ", s->s_name);
+  postatom(argc, argv);
+  endpost();
 }
 
 void *sdt_osc_new(void) {
@@ -29,5 +32,5 @@ void sdt_osc_setup(void) {
     0
   );
 
-  class_addbang(sdt_osc_class, sdt_osc_bang);
+  class_addanything(sdt_osc_class, sdt_osc_echo);
 }
