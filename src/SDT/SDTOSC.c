@@ -93,7 +93,7 @@ SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress* x) {
   y->nodes = (char **) malloc(sizeof(char *) * y->depth);
   for(unsigned int i = 0 ; i < y->depth ; ++i) {
     y->nodes[i] = (char *) malloc(sizeof(char) * (strlen(x->nodes[i + 1]) + 1));
-    sprintf(y->nodes[i], "%s", x->nodes[i + 1]);
+    strcpy(y->nodes[i], x->nodes[i + 1]);
   }
 
   return y;
