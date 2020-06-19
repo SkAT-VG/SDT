@@ -169,6 +169,15 @@ SDTOSCArgumentList *SDTOSCArgumentList_new(int argc) {
   return x;
 }
 
+SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x) {
+  SDTOSCArgumentList *y = (SDTOSCArgumentList *) malloc(sizeof(SDTOSCArgumentList));
+  y->argc = x->argc;
+  y->argv = (SDTOSCArgument **) malloc(sizeof(SDTOSCArgument *) * y->argc);
+  for(unsigned int i = 0 ; i < y->argc ; ++i)
+    y->argv[i] = (x->argv[i])? (SDTOSCArgument *) memcpy(malloc(sizeof(SDTOSCArgument)), (void *) x->argv[i], sizeof(SDTOSCArgument)) : 0;
+  return y;
+}
+
 void SDTOSCArgumentList_free(SDTOSCArgumentList *x) {
   for(unsigned int i = 0 ; i < x->argc ; ++i)
     if (x->argv[i])
@@ -223,6 +232,38 @@ float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i) {
 
 const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
   return SDTOSCArgument_getString(x->argv[i]);
+}
+
+//-------------------------------------------------------------------------------------//
+
+struct SDTOSCMessage {
+  SDTOSCAddress *address;
+  SDTOSCArgumentList *args;
+};
+
+SDTOSCMessage *SDTOSCMessage_new(SDTOSCAddress *address, SDTOSCArgumentList *args) {
+  SDTOSCMessage *x = (SDTOSCMessage *) malloc(sizeof(SDTOSCMessage));
+  x->address = address;
+  x->args = args;
+  return x;
+}
+
+void SDTOSCMessage_free(SDTOSCMessage *x) {
+  SDTOSCAddress_free(x->address);
+  SDTOSCArgumentList_free(x->args);
+  free(x);
+}
+
+SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x) {
+  return x->args;
+}
+
+char *SDTOSCMessage_getContainer(const SDTOSCMessage *x) {
+  return SDTOSCAddress_getNode(x->address, 0);
+}
+
+SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
+  return SDTOSCMessage_new(SDTOSCAddress_openContainer(x->address), SDTOSCArgumentList_copy(x->args));
 }
 
 //-------------------------------------------------------------------------------------//

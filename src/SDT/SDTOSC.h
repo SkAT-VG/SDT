@@ -13,7 +13,7 @@ extern "C" {
 
 #include "SDTResonators.h"
 
-/** @defgroup address OSC Address
+/** @defgroup osc_address OSC Address
 This class represents OSC addresses
 @{ */
 
@@ -103,6 +103,10 @@ typedef struct SDTOSCArgumentList SDTOSCArgumentList;
 @return Pointer to the new instance */
 extern SDTOSCArgumentList *SDTOSCArgumentList_new(int argc);
 
+/** @brief Object copy constructor.
+@return Pointer to the new instance */
+extern SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x);
+
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTOSCArgumentList_free(SDTOSCArgumentList *x);
@@ -155,6 +159,37 @@ extern float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i);
 Argument should be previously checked with ::SDTOSCArgumentList_isString
 @return The float value */
 extern const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i);
+
+/** @} */
+
+/** @defgroup osc_message OSC Message
+This class represents OSC messages
+@{ */
+
+/** @brief Data structure representing an OSC message. */
+typedef struct SDTOSCMessage SDTOSCMessage;
+
+/** @brief Object constructor.
+@param[in] address OSC address
+@param[in] args OSC argument list
+@return Pointer to the new instance */
+extern SDTOSCMessage *SDTOSCMessage_new(SDTOSCAddress *address, SDTOSCArgumentList *args);
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTOSCMessage_free(SDTOSCMessage *x);
+
+/** @brief Gets the arguments of the message
+@return The arguments */
+extern SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x);
+
+/** @brief Gets the top-level container name of the address of the message
+@return The container name */
+extern char *SDTOSCMessage_getContainer(const SDTOSCMessage *x);
+
+/** @brief Gets the message obtained by "opening the container", i.e. removing the first (non-root) node of the address.
+@return The new message */
+extern SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x);
 
 /** @} */
 
