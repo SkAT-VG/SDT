@@ -99,6 +99,128 @@ SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress* x) {
   return y;
 }
 
+struct SDTOSCArgument {
+  enum {
+    SDT_OSC_ARG_UNSUPPORTED,
+    SDT_OSC_ARG_FLOAT,
+    SDT_OSC_ARG_STRING,
+  } tag;
+  union {
+    float f;
+    const char *s;
+  } value;
+};
+
+SDTOSCArgument *SDTOSCArgument_new() {
+  SDTOSCArgument *x = (SDTOSCArgument *) malloc(sizeof(SDTOSCArgument));
+  x->tag = SDT_OSC_ARG_UNSUPPORTED;
+  return x;
+}
+
+SDTOSCArgument *SDTOSCArgument_newFloat(float f) {
+  SDTOSCArgument *x = SDTOSCArgument_new();
+  x->tag = SDT_OSC_ARG_FLOAT;
+  x->value.f = f;
+  return x;
+}
+
+SDTOSCArgument *SDTOSCArgument_newString(const char *s) {
+  SDTOSCArgument *x = SDTOSCArgument_new();
+  x->tag = SDT_OSC_ARG_STRING;
+  x->value.s = s;
+  return x;
+}
+
+int SDTOSCArgument_isUnsupported(const SDTOSCArgument *x) {
+  return x->tag == SDT_OSC_ARG_UNSUPPORTED;
+}
+
+int SDTOSCArgument_isFloat(const SDTOSCArgument *x) {
+  return x->tag == SDT_OSC_ARG_FLOAT;
+}
+
+int SDTOSCArgument_isString(const SDTOSCArgument *x) {
+  return x->tag == SDT_OSC_ARG_STRING;
+}
+
+float SDTOSCArgument_getFloat(const SDTOSCArgument *x) {
+  return x->value.f;
+}
+
+const char *SDTOSCArgument_getString(const SDTOSCArgument *x) {
+  return x->value.s;
+}
+
+struct SDTOSCArgumentList {
+  int argc;
+  SDTOSCArgument **argv;
+};
+
+SDTOSCArgumentList *SDTOSCArgumentList_new(int argc) {
+  SDTOSCArgumentList *x = (SDTOSCArgumentList *) malloc(sizeof(SDTOSCArgumentList));
+  x->argc = argc;
+  x->argv = (SDTOSCArgument **) malloc(sizeof(SDTOSCArgument *) * argc);
+  for(unsigned int i = 0 ; i < argc ; ++i)
+    x->argv[i] = 0;
+  return x;
+}
+
+void SDTOSCArgumentList_free(SDTOSCArgumentList *x) {
+  for(unsigned int i = 0 ; i < x->argc ; ++i)
+    if (x->argv[i])
+      free(x->argv[i]);
+  free(x->argv);
+  free(x);
+}
+
+void SDTOSCArgumentList_put(SDTOSCArgumentList *x, int i) {
+  if (x->argv[i])
+    free(x->argv[i]);
+  x->argv[i] = SDTOSCArgument_new();
+}
+
+void SDTOSCArgumentList_putArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a) {
+  if (x->argv[i])
+    free(x->argv[i]);
+  x->argv[i] = a;
+}
+
+void SDTOSCArgumentList_putFloat(SDTOSCArgumentList *x, int i, float f) {
+  if (x->argv[i])
+    free(x->argv[i]);
+  x->argv[i] = SDTOSCArgument_newFloat(f);
+}
+
+void SDTOSCArgumentList_putString(SDTOSCArgumentList *x, int i, const char *s) {
+  if (x->argv[i])
+    free(x->argv[i]);
+  x->argv[i] = SDTOSCArgument_newString(s);
+}
+
+int SDTOSCArgumentList_isEmpty(const SDTOSCArgumentList *x, int i) {
+  return !x->argv[i];
+}
+
+int SDTOSCArgumentList_isUnsupported(const SDTOSCArgumentList *x, int i) {
+  return !SDTOSCArgumentList_isEmpty(x, i) && SDTOSCArgument_isUnsupported(x->argv[i]);
+}
+
+int SDTOSCArgumentList_isFloat(const SDTOSCArgumentList *x, int i) {
+  return !SDTOSCArgumentList_isEmpty(x, i) && SDTOSCArgument_isFloat(x->argv[i]);
+}
+
+int SDTOSCArgumentList_isString(const SDTOSCArgumentList *x, int i) {
+  return !SDTOSCArgumentList_isEmpty(x, i) && SDTOSCArgument_isString(x->argv[i]);
+}
+
+float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i) {
+  return SDTOSCArgument_getFloat(x->argv[i]);
+}
+
+const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
+  return SDTOSCArgument_getString(x->argv[i]);
+}
+
 int SDTOSCRoot (const SDTOSCAddress* x) {
   if (!x)
     return 0;
