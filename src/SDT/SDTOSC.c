@@ -99,6 +99,8 @@ SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress* x) {
   return y;
 }
 
+//-------------------------------------------------------------------------------------//
+
 struct SDTOSCArgument {
   enum {
     SDT_OSC_ARG_UNSUPPORTED,
@@ -150,6 +152,8 @@ float SDTOSCArgument_getFloat(const SDTOSCArgument *x) {
 const char *SDTOSCArgument_getString(const SDTOSCArgument *x) {
   return x->value.s;
 }
+
+//-------------------------------------------------------------------------------------//
 
 struct SDTOSCArgumentList {
   int argc;
@@ -220,6 +224,8 @@ float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i) {
 const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
   return SDTOSCArgument_getString(x->argv[i]);
 }
+
+//-------------------------------------------------------------------------------------//
 
 int SDTOSCRoot (const SDTOSCAddress* x) {
   if (!x)
