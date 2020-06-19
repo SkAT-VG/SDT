@@ -273,6 +273,16 @@ SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
 
 //-------------------------------------------------------------------------------------//
 
+void SDTOSCPostArgs(const SDTOSCMessage* x) {
+  for(unsigned int i = 0 ; i < x->args->argc ; ++i)
+    if (SDTOSCArgumentList_isString(x->args, i))
+      post("%d) STRING: %s", i + 1, SDTOSCArgumentList_getString(x->args, i));
+    else if (SDTOSCArgumentList_isFloat(x->args, i))
+      post("%d) FLOAT: %.2f", i + 1, SDTOSCArgumentList_getFloat(x->args, i));
+    else if (SDTOSCArgumentList_isUnsupported(x->args, i))
+      post("%d) [UNSUPPORTED]", i + 1);
+}
+
 int SDTOSCRoot (const SDTOSCMessage* x) {
   if (!SDTOSCMessage_hasContainer(x))
     return 0;
@@ -282,6 +292,9 @@ int SDTOSCRoot (const SDTOSCMessage* x) {
   if (!strcmp("resonator", SDTOSCMessage_getContainer(x))) {
     return_code = 1;
     SDTOSCResonator(sub);
+  } else if (!strcmp("post", SDTOSCMessage_getContainer(x))) {
+    return_code = 2;
+    SDTOSCPostArgs(sub);
   }
 
   SDTOSCMessage_free(sub);
