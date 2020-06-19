@@ -1,4 +1,6 @@
+#include "m_pd.h"
 #include "SDTOSC.h"
+#include "SDTSolids.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -80,4 +82,48 @@ unsigned int SDTOSCAddress_getDepth(const SDTOSCAddress *x) {
 
 char *SDTOSCAddress_getNode(const SDTOSCAddress *x, unsigned int node_idx) {
   return x->nodes[node_idx];
+}
+
+SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress* x) {
+  if (x->depth < 2)
+    return 0;
+
+  SDTOSCAddress *y = (SDTOSCAddress *) malloc(sizeof(SDTOSCAddress));
+  y->depth = x->depth - 1;
+  y->nodes = (char **) malloc(sizeof(char *) * y->depth);
+  for(unsigned int i = 0 ; i < y->depth ; ++i) {
+    y->nodes[i] = (char *) malloc(sizeof(char) * (strlen(x->nodes[i + 1]) + 1));
+    sprintf(y->nodes[i], "%s", x->nodes[i + 1]);
+  }
+
+  return y;
+}
+
+int SDTOSCRoot (const SDTOSCAddress* x) {
+  if (!x)
+    return 0;
+
+  SDTOSCAddress* sub = SDTOSCAddress_openContainer(x);
+  int return_code = 0;
+  if (!strcmp("resonator", x->nodes[0])) {
+    return_code = 1;
+    SDTOSCResonator(sub);
+  }
+
+  SDTOSCAddress_free(sub);
+  return return_code;
+}
+
+SDTResonator *SDTOSCResonator(const SDTOSCAddress* x) {
+  SDTResonator *res = (x)? SDT_getResonator(x->nodes[0]) : 0;
+
+  if (res)
+    post("Found resonator '%s' at %d", x->nodes[0], res);
+  else
+    if (x)
+      post("Resonator '%s' not found", x->nodes[0]);
+    else
+      post("Resonator not specified");
+
+  return res;
 }

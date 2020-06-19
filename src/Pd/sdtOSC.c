@@ -8,24 +8,14 @@ typedef struct _sdt_osc {
   t_object  obj;
 } t_sdt_osc;
 
-void sdt_osc_echo(t_sdt_osc *x, t_symbol *s, int argc, t_atom *argv) {
-  startpost("SDT/OSC [%s]: ", s->s_name);
-  postatom(argc, argv);
-  endpost();
-
+void sdt_osc_root(t_sdt_osc *x, t_symbol *s, int argc, t_atom *argv) {
   SDTOSCAddress *a = SDTOSCAddress_new(s->s_name);
-  if (a) {
-    post("  Depth: %d", SDTOSCAddress_getDepth(a));
-    post("  Method: %s", SDTOSCAddress_getNode(a, SDTOSCAddress_getDepth(a) - 1));
-    startpost("  Container: /");
-    for (int i = 0 ; i < ((int) SDTOSCAddress_getDepth(a)) - 1 ; ++i)
-      startpost("%s/", SDTOSCAddress_getNode(a, i));
+  if (!SDTOSCRoot(a) && a) {
+    startpost("SDT OSC @[%s]: ", s->s_name);
+    postatom(argc, argv);
     endpost();
-    SDTOSCAddress_free(a);
   }
-  startpost("  Arguments:");
-  postatom(argc, argv);
-  endpost();
+  SDTOSCAddress_free(a);
 }
 
 void *sdt_osc_new(void) {
@@ -47,5 +37,5 @@ void sdt_osc_setup(void) {
     0
   );
 
-  class_addanything(sdt_osc_class, sdt_osc_echo);
+  class_addanything(sdt_osc_class, sdt_osc_root);
 }

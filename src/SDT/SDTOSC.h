@@ -11,6 +11,8 @@ Functions and structures to handle OSC messages for SDT.
 extern "C" {
 #endif
 
+#include "SDTResonators.h"
+
 /** @defgroup address OSC Address
 This class represent OSC Addresses to allow ease of manipulation and parsing.
 @{ */
@@ -39,6 +41,24 @@ extern unsigned int SDTOSCAddress_getDepth(const SDTOSCAddress *x);
 @param[in] node_idx Depth of the node (container / method) in the OSC address. Index 0 is for the first (non-root) node.
 @return Node name as a C-string */
 extern char *SDTOSCAddress_getNode(const SDTOSCAddress *x, unsigned int node_idx);
+
+/** @brief Gets the address obtained by "opening the container", i.e. removing the first (non-root) node.
+@return The new address */
+extern SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress *x);
+
+/** @} */
+
+/** @brief OSC root for SDT methods
+@return An integer code corresponding to the child node, if it is valid, otherwise 0. */
+extern int SDTOSCRoot (const SDTOSCAddress* x);
+
+/** @defgroup osc_resonators Resonators
+OSC containers and methods for SDT Resonators
+@{ */
+
+/** @brief The container of OSC methods for SDT Resonators
+@return The pointer to the Resonator instance being operated onto. */
+extern SDTResonator *SDTOSCResonator(const SDTOSCAddress* x);
 
 /** @} */
 

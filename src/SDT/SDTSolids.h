@@ -24,6 +24,13 @@ If an interactor with the same ID is present, the resonator is bound to the inte
 @param[in] key Unique ID assigned to the resonator instance */
 extern int SDT_registerResonator(SDTResonator *x, char *key);
 
+/** @brief Queries the resonators list by its unique ID.
+If a resonator with the ID is present, a pointer to the resonator is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the resonator instance
+@return Resonator instance pointer */
+extern SDTResonator *SDT_getResonator(char *key);
+
 /** @brief Unregisters a resonator from the resonator list.
 If a resonator with the given ID is present, it is unregistered from the list. If also an
 interactor with the same ID is present, the object is released by the interactor as well.

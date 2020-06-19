@@ -31,6 +31,10 @@ int SDT_registerResonator(SDTResonator *x, char *key) {
   return 0;
 }
 
+SDTResonator *SDT_getResonator(char *key) {
+  return (resonators)? SDTHashmap_get(resonators, key) : 0;
+}
+
 int SDT_unregisterResonator(char *key) {
   if (!resonators) return 1;
   if (SDTHashmap_del(resonators, key)) return 1;
