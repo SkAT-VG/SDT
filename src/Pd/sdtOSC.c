@@ -30,15 +30,7 @@ void sdt_osc_root(t_sdt_osc *x, t_symbol *s, int argc, t_atom *argv) {
   postatom(argc, argv);
   endpost();
   SDTOSCMessage *m = pd_args_to_sdt(s, argc, argv);
-  //sdt_osc_arg_post(argc, argv);
-  //free(pd_args_to_sdt(argc, argv));
-  // sdt_osc_arg_post(argc, argv);
-  //SDTOSCAddress *a = SDTOSCAddress_new(s->s_name);
-  //if (!SDTOSCRoot(a) && a) {
-  //  startpost("SDT OSC @[%s]: ", s->s_name);
-  //  postatom(argc, argv);
-  //  endpost();
-  //}
+  SDTOSCRoot(m);
   SDTOSCMessage_free(m);
 }
 

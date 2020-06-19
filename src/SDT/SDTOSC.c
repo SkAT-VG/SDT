@@ -258,6 +258,10 @@ SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x) {
   return x->args;
 }
 
+int SDTOSCMessage_hasContainer(const SDTOSCMessage *x) {
+  return !!x->address;
+}
+
 char *SDTOSCMessage_getContainer(const SDTOSCMessage *x) {
   return SDTOSCAddress_getNode(x->address, 0);
 }
@@ -268,31 +272,30 @@ SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
 
 //-------------------------------------------------------------------------------------//
 
-int SDTOSCRoot (const SDTOSCAddress* x) {
-  if (!x)
+int SDTOSCRoot (const SDTOSCMessage* x) {
+  if (!SDTOSCMessage_hasContainer(x))
     return 0;
 
-  SDTOSCAddress* sub = SDTOSCAddress_openContainer(x);
+  SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
   int return_code = 0;
-  if (!strcmp("resonator", x->nodes[0])) {
+  if (!strcmp("resonator", SDTOSCMessage_getContainer(x))) {
     return_code = 1;
     SDTOSCResonator(sub);
   }
 
-  SDTOSCAddress_free(sub);
+  SDTOSCMessage_free(sub);
   return return_code;
 }
 
-SDTResonator *SDTOSCResonator(const SDTOSCAddress* x) {
-  SDTResonator *res = (x)? SDT_getResonator(x->nodes[0]) : 0;
+SDTResonator *SDTOSCResonator(const SDTOSCMessage* x) {
+  SDTResonator *res = (SDTOSCMessage_hasContainer(x))? SDT_getResonator(SDTOSCMessage_getContainer(x)) : 0;
 
   if (res)
-    post("Found resonator '%s' at %d", x->nodes[0], res);
+    post("Found resonator '%s' at %d", SDTOSCMessage_getContainer(x), res);
+  else if (SDTOSCMessage_hasContainer(x))
+    post("Resonator '%s' not found", SDTOSCMessage_getContainer(x));
   else
-    if (x)
-      post("Resonator '%s' not found", x->nodes[0]);
-    else
-      post("Resonator not specified");
+    post("Resonator not specified");
 
   return res;
 }

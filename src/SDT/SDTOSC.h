@@ -183,6 +183,10 @@ extern void SDTOSCMessage_free(SDTOSCMessage *x);
 @return The arguments */
 extern SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x);
 
+/** @brief Checks if the message has a top-level container name
+@return The  The truth value of the check */
+extern int SDTOSCMessage_hasContainer(const SDTOSCMessage *x);
+
 /** @brief Gets the top-level container name of the address of the message
 @return The container name */
 extern char *SDTOSCMessage_getContainer(const SDTOSCMessage *x);
@@ -193,17 +197,17 @@ extern SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x);
 
 /** @} */
 
-/** @brief OSC root for SDT methods
-@return An integer code corresponding to the child node, if it is valid, otherwise 0. */
-extern int SDTOSCRoot (const SDTOSCAddress* x);
-
-/** @defgroup osc_resonators Resonators
-OSC containers and methods for SDT Resonators
+/** @defgroup osc_methods OSC Methods
+OSC containers and methods for SDT
 @{ */
+
+/** @brief OSC root for SDT methods
+@return An integer code corresponding to the child node ID, if it is valid, otherwise 0. */
+extern int SDTOSCRoot (const SDTOSCMessage* x);
 
 /** @brief The container of OSC methods for SDT Resonators
 @return The pointer to the Resonator instance being operated onto. */
-extern SDTResonator *SDTOSCResonator(const SDTOSCAddress* x);
+extern SDTResonator *SDTOSCResonator(const SDTOSCMessage* x);
 
 /** @} */
 
