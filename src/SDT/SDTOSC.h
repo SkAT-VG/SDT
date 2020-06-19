@@ -11,8 +11,10 @@ Functions and structures to handle OSC messages for SDT.
 extern "C" {
 #endif
 
+#include "SDTResonators.h"
+
 /** @defgroup address OSC Address
-This class represent OSC Addresses to allow ease of manipulation and parsing.
+This class represents OSC addresses
 @{ */
 
 /** @brief Data structure representing an OSC address. */
@@ -39,6 +41,134 @@ extern unsigned int SDTOSCAddress_getDepth(const SDTOSCAddress *x);
 @param[in] node_idx Depth of the node (container / method) in the OSC address. Index 0 is for the first (non-root) node.
 @return Node name as a C-string */
 extern char *SDTOSCAddress_getNode(const SDTOSCAddress *x, unsigned int node_idx);
+
+/** @brief Gets the address obtained by "opening the container", i.e. removing the first (non-root) node.
+@return The new address */
+extern SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress *x);
+
+/** @} */
+/** @defgroup osc_arguments OSC Argument
+This class represents OSC arguments
+@{ */
+
+/** @brief Data structure representing an OSC argument */
+typedef struct SDTOSCArgument SDTOSCArgument;
+
+/** @brief Object constructor.
+This object represents an usupported argument.
+@return Pointer to the new instance */
+extern SDTOSCArgument *SDTOSCArgument_new();
+
+/** @brief Checks if the argument is unsupported
+@return The truth value of the check */
+extern int SDTOSCArgument_isUnsupported(const SDTOSCArgument *x);
+
+/** @brief Object constructor.
+@param[in] f Float value to use as an OSC argument
+@return Pointer to the new instance */
+extern SDTOSCArgument *SDTOSCArgument_newFloat(float f);
+
+/** @brief Object constructor.
+@param[in] s String value (character pointer) to use as an OSC argument
+@return Pointer to the new instance */
+extern SDTOSCArgument *SDTOSCArgument_newString(const char *s);
+
+/** @brief Checks if the argument is a float
+@return The truth value of the check */
+extern int SDTOSCArgument_isFloat(const SDTOSCArgument *x);
+
+/** @brief Gets the float value of the argument.
+Argument should be previously checked with ::SDTOSCArgument_isFloat
+@return The float value */
+extern float SDTOSCArgument_getFloat(const SDTOSCArgument *x);
+
+/** @brief Checks if the argument is a string
+@return The truth value of the check */
+extern int SDTOSCArgument_isString(const SDTOSCArgument *x);
+
+/** @brief Gets the string value of the argument.
+Argument should be previously checked with ::SDTOSCArgument_isString
+@return The string as a character pointer */
+extern const char *SDTOSCArgument_getString(const SDTOSCArgument *x);
+
+/** @} */
+/** @defgroup osc_argument_lists OSC Argument List
+This class represents OSC argument lists
+@{ */
+
+/** @brief Data structure representing a list of OSC arguments */
+typedef struct SDTOSCArgumentList SDTOSCArgumentList;
+
+/** @brief Object constructor.
+@return Pointer to the new instance */
+extern SDTOSCArgumentList *SDTOSCArgumentList_new(int argc);
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTOSCArgumentList_free(SDTOSCArgumentList *x);
+
+/** @ brief Puts a new argument in the list at the specified position.
+The argument is unsupported.
+@param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed. */
+extern void SDTOSCArgumentList_put(SDTOSCArgumentList *x, int i);
+
+/** @ brief Puts a new argument in the list at the specified position.
+@param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed. */
+extern void SDTOSCArgumentList_putArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a);
+
+/** @ brief Puts a new float argument in the list at the specified position.
+@param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed.
+@param[in] f The float value */
+extern void SDTOSCArgumentList_putFloat(SDTOSCArgumentList *x, int i, float f);
+
+/** @ brief Puts a new string argument in the list at the specified position.
+@param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed.
+@param[in] s The string value */
+extern void SDTOSCArgumentList_putString(SDTOSCArgumentList *x, int i, const char *s);
+
+/** @brief Checks if no argument is at the specified position
+@param[in] i The position in the list to check
+@return The truth value of the check. Check succeeds if NULL pointer is at position i. */
+extern int SDTOSCArgumentList_isEmpty(const SDTOSCArgumentList *x, int i);
+
+/** @brief Checks if the argument at the specified position is unsupported
+@param[in] i The position in the list to check
+@return The truth value of the check. Check fails also if NULL pointer is at position i. */
+extern int SDTOSCArgumentList_isUnsupported(const SDTOSCArgumentList *x, int i);
+
+/** @brief Checks if the argument at the specified position is a float
+@param[in] i The position in the list to check
+@return The truth value of the check. Check fails also if NULL pointer is at position i. */
+extern int SDTOSCArgumentList_isFloat(const SDTOSCArgumentList *x, int i);
+
+/** @brief Checks if the argument at the specified position is a string
+@param[in] i The position in the list to check
+@return The truth value of the check. Check fails also if NULL pointer is at position i. */
+extern int SDTOSCArgumentList_isString(const SDTOSCArgumentList *x, int i);
+
+/** @brief Gets the float value of the argument at the specified position
+Argument should be previously checked with ::SDTOSCArgumentList_isFloat
+@return The float value */
+extern float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i);
+
+/** @brief Gets the string value of the argument at the specified position
+Argument should be previously checked with ::SDTOSCArgumentList_isString
+@return The float value */
+extern const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i);
+
+/** @} */
+
+/** @brief OSC root for SDT methods
+@return An integer code corresponding to the child node, if it is valid, otherwise 0. */
+extern int SDTOSCRoot (const SDTOSCAddress* x);
+
+/** @defgroup osc_resonators Resonators
+OSC containers and methods for SDT Resonators
+@{ */
+
+/** @brief The container of OSC methods for SDT Resonators
+@return The pointer to the Resonator instance being operated onto. */
+extern SDTResonator *SDTOSCResonator(const SDTOSCAddress* x);
 
 /** @} */
 
