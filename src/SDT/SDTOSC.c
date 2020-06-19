@@ -1,9 +1,10 @@
-#include "m_pd.h"
 #include "SDTOSC.h"
 #include "SDTSolids.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+extern void post(const char *fmt, ...);
 
 struct SDTOSCAddress {
   unsigned int depth;
