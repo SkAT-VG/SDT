@@ -111,21 +111,21 @@ extern SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTOSCArgumentList_free(SDTOSCArgumentList *x);
 
-/** @ brief Puts a new argument in the list at the specified position.
+/** @brief Puts a new argument in the list at the specified position.
 The argument is unsupported.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed. */
 extern void SDTOSCArgumentList_set(SDTOSCArgumentList *x, int i);
 
-/** @ brief Puts a new argument in the list at the specified position.
+/** @brief Puts a new argument in the list at the specified position.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed. */
 extern void SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a);
 
-/** @ brief Puts a new float argument in the list at the specified position.
+/** @brief Puts a new float argument in the list at the specified position.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed.
 @param[in] f The float value */
 extern void SDTOSCArgumentList_setFloat(SDTOSCArgumentList *x, int i, float f);
 
-/** @ brief Puts a new string argument in the list at the specified position.
+/** @brief Puts a new string argument in the list at the specified position.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed.
 @param[in] s The string value */
 extern void SDTOSCArgumentList_setString(SDTOSCArgumentList *x, int i, const char *s);
