@@ -26,11 +26,8 @@ SDTOSCMessage *pd_args_to_sdt(t_symbol *s, int argc, t_atom *argv) {
 }
 
 void sdt_osc_root(t_sdt_osc *x, t_symbol *s, int argc, t_atom *argv) {
-  startpost("SDT OSC @[%s]: ", s->s_name);
-  postatom(argc, argv);
-  endpost();
   SDTOSCMessage *m = pd_args_to_sdt(s, argc, argv);
-  SDTOSCRoot(m);
+  SDTOSCLog(&startpost, SDTOSCRoot(m), m);
   SDTOSCMessage_free(m);
 }
 

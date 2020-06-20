@@ -107,6 +107,13 @@ extern SDTOSCArgumentList *SDTOSCArgumentList_new(int argc);
 @return Pointer to the new instance */
 extern SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x);
 
+/** @brief Object copy constructor.
+Only copies arguments in the specified range of indices [from, to).
+@param[in] from The position of the first argument to copy.
+@param[in] to The position of the first argument not to copy. If to < 0, then all arguments are copied from from until the end of the list.
+@return Pointer to the new instance */
+extern SDTOSCArgumentList *SDTOSCArgumentList_copyFromTo(const SDTOSCArgumentList *x, unsigned int from, int to);
+
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTOSCArgumentList_free(SDTOSCArgumentList *x);
@@ -201,15 +208,35 @@ extern SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x);
 OSC containers and methods for SDT
 @{ */
 
+/** @brief Return codes for OSC methods */
+typedef enum SDTOSCReturnCode {
+  SDT_OSC_RETURN_OK,
+  SDT_OSC_RETURN_MISSING_CONTAINER,
+  SDT_OSC_RETURN_MISSING_METHOD,
+  SDT_OSC_RETURN_NOT_IMPLEMENTED,
+  SDT_OSC_RETURN_ARGUMENT_ERROR,
+  SDT_OSC_RETURN_OBJECT_NOT_FOUND,
+} SDTOSCReturnCode;
+
 /** @brief OSC root for SDT methods
-@return An integer code corresponding to the child node ID, if it is valid, otherwise 0. */
-extern int SDTOSCRoot (const SDTOSCMessage* x);
+@return Return code */
+extern SDTOSCReturnCode SDTOSCRoot(const SDTOSCMessage* x);
 
 /** @brief The container of OSC methods for SDT Resonators
-@return The pointer to the Resonator instance being operated onto. */
-extern SDTResonator *SDTOSCResonator(const SDTOSCMessage* x);
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x);
+
+/** @brief OSC methods for setting modal frequencies of SDT Resonators
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const SDTOSCArgumentList *args);
 
 /** @} */
+
+/** @brief Log OSC return code information with a custom log function
+@param[in] log Log function pointer
+@param[in] r Return code
+@param[in] m OSC message. Use a NULL pointer if it doesn't have to be printed. */
+extern void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m);
 
 #ifdef __cplusplus
 };
