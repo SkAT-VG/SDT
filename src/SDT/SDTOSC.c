@@ -187,25 +187,25 @@ void SDTOSCArgumentList_free(SDTOSCArgumentList *x) {
   free(x);
 }
 
-void SDTOSCArgumentList_put(SDTOSCArgumentList *x, int i) {
+void SDTOSCArgumentList_set(SDTOSCArgumentList *x, int i) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = SDTOSCArgument_new();
 }
 
-void SDTOSCArgumentList_putArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a) {
+void SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = a;
 }
 
-void SDTOSCArgumentList_putFloat(SDTOSCArgumentList *x, int i, float f) {
+void SDTOSCArgumentList_setFloat(SDTOSCArgumentList *x, int i, float f) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = SDTOSCArgument_newFloat(f);
 }
 
-void SDTOSCArgumentList_putString(SDTOSCArgumentList *x, int i, const char *s) {
+void SDTOSCArgumentList_setString(SDTOSCArgumentList *x, int i, const char *s) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = SDTOSCArgument_newString(s);

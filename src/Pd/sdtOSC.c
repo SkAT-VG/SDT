@@ -21,7 +21,7 @@ SDTOSCArgument *pd_arg_to_sdt(t_atom *x) {
 SDTOSCMessage *pd_args_to_sdt(t_symbol *s, int argc, t_atom *argv) {
   SDTOSCArgumentList *a = SDTOSCArgumentList_new(argc);
   for(unsigned int i = 0; i < argc ; ++i)
-    SDTOSCArgumentList_putArgument(a, i, pd_arg_to_sdt(argv + i));
+    SDTOSCArgumentList_setArgument(a, i, pd_arg_to_sdt(argv + i));
   return SDTOSCMessage_new(SDTOSCAddress_new(s->s_name), a);
 }
 
