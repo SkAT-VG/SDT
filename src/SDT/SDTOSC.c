@@ -1,9 +1,10 @@
-#include "m_pd.h"
 #include "SDTOSC.h"
 #include "SDTSolids.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+extern void post(const char *fmt, ...);
 
 struct SDTOSCAddress {
   unsigned int depth;
@@ -99,6 +100,8 @@ SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress* x) {
   return y;
 }
 
+//-------------------------------------------------------------------------------------//
+
 struct SDTOSCArgument {
   enum {
     SDT_OSC_ARG_UNSUPPORTED,
@@ -151,6 +154,8 @@ const char *SDTOSCArgument_getString(const SDTOSCArgument *x) {
   return x->value.s;
 }
 
+//-------------------------------------------------------------------------------------//
+
 struct SDTOSCArgumentList {
   int argc;
   SDTOSCArgument **argv;
@@ -165,6 +170,15 @@ SDTOSCArgumentList *SDTOSCArgumentList_new(int argc) {
   return x;
 }
 
+SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x) {
+  SDTOSCArgumentList *y = (SDTOSCArgumentList *) malloc(sizeof(SDTOSCArgumentList));
+  y->argc = x->argc;
+  y->argv = (SDTOSCArgument **) malloc(sizeof(SDTOSCArgument *) * y->argc);
+  for(unsigned int i = 0 ; i < y->argc ; ++i)
+    y->argv[i] = (x->argv[i])? (SDTOSCArgument *) memcpy(malloc(sizeof(SDTOSCArgument)), (void *) x->argv[i], sizeof(SDTOSCArgument)) : 0;
+  return y;
+}
+
 void SDTOSCArgumentList_free(SDTOSCArgumentList *x) {
   for(unsigned int i = 0 ; i < x->argc ; ++i)
     if (x->argv[i])
@@ -173,25 +187,25 @@ void SDTOSCArgumentList_free(SDTOSCArgumentList *x) {
   free(x);
 }
 
-void SDTOSCArgumentList_put(SDTOSCArgumentList *x, int i) {
+void SDTOSCArgumentList_set(SDTOSCArgumentList *x, int i) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = SDTOSCArgument_new();
 }
 
-void SDTOSCArgumentList_putArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a) {
+void SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = a;
 }
 
-void SDTOSCArgumentList_putFloat(SDTOSCArgumentList *x, int i, float f) {
+void SDTOSCArgumentList_setFloat(SDTOSCArgumentList *x, int i, float f) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = SDTOSCArgument_newFloat(f);
 }
 
-void SDTOSCArgumentList_putString(SDTOSCArgumentList *x, int i, const char *s) {
+void SDTOSCArgumentList_setString(SDTOSCArgumentList *x, int i, const char *s) {
   if (x->argv[i])
     free(x->argv[i]);
   x->argv[i] = SDTOSCArgument_newString(s);
@@ -221,31 +235,81 @@ const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
   return SDTOSCArgument_getString(x->argv[i]);
 }
 
-int SDTOSCRoot (const SDTOSCAddress* x) {
-  if (!x)
+//-------------------------------------------------------------------------------------//
+
+struct SDTOSCMessage {
+  SDTOSCAddress *address;
+  SDTOSCArgumentList *args;
+};
+
+SDTOSCMessage *SDTOSCMessage_new(SDTOSCAddress *address, SDTOSCArgumentList *args) {
+  SDTOSCMessage *x = (SDTOSCMessage *) malloc(sizeof(SDTOSCMessage));
+  x->address = address;
+  x->args = args;
+  return x;
+}
+
+void SDTOSCMessage_free(SDTOSCMessage *x) {
+  SDTOSCAddress_free(x->address);
+  SDTOSCArgumentList_free(x->args);
+  free(x);
+}
+
+SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x) {
+  return x->args;
+}
+
+int SDTOSCMessage_hasContainer(const SDTOSCMessage *x) {
+  return !!x->address;
+}
+
+char *SDTOSCMessage_getContainer(const SDTOSCMessage *x) {
+  return SDTOSCAddress_getNode(x->address, 0);
+}
+
+SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
+  return SDTOSCMessage_new(SDTOSCAddress_openContainer(x->address), SDTOSCArgumentList_copy(x->args));
+}
+
+//-------------------------------------------------------------------------------------//
+
+void SDTOSCPostArgs(const SDTOSCMessage* x) {
+  for(unsigned int i = 0 ; i < x->args->argc ; ++i)
+    if (SDTOSCArgumentList_isString(x->args, i))
+      post("%d) STRING: %s", i + 1, SDTOSCArgumentList_getString(x->args, i));
+    else if (SDTOSCArgumentList_isFloat(x->args, i))
+      post("%d) FLOAT: %.2f", i + 1, SDTOSCArgumentList_getFloat(x->args, i));
+    else if (SDTOSCArgumentList_isUnsupported(x->args, i))
+      post("%d) [UNSUPPORTED]", i + 1);
+}
+
+int SDTOSCRoot (const SDTOSCMessage* x) {
+  if (!SDTOSCMessage_hasContainer(x))
     return 0;
 
-  SDTOSCAddress* sub = SDTOSCAddress_openContainer(x);
+  SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
   int return_code = 0;
-  if (!strcmp("resonator", x->nodes[0])) {
+  if (!strcmp("resonator", SDTOSCMessage_getContainer(x))) {
     return_code = 1;
     SDTOSCResonator(sub);
+  } else if (!strcmp("post", SDTOSCMessage_getContainer(x))) {
+    return_code = 2;
+    SDTOSCPostArgs(sub);
   }
 
-  SDTOSCAddress_free(sub);
+  SDTOSCMessage_free(sub);
   return return_code;
 }
 
-SDTResonator *SDTOSCResonator(const SDTOSCAddress* x) {
-  SDTResonator *res = (x)? SDT_getResonator(x->nodes[0]) : 0;
+SDTResonator *SDTOSCResonator(const SDTOSCMessage* x) {
+  SDTResonator *res = (SDTOSCMessage_hasContainer(x))? SDT_getResonator(SDTOSCMessage_getContainer(x)) : 0;
 
   if (res)
-    post("Found resonator '%s' at %d", x->nodes[0], res);
+    post("Found resonator '%s' at %d", SDTOSCMessage_getContainer(x), res);
+  else if (SDTOSCMessage_hasContainer(x))
+    post("Resonator '%s' not found", SDTOSCMessage_getContainer(x));
   else
-    if (x)
-      post("Resonator '%s' not found", x->nodes[0]);
-    else
-      post("Resonator not specified");
+    post("Resonator not specified");
 
   return res;
 }

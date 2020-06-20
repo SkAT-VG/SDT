@@ -13,7 +13,7 @@ extern "C" {
 
 #include "SDTResonators.h"
 
-/** @defgroup address OSC Address
+/** @defgroup osc_address OSC Address
 This class represents OSC addresses
 @{ */
 
@@ -103,28 +103,32 @@ typedef struct SDTOSCArgumentList SDTOSCArgumentList;
 @return Pointer to the new instance */
 extern SDTOSCArgumentList *SDTOSCArgumentList_new(int argc);
 
+/** @brief Object copy constructor.
+@return Pointer to the new instance */
+extern SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x);
+
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTOSCArgumentList_free(SDTOSCArgumentList *x);
 
-/** @ brief Puts a new argument in the list at the specified position.
+/** @brief Puts a new argument in the list at the specified position.
 The argument is unsupported.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed. */
-extern void SDTOSCArgumentList_put(SDTOSCArgumentList *x, int i);
+extern void SDTOSCArgumentList_set(SDTOSCArgumentList *x, int i);
 
-/** @ brief Puts a new argument in the list at the specified position.
+/** @brief Puts a new argument in the list at the specified position.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed. */
-extern void SDTOSCArgumentList_putArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a);
+extern void SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x, int i, SDTOSCArgument *a);
 
-/** @ brief Puts a new float argument in the list at the specified position.
+/** @brief Puts a new float argument in the list at the specified position.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed.
 @param[in] f The float value */
-extern void SDTOSCArgumentList_putFloat(SDTOSCArgumentList *x, int i, float f);
+extern void SDTOSCArgumentList_setFloat(SDTOSCArgumentList *x, int i, float f);
 
-/** @ brief Puts a new string argument in the list at the specified position.
+/** @brief Puts a new string argument in the list at the specified position.
 @param[in] i The position in the list where to put the new argument. If the position is occupied, the old argument is destroyed.
 @param[in] s The string value */
-extern void SDTOSCArgumentList_putString(SDTOSCArgumentList *x, int i, const char *s);
+extern void SDTOSCArgumentList_setString(SDTOSCArgumentList *x, int i, const char *s);
 
 /** @brief Checks if no argument is at the specified position
 @param[in] i The position in the list to check
@@ -158,17 +162,52 @@ extern const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int
 
 /** @} */
 
-/** @brief OSC root for SDT methods
-@return An integer code corresponding to the child node, if it is valid, otherwise 0. */
-extern int SDTOSCRoot (const SDTOSCAddress* x);
-
-/** @defgroup osc_resonators Resonators
-OSC containers and methods for SDT Resonators
+/** @defgroup osc_message OSC Message
+This class represents OSC messages
 @{ */
+
+/** @brief Data structure representing an OSC message. */
+typedef struct SDTOSCMessage SDTOSCMessage;
+
+/** @brief Object constructor.
+@param[in] address OSC address
+@param[in] args OSC argument list
+@return Pointer to the new instance */
+extern SDTOSCMessage *SDTOSCMessage_new(SDTOSCAddress *address, SDTOSCArgumentList *args);
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTOSCMessage_free(SDTOSCMessage *x);
+
+/** @brief Gets the arguments of the message
+@return The arguments */
+extern SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x);
+
+/** @brief Checks if the message has a top-level container name
+@return The  The truth value of the check */
+extern int SDTOSCMessage_hasContainer(const SDTOSCMessage *x);
+
+/** @brief Gets the top-level container name of the address of the message
+@return The container name */
+extern char *SDTOSCMessage_getContainer(const SDTOSCMessage *x);
+
+/** @brief Gets the message obtained by "opening the container", i.e. removing the first (non-root) node of the address.
+@return The new message */
+extern SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x);
+
+/** @} */
+
+/** @defgroup osc_methods OSC Methods
+OSC containers and methods for SDT
+@{ */
+
+/** @brief OSC root for SDT methods
+@return An integer code corresponding to the child node ID, if it is valid, otherwise 0. */
+extern int SDTOSCRoot (const SDTOSCMessage* x);
 
 /** @brief The container of OSC methods for SDT Resonators
 @return The pointer to the Resonator instance being operated onto. */
-extern SDTResonator *SDTOSCResonator(const SDTOSCAddress* x);
+extern SDTResonator *SDTOSCResonator(const SDTOSCMessage* x);
 
 /** @} */
 
