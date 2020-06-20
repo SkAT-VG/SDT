@@ -222,6 +222,10 @@ typedef enum SDTOSCReturnCode {
 @return Return code */
 extern SDTOSCReturnCode SDTOSCRoot(const SDTOSCMessage* x);
 
+/** @defgroup osc_methods_resonators OSC Resonators Methods
+OSC containers and methods for SDT resonators
+@{ */
+
 /** @brief The container of OSC methods for SDT Resonators
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x);
@@ -230,6 +234,26 @@ extern SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x);
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const SDTOSCArgumentList *args);
 
+/** @brief OSC methods for setting modal decays of SDT Resonators
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setDecay(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC methods for setting modal weights of SDT Resonators
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setWeight(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC methods for setting pickup gains of SDT Resonators
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setGain(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC methods for setting the fragment size of SDT Resonators
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setFragmentSize(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC methods for setting the active modes of SDT Resonators
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const SDTOSCArgumentList *args);
+
 /** @} */
 
 /** @brief Log OSC return code information with a custom log function
@@ -237,6 +261,8 @@ extern SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const SDTO
 @param[in] r Return code
 @param[in] m OSC message. Use a NULL pointer if it doesn't have to be printed. */
 extern void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m);
+
+/** @} */
 
 #ifdef __cplusplus
 };
