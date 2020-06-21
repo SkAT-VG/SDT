@@ -29,7 +29,7 @@ If a resonator with the ID is present, a pointer to the resonator is returned.
 Otherwise, a NULL pointer is returned.
 @param[in] key Unique ID assigned to the resonator instance
 @return Resonator instance pointer */
-extern SDTResonator *SDT_getResonator(char *key);
+extern SDTResonator *SDT_getResonator(const char *key);
 
 /** @brief Unregisters a resonator from the resonator list.
 If a resonator with the given ID is present, it is unregistered from the list. If also an

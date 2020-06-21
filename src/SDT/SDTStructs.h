@@ -24,7 +24,7 @@ extern void SDTHashmap_free(SDTHashmap *x);
 /** @brief Looks for an entry with the given key in the hashmap.
 @param[in] key Key to look for in the hashmap
 @return Value associated to the key if found, NULL otherwise */
-extern void *SDTHashmap_get(SDTHashmap *x, char *key);
+extern void *SDTHashmap_get(SDTHashmap *x, const char *key);
 
 /** @brief Inserts a key/value pair in the hashmap.
 @param[in] key Key to associate to the value

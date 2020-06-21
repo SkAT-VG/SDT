@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-extern void post(const char *fmt, ...);
-
 struct SDTOSCAddress {
   unsigned int depth;
   char **nodes;
@@ -170,13 +168,20 @@ SDTOSCArgumentList *SDTOSCArgumentList_new(int argc) {
   return x;
 }
 
-SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x) {
+SDTOSCArgumentList *SDTOSCArgumentList_copyFromTo(const SDTOSCArgumentList *x, unsigned int from, int to) {
+  if (to < 0)
+    to = x->argc;
+
   SDTOSCArgumentList *y = (SDTOSCArgumentList *) malloc(sizeof(SDTOSCArgumentList));
-  y->argc = x->argc;
+  y->argc = to - from;
   y->argv = (SDTOSCArgument **) malloc(sizeof(SDTOSCArgument *) * y->argc);
   for(unsigned int i = 0 ; i < y->argc ; ++i)
-    y->argv[i] = (x->argv[i])? (SDTOSCArgument *) memcpy(malloc(sizeof(SDTOSCArgument)), (void *) x->argv[i], sizeof(SDTOSCArgument)) : 0;
+    y->argv[i] = (x->argv[from + i])? (SDTOSCArgument *) memcpy(malloc(sizeof(SDTOSCArgument)), (void *) x->argv[from + i], sizeof(SDTOSCArgument)) : 0;
   return y;
+}
+
+SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x) {
+  return SDTOSCArgumentList_copyFromTo(x, 0, -1);
 }
 
 void SDTOSCArgumentList_free(SDTOSCArgumentList *x) {
@@ -273,43 +278,208 @@ SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
 
 //-------------------------------------------------------------------------------------//
 
-void SDTOSCPostArgs(const SDTOSCMessage* x) {
-  for(unsigned int i = 0 ; i < x->args->argc ; ++i)
-    if (SDTOSCArgumentList_isString(x->args, i))
-      post("%d) STRING: %s", i + 1, SDTOSCArgumentList_getString(x->args, i));
-    else if (SDTOSCArgumentList_isFloat(x->args, i))
-      post("%d) FLOAT: %.2f", i + 1, SDTOSCArgumentList_getFloat(x->args, i));
-    else if (SDTOSCArgumentList_isUnsupported(x->args, i))
-      post("%d) [UNSUPPORTED]", i + 1);
-}
-
-int SDTOSCRoot (const SDTOSCMessage* x) {
+SDTOSCReturnCode SDTOSCRoot(const SDTOSCMessage* x) {
   if (!SDTOSCMessage_hasContainer(x))
-    return 0;
+    return SDT_OSC_RETURN_MISSING_CONTAINER;
+  char *method = SDTOSCMessage_getContainer(x);
 
   SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
-  int return_code = 0;
-  if (!strcmp("resonator", SDTOSCMessage_getContainer(x))) {
-    return_code = 1;
-    SDTOSCResonator(sub);
-  } else if (!strcmp("post", SDTOSCMessage_getContainer(x))) {
-    return_code = 2;
-    SDTOSCPostArgs(sub);
-  }
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+  if (!strcmp("resonator", method) || !strcmp("inertial", method))
+    return_code = SDTOSCResonator(sub);
 
   SDTOSCMessage_free(sub);
   return return_code;
 }
 
-SDTResonator *SDTOSCResonator(const SDTOSCMessage* x) {
-  SDTResonator *res = (SDTOSCMessage_hasContainer(x))? SDT_getResonator(SDTOSCMessage_getContainer(x)) : 0;
+//-------------------------------------------------------------------------------------//
+
+SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x) {
+  SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  const char *res_key = (args->argc && SDTOSCArgumentList_isString(args, 0))? SDTOSCArgumentList_getString(args, 0) : 0;
+  SDTResonator *res = (res_key)? SDT_getResonator(res_key) : 0;
+  SDTOSCReturnCode return_code;
 
   if (res)
-    post("Found resonator '%s' at %d", SDTOSCMessage_getContainer(x), res);
-  else if (SDTOSCMessage_hasContainer(x))
-    post("Resonator '%s' not found", SDTOSCMessage_getContainer(x));
+    if (SDTOSCMessage_hasContainer(x)) {
+      SDTOSCArgumentList *sub_args = SDTOSCArgumentList_copyFromTo(SDTOSCMessage_getArguments(x), 1, -1);
+      char *method = SDTOSCMessage_getContainer(x);
+      if (!strcmp("frequency", method))
+        return_code = SDTOSCResonator_setFrequency(res, sub_args);
+      else if (!strcmp("decay", method))
+        return_code = SDTOSCResonator_setDecay(res, sub_args);
+      else if (!strcmp("weight", method))
+        return_code = SDTOSCResonator_setWeight(res, sub_args);
+      else if (!strcmp("gain", method))
+        return_code = SDTOSCResonator_setGain(res, sub_args);
+      else if (!strcmp("fragmentsize", method))
+        return_code = SDTOSCResonator_setFragmentSize(res, sub_args);
+      else if (!strcmp("activemodes", method))
+        return_code = SDTOSCResonator_setActiveModes(res, sub_args);
+      else if (!strcmp("strike", method))
+        return_code = SDTOSCResonator_strike(res, sub_args);
+      else if (!strcmp("freqs", method))
+        return_code = SDTOSCResonator_setFreqs(res, sub_args);
+      else if (!strcmp("decays", method))
+        return_code = SDTOSCResonator_setDecays(res, sub_args);
+      else if (!strcmp("weights", method))
+        return_code = SDTOSCResonator_setWeights(res, sub_args);
+      else if (!strcmp("pickup", method))
+        return_code = SDTOSCResonator_setGains(res, sub_args);
+      else
+        return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+      SDTOSCArgumentList_free(sub_args);
+    } else
+      return_code = SDT_OSC_RETURN_MISSING_METHOD;
+  else if (res_key)
+    return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
   else
-    post("Resonator not specified");
+    return_code = SDT_OSC_RETURN_ARGUMENT_ERROR;
 
-  return res;
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setFloat(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {
+  for(unsigned int i = 0 ; i < args->argc ; ++i)
+    if (!SDTOSCArgumentList_isFloat(args, i))
+      return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  // If setter_idx function is specified, use that and consider the first argument as the index
+  unsigned int idx_flag = (setter_idx)? 1 : 0;
+  if (idx_flag && args->argc < (2 + idx_flag))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  unsigned int idx = (idx_flag)? SDTOSCArgumentList_getFloat(args, 0) : 0;
+
+  if (idx_flag)
+    (*setter_idx)(x, idx, (unsigned int) SDTOSCArgumentList_getFloat(args, 1), SDTOSCArgumentList_getFloat(args, 2));
+  else
+    (*setter)(x, (unsigned int) SDTOSCArgumentList_getFloat(args, 0), SDTOSCArgumentList_getFloat(args, 1));
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setFloat(&SDTResonator_setFrequency, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setDecay(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setFloat(&SDTResonator_setDecay, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setWeight(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setFloat(&SDTResonator_setWeight, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setGain(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setFloat(0, &SDTResonator_setGain, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setFragmentSize(SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 1 || !SDTOSCArgumentList_isFloat(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  SDTResonator_setFragmentSize(x, (double) SDTOSCArgumentList_getFloat(args, 0));
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 1 || !SDTOSCArgumentList_isFloat(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  SDTResonator_setActiveModes(x, (unsigned int) SDTOSCArgumentList_getFloat(args, 0));
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setList(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {
+  for(unsigned int i = 0 ; i < args->argc ; ++i)
+    if (!SDTOSCArgumentList_isFloat(args, i))
+      return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  // If setter_idx function is specified, use that and consider the first argument as the index
+  unsigned int idx_flag = (setter_idx)? 1 : 0;
+  if (idx_flag && args->argc < 1)
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  unsigned int idx = (idx_flag)? SDTOSCArgumentList_getFloat(args, 0) : 0;
+
+  for(unsigned int i = idx_flag ; i < args->argc ; ++i)
+    if (idx_flag)
+      (*setter_idx)(x, idx, i - 1, SDTOSCArgumentList_getFloat(args, i));
+    else
+      (*setter)(x, i, SDTOSCArgumentList_getFloat(args, i));
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setFreqs(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(&SDTResonator_setFrequency, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setDecays(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(&SDTResonator_setDecay, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setWeights(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(&SDTResonator_setWeight, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setGains(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(0, &SDTResonator_setGain, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 2 || !SDTOSCArgumentList_isFloat(args, 0) || !SDTOSCArgumentList_isFloat(args, 1))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  double p = (double) SDTOSCArgumentList_getFloat(args, 0);
+  double v = (double) SDTOSCArgumentList_getFloat(args, 1);
+  int n = SDTResonator_getNPickups(x);
+  for(unsigned int i = 0 ; i < n ; ++i) {
+    SDTResonator_setPosition(x, i, p);
+    SDTResonator_setVelocity(x, i, v);
+  }
+  return SDT_OSC_RETURN_OK;
+}
+
+//-------------------------------------------------------------------------------------//
+
+char *_docs_url = "https://chromaticisobar.github.io/SDT";
+
+void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m) {
+  if (r) {
+    // Error code
+    const char *err = "[ERROR]";
+    if (r == SDT_OSC_RETURN_MISSING_CONTAINER)
+      err = "[MISSING_CONTAINER]: please, specify an OSC container";
+    else if (r == SDT_OSC_RETURN_MISSING_METHOD)
+      err = "[MISSING_METHOD]: please, specify an OSC method from the container";
+    else if (r == SDT_OSC_RETURN_NOT_IMPLEMENTED)
+      err = "[NOT_IMPLEMENTED]: the specified container/method is not implemented";
+    else if (r == SDT_OSC_RETURN_ARGUMENT_ERROR)
+      err = "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for the specified method";
+    else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
+      err = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
+    (*log)("sdtOSC %s", err);
+
+    // Message
+    if (m) {
+      (*log)("\n       Processed message:");
+
+      char *adr = (m->address)? SDTOSCAddress_str(m->address) : 0;
+      if (adr) {
+        (*log)(" @[%s]", adr);
+        free(adr);
+      }
+
+      // Arguments
+      SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
+      for(unsigned int i = 0 ; i < args->argc ; ++i)
+        if (SDTOSCArgumentList_isString(args, i))
+          (*log)(" '%s'", SDTOSCArgumentList_getString(args, i));
+        else if (SDTOSCArgumentList_isFloat(args, i))
+          (*log)(" %.2f", SDTOSCArgumentList_getFloat(args, i));
+        else
+          (*log)(" [UNSUPPORTED]");
+    }
+
+    // Closing
+    (*log)("\n       For further details, please, visit the documentation at %s\n", _docs_url);
+  }
 }
