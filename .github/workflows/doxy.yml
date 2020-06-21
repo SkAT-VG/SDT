@@ -18,14 +18,16 @@ jobs:
         persist-credentials: false
     - name: Build docs
       run: doxygen
-    - name: Upload docs
-      uses: actions/upload-artifact@v1
-      with:
-        name: doc
-        path: doc
     - name: Deploy pages
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: doc/html
+    - name: Build latex
+      run: cd doc/latex && make && cd ../..
+    - name: Upload pdf
+      uses: actions/upload-artifact@v1
+      with:
+        name: refman
+        path: doc/latex/refman.pdf
