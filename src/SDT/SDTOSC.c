@@ -318,6 +318,14 @@ SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x) {
         return_code = SDTOSCResonator_setActiveModes(res, sub_args);
       else if (!strcmp("strike", method))
         return_code = SDTOSCResonator_strike(res, sub_args);
+      else if (!strcmp("freqs", method))
+        return_code = SDTOSCResonator_setFreqs(res, sub_args);
+      else if (!strcmp("decays", method))
+        return_code = SDTOSCResonator_setDecays(res, sub_args);
+      else if (!strcmp("weights", method))
+        return_code = SDTOSCResonator_setWeights(res, sub_args);
+      else if (!strcmp("pickup", method))
+        return_code = SDTOSCResonator_setGains(res, sub_args);
       else
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
       SDTOSCArgumentList_free(sub_args);
@@ -388,6 +396,41 @@ SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const SDTOSCArg
   unsigned int i = (unsigned int) SDTOSCArgumentList_getFloat(args, 0);
   SDTResonator_setActiveModes(x, i);
   return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setList(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {
+  for(unsigned int i = 0 ; i < args->argc ; ++i)
+    if (!SDTOSCArgumentList_isFloat(args, i))
+      return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  // If setter_idx function is specified, use that and consider the first argument as the index
+  unsigned int idx_flag = (setter_idx)? 1 : 0;
+  if (idx_flag && args->argc < 1)
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  unsigned int idx = (idx_flag)? SDTOSCArgumentList_getFloat(args, 0) : 0;
+
+  for(unsigned int i = idx_flag ; i < args->argc ; ++i)
+    if (idx_flag)
+      (*setter_idx)(x, idx, i - 1, SDTOSCArgumentList_getFloat(args, i));
+    else
+      (*setter)(x, i, SDTOSCArgumentList_getFloat(args, i));
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setFreqs(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(&SDTResonator_setFrequency, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setDecays(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(&SDTResonator_setDecay, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setWeights(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(&SDTResonator_setWeight, 0, x, args);
+}
+
+SDTOSCReturnCode SDTOSCResonator_setGains(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setList(0, &SDTResonator_setGain, x, args);
 }
 
 SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentList *args) {

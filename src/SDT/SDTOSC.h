@@ -309,6 +309,46 @@ extern SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const SD
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentList *args);
 
+/** @brief OSC method for setting multiple modal frequencies of SDT Resonators
+\par OSC Address
+/resonator/freqs
+\par Calls
+::SDTResonator_setFrequency
+@param [in] x Pointer to the SDT resonator instance to affect
+@param [in] args Additional OSC arguments: a modal frequency (float) per mode, in order of mode index
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setFreqs(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for setting multiple modal decays of SDT Resonators
+\par OSC Address
+/resonator/decays
+\par Calls
+::SDTResonator_setDecay
+@param [in] x Pointer to the SDT resonator instance to affect
+@param [in] args Additional OSC arguments: a modal decay (float) per mode, in order of mode index
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setDecays(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for setting multiple modal weights of SDT Resonators
+\par OSC Address
+/resonator/weights
+\par Calls
+::SDTResonator_setWeight
+@param [in] x Pointer to the SDT resonator instance to affect
+@param [in] args Additional OSC arguments: a modal weight (float) per mode, in order of mode index
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setWeights(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for setting multiple pickup gains of SDT Resonators
+\par OSC Address
+/resonator/pickup
+\par Calls
+::SDTResonator_setGain
+@param [in] x Pointer to the SDT resonator instance to affect
+@param [in] args Additional OSC arguments: the pickup point index (int), then a pickup gain (float) per mode, in order of mode index
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_setGains(SDTResonator *x, const SDTOSCArgumentList *args);
+
 /** @} */
 
 /** @brief Log OSC return code information with a custom log function
