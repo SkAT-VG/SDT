@@ -224,13 +224,15 @@ typedef enum SDTOSCReturnCode {
 @return Return code */
 extern SDTOSCReturnCode SDTOSCRoot(const SDTOSCMessage* x);
 
-/** @defgroup osc_methods_resonators OSC Resonators Methods
+/** @defgroup osc_methods_resonators OSC Resonator Methods
 OSC containers and methods for SDT resonators
 @{ */
 
 /** @brief The container of OSC methods for SDT Resonators
 \par OSC Address
 /resonator
+\par
+/inertial (alias)
 @param[in] x OSC message: the first argument must be the resonator's ID. All other arguments are passed down to the method
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x);
@@ -294,6 +296,18 @@ extern SDTOSCReturnCode SDTOSCResonator_setFragmentSize(SDTResonator *x, const S
 @param [in] args Additional OSC arguments: active modes (int)
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for striking SDT Resonators
+\par OSC Address
+/resonator/strike
+\par Calls
+::SDTResonator_setPosition
+\par
+::SDTResonator_setVelocity
+@param [in] x Pointer to the SDT resonator instance to affect
+@param [in] args Additional OSC arguments: modal displacement (float), modal velocity (float)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentList *args);
 
 /** @} */
 
