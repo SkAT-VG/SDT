@@ -339,53 +339,45 @@ SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x) {
   return return_code;
 }
 
-SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const SDTOSCArgumentList *args) {
-  if (args->argc < 2 || !SDTOSCArgumentList_isFloat(args, 0) || !SDTOSCArgumentList_isFloat(args, 1))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+SDTOSCReturnCode SDTOSCResonator_setFloat(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {
+  for(unsigned int i = 0 ; i < args->argc ; ++i)
+    if (!SDTOSCArgumentList_isFloat(args, i))
+      return SDT_OSC_RETURN_ARGUMENT_ERROR;
 
-  unsigned int mode = (unsigned int) SDTOSCArgumentList_getFloat(args, 0);
-  double f = (double) SDTOSCArgumentList_getFloat(args, 1);
-  SDTResonator_setFrequency(x, mode, f);
+  // If setter_idx function is specified, use that and consider the first argument as the index
+  unsigned int idx_flag = (setter_idx)? 1 : 0;
+  if (idx_flag && args->argc < (2 + idx_flag))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  unsigned int idx = (idx_flag)? SDTOSCArgumentList_getFloat(args, 0) : 0;
+
+  if (idx_flag)
+    (*setter_idx)(x, idx, (unsigned int) SDTOSCArgumentList_getFloat(args, 1), SDTOSCArgumentList_getFloat(args, 2));
+  else
+    (*setter)(x, (unsigned int) SDTOSCArgumentList_getFloat(args, 0), SDTOSCArgumentList_getFloat(args, 1));
   return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const SDTOSCArgumentList *args) {
+  return SDTOSCResonator_setFloat(&SDTResonator_setFrequency, 0, x, args);
 }
 
 SDTOSCReturnCode SDTOSCResonator_setDecay(SDTResonator *x, const SDTOSCArgumentList *args) {
-  if (args->argc < 2 || !SDTOSCArgumentList_isFloat(args, 0) || !SDTOSCArgumentList_isFloat(args, 1))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-
-  unsigned int mode = (unsigned int) SDTOSCArgumentList_getFloat(args, 0);
-  double f = (double) SDTOSCArgumentList_getFloat(args, 1);
-  SDTResonator_setDecay(x, mode, f);
-  return SDT_OSC_RETURN_OK;
+  return SDTOSCResonator_setFloat(&SDTResonator_setDecay, 0, x, args);
 }
 
 SDTOSCReturnCode SDTOSCResonator_setWeight(SDTResonator *x, const SDTOSCArgumentList *args) {
-  if (args->argc < 2 || !SDTOSCArgumentList_isFloat(args, 0) || !SDTOSCArgumentList_isFloat(args, 1))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-
-  unsigned int mode = (unsigned int) SDTOSCArgumentList_getFloat(args, 0);
-  double f = (double) SDTOSCArgumentList_getFloat(args, 1);
-  SDTResonator_setWeight(x, mode, f);
-  return SDT_OSC_RETURN_OK;
+  return SDTOSCResonator_setFloat(&SDTResonator_setWeight, 0, x, args);
 }
 
 SDTOSCReturnCode SDTOSCResonator_setGain(SDTResonator *x, const SDTOSCArgumentList *args) {
-  if (args->argc < 3 || !SDTOSCArgumentList_isFloat(args, 0) || !SDTOSCArgumentList_isFloat(args, 1) || !SDTOSCArgumentList_isFloat(args, 2))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-
-  unsigned int pickup = (unsigned int) SDTOSCArgumentList_getFloat(args, 0);
-  unsigned int mode = (unsigned int) SDTOSCArgumentList_getFloat(args, 1);
-  double f = (double) SDTOSCArgumentList_getFloat(args, 2);
-  SDTResonator_setGain(x, pickup, mode, f);
-  return SDT_OSC_RETURN_OK;
+  return SDTOSCResonator_setFloat(0, &SDTResonator_setGain, x, args);
 }
 
 SDTOSCReturnCode SDTOSCResonator_setFragmentSize(SDTResonator *x, const SDTOSCArgumentList *args) {
   if (args->argc < 1 || !SDTOSCArgumentList_isFloat(args, 0))
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
 
-  double f = (double) SDTOSCArgumentList_getFloat(args, 0);
-  SDTResonator_setFragmentSize(x, f);
+  SDTResonator_setFragmentSize(x, (double) SDTOSCArgumentList_getFloat(args, 0));
   return SDT_OSC_RETURN_OK;
 }
 
@@ -393,8 +385,7 @@ SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const SDTOSCArg
   if (args->argc < 1 || !SDTOSCArgumentList_isFloat(args, 0))
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
 
-  unsigned int i = (unsigned int) SDTOSCArgumentList_getFloat(args, 0);
-  SDTResonator_setActiveModes(x, i);
+  SDTResonator_setActiveModes(x, (unsigned int) SDTOSCArgumentList_getFloat(args, 0));
   return SDT_OSC_RETURN_OK;
 }
 
