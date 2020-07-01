@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 struct SDTOSCAddress {
   unsigned int depth;
@@ -441,45 +442,70 @@ SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentLis
 //-------------------------------------------------------------------------------------//
 
 char *_docs_url = "https://chromaticisobar.github.io/SDT";
+char *_indent = "  ";
+
+char *strjoin_free(char *x, int free_x, char* y, int free_y) {
+  char *z = malloc(sizeof(char) * (strlen(x) + strlen(y) + 1));
+  sprintf(z, "%s%s", x, y);
+  if (free_x)
+    free(x);
+  if (free_y)
+    free(y);
+  return z;
+}
+
+char *indent_free(char *x, int free_x, int newline) {
+  char *ind = strjoin_free((newline)? "\n" : "", 0, _indent, 0);
+  return strjoin_free(ind, 1, x, free_x);
+}
 
 void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m) {
   if (r) {
     // Error code
-    const char *err = "[ERROR]";
+    char *msg = "[ERROR]";
     if (r == SDT_OSC_RETURN_MISSING_CONTAINER)
-      err = "[MISSING_CONTAINER]: please, specify an OSC container";
+      msg = "[MISSING_CONTAINER]: please, specify an OSC container";
     else if (r == SDT_OSC_RETURN_MISSING_METHOD)
-      err = "[MISSING_METHOD]: please, specify an OSC method from the container";
+      msg = "[MISSING_METHOD]: please, specify an OSC method from the container";
     else if (r == SDT_OSC_RETURN_NOT_IMPLEMENTED)
-      err = "[NOT_IMPLEMENTED]: the specified container/method is not implemented";
+      msg = "[NOT_IMPLEMENTED]: the specified container/method is not implemented";
     else if (r == SDT_OSC_RETURN_ARGUMENT_ERROR)
-      err = "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for the specified method";
+      msg = "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for the specified method";
     else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
-      err = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
-    (*log)("sdtOSC %s", err);
+      msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
+
+    msg = strjoin_free("sdtOSC ", 0, msg, 0);
 
     // Message
     if (m) {
-      (*log)("\n       Processed message:");
+      msg = strjoin_free(msg, 1, indent_free("Message:", 0, 1), 1);
 
       char *adr = (m->address)? SDTOSCAddress_str(m->address) : 0;
-      if (adr) {
-        (*log)(" @[%s]", adr);
-        free(adr);
-      }
+      if (adr)
+        msg = strjoin_free(msg, 1, strjoin_free(strjoin_free(" @[", 0, adr, 1), 1, "]", 0), 1);
 
       // Arguments
       SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
       for(unsigned int i = 0 ; i < args->argc ; ++i)
-        if (SDTOSCArgumentList_isString(args, i))
-          (*log)(" '%s'", SDTOSCArgumentList_getString(args, i));
-        else if (SDTOSCArgumentList_isFloat(args, i))
-          (*log)(" %.2f", SDTOSCArgumentList_getFloat(args, i));
-        else
-          (*log)(" [UNSUPPORTED]");
+        if (SDTOSCArgumentList_isString(args, i)) {
+          const char* src = SDTOSCArgumentList_getString(args, i);
+          char *arg = (char *) malloc(sizeof(char) * (strlen(src) + 4));
+          sprintf(arg, " '%s'", src);
+          msg = strjoin_free(msg, 1, arg, 1);
+        } else if (SDTOSCArgumentList_isFloat(args, i)) {
+          float arg = SDTOSCArgumentList_getFloat(args, i);
+          char *s = (char *) malloc(sizeof(char) * (16 + (int) ceil(log10(fabs(arg) + 1))));
+          sprintf(s, (fmod(arg, 1))? " %.2f" : " %.0f", arg);
+          msg = strjoin_free(msg, 1, s, 1);
+        } else
+          msg = strjoin_free(msg, 1, " [UNSUPPORTED]", 0);
     }
 
-    // Closing
-    (*log)("\n       For further details, please, visit the documentation at %s\n", _docs_url);
+  msg = strjoin_free(
+    msg, 1,
+    indent_free(strjoin_free("For further details, please, visit the documentation at ", 0, _docs_url, 0), 1, 1), 1
+  );
+  (*log)(msg);
+  free(msg);
   }
 }
