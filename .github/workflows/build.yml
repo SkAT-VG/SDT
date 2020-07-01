@@ -1,0 +1,58 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - win
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [linux, win32, win64]
+        platform: [install, install_max, install_pd]
+        exclude:
+        - target: linux
+          platform: install_max
+        - target: linux
+          platform: install_pd
+        - target: win32
+          platform: install
+        - target: win64
+          platform: install
+        - target: win64
+          platform: install_pd
+        include:
+        - target: linux
+          dir: PREFIX
+        - target: win32
+          dir: DSTDIR
+        - target: win64
+          dir: DSTDIR
+        - platform: install
+          plt_name: pd
+        - platform: install_pd
+          plt_name: pd
+        - platform: install_max
+          plt_name: max
+    container: chromaticisobar/pd
+    steps:
+    - uses: actions/checkout@v2
+    - name: Make
+      run: cd build/${{ matrix.target }} && make
+    - name: Prepare package directory
+      run: mkdir SoundDesignToolkit
+    - name: Package
+      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} ${{ matrix.dir }}=../../SoundDesignToolkit
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with: 
+        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
+        path: SoundDesignToolkit

@@ -1,4 +1,4 @@
-[![Ubuntu build status](https://github.com/ChromaticIsobar/SDT/workflows/ubuntu/badge.svg?branch=develop)](https://github.com/ChromaticIsobar/SDT/actions?query=workflow%3Aubuntu) [![Pages website docs](https://github.com/ChromaticIsobar/SDT/workflows/doxy/badge.svg?branch=develop)](https://chromaticisobar.github.io/SDT)
+[![Build status](https://github.com/ChromaticIsobar/SDT/workflows/build/badge.svg?branch=win)](https://github.com/ChromaticIsobar/SDT/actions?query=workflow%3Abuild) [![Pages website docs](https://github.com/ChromaticIsobar/SDT/workflows/doxy/badge.svg?branch=develop)](https://chromaticisobar.github.io/SDT)
 # SOUND DESIGN TOOLKIT (SDT)
 
 
