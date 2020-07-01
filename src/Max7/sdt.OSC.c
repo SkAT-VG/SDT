@@ -53,7 +53,7 @@ void C74_EXPORT ext_main(void *r) {
     (method) sdt_osc_free,
     (long) sizeof(t_sdt_osc),
     0L,
-	0
+    0
   );
   
   class_addmethod(c, (method) sdt_osc_root, "anything", A_GIMME, 0);

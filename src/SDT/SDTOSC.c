@@ -455,8 +455,8 @@ char *strjoin_free(char *x, int free_x, char* y, int free_y) {
 }
 
 char *indent_free(char *x, int free_x, int newline) {
-	char *ind = strjoin_free((newline)? "\n" : "", 0, _indent, 0);
-	return strjoin_free(ind, 1, x, free_x);
+  char *ind = strjoin_free((newline)? "\n" : "", 0, _indent, 0);
+  return strjoin_free(ind, 1, x, free_x);
 }
 
 void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m) {
@@ -473,9 +473,9 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessag
       msg = "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for the specified method";
     else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
       msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
-	
-	msg = strjoin_free("sdtOSC ", 0, msg, 0);
-	
+
+    msg = strjoin_free("sdtOSC ", 0, msg, 0);
+
     // Message
     if (m) {
       msg = strjoin_free(msg, 1, indent_free("Message:", 0, 1), 1);
@@ -490,22 +490,22 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessag
         if (SDTOSCArgumentList_isString(args, i)) {
           const char* src = SDTOSCArgumentList_getString(args, i);
           char *arg = (char *) malloc(sizeof(char) * (strlen(src) + 4));
-		  sprintf(arg, " '%s'", src);
+          sprintf(arg, " '%s'", src);
           msg = strjoin_free(msg, 1, arg, 1);
         } else if (SDTOSCArgumentList_isFloat(args, i)) {
           float arg = SDTOSCArgumentList_getFloat(args, i);
-		  char *s = (char *) malloc(sizeof(char) * (16 + (int) ceil(log10(fabs(arg) + 1))));
-		  sprintf(s, (fmod(arg, 1))? " %.2f" : " %.0f", arg);
-		  msg = strjoin_free(msg, 1, s, 1);
+          char *s = (char *) malloc(sizeof(char) * (16 + (int) ceil(log10(fabs(arg) + 1))));
+          sprintf(s, (fmod(arg, 1))? " %.2f" : " %.0f", arg);
+          msg = strjoin_free(msg, 1, s, 1);
         } else
           msg = strjoin_free(msg, 1, " [UNSUPPORTED]", 0);
     }
-	
-	msg = strjoin_free(
-      msg, 1,
-      indent_free(strjoin_free("For further details, please, visit the documentation at ", 0, _docs_url, 0), 1, 1), 1
-    );
-	(*log)(msg);
-	free(msg);
+
+  msg = strjoin_free(
+    msg, 1,
+    indent_free(strjoin_free("For further details, please, visit the documentation at ", 0, _docs_url, 0), 1, 1), 1
+  );
+  (*log)(msg);
+  free(msg);
   }
 }
