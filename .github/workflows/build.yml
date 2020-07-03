@@ -5,20 +5,23 @@ on:
     branches:
       - master
       - develop
-      - win
+    tags:
+      - 'v*.*'
   pull_request:
     branches:
       - master
       - develop
 
 jobs:
-  build:
+  build-docker:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         target: [linux, win32, win64]
-        platform: [install, install_max, install_pd]
+        platform: [install, install_core, install_max, install_pd]
         exclude:
+        - target: linux
+          platform: install_core
         - target: linux
           platform: install_max
         - target: linux
@@ -37,11 +40,13 @@ jobs:
         - target: win64
           dir: DSTDIR
         - platform: install
-          plt_name: pd
+          plt_name: _pd
+        - platform: install_core
+          plt_name: ""
         - platform: install_pd
-          plt_name: pd
+          plt_name: _pd
         - platform: install_max
-          plt_name: max
+          plt_name: _max
     container: chromaticisobar/pd
     steps:
     - uses: actions/checkout@v2
@@ -53,6 +58,93 @@ jobs:
       run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} ${{ matrix.dir }}=../../SoundDesignToolkit
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
-      with: 
-        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
+      with:
+        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
         path: SoundDesignToolkit
+
+  # Cannot be run in the previous matrix because there is no way (for now) to specify not to use a container for macos
+  # https://github.community/t/run-matrix-job-on-macos-and-on-ubuntu-in-container/16359/3
+  # Job definiton is ready for merge in case the option is impelemented
+  build-macos:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        target: [macosx]
+        platform: [install, install_core, install_max, install_pd]
+        exclude:
+        - target: macosx
+          platform: install
+        include:
+        - target: macosx
+          dir: DSTDIR
+        - platform: install_core
+          plt_name: ""
+        - platform: install_pd
+          plt_name: _pd
+        - platform: install_max
+          plt_name: _max
+    # notice that steps are the same as build-docker
+    steps:
+    - uses: actions/checkout@v2
+    - name: Make
+      run: cd build/${{ matrix.target }} && make
+    - name: Prepare package directory
+      run: mkdir SoundDesignToolkit
+    - name: Package
+      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} ${{ matrix.dir }}=../../SoundDesignToolkit
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+        path: SoundDesignToolkit
+
+  release-create:
+    if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
+    runs-on: ubuntu-latest
+    needs: [build-docker, build-macos]
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: ${{ contains( github.ref , 'dev' ) }}
+
+  release-upload:
+    strategy:
+      matrix:
+        target: [linux, win32, win64, macosx]
+        plt_name: ["", _pd, _max]
+        exclude:
+        - target: linux
+          plt_name: ""
+        - target: linux
+          plt_name: _max
+        - target: win64
+          plt_name: _pd
+    runs-on: ubuntu-latest
+    needs: release-create
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+    - name: Zip artifacts
+      run: zip -r ../SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip *
+      working-directory: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.release-create.outputs.upload_url }}
+        asset_path: ./SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
+        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ github.ref }}.zip
+        asset_content_type: application/zip

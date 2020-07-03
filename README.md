@@ -42,6 +42,11 @@ http://www.soundobject.org/SDT
 then unpack it and copy the branch for your operating system and platform into
 the desired destination folder.
 
+### Precompiled binaries
+Precompiled binaries are available as release assets of this repository:
+
+https://github.com/ChromaticIsobar/SDT/releases
+
 ### Compiling from source code
 
 #### Mac OS
