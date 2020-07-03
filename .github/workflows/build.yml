@@ -98,48 +98,53 @@ jobs:
         name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
         path: SoundDesignToolkit
 
-  release:
-    strategy:
-      matrix:
-        target: [linux, win32, win64, macosx]
-        platform: ["", _pd, _max]
-        exclude:
-        - target: linux
-          platform: ""
-        - target: linux
-          platform: _max
-        - target: win64
-          platform: _pd
+  release-create:
     if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
     runs-on: ubuntu-latest
     needs: [build-docker, build-macos]
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
-    - name: Download artifacts
-      uses: actions/download-artifact@v1
-      with:
-        name: SDT_${{ matrix.target }}${{ matrix.platform }}
-    - name: Zip artifacts
-      run: zip -r ../SDT_${{ matrix.target }}${{ matrix.platform }}.zip *
-      working-directory: SDT_${{ matrix.target }}${{ matrix.platform }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}_${{ matrix.target }}${{ matrix.platform }}
-        release_name: SDT_${{ matrix.target }}${{ matrix.platform }} ${{ github.ref }}
+        tag_name: ${{ github.ref }}
+        release_name: SDT ${{ github.ref }}
         draft: false
         prerelease: ${{ contains( github.ref , 'dev' ) }}
-    - name: LS
-      run: ls
+
+  release-upload:
+    strategy:
+      matrix:
+        target: [linux, win32, win64, macosx]
+        plt_name: ["", _pd, _max]
+        exclude:
+        - target: linux
+          plt_name: ""
+        - target: linux
+          plt_name: _max
+        - target: win64
+          plt_name: _pd
+    runs-on: ubuntu-latest
+    needs: release-create
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+    - name: Zip artifacts
+      run: zip -r ../SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip *
+      working-directory: SDT_${{ matrix.target }}${{ matrix.plt_name }}
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./SDT_${{ matrix.target }}${{ matrix.platform }}.zip
-        asset_name: SDT_${{ matrix.target }}${{ matrix.platform }}.zip
+        upload_url: ${{ needs.release-create.outputs.upload_url }}
+        asset_path: ./SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
+        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
         asset_content_type: application/zip
