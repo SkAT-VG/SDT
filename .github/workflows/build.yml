@@ -104,6 +104,7 @@ jobs:
     needs: [build-docker, build-macos]
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
+      version: ${{ steps.get_version.outputs.VERSION }}
     steps:
     - name: Create Release
       id: create_release
@@ -115,6 +116,9 @@ jobs:
         release_name: ${{ github.ref }}
         draft: false
         prerelease: ${{ contains( github.ref , 'dev' ) }}
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
   release-upload:
     strategy:
@@ -146,5 +150,48 @@ jobs:
       with:
         upload_url: ${{ needs.release-create.outputs.upload_url }}
         asset_path: ./SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
-        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ github.ref }}.zip
+        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ needs.release-create.outputs.version }}.zip
         asset_content_type: application/zip
+  
+  doxygen:
+    runs-on: ubuntu-latest
+    container: chromaticisobar/doxy
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: Build docs
+      run: doxygen
+    - name: Deploy pages
+      if: ${{ github.ref == 'refs/heads/develop' }}
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: doc/html
+    - name: Build latex
+      run: cd doc/latex && make && cd ../..
+    - name: Upload pdf
+      uses: actions/upload-artifact@v1
+      with:
+        name: refman
+        path: doc/latex/refman.pdf
+
+  release-upload-doxygen:
+    runs-on: ubuntu-latest
+    needs: [release-create, doxygen]
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: refman
+    - name: Upload Reference Manual
+      id: upload-refman
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.release-create.outputs.upload_url }}
+        asset_path: ./refman/refman.pdf
+        asset_name: refman_${{ needs.release-create.outputs.version }}.pdf
+        asset_content_type: application/pdf

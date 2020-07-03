@@ -1,4 +1,4 @@
-[![Build status](https://github.com/ChromaticIsobar/SDT/workflows/build/badge.svg?branch=win)](https://github.com/ChromaticIsobar/SDT/actions?query=workflow%3Abuild) [![Pages website docs](https://github.com/ChromaticIsobar/SDT/workflows/doxy/badge.svg?branch=develop)](https://chromaticisobar.github.io/SDT)
+[![Build status](https://github.com/ChromaticIsobar/SDT/workflows/build/badge.svg?branch=develop)](https://github.com/ChromaticIsobar/SDT/actions?query=workflow%3Abuild)
 # SOUND DESIGN TOOLKIT (SDT)
 
 
@@ -26,6 +26,10 @@ clarity;
 3. parametric temporal control, which ensures appropriate, natural and
 expressive articulations of sonic processes.
 
+## Documentation
+API documentation can be found online here:
+
+https://chromaticisobar.github.io/SDT/
 
 ## Installation
 
