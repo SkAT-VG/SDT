@@ -1,0 +1,142 @@
+{
+	"sdt.inertial" : 	{
+		"digest" : "Physical model of an inertial mass",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Solids interaction" ],
+		"seealso" : [ "sdt.modal", "sdt.impact~", "sdt.friction~" ]
+	}
+,
+	"sdt.modal" : 	{
+		"digest" : "Physical model of a modal resonator",
+		"module" : "SDT",
+		"category" : [ "SDT Objects", "SDT", "SDT Solids interaction" ],
+		"seealso" : [ "sdt.inertial", "sdt.impact~", "sdt.friction~" ]
+	}
+,
+	"sdt.impact~" : 	{
+		"digest" : "Non-linear impact between one inertial and one modal object.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Solids interaction" ],
+		"seealso" : [ "sdt.inertial", "sdt.modal", "sdt.rolling~", "sdt.crumpling~", "sdt.breaking~", "sdt.bouncing~", "sdt.scraping~", "sdt.friction~" ]
+	}
+,
+	"sdt.friction~" : 	{
+		"digest" : "Non-linear friction between one inertial and one modal object.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Solids interaction" ],
+		"seealso" : [ "sdt.inertial", "sdt.modal", "sdt.impact~", "sdt.rolling~", "sdt.crumpling~", "sdt.breaking~", "sdt.bouncing~", "sdt.scraping~" ]
+	}
+,
+	"sdt.bubble~" : 	{
+		"digest" : "Single, spherical bubble model.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Liquids" ],
+		"seealso" : [ "sdt.fluidflow~" ]
+	}
+,
+	"sdt.fluidflow~" : 	{
+		"digest" : "stochastic population of bubbles.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Liquids" ],
+		"seealso" : [ "sdt.bubble~" ]
+	}
+,
+	"bufreverse~" : 	{
+		"digest" : "Turbulence model of gases impacting against a surface.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Gasses" ],
+		"seealso" : [ "sdt.windcavity~", "sdt.windkarman~", "sdt.explosion~" ]
+	}
+,
+	"sdt.windcavity~" : 	{
+		"digest" : "Turbulence model of gases passing through cylindrical cavities.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Gasses" ],
+		"seealso" : [ "sdt.windflow~", "sdt.windkarman~", "sdt.explosion~" ]
+	}
+,
+	"sdt.windkarman~" : 	{
+		"digest" : "Turbulence model of gases across thin objects.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Gasses" ],
+		"seealso" : [ "sdt.windflow~", "sdt.windcavity~", "sdt.explosion~" ]
+	}
+,
+	"sdt.explosion~" : 	{
+		"digest" : "Blast wave model for explosion sounds.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Gasses" ],
+		"seealso" : [ "sdt.windflow~", "sdt.windcavity~", "sdt.windkarman~" ]
+	}
+,
+	"sdt.dcmotor~" : 	{
+		"digest" : "Model of DC brushed electric motor.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Machines" ],
+		"seealso" : [ "sdt.motor~" ]
+	}
+,
+	"sdt.motor~" : 	{
+		"digest" : "Model of a combustion engine",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Machines" ],
+		"seealso" : [ "sdt.dcmotor~" ]
+	}
+,
+	"sdt.demix~" : 	{
+		"digest" : "Transient / tonal / residual component separator",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Processors" ],
+		"seealso" : [ "sdt.reverb~", "sdt.pitchshift~" ]
+	}
+,
+	"sdt.reverb~" : 	{
+		"digest" : "Feedback Delay Network (FDN) reverberator",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Processors" ],
+		"seealso" : [ "sdt.demix~", "sdt.pitchshift~" ]
+	}
+,
+	"sdt.pitchshift~" : 	{
+		"digest" : "Frequency domain pitch shifter",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Processors" ],
+		"seealso" : [ "sdt.reverb~", "sdt.pitchshift~" ]
+	}
+,
+	"sdt.envelope~" : 	{
+		"digest" : "Envelope follower with different attack and release times.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Analysis" ],
+		"seealso" : [ "sdt.pitch~", "sdt.spectralfeats~", "sdt.zerox~", "sdt.myo~" ]
+	}
+,
+	"sdt.pitch~" : 	{
+		"digest" : "Normalized Squared Difference Function (NSDF) based pitch detector.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Analysis" ],
+		"seealso" : [ "sdt.envelope~", "sdt.spectralfeats~", "sdt.zerox~", "sdt.myo~" ]
+	}
+,
+	"sdt.spectralfeats~" : 	{
+		"digest" : "Spectral analyzer, extracting several audio descriptors.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Analysis" ],
+		"seealso" : [ "sdt.envelope~", "sdt.pitch~", "sdt.zerox~", "sdt.myo~" ]
+	}
+,
+	"sdt.zerox~" : 	{
+		"digest" : "Zero crossing detector.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Analysis" ],
+		"seealso" : [ "sdt.envelope~", "sdt.spectralfeats~", "sdt.pitch~", "sdt.myo~" ]
+	}
+,
+	"sdt.myo~" : 	{
+		"digest" : "Myoelastic vocal activity detector.",
+		"module" : "SDT",
+		"category" : [ "SDT", "SDT Objects", "SDT Analysis" ],
+		"seealso" : [ "sdt.envelope~", "sdt.spectralfeats~", "sdt.pitch~", "sdt.zerox~" ]
+	}
+
+}
