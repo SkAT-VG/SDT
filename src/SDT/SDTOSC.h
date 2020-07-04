@@ -240,7 +240,16 @@ extern SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const S
 ID
 \par Calls
 ::SDTResonator_getNModes
+\par
 ::SDTResonator_getActiveModes
+\par
+::SDTResonator_getFrequency
+\par
+::SDTResonator_getDecay
+\par
+::SDTResonator_getWeight
+\par
+::SDTResonator_getGain
 @param [in] log Log function pointer
 @param [in] key Resonator name (ID)
 @param [in] x Pointer to the SDT resonator instance to inspect
