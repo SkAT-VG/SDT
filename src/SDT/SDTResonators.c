@@ -218,6 +218,10 @@ double SDTResonator_getWeight(SDTResonator *x, unsigned int mode) {
   return x->weights[mode];
 }
 
+double SDTResonator_getGain(SDTResonator *x, unsigned int pickup, unsigned int mode) {
+  return x->gains[pickup][mode];
+}
+
 int SDTResonator_getNPickups(SDTResonator *x) {
   return x->nPickups;
 }

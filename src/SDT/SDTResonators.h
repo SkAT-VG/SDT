@@ -56,6 +56,12 @@ extern double SDTResonator_getDecay(SDTResonator *x, unsigned int mode);
 @return Modal weight, in Kg */
 extern double SDTResonator_getWeight(SDTResonator *x, unsigned int mode);
 
+/** @brief Gets the pickup gain for a given mode and pickup
+@param[in] pickup Pickup number
+@param[in] mode Mode number
+@return Pickup gain */
+extern double SDTResonator_getGain(SDTResonator *x, unsigned int pickup, unsigned int mode);
+
 /** @brief Gets the number of pickup points
 @return Number of pickup points */
 extern int SDTResonator_getNPickups(SDTResonator *x);
