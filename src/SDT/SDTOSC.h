@@ -231,7 +231,21 @@ ID [args...]
 /inertial (alias)
 @param[in] x OSC message: the first argument must be the resonator's ID. All other arguments are passed down to the method
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x);
+extern SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMessage* x);
+
+/** @brief OSC method for logging information about SDT Resonators
+\par OSC Address
+/resonator/log
+\par OSC Arguments
+ID
+\par Calls
+::SDTResonator_getNModes
+::SDTResonator_getActiveModes
+@param [in] log Log function pointer
+@param [in] key Resonator name (ID)
+@param [in] x Pointer to the SDT resonator instance to inspect
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x);
 
 /** @brief OSC method for setting modal frequencies of SDT Resonators
 \par OSC Address

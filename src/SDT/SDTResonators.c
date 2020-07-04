@@ -210,6 +210,14 @@ int SDTResonator_getNPickups(SDTResonator *x) {
   return x->nPickups;
 }
 
+int SDTResonator_getNModes(SDTResonator *x) {
+  return x->nModes;
+}
+
+int SDTResonator_getActiveModes(SDTResonator *x) {
+  return x->activeModes;
+}
+
 void SDTResonator_setPosition(SDTResonator *x, unsigned int pickup, double f) {
   int mode;
   

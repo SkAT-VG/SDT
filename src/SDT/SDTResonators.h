@@ -45,6 +45,14 @@ extern double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup);
 @return Number of pickup points */
 extern int SDTResonator_getNPickups(SDTResonator *x);
 
+/** @brief Gets the number of resonant modes
+@return Number of resonant modes */
+extern int SDTResonator_getNModes(SDTResonator *x);
+
+/** @brief Gets the number of active modes
+@return Number of active modes */
+extern int SDTResonator_getActiveModes(SDTResonator *x);
+
 /** @brief Sets a modal displacement at a given pickup point
 @param[in] pickup Pickup point
 @param[in] f Modal displacement, in m */
