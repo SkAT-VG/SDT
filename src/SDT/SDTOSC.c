@@ -5,6 +5,36 @@
 #include <string.h>
 #include <math.h>
 
+//-------------------------------------------------------------------------------------//
+// Private utils
+
+char *_indent = "  ";
+
+char *strjoin_free(char *x, int free_x, char* y, int free_y) {
+  char *z = malloc(sizeof(char) * (strlen(x) + strlen(y) + 1));
+  sprintf(z, "%s%s", x, y);
+  if (free_x)
+    free(x);
+  if (free_y)
+    free(y);
+  return z;
+}
+
+char *indent_free(char *x, int free_x, int newline) {
+  char *ind = strjoin_free((newline)? "\n" : "", 0, _indent, 0);
+  return strjoin_free(ind, 1, x, free_x);
+}
+
+int n_digits(float x) {
+  return (int) fmax(ceil(log10(fabs(x) + 1)), 1);
+}
+
+char *int_stralloc(float x, int headroom, int times) {
+  return (char *) malloc(sizeof(char) * times * (headroom + n_digits(x)));
+}
+
+//-------------------------------------------------------------------------------------//
+
 struct SDTOSCAddress {
   unsigned int depth;
   char **nodes;
@@ -279,23 +309,34 @@ SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
 
 //-------------------------------------------------------------------------------------//
 
-SDTOSCReturnCode SDTOSCRoot(const SDTOSCMessage* x) {
-  if (!SDTOSCMessage_hasContainer(x))
-    return SDT_OSC_RETURN_MISSING_CONTAINER;
-  char *method = SDTOSCMessage_getContainer(x);
+enum SDTOSCReturnCode {
+  SDT_OSC_RETURN_OK,
+  SDT_OSC_RETURN_MISSING_CONTAINER,
+  SDT_OSC_RETURN_MISSING_METHOD,
+  SDT_OSC_RETURN_NOT_IMPLEMENTED,
+  SDT_OSC_RETURN_ARGUMENT_ERROR,
+  SDT_OSC_RETURN_OBJECT_NOT_FOUND,
+};
 
-  SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
+void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-  if (!strcmp("resonator", method) || !strcmp("inertial", method))
-    return_code = SDTOSCResonator(sub);
+  if (!SDTOSCMessage_hasContainer(x))
+    return_code = SDT_OSC_RETURN_MISSING_CONTAINER;
+  else {
+    char *method = SDTOSCMessage_getContainer(x);
 
-  SDTOSCMessage_free(sub);
-  return return_code;
+    SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
+    if (!strcmp("resonator", method) || !strcmp("inertial", method))
+      return_code = SDTOSCResonator(log, sub);
+
+    SDTOSCMessage_free(sub);
+  }
+  SDTOSCLog(log, return_code, x);
 }
 
 //-------------------------------------------------------------------------------------//
 
-SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x) {
+SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
   const char *res_key = (args->argc && SDTOSCArgumentList_isString(args, 0))? SDTOSCArgumentList_getString(args, 0) : 0;
   SDTResonator *res = (res_key)? SDT_getResonator(res_key) : 0;
@@ -305,7 +346,9 @@ SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x) {
     if (SDTOSCMessage_hasContainer(x)) {
       SDTOSCArgumentList *sub_args = SDTOSCArgumentList_copyFromTo(SDTOSCMessage_getArguments(x), 1, -1);
       char *method = SDTOSCMessage_getContainer(x);
-      if (!strcmp("frequency", method))
+      if (!strcmp("log", method))
+        return_code = SDTOSCResonator_log(log, res_key, res);
+      else if (!strcmp("frequency", method))
         return_code = SDTOSCResonator_setFrequency(res, sub_args);
       else if (!strcmp("decay", method))
         return_code = SDTOSCResonator_setDecay(res, sub_args);
@@ -338,6 +381,67 @@ SDTOSCReturnCode SDTOSCResonator(const SDTOSCMessage* x) {
     return_code = SDT_OSC_RETURN_ARGUMENT_ERROR;
 
   return return_code;
+}
+
+SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
+  char *s = (char *) malloc(sizeof(char) * (strlen(key) + 1)), *a;
+  s = strjoin_free(strjoin_free("sdtOSC: resonator '", 0, strcpy(s, key), 1), 1, "'", 0);
+
+  // Log number of modes
+  a = int_stralloc(SDTResonator_getNModes(x), 8, 2);
+  sprintf(a, "%d/%d", SDTResonator_getActiveModes(x), SDTResonator_getNModes(x));
+  s = strjoin_free(strjoin_free(s, 1, indent_free("active modes: ", 0, 1), 1), 1, a, 1);
+
+  // Log number of pickup points
+  a = int_stralloc(SDTResonator_getNPickups(x), 8, 1);
+  sprintf(a, "%d", SDTResonator_getNPickups(x));
+  s = strjoin_free(strjoin_free(s, 1, indent_free("pickup points: ", 0, 1), 1), 1, a, 1);
+
+  // Log modal parameters
+  if (SDTResonator_getActiveModes(x))
+    s = strjoin_free(s, 1, indent_free(" --- active modes --- ", 0, 1), 1);
+  for (unsigned int m = 0; m < SDTResonator_getNModes(x) ; ++m) {
+    if (m == SDTResonator_getActiveModes(x))
+      s = strjoin_free(s, 1, indent_free(" --- inactive modes --- ", 0, 1), 1);
+    int nd = n_digits(SDTResonator_getNModes(x));
+    int md = n_digits(m);
+    a = int_stralloc(SDTResonator_getNModes(x), 8, 1);
+    sprintf(a + nd - md, "%d) ", m);
+    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
+
+    // Frequecy
+    a = int_stralloc(SDTResonator_getFrequency(x, m), 16, 1);
+    sprintf(a, "freq=%.2f", SDTResonator_getFrequency(x, m));
+    s = strjoin_free(s, 1, a, 1);
+
+    // Decay
+    a = int_stralloc(SDTResonator_getDecay(x, m), 16 + nd, 1);
+    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
+    sprintf(a + nd + 2, "decay=%.2f", SDTResonator_getDecay(x, m));
+    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
+
+    // Weight
+    a = int_stralloc(SDTResonator_getWeight(x, m), 16 + nd, 1);
+    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
+    sprintf(a + nd + 2, "weight=%.2f", SDTResonator_getWeight(x, m));
+    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
+
+    // Gains
+    a = (char *) malloc(sizeof(char) * (nd + 16));
+    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
+    sprintf(a + nd + 2, "gain=[ ");
+    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
+    for (unsigned int p = 0 ; p < SDTResonator_getNPickups(x) ; ++p) {
+      a = int_stralloc(SDTResonator_getGain(x, p, m), 8, 1);
+      sprintf(a, "%.2f ", SDTResonator_getGain(x, p, m));
+      s = strjoin_free(s, 1, a, 1);
+    }
+    s = strjoin_free(s, 1, "]", 0);
+  }
+
+  (*log)(s);
+  free(s);
+  return SDT_OSC_RETURN_OK;
 }
 
 SDTOSCReturnCode SDTOSCResonator_setFloat(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {
@@ -442,25 +546,9 @@ SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentLis
 //-------------------------------------------------------------------------------------//
 
 char *_docs_url = "https://chromaticisobar.github.io/SDT";
-char *_indent = "  ";
 
-char *strjoin_free(char *x, int free_x, char* y, int free_y) {
-  char *z = malloc(sizeof(char) * (strlen(x) + strlen(y) + 1));
-  sprintf(z, "%s%s", x, y);
-  if (free_x)
-    free(x);
-  if (free_y)
-    free(y);
-  return z;
-}
-
-char *indent_free(char *x, int free_x, int newline) {
-  char *ind = strjoin_free((newline)? "\n" : "", 0, _indent, 0);
-  return strjoin_free(ind, 1, x, free_x);
-}
-
-void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m) {
-  if (r) {
+void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSCMessage *m) {
+  if (log && r) {
     // Error code
     char *msg = "[ERROR]";
     if (r == SDT_OSC_RETURN_MISSING_CONTAINER)
@@ -494,7 +582,7 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessag
           msg = strjoin_free(msg, 1, arg, 1);
         } else if (SDTOSCArgumentList_isFloat(args, i)) {
           float arg = SDTOSCArgumentList_getFloat(args, i);
-          char *s = (char *) malloc(sizeof(char) * (16 + (int) ceil(log10(fabs(arg) + 1))));
+          char *s = (char *) malloc(sizeof(char) * (16 + n_digits(arg)));
           sprintf(s, (fmod(arg, 1))? " %.2f" : " %.0f", arg);
           msg = strjoin_free(msg, 1, s, 1);
         } else

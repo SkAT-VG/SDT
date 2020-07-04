@@ -206,8 +206,32 @@ double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup) {
   return out;
 }
 
+double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode) {
+  return x->freqs[mode];
+}
+
+double SDTResonator_getDecay(SDTResonator *x, unsigned int mode) {
+  return x->decays[mode];
+}
+
+double SDTResonator_getWeight(SDTResonator *x, unsigned int mode) {
+  return x->weights[mode];
+}
+
+double SDTResonator_getGain(SDTResonator *x, unsigned int pickup, unsigned int mode) {
+  return x->gains[pickup][mode];
+}
+
 int SDTResonator_getNPickups(SDTResonator *x) {
   return x->nPickups;
+}
+
+int SDTResonator_getNModes(SDTResonator *x) {
+  return x->nModes;
+}
+
+int SDTResonator_getActiveModes(SDTResonator *x) {
+  return x->activeModes;
 }
 
 void SDTResonator_setPosition(SDTResonator *x, unsigned int pickup, double f) {

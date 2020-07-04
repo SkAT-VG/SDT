@@ -41,9 +41,38 @@ extern double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup);
 @return Object velocity, in m/s */
 extern double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup);
 
+/** @brief Gets the resonant frequency for a given mode
+@param[in] mode Mode number
+@return Modal frequency, in Hz */
+extern double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode);
+
+/** @brief Gets the decay for a given mode
+@param[in] mode Mode number
+@return Modal decay, in s. A value of 0 means no decay at all (infinite decay time) */
+extern double SDTResonator_getDecay(SDTResonator *x, unsigned int mode);
+
+/** @brief Gets the weight for a given mode
+@param[in] mode Mode number
+@return Modal weight, in Kg */
+extern double SDTResonator_getWeight(SDTResonator *x, unsigned int mode);
+
+/** @brief Gets the pickup gain for a given mode and pickup
+@param[in] pickup Pickup number
+@param[in] mode Mode number
+@return Pickup gain */
+extern double SDTResonator_getGain(SDTResonator *x, unsigned int pickup, unsigned int mode);
+
 /** @brief Gets the number of pickup points
 @return Number of pickup points */
 extern int SDTResonator_getNPickups(SDTResonator *x);
+
+/** @brief Gets the number of resonant modes
+@return Number of resonant modes */
+extern int SDTResonator_getNModes(SDTResonator *x);
+
+/** @brief Gets the number of active modes
+@return Number of active modes */
+extern int SDTResonator_getActiveModes(SDTResonator *x);
 
 /** @brief Sets a modal displacement at a given pickup point
 @param[in] pickup Pickup point
