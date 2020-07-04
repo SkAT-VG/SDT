@@ -41,6 +41,11 @@ extern double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup);
 @return Object velocity, in m/s */
 extern double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup);
 
+/** @brief Gets the resonant frequency for a given mode
+@param[in] mode Mode number
+@return Modal frequency, in Hz */
+extern double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode);
+
 /** @brief Gets the number of pickup points
 @return Number of pickup points */
 extern int SDTResonator_getNPickups(SDTResonator *x);

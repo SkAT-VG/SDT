@@ -5,6 +5,9 @@
 #include <string.h>
 #include <math.h>
 
+//-------------------------------------------------------------------------------------//
+// Private utils
+
 char *_indent = "  ";
 
 char *strjoin_free(char *x, int free_x, char* y, int free_y) {
@@ -20,6 +23,14 @@ char *strjoin_free(char *x, int free_x, char* y, int free_y) {
 char *indent_free(char *x, int free_x, int newline) {
   char *ind = strjoin_free((newline)? "\n" : "", 0, _indent, 0);
   return strjoin_free(ind, 1, x, free_x);
+}
+
+int n_digits(float x) {
+  return (int) fmax(ceil(log10(fabs(x) + 1)), 1);
+}
+
+char *int_stralloc(float x, int headroom, int times) {
+  return (char *) malloc(sizeof(char) * times * (headroom + n_digits(x)));
 }
 
 //-------------------------------------------------------------------------------------//
@@ -373,14 +384,38 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
 }
 
 SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
-  char *s = (char *) malloc(sizeof(char) * (strlen(key) + 1));
+  char *s = (char *) malloc(sizeof(char) * (strlen(key) + 1)), *a;
   s = strjoin_free(strjoin_free("sdtOSC: resonator '", 0, strcpy(s, key), 1), 1, "'", 0);
 
-  char *a = (char *) malloc(sizeof(char) * 2 * (16 + (int) ceil(log10(fabs(SDTResonator_getNModes(x)) + 1))));
+  // Log number of modes
+  a = int_stralloc(SDTResonator_getNModes(x), 8, 2);
   sprintf(a, "%d/%d", SDTResonator_getActiveModes(x), SDTResonator_getNModes(x));
   s = strjoin_free(strjoin_free(s, 1, indent_free("active modes: ", 0, 1), 1), 1, a, 1);
 
+  // Log number of pickup points
+  a = int_stralloc(SDTResonator_getNPickups(x), 8, 1);
+  sprintf(a, "%d", SDTResonator_getNPickups(x));
+  s = strjoin_free(strjoin_free(s, 1, indent_free("pickup points: ", 0, 1), 1), 1, a, 1);
+
+  // Log modal parameters
+  if (SDTResonator_getActiveModes(x))
+    s = strjoin_free(s, 1, indent_free(" --- active modes --- ", 0, 1), 1);
+  for (unsigned int m = 0; m < SDTResonator_getNModes(x) ; ++m) {
+    if (m == SDTResonator_getActiveModes(x))
+      s = strjoin_free(s, 1, indent_free(" --- inactive modes --- ", 0, 1), 1);
+    int nd = n_digits(SDTResonator_getNModes(x));
+    int md = n_digits(m);
+    a = int_stralloc(SDTResonator_getNModes(x), 8, 1);
+    sprintf(a + nd - md, "%d) ", m);
+    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
+
+    a = int_stralloc(SDTResonator_getFrequency(x, m), 16, 1);
+    sprintf(a, "freq=%.2f", SDTResonator_getFrequency(x, m));
+    s = strjoin_free(s, 1, a, 1);
+  }
+
   (*log)(s);
+  free(s);
   return SDT_OSC_RETURN_OK;
 }
 
@@ -522,7 +557,7 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
           msg = strjoin_free(msg, 1, arg, 1);
         } else if (SDTOSCArgumentList_isFloat(args, i)) {
           float arg = SDTOSCArgumentList_getFloat(args, i);
-          char *s = (char *) malloc(sizeof(char) * (16 + (int) ceil(log10(fabs(arg) + 1))));
+          char *s = (char *) malloc(sizeof(char) * (16 + n_digits(arg)));
           sprintf(s, (fmod(arg, 1))? " %.2f" : " %.0f", arg);
           msg = strjoin_free(msg, 1, s, 1);
         } else

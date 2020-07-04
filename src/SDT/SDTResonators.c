@@ -206,6 +206,10 @@ double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup) {
   return out;
 }
 
+double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode) {
+  return x->freqs[mode];
+}
+
 int SDTResonator_getNPickups(SDTResonator *x) {
   return x->nPickups;
 }
