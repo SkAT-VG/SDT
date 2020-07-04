@@ -210,6 +210,10 @@ double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode) {
   return x->freqs[mode];
 }
 
+double SDTResonator_getDecay(SDTResonator *x, unsigned int mode) {
+  return x->decays[mode];
+}
+
 int SDTResonator_getNPickups(SDTResonator *x) {
   return x->nPickups;
 }

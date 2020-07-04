@@ -409,9 +409,16 @@ SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char
     sprintf(a + nd - md, "%d) ", m);
     s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
 
+    // Frequecy
     a = int_stralloc(SDTResonator_getFrequency(x, m), 16, 1);
     sprintf(a, "freq=%.2f", SDTResonator_getFrequency(x, m));
     s = strjoin_free(s, 1, a, 1);
+
+    // Decay
+    a = int_stralloc(SDTResonator_getDecay(x, m), 16 + nd, 1);
+    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
+    sprintf(a + nd + 2, "decay=%.2f", SDTResonator_getDecay(x, m));
+    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
   }
 
   (*log)(s);
