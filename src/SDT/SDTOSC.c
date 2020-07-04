@@ -419,6 +419,12 @@ SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char
     for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
     sprintf(a + nd + 2, "decay=%.2f", SDTResonator_getDecay(x, m));
     s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
+
+    // Weight
+    a = int_stralloc(SDTResonator_getWeight(x, m), 16 + nd, 1);
+    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
+    sprintf(a + nd + 2, "weight=%.2f", SDTResonator_getWeight(x, m));
+    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
   }
 
   (*log)(s);

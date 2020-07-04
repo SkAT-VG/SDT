@@ -214,6 +214,10 @@ double SDTResonator_getDecay(SDTResonator *x, unsigned int mode) {
   return x->decays[mode];
 }
 
+double SDTResonator_getWeight(SDTResonator *x, unsigned int mode) {
+  return x->weights[mode];
+}
+
 int SDTResonator_getNPickups(SDTResonator *x) {
   return x->nPickups;
 }

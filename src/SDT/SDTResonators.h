@@ -51,6 +51,11 @@ extern double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode);
 @return Modal decay, in s. A value of 0 means no decay at all (infinite decay time) */
 extern double SDTResonator_getDecay(SDTResonator *x, unsigned int mode);
 
+/** @brief Gets the weight for a given mode
+@param[in] mode Mode number
+@return Modal weight, in Kg */
+extern double SDTResonator_getWeight(SDTResonator *x, unsigned int mode);
+
 /** @brief Gets the number of pickup points
 @return Number of pickup points */
 extern int SDTResonator_getNPickups(SDTResonator *x);
