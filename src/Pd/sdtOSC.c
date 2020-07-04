@@ -27,7 +27,7 @@ SDTOSCMessage *pd_args_to_sdt(t_symbol *s, int argc, t_atom *argv) {
 
 void sdt_osc_root(t_sdt_osc *x, t_symbol *s, int argc, t_atom *argv) {
   SDTOSCMessage *m = pd_args_to_sdt(s, argc, argv);
-  SDTOSCLog(&post, SDTOSCRoot(m), m);
+  SDTOSCRoot(&post, m);
   SDTOSCMessage_free(m);
 }
 

@@ -209,20 +209,14 @@ OSC containers and methods for SDT
 @{ */
 
 /** @brief Return codes for OSC methods */
-typedef enum SDTOSCReturnCode {
-  SDT_OSC_RETURN_OK,
-  SDT_OSC_RETURN_MISSING_CONTAINER,
-  SDT_OSC_RETURN_MISSING_METHOD,
-  SDT_OSC_RETURN_NOT_IMPLEMENTED,
-  SDT_OSC_RETURN_ARGUMENT_ERROR,
-  SDT_OSC_RETURN_OBJECT_NOT_FOUND,
-} SDTOSCReturnCode;
+typedef enum SDTOSCReturnCode SDTOSCReturnCode;
 
 /** @brief OSC root for SDT methods
 \par OSC Address
 /
-@return Return code */
-extern SDTOSCReturnCode SDTOSCRoot(const SDTOSCMessage* x);
+@param [in] log Log function pointer
+@param [in] x OSC message*/
+extern void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x);
 
 /** @defgroup osc_methods_resonators OSC Resonator Methods
 OSC containers and methods for SDT resonators
@@ -379,7 +373,7 @@ extern SDTOSCReturnCode SDTOSCResonator_setGains(SDTResonator *x, const SDTOSCAr
 @param[in] log Log function pointer
 @param[in] r Return code
 @param[in] m OSC message. Use a NULL pointer if it doesn't have to be printed. */
-extern void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m);
+extern void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSCMessage *m);
 
 /** @} */
 

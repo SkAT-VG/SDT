@@ -279,18 +279,29 @@ SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
 
 //-------------------------------------------------------------------------------------//
 
-SDTOSCReturnCode SDTOSCRoot(const SDTOSCMessage* x) {
-  if (!SDTOSCMessage_hasContainer(x))
-    return SDT_OSC_RETURN_MISSING_CONTAINER;
-  char *method = SDTOSCMessage_getContainer(x);
+enum SDTOSCReturnCode {
+  SDT_OSC_RETURN_OK,
+  SDT_OSC_RETURN_MISSING_CONTAINER,
+  SDT_OSC_RETURN_MISSING_METHOD,
+  SDT_OSC_RETURN_NOT_IMPLEMENTED,
+  SDT_OSC_RETURN_ARGUMENT_ERROR,
+  SDT_OSC_RETURN_OBJECT_NOT_FOUND,
+};
 
-  SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
+void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-  if (!strcmp("resonator", method) || !strcmp("inertial", method))
-    return_code = SDTOSCResonator(sub);
+  if (!SDTOSCMessage_hasContainer(x))
+    return_code = SDT_OSC_RETURN_MISSING_CONTAINER;
+  else {
+    char *method = SDTOSCMessage_getContainer(x);
 
-  SDTOSCMessage_free(sub);
-  return return_code;
+    SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
+    if (!strcmp("resonator", method) || !strcmp("inertial", method))
+      return_code = SDTOSCResonator(sub);
+
+    SDTOSCMessage_free(sub);
+  }
+  SDTOSCLog(log, return_code, x);
 }
 
 //-------------------------------------------------------------------------------------//
@@ -459,8 +470,8 @@ char *indent_free(char *x, int free_x, int newline) {
   return strjoin_free(ind, 1, x, free_x);
 }
 
-void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, SDTOSCMessage *m) {
-  if (r) {
+void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSCMessage *m) {
+  if (log && r) {
     // Error code
     char *msg = "[ERROR]";
     if (r == SDT_OSC_RETURN_MISSING_CONTAINER)
