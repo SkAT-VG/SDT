@@ -31,6 +31,13 @@ extern SDTResonator *SDTResonator_new(unsigned int nModes, unsigned int nPickups
 @param[in] x Pointer to the instance to destroy */
 extern void SDTResonator_free(SDTResonator *x);
 
+/** @brief Object reinitializer
+@param[in] x Pointer to the instance to renew
+@param[in] nModes New number of resonant modes
+@param[in] nPickups New number of pickup points 
+@return Pointer to the instance x */
+extern SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned int nPickups);
+
 /** @brief Gets the displacement of the object at a given pickup point.
 @param[in] pickup Pickup point
 @return Object displacement, in m */

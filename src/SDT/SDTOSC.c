@@ -370,6 +370,8 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
         return_code = SDTOSCResonator_setWeights(res, sub_args);
       else if (!strcmp("pickup", method))
         return_code = SDTOSCResonator_setGains(res, sub_args);
+      else if (!strcmp("renew", method))
+        return_code = SDTOSCResonator_renew(res, sub_args);
       else
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
       SDTOSCArgumentList_free(sub_args);
@@ -441,6 +443,18 @@ SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char
 
   (*log)(s);
   free(s);
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 2)
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  for(unsigned int i = 0 ; i < 2 ; ++i)
+    if (!SDTOSCArgumentList_isFloat(args, i))
+      return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  SDTResonator_renew(x, (unsigned int) SDTOSCArgumentList_getFloat(args, 0), (unsigned int) SDTOSCArgumentList_getFloat(args, 1));
+
   return SDT_OSC_RETURN_OK;
 }
 

@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 #include "SDTCommon.h"
 #include "SDTResonators.h"
 
@@ -178,6 +179,73 @@ void SDTResonator_free(SDTResonator *x) {
   free(x->v);
   free(x->f);
   free(x);
+}
+
+SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned int nPickups) {
+  unsigned int min_nModes = (nModes > x->nModes)? x->nModes : nModes;
+  unsigned int min_nPickups = (nPickups > x->nPickups)? x->nPickups : nPickups;
+
+  double *freqs = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->freqs, sizeof(double) * min_nModes);
+  double *decays = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->decays, sizeof(double) * min_nModes);
+  double *weights = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->weights, sizeof(double) * min_nModes);
+  double *m = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->m, sizeof(double) * min_nModes);
+  double *k = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->k, sizeof(double) * min_nModes);
+  double *b1 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->b1, sizeof(double) * min_nModes);
+  double *a1 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->a1, sizeof(double) * min_nModes);
+  double *a2 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->a2, sizeof(double) * min_nModes);
+  double *b0v = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->b0v, sizeof(double) * min_nModes);
+  double *b1v = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->b1v, sizeof(double) * min_nModes);
+  double *p0 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->p0, sizeof(double) * min_nModes);
+  double *p1 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->p1, sizeof(double) * min_nModes);
+  double *v = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->v, sizeof(double) * min_nModes);
+  double *f = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->f, sizeof(double) * min_nModes);
+  
+  free(x->freqs);
+  free(x->decays);
+  free(x->weights);
+  free(x->m);
+  free(x->k);
+  free(x->b1);
+  free(x->a1);
+  free(x->a2);
+  free(x->b0v);
+  free(x->b1v);
+  free(x->p0);
+  free(x->p1);
+  free(x->v);
+  free(x->f);
+
+  x->freqs = freqs;
+  x->decays = decays;
+  x->weights = weights;
+  x->m = m;
+  x->k = k;
+  x->b1 = b1;
+  x->a1 = a1;
+  x->a2 = a2;
+  x->b0v = b0v;
+  x->b1v = b1v;
+  x->p0 = p0;
+  x->p1 = p1;
+  x->v = v;
+  x->f = f;
+
+  double **gains = malloc(nPickups * sizeof(double *));
+  for (unsigned int p = 0 ; p < nPickups ; ++p) {
+    gains[p] = (double *) calloc(nModes + 1, sizeof(double));
+    if (p < min_nPickups) {
+      memcpy((void *) gains[p], (void *) x->gains[p], sizeof(double) * (min_nModes + 1));
+      free(x->gains[p]);
+    }
+  }
+
+  free(x->gains);
+  x->gains = gains;
+
+  x->nModes = nModes;
+  x->nPickups = nPickups;
+  x->activeModes = (x->activeModes > min_nModes)? min_nModes : x->activeModes;
+  return x;
 }
 
 double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup) {

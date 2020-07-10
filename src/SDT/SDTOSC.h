@@ -256,6 +256,18 @@ ID
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x);
 
+/** @brief OSC method for reinitializing a resonator
+\par OSC Address
+/resonator/renew
+\par OSC Arguments
+ID NMODES NPICKUPS
+\par Calls
+::SDTResonator_renew
+@param [in] x Pointer to the SDT resonator instance to affect
+@param [in] args Additional OSC arguments: number of modes (int), number of pickup points (int)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList *args);
+
 /** @brief OSC method for setting modal frequencies of SDT Resonators
 \par OSC Address
 /resonator/frequency
