@@ -25,6 +25,16 @@ extern json_value *json_SDTResonator_new(SDTResonator *x);
 @return 0 on success, 1 on error */
 extern int json_dump(json_value *x, const char *fpath);
 
+/** @brief Check write access for the file path
+@param[in] fpath The file path
+@return 0 if not accessible, non-zero if accessible */
+extern int can_write_file(const char *fpath);
+
+/** @brief Check read access for the file path
+@param[in] fpath The file path
+@return 0 if not accessible, non-zero if accessible */
+extern int can_read_file(const char *fpath);
+
 #ifdef __cplusplus
 };
 #endif

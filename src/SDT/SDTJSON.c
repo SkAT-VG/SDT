@@ -1,6 +1,9 @@
 #include "SDTJSON.h"
 #include <unistd.h>
 #include <stdio.h>
+#include <string.h>
+#include <libgen.h>
+#include <sys/stat.h>
 
 json_value *json_SDTResonator_new(SDTResonator *x) {
   json_value *obj = json_object_new(0);
@@ -33,11 +36,27 @@ json_value *json_SDTResonator_new(SDTResonator *x) {
   return obj;
 }
 
+int can_write_file(const char *fpath) {
+  char *s = malloc(sizeof(char) * (strlen(fpath) + 1));
+  strcpy(s, fpath);
+  struct stat buf;
+
+  return strlen(s) && (                                  // file name must be non-empty and either
+    ((stat(s, &buf) == -1) && !access(dirname(s), W_OK)) // - the file does not exist and it is in a writable directory
+    ||
+    (S_ISREG(buf.st_mode) && !access(s, W_OK))           // - the file is a regular file and it is writable
+  );
+}
+
+int can_read_file(const char *fpath) {
+  return !access(fpath, R_OK);
+}
+
 int json_dump(json_value *x, const char *fpath) {
   char *s = malloc(json_measure(x));
   json_serialize(s, x);
 
-  if (!access(fpath, W_OK))
+  if (!can_write_file(fpath))
     return 1;
 
   FILE *f = fopen(fpath, "w");
