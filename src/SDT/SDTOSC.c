@@ -1,4 +1,5 @@
 #include "SDTOSC.h"
+#include "SDTJSON.h"
 #include "SDTSolids.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -386,62 +387,17 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
 }
 
 SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
-  char *s = (char *) malloc(sizeof(char) * (strlen(key) + 1)), *a;
-  s = strjoin_free(strjoin_free("sdtOSC: resonator '", 0, strcpy(s, key), 1), 1, "'", 0);
+  json_value *obj = json_SDTResonator_new(x);
 
-  // Log number of modes
-  a = int_stralloc(SDTResonator_getNModes(x), 8, 2);
-  sprintf(a, "%d/%d", SDTResonator_getActiveModes(x), SDTResonator_getNModes(x));
-  s = strjoin_free(strjoin_free(s, 1, indent_free("active modes: ", 0, 1), 1), 1, a, 1);
+  json_serialize_opts opts;
+  opts.mode = json_serialize_mode_multiline;
+  opts.indent_size = 2;
 
-  // Log number of pickup points
-  a = int_stralloc(SDTResonator_getNPickups(x), 8, 1);
-  sprintf(a, "%d", SDTResonator_getNPickups(x));
-  s = strjoin_free(strjoin_free(s, 1, indent_free("pickup points: ", 0, 1), 1), 1, a, 1);
+  char *s = malloc(json_measure_ex(obj, opts));
+  json_serialize_ex(s, obj, opts);
+  json_builder_free(obj);
 
-  // Log modal parameters
-  if (SDTResonator_getActiveModes(x))
-    s = strjoin_free(s, 1, indent_free(" --- active modes --- ", 0, 1), 1);
-  for (unsigned int m = 0; m < SDTResonator_getNModes(x) ; ++m) {
-    if (m == SDTResonator_getActiveModes(x))
-      s = strjoin_free(s, 1, indent_free(" --- inactive modes --- ", 0, 1), 1);
-    int nd = n_digits(SDTResonator_getNModes(x));
-    int md = n_digits(m);
-    a = int_stralloc(SDTResonator_getNModes(x), 8, 1);
-    sprintf(a + nd - md, "%d) ", m);
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
-
-    // Frequecy
-    a = int_stralloc(SDTResonator_getFrequency(x, m), 16, 1);
-    sprintf(a, "freq=%.2f", SDTResonator_getFrequency(x, m));
-    s = strjoin_free(s, 1, a, 1);
-
-    // Decay
-    a = int_stralloc(SDTResonator_getDecay(x, m), 16 + nd, 1);
-    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
-    sprintf(a + nd + 2, "decay=%.2f", SDTResonator_getDecay(x, m));
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
-
-    // Weight
-    a = int_stralloc(SDTResonator_getWeight(x, m), 16 + nd, 1);
-    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
-    sprintf(a + nd + 2, "weight=%.2f", SDTResonator_getWeight(x, m));
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
-
-    // Gains
-    a = (char *) malloc(sizeof(char) * (nd + 16));
-    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
-    sprintf(a + nd + 2, "gain=[ ");
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
-    for (unsigned int p = 0 ; p < SDTResonator_getNPickups(x) ; ++p) {
-      a = int_stralloc(SDTResonator_getGain(x, p, m), 8, 1);
-      sprintf(a, "%.2f ", SDTResonator_getGain(x, p, m));
-      s = strjoin_free(s, 1, a, 1);
-    }
-    s = strjoin_free(s, 1, "]", 0);
-  }
-
-  (*log)(s);
+  (*log)("sdtOSC: %s\n%s", key, s);
   free(s);
   return SDT_OSC_RETURN_OK;
 }
