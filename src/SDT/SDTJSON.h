@@ -19,6 +19,12 @@ extern "C" {
 @return Pointer to the JSON object */
 extern json_value *json_SDTResonator_new(SDTResonator *x);
 
+/** @brief Dump a JSON value to file
+@param[in] x The JSON value
+@param[in] fpath The file path
+@return 0 on success, 1 on error */
+extern int json_dump(json_value *x, const char *fpath);
+
 #ifdef __cplusplus
 };
 #endif

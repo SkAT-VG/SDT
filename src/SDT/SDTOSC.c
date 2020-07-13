@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <unistd.h>
 
 //-------------------------------------------------------------------------------------//
 // Private utils
@@ -424,20 +423,15 @@ SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const cha
   const char *fpath = SDTOSCArgumentList_getString(args, 0);
 
   json_value *obj = json_SDTResonator_new(x);
-  char *s = malloc(json_measure(obj));
-  json_serialize(s, obj);
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
+
+  if (!json_dump(obj, fpath))
+    (*log)("sdtOSC: saved '%s' to '%s'", key, fpath);
+  else
+    return_code = SDT_OSC_RETURN_NO_WRITE_PERMISSION;
+
   json_builder_free(obj);
-
-  if (!access(fpath, W_OK))
-    return SDT_OSC_RETURN_NO_WRITE_PERMISSION;
-
-  FILE *f = fopen(fpath, "w");
-  fprintf(f, "%s", s);
-  fclose(f);
-
-  (*log)("sdtOSC: saved '%s' to '%s'", key, fpath);
-  free(s);
-  return SDT_OSC_RETURN_OK;
+  return return_code;
 }
 
 SDTOSCReturnCode SDTOSCResonator_setFloat(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {

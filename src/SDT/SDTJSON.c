@@ -1,4 +1,6 @@
 #include "SDTJSON.h"
+#include <unistd.h>
+#include <stdio.h>
 
 json_value *json_SDTResonator_new(SDTResonator *x) {
   json_value *obj = json_object_new(0);
@@ -29,4 +31,19 @@ json_value *json_SDTResonator_new(SDTResonator *x) {
   json_object_push(obj, "gains", g);
 
   return obj;
+}
+
+int json_dump(json_value *x, const char *fpath) {
+  char *s = malloc(json_measure(x));
+  json_serialize(s, x);
+
+  if (!access(fpath, W_OK))
+    return 1;
+
+  FILE *f = fopen(fpath, "w");
+  fprintf(f, "%s", s);
+  fclose(f);
+
+  free(s);
+  return 0;
 }
