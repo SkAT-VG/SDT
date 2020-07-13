@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
 
 //-------------------------------------------------------------------------------------//
 // Private utils
@@ -317,6 +318,7 @@ enum SDTOSCReturnCode {
   SDT_OSC_RETURN_NOT_IMPLEMENTED,
   SDT_OSC_RETURN_ARGUMENT_ERROR,
   SDT_OSC_RETURN_OBJECT_NOT_FOUND,
+  SDT_OSC_RETURN_NO_WRITE_PERMISSION,
 };
 
 void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
@@ -373,6 +375,8 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
         return_code = SDTOSCResonator_setGains(res, sub_args);
       else if (!strcmp("renew", method))
         return_code = SDTOSCResonator_renew(res, sub_args);
+      else if (!strcmp("save", method))
+        return_code = SDTOSCResonator_save(log, res_key, res, sub_args);
       else
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
       SDTOSCArgumentList_free(sub_args);
@@ -411,6 +415,28 @@ SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList
 
   SDTResonator_renew(x, (unsigned int) SDTOSCArgumentList_getFloat(args, 0), (unsigned int) SDTOSCArgumentList_getFloat(args, 1));
 
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+
+  json_value *obj = json_SDTResonator_new(x);
+  char *s = malloc(json_measure(obj));
+  json_serialize(s, obj);
+  json_builder_free(obj);
+
+  if (!access(fpath, W_OK))
+    return SDT_OSC_RETURN_NO_WRITE_PERMISSION;
+
+  FILE *f = fopen(fpath, "w");
+  fprintf(f, "%s", s);
+  fclose(f);
+
+  (*log)("sdtOSC: saved '%s' to '%s'", key, fpath);
+  free(s);
   return SDT_OSC_RETURN_OK;
 }
 
@@ -531,6 +557,8 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
       msg = "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for the specified method";
     else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
       msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
+    else if (r == SDT_OSC_RETURN_NO_WRITE_PERMISSION)
+      msg = "[NO_WRITE_PERMISSION]: the specified filepath is not writable";
 
     msg = strjoin_free("sdtOSC ", 0, msg, 0);
 

@@ -1,3 +1,5 @@
+#include "SDTResonators.h"
+
 /** @file SDTOSC.h
 @defgroup OSC SDTOSC.h: Open Sound Control
 Functions and structures to handle OSC messages for SDT.
@@ -10,8 +12,6 @@ Functions and structures to handle OSC messages for SDT.
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "SDTResonators.h"
 
 /** @defgroup osc_address OSC Address
 This class represents OSC addresses
@@ -239,17 +239,7 @@ extern SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const S
 \par OSC Arguments
 ID
 \par Calls
-::SDTResonator_getNModes
-\par
-::SDTResonator_getActiveModes
-\par
-::SDTResonator_getFrequency
-\par
-::SDTResonator_getDecay
-\par
-::SDTResonator_getWeight
-\par
-::SDTResonator_getGain
+::json_SDTResonator_new
 @param [in] log Log function pointer
 @param [in] key Resonator name (ID)
 @param [in] x Pointer to the SDT resonator instance to inspect
@@ -267,6 +257,20 @@ ID NMODES NPICKUPS
 @param [in] args Additional OSC arguments: number of modes (int), number of pickup points (int)
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for saving information about SDT Resonators
+\par OSC Address
+/resonator/log
+\par OSC Arguments
+ID FILEPATH
+\par Calls
+::json_SDTResonator_new
+@param [in] log Log function pointer
+@param [in] key Resonator name (ID)
+@param [in] x Pointer to the SDT resonator instance to save
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting modal frequencies of SDT Resonators
 \par OSC Address

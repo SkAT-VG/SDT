@@ -1,3 +1,6 @@
+#include "../../3rdparty/json-builder/json-builder.h"
+#include "SDTResonators.h"
+
 /** @file SDTJSON.h
 @defgroup OSC SDTJSON.h: JSON
 SDT serialization and deserialization using JSON
@@ -10,9 +13,6 @@ SDT serialization and deserialization using JSON
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "../../3rdparty/json-builder/json-builder.h"
-#include "SDTResonators.h"
 
 /** @brief Convert an SDTResonator object in a JSON object
 @param[in] x Pointer to the SDTResonator
