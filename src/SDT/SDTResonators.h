@@ -38,6 +38,12 @@ extern void SDTResonator_free(SDTResonator *x);
 @return Pointer to the instance x */
 extern SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned int nPickups);
 
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTResonator *SDTResonator_copy(SDTResonator *dest, const SDTResonator *src);
+
 /** @brief Gets the displacement of the object at a given pickup point.
 @param[in] pickup Pickup point
 @return Object displacement, in m */
@@ -80,6 +86,10 @@ extern int SDTResonator_getNModes(SDTResonator *x);
 /** @brief Gets the number of active modes
 @return Number of active modes */
 extern int SDTResonator_getActiveModes(SDTResonator *x);
+
+/** @brief Gets the fragment size
+@return Fragment size */
+extern double SDTResonator_getFragmentSize(SDTResonator *x);
 
 /** @brief Sets a modal displacement at a given pickup point
 @param[in] pickup Pickup point

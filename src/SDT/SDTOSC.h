@@ -260,7 +260,7 @@ extern SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgum
 
 /** @brief OSC method for saving information about SDT Resonators
 \par OSC Address
-/resonator/log
+/resonator/save
 \par OSC Arguments
 ID FILEPATH
 \par Calls
@@ -271,6 +271,22 @@ ID FILEPATH
 @param [in] args Additional OSC arguments: file path (string)
 @return Return code */
 extern SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for loading information about SDT Resonators
+\par OSC Address
+/resonator/load
+\par OSC Arguments
+ID FILEPATH
+\par Calls
+::json_SDTResonator_load
+\par
+::SDTResonator_copy
+@param [in] log Log function pointer
+@param [in] key Resonator name (ID)
+@param [in] x Pointer to the SDT resonator instance to change
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting modal frequencies of SDT Resonators
 \par OSC Address

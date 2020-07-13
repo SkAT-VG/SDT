@@ -318,6 +318,7 @@ enum SDTOSCReturnCode {
   SDT_OSC_RETURN_ARGUMENT_ERROR,
   SDT_OSC_RETURN_OBJECT_NOT_FOUND,
   SDT_OSC_RETURN_NO_WRITE_PERMISSION,
+  SDT_OSC_RETURN_ERROR_LOADING_JSON,
 };
 
 void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
@@ -376,6 +377,8 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
         return_code = SDTOSCResonator_renew(res, sub_args);
       else if (!strcmp("save", method))
         return_code = SDTOSCResonator_save(log, res_key, res, sub_args);
+      else if (!strcmp("load", method))
+        return_code = SDTOSCResonator_load(log, res_key, res, sub_args);
       else
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
       SDTOSCArgumentList_free(sub_args);
@@ -432,6 +435,25 @@ SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const cha
 
   json_builder_free(obj);
   return return_code;
+}
+
+SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+
+  json_value *obj;
+  if (!can_read_file(fpath) || !(obj = json_read(fpath)))
+    return SDT_OSC_RETURN_ERROR_LOADING_JSON;
+
+  SDTResonator *r = json_SDTResonator_load(obj);
+  SDTResonator_copy(x, r);
+
+  SDTResonator_free(r);
+  json_value_free(obj);
+  (*log)("sdtOSC: loaded '%s' from '%s'", key, fpath);
+
+  return SDT_OSC_RETURN_OK;
 }
 
 SDTOSCReturnCode SDTOSCResonator_setFloat(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {
@@ -553,6 +575,8 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
       msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
     else if (r == SDT_OSC_RETURN_NO_WRITE_PERMISSION)
       msg = "[NO_WRITE_PERMISSION]: the specified filepath is not writable";
+    else if (r == SDT_OSC_RETURN_ERROR_LOADING_JSON)
+      msg = "[ERROR_LOADING_JSON]: the specified filepath either is not readable or does not contain a valid JSON value";
 
     msg = strjoin_free("sdtOSC ", 0, msg, 0);
 
