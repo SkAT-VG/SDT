@@ -4,6 +4,7 @@ CC=i686-w64-mingw32-gcc
 CFLAGS=-Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=-shared
 SRCDIR=../../src
+THIRDPDIR=../../3rdparty
 DSTDIR=../../SoundDesignToolkit
 
 SDTDIR=$(SRCDIR)/SDT
@@ -14,15 +15,26 @@ MAXDIR=$(SRCDIR)/Max7
 MAXSRCS=$(wildcard $(MAXDIR)/*.c)
 MAXOBJS=$(patsubst %.c,%.mxe,$(MAXSRCS))
 
-MAXSDKDIR=../../3rdparty/Max7SDK
+MAXSDKDIR=$(THIRDPDIR)/Max7SDK
 MAXSDKVERSION=6.1.4
 
 PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
 PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
 
-PDSDKDIR=../../3rdparty/Pd
+PDSDKDIR=$(THIRDPDIR)/Pd
 PDSDKVERSION=0.41.4
+
+JSONDIRB=$(THIRDPDIR)/json-builder
+JSONSRCB=$(wildcard $(JSONDIRB)/*.c)
+JSONOBJB=$(patsubst %.c,%.o,$(JSONSRCB))
+
+JSONDIRP=$(THIRDPDIR)/json-parser
+JSONSRCP=$(wildcard $(JSONDIRP)/*.c)
+JSONOBJP=$(patsubst %.c,%.o,$(JSONSRCP))
+
+INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
+JSONOBJS=$(JSONOBJP) $(JSONOBJB)
 
 all: core max pd
 
@@ -53,11 +65,19 @@ fileusage:
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
 	-I$(SRCDIR) -c $(MAXDIR)/SDT_fileusage/SDT_fileusage.c -o $(MAXDIR)/SDT_fileusage.o
 
-core: $(SDTOBJS)
-	$(CC) $(LDFLAGS) $(SDTOBJS) -o $(SDTDIR)/libSDT.dll
+core: $(SDTOBJS) json
+	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/libSDT.dll
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
+
+json: $(JSONOBJP) $(JSONOBJB)
+
+$(JSONDIRP)/%.o: $(JSONDIRP)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
+
+$(JSONDIRB)/%.o: $(JSONDIRB)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
 install_max:
 	@if [ -z "$(DSTDIR)" ]; \
@@ -100,3 +120,5 @@ clean:
 	rm -rf $(MAXDIR)/*.o
 	rm -rf $(PDDIR)/*.dll
 	rm -rf $(PDDIR)/*.o
+	rm -rf $(JSONDIRP)/*.o
+	rm -rf $(JSONDIRB)/*.o
