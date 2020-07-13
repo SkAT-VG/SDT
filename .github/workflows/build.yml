@@ -47,7 +47,7 @@ jobs:
           plt_name: _pd
         - platform: install_max
           plt_name: _max
-    container: chromaticisobar/pd
+    container: chromaticisobar/sdt:build-latest
     steps:
     - uses: actions/checkout@v2
       with:
