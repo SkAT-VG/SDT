@@ -50,6 +50,8 @@ jobs:
     container: chromaticisobar/pd
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Make
       run: cd build/${{ matrix.target }} && make
     - name: Prepare package directory
@@ -86,6 +88,8 @@ jobs:
     # notice that steps are the same as build-docker
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
     - name: Make
       run: cd build/${{ matrix.target }} && make
     - name: Prepare package directory
