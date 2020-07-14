@@ -255,6 +255,8 @@ SDTResonator *SDTResonator_copy(SDTResonator *dest, const SDTResonator *src) {
   memcpy(dest->freqs, src->freqs, sizeof(double) * src->nModes);
   memcpy(dest->decays, src->decays, sizeof(double) * src->nModes);
   memcpy(dest->weights, src->weights, sizeof(double) * src->nModes);
+  for (unsigned int p = 0 ; p < dest->nPickups ; ++p)
+    memcpy(dest->gains[p], src->gains[p], sizeof(double) * dest->nModes);
 
   updateAll(dest);
   return dest;

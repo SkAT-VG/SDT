@@ -76,7 +76,7 @@ SDTResonator *json_SDTResonator_load(const json_value *x) {
     for (unsigned int p = 0 ; (p < g->u.array.length) && (p < SDTResonator_getNPickups(res)) ; ++p) {
       const json_value *gp = g->u.array.values[p];
       if (gp && gp->type == json_array)
-        for (unsigned int m = 0 ; (m < gp->u.array.length) && (m < SDTResonator_getNModes(res)) ; ++m)
+        for (unsigned int m = 0 ; m < SDTResonator_getNModes(res) ; ++m)
           SDTResonator_setGain(res, p, m, json_array_get_number(gp, m, 0));
     }
 
