@@ -2,7 +2,7 @@
 #include "SDTResonators.h"
 
 /** @file SDTJSON.h
-@defgroup OSC SDTJSON.h: JSON
+@defgroup JSON SDTJSON.h: JSON
 SDT serialization and deserialization using JSON
 @{
 */
@@ -14,21 +14,9 @@ SDT serialization and deserialization using JSON
 extern "C" {
 #endif
 
-/** @defgroup json_resonator JSON Resonator
-JSON functions for SDT Resonators
+/** @defgroup json_utils JSON Utils
+JSON utility functions
 @{ */
-
-/** @brief Convert an SDTResonator object in a JSON object
-@param[in] x Pointer to the SDTResonator
-@return Pointer to the JSON object */
-extern json_value *json_SDTResonator_new(SDTResonator *x);
-
-/** @brief Load an SDTResonator object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with SDTResonator_free */
-extern SDTResonator *json_SDTResonator_load(const json_value *x);
-
-/** @} */
 
 /** @brief Dump a JSON value to file
 @param[in] x The JSON value
@@ -63,6 +51,24 @@ extern const json_value *json_object_get_by_key(const json_value *x, const char 
 @param[in] dflt The default value
 @return x[idx] as a double if x is an array and idx is a valid position with a numeric value, otherwise dflt */
 extern double json_array_get_number(const json_value *x, unsigned int idx, double dflt);
+
+/** @} */
+
+/** @defgroup json_resonator SDT Resonators
+JSON functions for SDT Resonators
+@{ */
+
+/** @brief Convert an SDTResonator object in a JSON object
+@param[in] x Pointer to the SDTResonator
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *json_SDTResonator_new(SDTResonator *x);
+
+/** @brief Load an SDTResonator object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with ::SDTResonator_free */
+extern SDTResonator *json_SDTResonator_load(const json_value *x);
+
+/** @} */
 
 #ifdef __cplusplus
 };
