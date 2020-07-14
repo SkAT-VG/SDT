@@ -7,7 +7,7 @@
 
 //-------------------------------------------------------------------------------------//
 
-json_value *json_SDTResonator_new(SDTResonator *x) {
+json_value *SDTResonator_toJSON(SDTResonator *x) {
   json_value *obj = json_object_new(0);
   json_value *f = json_array_new(0);
   json_value *d = json_array_new(0);
@@ -39,7 +39,7 @@ json_value *json_SDTResonator_new(SDTResonator *x) {
   return obj;
 }
 
-SDTResonator *json_SDTResonator_load(const json_value *x) {
+SDTResonator *SDTResonator_fromJSON(const json_value *x) {
   if (!x || x->type != json_object)
     return 0;
   
@@ -86,20 +86,11 @@ SDTResonator *json_SDTResonator_load(const json_value *x) {
 
 //-------------------------------------------------------------------------------------//
 
-int can_write_file(const char *fpath) {
-  char *s = malloc(sizeof(char) * (strlen(fpath) + 1));
-  strcpy(s, fpath);
-  struct stat buf;
-
-  return strlen(s) && (                                  // file name must be non-empty and either
-    ((stat(s, &buf) == -1) && !access(dirname(s), W_OK)) // - the file does not exist and it is in a writable directory
-    ||
-    (S_ISREG(buf.st_mode) && !access(s, W_OK))           // - the file is a regular file and it is writable
-  );
-}
-
-int can_read_file(const char *fpath) {
-  return !access(fpath, R_OK);
+json_serialize_opts sdt_json_opts() {
+  json_serialize_opts opts;
+  opts.mode = json_serialize_mode_multiline;
+  opts.indent_size = 2;
+  return opts;
 }
 
 long long file_size(const char *fpath) {
@@ -109,6 +100,7 @@ long long file_size(const char *fpath) {
   if (stat(s, &buf) == -1)
     return -1;
 
+  free(s);
   return (long long) buf.st_size;
 }
 
@@ -124,27 +116,40 @@ json_value *json_read(const char *fpath) {
     N = ftell(fp);
     rewind(fp);
 
-    char *s = (char *) malloc(sizeof(char) * N);
+    char *s = (char *) malloc(sizeof(char) * (N + 1));
+    s[N] = 0;
     N = fread(s, 1, N, fp);
     fclose(fp);
 
-    v = json_parse((json_char *) s, strlen(s));
+    // Delimit JSON string
+    long int i_start = 0, i_stop = N;
+    for (long int i = 0; i < N ; ++i)
+      if (s[i] == '{') {
+        i_start = i;
+        break;
+      }
+    for (long int i = N - 1; i > 0 ; --i)
+      if (s[i] == '}') {
+        i_stop = i + 1;
+        break;
+      }
+
+    v = json_parse((json_char *) s + i_start, i_stop - i_start);
     free(s);
   }
   return v;
 }
 
 int json_dump(json_value *x, const char *fpath) {
-  char *s = malloc(json_measure(x));
-  json_serialize(s, x);
-
-  if (!can_write_file(fpath))
-    return 1;
+  char *s = malloc(json_measure_ex(x, sdt_json_opts()));
+  json_serialize_ex(s, x, sdt_json_opts());
 
   FILE *f = fopen(fpath, "w");
+  if (!f)
+    return 1;
+
   fprintf(f, "%s", s);
   fclose(f);
-
   free(s);
   return 0;
 }

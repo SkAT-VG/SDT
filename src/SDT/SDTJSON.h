@@ -18,21 +18,15 @@ extern "C" {
 JSON utility functions
 @{ */
 
+/** @brief Get the default JSON serialization options for SDT
+@return The default JSON serialization options for SDT */
+extern json_serialize_opts sdt_json_opts();
+
 /** @brief Dump a JSON value to file
 @param[in] x The JSON value
 @param[in] fpath The file path
 @return 0 on success, 1 on error */
 extern int json_dump(json_value *x, const char *fpath);
-
-/** @brief Check write access for the file path
-@param[in] fpath The file path
-@return 0 if not accessible, non-zero if accessible */
-extern int can_write_file(const char *fpath);
-
-/** @brief Check read access for the file path
-@param[in] fpath The file path
-@return 0 if not accessible, non-zero if accessible */
-extern int can_read_file(const char *fpath);
 
 /** @brief Read JSON value from file
 @param[in] fpath The file path
@@ -61,12 +55,12 @@ JSON functions for SDT Resonators
 /** @brief Convert an SDTResonator object in a JSON object
 @param[in] x Pointer to the SDTResonator
 @return Pointer to the JSON object. Memory must be freed with json_builder_free */
-extern json_value *json_SDTResonator_new(SDTResonator *x);
+extern json_value *SDTResonator_toJSON(SDTResonator *x);
 
 /** @brief Load an SDTResonator object from a JSON object
 @param[in] x Pointer to the JSON object
 @return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with ::SDTResonator_free */
-extern SDTResonator *json_SDTResonator_load(const json_value *x);
+extern SDTResonator *SDTResonator_fromJSON(const json_value *x);
 
 /** @} */
 
