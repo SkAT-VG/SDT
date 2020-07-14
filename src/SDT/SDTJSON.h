@@ -61,12 +61,12 @@ JSON functions for SDT Resonators
 /** @brief Convert an SDTResonator object in a JSON object
 @param[in] x Pointer to the SDTResonator
 @return Pointer to the JSON object. Memory must be freed with json_builder_free */
-extern json_value *json_SDTResonator_new(SDTResonator *x);
+extern json_value *SDTResonator_toJSON(SDTResonator *x);
 
 /** @brief Load an SDTResonator object from a JSON object
 @param[in] x Pointer to the JSON object
 @return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with ::SDTResonator_free */
-extern SDTResonator *json_SDTResonator_load(const json_value *x);
+extern SDTResonator *SDTResonator_fromJSON(const json_value *x);
 
 /** @} */
 

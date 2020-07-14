@@ -395,7 +395,7 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
 const unsigned int log_cap = 1 << 10;
 
 SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
-  json_value *obj = json_SDTResonator_new(x);
+  json_value *obj = SDTResonator_toJSON(x);
 
   json_serialize_opts opts;
   opts.mode = json_serialize_mode_multiline;
@@ -453,7 +453,7 @@ SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const cha
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
   const char *fpath = SDTOSCArgumentList_getString(args, 0);
 
-  json_value *obj = json_SDTResonator_new(x);
+  json_value *obj = SDTResonator_toJSON(x);
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
 
   if (!json_dump(obj, fpath))
@@ -474,7 +474,7 @@ SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const cha
   if (!can_read_file(fpath) || !(obj = json_read(fpath)))
     return SDT_OSC_RETURN_ERROR_LOADING_JSON;
 
-  SDTResonator *r = json_SDTResonator_load(obj);
+  SDTResonator *r = SDTResonator_fromJSON(obj);
   SDTResonator_copy(x, r);
 
   SDTResonator_free(r);

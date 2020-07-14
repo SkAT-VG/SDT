@@ -7,7 +7,7 @@
 
 //-------------------------------------------------------------------------------------//
 
-json_value *json_SDTResonator_new(SDTResonator *x) {
+json_value *SDTResonator_toJSON(SDTResonator *x) {
   json_value *obj = json_object_new(0);
   json_value *f = json_array_new(0);
   json_value *d = json_array_new(0);
@@ -39,7 +39,7 @@ json_value *json_SDTResonator_new(SDTResonator *x) {
   return obj;
 }
 
-SDTResonator *json_SDTResonator_load(const json_value *x) {
+SDTResonator *SDTResonator_fromJSON(const json_value *x) {
   if (!x || x->type != json_object)
     return 0;
   
