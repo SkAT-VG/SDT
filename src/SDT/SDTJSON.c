@@ -86,18 +86,6 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
 //-------------------------------------------------------------------------------------//
 
-int can_write_file(const char *fpath) {
-  char *s = malloc(sizeof(char) * (strlen(fpath) + 1));
-  strcpy(s, fpath);
-  struct stat buf;
-
-  return strlen(s) && (                                  // file name must be non-empty and either
-    ((stat(s, &buf) == -1) && !access(dirname(s), W_OK)) // - the file does not exist and it is in a writable directory
-    ||
-    (S_ISREG(buf.st_mode) && !access(s, W_OK))           // - the file is a regular file and it is writable
-  );
-}
-
 long long file_size(const char *fpath) {
   char *s = malloc(sizeof(char) * (strlen(fpath) + 1));
   strcpy(s, fpath);
@@ -149,13 +137,12 @@ int json_dump(json_value *x, const char *fpath) {
   char *s = malloc(json_measure(x));
   json_serialize(s, x);
 
-  if (!can_write_file(fpath))
+  FILE *f = fopen(fpath, "w");
+  if (!f)
     return 1;
 
-  FILE *f = fopen(fpath, "w");
   fprintf(f, "%s", s);
   fclose(f);
-
   free(s);
   return 0;
 }

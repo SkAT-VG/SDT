@@ -24,11 +24,6 @@ JSON utility functions
 @return 0 on success, 1 on error */
 extern int json_dump(json_value *x, const char *fpath);
 
-/** @brief Check write access for the file path
-@param[in] fpath The file path
-@return 0 if not accessible, non-zero if accessible */
-extern int can_write_file(const char *fpath);
-
 /** @brief Read JSON value from file
 @param[in] fpath The file path
 @return The JSON value pointer, or 0 on failure. Memory must be freed with json_value_free */
