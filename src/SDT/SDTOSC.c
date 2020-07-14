@@ -392,6 +392,8 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
   return return_code;
 }
 
+const unsigned int log_cap = 1 << 10;
+
 SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
   json_value *obj = json_SDTResonator_new(x);
 
@@ -403,7 +405,33 @@ SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char
   json_serialize_ex(s, obj, opts);
   json_builder_free(obj);
 
-  (*log)("sdtOSC: %s\n%s", key, s);
+  unsigned int s_len = strlen(s), n_print = 0;
+  for (unsigned i = 0 ; i < s_len ; i += n_print) {
+    n_print = (i + log_cap > s_len)? s_len - i : log_cap;
+    char *t = (char *) malloc(sizeof(char) * (n_print + 3));
+    memcpy(t, s + i, n_print);
+
+    // Break print at last newline, if there is any, otherwise put line continuation symbol '\' (unless end of string)
+    int j;
+    for (j = n_print - 1; j >=0 ; --j)
+      if (s[i + j] == '\n')
+        break;
+    if (j >= 0) {
+      n_print = j + 1;
+      t[j] = 0;
+    } else if (i + n_print < s_len) {
+      t[n_print] = '\\';
+      t[n_print + 1] = 0;
+    } else {
+      t[n_print] = 0;
+    }
+
+    if (i)
+      (*log)("%s", t);
+    else
+      (*log)("sdtOSC: %s\n%s", key, t);
+    free(t);
+  }
   free(s);
   return SDT_OSC_RETURN_OK;
 }
