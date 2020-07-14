@@ -397,12 +397,8 @@ const unsigned int log_cap = 1 << 10;
 SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
   json_value *obj = SDTResonator_toJSON(x);
 
-  json_serialize_opts opts;
-  opts.mode = json_serialize_mode_multiline;
-  opts.indent_size = 2;
-
-  char *s = malloc(json_measure_ex(obj, opts));
-  json_serialize_ex(s, obj, opts);
+  char *s = malloc(json_measure_ex(obj, sdt_json_opts()));
+  json_serialize_ex(s, obj, sdt_json_opts());
   json_builder_free(obj);
 
   unsigned int s_len = strlen(s), n_print = 0;

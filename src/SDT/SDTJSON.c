@@ -86,6 +86,13 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
 //-------------------------------------------------------------------------------------//
 
+json_serialize_opts sdt_json_opts() {
+  json_serialize_opts opts;
+  opts.mode = json_serialize_mode_multiline;
+  opts.indent_size = 2;
+  return opts;
+}
+
 long long file_size(const char *fpath) {
   char *s = malloc(sizeof(char) * (strlen(fpath) + 1));
   strcpy(s, fpath);
@@ -134,8 +141,8 @@ json_value *json_read(const char *fpath) {
 }
 
 int json_dump(json_value *x, const char *fpath) {
-  char *s = malloc(json_measure(x));
-  json_serialize(s, x);
+  char *s = malloc(json_measure_ex(x, sdt_json_opts()));
+  json_serialize_ex(s, x, sdt_json_opts());
 
   FILE *f = fopen(fpath, "w");
   if (!f)

@@ -18,6 +18,10 @@ extern "C" {
 JSON utility functions
 @{ */
 
+/** @brief Get the default JSON serialization options for SDT
+@return The default JSON serialization options for SDT */
+extern json_serialize_opts sdt_json_opts();
+
 /** @brief Dump a JSON value to file
 @param[in] x The JSON value
 @param[in] fpath The file path
