@@ -98,10 +98,6 @@ int can_write_file(const char *fpath) {
   );
 }
 
-int can_read_file(const char *fpath) {
-  return !access(fpath, R_OK);
-}
-
 long long file_size(const char *fpath) {
   char *s = malloc(sizeof(char) * (strlen(fpath) + 1));
   strcpy(s, fpath);
@@ -109,6 +105,7 @@ long long file_size(const char *fpath) {
   if (stat(s, &buf) == -1)
     return -1;
 
+  free(s);
   return (long long) buf.st_size;
 }
 
@@ -124,11 +121,25 @@ json_value *json_read(const char *fpath) {
     N = ftell(fp);
     rewind(fp);
 
-    char *s = (char *) malloc(sizeof(char) * N);
+    char *s = (char *) malloc(sizeof(char) * (N + 1));
+    s[N] = 0;
     N = fread(s, 1, N, fp);
     fclose(fp);
 
-    v = json_parse((json_char *) s, strlen(s));
+    // Delimit JSON string
+    long int i_start = 0, i_stop = N;
+    for (long int i = 0; i < N ; ++i)
+      if (s[i] == '{') {
+        i_start = i;
+        break;
+      }
+    for (long int i = N - 1; i > 0 ; --i)
+      if (s[i] == '}') {
+        i_stop = i + 1;
+        break;
+      }
+
+    v = json_parse((json_char *) s + i_start, i_stop - i_start);
     free(s);
   }
   return v;

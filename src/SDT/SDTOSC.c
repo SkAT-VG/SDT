@@ -471,7 +471,7 @@ SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const cha
   const char *fpath = SDTOSCArgumentList_getString(args, 0);
 
   json_value *obj;
-  if (!can_read_file(fpath) || !(obj = json_read(fpath)))
+  if (!(obj = json_read(fpath)))
     return SDT_OSC_RETURN_ERROR_LOADING_JSON;
 
   SDTResonator *r = SDTResonator_fromJSON(obj);
