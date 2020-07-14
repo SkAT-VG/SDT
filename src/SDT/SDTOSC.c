@@ -1,4 +1,5 @@
 #include "SDTOSC.h"
+#include "SDTJSON.h"
 #include "SDTSolids.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -316,6 +317,8 @@ enum SDTOSCReturnCode {
   SDT_OSC_RETURN_NOT_IMPLEMENTED,
   SDT_OSC_RETURN_ARGUMENT_ERROR,
   SDT_OSC_RETURN_OBJECT_NOT_FOUND,
+  SDT_OSC_RETURN_NO_WRITE_PERMISSION,
+  SDT_OSC_RETURN_ERROR_LOADING_JSON,
 };
 
 void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
@@ -372,6 +375,10 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
         return_code = SDTOSCResonator_setGains(res, sub_args);
       else if (!strcmp("renew", method))
         return_code = SDTOSCResonator_renew(res, sub_args);
+      else if (!strcmp("save", method))
+        return_code = SDTOSCResonator_save(log, res_key, res, sub_args);
+      else if (!strcmp("load", method))
+        return_code = SDTOSCResonator_load(log, res_key, res, sub_args);
       else
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
       SDTOSCArgumentList_free(sub_args);
@@ -385,63 +392,46 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
   return return_code;
 }
 
+const unsigned int log_cap = 1 << 10;
+
 SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
-  char *s = (char *) malloc(sizeof(char) * (strlen(key) + 1)), *a;
-  s = strjoin_free(strjoin_free("sdtOSC: resonator '", 0, strcpy(s, key), 1), 1, "'", 0);
+  json_value *obj = json_SDTResonator_new(x);
 
-  // Log number of modes
-  a = int_stralloc(SDTResonator_getNModes(x), 8, 2);
-  sprintf(a, "%d/%d", SDTResonator_getActiveModes(x), SDTResonator_getNModes(x));
-  s = strjoin_free(strjoin_free(s, 1, indent_free("active modes: ", 0, 1), 1), 1, a, 1);
+  json_serialize_opts opts;
+  opts.mode = json_serialize_mode_multiline;
+  opts.indent_size = 2;
 
-  // Log number of pickup points
-  a = int_stralloc(SDTResonator_getNPickups(x), 8, 1);
-  sprintf(a, "%d", SDTResonator_getNPickups(x));
-  s = strjoin_free(strjoin_free(s, 1, indent_free("pickup points: ", 0, 1), 1), 1, a, 1);
+  char *s = malloc(json_measure_ex(obj, opts));
+  json_serialize_ex(s, obj, opts);
+  json_builder_free(obj);
 
-  // Log modal parameters
-  if (SDTResonator_getActiveModes(x))
-    s = strjoin_free(s, 1, indent_free(" --- active modes --- ", 0, 1), 1);
-  for (unsigned int m = 0; m < SDTResonator_getNModes(x) ; ++m) {
-    if (m == SDTResonator_getActiveModes(x))
-      s = strjoin_free(s, 1, indent_free(" --- inactive modes --- ", 0, 1), 1);
-    int nd = n_digits(SDTResonator_getNModes(x));
-    int md = n_digits(m);
-    a = int_stralloc(SDTResonator_getNModes(x), 8, 1);
-    sprintf(a + nd - md, "%d) ", m);
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
+  unsigned int s_len = strlen(s), n_print = 0;
+  for (unsigned i = 0 ; i < s_len ; i += n_print) {
+    n_print = (i + log_cap > s_len)? s_len - i : log_cap;
+    char *t = (char *) malloc(sizeof(char) * (n_print + 3));
+    memcpy(t, s + i, n_print);
 
-    // Frequecy
-    a = int_stralloc(SDTResonator_getFrequency(x, m), 16, 1);
-    sprintf(a, "freq=%.2f", SDTResonator_getFrequency(x, m));
-    s = strjoin_free(s, 1, a, 1);
-
-    // Decay
-    a = int_stralloc(SDTResonator_getDecay(x, m), 16 + nd, 1);
-    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
-    sprintf(a + nd + 2, "decay=%.2f", SDTResonator_getDecay(x, m));
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
-
-    // Weight
-    a = int_stralloc(SDTResonator_getWeight(x, m), 16 + nd, 1);
-    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
-    sprintf(a + nd + 2, "weight=%.2f", SDTResonator_getWeight(x, m));
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
-
-    // Gains
-    a = (char *) malloc(sizeof(char) * (nd + 16));
-    for (unsigned int j = 0 ; j < nd + 2 ; ++j) a[j] = ' ';
-    sprintf(a + nd + 2, "gain=[ ");
-    s = strjoin_free(s, 1, indent_free(a, 1, 1), 1);
-    for (unsigned int p = 0 ; p < SDTResonator_getNPickups(x) ; ++p) {
-      a = int_stralloc(SDTResonator_getGain(x, p, m), 8, 1);
-      sprintf(a, "%.2f ", SDTResonator_getGain(x, p, m));
-      s = strjoin_free(s, 1, a, 1);
+    // Break print at last newline, if there is any, otherwise put line continuation symbol '\' (unless end of string)
+    int j;
+    for (j = n_print - 1; j >=0 ; --j)
+      if (s[i + j] == '\n')
+        break;
+    if (j >= 0) {
+      n_print = j + 1;
+      t[j] = 0;
+    } else if (i + n_print < s_len) {
+      t[n_print] = '\\';
+      t[n_print + 1] = 0;
+    } else {
+      t[n_print] = 0;
     }
-    s = strjoin_free(s, 1, "]", 0);
-  }
 
-  (*log)(s);
+    if (i)
+      (*log)("%s", t);
+    else
+      (*log)("sdtOSC: %s\n%s", key, t);
+    free(t);
+  }
   free(s);
   return SDT_OSC_RETURN_OK;
 }
@@ -454,6 +444,42 @@ SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList
       return SDT_OSC_RETURN_ARGUMENT_ERROR;
 
   SDTResonator_renew(x, (unsigned int) SDTOSCArgumentList_getFloat(args, 0), (unsigned int) SDTOSCArgumentList_getFloat(args, 1));
+
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+
+  json_value *obj = json_SDTResonator_new(x);
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
+
+  if (!json_dump(obj, fpath))
+    (*log)("sdtOSC: saved '%s' to '%s'", key, fpath);
+  else
+    return_code = SDT_OSC_RETURN_NO_WRITE_PERMISSION;
+
+  json_builder_free(obj);
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args) {
+  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+
+  json_value *obj;
+  if (!can_read_file(fpath) || !(obj = json_read(fpath)))
+    return SDT_OSC_RETURN_ERROR_LOADING_JSON;
+
+  SDTResonator *r = json_SDTResonator_load(obj);
+  SDTResonator_copy(x, r);
+
+  SDTResonator_free(r);
+  json_value_free(obj);
+  (*log)("sdtOSC: loaded '%s' from '%s'", key, fpath);
 
   return SDT_OSC_RETURN_OK;
 }
@@ -575,6 +601,10 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
       msg = "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for the specified method";
     else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
       msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
+    else if (r == SDT_OSC_RETURN_NO_WRITE_PERMISSION)
+      msg = "[NO_WRITE_PERMISSION]: the specified filepath is not writable";
+    else if (r == SDT_OSC_RETURN_ERROR_LOADING_JSON)
+      msg = "[ERROR_LOADING_JSON]: the specified filepath either is not readable or does not contain a valid JSON value";
 
     msg = strjoin_free("sdtOSC ", 0, msg, 0);
 

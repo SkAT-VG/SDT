@@ -245,7 +245,21 @@ SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned 
   x->nModes = nModes;
   x->nPickups = nPickups;
   x->activeModes = (x->activeModes > min_nModes)? min_nModes : x->activeModes;
+  updateAll(x);
   return x;
+}
+
+SDTResonator *SDTResonator_copy(SDTResonator *dest, const SDTResonator *src) {
+  SDTResonator_renew(dest, src->nModes, src->nPickups);
+  SDTResonator_setActiveModes(dest, src->activeModes);
+  memcpy(dest->freqs, src->freqs, sizeof(double) * src->nModes);
+  memcpy(dest->decays, src->decays, sizeof(double) * src->nModes);
+  memcpy(dest->weights, src->weights, sizeof(double) * src->nModes);
+  for (unsigned int p = 0 ; p < dest->nPickups ; ++p)
+    memcpy(dest->gains[p], src->gains[p], sizeof(double) * dest->nModes);
+
+  updateAll(dest);
+  return dest;
 }
 
 double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup) {
@@ -300,6 +314,10 @@ int SDTResonator_getNModes(SDTResonator *x) {
 
 int SDTResonator_getActiveModes(SDTResonator *x) {
   return x->activeModes;
+}
+
+double SDTResonator_getFragmentSize(SDTResonator *x) {
+  return x->fragmentSize;
 }
 
 void SDTResonator_setPosition(SDTResonator *x, unsigned int pickup, double f) {
