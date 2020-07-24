@@ -319,6 +319,7 @@ enum SDTOSCReturnCode {
   SDT_OSC_RETURN_OBJECT_NOT_FOUND,
   SDT_OSC_RETURN_NO_WRITE_PERMISSION,
   SDT_OSC_RETURN_ERROR_LOADING_JSON,
+  SDT_OSC_RETURN_WARNING_INTERACTOR_KEY,
 };
 
 void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
@@ -428,23 +429,19 @@ SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const cha
 }
 
 SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args) {
-  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  const char *fpath = SDTOSCArgumentList_getString(args, 0);
-
   json_value *obj;
-  if (!(obj = json_read(fpath)))
-    return SDT_OSC_RETURN_ERROR_LOADING_JSON;
-
-  SDTResonator *r = SDTResonator_fromJSON(obj);
-  SDTResonator_copy(x, r);
-
-  SDTResonator_free(r);
-  json_value_free(obj);
-  if (log)
-    (*log)("sdtOSC: loaded '%s' from '%s'", key, fpath);
-
-  return SDT_OSC_RETURN_OK;
+  char *name = malloc(sizeof(char) * (strlen(key) + 8));
+  sprintf(name, "'%s'", key);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  free(name);
+  if (return_code == SDT_OSC_RETURN_OK) {
+    SDTResonator *r = SDTResonator_fromJSON(obj);
+    SDTResonator_copy(x, r);
+    SDTResonator_free(r);
+  }
+  if (obj)
+    json_value_free(obj);
+  return return_code;
 }
 
 SDTOSCReturnCode SDTOSCResonator_setFloat(void (* setter)(SDTResonator *, unsigned int, double), void (* setter_idx)(SDTResonator *, unsigned int, unsigned int, double), SDTResonator *x, const SDTOSCArgumentList *args) {
@@ -584,8 +581,10 @@ SDTOSCReturnCode SDTOSCImpact(void (* log)(const char *, ...), const char *key0,
       const SDTOSCArgumentList *args = m->args;
       if (!strcmp("log", method))
         return_code = SDTOSCImpact_log(log, key0, key1, x);
-      if (!strcmp("save", method))
+      else if (!strcmp("save", method))
         return_code = SDTOSCImpact_save(log, key0, key1, x, args);
+      else if (!strcmp("load", method))
+        return_code = SDTOSCImpact_load(log, key0, key1, x, args);
     }
   else
     return_code = SDT_OSC_RETURN_MISSING_METHOD;
@@ -607,6 +606,32 @@ SDTOSCReturnCode SDTOSCImpact_save(void (* log)(const char *, ...), const char *
   free(name);
   json_builder_free(obj);
   return r;
+}
+
+SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args) {
+  json_value *obj = 0;
+  char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
+  sprintf(name, "impact between '%s' and '%s'", key0, key1);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  free(name);
+  if (return_code == SDT_OSC_RETURN_OK) {
+    SDTInteractor *inter = SDTImpact_fromJSON(obj);
+
+    SDTImpact_setStiffness(x, SDTImpact_getStiffness(inter));
+    SDTImpact_setDissipation(x, SDTImpact_getDissipation(inter));
+    SDTImpact_setShape(x, SDTImpact_getShape(inter));
+    if (SDTInteractor_getFirstResonator(inter) != SDTInteractor_getFirstResonator(x) || SDTInteractor_getSecondResonator(inter) != SDTInteractor_getSecondResonator(x))
+      return_code = SDT_OSC_RETURN_WARNING_INTERACTOR_KEY;
+    SDTInteractor_setFirstResonator(x, SDTInteractor_getFirstResonator(inter));
+    SDTInteractor_setSecondResonator(x, SDTInteractor_getSecondResonator(inter));
+    SDTInteractor_setFirstPoint(x, SDTInteractor_getFirstPoint(inter));
+    SDTInteractor_setSecondPoint(x, SDTInteractor_getSecondPoint(inter));
+
+    SDTImpact_free(inter);
+  }
+  if (obj)
+    json_value_free(obj);
+  return return_code;
 }
 
 //-------------------------------------------------------------------------------------//
@@ -667,6 +692,21 @@ SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *na
   return return_code;
 }
 
+SDTOSCReturnCode SDTOSCJSON_load(void (* log)(const char *, ...), const char *name, json_value **obj, const SDTOSCArgumentList *args) {
+  *obj = 0;
+  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+
+  if (!(*obj = json_read(fpath)))
+    return SDT_OSC_RETURN_ERROR_LOADING_JSON;
+
+  if (log)
+    (*log)("sdtOSC: loaded %s from '%s'", name, fpath);
+
+  return SDT_OSC_RETURN_OK;
+}
+
 void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSCMessage *m) {
   if (log && r) {
     // Error code
@@ -685,6 +725,8 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
       msg = "[NO_WRITE_PERMISSION]: the specified filepath is not writable";
     else if (r == SDT_OSC_RETURN_ERROR_LOADING_JSON)
       msg = "[ERROR_LOADING_JSON]: the specified filepath either is not readable or does not contain a valid JSON value";
+    else if (r == SDT_OSC_RETURN_WARNING_INTERACTOR_KEY)
+      msg = "[WARNING_INTERACTOR_KEY]: at least one resonator key in the loaded JSON file does not match the previous resonator. The resonator is updated to point to the newly specified instance. However, the interactor is still registered under the previous key pair. Please, check that this is intended. To avoid this warning, change the resonator key either in your JSON file or in your program to match each other.";
 
     msg = strjoin_free("sdtOSC ", 0, msg, 0);
 

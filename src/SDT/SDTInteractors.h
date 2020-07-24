@@ -40,6 +40,14 @@ extern void SDTInteractor_setFirstPoint(SDTInteractor *x, long l);
 @param[in] Number of the second resonator pickup chosen for interaction */
 extern void SDTInteractor_setSecondPoint(SDTInteractor *x, long l);
 
+/** @brief Gets the pointer to the first interacting resonator
+@param[in] p The pointer to the first interacting resonator */
+extern SDTResonator *SDTInteractor_getFirstResonator(SDTInteractor *x);
+
+/** @brief Gets the pointer to the second interacting resonator
+@param[in] p The pointer to the second interacting resonator */
+extern SDTResonator *SDTInteractor_getSecondResonator(SDTInteractor *x);
+
 /** @brief Gets the contact point index for the first resonator
 @return Number of the first resonator pickup chosen for interaction */
 extern long SDTInteractor_getFirstPoint(const SDTInteractor *x);

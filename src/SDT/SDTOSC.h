@@ -480,6 +480,21 @@ ID0 ID1 FILEPATH
 @return Return code */
 extern SDTOSCReturnCode SDTOSCImpact_save(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
 
+/** @brief OSC method for loading information about SDT Impacts
+\par OSC Address
+/interactor/impact/load
+\par OSC Arguments
+ID0 ID1 FILEPATH
+\par Calls
+::SDTImpact_fromJSON
+@param[in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param[in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
+
 /** @} */
 
 /** @brief Log JSON information with a custom log function
@@ -494,6 +509,14 @@ extern SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const ch
 @param[in] obj JSON object
 @param[in] args Additional OSC arguments: file path (string) */
 extern SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *name, json_value *obj, const SDTOSCArgumentList *args);
+
+/** @brief Load information from JSON files
+@param [in] log Log function pointer
+@param [in] name Name of the object
+@param [out] obj Loaded JSON object
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCJSON_load(void (* log)(const char *, ...), const char *name, json_value **obj, const SDTOSCArgumentList *args);
 
 /** @brief Log OSC return code information with a custom log function
 @param[in] log Log function pointer

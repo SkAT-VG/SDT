@@ -1,4 +1,5 @@
 #include "SDTJSON.h"
+#include "SDTSolids.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
@@ -97,6 +98,34 @@ json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const cha
   json_object_push(obj, "contact1", json_integer_new(SDTInteractor_getSecondPoint(x)));
 
   return obj;
+}
+
+SDTInteractor *SDTImpact_fromJSON(const json_value *x) {
+  SDTInteractor *inter = SDTImpact_new();
+  const json_value *v;
+
+  v = json_object_get_by_key(x, "stiffness");
+  SDTImpact_setStiffness(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "dissipation");
+  SDTImpact_setDissipation(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "shape");
+  SDTImpact_setShape(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "key0");
+  SDTInteractor_setFirstResonator(inter, (v && (v->type == json_string))? SDT_getResonator(v->u.string.ptr) : 0);
+
+  v = json_object_get_by_key(x, "key1");
+  SDTInteractor_setSecondResonator(inter, (v && (v->type == json_string))? SDT_getResonator(v->u.string.ptr) : 0);
+
+  v = json_object_get_by_key(x, "contact0");
+  SDTInteractor_setFirstPoint(inter, (v && (v->type == json_integer))? v->u.integer : 0);
+
+  v = json_object_get_by_key(x, "contact1");
+  SDTInteractor_setSecondPoint(inter, (v && (v->type == json_integer))? v->u.integer : 0);
+
+  return inter;
 }
 
 //-------------------------------------------------------------------------------------//

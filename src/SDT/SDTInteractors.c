@@ -51,6 +51,14 @@ void SDTInteractor_setSecondPoint(SDTInteractor *x, long l) {
   x->contact1 = l;
 }
 
+SDTResonator *SDTInteractor_getFirstResonator(SDTInteractor *x) {
+  return x->obj0;
+}
+
+SDTResonator *SDTInteractor_getSecondResonator(SDTInteractor *x) {
+  return x->obj1;
+}
+
 long SDTInteractor_getFirstPoint(const SDTInteractor *x) {
   return x->contact0;
 }

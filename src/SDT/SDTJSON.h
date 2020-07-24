@@ -76,6 +76,11 @@ JSON functions for SDT Impacts
 @return Pointer to the JSON object. Memory must be freed with json_builder_free */
 extern json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
 
+/** @brief Load an SDTImpact object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with ::SDTImpact_free */
+extern SDTInteractor *SDTImpact_fromJSON(const json_value *x);
+
 /** @} */
 
 #ifdef __cplusplus
