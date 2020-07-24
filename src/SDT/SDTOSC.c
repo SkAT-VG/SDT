@@ -441,7 +441,8 @@ SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const cha
 
   SDTResonator_free(r);
   json_value_free(obj);
-  (*log)("sdtOSC: loaded '%s' from '%s'", key, fpath);
+  if (log)
+    (*log)("sdtOSC: loaded '%s' from '%s'", key, fpath);
 
   return SDT_OSC_RETURN_OK;
 }
@@ -614,6 +615,8 @@ const unsigned int log_cap = 1 << 10;
 char *_docs_url = "https://chromaticisobar.github.io/SDT";
 
 SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* preamble, json_value *obj) {
+  if (!log)
+    return SDT_OSC_RETURN_OK;
   char *s = malloc(json_measure_ex(obj, sdt_json_opts()));
   json_serialize_ex(s, obj, sdt_json_opts());
 
@@ -655,9 +658,10 @@ SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *na
 
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
 
-  if (!json_dump(obj, fpath))
-    (*log)("sdtOSC: saved %s to '%s'", name, fpath);
-  else
+  if (!json_dump(obj, fpath)) {
+    if (log)
+      (*log)("sdtOSC: saved %s to '%s'", name, fpath);
+  } else
     return_code = SDT_OSC_RETURN_NO_WRITE_PERMISSION;
 
   return return_code;
