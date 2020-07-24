@@ -417,19 +417,13 @@ SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList
 }
 
 SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args) {
-  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  const char *fpath = SDTOSCArgumentList_getString(args, 0);
-
+  char *name = malloc(sizeof(char) * (strlen(key) + 8));
+  sprintf(name, "'%s'", key);
   json_value *obj = SDTResonator_toJSON(x);
-  SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
-
-  if (!json_dump(obj, fpath))
-    (*log)("sdtOSC: saved '%s' to '%s'", key, fpath);
-  else
-    return_code = SDT_OSC_RETURN_NO_WRITE_PERMISSION;
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
 
   json_builder_free(obj);
+  free(name);
   return return_code;
 }
 
@@ -586,8 +580,11 @@ SDTOSCReturnCode SDTOSCImpact(void (* log)(const char *, ...), const char *key0,
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
   if (SDTOSCMessage_hasContainer(m)) {
       char *method = SDTOSCMessage_getContainer(m);
+      const SDTOSCArgumentList *args = m->args;
       if (!strcmp("log", method))
         return_code = SDTOSCImpact_log(log, key0, key1, x);
+      if (!strcmp("save", method))
+        return_code = SDTOSCImpact_save(log, key0, key1, x, args);
     }
   else
     return_code = SDT_OSC_RETURN_MISSING_METHOD;
@@ -597,6 +594,16 @@ SDTOSCReturnCode SDTOSCImpact(void (* log)(const char *, ...), const char *key0,
 SDTOSCReturnCode SDTOSCImpact_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x) {
   json_value *obj = SDTImpact_toJSON(x, key0, key1);
   SDTOSCReturnCode r = SDTOSCJSON_log(log, "sdtOSC:", obj);
+  json_builder_free(obj);
+  return r;
+}
+
+SDTOSCReturnCode SDTOSCImpact_save(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args) {
+  json_value *obj = SDTImpact_toJSON(x, key0, key1);
+  char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
+  sprintf(name, "impact between '%s' and '%s'", key0, key1);
+  SDTOSCReturnCode r = SDTOSCJSON_save(log, name, obj, args);
+  free(name);
   json_builder_free(obj);
   return r;
 }
@@ -639,6 +646,21 @@ SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* pre
   }
   free(s);
   return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *name, json_value *obj, const SDTOSCArgumentList *args) {
+  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
+
+  if (!json_dump(obj, fpath))
+    (*log)("sdtOSC: saved %s to '%s'", name, fpath);
+  else
+    return_code = SDT_OSC_RETURN_NO_WRITE_PERMISSION;
+
+  return return_code;
 }
 
 void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSCMessage *m) {

@@ -33,7 +33,7 @@ pd: sdt $(PDOBJS)
 	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) -c $< -o $@
 
 sdt: $(SDTOBJS) json
 	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/libSDT.so -lc -lm

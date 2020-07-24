@@ -465,6 +465,21 @@ ID0 ID1
 @return Return code */
 extern SDTOSCReturnCode SDTOSCImpact_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x);
 
+/** @brief OSC method for saving information about SDT Impacts
+\par OSC Address
+/interactor/impact/save
+\par OSC Arguments
+ID0 ID1 FILEPATH
+\par Calls
+::SDTImpact_toJSON
+@param [in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCImpact_save(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
+
 /** @} */
 
 /** @brief Log JSON information with a custom log function
@@ -472,6 +487,13 @@ extern SDTOSCReturnCode SDTOSCImpact_log(void (* log)(const char *, ...), const 
 @param[in] preamble Preamble to the log information
 @param[in] obj JSON object */
 extern SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* preamble, json_value *obj);
+
+/** @brief Save JSON information to file
+@param[in] log Log function pointer
+@param[in] name Name of the object
+@param[in] obj JSON object
+@param[in] args Additional OSC arguments: file path (string) */
+extern SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *name, json_value *obj, const SDTOSCArgumentList *args);
 
 /** @brief Log OSC return code information with a custom log function
 @param[in] log Log function pointer

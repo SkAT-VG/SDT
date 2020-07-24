@@ -43,6 +43,7 @@ $(MAXDIR)/%.mxe64: $(MAXDIR)/%.o
 $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
 	-DWIN_VERSION -DWIN_EXT_VERSION -fvisibility=hidden \
+	$(INCLUDE_JSON) \
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
 	-I$(SRCDIR) -c $< -o $@ 
 

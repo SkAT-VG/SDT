@@ -42,7 +42,7 @@ pd: $(SDTOBJS) $(PDOBJS)
 	$(CC) $(LDFLAGS) -L$(SDTDIR) -L$(PDSDKDIR) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.dll -lSDT -lpd
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) $(INCLUDE_JSON) -c $< -o $@
 
 max: core fileusage $(MAXOBJS)
 
@@ -55,6 +55,7 @@ $(MAXDIR)/%.mxe: $(MAXDIR)/%.o
 
 $(MAXDIR)/%.o: $(MAXDIR)/%.c $(MAXDIR)/SDT_fileusage/SDT_fileusage.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
+	$(INCLUDE_JSON) \
 	-DWIN_VERSION -DWIN_EXT_VERSION -fvisibility=hidden \
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
 	-I$(SRCDIR) -c $< -o $@
