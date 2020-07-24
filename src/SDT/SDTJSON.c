@@ -86,6 +86,21 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
 //-------------------------------------------------------------------------------------//
 
+json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "stiffness", json_double_new(SDTImpact_getStiffness(x)));
+  json_object_push(obj, "dissipation", json_double_new(SDTImpact_getDissipation(x)));
+  json_object_push(obj, "shape", json_double_new(SDTImpact_getShape(x)));
+  json_object_push(obj, "key0", json_string_new(key0));
+  json_object_push(obj, "key1", json_string_new(key1));
+  json_object_push(obj, "contact0", json_integer_new(SDTInteractor_getFirstPoint(x)));
+  json_object_push(obj, "contact1", json_integer_new(SDTInteractor_getSecondPoint(x)));
+
+  return obj;
+}
+
+//-------------------------------------------------------------------------------------//
+
 json_serialize_opts sdt_json_opts() {
   json_serialize_opts opts;
   opts.mode = json_serialize_mode_multiline;

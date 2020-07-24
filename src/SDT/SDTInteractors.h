@@ -40,6 +40,14 @@ extern void SDTInteractor_setFirstPoint(SDTInteractor *x, long l);
 @param[in] Number of the second resonator pickup chosen for interaction */
 extern void SDTInteractor_setSecondPoint(SDTInteractor *x, long l);
 
+/** @brief Gets the contact point index for the first resonator
+@return Number of the first resonator pickup chosen for interaction */
+extern long SDTInteractor_getFirstPoint(const SDTInteractor *x);
+
+/** @brief Gets the contact point index for the second resonator
+@return Number of the second resonator pickup chosen for interaction */
+extern long SDTInteractor_getSecondPoint(const SDTInteractor *x);
+
 /** @brief Computes a force to apply to the contact points,
 based on the resonators' state at the chosen pickups */ 
 extern double SDTInteractor_computeForce(SDTInteractor *x);
@@ -81,6 +89,18 @@ extern SDTInteractor *SDTImpact_new();
 /** @brief Object destructor.
 param[in] Pointer to a SDTInteractor instance, configured for the impact case. */
 extern void SDTImpact_free(SDTInteractor *x);
+
+/** @brief Gets the impact stiffness.
+@return Impact stiffness */
+extern double SDTImpact_getStiffness(const SDTInteractor *x);
+
+/** @brief Gets the dissipation coefficient.
+@return Dissipation coefficient */
+extern double SDTImpact_getDissipation(const SDTInteractor *x);
+
+/** @brief Gets the shape factor.
+@return Shape factor */
+extern double SDTImpact_getShape(const SDTInteractor *x);
 
 /** @brief Sets the impact stiffness.
 @param[in] f Impact stiffness (>> 1) */

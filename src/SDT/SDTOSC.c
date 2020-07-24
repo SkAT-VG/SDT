@@ -331,6 +331,8 @@ void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
     SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
     if (!strcmp("resonator", method) || !strcmp("inertial", method))
       return_code = SDTOSCResonator(log, sub);
+    if (!strcmp("interactor", method))
+      return_code = SDTOSCInteractor(log, sub);
 
     SDTOSCMessage_free(sub);
   }
@@ -392,44 +394,14 @@ SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMe
   return return_code;
 }
 
-const unsigned int log_cap = 1 << 10;
-
 SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x) {
   json_value *obj = SDTResonator_toJSON(x);
-
-  char *s = malloc(json_measure_ex(obj, sdt_json_opts()));
-  json_serialize_ex(s, obj, sdt_json_opts());
-  json_builder_free(obj);
-
-  unsigned int s_len = strlen(s), n_print = 0;
-  for (unsigned i = 0 ; i < s_len ; i += n_print) {
-    n_print = (i + log_cap > s_len)? s_len - i : log_cap;
-    char *t = (char *) malloc(sizeof(char) * (n_print + 3));
-    memcpy(t, s + i, n_print);
-
-    // Break print at last newline, if there is any, otherwise put line continuation symbol '\' (unless end of string)
-    int j;
-    for (j = n_print - 1; j >=0 ; --j)
-      if (s[i + j] == '\n')
-        break;
-    if (j >= 0) {
-      n_print = j + 1;
-      t[j] = 0;
-    } else if (i + n_print < s_len) {
-      t[n_print] = '\\';
-      t[n_print + 1] = 0;
-    } else {
-      t[n_print] = 0;
-    }
-
-    if (i)
-      (*log)("%s", t);
-    else
-      (*log)("sdtOSC: %s\n%s", key, t);
-    free(t);
-  }
+  char *s = malloc(sizeof(char) * (strlen(key) + 32));
+  sprintf(s, "sdtOSC: %s", key);
+  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
   free(s);
-  return SDT_OSC_RETURN_OK;
+  json_builder_free(obj);
+  return r;
 }
 
 SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList *args) {
@@ -581,7 +553,93 @@ SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentLis
 
 //-------------------------------------------------------------------------------------//
 
+SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCMessage* x) {
+  SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  if (args->argc < 2 || !SDTOSCArgumentList_isString(args, 0) || !SDTOSCArgumentList_isString(args, 1))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  const char *key0 = SDTOSCArgumentList_getString(args, 0);
+  const char *key1 = SDTOSCArgumentList_getString(args, 1);
+  SDTInteractor *inter = (key0 && key1)? SDT_getInteractor(key0, key1) : 0;
+  SDTOSCReturnCode return_code;
+
+  if (inter)
+    if (SDTOSCMessage_hasContainer(x)) {
+      SDTOSCMessage *sub = SDTOSCMessage_new(SDTOSCAddress_openContainer(x->address), SDTOSCArgumentList_copyFromTo(SDTOSCMessage_getArguments(x), 2, -1));
+      char *method = SDTOSCMessage_getContainer(x);
+      if (!strcmp("impact", method))
+        return_code = SDTOSCImpact(log, key0, key1, inter, sub);
+      else
+        return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+      SDTOSCMessage_free(sub);
+    } else
+      return_code = SDT_OSC_RETURN_MISSING_METHOD;
+  else if (key0 && key1)
+    return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
+  else
+    return_code = SDT_OSC_RETURN_ARGUMENT_ERROR;
+
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCImpact(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m) {
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+  if (SDTOSCMessage_hasContainer(m)) {
+      char *method = SDTOSCMessage_getContainer(m);
+      if (!strcmp("log", method))
+        return_code = SDTOSCImpact_log(log, key0, key1, x);
+    }
+  else
+    return_code = SDT_OSC_RETURN_MISSING_METHOD;
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCImpact_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x) {
+  json_value *obj = SDTImpact_toJSON(x, key0, key1);
+  SDTOSCReturnCode r = SDTOSCJSON_log(log, "sdtOSC:", obj);
+  json_builder_free(obj);
+  return r;
+}
+
+//-------------------------------------------------------------------------------------//
+
+const unsigned int log_cap = 1 << 10;
 char *_docs_url = "https://chromaticisobar.github.io/SDT";
+
+SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* preamble, json_value *obj) {
+  char *s = malloc(json_measure_ex(obj, sdt_json_opts()));
+  json_serialize_ex(s, obj, sdt_json_opts());
+
+  unsigned int s_len = strlen(s), n_print = 0;
+  for (unsigned i = 0 ; i < s_len ; i += n_print) {
+    n_print = (i + log_cap > s_len)? s_len - i : log_cap;
+    char *t = (char *) malloc(sizeof(char) * (n_print + 3));
+    memcpy(t, s + i, n_print);
+
+    // Break print at last newline, if there is any, otherwise put line continuation symbol '\' (unless end of string)
+    int j;
+    for (j = n_print - 1; j >=0 ; --j)
+      if (s[i + j] == '\n')
+        break;
+    if (j >= 0) {
+      n_print = j + 1;
+      t[j] = 0;
+    } else if (i + n_print < s_len) {
+      t[n_print] = '\\';
+      t[n_print + 1] = 0;
+    } else {
+      t[n_print] = 0;
+    }
+
+    if (i)
+      (*log)("%s", t);
+    else
+      (*log)("%s\n%s", preamble, t);
+    free(t);
+  }
+  free(s);
+  return SDT_OSC_RETURN_OK;
+}
 
 void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSCMessage *m) {
   if (log && r) {

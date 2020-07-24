@@ -1,5 +1,6 @@
 #include "../../3rdparty/json-builder/json-builder.h"
 #include "SDTResonators.h"
+#include "SDTInteractors.h"
 
 /** @file SDTJSON.h
 @defgroup JSON SDTJSON.h: JSON
@@ -61,6 +62,19 @@ extern json_value *SDTResonator_toJSON(SDTResonator *x);
 @param[in] x Pointer to the JSON object
 @return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with ::SDTResonator_free */
 extern SDTResonator *SDTResonator_fromJSON(const json_value *x);
+
+/** @} */
+
+/** @defgroup json_impact SDT Impact
+JSON functions for SDT Impacts
+@{ */
+
+/** @brief Convert an SDTImpact object in a JSON object
+@param[in] x Pointer to the SDTInteractor
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
 
 /** @} */
 
