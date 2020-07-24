@@ -1,4 +1,6 @@
 #include "SDTResonators.h"
+#include "SDTInteractors.h"
+#include "SDTJSON.h"
 
 /** @file SDTOSC.h
 @defgroup OSC SDTOSC.h: Open Sound Control
@@ -239,7 +241,7 @@ extern SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const S
 \par OSC Arguments
 ID
 \par Calls
-::json_SDTResonator_new
+::SDTResonator_toJSON
 @param [in] log Log function pointer
 @param [in] key Resonator name (ID)
 @param [in] x Pointer to the SDT resonator instance to inspect
@@ -264,7 +266,7 @@ extern SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgum
 \par OSC Arguments
 ID FILEPATH
 \par Calls
-::json_SDTResonator_new
+::SDTResonator_toJSON
 @param [in] log Log function pointer
 @param [in] key Resonator name (ID)
 @param [in] x Pointer to the SDT resonator instance to save
@@ -278,7 +280,7 @@ extern SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), co
 \par OSC Arguments
 ID FILEPATH
 \par Calls
-::json_SDTResonator_load
+::SDTResonator_fromJSON
 \par
 ::SDTResonator_copy
 @param [in] log Log function pointer
@@ -423,6 +425,98 @@ ID PICKUP [F...]
 extern SDTOSCReturnCode SDTOSCResonator_setGains(SDTResonator *x, const SDTOSCArgumentList *args);
 
 /** @} */
+
+/** @defgroup osc_methods_interactors OSC Interactor Methods
+OSC containers and methods for SDT interactors
+@{ */
+
+/** @brief The container of OSC methods for SDT Interactors
+\par OSC Address
+/interactor
+\par OSC Arguments
+ID0 ID1 [args...]
+@param[in] x OSC message: the first two argument must be resonator IDs. All other arguments are passed down to the method
+@return Return code */
+extern SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCMessage* x);
+
+/** @brief The container of OSC methods for SDT Impacts
+\par OSC Address
+/interactor/impact
+\par OSC Arguments
+ID0 ID1 [args...]
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param[in] m OSC message pointer
+@return Return code */
+extern SDTOSCReturnCode SDTOSCImpact(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m);
+
+/** @brief OSC method for logging information about SDT Impacts
+\par OSC Address
+/interactor/impact/log
+\par OSC Arguments
+ID0 ID1
+\par Calls
+::SDTImpact_toJSON
+@param [in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@return Return code */
+extern SDTOSCReturnCode SDTOSCImpact_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x);
+
+/** @brief OSC method for saving information about SDT Impacts
+\par OSC Address
+/interactor/impact/save
+\par OSC Arguments
+ID0 ID1 FILEPATH
+\par Calls
+::SDTImpact_toJSON
+@param [in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCImpact_save(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for loading information about SDT Impacts
+\par OSC Address
+/interactor/impact/load
+\par OSC Arguments
+ID0 ID1 FILEPATH
+\par Calls
+::SDTImpact_fromJSON
+@param[in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param[in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
+
+/** @} */
+
+/** @brief Log JSON information with a custom log function
+@param[in] log Log function pointer
+@param[in] preamble Preamble to the log information
+@param[in] obj JSON object */
+extern SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* preamble, json_value *obj);
+
+/** @brief Save JSON information to file
+@param[in] log Log function pointer
+@param[in] name Name of the object
+@param[in] obj JSON object
+@param[in] args Additional OSC arguments: file path (string) */
+extern SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *name, json_value *obj, const SDTOSCArgumentList *args);
+
+/** @brief Load information from JSON files
+@param [in] log Log function pointer
+@param [in] name Name of the object
+@param [out] obj Loaded JSON object
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCJSON_load(void (* log)(const char *, ...), const char *name, json_value **obj, const SDTOSCArgumentList *args);
 
 /** @brief Log OSC return code information with a custom log function
 @param[in] log Log function pointer

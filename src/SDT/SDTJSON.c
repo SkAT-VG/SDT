@@ -1,4 +1,5 @@
 #include "SDTJSON.h"
+#include "SDTSolids.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
@@ -82,6 +83,49 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
 
   return res;
+}
+
+//-------------------------------------------------------------------------------------//
+
+json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "stiffness", json_double_new(SDTImpact_getStiffness(x)));
+  json_object_push(obj, "dissipation", json_double_new(SDTImpact_getDissipation(x)));
+  json_object_push(obj, "shape", json_double_new(SDTImpact_getShape(x)));
+  json_object_push(obj, "key0", json_string_new(key0));
+  json_object_push(obj, "key1", json_string_new(key1));
+  json_object_push(obj, "contact0", json_integer_new(SDTInteractor_getFirstPoint(x)));
+  json_object_push(obj, "contact1", json_integer_new(SDTInteractor_getSecondPoint(x)));
+
+  return obj;
+}
+
+SDTInteractor *SDTImpact_fromJSON(const json_value *x) {
+  SDTInteractor *inter = SDTImpact_new();
+  const json_value *v;
+
+  v = json_object_get_by_key(x, "stiffness");
+  SDTImpact_setStiffness(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "dissipation");
+  SDTImpact_setDissipation(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "shape");
+  SDTImpact_setShape(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "key0");
+  SDTInteractor_setFirstResonator(inter, (v && (v->type == json_string))? SDT_getResonator(v->u.string.ptr) : 0);
+
+  v = json_object_get_by_key(x, "key1");
+  SDTInteractor_setSecondResonator(inter, (v && (v->type == json_string))? SDT_getResonator(v->u.string.ptr) : 0);
+
+  v = json_object_get_by_key(x, "contact0");
+  SDTInteractor_setFirstPoint(inter, (v && (v->type == json_integer))? v->u.integer : 0);
+
+  v = json_object_get_by_key(x, "contact1");
+  SDTInteractor_setSecondPoint(inter, (v && (v->type == json_integer))? v->u.integer : 0);
+
+  return inter;
 }
 
 //-------------------------------------------------------------------------------------//

@@ -61,6 +61,7 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
 	-DMAC_VERSION -DMAC_EXT_VERSION -Dpowerc -fvisibility=hidden \
+	$(INCLUDE_JSON) \
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch -c $< -o $@
@@ -69,7 +70,7 @@ pd: $(SDTOBJS) $(PDOBJS)
 	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -F$(SDTDIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) $(INCLUDE_JSON) -F$(SDTDIR) -c $< -o $@
 
 fileusage:
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \

@@ -63,6 +63,19 @@ int SDT_registerInteractor(SDTInteractor *x, char *key0, char *key1) {
   return 0;
 }
 
+SDTInteractor *SDT_getInteractor(const char *key0, const char *key1) {
+  if (!interactors0 || !interactors1)
+    return 0;
+  SDTInteractor *x0, *x1;
+  x0 = SDTHashmap_get(interactors0, key0);
+  x1 = SDTHashmap_get(interactors1, key1);
+  if (!x0 || !x1)
+    return 0;
+  if (x0 == x1)
+    return x0;
+  return 0;
+}
+
 int SDT_unregisterInteractor(char *key0, char *key1) {
   if (!interactors0 || !interactors1) return 1;
   if (!SDTHashmap_get(interactors0, key0) || !SDTHashmap_get(interactors1, key1)) return 1;

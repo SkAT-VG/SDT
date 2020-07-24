@@ -51,6 +51,22 @@ void SDTInteractor_setSecondPoint(SDTInteractor *x, long l) {
   x->contact1 = l;
 }
 
+SDTResonator *SDTInteractor_getFirstResonator(SDTInteractor *x) {
+  return x->obj0;
+}
+
+SDTResonator *SDTInteractor_getSecondResonator(SDTInteractor *x) {
+  return x->obj1;
+}
+
+long SDTInteractor_getFirstPoint(const SDTInteractor *x) {
+  return x->contact0;
+}
+
+long SDTInteractor_getSecondPoint(const SDTInteractor *x) {
+  return x->contact1;
+}
+
 double SDTInteractor_computeForce(SDTInteractor *x) {
   double f, h, w, f0, f1;
   int count;
@@ -157,6 +173,18 @@ SDTInteractor *SDTImpact_new() {
 void SDTImpact_free(SDTInteractor *x) {
   free(x->state);
   SDTInteractor_free(x);
+}
+
+double SDTImpact_getStiffness(const SDTInteractor *x) {
+  return ((SDTImpact *)x->state)->stiffness;
+}
+
+double SDTImpact_getDissipation(const SDTInteractor *x) {
+  return ((SDTImpact *)x->state)->dissipation;
+}
+
+double SDTImpact_getShape(const SDTInteractor *x) {
+  return ((SDTImpact *)x->state)->shape;
 }
 
 void SDTImpact_setStiffness(SDTInteractor *x, double f) {

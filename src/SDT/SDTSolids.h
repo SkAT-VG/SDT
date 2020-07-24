@@ -44,6 +44,13 @@ If resonators with the same IDs are present, they are immediately bound to the i
 @param[in] key1 Unique ID of the second resonator */
 extern int SDT_registerInteractor(SDTInteractor *x, char *key0, char *key1);
 
+/** @brief Retrieves an interactor from the interactors list.
+If an interactor with the given IDs is present, it is retrieved from the list.
+@param[in] key0 Unique ID of the first resonator
+@param[in] key1 Unique ID of the second resonator
+@return Interactor instance pointer */
+extern SDTInteractor *SDT_getInteractor(const char *key0, const char *key1);
+
 /** @brief Unregisters an interactor from the interactors list.
 If an interactor with the given IDs is present, it is unregistered from the list.
 @param[in] key0 Unique ID of the first resonator
