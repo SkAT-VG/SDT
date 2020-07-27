@@ -342,6 +342,8 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
       msg = "[ERROR_LOADING_JSON]: the specified filepath either is not readable or does not contain a valid JSON value";
     else if (r == SDT_OSC_RETURN_WARNING_INTERACTOR_KEY)
       msg = "[WARNING_INTERACTOR_KEY]: at least one resonator key in the loaded JSON file does not match the previous resonator. The resonator is updated to point to the newly specified instance. However, the interactor is still registered under the previous key pair. Please, check that this is intended. To avoid this warning, change the resonator key either in your JSON file or in your program to match each other.";
+    else if (r == SDT_OSC_RETURN_JSON_NOT_COMPLIANT)
+      msg = "[JSON_NOT_COMPLIANT]: your JSON file is not compliant to SDT's standard";
 
     msg = strjoin_free("sdtOSC ", 0, msg, 0);
 

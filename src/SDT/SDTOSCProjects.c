@@ -102,6 +102,62 @@ SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOS
         }
       }
 
+    // Load interactors
+    const json_value *inter = json_object_get_by_key(prj, "interactors");
+    if ((return_code == SDT_OSC_RETURN_OK) && inter && (inter->type == json_object)) {
+      // Load impacts
+      const json_value *imp = json_object_get_by_key(inter, "impacts");
+      if (imp && (imp->type == json_array)) {
+        const char *key0, *key1;
+        unsigned int i;
+        for (i = 0; i < imp->u.array.length; ++i)
+          if (imp->u.array.values[i]->type == json_object) {
+            const json_value *k = json_object_get_by_key(imp->u.array.values[i], "key0");
+            key0 = (k && k->type == json_string)? k->u.string.ptr : 0;
+            k = json_object_get_by_key(imp->u.array.values[i], "key1");
+            key1 = (k && k->type == json_string)? k->u.string.ptr : 0;
+
+            if (key0 && key1) {
+              SDTInteractor *x = SDT_getInteractor(key0, key1);
+              if (x) {
+                SDTInteractor *tmp = SDTImpact_fromJSON(imp->u.array.values[i]);
+
+                SDTImpact_setStiffness(x, SDTImpact_getStiffness(tmp));
+                SDTImpact_setDissipation(x, SDTImpact_getDissipation(tmp));
+                SDTImpact_setShape(x, SDTImpact_getShape(tmp));
+                SDTInteractor_setFirstPoint(x, SDTInteractor_getFirstPoint(tmp));
+                SDTInteractor_setSecondPoint(x, SDTInteractor_getSecondPoint(tmp));
+
+                SDTImpact_free(tmp);
+              } else
+                return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
+            } else
+              return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+
+            if (return_code == SDT_OSC_RETURN_OK) {
+              if (log)
+                (*log)("         - impact between '%s' and '%s'", key0, key1);
+            } else {
+              if (log)
+                (*log)("         - couldn't load impact between '%s' and '%s'", key0, key1);
+              break;
+            }
+          } else {
+            if (log)
+              (*log)("         - impact #%d not compliant (not an object)", i + 1);
+            return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+            break;
+          }
+      } else {
+        if (log)
+          (*log)("         - impacts not compliant (not present or not an array)");
+        return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+      }
+    } else {
+      if (log)
+        (*log)("         - interactors not compliant (not present or not an object)");
+      return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+    }
   }
 
   if (prj)
