@@ -2,7 +2,7 @@
 
 /** @file SDTOSC.h
 @defgroup OSC SDTOSC.h: Open Sound Control
-Functions and structures to handle OSC messages for SDT.
+Interface to use OSC with SDT.
 @{
 */
 

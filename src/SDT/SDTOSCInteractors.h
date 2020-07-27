@@ -4,10 +4,9 @@
 #include "SDTSolids.h"
 
 /** @file SDTOSCInteractors.h
-@defgroup OSC SDTOSCInteractors.h: SDT Interactors
-OSC containers and methods for SDT interactors
-@{
-*/
+@defgroup OSCInteractors SDTOSCInteractors.h: OSC Interactors
+OSC containers and methods for SDT Interactors
+@{ */
 
 #ifndef SDT_OSC_INTERACTORS_H
 #define SDT_OSC_INTERACTORS_H
@@ -24,6 +23,10 @@ ID0 ID1 [args...]
 @param[in] x OSC message: the first two argument must be resonator IDs. All other arguments are passed down to the method
 @return Return code */
 extern SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCMessage* x);
+
+/** @defgroup osc_impact OSC Impact
+OSC containers and methods for SDT Impacts
+@{ */
 
 /** @brief The container of OSC methods for SDT Impacts
 \par OSC Address
@@ -80,6 +83,8 @@ ID0 ID1 FILEPATH
 @param[in] args Additional OSC arguments: file path (string)
 @return Return code */
 extern SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
+
+/** @} */
 
 #ifdef __cplusplus
 };

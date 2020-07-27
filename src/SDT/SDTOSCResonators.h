@@ -2,8 +2,8 @@
 #include "SDTResonators.h"
 
 /** @file SDTOSCResonators.h
-@defgroup OSC SDTOSCResonators.h: OSC Resonators
-OSC containers and methods for SDT resonators
+@defgroup OSCResonators SDTOSCResonators.h: OSC Resonators
+OSC containers and methods for SDT Resonators
 @{
 */
 

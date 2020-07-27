@@ -1,7 +1,7 @@
 #include "../../3rdparty/json-builder/json-builder.h"
 
 /** @file SDTOSCCommon.h
-@defgroup OSC SDTOSCCommon.h: OSC Commons
+@defgroup OSCCommon SDTOSCCommon.h: OSC Commons
 Functions and structures to handle OSC messages for SDT.
 @{
 */
