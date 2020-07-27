@@ -1,3 +1,5 @@
+#include "SDTResonators.h"
+
 /** @file SDTInteractors.h
 @defgroup interactors SDTInteractors.h: interactions between solids
 These models simulate basic mechanical interactions that can occur
