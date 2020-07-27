@@ -26,9 +26,19 @@ extern SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDT
 \par OSC Arguments
 ID0 ID1 ...
 @param [in] log Log function pointer
-@param [in] args Additional OSC arguments: object IDs
+@param [in] args Additional OSC arguments: object IDs (strings)
 @return Return code */
 extern SDTOSCReturnCode SDTOSCProject_log(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+
+/** @brief OSC method for saving information about SDT Projects
+\par OSC Address
+/project/save
+\par OSC Arguments
+FILE ID0 ID1 ...
+@param [in] log Log function pointer
+@param [in] args Additional OSC arguments: file path (string), object IDs (strings)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
 
 #ifdef __cplusplus
 };
