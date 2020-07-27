@@ -7,15 +7,12 @@ json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
   json_value *prj = json_object_new(0);
 
   // Fetch all resonators and interactors
-  json_value *res = json_array_new(0), *inter = json_object_new(0), *imp = json_array_new(0);
+  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0);
   SDTResonator *r;
   SDTInteractor *s;
   for (unsigned int i = 0; i < argc ; ++i)
     if ((r = SDT_getResonator(argv[i]))) {
-      json_value *obj = json_object_new(0);
-      json_object_push(obj, "key", json_string_new(argv[i]));
-      json_object_push(obj, "value", SDTResonator_toJSON(r));
-      json_array_push(res, obj);
+      json_object_push(res, argv[i], SDTResonator_toJSON(r));
       for (unsigned int j = 0; j < argc ; ++j)
         if ((j != i) && (s = SDT_getInteractor(argv[i], argv[j])))
           if (SDTInteractor_isImpact(s))
@@ -42,6 +39,8 @@ SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMess
       return_code = SDTOSCProject_log(log, args);
     else if (!strcmp("save", method))
       return_code = SDTOSCProject_save(log, args);
+    else if (!strcmp("load", method))
+      return_code = SDTOSCProject_load(log, args);
     else
       return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
   }
@@ -81,6 +80,29 @@ SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOS
 SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
   json_value *prj;
   SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "project", &prj, args);
+
+  if (return_code == SDT_OSC_RETURN_OK && prj->type == json_object) {
+    // Load resonators
+    const json_value *res = json_object_get_by_key(prj, "resonators");
+    if (res && (res->type == json_object))
+      for (unsigned int i = 0; i < res->u.object.length; ++i) {
+        SDTResonator *x;
+        const char *x_key = res->u.object.values[i].name;
+        if ((x = SDT_getResonator(x_key))) {
+          SDTResonator *tmp = SDTResonator_fromJSON(res->u.object.values[i].value);
+          SDTResonator_copy(x, tmp);
+          SDTResonator_free(tmp);
+          if (log)
+            (*log)("         - %s", x_key);
+        } else {
+          if (log)
+            (*log)("         - couldn't load '%s' (not found)", x_key);
+          return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
+          break;
+        }
+      }
+
+  }
 
   if (prj)
     json_value_free(prj);
