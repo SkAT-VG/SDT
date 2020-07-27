@@ -170,6 +170,10 @@ SDTInteractor *SDTImpact_new() {
   return x;
 }
 
+int SDTInteractor_isImpact(const SDTInteractor *x) {
+  return x->computeForce == SDTImpact_MarhefkaOrin;
+}
+
 void SDTImpact_free(SDTInteractor *x) {
   free(x->state);
   SDTInteractor_free(x);
