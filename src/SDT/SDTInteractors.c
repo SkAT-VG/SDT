@@ -51,11 +51,11 @@ void SDTInteractor_setSecondPoint(SDTInteractor *x, long l) {
   x->contact1 = l;
 }
 
-SDTResonator *SDTInteractor_getFirstResonator(SDTInteractor *x) {
+SDTResonator *SDTInteractor_getFirstResonator(const SDTInteractor *x) {
   return x->obj0;
 }
 
-SDTResonator *SDTInteractor_getSecondResonator(SDTInteractor *x) {
+SDTResonator *SDTInteractor_getSecondResonator(const SDTInteractor *x) {
   return x->obj1;
 }
 
@@ -170,6 +170,21 @@ SDTInteractor *SDTImpact_new() {
   return x;
 }
 
+SDTInteractor *SDTImpact_copy(SDTInteractor *dest, const SDTInteractor *src) {
+  SDTImpact_setStiffness(dest, SDTImpact_getStiffness(src));
+  SDTImpact_setDissipation(dest, SDTImpact_getDissipation(src));
+  SDTImpact_setShape(dest, SDTImpact_getShape(src));
+  SDTFriction_setDissipation(dest, SDTFriction_getDissipation(src));
+  SDTFriction_setViscosity(dest, SDTFriction_getViscosity(src));
+  SDTFriction_setNoisiness(dest, SDTFriction_getNoisiness(src));
+  SDTInteractor_setFirstResonator(dest, SDTInteractor_getFirstResonator(src));
+  SDTInteractor_setSecondResonator(dest, SDTInteractor_getSecondResonator(src));
+  SDTInteractor_setFirstPoint(dest, SDTInteractor_getFirstPoint(src));
+  SDTInteractor_setSecondPoint(dest, SDTInteractor_getSecondPoint(src));
+
+  return dest;
+}
+
 int SDTInteractor_isImpact(const SDTInteractor *x) {
   return x->computeForce == SDTImpact_MarhefkaOrin;
 }
@@ -261,6 +276,27 @@ SDTInteractor *SDTFriction_new() {
   return x;
 }
 
+SDTInteractor *SDTFriction_copy(SDTInteractor *dest, const SDTInteractor *src) {
+  SDTFriction_setNormalForce(dest, SDTFriction_getNormalForce(src));
+  SDTFriction_setStaticCoefficient(dest, SDTFriction_getStaticCoefficient(src));
+  SDTFriction_setDynamicCoefficient(dest, SDTFriction_getDynamicCoefficient(src));
+  SDTFriction_setBreakAway(dest, SDTFriction_getBreakAway(src));
+  SDTFriction_setStiffness(dest, SDTFriction_getStiffness(src));
+  SDTFriction_setDissipation(dest, SDTFriction_getDissipation(src));
+  SDTFriction_setViscosity(dest, SDTFriction_getViscosity(src));
+  SDTFriction_setNoisiness(dest, SDTFriction_getNoisiness(src));
+  SDTInteractor_setFirstResonator(dest, SDTInteractor_getFirstResonator(src));
+  SDTInteractor_setSecondResonator(dest, SDTInteractor_getSecondResonator(src));
+  SDTInteractor_setFirstPoint(dest, SDTInteractor_getFirstPoint(src));
+  SDTInteractor_setSecondPoint(dest, SDTInteractor_getSecondPoint(src));
+
+  return dest;
+}
+
+int SDTInteractor_isFriction(const SDTInteractor *x) {
+  return x->computeForce == SDTFriction_ElastoPlastic;
+}
+
 void SDTFriction_free(SDTInteractor *x) {
   free(x->state);
   SDTInteractor_free(x);
@@ -307,4 +343,40 @@ void SDTFriction_setViscosity(SDTInteractor *x, double f) {
 
 void SDTFriction_setNoisiness(SDTInteractor *x, double f) {
   ((SDTFriction *)x->state)->s3 = fmax(0.0, f);
+}
+
+double SDTFriction_getNormalForce(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->fn;
+}
+
+double SDTFriction_getStribeckVelocity(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->vs;
+}
+
+double SDTFriction_getStaticCoefficient(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->ks;
+}
+
+double SDTFriction_getDynamicCoefficient(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->kd;
+}
+
+double SDTFriction_getBreakAway(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->kba;
+}
+
+double SDTFriction_getStiffness(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s0;
+}
+
+double SDTFriction_getDissipation(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s1;
+}
+
+double SDTFriction_getViscosity(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s2;
+}
+
+double SDTFriction_getNoisiness(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s3;
 }

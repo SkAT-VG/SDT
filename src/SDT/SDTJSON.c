@@ -89,6 +89,7 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
 json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
   json_value *obj = json_object_new(0);
+
   json_object_push(obj, "stiffness", json_double_new(SDTImpact_getStiffness(x)));
   json_object_push(obj, "dissipation", json_double_new(SDTImpact_getDissipation(x)));
   json_object_push(obj, "shape", json_double_new(SDTImpact_getShape(x)));
@@ -112,6 +113,74 @@ SDTInteractor *SDTImpact_fromJSON(const json_value *x) {
 
   v = json_object_get_by_key(x, "shape");
   SDTImpact_setShape(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "key0");
+  SDTInteractor_setFirstResonator(inter, (v && (v->type == json_string))? SDT_getResonator(v->u.string.ptr) : 0);
+
+  v = json_object_get_by_key(x, "key1");
+  SDTInteractor_setSecondResonator(inter, (v && (v->type == json_string))? SDT_getResonator(v->u.string.ptr) : 0);
+
+  v = json_object_get_by_key(x, "contact0");
+  SDTInteractor_setFirstPoint(inter, (v && (v->type == json_integer))? v->u.integer : 0);
+
+  v = json_object_get_by_key(x, "contact1");
+  SDTInteractor_setSecondPoint(inter, (v && (v->type == json_integer))? v->u.integer : 0);
+
+  return inter;
+}
+
+//-------------------------------------------------------------------------------------//
+
+json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "force", json_double_new(SDTFriction_getNormalForce(x)));
+  json_object_push(obj, "stribeck", json_double_new(SDTFriction_getStribeckVelocity(x)));
+  json_object_push(obj, "kStatic", json_double_new(SDTFriction_getStaticCoefficient(x)));
+  json_object_push(obj, "kDynamic", json_double_new(SDTFriction_getDynamicCoefficient(x)));
+  json_object_push(obj, "breakAway", json_double_new(SDTFriction_getBreakAway(x)));
+  json_object_push(obj, "stiffness", json_double_new(SDTFriction_getStiffness(x)));
+  json_object_push(obj, "dissipation", json_double_new(SDTFriction_getDissipation(x)));
+  json_object_push(obj, "viscosity", json_double_new(SDTFriction_getViscosity(x)));
+  json_object_push(obj, "noisiness", json_double_new(SDTFriction_getNoisiness(x)));
+  json_object_push(obj, "key0", json_string_new(key0));
+  json_object_push(obj, "key1", json_string_new(key1));
+  json_object_push(obj, "contact0", json_integer_new(SDTInteractor_getFirstPoint(x)));
+  json_object_push(obj, "contact1", json_integer_new(SDTInteractor_getSecondPoint(x)));
+
+  return obj;
+}
+
+SDTInteractor *SDTFriction_fromJSON(const json_value *x) {
+  SDTInteractor *inter = SDTFriction_new();
+  const json_value *v;
+
+  v = json_object_get_by_key(x, "force");
+  SDTFriction_setNormalForce(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "stribeck");
+  SDTFriction_setStribeckVelocity(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "kStatic");
+  SDTFriction_setStaticCoefficient(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "kDynamic");
+  SDTFriction_setDynamicCoefficient(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "breakAway");
+  SDTFriction_setBreakAway(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "stiffness");
+  SDTFriction_setStiffness(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "dissipation");
+  SDTFriction_setDissipation(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "viscosity");
+  SDTFriction_setViscosity(inter, (v && (v->type == json_double))? v->u.dbl : 0);
+
+  v = json_object_get_by_key(x, "noisiness");
+  SDTFriction_setNoisiness(inter, (v && (v->type == json_double))? v->u.dbl : 0);
 
   v = json_object_get_by_key(x, "key0");
   SDTInteractor_setFirstResonator(inter, (v && (v->type == json_string))? SDT_getResonator(v->u.string.ptr) : 0);

@@ -228,6 +228,7 @@ typedef enum SDTOSCReturnCode {
   SDT_OSC_RETURN_ERROR_LOADING_JSON,
   SDT_OSC_RETURN_WARNING_INTERACTOR_KEY,
   SDT_OSC_RETURN_JSON_NOT_COMPLIANT,
+  SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE,
 } SDTOSCReturnCode;
 
 /** @brief Log OSC return code information with a custom log function

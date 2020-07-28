@@ -44,11 +44,11 @@ extern void SDTInteractor_setSecondPoint(SDTInteractor *x, long l);
 
 /** @brief Gets the pointer to the first interacting resonator
 @param[in] p The pointer to the first interacting resonator */
-extern SDTResonator *SDTInteractor_getFirstResonator(SDTInteractor *x);
+extern SDTResonator *SDTInteractor_getFirstResonator(const SDTInteractor *x);
 
 /** @brief Gets the pointer to the second interacting resonator
 @param[in] p The pointer to the second interacting resonator */
-extern SDTResonator *SDTInteractor_getSecondResonator(SDTInteractor *x);
+extern SDTResonator *SDTInteractor_getSecondResonator(const SDTInteractor *x);
 
 /** @brief Gets the contact point index for the first resonator
 @return Number of the first resonator pickup chosen for interaction */
@@ -95,6 +95,12 @@ typedef struct SDTImpact SDTImpact;
 /** @brief Object constructor.
 @return Pointer to a SDTInteractor instance, configured for the impact case */
 extern SDTInteractor *SDTImpact_new();
+
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTInteractor *SDTImpact_copy(SDTInteractor *dest, const SDTInteractor *src);
 
 /** @brief Check if the interactor is an Impact
 @return Truth value of the check */
@@ -154,6 +160,16 @@ typedef struct SDTFriction SDTFriction;
 @return Pointer to a SDTInteractor instance, configured for the friction case */
 extern SDTInteractor *SDTFriction_new();
 
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTInteractor *SDTFriction_copy(SDTInteractor *dest, const SDTInteractor *src);
+
+/** @brief Check if the interactor is a Friction
+@return Truth value of the check */
+extern int SDTInteractor_isFriction(const SDTInteractor *x);
+
 /** @brief Object destructor.
 param[in] Pointer to a SDTInteractor instance, configured for the friction case. */
 extern void SDTFriction_free(SDTInteractor *x);
@@ -193,6 +209,42 @@ extern void SDTFriction_setViscosity(SDTInteractor *x, double f);
 /** @brief Sets the surface roughness.
 @param[in] f Surface roughness, positive scalar */
 extern void SDTFriction_setNoisiness(SDTInteractor *x, double f);
+
+/** @brief Gets the perpendicular force (pressure) applied to the two sliding resonators.
+@return Normal force, in N */
+extern double SDTFriction_getNormalForce(const SDTInteractor *x);
+
+/** @brief Gets the Stribeck velocity.
+@return Stribeck velocity, in m/s */
+extern double SDTFriction_getStribeckVelocity(const SDTInteractor *x);
+
+/** @brief Gets the static friction coefficient.
+@return Static friction coefficient [0,1] */
+extern double SDTFriction_getStaticCoefficient(const SDTInteractor *x);
+
+/** @brief Gets the dynamic friction coefficient.
+@return Dynamic friction coefficient [0,1] */
+extern double SDTFriction_getDynamicCoefficient(const SDTInteractor *x);
+
+/** @brief Gets the break away coefficient.
+@return Break away coefficient */
+extern double SDTFriction_getBreakAway(const SDTInteractor *x);
+
+/** @brief Gets the contact stiffness.
+@return Contact stiffness */
+extern double SDTFriction_getStiffness(const SDTInteractor *x);
+
+/** @brief Gets the dissipation coefficient.
+@return Dissipation coefficient */
+extern double SDTFriction_getDissipation(const SDTInteractor *x);
+
+/** @brief Gets the contact viscosity.
+@return Contact viscosity */
+extern double SDTFriction_getViscosity(const SDTInteractor *x);
+
+/** @brief Gets the surface roughness.
+@return Surface roughness */
+extern double SDTFriction_getNoisiness(const SDTInteractor *x);
 
 /** @} */
 

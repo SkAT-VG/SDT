@@ -9,19 +9,23 @@ json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
   json_value *prj = json_object_new(0);
 
   // Fetch all resonators and interactors
-  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0);
+  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0), *fri = json_array_new(0);
   SDTResonator *r;
   SDTInteractor *s;
   for (unsigned int i = 0; i < argc ; ++i)
     if ((r = SDT_getResonator(argv[i]))) {
       json_object_push(res, argv[i], SDTResonator_toJSON(r));
       for (unsigned int j = 0; j < argc ; ++j)
-        if ((j != i) && (s = SDT_getInteractor(argv[i], argv[j])))
+        if ((s = SDT_getInteractor(argv[i], argv[j]))) {
           if (SDTInteractor_isImpact(s))
             json_array_push(imp, SDTImpact_toJSON(s, argv[i], argv[j]));
+          else if (SDTInteractor_isFriction(s))
+            json_array_push(fri, SDTFriction_toJSON(s, argv[i], argv[j]));
+        }
     }
   json_object_push(prj, "resonators", res);
   json_object_push(inter, "impacts", imp);
+  json_object_push(inter, "frictions", fri);
   json_object_push(prj, "interactors", inter);
 
   return prj;
@@ -121,15 +125,24 @@ SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), co
   return SDT_OSC_RETURN_OK;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadImpact(void (* log)(const char *, ...), const json_value *impacts, unsigned int idx) {
+SDTOSCReturnCode SDTOSCProject_loadInteractorT(
+  void (* log)(const char *, ...),
+  const json_value *interactors,
+  unsigned int idx,
+  const char *type_name,
+  int (* type_check)(const SDTInteractor *),
+  SDTInteractor *(* inter_from_json)(const json_value *),
+  SDTInteractor *(* inter_copy)(SDTInteractor *, const SDTInteractor *),
+  void (* inter_free)(SDTInteractor *)
+) {
   /*
-  Load impact from JSON array impacts
+  Load interactor of a type from JSON array interactors
   On fail, log message and set return code appropriately
   */
-  json_value *v = impacts->u.array.values[idx];
+  json_value *v = interactors->u.array.values[idx];
 
   if (v->type != json_object) {
-    if (log) (*log)("         - impact #%d not compliant (not an object)", idx + 1);
+    if (log) (*log)("         - %s #%d not compliant (not an object)", type_name, idx + 1);
     return SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
   }
 
@@ -139,29 +152,90 @@ SDTOSCReturnCode SDTOSCProject_loadImpact(void (* log)(const char *, ...), const
   const char *key1 = (k && k->type == json_string)? k->u.string.ptr : 0;
 
   if (!(key0 && key1)) {
-    if (log) (*log)("         - impact #%d not compliant (incomplete keys '%s' and '%s')", idx + 1, key0, key1);
+    if (log) (*log)("         - %s #%d not compliant (incomplete keys '%s' and '%s')", type_name, idx + 1, key0, key1);
     return SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
   }
 
   SDTInteractor *x = SDT_getInteractor(key0, key1);
 
   if (!x) {
-    if (log) (*log)("         - couldn't load impact between '%s' and '%s' (not found)", key0, key1);
+    if (log) (*log)("         - couldn't load %s between '%s' and '%s' (not found)", type_name, key0, key1);
     return SDT_OSC_RETURN_OBJECT_NOT_FOUND;
   }
 
-  SDTInteractor *tmp = SDTImpact_fromJSON(v);
+  if (!(*type_check)(x)) {
+    if (log) (*log)("         - couldn't load %s between '%s' and '%s' (not a %s)", type_name, key0, key1, type_name);
+    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
+  }
 
-  SDTImpact_setStiffness(x, SDTImpact_getStiffness(tmp));
-  SDTImpact_setDissipation(x, SDTImpact_getDissipation(tmp));
-  SDTImpact_setShape(x, SDTImpact_getShape(tmp));
-  SDTInteractor_setFirstPoint(x, SDTInteractor_getFirstPoint(tmp));
-  SDTInteractor_setSecondPoint(x, SDTInteractor_getSecondPoint(tmp));
-
-  SDTImpact_free(tmp);
-  if (log) (*log)("         - impact between '%s' and '%s'", key0, key1);
+  SDTInteractor *tmp = (*inter_from_json)(v);
+  (*inter_copy)(x, tmp);
+  (*inter_free)(tmp);
+  
+  if (log) (*log)("         - %s between '%s' and '%s'", type_name, key0, key1);
 
   return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCProject_loadInteractorsT(
+  SDTOSCReturnCode return_code,
+  void (* log)(const char *, ...),
+  const json_value *interactors,
+  const char *json_key,
+  const char *type_name,
+  int (* type_check)(const SDTInteractor *),
+  SDTInteractor *(* inter_from_json)(const json_value *),
+  SDTInteractor *(* inter_copy)(SDTInteractor *, const SDTInteractor *),
+  void (* inter_free)(SDTInteractor *)
+) {
+  /*
+  If the return code is OK
+  Load interactors of a type from JSON project "interactors" object
+  On fail, log message and set return code appropriately
+  */
+  if (return_code == SDT_OSC_RETURN_OK) {
+    const json_value *arr = json_object_get_by_key(interactors, json_key);
+    if (arr) {
+      if (arr->type == json_array)
+        for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < arr->u.array.length; ++i)
+          return_code = SDTOSCProject_loadInteractorT(log, arr, i, type_name, type_check, inter_from_json, inter_copy, inter_free);
+      else {
+        if (log) (*log)("         - %s not compliant (not an array)", json_key);
+        return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+      }
+    }
+  }
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCProject_loadImpacts(
+  SDTOSCReturnCode return_code,
+  void (* log)(const char *, ...),
+  const json_value *interactors
+) {
+  return SDTOSCProject_loadInteractorsT(return_code, log, interactors,
+    "impacts",
+    "impact",
+    &SDTInteractor_isImpact,
+    &SDTImpact_fromJSON,
+    &SDTImpact_copy,
+    &SDTImpact_free
+  );
+}
+
+SDTOSCReturnCode SDTOSCProject_loadFrictions(
+  SDTOSCReturnCode return_code,
+  void (* log)(const char *, ...),
+  const json_value *interactors
+) {
+  return SDTOSCProject_loadInteractorsT(return_code, log, interactors,
+    "frictions",
+    "friction",
+    &SDTInteractor_isFriction,
+    &SDTFriction_fromJSON,
+    &SDTFriction_copy,
+    &SDTFriction_free
+  );
 }
 
 SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
@@ -181,16 +255,11 @@ SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOS
   // Load interactors
   if (return_code == SDT_OSC_RETURN_OK) {
     const json_value *inter = json_object_get_by_key(prj, "interactors");
-    if (inter) {
+    if (inter)
       if (SDTProject_checkHelper(inter->type == json_object, log, "         - interactors not compliant (not an object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
-        // Load impacts
-        const json_value *imp = json_object_get_by_key(inter, "impacts");
-        if (imp)
-          if (SDTProject_checkHelper(imp->type == json_array, log, "         - impacts not compliant (not an array)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
-            for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < imp->u.array.length; ++i)
-              return_code = SDTOSCProject_loadImpact(log, imp, i);
+        return_code = SDTOSCProject_loadImpacts(return_code, log, inter);
+        return_code = SDTOSCProject_loadFrictions(return_code, log, inter);
       }
-    }
   }
 
   if (prj)

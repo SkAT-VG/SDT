@@ -86,6 +86,68 @@ extern SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const
 
 /** @} */
 
+/** @defgroup osc_friction OSC Friction
+OSC containers and methods for SDT Frictions
+@{ */
+
+/** @brief The container of OSC methods for SDT Frictions
+\par OSC Address
+/interactor/friction
+\par OSC Arguments
+ID0 ID1 [args...]
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param[in] m OSC message pointer
+@return Return code */
+extern SDTOSCReturnCode SDTOSCFriction(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m);
+
+/** @brief OSC method for logging information about SDT Frictions
+\par OSC Address
+/interactor/friction/log
+\par OSC Arguments
+ID0 ID1
+\par Calls
+::SDTFriction_toJSON
+@param [in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@return Return code */
+extern SDTOSCReturnCode SDTOSCFriction_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x);
+
+/** @brief OSC method for saving information about SDT Frictions
+\par OSC Address
+/interactor/friction/save
+\par OSC Arguments
+ID0 ID1 FILEPATH
+\par Calls
+::SDTFriction_toJSON
+@param [in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCFriction_save(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
+
+/** @brief OSC method for loading information about SDT Frictions
+\par OSC Address
+/interactor/friction/load
+\par OSC Arguments
+ID0 ID1 FILEPATH
+\par Calls
+::SDTFriction_fromJSON
+@param[in] log Log function pointer
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@param[in] x Interactor instance pointer
+@param[in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCFriction_load(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif
