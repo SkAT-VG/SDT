@@ -19,6 +19,8 @@ SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCM
       char *method = SDTOSCMessage_getContainer(x);
       if (!strcmp("impact", method))
         return_code = SDTOSCImpact(log, key0, key1, inter, sub);
+      else if (!strcmp("friction", method))
+        return_code = SDTOSCFriction(log, key0, key1, inter, sub);
       else
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
       SDTOSCMessage_free(sub);
@@ -92,4 +94,35 @@ SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *
   if (obj)
     json_value_free(obj);
   return return_code;
+}
+
+//-------------------------------------------------------------------------------------//
+
+SDTOSCReturnCode SDTOSCFriction(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m) {
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+  if (SDTOSCMessage_hasContainer(m)) {
+      char *method = SDTOSCMessage_getContainer(m);
+      const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
+      if (!strcmp("log", method))
+        return_code = SDTOSCFriction_log(log, key0, key1, x);
+      else if (!strcmp("save", method))
+        return_code = SDTOSCFriction_save(log, key0, key1, x, args);
+      else if (!strcmp("load", method))
+        return_code = SDTOSCFriction_load(log, key0, key1, x, args);
+    }
+  else
+    return_code = SDT_OSC_RETURN_MISSING_METHOD;
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCFriction_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x) {
+  return SDT_OSC_RETURN_NOT_IMPLEMENTED;
+}
+
+SDTOSCReturnCode SDTOSCFriction_save(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args) {
+  return SDT_OSC_RETURN_NOT_IMPLEMENTED;
+}
+
+SDTOSCReturnCode SDTOSCFriction_load(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args) {
+  return SDT_OSC_RETURN_NOT_IMPLEMENTED;
 }
