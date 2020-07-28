@@ -90,17 +90,10 @@ SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTInteractor *inter = SDTImpact_fromJSON(obj);
-
-    SDTImpact_setStiffness(x, SDTImpact_getStiffness(inter));
-    SDTImpact_setDissipation(x, SDTImpact_getDissipation(inter));
-    SDTImpact_setShape(x, SDTImpact_getShape(inter));
-    if (SDTInteractor_getFirstResonator(inter) != SDTInteractor_getFirstResonator(x) || SDTInteractor_getSecondResonator(inter) != SDTInteractor_getSecondResonator(x))
+    if (!SDTInteractor_checkSameResonators(x, inter))
       return_code = SDT_OSC_RETURN_WARNING_INTERACTOR_KEY;
-    SDTInteractor_setFirstResonator(x, SDTInteractor_getFirstResonator(inter));
-    SDTInteractor_setSecondResonator(x, SDTInteractor_getSecondResonator(inter));
-    SDTInteractor_setFirstPoint(x, SDTInteractor_getFirstPoint(inter));
-    SDTInteractor_setSecondPoint(x, SDTInteractor_getSecondPoint(inter));
 
+    SDTImpact_copy(x, inter);
     SDTImpact_free(inter);
   }
   if (obj)

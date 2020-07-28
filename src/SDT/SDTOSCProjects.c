@@ -151,14 +151,9 @@ SDTOSCReturnCode SDTOSCProject_loadImpact(void (* log)(const char *, ...), const
   }
 
   SDTInteractor *tmp = SDTImpact_fromJSON(v);
-
-  SDTImpact_setStiffness(x, SDTImpact_getStiffness(tmp));
-  SDTImpact_setDissipation(x, SDTImpact_getDissipation(tmp));
-  SDTImpact_setShape(x, SDTImpact_getShape(tmp));
-  SDTInteractor_setFirstPoint(x, SDTInteractor_getFirstPoint(tmp));
-  SDTInteractor_setSecondPoint(x, SDTInteractor_getSecondPoint(tmp));
-
+  SDTImpact_copy(x, tmp);
   SDTImpact_free(tmp);
+  
   if (log) (*log)("         - impact between '%s' and '%s'", key0, key1);
 
   return SDT_OSC_RETURN_OK;

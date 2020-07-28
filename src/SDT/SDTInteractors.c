@@ -170,6 +170,21 @@ SDTInteractor *SDTImpact_new() {
   return x;
 }
 
+SDTInteractor *SDTImpact_copy(SDTInteractor *dest, const SDTInteractor *src) {
+  SDTImpact_setStiffness(dest, SDTImpact_getStiffness(src));
+  SDTImpact_setDissipation(dest, SDTImpact_getDissipation(src));
+  SDTImpact_setShape(dest, SDTImpact_getShape(src));
+  SDTFriction_setDissipation(dest, SDTFriction_getDissipation(src));
+  SDTFriction_setViscosity(dest, SDTFriction_getViscosity(src));
+  SDTFriction_setNoisiness(dest, SDTFriction_getNoisiness(src));
+  SDTInteractor_setFirstResonator(dest, SDTInteractor_getFirstResonator(src));
+  SDTInteractor_setSecondResonator(dest, SDTInteractor_getSecondResonator(src));
+  SDTInteractor_setFirstPoint(dest, SDTInteractor_getFirstPoint(src));
+  SDTInteractor_setSecondPoint(dest, SDTInteractor_getSecondPoint(src));
+
+  return dest;
+}
+
 int SDTInteractor_isImpact(const SDTInteractor *x) {
   return x->computeForce == SDTImpact_MarhefkaOrin;
 }
