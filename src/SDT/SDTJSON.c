@@ -89,7 +89,7 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
 json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
   json_value *obj = json_object_new(0);
-  
+
   json_object_push(obj, "stiffness", json_double_new(SDTImpact_getStiffness(x)));
   json_object_push(obj, "dissipation", json_double_new(SDTImpact_getDissipation(x)));
   json_object_push(obj, "shape", json_double_new(SDTImpact_getShape(x)));
@@ -134,15 +134,19 @@ SDTInteractor *SDTImpact_fromJSON(const json_value *x) {
 json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
   json_value *obj = json_object_new(0);
 
-  json_object_push(obj, "normalForce", json_double_new(SDTFriction_getNormalForce(x)));
-  json_object_push(obj, "stribeckVelocity", json_double_new(SDTFriction_getStribeckVelocity(x)));
-  json_object_push(obj, "staticCoefficient", json_double_new(SDTFriction_getStaticCoefficient(x)));
-  json_object_push(obj, "dynamicCoefficient", json_double_new(SDTFriction_getDynamicCoefficient(x)));
+  json_object_push(obj, "force", json_double_new(SDTFriction_getNormalForce(x)));
+  json_object_push(obj, "stribeck", json_double_new(SDTFriction_getStribeckVelocity(x)));
+  json_object_push(obj, "kStatic", json_double_new(SDTFriction_getStaticCoefficient(x)));
+  json_object_push(obj, "kDynamic", json_double_new(SDTFriction_getDynamicCoefficient(x)));
   json_object_push(obj, "breakAway", json_double_new(SDTFriction_getBreakAway(x)));
   json_object_push(obj, "stiffness", json_double_new(SDTFriction_getStiffness(x)));
   json_object_push(obj, "dissipation", json_double_new(SDTFriction_getDissipation(x)));
   json_object_push(obj, "viscosity", json_double_new(SDTFriction_getViscosity(x)));
   json_object_push(obj, "noisiness", json_double_new(SDTFriction_getNoisiness(x)));
+  json_object_push(obj, "key0", json_string_new(key0));
+  json_object_push(obj, "key1", json_string_new(key1));
+  json_object_push(obj, "contact0", json_integer_new(SDTInteractor_getFirstPoint(x)));
+  json_object_push(obj, "contact1", json_integer_new(SDTInteractor_getSecondPoint(x)));
 
   return obj;
 }
