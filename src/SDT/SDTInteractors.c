@@ -312,3 +312,39 @@ void SDTFriction_setViscosity(SDTInteractor *x, double f) {
 void SDTFriction_setNoisiness(SDTInteractor *x, double f) {
   ((SDTFriction *)x->state)->s3 = fmax(0.0, f);
 }
+
+double SDTFriction_getNormalForce(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->fn;
+}
+
+double SDTFriction_getStribeckVelocity(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->vs;
+}
+
+double SDTFriction_getStaticCoefficient(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->ks;
+}
+
+double SDTFriction_getDynamicCoefficient(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->kd;
+}
+
+double SDTFriction_getBreakAway(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->kba;
+}
+
+double SDTFriction_getStiffness(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s0;
+}
+
+double SDTFriction_getDissipation(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s1;
+}
+
+double SDTFriction_getViscosity(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s2;
+}
+
+double SDTFriction_getNoisiness(const SDTInteractor *x) {
+  return ((SDTFriction *)x->state)->s3;
+}

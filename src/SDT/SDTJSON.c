@@ -89,6 +89,7 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
 json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
   json_value *obj = json_object_new(0);
+  
   json_object_push(obj, "stiffness", json_double_new(SDTImpact_getStiffness(x)));
   json_object_push(obj, "dissipation", json_double_new(SDTImpact_getDissipation(x)));
   json_object_push(obj, "shape", json_double_new(SDTImpact_getShape(x)));
@@ -124,6 +125,30 @@ SDTInteractor *SDTImpact_fromJSON(const json_value *x) {
 
   v = json_object_get_by_key(x, "contact1");
   SDTInteractor_setSecondPoint(inter, (v && (v->type == json_integer))? v->u.integer : 0);
+
+  return inter;
+}
+
+//-------------------------------------------------------------------------------------//
+
+json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0, const char *key1) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "normalForce", json_double_new(SDTFriction_getNormalForce(x)));
+  json_object_push(obj, "stribeckVelocity", json_double_new(SDTFriction_getStribeckVelocity(x)));
+  json_object_push(obj, "staticCoefficient", json_double_new(SDTFriction_getStaticCoefficient(x)));
+  json_object_push(obj, "dynamicCoefficient", json_double_new(SDTFriction_getDynamicCoefficient(x)));
+  json_object_push(obj, "breakAway", json_double_new(SDTFriction_getBreakAway(x)));
+  json_object_push(obj, "stiffness", json_double_new(SDTFriction_getStiffness(x)));
+  json_object_push(obj, "dissipation", json_double_new(SDTFriction_getDissipation(x)));
+  json_object_push(obj, "viscosity", json_double_new(SDTFriction_getViscosity(x)));
+  json_object_push(obj, "noisiness", json_double_new(SDTFriction_getNoisiness(x)));
+
+  return obj;
+}
+
+SDTInteractor *SDTFriction_fromJSON(const json_value *x) {
+  SDTInteractor *inter = SDTFriction_new();
 
   return inter;
 }

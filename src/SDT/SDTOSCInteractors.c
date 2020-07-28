@@ -122,7 +122,10 @@ SDTOSCReturnCode SDTOSCFriction(void (* log)(const char *, ...), const char *key
 }
 
 SDTOSCReturnCode SDTOSCFriction_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x) {
-  return SDT_OSC_RETURN_NOT_IMPLEMENTED;
+  json_value *obj = SDTFriction_toJSON(x, key0, key1);
+  SDTOSCReturnCode r = SDTOSCJSON_log(log, "sdtOSC:", obj);
+  json_builder_free(obj);
+  return r;
 }
 
 SDTOSCReturnCode SDTOSCFriction_save(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args) {
