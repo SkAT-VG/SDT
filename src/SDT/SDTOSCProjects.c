@@ -1,6 +1,8 @@
 #include "SDTOSCProjects.h"
 #include "SDTSolids.h"
 #include <string.h>
+#include <stdio.h>
+#include <stdint.h>
 
 
 json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
@@ -77,86 +79,117 @@ SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOS
   return r;
 }
 
+int SDTProject_checkHelper(int check, void (* log)(const char *, ...), const char *fail_msg, SDTOSCReturnCode fail_code, SDTOSCReturnCode *code) {
+  /*
+  Pass through the check value
+  If the check is false, then log the fail message and set the code to the fail code
+  */
+  if (!check) {
+    if (log)
+      (*log)(fail_msg);
+    *code = fail_code;
+  }
+  return check;
+}
+
+SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), const json_value *resonators, unsigned int idx) {
+  /*
+  Load resonator from JSON object resonators
+  On fail, log message and set return code appropriately
+  */
+  const char *name = resonators->u.object.values[idx].name;
+  const json_value *value = resonators->u.object.values[idx].value;
+
+  if (value->type != json_object) {
+    if (log) (*log)("         - '%s' not compliant (not a JSON object)", name);
+    return SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+  }
+
+  SDTResonator *x = SDT_getResonator(name);
+
+  if (!x) {
+    if (log) (*log)("         - couldn't load '%s' (not found)", name);
+    return SDT_OSC_RETURN_OBJECT_NOT_FOUND;
+  }
+
+  SDTResonator *tmp = SDTResonator_fromJSON(value);
+  SDTResonator_copy(x, tmp);
+  SDTResonator_free(tmp);
+  
+  if (log) (*log)("         - %s", name);
+
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCProject_loadImpact(void (* log)(const char *, ...), const json_value *impacts, unsigned int idx) {
+  /*
+  Load impact from JSON array impacts
+  On fail, log message and set return code appropriately
+  */
+  json_value *v = impacts->u.array.values[idx];
+
+  if (v->type != json_object) {
+    if (log) (*log)("         - impact #%d not compliant (not an object)", idx + 1);
+    return SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+  }
+
+  const json_value *k = json_object_get_by_key(v, "key0");
+  const char *key0 = (k && k->type == json_string)? k->u.string.ptr : 0;
+  k = json_object_get_by_key(v, "key1");
+  const char *key1 = (k && k->type == json_string)? k->u.string.ptr : 0;
+
+  if (!(key0 && key1)) {
+    if (log) (*log)("         - impact #%d not compliant (incomplete keys '%s' and '%s')", idx + 1, key0, key1);
+    return SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+  }
+
+  SDTInteractor *x = SDT_getInteractor(key0, key1);
+
+  if (!x) {
+    if (log) (*log)("         - couldn't load impact between '%s' and '%s' (not found)", key0, key1);
+    return SDT_OSC_RETURN_OBJECT_NOT_FOUND;
+  }
+
+  SDTInteractor *tmp = SDTImpact_fromJSON(v);
+
+  SDTImpact_setStiffness(x, SDTImpact_getStiffness(tmp));
+  SDTImpact_setDissipation(x, SDTImpact_getDissipation(tmp));
+  SDTImpact_setShape(x, SDTImpact_getShape(tmp));
+  SDTInteractor_setFirstPoint(x, SDTInteractor_getFirstPoint(tmp));
+  SDTInteractor_setSecondPoint(x, SDTInteractor_getSecondPoint(tmp));
+
+  SDTImpact_free(tmp);
+  if (log) (*log)("         - impact between '%s' and '%s'", key0, key1);
+
+  return SDT_OSC_RETURN_OK;
+}
+
 SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
   json_value *prj;
   SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "project", &prj, args);
 
-  if (return_code == SDT_OSC_RETURN_OK && prj->type == json_object) {
-    // Load resonators
-    const json_value *res = json_object_get_by_key(prj, "resonators");
-    if (res && (res->type == json_object))
-      for (unsigned int i = 0; i < res->u.object.length; ++i) {
-        SDTResonator *x;
-        const char *x_key = res->u.object.values[i].name;
-        if ((x = SDT_getResonator(x_key))) {
-          SDTResonator *tmp = SDTResonator_fromJSON(res->u.object.values[i].value);
-          SDTResonator_copy(x, tmp);
-          SDTResonator_free(tmp);
-          if (log)
-            (*log)("         - %s", x_key);
-        } else {
-          if (log)
-            (*log)("         - couldn't load '%s' (not found)", x_key);
-          return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
-          break;
-        }
-      }
+  // Load resonators
+  if (return_code == SDT_OSC_RETURN_OK)
+    if (SDTProject_checkHelper(prj->type == json_object, log, "         - project not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
+      const json_value *res = json_object_get_by_key(prj, "resonators");
+      if (res)
+        if (SDTProject_checkHelper(res->type == json_object, log, "         - resonators not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
+          for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < res->u.object.length; ++i)
+            return_code = SDTOSCProject_loadResonator(log, res, i);
+    }
 
-    // Load interactors
+  // Load interactors
+  if (return_code == SDT_OSC_RETURN_OK) {
     const json_value *inter = json_object_get_by_key(prj, "interactors");
-    if ((return_code == SDT_OSC_RETURN_OK) && inter && (inter->type == json_object)) {
-      // Load impacts
-      const json_value *imp = json_object_get_by_key(inter, "impacts");
-      if (imp && (imp->type == json_array)) {
-        const char *key0, *key1;
-        unsigned int i;
-        for (i = 0; i < imp->u.array.length; ++i)
-          if (imp->u.array.values[i]->type == json_object) {
-            const json_value *k = json_object_get_by_key(imp->u.array.values[i], "key0");
-            key0 = (k && k->type == json_string)? k->u.string.ptr : 0;
-            k = json_object_get_by_key(imp->u.array.values[i], "key1");
-            key1 = (k && k->type == json_string)? k->u.string.ptr : 0;
-
-            if (key0 && key1) {
-              SDTInteractor *x = SDT_getInteractor(key0, key1);
-              if (x) {
-                SDTInteractor *tmp = SDTImpact_fromJSON(imp->u.array.values[i]);
-
-                SDTImpact_setStiffness(x, SDTImpact_getStiffness(tmp));
-                SDTImpact_setDissipation(x, SDTImpact_getDissipation(tmp));
-                SDTImpact_setShape(x, SDTImpact_getShape(tmp));
-                SDTInteractor_setFirstPoint(x, SDTInteractor_getFirstPoint(tmp));
-                SDTInteractor_setSecondPoint(x, SDTInteractor_getSecondPoint(tmp));
-
-                SDTImpact_free(tmp);
-              } else
-                return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
-            } else
-              return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
-
-            if (return_code == SDT_OSC_RETURN_OK) {
-              if (log)
-                (*log)("         - impact between '%s' and '%s'", key0, key1);
-            } else {
-              if (log)
-                (*log)("         - couldn't load impact between '%s' and '%s'", key0, key1);
-              break;
-            }
-          } else {
-            if (log)
-              (*log)("         - impact #%d not compliant (not an object)", i + 1);
-            return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
-            break;
-          }
-      } else {
-        if (log)
-          (*log)("         - impacts not compliant (not present or not an array)");
-        return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
+    if (inter) {
+      if (SDTProject_checkHelper(inter->type == json_object, log, "         - interactors not compliant (not an object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
+        // Load impacts
+        const json_value *imp = json_object_get_by_key(inter, "impacts");
+        if (imp)
+          if (SDTProject_checkHelper(imp->type == json_array, log, "         - impacts not compliant (not an array)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
+            for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < imp->u.array.length; ++i)
+              return_code = SDTOSCProject_loadImpact(log, imp, i);
       }
-    } else {
-      if (log)
-        (*log)("         - interactors not compliant (not present or not an object)");
-      return_code = SDT_OSC_RETURN_JSON_NOT_COMPLIANT;
     }
   }
 
