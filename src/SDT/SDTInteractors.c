@@ -261,6 +261,10 @@ SDTInteractor *SDTFriction_new() {
   return x;
 }
 
+int SDTInteractor_isFriction(const SDTInteractor *x) {
+  return x->computeForce == SDTFriction_ElastoPlastic;
+}
+
 void SDTFriction_free(SDTInteractor *x) {
   free(x->state);
   SDTInteractor_free(x);

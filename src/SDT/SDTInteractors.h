@@ -154,6 +154,10 @@ typedef struct SDTFriction SDTFriction;
 @return Pointer to a SDTInteractor instance, configured for the friction case */
 extern SDTInteractor *SDTFriction_new();
 
+/** @brief Check if the interactor is a Friction
+@return Truth value of the check */
+extern int SDTInteractor_isFriction(const SDTInteractor *x);
+
 /** @brief Object destructor.
 param[in] Pointer to a SDTInteractor instance, configured for the friction case. */
 extern void SDTFriction_free(SDTInteractor *x);

@@ -37,6 +37,9 @@ SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCM
 //-------------------------------------------------------------------------------------//
 
 SDTOSCReturnCode SDTOSCImpact(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m) {
+  if (!SDTInteractor_isImpact(x))
+    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
+
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
   if (SDTOSCMessage_hasContainer(m)) {
       char *method = SDTOSCMessage_getContainer(m);
@@ -99,6 +102,9 @@ SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *
 //-------------------------------------------------------------------------------------//
 
 SDTOSCReturnCode SDTOSCFriction(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m) {
+  if (!SDTInteractor_isFriction(x))
+    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
+
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
   if (SDTOSCMessage_hasContainer(m)) {
       char *method = SDTOSCMessage_getContainer(m);
