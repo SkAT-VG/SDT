@@ -346,6 +346,8 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
       msg = "[JSON_NOT_COMPLIANT]: your JSON file is not compliant to SDT's standard";
     else if (r == SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE)
       msg = "[INCORRECT_INTERACTOR_TYPE]: the specified interactor does not match the expected type for the method";
+    else if (r == SDT_OSC_RETURN_ERROR_WRITING_JSON)
+      msg = "[ERROR_WRITING_JSON]: an error occurred while converting to JSON";
 
     msg = strjoin_free("sdtOSC ", 0, msg, 0);
 
@@ -423,15 +425,14 @@ SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* pre
 }
 
 SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *name, json_value *obj, const SDTOSCArgumentList *args) {
-  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
+  if (!args || args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
   const char *fpath = SDTOSCArgumentList_getString(args, 0);
 
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
 
   if (!json_dump(obj, fpath)) {
-    if (log)
-      (*log)("sdtOSC: saved %s to '%s'", name, fpath);
+    if (log) (*log)("sdtOSC: saved %s to '%s'", name, fpath);
   } else
     return_code = SDT_OSC_RETURN_NO_WRITE_PERMISSION;
 

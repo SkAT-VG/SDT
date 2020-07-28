@@ -78,8 +78,12 @@ SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOS
 
   json_value *prj = SDTOSCProject_toJSON(argc, argv);
   free(argv);
-  SDTOSCReturnCode r = SDTOSCJSON_save(log, "project", prj, args);
-  json_builder_free(prj);
+  SDTOSCReturnCode r = SDT_OSC_RETURN_ERROR_WRITING_JSON;
+
+  if (prj) {
+    r = SDTOSCJSON_save(log, "project", prj, args);
+    json_builder_free(prj);
+  }
   return r;
 }
 

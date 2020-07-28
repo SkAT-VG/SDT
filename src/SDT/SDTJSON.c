@@ -254,17 +254,23 @@ json_value *json_read(const char *fpath) {
 }
 
 int json_dump(json_value *x, const char *fpath) {
+  int return_code = 0;
   char *s = malloc(json_measure_ex(x, sdt_json_opts()));
-  json_serialize_ex(s, x, sdt_json_opts());
+  if (s) {
+    json_serialize_ex(s, x, sdt_json_opts());
 
-  FILE *f = fopen(fpath, "w");
-  if (!f)
-    return 1;
+    FILE *f = fopen(fpath, "w");
+    if (f) {
+      fprintf(f, "%s", s);
+      fclose(f);
+    }
+    else
+      return_code = 1;
+    free(s);
+  } else
+    return_code = 2;
 
-  fprintf(f, "%s", s);
-  fclose(f);
-  free(s);
-  return 0;
+  return return_code;
 }
 
 const json_value *json_object_get_by_key(const json_value *x, const char *key) {
