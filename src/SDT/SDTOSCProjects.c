@@ -68,21 +68,23 @@ SDTOSCReturnCode SDTOSCProject_log(void (* log)(const char *, ...), const SDTOSC
 }
 
 SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
-  unsigned int argc = SDTOSCArgumentList_getNArgs(args);
+  int argc = SDTOSCArgumentList_getNArgs(args) - 1;
   if (argc < 1)
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
 
-  const char **argv = malloc(sizeof(char *) * (argc - 1));
-  for (unsigned int i = 1; i < argc ; ++i)
-    argv[i] = SDTOSCArgumentList_getString(args, i);
-
-  json_value *prj = SDTOSCProject_toJSON(argc, argv);
-  free(argv);
   SDTOSCReturnCode r = SDT_OSC_RETURN_ERROR_WRITING_JSON;
+  const char **argv = malloc(sizeof(char *) * argc);
+  if (argv) {
+    for (unsigned int i = 0; i < argc ; ++i)
+      argv[i] = SDTOSCArgumentList_getString(args, i + 1);
 
-  if (prj) {
-    r = SDTOSCJSON_save(log, "project", prj, args);
-    json_builder_free(prj);
+    json_value *prj = SDTOSCProject_toJSON(argc, argv);
+    free(argv);
+
+    if (prj) {
+      r = SDTOSCJSON_save(log, "project", prj, args);
+      json_builder_free(prj);
+    }
   }
   return r;
 }
