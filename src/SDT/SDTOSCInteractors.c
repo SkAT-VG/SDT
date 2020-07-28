@@ -3,6 +3,15 @@
 #include <string.h>
 #include <stdio.h>
 
+//-------------------------------------------------------------------------------------//
+// Private utils
+
+int SDTInteractor_checkSameResonators(const SDTInteractor *x, const SDTInteractor *y) {
+  return SDTInteractor_getFirstResonator(x) == SDTInteractor_getFirstResonator(y) && SDTInteractor_getSecondResonator(x) == SDTInteractor_getSecondResonator(y);
+}
+
+//-------------------------------------------------------------------------------------//
+
 SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
   if (SDTOSCArgumentList_getNArgs(args) < 2 || !SDTOSCArgumentList_isString(args, 0) || !SDTOSCArgumentList_isString(args, 1))
@@ -139,5 +148,20 @@ SDTOSCReturnCode SDTOSCFriction_save(void (* log)(const char *, ...), const char
 }
 
 SDTOSCReturnCode SDTOSCFriction_load(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCArgumentList *args) {
-  return SDT_OSC_RETURN_NOT_IMPLEMENTED;
+  json_value *obj = 0;
+  char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
+  sprintf(name, "friction between '%s' and '%s'", key0, key1);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  free(name);
+  if (return_code == SDT_OSC_RETURN_OK) {
+    SDTInteractor *inter = SDTFriction_fromJSON(obj);
+    if (!SDTInteractor_checkSameResonators(x, inter))
+      return_code = SDT_OSC_RETURN_WARNING_INTERACTOR_KEY;
+
+    SDTFriction_copy(x, inter);
+    SDTFriction_free(inter);
+  }
+  if (obj)
+    json_value_free(obj);
+  return return_code;
 }

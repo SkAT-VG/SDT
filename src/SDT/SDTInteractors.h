@@ -44,11 +44,11 @@ extern void SDTInteractor_setSecondPoint(SDTInteractor *x, long l);
 
 /** @brief Gets the pointer to the first interacting resonator
 @param[in] p The pointer to the first interacting resonator */
-extern SDTResonator *SDTInteractor_getFirstResonator(SDTInteractor *x);
+extern SDTResonator *SDTInteractor_getFirstResonator(const SDTInteractor *x);
 
 /** @brief Gets the pointer to the second interacting resonator
 @param[in] p The pointer to the second interacting resonator */
-extern SDTResonator *SDTInteractor_getSecondResonator(SDTInteractor *x);
+extern SDTResonator *SDTInteractor_getSecondResonator(const SDTInteractor *x);
 
 /** @brief Gets the contact point index for the first resonator
 @return Number of the first resonator pickup chosen for interaction */
@@ -95,6 +95,12 @@ typedef struct SDTImpact SDTImpact;
 /** @brief Object constructor.
 @return Pointer to a SDTInteractor instance, configured for the impact case */
 extern SDTInteractor *SDTImpact_new();
+
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTInteractor *SDTImpact_copy(SDTInteractor *dest, const SDTInteractor *src);
 
 /** @brief Check if the interactor is an Impact
 @return Truth value of the check */
@@ -153,6 +159,12 @@ typedef struct SDTFriction SDTFriction;
 /** @brief Object constructor.
 @return Pointer to a SDTInteractor instance, configured for the friction case */
 extern SDTInteractor *SDTFriction_new();
+
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTInteractor *SDTFriction_copy(SDTInteractor *dest, const SDTInteractor *src);
 
 /** @brief Check if the interactor is a Friction
 @return Truth value of the check */
