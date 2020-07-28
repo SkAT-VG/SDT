@@ -9,19 +9,23 @@ json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
   json_value *prj = json_object_new(0);
 
   // Fetch all resonators and interactors
-  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0);
+  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0), *fri = json_array_new(0);
   SDTResonator *r;
   SDTInteractor *s;
   for (unsigned int i = 0; i < argc ; ++i)
     if ((r = SDT_getResonator(argv[i]))) {
       json_object_push(res, argv[i], SDTResonator_toJSON(r));
       for (unsigned int j = 0; j < argc ; ++j)
-        if ((j != i) && (s = SDT_getInteractor(argv[i], argv[j])))
+        if ((s = SDT_getInteractor(argv[i], argv[j]))) {
           if (SDTInteractor_isImpact(s))
             json_array_push(imp, SDTImpact_toJSON(s, argv[i], argv[j]));
+          else if (SDTInteractor_isFriction(s))
+            json_array_push(fri, SDTFriction_toJSON(s, argv[i], argv[j]));
+        }
     }
   json_object_push(prj, "resonators", res);
   json_object_push(inter, "impacts", imp);
+  json_object_push(inter, "frictions", fri);
   json_object_push(prj, "interactors", inter);
 
   return prj;
