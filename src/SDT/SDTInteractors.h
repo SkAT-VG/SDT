@@ -96,6 +96,10 @@ typedef struct SDTImpact SDTImpact;
 @return Pointer to a SDTInteractor instance, configured for the impact case */
 extern SDTInteractor *SDTImpact_new();
 
+/** @brief Check if the interactor is an Impact
+@return Truth value of the check */
+extern int SDTInteractor_isImpact(const SDTInteractor *x);
+
 /** @brief Object destructor.
 param[in] Pointer to a SDTInteractor instance, configured for the impact case. */
 extern void SDTImpact_free(SDTInteractor *x);

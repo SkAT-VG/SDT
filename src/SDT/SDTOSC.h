@@ -20,8 +20,6 @@ extern "C" {
 @param [in] x OSC message*/
 extern void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x);
 
-/** @} */
-
 #ifdef __cplusplus
 };
 #endif
