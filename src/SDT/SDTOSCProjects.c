@@ -150,6 +150,11 @@ SDTOSCReturnCode SDTOSCProject_loadImpact(void (* log)(const char *, ...), const
     return SDT_OSC_RETURN_OBJECT_NOT_FOUND;
   }
 
+  if (!SDTInteractor_isImpact(x)) {
+    if (log) (*log)("         - couldn't load impact between '%s' and '%s' (not an impact)", key0, key1);
+    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
+  }
+
   SDTInteractor *tmp = SDTImpact_fromJSON(v);
   SDTImpact_copy(x, tmp);
   SDTImpact_free(tmp);
