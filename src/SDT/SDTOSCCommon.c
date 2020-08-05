@@ -1,6 +1,7 @@
 #include "SDTOSCCommon.h"
 #include "SDTJSON.h"
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -8,7 +9,7 @@
 // Private utils
 
 char *_indent = "  ";
-const unsigned int log_cap = 1 << 10;
+const unsigned int log_cap = 1 << 9;
 char *_docs_url = "https://chromaticisobar.github.io/SDT";
 
 char *strjoin_free(char *x, int free_x, char* y, int free_y) {
@@ -391,37 +392,45 @@ SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* pre
   if (!log)
     return SDT_OSC_RETURN_OK;
   char *s = malloc(json_measure_ex(obj, sdt_json_opts()));
+  if (!s)
+    return SDT_OSC_RETURN_ERROR_WRITING_JSON;
+
   json_serialize_ex(s, obj, sdt_json_opts());
 
   unsigned int s_len = strlen(s), n_print = 0;
-  for (unsigned i = 0 ; i < s_len ; i += n_print) {
-    n_print = (i + log_cap > s_len)? s_len - i : log_cap;
-    char *t = (char *) malloc(sizeof(char) * (n_print + 3));
-    memcpy(t, s + i, n_print);
+  char *buffer = (char *) malloc(sizeof(char) * (log_cap + 8));
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
+  if (!buffer)
+    return_code = SDT_OSC_RETURN_ERROR_WRITING_JSON;
+  else {
+    for (unsigned int n_printed = 0; n_printed < s_len; n_printed += n_print) {
+      // If the first character is a newline, ignore it
+      if (s[n_printed] == '\n') {
+        n_print = 1;
+        continue;
+      }
 
-    // Break print at last newline, if there is any, otherwise put line continuation symbol '\' (unless end of string)
-    int j;
-    for (j = n_print - 1; j >=0 ; --j)
-      if (s[i + j] == '\n')
-        break;
-    if (j >= 0) {
-      n_print = j + 1;
-      t[j] = 0;
-    } else if (i + n_print < s_len) {
-      t[n_print] = '\\';
-      t[n_print + 1] = 0;
-    } else {
-      t[n_print] = 0;
+      if (n_printed + log_cap > s_len)
+        n_print = s_len - n_printed;
+      else {
+        // Break print at last newline, if there is one
+        for (n_print = log_cap; n_print > 0 && s[n_printed + n_print - 1] != '\n'; --n_print);
+        if (!n_print)
+          n_print = log_cap;
+      }
+
+      memcpy(buffer, s + n_printed, n_print);
+      buffer[n_print] = 0;
+
+      if (n_printed)
+        (*log)("%s", buffer);
+      else
+        (*log)("%s\n%s", preamble, buffer);
     }
-
-    if (i)
-      (*log)("%s", t);
-    else
-      (*log)("%s\n%s", preamble, t);
-    free(t);
+    free(buffer);
   }
   free(s);
-  return SDT_OSC_RETURN_OK;
+  return return_code;
 }
 
 SDTOSCReturnCode SDTOSCJSON_save(void (* log)(const char *, ...), const char *name, json_value *obj, const SDTOSCArgumentList *args) {
