@@ -5,6 +5,18 @@
 #include <stdint.h>
 
 
+json_value *push_else_free(json_value *dest, const char *key, json_value *src, int length) {
+  if (!src)
+    return src;
+  if (!length) {
+    json_builder_free(src);
+    return 0;
+  }
+  if (dest && key)
+    json_object_push(dest, key, src);
+  return src;
+}
+
 json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
   json_value *prj = json_object_new(0);
 
@@ -23,10 +35,11 @@ json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
             json_array_push(fri, SDTFriction_toJSON(s, argv[i], argv[j]));
         }
     }
-  json_object_push(prj, "resonators", res);
-  json_object_push(inter, "impacts", imp);
-  json_object_push(inter, "frictions", fri);
-  json_object_push(prj, "interactors", inter);
+
+  push_else_free(prj, "resonators", res, res->u.object.length);
+  push_else_free(inter, "impacts", imp, imp->u.array.length);
+  push_else_free(inter, "frictions", fri, fri->u.array.length);
+  push_else_free(prj, "interactors", inter, inter->u.object.length);
 
   return prj;
 }
