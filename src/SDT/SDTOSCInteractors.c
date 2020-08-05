@@ -97,7 +97,7 @@ SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *
     SDTImpact_free(inter);
   }
   if (obj)
-    json_value_free(obj);
+    json_builder_free(obj);
   return return_code;
 }
 
@@ -155,6 +155,6 @@ SDTOSCReturnCode SDTOSCFriction_load(void (* log)(const char *, ...), const char
     SDTFriction_free(inter);
   }
   if (obj)
-    json_value_free(obj);
+    json_builder_free(obj);
   return return_code;
 }

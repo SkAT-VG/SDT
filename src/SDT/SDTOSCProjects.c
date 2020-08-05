@@ -5,6 +5,8 @@
 #include <stdint.h>
 
 
+json_value *metadata = 0;
+
 json_value *push_else_free(json_value *dest, const char *key, json_value *src, int length) {
   if (!src)
     return src;
@@ -44,6 +46,8 @@ json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
   return prj;
 }
 
+//-------------------------------------------------------------------------------------//
+
 SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
   for (unsigned int i = 0 ; i < SDTOSCArgumentList_getNArgs(args) ; ++i)
@@ -53,6 +57,7 @@ SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMess
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_MISSING_METHOD;
   if (SDTOSCMessage_hasContainer(x)) {
     char *method = SDTOSCMessage_getContainer(x);
+    SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
 
     if (!strcmp("log", method))
       return_code = SDTOSCProject_log(log, args);
@@ -60,8 +65,12 @@ SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMess
       return_code = SDTOSCProject_save(log, args);
     else if (!strcmp("load", method))
       return_code = SDTOSCProject_load(log, args);
+    else if (!strcmp("metadata", method))
+      return_code = SDTOSCProjectMetadata(log, sub);
     else
       return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+
+    SDTOSCMessage_free(sub);
   }
 
   return return_code;
@@ -288,6 +297,44 @@ SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOS
   }
 
   if (prj)
-    json_value_free(prj);
+    json_builder_free(prj);
   return return_code;
+}
+
+//-------------------------------------------------------------------------------------//
+
+SDTOSCReturnCode SDTOSCProjectMetadata(void (* log)(const char *, ...), const SDTOSCMessage* x) {
+  SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_MISSING_METHOD;
+  if (SDTOSCMessage_hasContainer(x)) {
+    char *method = SDTOSCMessage_getContainer(x);
+    if (!metadata)
+      metadata = json_object_new(0);
+
+    if (!strcmp("log", method))
+      return_code = SDTOSCProjectMetadata_log(log);
+    else if (!strcmp("save", method))
+      return_code = SDTOSCProjectMetadata_save(log, args);
+    else if (!strcmp("load", method))
+      return_code = SDTOSCProjectMetadata_load(log, args);
+    else
+      return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+  }
+
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_log(void (* log)(const char *, ...)) {
+  return SDTOSCJSON_log(log, "sdtOSC: metadata", metadata);
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_save(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
+  if (!args || !SDTOSCArgumentList_getNArgs(args))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  return SDTOSCJSON_save(log, "metadata", metadata, args);
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
+  json_builder_free(metadata);
+  return SDTOSCJSON_load(log, "metadata", &metadata, args);
 }

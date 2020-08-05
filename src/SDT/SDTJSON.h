@@ -31,7 +31,7 @@ extern int json_dump(json_value *x, const char *fpath);
 
 /** @brief Read JSON value from file
 @param[in] fpath The file path
-@return The JSON value pointer, or 0 on failure. Memory must be freed with json_value_free */
+@return The JSON value pointer, or 0 on failure. Memory must be freed with json_builder_free */
 extern json_value *json_read(const char *fpath);
 
 /** @brief Get the value of a field of a JSON object

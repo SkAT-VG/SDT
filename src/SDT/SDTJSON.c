@@ -247,7 +247,10 @@ json_value *json_read(const char *fpath) {
         break;
       }
 
-    v = json_parse((json_char *) s + i_start, i_stop - i_start);
+    json_settings settings = {};
+    settings.value_extra =  json_builder_extra;
+    char err[json_error_max];
+    v = json_parse_ex(&settings, (json_char *) s + i_start, i_stop - i_start, err);
     free(s);
   }
   return v;
