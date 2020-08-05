@@ -123,10 +123,16 @@ SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), co
   }
 
   SDTResonator *tmp = SDTResonator_fromJSON(value);
+
+  if (log) {
+    if (SDTResonator_getNPickups(x) == SDTResonator_getNPickups(tmp))
+      (*log)("         - %s", name);
+    else
+      (*log)("         - %s (number of pickup points changed from %d to %d, check that any interactor that involves this resonator has the correct number of outlets)", name, SDTResonator_getNPickups(x), SDTResonator_getNPickups(tmp));
+  }
+
   SDTResonator_copy(x, tmp);
   SDTResonator_free(tmp);
-  
-  if (log) (*log)("         - %s", name);
 
   return SDT_OSC_RETURN_OK;
 }
