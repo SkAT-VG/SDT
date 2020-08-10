@@ -6,51 +6,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-json_value *push_else_free(json_value *dest, const char *key, json_value *src, int length) {
-  if (!src)
-    return src;
-  if (!length) {
-    json_builder_free(src);
-    return 0;
-  }
-  if (dest && key)
-    json_object_push(dest, key, src);
-  return src;
-}
-
-//-------------------------------------------------------------------------------------//
-
-json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
-  json_value *prj = json_object_new(0);
-
-  // Fetch all resonators and interactors
-  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0), *fri = json_array_new(0);
-  SDTResonator *r;
-  SDTInteractor *s;
-  for (unsigned int i = 0; i < argc ; ++i)
-    if ((r = SDT_getResonator(argv[i]))) {
-      json_object_push(res, argv[i], SDTResonator_toJSON(r));
-      for (unsigned int j = 0; j < argc ; ++j)
-        if ((s = SDT_getInteractor(argv[i], argv[j]))) {
-          if (SDTInteractor_isImpact(s))
-            json_array_push(imp, SDTImpact_toJSON(s, argv[i], argv[j]));
-          else if (SDTInteractor_isFriction(s))
-            json_array_push(fri, SDTFriction_toJSON(s, argv[i], argv[j]));
-        }
-    }
-
-  if (SDTProjectMetadata_get()->u.object.length)
-    json_object_push(prj, "metadata", SDTProjectMetadata_pop());
-  push_else_free(prj, "resonators", res, res->u.object.length);
-  push_else_free(inter, "impacts", imp, imp->u.array.length);
-  push_else_free(inter, "frictions", fri, fri->u.array.length);
-  push_else_free(prj, "interactors", inter, inter->u.object.length);
-
-  return prj;
-}
-
-//-------------------------------------------------------------------------------------//
-
 SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
   for (unsigned int i = 0 ; i < SDTOSCArgumentList_getNArgs(args) ; ++i)
@@ -85,7 +40,7 @@ SDTOSCReturnCode SDTOSCProject_log(void (* log)(const char *, ...), const SDTOSC
   for (unsigned int i = 0; i < argc ; ++i)
     argv[i] = SDTOSCArgumentList_getString(args, i);
 
-  json_value *prj = SDTOSCProject_toJSON(argc, argv);
+  json_value *prj = SDTProject_toJSON(argc, argv);
   free(argv);
   SDTOSCReturnCode r = SDTOSCJSON_log(log, "sdtOSC: project", prj);
   json_builder_free(prj);
@@ -103,7 +58,7 @@ SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOS
     for (unsigned int i = 0; i < argc ; ++i)
       argv[i] = SDTOSCArgumentList_getString(args, i + 1);
 
-    json_value *prj = SDTOSCProject_toJSON(argc, argv);
+    json_value *prj = SDTProject_toJSON(argc, argv);
     free(argv);
 
     if (prj) {

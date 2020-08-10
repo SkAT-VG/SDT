@@ -9,6 +9,12 @@ Functions for SDT Projects
 #ifndef SDT_PROJECTS_H
 #define SDT_PROJECTS_H
 
+/** @brief Convert to a JSON object the information about a SDT project
+@param[in] argc Number of arguments
+@param[in] argv Array of keys of the objects in the project
+@return The project JSON object */
+extern json_value *SDTProject_toJSON(int argc, const char **argv);
+
 /** @brief Sets the SDT Project Metadata
 @param [in] value The metadata JSON object
 @return The metadata JSON object */

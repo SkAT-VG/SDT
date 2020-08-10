@@ -14,12 +14,6 @@ OSC containers and methods for SDT Projects
 extern "C" {
 #endif
 
-/** @brief Convert to a JSON array the information about a SDT project
-@param[in] argc Number of arguments
-@param[in] argv Array of keys of the objects in the project
-@return The JSON array of key / value pairs */
-extern json_value *SDTOSCProject_toJSON(int argc, const char **argv);
-
 /** @brief The container of OSC methods for SDT Projects
 \par OSC Address
 /project
