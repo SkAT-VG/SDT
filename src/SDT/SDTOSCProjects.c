@@ -69,7 +69,7 @@ SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOS
   return r;
 }
 
-int SDTProject_checkHelper(int check, void (* log)(const char *, ...), const char *fail_msg, SDTOSCReturnCode fail_code, SDTOSCReturnCode *code) {
+static int SDTOSCProject_checkHelper(int check, void (* log)(const char *, ...), const char *fail_msg, SDTOSCReturnCode fail_code, SDTOSCReturnCode *code) {
   /*
   Pass through the check value
   If the check is false, then log the fail message and set the code to the fail code
@@ -82,7 +82,7 @@ int SDTProject_checkHelper(int check, void (* log)(const char *, ...), const cha
   return check;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), const json_value *resonators, unsigned int idx) {
+static SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), const json_value *resonators, unsigned int idx) {
   /*
   Load resonator from JSON object resonators
   On fail, log message and set return code appropriately
@@ -117,7 +117,7 @@ SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), co
   return SDT_OSC_RETURN_OK;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadInteractorT(
+static SDTOSCReturnCode SDTOSCProject_loadInteractorT(
   void (* log)(const char *, ...),
   const json_value *interactors,
   unsigned int idx,
@@ -169,7 +169,7 @@ SDTOSCReturnCode SDTOSCProject_loadInteractorT(
   return SDT_OSC_RETURN_OK;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadInteractorsT(
+static SDTOSCReturnCode SDTOSCProject_loadInteractorsT(
   SDTOSCReturnCode return_code,
   void (* log)(const char *, ...),
   const json_value *interactors,
@@ -200,7 +200,7 @@ SDTOSCReturnCode SDTOSCProject_loadInteractorsT(
   return return_code;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadImpacts(
+static SDTOSCReturnCode SDTOSCProject_loadImpacts(
   SDTOSCReturnCode return_code,
   void (* log)(const char *, ...),
   const json_value *interactors
@@ -215,7 +215,7 @@ SDTOSCReturnCode SDTOSCProject_loadImpacts(
   );
 }
 
-SDTOSCReturnCode SDTOSCProject_loadFrictions(
+static SDTOSCReturnCode SDTOSCProject_loadFrictions(
   SDTOSCReturnCode return_code,
   void (* log)(const char *, ...),
   const json_value *interactors
@@ -236,10 +236,10 @@ SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOS
 
   // Load resonators
   if (return_code == SDT_OSC_RETURN_OK)
-    if (SDTProject_checkHelper(prj->type == json_object, log, "         - project not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
+    if (SDTOSCProject_checkHelper(prj->type == json_object, log, "         - project not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
       const json_value *res = json_object_get_by_key(prj, "resonators");
       if (res)
-        if (SDTProject_checkHelper(res->type == json_object, log, "         - resonators not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
+        if (SDTOSCProject_checkHelper(res->type == json_object, log, "         - resonators not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
           for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < res->u.object.length; ++i)
             return_code = SDTOSCProject_loadResonator(log, res, i);
     }
@@ -248,7 +248,7 @@ SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOS
   if (return_code == SDT_OSC_RETURN_OK) {
     const json_value *inter = json_object_get_by_key(prj, "interactors");
     if (inter)
-      if (SDTProject_checkHelper(inter->type == json_object, log, "         - interactors not compliant (not an object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
+      if (SDTOSCProject_checkHelper(inter->type == json_object, log, "         - interactors not compliant (not an object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
         return_code = SDTOSCProject_loadImpacts(return_code, log, inter);
         return_code = SDTOSCProject_loadFrictions(return_code, log, inter);
       }
