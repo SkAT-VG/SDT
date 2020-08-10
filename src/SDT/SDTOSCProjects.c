@@ -1,59 +1,10 @@
 #include "SDTOSCProjects.h"
+#include "SDTProjects.h"
 #include "SDTSolids.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-
-
-json_value *_metadata = 0;
-char *_metadata_cache = 0;
-
-char *update_metadata_cache() {
-  // Update the value of the string dump of the metadata
-  if (_metadata_cache)
-    free(_metadata_cache);
-  if (_metadata) {
-    _metadata_cache = malloc(json_measure_ex(_metadata, sdt_json_opts()));
-    json_serialize_ex(_metadata_cache, _metadata, sdt_json_opts());
-  }
-  return _metadata_cache;
-}
-
-json_value *resume_metadata_cache() {
-  // Restore the metadata from the string dump
-  if (!_metadata_cache)
-    return 0;
-  json_settings settings = {};
-  settings.value_extra =  json_builder_extra;
-  char err[json_error_max];
-  return json_parse_ex(&settings, (json_char *) _metadata_cache, strlen(_metadata_cache), err);
-}
-
-json_value *set_metadata(json_value *value) {
-  // Set the metadata
-  if (_metadata)
-    json_builder_free(_metadata);
-  _metadata = value;
-  update_metadata_cache();
-  return _metadata;
-}
-
-const json_value *get_metadata() {
-  // Get the metadata (read-only)
-  if (!_metadata && !set_metadata(resume_metadata_cache()))
-    set_metadata(json_object_new(0));
-  return _metadata;
-}
-
-json_value *invalidate_metadata() {
-  // Get the metadata, the value must be freed
-  if (!_metadata && !set_metadata(resume_metadata_cache()))
-    set_metadata(json_object_new(0));
-  json_value *tmp = _metadata;
-  _metadata = 0;
-  return tmp;
-}
 
 json_value *push_else_free(json_value *dest, const char *key, json_value *src, int length) {
   if (!src)
@@ -66,6 +17,8 @@ json_value *push_else_free(json_value *dest, const char *key, json_value *src, i
     json_object_push(dest, key, src);
   return src;
 }
+
+//-------------------------------------------------------------------------------------//
 
 json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
   json_value *prj = json_object_new(0);
@@ -86,8 +39,8 @@ json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
         }
     }
 
-  if (get_metadata()->u.object.length)
-    json_object_push(prj, "metadata", invalidate_metadata());
+  if (SDTProjectMetadata_get()->u.object.length)
+    json_object_push(prj, "metadata", SDTProjectMetadata_pop());
   push_else_free(prj, "resonators", res, res->u.object.length);
   push_else_free(inter, "impacts", imp, imp->u.array.length);
   push_else_free(inter, "frictions", fri, fri->u.array.length);
@@ -373,7 +326,7 @@ SDTOSCReturnCode SDTOSCProjectMetadata(void (* log)(const char *, ...), const SD
 }
 
 SDTOSCReturnCode SDTOSCProjectMetadata_log(void (* log)(const char *, ...)) {
-  json_value *metadata = invalidate_metadata();
+  json_value *metadata = SDTProjectMetadata_pop();
   SDTOSCReturnCode return_code = SDTOSCJSON_log(log, "sdtOSC: metadata", metadata);
   json_builder_free(metadata);
   return return_code;
@@ -382,7 +335,7 @@ SDTOSCReturnCode SDTOSCProjectMetadata_log(void (* log)(const char *, ...)) {
 SDTOSCReturnCode SDTOSCProjectMetadata_save(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
   if (!args || !SDTOSCArgumentList_getNArgs(args))
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  json_value *metadata = invalidate_metadata();
+  json_value *metadata = SDTProjectMetadata_pop();
   SDTOSCReturnCode return_code = SDTOSCJSON_save(log, "metadata", metadata, args);
   json_builder_free(metadata);
   return return_code;
@@ -391,6 +344,6 @@ SDTOSCReturnCode SDTOSCProjectMetadata_save(void (* log)(const char *, ...), con
 SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
   json_value *tmp;
   SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "metadata", &tmp, args);
-  set_metadata(tmp);
+  SDTProjectMetadata_set(tmp);
   return return_code;
 }
