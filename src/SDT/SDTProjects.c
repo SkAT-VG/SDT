@@ -53,10 +53,7 @@ static char *update_metadata_dump() {
   // Update the value of the string dump of the metadata
   if (_metadata_dump)
     free(_metadata_dump);
-  if (_metadata) {
-    _metadata_dump = malloc(json_measure_ex(_metadata, sdt_json_opts()));
-    json_serialize_ex(_metadata_dump, _metadata, sdt_json_opts());
-  }
+  _metadata_dump = (_metadata)? json_dumps(_metadata) : 0;
   return _metadata_dump;
 }
 
@@ -84,8 +81,8 @@ json_value *SDTProjectMetadata_set(json_value *value) {
 void SDTProjectMetadata_reset() {
   if (_metadata)
     json_builder_free(_metadata);
-  if (_metadata_dump)
-    free(_metadata_dump);
+  _metadata = 0;
+  update_metadata_dump();
 }
 
 const json_value *SDTProjectMetadata_get() {

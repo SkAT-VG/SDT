@@ -1,5 +1,6 @@
 #include "SDTOSCProjects.h"
 #include "SDTProjects.h"
+#include "SDTJSON.h"
 #include "SDTSolids.h"
 #include <string.h>
 #include <stdlib.h>
@@ -234,15 +235,19 @@ SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOS
   json_value *prj;
   SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "project", &prj, args);
 
-  // Load resonators
+  // Load metadata
   if (return_code == SDT_OSC_RETURN_OK)
-    if (SDTOSCProject_checkHelper(prj->type == json_object, log, "         - project not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
-      const json_value *res = json_object_get_by_key(prj, "resonators");
-      if (res)
-        if (SDTOSCProject_checkHelper(res->type == json_object, log, "         - resonators not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
-          for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < res->u.object.length; ++i)
-            return_code = SDTOSCProject_loadResonator(log, res, i);
-    }
+    if (SDTOSCProject_checkHelper(prj->type == json_object, log, "         - project not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
+      SDTProjectMetadata_set(json_deepcopy(json_object_get_by_key(prj, "metadata")));
+
+  // Load resonators
+  if (return_code == SDT_OSC_RETURN_OK) {
+    const json_value *res = json_object_get_by_key(prj, "resonators");
+    if (res)
+      if (SDTOSCProject_checkHelper(res->type == json_object, log, "         - resonators not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
+        for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < res->u.object.length; ++i)
+          return_code = SDTOSCProject_loadResonator(log, res, i);
+  }
 
   // Load interactors
   if (return_code == SDT_OSC_RETURN_OK) {

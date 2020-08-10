@@ -391,11 +391,9 @@ void SDTOSCLog(void (* log)(const char *, ...), SDTOSCReturnCode r, const SDTOSC
 SDTOSCReturnCode SDTOSCJSON_log(void (* log)(const char *, ...), const char* preamble, json_value *obj) {
   if (!log)
     return SDT_OSC_RETURN_OK;
-  char *s = malloc(json_measure_ex(obj, sdt_json_opts()));
+  char *s = json_dumps(obj);
   if (!s)
     return SDT_OSC_RETURN_ERROR_WRITING_JSON;
-
-  json_serialize_ex(s, obj, sdt_json_opts());
 
   unsigned int s_len = strlen(s), n_print = 0;
   char *buffer = (char *) malloc(sizeof(char) * (log_cap + 8));
