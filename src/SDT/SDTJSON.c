@@ -217,6 +217,16 @@ long long file_size(const char *fpath) {
   return (long long) buf.st_size;
 }
 
+json_value *json_reads(const char *s, int n) {
+  if (n < 0)
+    n = strlen(s);
+  json_settings settings = {};
+  settings.value_extra =  json_builder_extra;
+  char err[json_error_max];
+  json_value *v = json_parse_ex(&settings, (json_char *) s, n, err);
+  return v;
+}
+
 json_value *json_read(const char *fpath) {
   json_value *v = 0;
   int N = 0;
@@ -247,10 +257,7 @@ json_value *json_read(const char *fpath) {
         break;
       }
 
-    json_settings settings = {};
-    settings.value_extra =  json_builder_extra;
-    char err[json_error_max];
-    v = json_parse_ex(&settings, (json_char *) s + i_start, i_stop - i_start, err);
+    v = json_reads(s + i_start, i_stop - i_start);
     free(s);
   }
   return v;

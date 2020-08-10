@@ -21,12 +21,7 @@ static char *update_metadata_dump() {
 
 static json_value *load_metadata_dump() {
   // Restore the metadata from the string dump
-  if (!_metadata_dump)
-    return 0;
-  json_settings settings = {};
-  settings.value_extra =  json_builder_extra;
-  char err[json_error_max];
-  return json_parse_ex(&settings, (json_char *) _metadata_dump, strlen(_metadata_dump), err);
+  return (_metadata_dump)? json_reads(_metadata_dump, -1) : 0;
 }
 
 static json_value *get_metadata() {

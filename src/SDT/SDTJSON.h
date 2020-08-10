@@ -29,6 +29,12 @@ extern json_serialize_opts sdt_json_opts();
 @return 0 on success, 1 on error */
 extern int json_dump(json_value *x, const char *fpath);
 
+/** @brief Read JSON value from string
+@param[in] s The string
+@param[in] n The number of characters to read. If negative, all the string is read up until the first NULL character
+@return The JSON value pointer, or 0 on failure. Memory must be freed with json_builder_free */
+extern json_value *json_reads(const char *s, int n);
+
 /** @brief Read JSON value from file
 @param[in] fpath The file path
 @return The JSON value pointer, or 0 on failure. Memory must be freed with json_builder_free */
