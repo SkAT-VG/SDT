@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <math.h>
 
 SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
@@ -278,6 +279,10 @@ SDTOSCReturnCode SDTOSCProjectMetadata(void (* log)(const char *, ...), const SD
       return_code = SDTOSCProjectMetadata_save(log, args);
     else if (!strcmp("load", method))
       return_code = SDTOSCProjectMetadata_load(log, args);
+    else if (!strcmp("set", method))
+      return_code = SDTOSCProjectMetadata_set(log, args);
+    else if (!strcmp("reset", method))
+      return_code = SDTOSCProjectMetadata_reset(log);
     else
       return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
   }
@@ -306,4 +311,28 @@ SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), con
   SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "metadata", &tmp, args);
   SDTProjectMetadata_set(tmp);
   return return_code;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_set(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
+  if (!args || SDTOSCArgumentList_getNArgs(args) < 2 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  json_value *meta = SDTProjectMetadata_pop(), *value;
+
+  if (SDTOSCArgumentList_isString(args, 1))
+    value = json_string_new(SDTOSCArgumentList_getString(args, 1));
+  else if (SDTOSCArgumentList_isFloat(args, 1)) {
+    float v = SDTOSCArgumentList_getFloat(args, 1);
+    value = (fmod(v, 1))? json_double_new(v) : json_integer_new((int) v);
+  }
+  else
+    value = json_null_new();
+
+  json_object_push(meta, SDTOSCArgumentList_getString(args, 0), value);
+  SDTProjectMetadata_set(meta);
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_reset(void (* log)(const char *, ...)) {
+  SDTProjectMetadata_reset();
+  return SDT_OSC_RETURN_OK;
 }

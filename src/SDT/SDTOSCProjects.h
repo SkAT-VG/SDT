@@ -88,7 +88,24 @@ FILE
 @param [in] log Log function pointer
 @param [in] args Additional OSC arguments: file path (string)
 @return Return code */
-SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+extern SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+
+/** @brief OSC method for setting SDT Project Metadata
+\par OSC Address
+/project/metadata/set
+\par OSC Arguments
+KEY VALUE
+@param [in] log Log function pointer
+@param [in] args Additional OSC arguments: key (string), value (any)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata_set(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+
+/** @brief OSC method for resetting SDT Project Metadata to an empty object
+\par OSC Address
+/project/metadata/reset
+@param [in] log Log function pointer
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata_reset(void (* log)(const char *, ...));
 
 /** @} */
 
