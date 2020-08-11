@@ -217,6 +217,16 @@ long long file_size(const char *fpath) {
   return (long long) buf.st_size;
 }
 
+json_value *json_reads(const char *s, int n) {
+  if (n < 0)
+    n = strlen(s);
+  json_settings settings = {};
+  settings.value_extra =  json_builder_extra;
+  char err[json_error_max];
+  json_value *v = json_parse_ex(&settings, (json_char *) s, n, err);
+  return v;
+}
+
 json_value *json_read(const char *fpath) {
   json_value *v = 0;
   int N = 0;
@@ -247,18 +257,23 @@ json_value *json_read(const char *fpath) {
         break;
       }
 
-    v = json_parse((json_char *) s + i_start, i_stop - i_start);
+    v = json_reads(s + i_start, i_stop - i_start);
     free(s);
   }
   return v;
 }
 
-int json_dump(json_value *x, const char *fpath) {
-  int return_code = 0;
+char *json_dumps(const json_value *x) {
   char *s = malloc(json_measure_ex(x, sdt_json_opts()));
-  if (s) {
+  if (s)
     json_serialize_ex(s, x, sdt_json_opts());
+  return s;
+}
 
+int json_dump(const json_value *x, const char *fpath) {
+  int return_code = 0;
+  char *s = json_dumps(x);
+  if (s) {
     FILE *f = fopen(fpath, "w");
     if (f) {
       fprintf(f, "%s", s);
@@ -290,4 +305,34 @@ double json_array_get_number(const json_value *x, unsigned int idx, double dflt)
       return x->u.array.values[idx]->u.dbl;
   }
   return dflt;
+}
+
+json_value * json_deepcopy(const json_value * value) {
+  if (!value)
+    return 0;
+  json_value *sub;
+  switch (value->type) {
+    case json_null:
+      return json_null_new();
+    case json_boolean:
+      return json_boolean_new(value->u.boolean);
+    case json_string:
+      return json_string_new(value->u.string.ptr);
+    case json_double:
+      return json_double_new(value->u.dbl);
+    case json_integer:
+      return json_integer_new(value->u.integer);
+    case json_array:
+      sub = json_array_new(0);
+      for (unsigned int i = 0; i < value->u.array.length; ++i)
+        json_array_push(sub, json_deepcopy(value->u.array.values[i]));
+      return sub;
+    case json_object:
+      sub = json_object_new(0);
+      for (unsigned int i = 0; i < value->u.object.length; ++i)
+        json_object_push(sub, value->u.object.values[i].name, json_deepcopy(value->u.object.values[i].value));
+      return sub;
+    default:
+      return 0;
+  }
 }

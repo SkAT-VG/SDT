@@ -102,7 +102,7 @@ SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const cha
     SDTResonator_free(r);
   }
   if (obj)
-    json_value_free(obj);
+    json_builder_free(obj);
   return return_code;
 }
 

@@ -14,16 +14,11 @@ OSC containers and methods for SDT Projects
 extern "C" {
 #endif
 
-/** @brief Convert to a JSON array the information about a SDT project
-@param[in] argc Number of arguments
-@param[in] argv Array of keys of the objects in the project
-@return The JSON array of key / value pairs */
-extern json_value *SDTOSCProject_toJSON(int argc, const char **argv);
-
 /** @brief The container of OSC methods for SDT Projects
 \par OSC Address
 /project
-@param[in] x OSC message: the first argument must be the resonator's ID. All other arguments are passed down to the method
+@param [in] log Log function pointer
+@param[in] x OSC message
 @return Return code */
 extern SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMessage* x);
 
@@ -56,6 +51,63 @@ FILE
 @param [in] args Additional OSC arguments: file path (string)
 @return Return code */
 SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+
+/** @defgroup osc_project_metadata Project Metadata
+OSC containers and methods for SDT Project Metadata
+@{
+*/
+
+/** @brief The container of OSC methods for SDT Project Metadata
+\par OSC Address
+/project/metadata
+@param [in] log Log function pointer
+@param[in] x OSC message
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata(void (* log)(const char *, ...), const SDTOSCMessage* x);
+
+/** @brief OSC method for logging SDT Project Metadata
+\par OSC Address
+/project/metadata/log
+@param [in] log Log function pointer
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata_log(void (* log)(const char *, ...));
+
+/** @brief OSC method for saving SDT Project Metadata
+\par OSC Address
+/project/metadata/save
+@param [in] log Log function pointer
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata_save(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+
+/** @brief OSC method for loading SDT Project Metadata from a JSON file
+\par OSC Address
+/project/metadata/load
+\par OSC Arguments
+FILE
+@param [in] log Log function pointer
+@param [in] args Additional OSC arguments: file path (string)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+
+/** @brief OSC method for setting SDT Project Metadata
+\par OSC Address
+/project/metadata/set
+\par OSC Arguments
+KEY VALUE
+@param [in] log Log function pointer
+@param [in] args Additional OSC arguments: key (string), value (any)
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata_set(void (* log)(const char *, ...), const SDTOSCArgumentList* args);
+
+/** @brief OSC method for resetting SDT Project Metadata to an empty object
+\par OSC Address
+/project/metadata/reset
+@param [in] log Log function pointer
+@return Return code */
+extern SDTOSCReturnCode SDTOSCProjectMetadata_reset(void (* log)(const char *, ...));
+
+/** @} */
 
 #ifdef __cplusplus
 };

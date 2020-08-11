@@ -1,48 +1,12 @@
 #include "SDTOSCProjects.h"
+#include "SDTProjects.h"
+#include "SDTJSON.h"
 #include "SDTSolids.h"
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
-
-
-json_value *push_else_free(json_value *dest, const char *key, json_value *src, int length) {
-  if (!src)
-    return src;
-  if (!length) {
-    json_builder_free(src);
-    return 0;
-  }
-  if (dest && key)
-    json_object_push(dest, key, src);
-  return src;
-}
-
-json_value *SDTOSCProject_toJSON(int argc, const char **argv) {
-  json_value *prj = json_object_new(0);
-
-  // Fetch all resonators and interactors
-  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0), *fri = json_array_new(0);
-  SDTResonator *r;
-  SDTInteractor *s;
-  for (unsigned int i = 0; i < argc ; ++i)
-    if ((r = SDT_getResonator(argv[i]))) {
-      json_object_push(res, argv[i], SDTResonator_toJSON(r));
-      for (unsigned int j = 0; j < argc ; ++j)
-        if ((s = SDT_getInteractor(argv[i], argv[j]))) {
-          if (SDTInteractor_isImpact(s))
-            json_array_push(imp, SDTImpact_toJSON(s, argv[i], argv[j]));
-          else if (SDTInteractor_isFriction(s))
-            json_array_push(fri, SDTFriction_toJSON(s, argv[i], argv[j]));
-        }
-    }
-
-  push_else_free(prj, "resonators", res, res->u.object.length);
-  push_else_free(inter, "impacts", imp, imp->u.array.length);
-  push_else_free(inter, "frictions", fri, fri->u.array.length);
-  push_else_free(prj, "interactors", inter, inter->u.object.length);
-
-  return prj;
-}
+#include <math.h>
 
 SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMessage* x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
@@ -53,6 +17,7 @@ SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMess
   SDTOSCReturnCode return_code = SDT_OSC_RETURN_MISSING_METHOD;
   if (SDTOSCMessage_hasContainer(x)) {
     char *method = SDTOSCMessage_getContainer(x);
+    SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
 
     if (!strcmp("log", method))
       return_code = SDTOSCProject_log(log, args);
@@ -60,8 +25,12 @@ SDTOSCReturnCode SDTOSCProject(void (* log)(const char *, ...), const SDTOSCMess
       return_code = SDTOSCProject_save(log, args);
     else if (!strcmp("load", method))
       return_code = SDTOSCProject_load(log, args);
+    else if (!strcmp("metadata", method))
+      return_code = SDTOSCProjectMetadata(log, sub);
     else
       return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+
+    SDTOSCMessage_free(sub);
   }
 
   return return_code;
@@ -73,7 +42,7 @@ SDTOSCReturnCode SDTOSCProject_log(void (* log)(const char *, ...), const SDTOSC
   for (unsigned int i = 0; i < argc ; ++i)
     argv[i] = SDTOSCArgumentList_getString(args, i);
 
-  json_value *prj = SDTOSCProject_toJSON(argc, argv);
+  json_value *prj = SDTProject_toJSON(argc, argv);
   free(argv);
   SDTOSCReturnCode r = SDTOSCJSON_log(log, "sdtOSC: project", prj);
   json_builder_free(prj);
@@ -91,7 +60,7 @@ SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOS
     for (unsigned int i = 0; i < argc ; ++i)
       argv[i] = SDTOSCArgumentList_getString(args, i + 1);
 
-    json_value *prj = SDTOSCProject_toJSON(argc, argv);
+    json_value *prj = SDTProject_toJSON(argc, argv);
     free(argv);
 
     if (prj) {
@@ -102,7 +71,7 @@ SDTOSCReturnCode SDTOSCProject_save(void (* log)(const char *, ...), const SDTOS
   return r;
 }
 
-int SDTProject_checkHelper(int check, void (* log)(const char *, ...), const char *fail_msg, SDTOSCReturnCode fail_code, SDTOSCReturnCode *code) {
+static int SDTOSCProject_checkHelper(int check, void (* log)(const char *, ...), const char *fail_msg, SDTOSCReturnCode fail_code, SDTOSCReturnCode *code) {
   /*
   Pass through the check value
   If the check is false, then log the fail message and set the code to the fail code
@@ -115,7 +84,7 @@ int SDTProject_checkHelper(int check, void (* log)(const char *, ...), const cha
   return check;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), const json_value *resonators, unsigned int idx) {
+static SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), const json_value *resonators, unsigned int idx) {
   /*
   Load resonator from JSON object resonators
   On fail, log message and set return code appropriately
@@ -150,7 +119,7 @@ SDTOSCReturnCode SDTOSCProject_loadResonator(void (* log)(const char *, ...), co
   return SDT_OSC_RETURN_OK;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadInteractorT(
+static SDTOSCReturnCode SDTOSCProject_loadInteractorT(
   void (* log)(const char *, ...),
   const json_value *interactors,
   unsigned int idx,
@@ -202,7 +171,7 @@ SDTOSCReturnCode SDTOSCProject_loadInteractorT(
   return SDT_OSC_RETURN_OK;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadInteractorsT(
+static SDTOSCReturnCode SDTOSCProject_loadInteractorsT(
   SDTOSCReturnCode return_code,
   void (* log)(const char *, ...),
   const json_value *interactors,
@@ -233,7 +202,7 @@ SDTOSCReturnCode SDTOSCProject_loadInteractorsT(
   return return_code;
 }
 
-SDTOSCReturnCode SDTOSCProject_loadImpacts(
+static SDTOSCReturnCode SDTOSCProject_loadImpacts(
   SDTOSCReturnCode return_code,
   void (* log)(const char *, ...),
   const json_value *interactors
@@ -248,7 +217,7 @@ SDTOSCReturnCode SDTOSCProject_loadImpacts(
   );
 }
 
-SDTOSCReturnCode SDTOSCProject_loadFrictions(
+static SDTOSCReturnCode SDTOSCProject_loadFrictions(
   SDTOSCReturnCode return_code,
   void (* log)(const char *, ...),
   const json_value *interactors
@@ -267,27 +236,103 @@ SDTOSCReturnCode SDTOSCProject_load(void (* log)(const char *, ...), const SDTOS
   json_value *prj;
   SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "project", &prj, args);
 
-  // Load resonators
+  // Load metadata
   if (return_code == SDT_OSC_RETURN_OK)
-    if (SDTProject_checkHelper(prj->type == json_object, log, "         - project not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
-      const json_value *res = json_object_get_by_key(prj, "resonators");
-      if (res)
-        if (SDTProject_checkHelper(res->type == json_object, log, "         - resonators not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
-          for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < res->u.object.length; ++i)
-            return_code = SDTOSCProject_loadResonator(log, res, i);
-    }
+    if (SDTOSCProject_checkHelper(prj->type == json_object, log, "         - project not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
+      SDTProjectMetadata_set(json_deepcopy(json_object_get_by_key(prj, "metadata")));
+
+  // Load resonators
+  if (return_code == SDT_OSC_RETURN_OK) {
+    const json_value *res = json_object_get_by_key(prj, "resonators");
+    if (res)
+      if (SDTOSCProject_checkHelper(res->type == json_object, log, "         - resonators not compliant (not a JSON object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code))
+        for (unsigned int i = 0; return_code == SDT_OSC_RETURN_OK && i < res->u.object.length; ++i)
+          return_code = SDTOSCProject_loadResonator(log, res, i);
+  }
 
   // Load interactors
   if (return_code == SDT_OSC_RETURN_OK) {
     const json_value *inter = json_object_get_by_key(prj, "interactors");
     if (inter)
-      if (SDTProject_checkHelper(inter->type == json_object, log, "         - interactors not compliant (not an object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
+      if (SDTOSCProject_checkHelper(inter->type == json_object, log, "         - interactors not compliant (not an object)", SDT_OSC_RETURN_JSON_NOT_COMPLIANT, &return_code)) {
         return_code = SDTOSCProject_loadImpacts(return_code, log, inter);
         return_code = SDTOSCProject_loadFrictions(return_code, log, inter);
       }
   }
 
   if (prj)
-    json_value_free(prj);
+    json_builder_free(prj);
   return return_code;
+}
+
+//-------------------------------------------------------------------------------------//
+
+SDTOSCReturnCode SDTOSCProjectMetadata(void (* log)(const char *, ...), const SDTOSCMessage* x) {
+  SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  SDTOSCReturnCode return_code = SDT_OSC_RETURN_MISSING_METHOD;
+  if (SDTOSCMessage_hasContainer(x)) {
+    char *method = SDTOSCMessage_getContainer(x);
+
+    if (!strcmp("log", method))
+      return_code = SDTOSCProjectMetadata_log(log);
+    else if (!strcmp("save", method))
+      return_code = SDTOSCProjectMetadata_save(log, args);
+    else if (!strcmp("load", method))
+      return_code = SDTOSCProjectMetadata_load(log, args);
+    else if (!strcmp("set", method))
+      return_code = SDTOSCProjectMetadata_set(log, args);
+    else if (!strcmp("reset", method))
+      return_code = SDTOSCProjectMetadata_reset(log);
+    else
+      return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
+  }
+
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_log(void (* log)(const char *, ...)) {
+  json_value *metadata = SDTProjectMetadata_pop();
+  SDTOSCReturnCode return_code = SDTOSCJSON_log(log, "sdtOSC: metadata", metadata);
+  json_builder_free(metadata);
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_save(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
+  if (!args || !SDTOSCArgumentList_getNArgs(args))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  json_value *metadata = SDTProjectMetadata_pop();
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, "metadata", metadata, args);
+  json_builder_free(metadata);
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
+  json_value *tmp;
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "metadata", &tmp, args);
+  SDTProjectMetadata_set(tmp);
+  return return_code;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_set(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
+  if (!args || SDTOSCArgumentList_getNArgs(args) < 2 || !SDTOSCArgumentList_isString(args, 0))
+    return SDT_OSC_RETURN_ARGUMENT_ERROR;
+  json_value *meta = SDTProjectMetadata_pop(), *value;
+
+  if (SDTOSCArgumentList_isString(args, 1))
+    value = json_string_new(SDTOSCArgumentList_getString(args, 1));
+  else if (SDTOSCArgumentList_isFloat(args, 1)) {
+    float v = SDTOSCArgumentList_getFloat(args, 1);
+    value = (fmod(v, 1))? json_double_new(v) : json_integer_new((int) v);
+  }
+  else
+    value = json_null_new();
+
+  json_object_push(meta, SDTOSCArgumentList_getString(args, 0), value);
+  SDTProjectMetadata_set(meta);
+  return SDT_OSC_RETURN_OK;
+}
+
+SDTOSCReturnCode SDTOSCProjectMetadata_reset(void (* log)(const char *, ...)) {
+  SDTProjectMetadata_reset();
+  return SDT_OSC_RETURN_OK;
 }
