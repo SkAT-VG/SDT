@@ -1,3 +1,5 @@
+#include "SDTJSON.h"
+
 /** @file SDTResonators.h
 @defgroup resonators SDTResonators.h: Solid resonators
 Physical model of a solid resonator, represented as a set of parallel mass-spring-damper
@@ -151,6 +153,22 @@ Call this function at sample rate to update the internal state of the resonator.
 DO NOT call this function if you plan to use any of the interactor DSP methods instead!
 See the SDTInteractors.h module documentation for further information. */
 extern void SDTResonator_dsp(SDTResonator *x);
+
+/** @defgroup json_resonator JSON
+JSON functions for SDT Resonators
+@{ */
+
+/** @brief Convert an SDTResonator object in a JSON object
+@param[in] x Pointer to the SDTResonator
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *SDTResonator_toJSON(SDTResonator *x);
+
+/** @brief Load an SDTResonator object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with ::SDTResonator_free */
+extern SDTResonator *SDTResonator_fromJSON(const json_value *x);
+
+/** @} */
 
 #ifdef __cplusplus
 };

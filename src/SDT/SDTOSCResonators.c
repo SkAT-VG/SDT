@@ -1,6 +1,5 @@
 #include "SDTOSCResonators.h"
 #include "SDTSolids.h"
-#include "SDTJSON.h"
 #include <string.h>
 #include <stdio.h>
 

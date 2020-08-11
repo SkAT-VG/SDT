@@ -1,6 +1,5 @@
 #include "SDTOSCCommon.h"
 #include "SDTInteractors.h"
-#include "SDTJSON.h"
 #include "SDTSolids.h"
 
 /** @file SDTOSCInteractors.h
