@@ -44,53 +44,24 @@ json_value *SDTProject_toJSON(int argc, const char **argv) {
 }
 
 // ----------------------------------------------------------------------------
-// Metadata internals
 
-json_value *_metadata = 0;
-char *_metadata_dump = 0;
-
-static char *update_metadata_dump() {
-  // Update the value of the string dump of the metadata
-  if (_metadata_dump)
-    free(_metadata_dump);
-  _metadata_dump = (_metadata)? json_dumps(_metadata) : 0;
-  return _metadata_dump;
-}
-
-static json_value *load_metadata_dump() {
-  // Restore the metadata from the string dump
-  return (_metadata_dump)? json_reads(_metadata_dump, -1) : 0;
-}
-
-static json_value *get_metadata() {
-  if (!_metadata && !SDTProjectMetadata_set(load_metadata_dump()))
-    SDTProjectMetadata_set(json_object_new(0));
-  return _metadata;
-}
-
-// ----------------------------------------------------------------------------
+json_value *metadata = 0;
 
 json_value *SDTProjectMetadata_set(json_value *value) {
-  if (_metadata)
-    json_builder_free(_metadata);
-  _metadata = value;
-  update_metadata_dump();
-  return _metadata;
+  if (metadata)
+    json_builder_free(metadata);
+  metadata = value;
+  return metadata;
 }
 
 void SDTProjectMetadata_reset() {
-  if (_metadata)
-    json_builder_free(_metadata);
-  _metadata = 0;
-  update_metadata_dump();
+  SDTProjectMetadata_set(0);
 }
 
 const json_value *SDTProjectMetadata_get() {
-  return get_metadata();
+  return (metadata)? metadata : SDTProjectMetadata_set(json_object_new(0));
 }
 
 json_value *SDTProjectMetadata_pop() {
-  json_value *tmp = get_metadata();
-  _metadata = 0;
-  return tmp;
+  return json_deepcopy(SDTProjectMetadata_get());
 }
