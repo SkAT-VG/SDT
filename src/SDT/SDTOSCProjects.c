@@ -314,20 +314,10 @@ SDTOSCReturnCode SDTOSCProjectMetadata_load(void (* log)(const char *, ...), con
 }
 
 SDTOSCReturnCode SDTOSCProjectMetadata_set(void (* log)(const char *, ...), const SDTOSCArgumentList* args) {
-  if (!args || SDTOSCArgumentList_getNArgs(args) < 2 || !SDTOSCArgumentList_isString(args, 0))
+  if (!args || SDTOSCArgumentList_getNArgs(args) < 2)
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  json_value *meta = SDTProjectMetadata_pop(), *value;
-
-  if (SDTOSCArgumentList_isString(args, 1))
-    value = json_string_new(SDTOSCArgumentList_getString(args, 1));
-  else if (SDTOSCArgumentList_isFloat(args, 1)) {
-    float v = SDTOSCArgumentList_getFloat(args, 1);
-    value = (fmod(v, 1))? json_double_new(v) : json_integer_new((int) v);
-  }
-  else
-    value = json_null_new();
-
-  json_object_push(meta, SDTOSCArgumentList_getString(args, 0), value);
+  json_value *meta = SDTProjectMetadata_pop();
+  json_object_push(meta, SDTOSCArgumentList_getString(args, 0), json_string_new(SDTOSCArgumentList_getString(args, 1)));
   SDTProjectMetadata_set(meta);
   return SDT_OSC_RETURN_OK;
 }
