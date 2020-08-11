@@ -1,4 +1,5 @@
 #include "SDTJSON.h"
+#include "SDTOSCCommon.h"
 
 /** @file SDTProjects.h
 @defgroup sdt_projects SDTProjects.h: SDT Projects
@@ -14,6 +15,12 @@ Functions for SDT Projects
 @param[in] argv Array of keys of the objects in the project
 @return The project JSON object */
 extern json_value *SDTProject_toJSON(int argc, const char **argv);
+
+/** @brief Load information about a SDT project from a JSON object
+@param[in] prj The project JSON object
+@param[in,out] return_code The return code
+@param[out] msg The failure messages, as a JSON object */
+extern void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code, json_value *msg);
 
 /** @brief Sets the SDT Project Metadata
 @param [in] value The metadata JSON object
