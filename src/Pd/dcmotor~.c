@@ -1,5 +1,4 @@
-#include "m_pd.h"
-#include "SDT/SDTCommon.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTDCMotor.h"
 #ifdef NT
 #pragma warning( disable : 4244 )
@@ -11,6 +10,7 @@ static t_class *dcmotor_class;
 typedef struct _dcmotor {
   t_object obj;
   SDTDCMotor *motor;
+  char *key;
   t_float f;
   t_inlet *in;
   t_outlet *out;
@@ -76,12 +76,16 @@ static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
   t_dcmotor *x = (t_dcmotor *)pd_new(dcmotor_class);
   x->in = inlet_new(&x->obj, &x->obj.ob_pd, &s_signal, &s_signal);
   x->out = outlet_new(&x->obj, gensym("signal"));
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    x->motor = SDTDCMotor_new(atom_getfloat(argv));
+
+  long argi[2], uarg;
+  t_atomtype targs[] = {A_SYMBOL, A_FLOAT};
+  if ((uarg = sdt_pd_arg_parse(s, argc, argv, 2, targs, argi)) >= 0) {
+    error("%s: unused argument in position %ld", s->s_name, uarg);
+    return NULL;
   }
-  else {
-    x->motor = SDTDCMotor_new(48000);
-  }
+
+  x->motor = SDTDCMotor_new((argi[1] >= 0)? atom_getfloat(argv + argi[1]) : 48000);
+  x->key = (char *)((argi[0] >= 0)? atom_getsymbol(argv + argi[0])->s_name : 0);
   return (x);
 }
 
