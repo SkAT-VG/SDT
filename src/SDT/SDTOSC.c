@@ -1,4 +1,5 @@
 #include "SDTOSC.h"
+#include "SDTOSCDCMotor.h"
 #include "SDTOSCResonators.h"
 #include "SDTOSCInteractors.h"
 #include "SDTOSCProjects.h"
@@ -12,7 +13,9 @@ void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x) {
     char *method = SDTOSCMessage_getContainer(x);
 
     SDTOSCMessage* sub = SDTOSCMessage_openContainer(x);
-    if (!strcmp("resonator", method) || !strcmp("inertial", method))
+    if (!strcmp("dcmotor", method))
+      return_code = SDTOSCDCMotor(log, sub);
+    else if (!strcmp("resonator", method) || !strcmp("inertial", method))
       return_code = SDTOSCResonator(log, sub);
     else if (!strcmp("interactor", method))
       return_code = SDTOSCInteractor(log, sub);
