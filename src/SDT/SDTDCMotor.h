@@ -1,3 +1,5 @@
+#include "SDTJSON.h"
+
 /** @file SDTDCMotor.h
 @defgroup dcmotor SDTDCMotor.h: Electric motors
 Physically informed model for the synthesis of electric motor sounds.
@@ -153,6 +155,22 @@ extern SDTDCMotor *SDT_getDCMotor(const char *key);
 If an electric motor with the given ID is present, it is unregistered from the list.
 @param[in] key Unique ID of the DCMotor instance to unregister */
 extern int SDT_unregisterDCMotor(char *key);
+
+/** @defgroup json_dcmotor JSON
+JSON functions for SDT DCMotors
+@{ */
+
+/** @brief Convert an SDTDCMotor object in a JSON object
+@param[in] x Pointer to the SDTDCMotor
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *SDTDCMotor_toJSON(const SDTDCMotor *x);
+
+/** @brief Load a SDTDCMotor object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTDCMotor, or 0 on failure. Memory must be freed with ::SDTDCMotor_free */
+extern SDTDCMotor *SDTDCMotor_fromJSON(const json_value *x);
+
+/** @} */
 
 #ifdef __cplusplus
 };

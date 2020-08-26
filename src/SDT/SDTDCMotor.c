@@ -202,3 +202,58 @@ int SDT_unregisterDCMotor(char *key) {
   if (SDTHashmap_del(dcmotors, key)) return 1;
   return 0;
 }
+
+//-------------------------------------------------------------------------------------//
+
+json_value *SDTDCMotor_toJSON(const SDTDCMotor *x) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "coils", json_integer_new(SDTDCMotor_getCoils(x)));
+  json_object_push(obj, "size", json_double_new(SDTDCMotor_getSize(x)));
+  json_object_push(obj, "reson", json_double_new(SDTDCMotor_getReson(x)));
+  json_object_push(obj, "gearRatio", json_double_new(SDTDCMotor_getGearRatio(x)));
+  json_object_push(obj, "harshness", json_double_new(SDTDCMotor_getHarshness(x)));
+  json_object_push(obj, "rotorGain", json_double_new(SDTDCMotor_getRotorGain(x)));
+  json_object_push(obj, "gearGain", json_double_new(SDTDCMotor_getGearGain(x)));
+  json_object_push(obj, "brushGain", json_double_new(SDTDCMotor_getBrushGain(x)));
+  json_object_push(obj, "airGain", json_double_new(SDTDCMotor_getAirGain(x)));
+
+  return obj;
+}
+
+SDTDCMotor *SDTDCMotor_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object)
+    return 0;
+
+  const json_value *v;
+  SDTDCMotor *m = SDTDCMotor_new(1);
+
+  v = json_object_get_by_key(x, "coils");
+  SDTDCMotor_setCoils(m, (v && (v->type == json_integer))? v->u.integer : 2);
+
+  v = json_object_get_by_key(x, "size");
+  SDTDCMotor_setSize(m, (v && (v->type == json_double))? v->u.dbl : 0.2);
+
+  v = json_object_get_by_key(x, "reson");
+  SDTDCMotor_setReson(m, (v && (v->type == json_double))? v->u.dbl : 0.8);
+
+  v = json_object_get_by_key(x, "gearRatio");
+  SDTDCMotor_setGearRatio(m, (v && (v->type == json_double))? v->u.dbl : 1.0);
+
+  v = json_object_get_by_key(x, "harshness");
+  SDTDCMotor_setHarshness(m, (v && (v->type == json_double))? v->u.dbl : 0.5);
+
+  v = json_object_get_by_key(x, "rotorGain");
+  SDTDCMotor_setRotorGain(m, (v && (v->type == json_double))? v->u.dbl : 0.5);
+
+  v = json_object_get_by_key(x, "gearGain");
+  SDTDCMotor_setGearGain(m, (v && (v->type == json_double))? v->u.dbl : 0.3);
+
+  v = json_object_get_by_key(x, "brushGain");
+  SDTDCMotor_setBrushGain(m, (v && (v->type == json_double))? v->u.dbl : 0.2);
+
+  v = json_object_get_by_key(x, "airGain");
+  SDTDCMotor_setAirGain(m, (v && (v->type == json_double))? v->u.dbl : 0.0);
+
+  return m;
+}
