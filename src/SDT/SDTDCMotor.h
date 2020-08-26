@@ -93,6 +93,23 @@ Call this function at sample rate to synthesize an electric motor sound.
 @return Computed audio sample */
 extern double SDTDCMotor_dsp(SDTDCMotor *x);
 
+/** @brief Registers an electric motor into the electric motors list with a unique ID.
+@param[in] x DCMotor instance to register
+@param[in] key Unique ID assigned to the electric motor instance */
+extern int SDT_registerDCMotor(SDTDCMotor *x, char *key);
+
+/** @brief Queries the electric motors list by its unique ID.
+If an electric motor with the ID is present, a pointer to the electric motor is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the DCMotor instance
+@return DCMotor instance pointer */
+extern SDTDCMotor *SDT_getDCMotor(const char *key);
+
+/** @brief Unregisters an electric motor from the electric motors list.
+If an electric motor with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the DCMotor instance to unregister */
+extern int SDT_unregisterDCMotor(char *key);
+
 #ifdef __cplusplus
 };
 #endif
