@@ -36,6 +36,12 @@ typedef struct SDTDCMotor SDTDCMotor;
 @return Pointer to the new instance */
 extern SDTDCMotor *SDTDCMotor_new(long maxSize);
 
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTDCMotor *SDTDCMotor_copy(SDTDCMotor *dest, const SDTDCMotor *src);
+
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDCMotor_free(SDTDCMotor *x);

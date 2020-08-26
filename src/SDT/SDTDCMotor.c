@@ -40,6 +40,19 @@ SDTDCMotor *SDTDCMotor_new(long maxSize) {
   return x;
 }
 
+SDTDCMotor *SDTDCMotor_copy(SDTDCMotor *dest, const SDTDCMotor *src) {
+  SDTDCMotor_setCoils(dest, SDTDCMotor_getCoils(src));
+  SDTDCMotor_setSize(dest, SDTDCMotor_getSize(src));
+  SDTDCMotor_setReson(dest, SDTDCMotor_getReson(src));
+  SDTDCMotor_setGearRatio(dest, SDTDCMotor_getGearRatio(src));
+  SDTDCMotor_setHarshness(dest, SDTDCMotor_getHarshness(src));
+  SDTDCMotor_setRotorGain(dest, SDTDCMotor_getRotorGain(src));
+  SDTDCMotor_setGearGain(dest, SDTDCMotor_getGearGain(src));
+  SDTDCMotor_setBrushGain(dest, SDTDCMotor_getBrushGain(src));
+  SDTDCMotor_setAirGain(dest, SDTDCMotor_getAirGain(src));
+  return dest;
+}
+
 void SDTDCMotor_free(SDTDCMotor *x) {
   SDTComb_free(x->chassis);
   SDTTwoPoles_free(x->brushFilter);
