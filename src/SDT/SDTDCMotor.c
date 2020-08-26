@@ -47,6 +47,50 @@ void SDTDCMotor_free(SDTDCMotor *x) {
   free(x);
 }
 
+double SDTDCMotor_getRpm(const SDTDCMotor *x) {
+  return x->rpm;
+}
+
+double SDTDCMotor_getLoad(const SDTDCMotor *x) {
+  return x->load;
+}
+
+long SDTDCMotor_getCoils(const SDTDCMotor *x) {
+  return x->coils;
+}
+
+double SDTDCMotor_getSize(const SDTDCMotor *x) {
+  return x->size;
+}
+
+double SDTDCMotor_getReson(const SDTDCMotor *x) {
+  return x->reson;
+}
+
+double SDTDCMotor_getGearRatio(const SDTDCMotor *x) {
+  return x->gearRatio;
+}
+
+double SDTDCMotor_getHarshness(const SDTDCMotor *x) {
+  return x->harshness;
+}
+
+double SDTDCMotor_getRotorGain(const SDTDCMotor *x) {
+  return x->rotorGain;
+}
+
+double SDTDCMotor_getGearGain(const SDTDCMotor *x) {
+  return x->gearGain;
+}
+
+double SDTDCMotor_getBrushGain(const SDTDCMotor *x) {
+  return x->brushGain;
+}
+
+double SDTDCMotor_getAirGain(const SDTDCMotor *x) {
+  return x->airGain;
+}
+
 void SDTDCMotor_setFilters(SDTDCMotor *x) {
   SDTComb_setYGain(x->chassis, x->reson);
   SDTComb_setYDelay(x->chassis, SDT_samplesInAir(x->size));

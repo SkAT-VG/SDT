@@ -38,6 +38,50 @@ extern SDTDCMotor *SDTDCMotor_new(long maxSize);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDCMotor_free(SDTDCMotor *x);
 
+/** @brief Gets the Revolutions Per Minute (RPM) of the engine rotor.
+@return Engine RPM */
+extern double SDTDCMotor_getRpm(const SDTDCMotor *x);
+
+/** @brief Gets the mechanical stress on the rotor.
+@return Engine load */
+extern double SDTDCMotor_getLoad(const SDTDCMotor *x);
+
+/** @brief Gets the number of coils on the rotor.
+@return Number of coils on the rotor */
+extern long SDTDCMotor_getCoils(const SDTDCMotor *x);
+
+/** @brief Gets the size of the chassis.
+@return Chassis length, in m */
+extern double SDTDCMotor_getSize(const SDTDCMotor *x);
+
+/** @brief Gets the amount of resonance caused by the chassis.
+@return Chassis resonance */
+extern double SDTDCMotor_getReson(const SDTDCMotor *x);
+
+/** @brief Gets the gear ratio of the engine.
+@return Gear ratio */
+extern double SDTDCMotor_getGearRatio(const SDTDCMotor *x);
+
+/** @brief Gets the harshness of the engine sound.
+@return Harshness */
+extern double SDTDCMotor_getHarshness(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume coming from the rotor.
+@return Rotor gain */
+extern double SDTDCMotor_getRotorGain(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume coming from the gears.
+@return Gear gain */
+extern double SDTDCMotor_getGearGain(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume coming from the commutator ring and brushes.
+@return Brush gain */
+extern double SDTDCMotor_getBrushGain(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume of the air turbulence caused by rotation.
+@return Air gain */
+extern double SDTDCMotor_getAirGain(const SDTDCMotor *x);
+
 /** @brief Sets the filter coefficients.
 Call this function whenever the sample rate changes */
 extern void SDTDCMotor_setFilters(SDTDCMotor *x);
