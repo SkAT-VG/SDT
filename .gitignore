@@ -9,3 +9,4 @@ doc
 *.mxe64
 .idea
 CMakeLists.txt
+*.json

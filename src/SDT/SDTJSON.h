@@ -1,10 +1,8 @@
 #include "../../3rdparty/json-builder/json-builder.h"
-#include "SDTResonators.h"
-#include "SDTInteractors.h"
 
 /** @file SDTJSON.h
 @defgroup JSON SDTJSON.h: JSON
-SDT serialization and deserialization using JSON
+JSON utility functions
 @{
 */
 
@@ -14,10 +12,6 @@ SDT serialization and deserialization using JSON
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/** @defgroup json_utils JSON Utils
-JSON utility functions
-@{ */
 
 /** @brief Get the default JSON serialization options for SDT
 @return The default JSON serialization options for SDT */
@@ -62,60 +56,6 @@ extern double json_array_get_number(const json_value *x, unsigned int idx, doubl
 @param[in] x The JSON value pointer
 @return A deep copy of the JSON value */
 extern json_value * json_deepcopy(const json_value * value);
-
-/** @} */
-
-/** @defgroup json_resonator SDT Resonators
-JSON functions for SDT Resonators
-@{ */
-
-/** @brief Convert an SDTResonator object in a JSON object
-@param[in] x Pointer to the SDTResonator
-@return Pointer to the JSON object. Memory must be freed with json_builder_free */
-extern json_value *SDTResonator_toJSON(SDTResonator *x);
-
-/** @brief Load an SDTResonator object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with ::SDTResonator_free */
-extern SDTResonator *SDTResonator_fromJSON(const json_value *x);
-
-/** @} */
-
-/** @defgroup json_impact SDT Impact
-JSON functions for SDT Impacts
-@{ */
-
-/** @brief Convert an SDTImpact object in a JSON object
-@param[in] x Pointer to the SDTInteractor
-@param[in] key0 First resonator ID
-@param[in] key1 Second resonator ID
-@return Pointer to the JSON object. Memory must be freed with json_builder_free */
-extern json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
-
-/** @brief Load an SDTImpact object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with ::SDTImpact_free */
-extern SDTInteractor *SDTImpact_fromJSON(const json_value *x);
-
-/** @} */
-
-/** @defgroup json_frcition SDT Friction
-JSON functions for SDT Frctions
-@{ */
-
-/** @brief Convert an SDTImpact object in a JSON object
-@param[in] x Pointer to the SDTInteractor
-@param[in] key0 First resonator ID
-@param[in] key1 Second resonator ID
-@return Pointer to the JSON object. Memory must be freed with json_builder_free */
-extern json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
-
-/** @brief Load an SDTImpact object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with ::SDTImpact_free */
-extern SDTInteractor *SDTFriction_fromJSON(const json_value *x);
-
-/** @} */
 
 #ifdef __cplusplus
 };

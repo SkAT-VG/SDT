@@ -1,4 +1,5 @@
 #include "SDTResonators.h"
+#include "SDTJSON.h"
 
 /** @file SDTInteractors.h
 @defgroup interactors SDTInteractors.h: interactions between solids
@@ -134,6 +135,24 @@ extern void SDTImpact_setDissipation(SDTInteractor *x, double f);
 @param[in] f Shape factor. Must be > 1, with 1.5 = spherical shape. Optimal range [1,4] */
 extern void SDTImpact_setShape(SDTInteractor *x, double f);
 
+/** @defgroup json_impact JSON
+JSON functions for SDT Impacts
+@{ */
+
+/** @brief Convert an SDTImpact object in a JSON object
+@param[in] x Pointer to the SDTInteractor
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
+
+/** @brief Load an SDTImpact object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with ::SDTImpact_free */
+extern SDTInteractor *SDTImpact_fromJSON(const json_value *x);
+
+/** @} */
+
 /** @} */
 
 /** @defgroup friction Friction
@@ -246,7 +265,26 @@ extern double SDTFriction_getViscosity(const SDTInteractor *x);
 @return Surface roughness */
 extern double SDTFriction_getNoisiness(const SDTInteractor *x);
 
+/** @defgroup json_friction JSON
+JSON functions for SDT Frctions
+@{ */
+
+/** @brief Convert an SDTImpact object in a JSON object
+@param[in] x Pointer to the SDTInteractor
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
+
+/** @brief Load an SDTImpact object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with ::SDTImpact_free */
+extern SDTInteractor *SDTFriction_fromJSON(const json_value *x);
+
 /** @} */
+
+/** @} */
+
 
 #ifdef __cplusplus
 };
