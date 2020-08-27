@@ -1,4 +1,5 @@
 #include "SDTCommonPd.h"
+#include "SDT/SDTCommon.h"
 #include "SDT/SDTDCMotor.h"
 #ifdef NT
 #pragma warning( disable : 4244 )
