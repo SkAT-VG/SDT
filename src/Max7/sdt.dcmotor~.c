@@ -12,6 +12,7 @@ typedef struct _dcmotor {
   double size, reson, gearRatio, noisiness, harshness,
          rotorGain, gearGain, brushGain, airGain;
   long coils;
+  t_symbol *key;
 } t_dcmotor;
 
 static t_class *dcmotor_class = NULL;
@@ -30,6 +31,7 @@ void *dcmotor_new(t_symbol *s, long argc, t_atom *argv) {
       maxDelay = 44100;
     }
     x->motor = SDTDCMotor_new(maxDelay);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -37,6 +39,8 @@ void *dcmotor_new(t_symbol *s, long argc, t_atom *argv) {
 
 void dcmotor_free(t_dcmotor *x)  {
   dsp_free((t_pxobject *)x);
+  if (x->key)
+    SDT_unregisterDCMotor(x->key->s_name);
   SDTDCMotor_free(x->motor);
 }
 
@@ -55,6 +59,13 @@ void dcmotor_assist(t_dcmotor *x, void *b, long m, long a, char *s) {
   else {
     sprintf(s, "(signal): Output sound");
   }
+}
+
+void dcmotor_key(t_dcmotor *x, void *attr, long ac, t_atom *av) {
+  if (x->key)
+    SDT_unregisterDCMotor(x->key->s_name);
+  x->key = atom_getsym(av);
+  SDT_registerDCMotor(x->motor, x->key->s_name);
 }
 
 void dcmotor_coils(t_dcmotor *x, void *attr, long ac, t_atom *av) {
@@ -153,7 +164,8 @@ void C74_EXPORT ext_main(void *r)
   class_addmethod(c, (method)dcmotor_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)dcmotor_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
-  
+
+  CLASS_ATTR_SYM(c, "key", 0, t_dcmotor, key);
   CLASS_ATTR_LONG(c, "coils", 0, t_dcmotor, coils);
   CLASS_ATTR_DOUBLE(c, "size", 0, t_dcmotor, size);
   CLASS_ATTR_DOUBLE(c, "reson", 0, t_dcmotor, reson);
@@ -173,7 +185,8 @@ void C74_EXPORT ext_main(void *r)
   CLASS_ATTR_FILTER_CLIP(c, "gearGain", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "brushGain", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "airGain", 0.0, 1.0);
-  
+
+  CLASS_ATTR_ACCESSORS(c, "key", NULL, (method)dcmotor_key);
   CLASS_ATTR_ACCESSORS(c, "coils", NULL, (method)dcmotor_coils);
   CLASS_ATTR_ACCESSORS(c, "size", NULL, (method)dcmotor_size);
   CLASS_ATTR_ACCESSORS(c, "reson", NULL, (method)dcmotor_reson);
@@ -183,16 +196,17 @@ void C74_EXPORT ext_main(void *r)
   CLASS_ATTR_ACCESSORS(c, "gearGain", NULL, (method)dcmotor_gearGain);
   CLASS_ATTR_ACCESSORS(c, "brushGain", NULL, (method)dcmotor_brushGain);
   CLASS_ATTR_ACCESSORS(c, "airGain", NULL, (method)dcmotor_airGain);
-  
-  CLASS_ATTR_ORDER(c, "coils", 0, "1");
-  CLASS_ATTR_ORDER(c, "size", 0, "2");
-  CLASS_ATTR_ORDER(c, "reson", 0, "3");
-  CLASS_ATTR_ORDER(c, "gearRatio", 0, "4");
-  CLASS_ATTR_ORDER(c, "harshness", 0, "5");
-  CLASS_ATTR_ORDER(c, "rotorGain", 0, "6");
-  CLASS_ATTR_ORDER(c, "gearGain", 0, "7");
-  CLASS_ATTR_ORDER(c, "brushGain", 0, "8");
-  CLASS_ATTR_ORDER(c, "airGain", 0, "9");
+
+  CLASS_ATTR_ORDER(c, "key", 0, "1");
+  CLASS_ATTR_ORDER(c, "coils", 0, "2");
+  CLASS_ATTR_ORDER(c, "size", 0, "3");
+  CLASS_ATTR_ORDER(c, "reson", 0, "4");
+  CLASS_ATTR_ORDER(c, "gearRatio", 0, "5");
+  CLASS_ATTR_ORDER(c, "harshness", 0, "6");
+  CLASS_ATTR_ORDER(c, "rotorGain", 0, "7");
+  CLASS_ATTR_ORDER(c, "gearGain", 0, "8");
+  CLASS_ATTR_ORDER(c, "brushGain", 0, "9");
+  CLASS_ATTR_ORDER(c, "airGain", 0, "10");
   
   class_dspinit(c);
   class_register(CLASS_BOX, c);
