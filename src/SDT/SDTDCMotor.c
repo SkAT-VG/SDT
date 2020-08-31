@@ -4,6 +4,9 @@
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
 #include "SDTDCMotor.h"
+#include "SDTStructs.h"
+
+#define HASHMAP_SIZE 59
 
 struct SDTDCMotor {
   SDTComb *chassis;
@@ -37,11 +40,68 @@ SDTDCMotor *SDTDCMotor_new(long maxSize) {
   return x;
 }
 
+SDTDCMotor *SDTDCMotor_copy(SDTDCMotor *dest, const SDTDCMotor *src) {
+  SDTDCMotor_setCoils(dest, SDTDCMotor_getCoils(src));
+  SDTDCMotor_setSize(dest, SDTDCMotor_getSize(src));
+  SDTDCMotor_setReson(dest, SDTDCMotor_getReson(src));
+  SDTDCMotor_setGearRatio(dest, SDTDCMotor_getGearRatio(src));
+  SDTDCMotor_setHarshness(dest, SDTDCMotor_getHarshness(src));
+  SDTDCMotor_setRotorGain(dest, SDTDCMotor_getRotorGain(src));
+  SDTDCMotor_setGearGain(dest, SDTDCMotor_getGearGain(src));
+  SDTDCMotor_setBrushGain(dest, SDTDCMotor_getBrushGain(src));
+  SDTDCMotor_setAirGain(dest, SDTDCMotor_getAirGain(src));
+  return dest;
+}
+
 void SDTDCMotor_free(SDTDCMotor *x) {
   SDTComb_free(x->chassis);
   SDTTwoPoles_free(x->brushFilter);
   SDTTwoPoles_free(x->airFilter);
   free(x);
+}
+
+double SDTDCMotor_getRpm(const SDTDCMotor *x) {
+  return x->rpm;
+}
+
+double SDTDCMotor_getLoad(const SDTDCMotor *x) {
+  return x->load;
+}
+
+long SDTDCMotor_getCoils(const SDTDCMotor *x) {
+  return x->coils;
+}
+
+double SDTDCMotor_getSize(const SDTDCMotor *x) {
+  return x->size;
+}
+
+double SDTDCMotor_getReson(const SDTDCMotor *x) {
+  return x->reson;
+}
+
+double SDTDCMotor_getGearRatio(const SDTDCMotor *x) {
+  return x->gearRatio;
+}
+
+double SDTDCMotor_getHarshness(const SDTDCMotor *x) {
+  return x->harshness;
+}
+
+double SDTDCMotor_getRotorGain(const SDTDCMotor *x) {
+  return x->rotorGain;
+}
+
+double SDTDCMotor_getGearGain(const SDTDCMotor *x) {
+  return x->gearGain;
+}
+
+double SDTDCMotor_getBrushGain(const SDTDCMotor *x) {
+  return x->brushGain;
+}
+
+double SDTDCMotor_getAirGain(const SDTDCMotor *x) {
+  return x->airGain;
 }
 
 void SDTDCMotor_setFilters(SDTDCMotor *x) {
@@ -134,4 +194,79 @@ double SDTDCMotor_dsp(SDTDCMotor *x) {
   air *= x->airGain;
   outGain = (1.0 - x->reson) * SDT_fclip(0.005 * rotorStep * SDT_sampleRate, 0.0, 1.0);
   return outGain * (SDTComb_dsp(x->chassis, rotor + gears + brushes) + air);
+}
+
+// ----------------------------------------------------------------------------
+
+SDTHashmap *dcmotors = NULL;
+
+int SDT_registerDCMotor(struct SDTDCMotor *x, char *key) {
+  if (!dcmotors) dcmotors = SDTHashmap_new(HASHMAP_SIZE);
+  if (SDTHashmap_put(dcmotors, key, x)) return 1;
+  return 0;
+}
+
+SDTDCMotor *SDT_getDCMotor(const char *key) {
+  return (dcmotors)? SDTHashmap_get(dcmotors, key) : 0;
+}
+
+int SDT_unregisterDCMotor(char *key) {
+  if (!dcmotors) return 1;
+  if (SDTHashmap_del(dcmotors, key)) return 1;
+  return 0;
+}
+
+//-------------------------------------------------------------------------------------//
+
+json_value *SDTDCMotor_toJSON(const SDTDCMotor *x) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "coils", json_integer_new(SDTDCMotor_getCoils(x)));
+  json_object_push(obj, "size", json_double_new(SDTDCMotor_getSize(x)));
+  json_object_push(obj, "reson", json_double_new(SDTDCMotor_getReson(x)));
+  json_object_push(obj, "gearRatio", json_double_new(SDTDCMotor_getGearRatio(x)));
+  json_object_push(obj, "harshness", json_double_new(SDTDCMotor_getHarshness(x)));
+  json_object_push(obj, "rotorGain", json_double_new(SDTDCMotor_getRotorGain(x)));
+  json_object_push(obj, "gearGain", json_double_new(SDTDCMotor_getGearGain(x)));
+  json_object_push(obj, "brushGain", json_double_new(SDTDCMotor_getBrushGain(x)));
+  json_object_push(obj, "airGain", json_double_new(SDTDCMotor_getAirGain(x)));
+
+  return obj;
+}
+
+SDTDCMotor *SDTDCMotor_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object)
+    return 0;
+
+  const json_value *v;
+  SDTDCMotor *m = SDTDCMotor_new(1);
+
+  v = json_object_get_by_key(x, "coils");
+  SDTDCMotor_setCoils(m, (v && (v->type == json_integer))? v->u.integer : 2);
+
+  v = json_object_get_by_key(x, "size");
+  SDTDCMotor_setSize(m, (v && (v->type == json_double))? v->u.dbl : 0.2);
+
+  v = json_object_get_by_key(x, "reson");
+  SDTDCMotor_setReson(m, (v && (v->type == json_double))? v->u.dbl : 0.8);
+
+  v = json_object_get_by_key(x, "gearRatio");
+  SDTDCMotor_setGearRatio(m, (v && (v->type == json_double))? v->u.dbl : 1.0);
+
+  v = json_object_get_by_key(x, "harshness");
+  SDTDCMotor_setHarshness(m, (v && (v->type == json_double))? v->u.dbl : 0.5);
+
+  v = json_object_get_by_key(x, "rotorGain");
+  SDTDCMotor_setRotorGain(m, (v && (v->type == json_double))? v->u.dbl : 0.5);
+
+  v = json_object_get_by_key(x, "gearGain");
+  SDTDCMotor_setGearGain(m, (v && (v->type == json_double))? v->u.dbl : 0.3);
+
+  v = json_object_get_by_key(x, "brushGain");
+  SDTDCMotor_setBrushGain(m, (v && (v->type == json_double))? v->u.dbl : 0.2);
+
+  v = json_object_get_by_key(x, "airGain");
+  SDTDCMotor_setAirGain(m, (v && (v->type == json_double))? v->u.dbl : 0.0);
+
+  return m;
 }
