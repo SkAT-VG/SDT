@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _pitchshift {
 	t_float f;
 	SDTPitchShift *shift;
 	t_outlet *out;
+	char *key;
 } t_pitchshift;
 
 void pitchshift_ratio(t_pitchshift *x, t_float f) {
@@ -42,28 +43,23 @@ void pitchshift_dsp(t_pitchshift *x, t_signal **sp) {
 }
 
 static void *pitchshift_new(t_symbol *s, long argc, t_atom *argv) {
-  float size, oversample;
+  SDT_PD_ARG_PARSE(3, A_SYMBOL, A_FLOAT, A_FLOAT)
+
   t_pitchshift *x = (t_pitchshift *)pd_new(pitchshift_class);
-  x->out = outlet_new(&x->obj, gensym("signal"));
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    size = atom_getfloat(argv);
-  }
-  else {
-    size = 2048.0;
-  }
-  if (argc > 1 && argv[1].a_type == A_FLOAT) {
-    oversample = atom_getfloat(argv + 1);
-  }
-  else {
-    oversample = 4.0;
-  }
+  float size, oversample;
+  size = GET_ARG(1, atom_getfloat, 2048);
+  oversample = GET_ARG(2, atom_getfloat, 4);
   x->shift = SDTPitchShift_new(size, oversample);
+
+  SDT_PD_REGISTER(PitchShift, shift, "pitch shifter", 0)
+
+  x->out = outlet_new(&x->obj, gensym("signal"));
   return (x);
 }
 
 static void pitchshift_free(t_pitchshift *x) {
   outlet_free(x->out);
-  SDTPitchShift_free(x->shift);
+  SDT_PD_FREE(PitchShift, shift)
 }
 
 void pitchshift_tilde_setup(void) {	

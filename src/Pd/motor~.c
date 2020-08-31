@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTMotor.h"
 #ifdef NT
@@ -14,6 +14,7 @@ typedef struct _motor {
   t_float f;
   t_inlet *in1;
   t_outlet *out0, *out1, *out2;
+  char *key;
 } t_motor;
 
 void motor_cycle(t_motor *x, t_float f) {
@@ -100,17 +101,17 @@ static void motor_dsp(t_motor *x, t_signal **sp) {
 }
 
 static void *motor_new(t_symbol *s, int argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+
   t_motor *x = (t_motor *)pd_new(motor_class);
+  x->motor = SDTMotor_new(GET_ARG(1, atom_getfloat, 44100));
+
+  SDT_PD_REGISTER(Motor, motor, "motor", 0)
+
   x->in1 = inlet_new(&x->obj, &x->obj.ob_pd, &s_signal, &s_signal);
   x->out0 = outlet_new(&x->obj, gensym("signal"));
   x->out1 = outlet_new(&x->obj, gensym("signal"));
   x->out2 = outlet_new(&x->obj, gensym("signal"));
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    x->motor = SDTMotor_new(atom_getfloat(argv));
-  }
-  else {
-    x->motor = SDTMotor_new(44100);
-  }
   return (x);
 }
 
@@ -119,7 +120,7 @@ static void motor_free(t_motor *x) {
   outlet_free(x->out0);
   outlet_free(x->out1);
   outlet_free(x->out2);
-  SDTMotor_free(x->motor);
+  SDT_PD_FREE(Motor, motor)
 }
 
 void motor_tilde_setup(void) {
