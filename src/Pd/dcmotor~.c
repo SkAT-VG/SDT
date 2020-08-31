@@ -74,10 +74,6 @@ static void dcmotor_dsp(t_dcmotor *x, t_signal **sp) {
 }
 
 static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
-  t_dcmotor *x = (t_dcmotor *)pd_new(dcmotor_class);
-  x->in = inlet_new(&x->obj, &x->obj.ob_pd, &s_signal, &s_signal);
-  x->out = outlet_new(&x->obj, gensym("signal"));
-
   long argi[2], uarg;
   t_atomtype targs[] = {A_SYMBOL, A_FLOAT};
   if ((uarg = sdt_pd_arg_parse(s, argc, argv, 2, targs, argi)) >= 0) {
@@ -85,6 +81,7 @@ static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
     return NULL;
   }
 
+  t_dcmotor *x = (t_dcmotor *)pd_new(dcmotor_class);
   x->motor = SDTDCMotor_new((argi[1] >= 0)? atom_getfloat(argv + argi[1]) : 48000);
   x->key = (char *)((argi[0] >= 0)? atom_getsymbol(argv + argi[0])->s_name : 0);
 
@@ -95,6 +92,8 @@ static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
       return NULL;
     }
 
+  x->in = inlet_new(&x->obj, &x->obj.ob_pd, &s_signal, &s_signal);
+  x->out = outlet_new(&x->obj, gensym("signal"));
   return (x);
 }
 
