@@ -62,6 +62,23 @@ Call this function at sample rate to synthesize a wind turbulence sound.
 @return Computed audio sample */
 extern double SDTWindFlow_dsp(SDTWindFlow *x);
 
+/** @brief Registers a wind flow into the wind flows list with a unique ID.
+@param[in] x WindFlow instance to register
+@param[in] key Unique ID assigned to the wind flow instance */
+extern int SDT_registerWindFlow(SDTWindFlow *x, char *key);
+
+/** @brief Queries the wind flows list by its unique ID.
+If a wind flow with the ID is present, a pointer to the wind flow is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the WindFlow instance
+@return WindFlow instance pointer */
+extern SDTWindFlow *SDT_getWindFlow(const char *key);
+
+/** @brief Unregisters a wind flow from the wind flows list.
+If a wind flow with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the WindFlow instance to unregister */
+extern int SDT_unregisterWindFlow(char *key);
+
 /** @} */
 
 /** @defgroup windcavity Turbulence through hollow cavities
@@ -109,6 +126,23 @@ Call this function at sample rate to synthesize wind through a cavity.
 @return Computed audio sample */
 extern double SDTWindCavity_dsp(SDTWindCavity *x);
 
+/** @brief Registers a wind cavity into the wind cavities list with a unique ID.
+@param[in] x WindCavity instance to register
+@param[in] key Unique ID assigned to the wind cavity instance */
+extern int SDT_registerWindCavity(SDTWindCavity *x, char *key);
+
+/** @brief Queries the wind cavities list by its unique ID.
+If a wind cavity with the ID is present, a pointer to the wind cavity is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the WindCavity instance
+@return WindCavity instance pointer */
+extern SDTWindCavity *SDT_getWindCavity(const char *key);
+
+/** @brief Unregisters a wind cavity from the wind cavities list.
+If a wind cavity with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the WindCavity instance to unregister */
+extern int SDT_unregisterWindCavity(char *key);
+
 /** @} */
 
 /** @defgroup windkarman Turbulence across thin objects
@@ -143,6 +177,23 @@ extern void SDTWindKarman_setWindSpeed(SDTWindKarman *x, double f);
 Call this function at sample rate to synthesize wind blowing against a thin object.
 @return Computed audio sample */
 extern double SDTWindKarman_dsp(SDTWindKarman *x);
+
+/** @brief Registers a wind Karman into the wind Karmans list with a unique ID.
+@param[in] x WindKarman instance to register
+@param[in] key Unique ID assigned to the wind Karman instance */
+extern int SDT_registerWindKarman(SDTWindKarman *x, char *key);
+
+/** @brief Queries the wind Karmans list by its unique ID.
+If a wind Karman with the ID is present, a pointer to the wind Karman is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the WindKarman instance
+@return WindKarman instance pointer */
+extern SDTWindKarman *SDT_getWindKarman(const char *key);
+
+/** @brief Unregisters a wind Karman from the wind Karmans list.
+If a wind Karman with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the WindKarman instance to unregister */
+extern int SDT_unregisterWindKarman(char *key);
 
 /** @} */
 
@@ -197,6 +248,23 @@ extern void SDTExplosion_update(SDTExplosion *x);
 Call this function at sample rate to synthesize an explosion sound.
 @return Computed audio sample */
 extern void SDTExplosion_dsp(SDTExplosion *x, double *outs);
+
+/** @brief Registers an explosion into the explosions list with a unique ID.
+@param[in] x Explosion instance to register
+@param[in] key Unique ID assigned to the explosion instance */
+extern int SDT_registerExplosion(SDTExplosion *x, char *key);
+
+/** @brief Queries the explosions list by its unique ID.
+If an explosion with the ID is present, a pointer to the explosion is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Explosion instance
+@return Explosion instance pointer */
+extern SDTExplosion *SDT_getExplosion(const char *key);
+
+/** @brief Unregisters an explosion from the explosions list.
+If an explosion with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Explosion instance to unregister */
+extern int SDT_unregisterExplosion(char *key);
 
 /** @} */
 

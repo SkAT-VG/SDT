@@ -103,6 +103,23 @@ Call this function at sample rate to compute the filtered signal.
 @return Output sample */
 extern double SDTEnvelope_dsp(SDTEnvelope *x, double in);
 
+/** @brief Registers an envelope filter into the envelope filters list with a unique ID.
+@param[in] x Envelope instance to register
+@param[in] key Unique ID assigned to the envelope filter instance */
+extern int SDT_registerEnvelope(SDTEnvelope *x, char *key);
+
+/** @brief Queries the envelope filters list by its unique ID.
+If an envelope filter with the ID is present, a pointer to the envelope filter is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Envelope instance
+@return Envelope instance pointer */
+extern SDTEnvelope *SDT_getEnvelope(const char *key);
+
+/** @brief Unregisters an envelope filter from the envelope filters list.
+If an envelope filter with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Envelope instance to unregister */
+extern int SDT_unregisterEnvelope(char *key);
+
 /** @} */
 
 /** @defgroup twopoles Two poles filter
@@ -186,6 +203,23 @@ Call this function at sample rate to compute the filtered signal.
 @param[in] in Input sample
 @return Output sample */
 extern double SDTBiquad_dsp(SDTBiquad *x, double in);
+
+/** @brief Registers a biquadratic filter into the biquadratic filters list with a unique ID.
+@param[in] x Biquad instance to register
+@param[in] key Unique ID assigned to the biquadratic filter instance */
+extern int SDT_registerBiquad(SDTBiquad *x, char *key);
+
+/** @brief Queries the biquadratic filters list by its unique ID.
+If a biquadratic filter with the ID is present, a pointer to the biquadratic filter is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Biquad instance
+@return Biquad instance pointer */
+extern SDTBiquad *SDT_getBiquad(const char *key);
+
+/** @brief Unregisters a biquadratic filter from the biquadratic filters list.
+If a biquadratic filter with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Biquad instance to unregister */
+extern int SDT_unregisterBiquad(char *key);
 
 /** @} */
 

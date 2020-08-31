@@ -58,6 +58,23 @@ Call this function at sample rate to obtain a bubble sound.
 @return Output sample */
 extern double SDTBubble_dsp(SDTBubble *x);
 
+/** @brief Registers a bubble into the bubbles list with a unique ID.
+@param[in] x Bubble instance to register
+@param[in] key Unique ID assigned to the bubble instance */
+extern int SDT_registerBubble(SDTBubble *x, char *key);
+
+/** @brief Queries the bubbles list by its unique ID.
+If a bubble with the ID is present, a pointer to the bubble is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Bubble instance
+@return Bubble instance pointer */
+extern SDTBubble *SDT_getBubble(const char *key);
+
+/** @brief Unregisters a bubble from the bubbles list.
+If a bubble with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Bubble instance to unregister */
+extern int SDT_unregisterBubble(char *key);
+
 /** @} */
 
 /** @defgroup fluidflow Fluid flow
@@ -124,6 +141,23 @@ extern void SDTFluidFlow_setAvgRate(SDTFluidFlow *x, double f);
 Call this function at sample rate to obtain a liquid sound.
 @return Output sample */
 extern double SDTFluidFlow_dsp(SDTFluidFlow *x);
+
+/** @brief Registers a fluid flow into the fluid flows list with a unique ID.
+@param[in] x FluidFlow instance to register
+@param[in] key Unique ID assigned to the fluid flow instance */
+extern int SDT_registerFluidFlow(SDTFluidFlow *x, char *key);
+
+/** @brief Queries the fluid flows list by its unique ID.
+If a fluid flow with the ID is present, a pointer to the fluid flow is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the FluidFlow instance
+@return FluidFlow instance pointer */
+extern SDTFluidFlow *SDT_getFluidFlow(const char *key);
+
+/** @brief Unregisters a fluid flow from the fluid flows list.
+If a fluid flow with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the FluidFlow instance to unregister */
+extern int SDT_unregisterFluidFlow(char *key);
 
 /** @} */
 

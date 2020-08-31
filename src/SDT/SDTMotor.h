@@ -119,6 +119,23 @@ output represents the sound coming from the exhaust outlet, towards the rear of 
 @param[out] outs Pointer to an array of three doubles, destination of the output */
 extern void SDTMotor_dsp(SDTMotor *x, double *outs);
 
+/** @brief Registers a motor into the motors list with a unique ID.
+@param[in] x Motor instance to register
+@param[in] key Unique ID assigned to the motor instance */
+extern int SDT_registerMotor(SDTMotor *x, char *key);
+
+/** @brief Queries the motors list by its unique ID.
+If a motor with the ID is present, a pointer to the motor is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Motor instance
+@return Motor instance pointer */
+extern SDTMotor *SDT_getMotor(const char *key);
+
+/** @brief Unregisters a motor from the motors list.
+If a motor with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Motor instance to unregister */
+extern int SDT_unregisterMotor(char *key);
+
 /** @} */
 
 #ifdef __cplusplus

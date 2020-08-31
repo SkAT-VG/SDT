@@ -52,6 +52,23 @@ extern double SDTBouncing_dsp(SDTBouncing *x);
 @return 1 (true) if the remaining energy is <= 0, 0 (false) otherwise. */
 extern int SDTBouncing_hasFinished(SDTBouncing *x);
 
+/** @brief Registers a bouncing process into the bouncing processes list with a unique ID.
+@param[in] x Bouncing instance to register
+@param[in] key Unique ID assigned to the bouncing process instance */
+extern int SDT_registerBouncing(SDTBouncing *x, char *key);
+
+/** @brief Queries the bouncing processes list by its unique ID.
+If a bouncing process with the ID is present, a pointer to the bouncing process is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Bouncing instance
+@return Bouncing instance pointer */
+extern SDTBouncing *SDT_getBouncing(const char *key);
+
+/** @brief Unregisters a bouncing process from the bouncing processes list.
+If a bouncing process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Bouncing instance to unregister */
+extern int SDT_unregisterBouncing(char *key);
+
 /** @} */
 
 /** @defgroup breaking Breaking
@@ -102,6 +119,23 @@ extern void SDTBreaking_dsp(SDTBreaking *x, double *outs);
 @return 1 (true) if the remaining energy is <= 0, 0 (false) otherwise. */
 extern int SDTBreaking_hasFinished(SDTBreaking *x);
 
+/** @brief Registers a breaking process into the breaking processes list with a unique ID.
+@param[in] x Breaking instance to register
+@param[in] key Unique ID assigned to the breaking process instance */
+extern int SDT_registerBreaking(SDTBreaking *x, char *key);
+
+/** @brief Queries the breaking processes list by its unique ID.
+If a breaking process with the ID is present, a pointer to the breaking process is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Breaking instance
+@return Breaking instance pointer */
+extern SDTBreaking *SDT_getBreaking(const char *key);
+
+/** @brief Unregisters a breaking process from the breaking processes list.
+If a breaking process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Breaking instance to unregister */
+extern int SDT_unregisterBreaking(char *key);
+
 /** @} */
 
 /** @defgroup crumpling Crumpling
@@ -139,6 +173,23 @@ Unlike in the breaking algorithm, iterations do not cause energy loss and the pr
 can continue indefinitely until explicitly interrupted.
 @param[out] outs Pointer to the output array: impact energy and fragment size */
 extern void SDTCrumpling_dsp(SDTCrumpling *x, double *outs);
+
+/** @brief Registers a crumpling process into the crumpling processes list with a unique ID.
+@param[in] x Crumpling instance to register
+@param[in] key Unique ID assigned to the crumpling process instance */
+extern int SDT_registerCrumpling(SDTCrumpling *x, char *key);
+
+/** @brief Queries the crumpling processes list by its unique ID.
+If a crumpling process with the ID is present, a pointer to the crumpling process is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Crumpling instance
+@return Crumpling instance pointer */
+extern SDTCrumpling *SDT_getCrumpling(const char *key);
+
+/** @brief Unregisters a crumpling process from the crumpling processes list.
+If a crumpling process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Crumpling instance to unregister */
+extern int SDT_unregisterCrumpling(char *key);
 
 /** @} */
 
@@ -185,6 +236,23 @@ Call this function at sample rate to compute the force acting on the rolling obj
 @return Normal force on the exciter */
 extern double SDTRolling_dsp(SDTRolling *x, double in);
 
+/** @brief Registers a rolling process into the rolling processes list with a unique ID.
+@param[in] x Rolling instance to register
+@param[in] key Unique ID assigned to the rolling process instance */
+extern int SDT_registerRolling(SDTRolling *x, char *key);
+
+/** @brief Queries the rolling processes list by its unique ID.
+If a rolling process with the ID is present, a pointer to the rolling process is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Rolling instance
+@return Rolling instance pointer */
+extern SDTRolling *SDT_getRolling(const char *key);
+
+/** @brief Unregisters a rolling process from the rolling processes list.
+If a rolling process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Rolling instance to unregister */
+extern int SDT_unregisterRolling(char *key);
+
 /** @} */
 
 /** @defgroup scraping Scraping
@@ -226,6 +294,23 @@ Call this function at sample rate to compute the force acting on the scraped sur
 @param[in] in Surface profile, as an audio signal
 @return Normal force on the resonator */
 extern double SDTScraping_dsp(SDTScraping *x, double in);
+
+/** @brief Registers a scraping process into the scraping processes list with a unique ID.
+@param[in] x Scraping instance to register
+@param[in] key Unique ID assigned to the scraping process instance */
+extern int SDT_registerScraping(SDTScraping *x, char *key);
+
+/** @brief Queries the scraping processes list by its unique ID.
+If a scraping process with the ID is present, a pointer to the scraping process is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Scraping instance
+@return Scraping instance pointer */
+extern SDTScraping *SDT_getScraping(const char *key);
+
+/** @brief Unregisters a scraping process from the scraping processes list.
+If a scraping process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Scraping instance to unregister */
+extern int SDT_unregisterScraping(char *key);
 
 /** @} */
 
