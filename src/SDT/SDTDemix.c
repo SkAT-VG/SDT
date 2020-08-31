@@ -6,6 +6,7 @@
 #include "SDTComplex.h"
 #include "SDTFFT.h"
 #include "SDTDemix.h"
+#include "SDTStructs.h"
 
 struct SDTDemix {
   double *kernel, *in, *win, *inFrame, **mag,
@@ -18,6 +19,8 @@ struct SDTDemix {
   int size, fftSize, hopSize, radius, width, center,
       bufCount, hopCount, magCount, rowCount, fftCount;
 };
+
+DEFINE_HASHMAP(Demix, demixes, 59)
 
 SDTDemix *SDTDemix_new(int size, int radius) {
   SDTDemix *x;

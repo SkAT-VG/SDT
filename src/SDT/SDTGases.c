@@ -5,11 +5,14 @@
 #include "SDTOscillators.h"
 #include "SDTEffects.h"
 #include "SDTGases.h"
+#include "SDTStructs.h"
 
 struct SDTWindFlow {
   SDTTwoPoles *reso;
   double windSpeed;
 };
+
+DEFINE_HASHMAP(WindFlow, windflows, 59)
 
 SDTWindFlow *SDTWindFlow_new() {
   SDTWindFlow *x;
@@ -48,6 +51,8 @@ struct SDTWindCavity {
   SDTTwoPoles *reso;
   double length, diameter, windSpeed, harmonics, freq, delay;
 };
+
+DEFINE_HASHMAP(WindCavity, windcavities, 59)
 
 void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
   double gain;
@@ -122,6 +127,8 @@ struct SDTWindKarman {
   double windSpeed, diameter;
 };
 
+DEFINE_HASHMAP(WindKarman, windkarmans, 59)
+
 void SDTWindKarman_updateResonance(SDTWindKarman *x) {
   double fc;
   
@@ -172,6 +179,8 @@ struct SDTExplosion {
          distance, waveSpeed, windSpeed, time;
   long i, waveDelay, windDelay, size;
 };
+
+DEFINE_HASHMAP(Explosion, explosions, 59)
 
 SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay) {
   SDTExplosion *x;

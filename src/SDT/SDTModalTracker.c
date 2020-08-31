@@ -6,6 +6,7 @@
 #include "SDTComplex.h"
 #include "SDTFFT.h"
 #include "SDTModalTracker.h"
+#include "SDTStructs.h"
 
 typedef struct SDTMode {
   double *mags, *freqs;
@@ -38,6 +39,8 @@ struct SDTModalTracker {
   SDTFFT *fftPlan;
   long nSamples, nModes, bufferSize, winSize, fftSize, skip;
 };
+
+DEFINE_HASHMAP(ModalTracker, modaltrackers, 59)
 
 SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize, long winSize) {
   SDTModalTracker *x;

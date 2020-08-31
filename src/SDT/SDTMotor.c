@@ -4,6 +4,7 @@
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
 #include "SDTMotor.h"
+#include "SDTStructs.h"
 
 #define MAX_CYLINDERS 12
 #define N_MUFFLERS 4
@@ -23,6 +24,8 @@ struct SDTMotor {
   unsigned char isRevvingDown, isBackfiring;
   int nCylinders;
 };
+
+DEFINE_HASHMAP(Motor, motors, 59)
 
 void fourStroke(double phase, double *pressure, double *inValve, double *outValve) {
   double w;

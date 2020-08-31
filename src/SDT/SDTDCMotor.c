@@ -6,8 +6,6 @@
 #include "SDTDCMotor.h"
 #include "SDTStructs.h"
 
-#define HASHMAP_SIZE 59
-
 struct SDTDCMotor {
   SDTComb *chassis;
   SDTTwoPoles *brushFilter, *airFilter;
@@ -16,6 +14,8 @@ struct SDTDCMotor {
          revPhase, rotorPhase, gearPhase;
   long coils;
 };
+
+DEFINE_HASHMAP(DCMotor, dcmotors, 59)
 
 SDTDCMotor *SDTDCMotor_new(long maxSize) {
   SDTDCMotor *x;
@@ -194,26 +194,6 @@ double SDTDCMotor_dsp(SDTDCMotor *x) {
   air *= x->airGain;
   outGain = (1.0 - x->reson) * SDT_fclip(0.005 * rotorStep * SDT_sampleRate, 0.0, 1.0);
   return outGain * (SDTComb_dsp(x->chassis, rotor + gears + brushes) + air);
-}
-
-// ----------------------------------------------------------------------------
-
-SDTHashmap *dcmotors = NULL;
-
-int SDT_registerDCMotor(struct SDTDCMotor *x, char *key) {
-  if (!dcmotors) dcmotors = SDTHashmap_new(HASHMAP_SIZE);
-  if (SDTHashmap_put(dcmotors, key, x)) return 1;
-  return 0;
-}
-
-SDTDCMotor *SDT_getDCMotor(const char *key) {
-  return (dcmotors)? SDTHashmap_get(dcmotors, key) : 0;
-}
-
-int SDT_unregisterDCMotor(char *key) {
-  if (!dcmotors) return 1;
-  if (SDTHashmap_del(dcmotors, key)) return 1;
-  return 0;
 }
 
 //-------------------------------------------------------------------------------------//

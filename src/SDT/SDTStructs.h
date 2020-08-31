@@ -40,6 +40,45 @@ extern int SDTHashmap_del(SDTHashmap *x, char *key);
 /** @brief Deletes all the entries in the hashmap. */
 extern void SDTHashmap_clear(SDTHashmap *x);
 
+/** @brief Define a global SDTHashmap
+@param[in] X Name of the global variable */
+#define DEFINE_HASHMAP_GLOBAL(X) SDTHashmap *X = NULL;
+
+/** @brief Define a SDTHashmap "register" function
+@param[in] T Name of the SDT type (without the leading "SDT")
+@param[in] X Name of the SDTHashmap global variable
+@param[in] S Size of the SDTHashmap */
+#define DEFINE_HASHMAP_REGISTER(T, X, S) int SDT_register ## T(struct SDT ## T *x, char *key) { \
+  if (! X) X = SDTHashmap_new(S); \
+  if (SDTHashmap_put(X, key, x)) return 1; \
+  return 0; \
+}
+
+/** @brief Define a SDTHashmap "get" function
+@param[in] T Name of the SDT type (without the leading "SDT")
+@param[in] X Name of the SDTHashmap global variable */
+#define DEFINE_HASHMAP_GET(T, X) SDT ## T *SDT_get ## T(const char *key) { \
+  return (X)? SDTHashmap_get(X, key) : 0; \
+}
+
+/** @brief Define a SDTHashmap "unregister" function
+@param[in] T Name of the SDT type (without the leading "SDT")
+@param[in] X Name of the SDTHashmap global variable */
+#define DEFINE_HASHMAP_UNREGISTER(T, X) int SDT_unregister ## T(char *key) { \
+  if (! X) return 1; \
+  if (SDTHashmap_del(X, key)) return 1; \
+  return 0; \
+}
+
+/** @brief Define a SDTHashmap and its correlated functions (register, get, unregister)
+@param[in] T Name of the SDT type (without the leading "SDT")
+@param[in] X Name of the SDTHashmap global variable
+@param[in] S Size of the SDTHashmap */
+#define DEFINE_HASHMAP(T, X, S) DEFINE_HASHMAP_GLOBAL(X) \
+DEFINE_HASHMAP_REGISTER(T, X, S) \
+DEFINE_HASHMAP_GET(T, X) \
+DEFINE_HASHMAP_UNREGISTER(T, X)
+
 #ifdef __cplusplus
 };
 #endif

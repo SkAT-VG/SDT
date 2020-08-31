@@ -6,6 +6,7 @@
 #include "SDTFFT.h"
 #include "SDTFilters.h"
 #include "SDTAnalysis.h"
+#include "SDTStructs.h"
 
 #define MYO_SR 1000
 #define MYO_SS 100
@@ -14,6 +15,8 @@ struct SDTZeroCrossing {
   double *in, *win;
   int i, j, size, skip;
 };
+
+DEFINE_HASHMAP(ZeroCrossing, zerocrossings, 59)
 
 SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   SDTZeroCrossing *x;
@@ -70,6 +73,8 @@ struct SDTMyoelastic {
          impAct, myoAct, impFreq, myoFreq;
   int impCount, myoCount;
 };
+
+DEFINE_HASHMAP(Myoelastic, myoelastics, 59)
 
 SDTMyoelastic *SDTMyoelastic_new(int bufSize) {
   SDTMyoelastic *x;
@@ -195,6 +200,8 @@ struct SDTSpectralFeats {
   SDTFFT *fftPlan;
   int i, j, size, fftSize, skip, min, max, span;
 };
+
+DEFINE_HASHMAP(SpectralFeats, spectralfeats, 59)
 
 SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
   SDTSpectralFeats *x;
@@ -331,6 +338,8 @@ struct SDTPitch {
   SDTFFT *fftPlan;
   int curr, count, size, skip, seek;
 };
+
+DEFINE_HASHMAP(Pitch, pitches, 59)
 
 SDTPitch *SDTPitch_new(unsigned int size) {
   SDTPitch *x;

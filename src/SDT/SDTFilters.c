@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTFilters.h"
+#include "SDTStructs.h"
 
 struct SDTOnePole {
   double b0, a1, y1;
@@ -82,6 +83,8 @@ double SDTAllPass_dsp(SDTAllPass *x, double in) {
 struct SDTEnvelope {
   double b0a, a1a, b0r, a1r, y1;
 };
+
+DEFINE_HASHMAP(Envelope, envelopes, 59)
 
 SDTEnvelope *SDTEnvelope_new() {
   SDTEnvelope *x;
@@ -190,6 +193,8 @@ struct SDTBiquad {
          f, w, cosw, sinw, *alpha;
   int nSections;
 };
+
+DEFINE_HASHMAP(Biquad, biquads, 59)
 
 SDTBiquad *SDTBiquad_new(int nSections) {
   SDTBiquad *x;

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTControl.h"
+#include "SDTStructs.h"
 
 #define UNDERSHOOT  0.1
 #define OVERSHOOT  10.0
@@ -13,6 +14,8 @@ double SDT_groundDecay(double grain, double velocity) {
 struct SDTBouncing {
   double restitution, height, irregularity, targetVelocity, currentVelocity;
 };
+
+DEFINE_HASHMAP(Bouncing, bouncings, 59)
 
 SDTBouncing *SDTBouncing_new() {
   SDTBouncing *x;
@@ -85,6 +88,8 @@ SDTBreaking *SDTBreaking_new() {
   return x;
 }
 
+DEFINE_HASHMAP(Breaking, breakings, 59)
+
 void SDTBreaking_free(SDTBreaking *x) {
   free(x);
 }
@@ -134,13 +139,13 @@ void SDTBreaking_dsp(SDTBreaking *x, double *outs) {
   outs[1] = size;
 }
 
-
-
 //-------------------------------------------------------------------------------------//
 
 struct SDTCrumpling {
   double crushingEnergy, granularity, fragmentation;
 };
+
+DEFINE_HASHMAP(Crumpling, crumplings, 59)
 
 SDTCrumpling *SDTCrumpling_new() {
   SDTCrumpling *x;
@@ -207,6 +212,8 @@ SDTRolling *SDTRolling_new() {
   return x;
 }
 
+DEFINE_HASHMAP(Rolling, rollings, 59)
+
 void SDTRolling_free(SDTRolling *x) {
   free(x);
 }
@@ -254,6 +261,8 @@ struct SDTScraping {
          decay, groundTrace;
 };
 
+DEFINE_HASHMAP(Scraping, scrapings, 59)
+
 SDTScraping *SDTScraping_new() {
   SDTScraping *x;
   
@@ -283,8 +292,6 @@ void SDTScraping_setVelocity(SDTScraping *x, double f) {
   x->velocity = f;
   x->decay = SDT_groundDecay(x->grain, x->velocity);
 }
-
-
 
 double SDTScraping_dsp(SDTScraping *x, double in) {
   double out, currGround, bump;

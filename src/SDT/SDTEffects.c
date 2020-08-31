@@ -6,6 +6,7 @@
 #include "SDTFilters.h"
 #include "SDTFFT.h"
 #include "SDTEffects.h"
+#include "SDTStructs.h"
 
 double modes[15][3] = {{1,0,0},{0,2,1},{1,0,1},
                        {2,1,0},{0,1,1},{1,1,1},
@@ -19,6 +20,8 @@ struct SDTReverb {
   double g[15], v[30], r[15],
          xSize, ySize, zSize, randomness, time, time1k;
 };
+
+DEFINE_HASHMAP(Reverb, reverbs, 59)
 
 SDTReverb *SDTReverb_new(long maxDelay) {
   SDTReverb *x;
@@ -127,6 +130,8 @@ struct SDTPitchShift {
   SDTFFT *fftPlan;
   int i, j, size, winSize, fftSize, hopSize;
 };
+
+DEFINE_HASHMAP(PitchShift, pitchshifts, 59)
 
 SDTPitchShift *SDTPitchShift_new(int size, int oversample) {
   SDTPitchShift *x;

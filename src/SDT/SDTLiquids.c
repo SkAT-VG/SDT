@@ -3,6 +3,7 @@
 #include "SDTCommon.h"
 #include "SDTFilters.h"
 #include "SDTLiquids.h"
+#include "SDTStructs.h"
 
 #define MIN_RADIUS      0.00015
 #define MAX_RADIUS      0.150
@@ -15,6 +16,8 @@ struct SDTBubble {
          amp, decay, gain, phaseStep, phaseRise,
          phase, out, lastOut;
 };
+
+DEFINE_HASHMAP(Bubble, bubbles, 59)
 
 SDTBubble *SDTBubble_new() {
   SDTBubble *x;
@@ -89,6 +92,8 @@ struct SDTFluidFlow {
          success, gain;
   int nBubbles;
 };
+
+DEFINE_HASHMAP(FluidFlow, fluidflows, 59)
 
 SDTFluidFlow *SDTFluidFlow_new(int nBubbles) {
   SDTFluidFlow *x;

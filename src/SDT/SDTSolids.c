@@ -4,9 +4,9 @@
 
 #define HASHMAP_SIZE 59
 
-SDTHashmap *resonators = NULL;
-SDTHashmap *interactors0 = NULL;
-SDTHashmap *interactors1 = NULL;
+DEFINE_HASHMAP_GLOBAL(resonators)
+DEFINE_HASHMAP_GLOBAL(interactors0)
+DEFINE_HASHMAP_GLOBAL(interactors1)
 
 void SDT_updateInteractors(char *key) {
   SDTResonator *resonator;
@@ -31,9 +31,7 @@ int SDT_registerResonator(SDTResonator *x, char *key) {
   return 0;
 }
 
-SDTResonator *SDT_getResonator(const char *key) {
-  return (resonators)? SDTHashmap_get(resonators, key) : 0;
-}
+DEFINE_HASHMAP_GET(Resonator, resonators)
 
 int SDT_unregisterResonator(char *key) {
   if (!resonators) return 1;
