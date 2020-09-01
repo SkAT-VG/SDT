@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTMotor.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -12,6 +13,7 @@ typedef struct _motor {
          intakeSize, extractorSize, exhaustSize, mufflerSize, outletSize,
          expansion, mufflerFeedback;
   long nCylinders, cycle;
+  t_symbol *key;
 } t_motor;
 
 static t_class *motor_class = NULL;
@@ -33,6 +35,7 @@ void *motor_new(t_symbol *s, long argc, t_atom *argv)
       maxDelay = 44100;
     }
     x->motor = SDTMotor_new(maxDelay);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -41,7 +44,7 @@ void *motor_new(t_symbol *s, long argc, t_atom *argv)
 void motor_free(t_motor *x) 
 {
   dsp_free((t_pxobject *)x);
-  SDTMotor_free(x->motor);
+  SDT_MAX_FREE(Motor, motor)
 }
 
 void motor_assist(t_motor *x, void *b, long m, long a, char *s) {
@@ -73,6 +76,8 @@ void motor_assist(t_motor *x, void *b, long m, long a, char *s) {
     }
   }
 }
+
+SDT_MAX_KEY(motor, Motor, motor, "motor~", "motor")
 
 void motor_cycle(t_motor *x, void *attr, long ac, t_atom *av) {
   x->cycle = atom_getlong(av);
@@ -208,6 +213,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)motor_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)motor_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(motor, "1")
   
   CLASS_ATTR_LONG(c, "cycle", 0, t_motor, cycle);
   CLASS_ATTR_LONG(c, "nCylinders", 0, t_motor, nCylinders);
@@ -254,20 +261,20 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "expansion", NULL, (method)motor_expansion);
   CLASS_ATTR_ACCESSORS(c, "mufflerFeedback", NULL, (method)motor_mufflerFeedback);
   
-  CLASS_ATTR_ORDER(c, "cycle", 0, "1");
-  CLASS_ATTR_ORDER(c, "nCylinders", 0, "2");
-  CLASS_ATTR_ORDER(c, "cylinderSize", 0, "3");
-  CLASS_ATTR_ORDER(c, "compressionRatio", 0, "4");
-  CLASS_ATTR_ORDER(c, "sparkTime", 0, "5");
-  CLASS_ATTR_ORDER(c, "asymmetry", 0, "6");
-  CLASS_ATTR_ORDER(c, "backfire", 0, "7");
-  CLASS_ATTR_ORDER(c, "intakeSize", 0, "8");
-  CLASS_ATTR_ORDER(c, "extractorSize", 0, "9");
-  CLASS_ATTR_ORDER(c, "exhaustSize", 0, "10");
-  CLASS_ATTR_ORDER(c, "mufflerSize", 0, "11");
-  CLASS_ATTR_ORDER(c, "outletSize", 0, "12");
-  CLASS_ATTR_ORDER(c, "expansion", 0, "13");
-  CLASS_ATTR_ORDER(c, "mufflerFeedback", 0, "14");
+  CLASS_ATTR_ORDER(c, "cycle", 0, "2");
+  CLASS_ATTR_ORDER(c, "nCylinders", 0, "3");
+  CLASS_ATTR_ORDER(c, "cylinderSize", 0, "4");
+  CLASS_ATTR_ORDER(c, "compressionRatio", 0, "5");
+  CLASS_ATTR_ORDER(c, "sparkTime", 0, "6");
+  CLASS_ATTR_ORDER(c, "asymmetry", 0, "7");
+  CLASS_ATTR_ORDER(c, "backfire", 0, "8");
+  CLASS_ATTR_ORDER(c, "intakeSize", 0, "9");
+  CLASS_ATTR_ORDER(c, "extractorSize", 0, "10");
+  CLASS_ATTR_ORDER(c, "exhaustSize", 0, "11");
+  CLASS_ATTR_ORDER(c, "mufflerSize", 0, "12");
+  CLASS_ATTR_ORDER(c, "outletSize", 0, "13");
+  CLASS_ATTR_ORDER(c, "expansion", 0, "14");
+  CLASS_ATTR_ORDER(c, "mufflerFeedback", 0, "15");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

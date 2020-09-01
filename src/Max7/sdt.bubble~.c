@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -8,7 +9,8 @@
 typedef struct _bubble {
 	t_pxobject ob;
 	SDTBubble *bubble;
-    double radius, riseFactor;
+	double radius, riseFactor;
+	t_symbol *key;
 } t_bubble;
 
 static t_class *bubble_class = NULL;
@@ -20,6 +22,7 @@ void *bubble_new(t_symbol *s, short argc, t_atom *argv) {
 		dsp_setup((t_pxobject *)x, 0);
 		outlet_new(x, "signal");
 		x->bubble = SDTBubble_new();
+    x->key = 0;
 		attr_args_process(x, argc, argv); 
 	}
 	return (x);
@@ -27,7 +30,7 @@ void *bubble_new(t_symbol *s, short argc, t_atom *argv) {
 
 void bubble_free(t_bubble *x)  {
 	dsp_free((t_pxobject *)x);
-    SDTBubble_free(x->bubble);
+  SDT_MAX_FREE(Bubble, bubble)
 }
 
 void bubble_assist(t_bubble *x, void *b, long m, long a, char *s) {
@@ -39,6 +42,8 @@ void bubble_assist(t_bubble *x, void *b, long m, long a, char *s) {
 	    sprintf(s, "(signal): Output sound");
 	}
 }
+
+SDT_MAX_KEY(bubble, Bubble, bubble, "bubble~", "bubble")
 
 void bubble_bang(t_bubble *x) {
     SDTBubble_setRadius(x->bubble, 0.001 * x->radius);
@@ -90,7 +95,9 @@ void C74_EXPORT ext_main(void *r) {
 	class_addmethod(c, (method)bubble_dsp, "dsp", A_CANT, 0);
 	class_addmethod(c, (method)bubble_dsp64, "dsp64", A_CANT, 0);
 	class_addmethod(c, (method)bubble_assist, "assist", A_CANT, 0);
-	class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
+	class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(bubble, "1")
 	
 	CLASS_ATTR_DOUBLE(c, "radius", 0, t_bubble, radius);
   CLASS_ATTR_DOUBLE(c, "riseFactor", 0, t_bubble, riseFactor);
@@ -98,8 +105,8 @@ void C74_EXPORT ext_main(void *r) {
 	CLASS_ATTR_FILTER_CLIP(c, "radius", 0.15, 150.0);
   CLASS_ATTR_FILTER_CLIP(c, "riseFactor", 0.0, 3.0);
 	
-	CLASS_ATTR_ORDER(c, "radius", 0, "1");
-	CLASS_ATTR_ORDER(c, "riseFactor", 0, "2");
+	CLASS_ATTR_ORDER(c, "radius", 0, "2");
+	CLASS_ATTR_ORDER(c, "riseFactor", 0, "3");
 	
 	class_dspinit(c);
 	class_register(CLASS_BOX, c);

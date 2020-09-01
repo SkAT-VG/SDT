@@ -2,6 +2,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTDCMotor.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -39,9 +40,7 @@ void *dcmotor_new(t_symbol *s, long argc, t_atom *argv) {
 
 void dcmotor_free(t_dcmotor *x)  {
   dsp_free((t_pxobject *)x);
-  if (x->key)
-    SDT_unregisterDCMotor(x->key->s_name);
-  SDTDCMotor_free(x->motor);
+  SDT_MAX_FREE(DCMotor, motor)
 }
 
 void dcmotor_assist(t_dcmotor *x, void *b, long m, long a, char *s) {
@@ -61,12 +60,7 @@ void dcmotor_assist(t_dcmotor *x, void *b, long m, long a, char *s) {
   }
 }
 
-void dcmotor_key(t_dcmotor *x, void *attr, long ac, t_atom *av) {
-  if (x->key)
-    SDT_unregisterDCMotor(x->key->s_name);
-  x->key = atom_getsym(av);
-  SDT_registerDCMotor(x->motor, x->key->s_name);
-}
+SDT_MAX_KEY(dcmotor, DCMotor, motor, "dcmotor~", "electric motor")
 
 void dcmotor_coils(t_dcmotor *x, void *attr, long ac, t_atom *av) {
   x->coils = atom_getlong(av);
@@ -165,7 +159,8 @@ void C74_EXPORT ext_main(void *r)
   class_addmethod(c, (method)dcmotor_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
-  CLASS_ATTR_SYM(c, "key", 0, t_dcmotor, key);
+  SDT_CLASS_KEY(dcmotor, "1")
+
   CLASS_ATTR_LONG(c, "coils", 0, t_dcmotor, coils);
   CLASS_ATTR_DOUBLE(c, "size", 0, t_dcmotor, size);
   CLASS_ATTR_DOUBLE(c, "reson", 0, t_dcmotor, reson);
@@ -186,7 +181,6 @@ void C74_EXPORT ext_main(void *r)
   CLASS_ATTR_FILTER_CLIP(c, "brushGain", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "airGain", 0.0, 1.0);
 
-  CLASS_ATTR_ACCESSORS(c, "key", NULL, (method)dcmotor_key);
   CLASS_ATTR_ACCESSORS(c, "coils", NULL, (method)dcmotor_coils);
   CLASS_ATTR_ACCESSORS(c, "size", NULL, (method)dcmotor_size);
   CLASS_ATTR_ACCESSORS(c, "reson", NULL, (method)dcmotor_reson);
@@ -197,7 +191,6 @@ void C74_EXPORT ext_main(void *r)
   CLASS_ATTR_ACCESSORS(c, "brushGain", NULL, (method)dcmotor_brushGain);
   CLASS_ATTR_ACCESSORS(c, "airGain", NULL, (method)dcmotor_airGain);
 
-  CLASS_ATTR_ORDER(c, "key", 0, "1");
   CLASS_ATTR_ORDER(c, "coils", 0, "2");
   CLASS_ATTR_ORDER(c, "size", 0, "3");
   CLASS_ATTR_ORDER(c, "reson", 0, "4");

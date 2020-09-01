@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -10,6 +11,7 @@ typedef struct _crumpling {
   void *size, *energy;
   SDTCrumpling *crumpling;
   double crushingEnergy, granularity, fragmentation;
+  t_symbol *key;
 } t_crumpling;
 
 static t_class *crumpling_class = NULL;
@@ -54,17 +56,20 @@ void *crumpling_new(t_symbol *s, short argc, t_atom *argv) {
     x->energy = outlet_new(x, "signal");
     x->size = outlet_new(x, "signal");
     x->crumpling = SDTCrumpling_new();
+    x->key = 0;
     attr_args_process(x, argc, argv); 
   }
   return (x);
 }
 
 void crumpling_free(t_crumpling *x)  {
-    dsp_free((t_pxobject *)x);
-    SDTCrumpling_free(x->crumpling);
-    object_free(x->size);
-    object_free(x->energy);
+  dsp_free((t_pxobject *)x);
+  SDT_MAX_FREE(Crumpling, crumpling)
+  object_free(x->size);
+  object_free(x->energy);
 }
+
+SDT_MAX_KEY(crumpling, Crumpling, crumpling, "crumpling~", "crumpling process")
 
 t_int *crumpling_perform(t_int *w) {
   t_crumpling *x = (t_crumpling *)(w[1]);
@@ -114,7 +119,9 @@ void C74_EXPORT ext_main(void *r) {
 	class_addmethod(c, (method)crumpling_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)crumpling_dsp64, "dsp64", A_CANT, 0);
 	class_addmethod(c, (method)crumpling_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(crumpling, "1")
 	
 	CLASS_ATTR_DOUBLE(c, "crushingEnergy", 0, t_crumpling, crushingEnergy);
   CLASS_ATTR_DOUBLE(c, "granularity", 0, t_crumpling, granularity);
@@ -128,9 +135,9 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "granularity", NULL, (method)crumpling_granularity);
   CLASS_ATTR_ACCESSORS(c, "fragmentation", NULL, (method)crumpling_fragmentation);
 	
-	CLASS_ATTR_ORDER(c, "crushingEnergy", 0, "1");
-	CLASS_ATTR_ORDER(c, "granularity", 0, "2");
-	CLASS_ATTR_ORDER(c, "fragmentation", 0, "3");
+	CLASS_ATTR_ORDER(c, "crushingEnergy", 0, "2");
+	CLASS_ATTR_ORDER(c, "granularity", 0, "3");
+	CLASS_ATTR_ORDER(c, "fragmentation", 0, "4");
 	
 	class_dspinit(c);
 	class_register(CLASS_BOX, c);
