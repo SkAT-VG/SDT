@@ -92,8 +92,8 @@ Macros for generating JSON serialization and deserialization functions
 #define JSON_TYPE_FIELD(T) JSON_ ## T ## _FIELD
 
 #define SDT_JSON_PUSH(SDT_TYPE, F, T, G, K, J, D) json_object_push(obj, #K, json_ ## J ## _new( CONCAT(SDT_TYPE_FULL(SDT_TYPE), CONCAT(_get, G))(x) ));
-#define SDT_JSON_PULL(SDT_TYPE, F, T, S, K, J, D) v = json_object_get_by_key(x, #K); \
-CONCAT(SDT_TYPE_FULL(SDT_TYPE), CONCAT(_set, S))(y, (v && (v->type == json_ ## J))? v->u. JSON_TYPE_FIELD(J) : D);
+#define SDT_JSON_PULL(SDT_TYPE, F, T, S, K, J, D) const json_value *v_ ## F = json_object_get_by_key(x, #K); \
+CONCAT(SDT_TYPE_FULL(SDT_TYPE), CONCAT(_set, S))(y, (v_ ## F && (v_ ## F->type == json_ ## J))? v_ ## F->u. JSON_TYPE_FIELD(J) : D);
 #define SDT_TYPE_INIT(SDT_TYPE, ...) SDT_TYPE_FULL(SDT_TYPE) *y = CONCAT(SDT_TYPE_FULL(SDT_TYPE), _new)(__VA_ARGS__)
 
 /** @brief Create the serialization function declaration
@@ -121,7 +121,6 @@ The newly created instance will have to be manually deallocated
 #define SDT_JSON_DESERIALIZE(SDT_TYPE) SDT_TYPE_FULL(SDT_TYPE) *CONCAT(SDT_TYPE_FULL(SDT_TYPE), _fromJSON)(const json_value *x) { \
   if (!x || x->type != json_object) \
     return 0; \
-  const json_value *v; \
   SDT_TYPE_INIT(SDT_TYPE, SDT_TYPE ## _NEW_ARGS); \
   SDT_TYPE ## _ATTRIBUTES(SDT_TYPE, SDT_JSON_PULL) \
   return y; \

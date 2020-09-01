@@ -40,8 +40,6 @@ struct SDTModalTracker {
   long nSamples, nModes, bufferSize, winSize, fftSize, skip;
 };
 
-SDT_DEFINE_HASHMAP(SDT_MODALTRACKER, 59)
-
 SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize, long winSize) {
   SDTModalTracker *x;
   long fftSize;
@@ -75,6 +73,52 @@ void SDTModalTracker_free(SDTModalTracker *x) {
   SDTFFT_free(x->fftPlan);
   free(x);
 }
+
+void SDTModalTracker_setNModes(SDTModalTracker *x, long f) {
+  for (unsigned int i = 0; i < x->nModes; ++i)
+    if (x->modes[i])
+      SDTMode_free(x->modes[i]);
+  free(x->modes);
+  x->nModes = f;
+  x->modes = (SDTMode **)calloc(x->nModes, sizeof(SDTMode *));
+}
+
+void SDTModalTracker_setBufferSize(SDTModalTracker *x, long f) {
+  free(x->buffer);
+  x->nSamples = 0;
+  x->bufferSize = f;
+  x->buffer = (double *)calloc(x->bufferSize, sizeof(double));
+  SDTModalTracker_update(x);
+}
+
+void SDTModalTracker_setWinSize(SDTModalTracker *x, long f) {
+  free(x->window);
+  free(x->fft);
+  SDTFFT_free(x->fftPlan);
+
+  x->skip = f * x->skip / x->winSize;
+  x->winSize = f;
+  x->fftSize = f / 2 + 1;
+
+  x->window = (double *)calloc(x->winSize, sizeof(double));
+  x->fft = (SDTComplex *)calloc(x->fftSize, sizeof(SDTComplex));
+  x->fftPlan = SDTFFT_new(x->winSize / 2);
+}
+
+SDT_TYPE_COPY(SDT_MODALTRACKER)
+SDT_DEFINE_HASHMAP(SDT_MODALTRACKER, 59)
+SDT_JSON_SERIALIZE(SDT_MODALTRACKER)
+SDT_JSON_DESERIALIZE(SDT_MODALTRACKER)
+
+double SDTModalTracker_getOverlap(const SDTModalTracker *x) {
+  return 1 - ((double) x->skip) / x->winSize;
+}
+
+long SDTModalTracker_getNModes(const SDTModalTracker *x) { return x->nModes; }
+
+long SDTModalTracker_getBufferSize(const SDTModalTracker *x) { return x->bufferSize; }
+
+long SDTModalTracker_getWinSize(const SDTModalTracker *x) { return x->winSize; }
 
 void SDTModalTracker_setOverlap(SDTModalTracker *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->winSize, 1, x->winSize);

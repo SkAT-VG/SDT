@@ -1,3 +1,4 @@
+#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
 
 /** @file SDTControl.h
@@ -30,8 +31,17 @@ extern SDTBouncing *SDTBouncing_new();
 extern void SDTBouncing_free(SDTBouncing *x);
 
 #define SDT_BOUNCING Bouncing
+#define SDT_BOUNCING_NEW_ARGS
+#define SDT_BOUNCING_ATTRIBUTES(T, A) \
+A(T, restitution, double, Restitution, restitution, double, 0.0)\
+A(T, height, double, Height, height, double, 0.0)\
+A(T, irregularity, double, Irregularity, irregularity, double, 0.0)
 
+SDT_TYPE_COPY_H(SDT_BOUNCING)
 SDT_DEFINE_HASHMAP_H(SDT_BOUNCING)
+SDT_TYPE_MAKE_GETTERS_H(SDT_BOUNCING)
+SDT_JSON_SERIALIZE_H(SDT_BOUNCING)
+SDT_JSON_DESERIALIZE_H(SDT_BOUNCING)
 
 /** @brief Sets the coefficient of restitution.
 @param[in] f Coefficient of restitution of the bouncing process */
@@ -78,8 +88,18 @@ extern SDTBreaking *SDTBreaking_new();
 extern void SDTBreaking_free(SDTBreaking *x);
 
 #define SDT_BREAKING Breaking
+#define SDT_BREAKING_NEW_ARGS
+#define SDT_BREAKING_ATTRIBUTES(T, A) \
+A(T, storedEnergy, double, StoredEnergy, storedEnergy, double, 0.0)\
+A(T, crushingEnergy, double, CrushingEnergy, crushing, double, 0.0)\
+A(T, granularity, double, Granularity, granularity, double, 0.0)\
+A(T, fragmentation, double, Fragmentation, fragmentation, double, 0.0)
 
+SDT_TYPE_COPY_H(SDT_BREAKING)
 SDT_DEFINE_HASHMAP_H(SDT_BREAKING)
+SDT_TYPE_MAKE_GETTERS_H(SDT_BREAKING)
+SDT_JSON_SERIALIZE_H(SDT_BREAKING)
+SDT_JSON_DESERIALIZE_H(SDT_BREAKING)
 
 /** @brief Sets the total energy stored in the object.
 @param[in] f Total stored energy consumed by the micro impacts, in N */
@@ -132,8 +152,17 @@ extern SDTCrumpling *SDTCrumpling_new();
 extern void SDTCrumpling_free(SDTCrumpling *x);
 
 #define SDT_CRUMPLING Crumpling
+#define SDT_CRUMPLING_NEW_ARGS
+#define SDT_CRUMPLING_ATTRIBUTES(T, A) \
+A(T, crushingEnergy, double, CrushingEnergy, crushing, double, 0.0)\
+A(T, granularity, double, Granularity, granularity, double, 0.0)\
+A(T, fragmentation, double, Fragmentation, fragmentation, double, 0.0)
 
+SDT_TYPE_COPY_H(SDT_CRUMPLING)
 SDT_DEFINE_HASHMAP_H(SDT_CRUMPLING)
+SDT_TYPE_MAKE_GETTERS_H(SDT_CRUMPLING)
+SDT_JSON_SERIALIZE_H(SDT_CRUMPLING)
+SDT_JSON_DESERIALIZE_H(SDT_CRUMPLING)
 
 /** @brief Sets the crushing energy.
 @param[in] f Average energy of the micro impacts, compared to the global energy of the process [0, 1] */
@@ -173,8 +202,18 @@ extern SDTRolling *SDTRolling_new();
 extern void SDTRolling_free(SDTRolling *x);
 
 #define SDT_ROLLING Rolling
+#define SDT_ROLLING_NEW_ARGS
+#define SDT_ROLLING_ATTRIBUTES(T, A) \
+A(T, grain, double, Grain, grain, double, 0.0)\
+A(T, depth, double, Depth, depth, double, 0.0)\
+A(T, mass, double, Mass, mass, double, 0.0)\
+A(T, velocity, double, Velocity, velocity, double, 0.0)
 
+SDT_TYPE_COPY_H(SDT_ROLLING)
 SDT_DEFINE_HASHMAP_H(SDT_ROLLING)
+SDT_TYPE_MAKE_GETTERS_H(SDT_ROLLING)
+SDT_JSON_SERIALIZE_H(SDT_ROLLING)
+SDT_JSON_DESERIALIZE_H(SDT_ROLLING)
 
 /** @brief Sets the grain of the surface.
 This parameter affects the density of the micro-impacts:
@@ -224,8 +263,17 @@ extern SDTScraping *SDTScraping_new();
 extern void SDTScraping_free(SDTScraping *x);
 
 #define SDT_SCRAPING Scraping
+#define SDT_SCRAPING_NEW_ARGS
+#define SDT_SCRAPING_ATTRIBUTES(T, A) \
+A(T, grain, double, Grain, grain, double, 0.0)\
+A(T, force, double, Force, force, double, 0.0)\
+A(T, velocity, double, Velocity, velocity, double, 0.0)
 
+SDT_TYPE_COPY_H(SDT_SCRAPING)
 SDT_DEFINE_HASHMAP_H(SDT_SCRAPING)
+SDT_TYPE_MAKE_GETTERS_H(SDT_SCRAPING)
+SDT_JSON_SERIALIZE_H(SDT_SCRAPING)
+SDT_JSON_DESERIALIZE_H(SDT_SCRAPING)
 
 /** @brief Sets the grain of the surface.
 This parameter affects the density of the micro-impacts:

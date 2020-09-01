@@ -42,8 +42,9 @@ extern SDTDCMotor *SDTDCMotor_new(long maxSize);
 extern void SDTDCMotor_free(SDTDCMotor *x);
 
 #define SDT_DCMOTOR DCMotor
-#define SDT_DCMOTOR_NEW_ARGS 1
+#define SDT_DCMOTOR_NEW_ARGS 48000
 #define SDT_DCMOTOR_ATTRIBUTES(T, A) \
+A(T, maxSize, long, MaxSize, maxSize, integer, 48000)\
 A(T, coils, long, Coils, coils, integer, 2)\
 A(T, size, double, Size, size, double, 0.2)\
 A(T, reson, double, Reson, reson, double, 0.8)\
@@ -59,6 +60,8 @@ SDT_DEFINE_HASHMAP_H(SDT_DCMOTOR)
 SDT_TYPE_MAKE_GETTERS_H(SDT_DCMOTOR)
 SDT_JSON_SERIALIZE_H(SDT_DCMOTOR)
 SDT_JSON_DESERIALIZE_H(SDT_DCMOTOR)
+
+extern void SDTDCMotor_setMaxSize(SDTDCMotor *x, long f);
 
 /** @brief Sets the filter coefficients.
 Call this function whenever the sample rate changes */

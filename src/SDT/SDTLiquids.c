@@ -39,7 +39,11 @@ void SDTBubble_free(SDTBubble *x) {
   free(x);
 }
 
+SDT_TYPE_COPY(SDT_BUBBLE)
 SDT_DEFINE_HASHMAP(SDT_BUBBLE, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_BUBBLE)
+SDT_JSON_SERIALIZE(SDT_BUBBLE)
+SDT_JSON_DESERIALIZE(SDT_BUBBLE)
 
 void SDTBubble_setRadius(SDTBubble *x, double f) {
   x->radius = SDT_fclip(f, MIN_RADIUS, MAX_RADIUS);
@@ -93,8 +97,6 @@ struct SDTFluidFlow {
   int nBubbles;
 };
 
-SDT_DEFINE_HASHMAP(SDT_FLUIDFLOW, 59)
-
 SDTFluidFlow *SDTFluidFlow_new(int nBubbles) {
   SDTFluidFlow *x;
   int i;
@@ -129,6 +131,22 @@ void SDTFluidFlow_free(SDTFluidFlow *x) {
   free(x->bubbles);
   free(x);
 }
+
+void SDTFluidFlow_setNBubbles(SDTFluidFlow *x, int f) {
+  for (unsigned int i = 0; i < x->nBubbles; i++)
+    SDTBubble_free(x->bubbles[i]);
+  free(x->bubbles);
+  x->nBubbles = f;
+  x->bubbles = (SDTBubble **) malloc(x->nBubbles * sizeof(SDTBubble *));
+  for (unsigned int i = 0; i < x->nBubbles; i++)
+    x->bubbles[i] = SDTBubble_new();
+}
+
+SDT_TYPE_COPY(SDT_FLUIDFLOW)
+SDT_DEFINE_HASHMAP(SDT_FLUIDFLOW, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_FLUIDFLOW)
+SDT_JSON_SERIALIZE(SDT_FLUIDFLOW)
+SDT_JSON_DESERIALIZE(SDT_FLUIDFLOW)
 
 void SDTFluidFlow_setMinRadius(SDTFluidFlow *x, double f) {
     x->minRadius = SDT_fclip(f, MIN_RADIUS, x->maxRadius);

@@ -1,3 +1,4 @@
+#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
 
 /** @file SDTDemix.h
@@ -27,8 +28,8 @@ the Sound Design Toolkit.
 @{
 */
 
-#ifndef SDT_EFFECTS_H
-#define SDT_EFFECTS_H
+#ifndef SDT_DEMIX_H
+#define SDT_DEMIX_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -48,8 +49,23 @@ extern SDTDemix *SDTDemix_new(int size, int radius);
 extern void SDTDemix_free(SDTDemix *x);
 
 #define SDT_DEMIX Demix
+#define SDT_DEMIX_NEW_ARGS 1024, 4
+#define SDT_DEMIX_ATTRIBUTES(T, A) \
+A(T, size, int, Size, size, integer, 1024) \
+A(T, radius, int, Radius, radius, integer, 4) \
+A(T, overlap, double, Overlap, overlap, double, 0.75) \
+A(T, gammaIso, double, NoiseThreshold, noiseThreshold, double, 0.0) \
+A(T, gammaDir, double, TonalThreshold, tonalThreshold, double, 0.0)
 
+SDT_TYPE_COPY_H(SDT_DEMIX)
 SDT_DEFINE_HASHMAP_H(SDT_DEMIX)
+SDT_TYPE_MAKE_GETTERS_H(SDT_DEMIX)
+SDT_JSON_SERIALIZE_H(SDT_DEMIX)
+SDT_JSON_DESERIALIZE_H(SDT_DEMIX)
+
+extern void SDTDemix_setSize(SDTDemix *x, int f);
+
+extern void SDTDemix_setRadius(SDTDemix *x, int f);
 
 /** @brief Sets the window overlapping factor.
 @param[in] f Window overlapping factor */

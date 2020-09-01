@@ -1,3 +1,4 @@
+#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
 
 /** @file SDTLiquids.h
@@ -38,8 +39,17 @@ extern SDTBubble *SDTBubble_new();
 extern void SDTBubble_free(SDTBubble *x);
 
 #define SDT_BUBBLE Bubble
+#define SDT_BUBBLE_NEW_ARGS
+#define SDT_BUBBLE_ATTRIBUTES(T, A) \
+A(T, radius, double, Radius, radius, double, 1.0) \
+A(T, riseFactor, double, RiseFactor, riseFactor, double, 0.0) \
+A(T, depth, double, Depth, depth, double, 0.0)
 
+SDT_TYPE_COPY_H(SDT_BUBBLE)
 SDT_DEFINE_HASHMAP_H(SDT_BUBBLE)
+SDT_TYPE_MAKE_GETTERS_H(SDT_BUBBLE)
+SDT_JSON_SERIALIZE_H(SDT_BUBBLE)
+SDT_JSON_DESERIALIZE_H(SDT_BUBBLE)
 
 /** @brief Sets the bubble radius.
 @param[in] f Bubble radius, in m [0.00015, 0.150] */
@@ -91,8 +101,26 @@ extern SDTFluidFlow *SDTFluidFlow_new(int nBubbles);
 extern void SDTFluidFlow_free(SDTFluidFlow *x);
 
 #define SDT_FLUIDFLOW FluidFlow
+#define SDT_FLUIDFLOW_NEW_ARGS 0
+#define SDT_FLUIDFLOW_ATTRIBUTES(T, A) \
+A(T, nBubbles, int, NBubbles, nBubbles, integer, 64) \
+A(T, avgRate, double, AvgRate, avgRate, double, 0) \
+A(T, minRadius, double, MinRadius, minRadius, double, 0.00015) \
+A(T, maxRadius, double, MaxRadius, maxRadius, double, 0.015) \
+A(T, expRadius, double, ExpRadius, expRadius, double, 1.0) \
+A(T, minDepth, double, MinDepth, minDepth, double, 0.0) \
+A(T, maxDepth, double, MaxDepth, maxDepth, double, 1.0) \
+A(T, expDepth, double, ExpDepth, expDepth, double, 1.0) \
+A(T, riseFactor, double, RiseFactor, riseFactor, double, 0.1) \
+A(T, riseCutoff, double, RiseCutoff, riseCutoff, double, 0.9)
 
+SDT_TYPE_COPY_H(SDT_FLUIDFLOW)
 SDT_DEFINE_HASHMAP_H(SDT_FLUIDFLOW)
+SDT_TYPE_MAKE_GETTERS_H(SDT_FLUIDFLOW)
+SDT_JSON_SERIALIZE_H(SDT_FLUIDFLOW)
+SDT_JSON_DESERIALIZE_H(SDT_FLUIDFLOW)
+
+extern void SDTFluidFlow_setNBubbles(SDTFluidFlow *x, int f);
 
 /** @brief Sets the minimum radius for the bubble population.
 @param[in] f Minimum radius of the generated bubbles, in m [0.00015, 0.150] */

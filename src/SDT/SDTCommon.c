@@ -324,6 +324,10 @@ double SDT_samplesInAir(double length) {
   return fmax(0.0, length) / SDT_MACH1 * SDT_sampleRate;
 }
 
+double SDT_samplesInAir_inv(double samples) {
+  return samples * SDT_MACH1 / SDT_sampleRate;
+}
+
 double SDT_scale(double x, double srcMin, double srcMax,
                  double dstMin, double dstMax, double gamma) {
   return pow((x - srcMin) / (srcMax - srcMin), gamma) * (dstMax - dstMin) + dstMin;

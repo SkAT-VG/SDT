@@ -100,7 +100,18 @@ void SDTEnvelope_free(SDTEnvelope *x) {
   free(x);
 }
 
+SDT_TYPE_COPY(SDT_ENVELOPE)
 SDT_DEFINE_HASHMAP(SDT_ENVELOPE, 59)
+SDT_JSON_SERIALIZE(SDT_ENVELOPE)
+SDT_JSON_DESERIALIZE(SDT_ENVELOPE)
+
+double SDTEnvelope_getAttack(const SDTEnvelope *x) {
+  return -SDT_TWOPI * SDT_timeStep / log(-x->a1a);
+}
+
+double SDTEnvelope_getRelease(const SDTEnvelope *x) {
+  return -SDT_TWOPI * SDT_timeStep / log(-x->a1r);
+}
 
 void SDTEnvelope_setAttack(SDTEnvelope *x, double a) {
   double w;
@@ -227,10 +238,72 @@ SDTBiquad *SDTBiquad_new(int nSections) {
 
 void SDTBiquad_free(SDTBiquad *x) {
   free(x->buf);
+  free(x->a0);
+  free(x->a1);
+  free(x->a2);
+  free(x->b0);
+  free(x->b1);
+  free(x->b2);
+  free(x->alpha);
   free(x);
 }
 
 SDT_DEFINE_HASHMAP(SDT_BIQUAD, 59)
+
+int SDTBiquad_getNSections(const SDTBiquad *x) { return x->nSections; }
+
+#define SDT_BIQUAD_ARRAYS(A) \
+A(a0) \
+A(a1) \
+A(a2) \
+A(b0) \
+A(b1) \
+A(b2) \
+A(alpha)
+
+#define SDT_BIQUAD_COPY_ARRAY(F) free(dest-> F); \
+dest-> F = (double *)malloc(nSections * sizeof(double)); \
+for (unsigned int i = 0; i < nSections; i++) dest-> F [i] = src-> F [i];
+
+SDTBiquad *SDTBiquad_copy(SDTBiquad *dest, const SDTBiquad *src) {
+  int nSections = SDTBiquad_getNSections(src);
+  SDT_BIQUAD_ARRAYS(SDT_BIQUAD_COPY_ARRAY)
+
+  int n = 2 * nSections + 2;
+  free(dest->buf);
+  dest->buf = calloc(n, sizeof(double));
+  dest->nSections = nSections;
+  return dest;
+}
+
+#define SDT_BIQUAD_PUSH_ARRAY(F) json_value *a_ ## F = json_array_new(nSections); \
+for (unsigned int i = 0; i < nSections; i++) json_array_push(a_ ## F, json_double_new(x-> F [i])); \
+json_object_push(obj, #F, a_ ## F);
+
+json_value *SDTBiquad_toJSON(const SDTBiquad *x) {
+  int nSections = SDTBiquad_getNSections(x);
+  json_value * obj = json_object_new(0);
+
+  json_object_push(obj, "nSections", json_integer_new(nSections));
+  SDT_BIQUAD_ARRAYS(SDT_BIQUAD_PUSH_ARRAY)
+  return obj;
+}
+
+#define SDT_BIQUAD_PULL_ARRAY(F) v = json_object_get_by_key(x, #F); \
+for (unsigned int i = 0; v && (v->type == json_array) && i < nSections && i < v->u.array.length; ++i) { \
+  const json_value *w = v->u.array.values[i]; \
+  y-> F [i] = (w && (w->type == json_double)) ? w->u.dbl : 0.0; \
+}
+
+SDTBiquad *SDTBiquad_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  const json_value *v = json_object_get_by_key(x, "nSections");
+  int nSections = (v && (v->type == json_integer)) ? v->u.integer : 1;
+  SDTBiquad * y = SDTBiquad_new(nSections);
+
+  SDT_BIQUAD_ARRAYS(SDT_BIQUAD_PULL_ARRAY)
+  return y;
+}
 
 void SDTBiquad_common(SDTBiquad *x, int i, double fc, double q) {
   x->w = 2.0 * SDT_PI * fc * SDT_timeStep;
@@ -447,9 +520,15 @@ void SDTDelay_clear(SDTDelay *x) {
   x->head = 0;
 }
 
+long SDTDelay_getMaxDelay(const SDTDelay *x) { return x->size; }
+
+double SDTDelay_getDelay(const SDTDelay *x) {
+  // Add 0.618 for compatibility with setter
+  return x->delay + 0.618;
+}
+
 void SDTDelay_setDelay(SDTDelay *x, double f) {
   double d;
-  
   f = SDT_fclip(f, 0.618, x->size);
   x->delay = f - 0.618;
   d = f - x->delay;
@@ -506,6 +585,14 @@ void SDTComb_free(SDTComb *x) {
   SDTDelay_free(x->xDelay);
   SDTDelay_free(x->yDelay);
   free(x);
+}
+
+long SDTComb_getMaxXDelay(const SDTComb *x) {
+  return SDTDelay_getMaxDelay(x->xDelay);
+}
+
+long SDTComb_getMaxYDelay(const SDTComb *x) {
+  return SDTDelay_getMaxDelay(x->yDelay);
 }
 
 void SDTComb_setXDelay(SDTComb *x, double f) {
@@ -576,12 +663,28 @@ void SDTWaveguide_free(SDTWaveguide *x) {
   free(x);
 }
 
+int SDTWaveguide_getMaxDelay(const SDTWaveguide *x) {
+  return SDTDelay_getMaxDelay(x->fwdDelay);
+}
+
+double SDTWaveguide_getDelay(const SDTWaveguide *x) {
+  return SDTDelay_getDelay(x->fwdDelay);
+}
+
 double SDTWaveguide_getFwdOut(SDTWaveguide *x) {
   return x->fwdThru;
 }
 
 double SDTWaveguide_getRevOut(SDTWaveguide *x) {
   return x->revThru;
+}
+
+double SDTWaveguide_getRevFeedback(const SDTWaveguide *x) {
+  return x->revFeedGain;
+}
+
+double SDTWaveguide_getFwdFeedback(const SDTWaveguide *x) {
+  return x->fwdFeedGain;
 }
 
 void SDTWaveguide_setDelay(SDTWaveguide *x, double f) {

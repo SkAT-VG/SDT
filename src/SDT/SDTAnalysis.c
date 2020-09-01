@@ -41,7 +41,28 @@ void SDTZeroCrossing_free(SDTZeroCrossing *x) {
   free(x);
 }
 
+void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f) {
+  free(x->in);
+  free(x->win);
+
+  x->in = calloc(2 * f, sizeof(double));
+  x->win = calloc(f, sizeof(double));
+  x->i = 0;
+  x->j = 0;
+  x->skip = f * x->skip / x->size;
+  x->size = f;
+}
+
+SDT_TYPE_COPY(SDT_ZEROCROSSING)
 SDT_DEFINE_HASHMAP(SDT_ZEROCROSSING, 59)
+SDT_JSON_SERIALIZE(SDT_ZEROCROSSING)
+SDT_JSON_DESERIALIZE(SDT_ZEROCROSSING)
+
+unsigned int SDTZeroCrossing_getSize(const SDTZeroCrossing *x) { return x->size; }
+
+double SDTZeroCrossing_getOverlap(const SDTZeroCrossing *x) {
+  return 1 - ((double) x->skip) / x->size;
+}
 
 void SDTZeroCrossing_setOverlap(SDTZeroCrossing *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
@@ -116,7 +137,11 @@ void SDTMyoelastic_free(SDTMyoelastic *x) {
   free(x);
 }
 
+SDT_TYPE_COPY(SDT_MYOELASTIC)
 SDT_DEFINE_HASHMAP(SDT_MYOELASTIC, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_MYOELASTIC)
+SDT_JSON_SERIALIZE(SDT_MYOELASTIC)
+SDT_JSON_DESERIALIZE(SDT_MYOELASTIC)
 
 void SDTMyoelastic_update(SDTMyoelastic *x) {
   SDTTwoPoles_lowpass(x->inRMS, 1000.0);
@@ -251,7 +276,52 @@ void SDTSpectralFeats_free(SDTSpectralFeats *x) {
   free(x);
 }
 
+void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
+  free(x->in);
+  free(x->win);
+  free(x->fft);
+  free(x->currMag);
+  free(x->prevMag);
+
+  x->in = calloc(2 * f, sizeof(double));
+  x->win = calloc(f, sizeof(double));
+  int fftSize = f / 2 + 1;
+  x->currMag = calloc(fftSize, sizeof(double));
+  x->prevMag = calloc(fftSize, sizeof(double));
+
+  x->fft = (SDTComplex *) malloc(fftSize * sizeof(SDTComplex));
+  for (unsigned int i = 0; i < fftSize; i++) x->fft[i] = SDTComplex_car(0.0, 0.0);
+
+  SDTFFT_free(x->fftPlan);
+  x->fftPlan = SDTFFT_new(f / 2);
+  x->i = 0;
+  x->j = 0;
+  x->fftSize = fftSize;
+  x->skip = f * x->skip / x->size;
+  x->min = f * x->min / x->size;
+  x->max = f * x->max / x->size;
+  x->span = x->max - x->min;
+  x->size = f;
+}
+
+SDT_TYPE_COPY(SDT_SPECTRALFEATS)
 SDT_DEFINE_HASHMAP(SDT_SPECTRALFEATS, 59)
+SDT_JSON_SERIALIZE(SDT_SPECTRALFEATS)
+SDT_JSON_DESERIALIZE(SDT_SPECTRALFEATS)
+
+unsigned int SDTSpectralFeats_getSize(const SDTSpectralFeats *x) { return x->size; }
+
+double SDTSpectralFeats_getOverlap(const SDTSpectralFeats *x) {
+  return 1 - ((double) x->skip) / x->size;
+}
+
+double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x) {
+  return x->min / (SDT_timeStep * x->size);
+}
+
+double SDTSpectralFeats_getMaxFreq(const SDTSpectralFeats *x) {
+  return x->max / (SDT_timeStep * x->size);
+}
 
 void SDTSpectralFeats_setOverlap(SDTSpectralFeats *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
@@ -382,7 +452,42 @@ void SDTPitch_free(SDTPitch *x) {
   free(x);
 }
 
+void SDTPitch_setSize(SDTPitch *x, unsigned int f) {
+  free(x->in);
+  free(x->win);
+  free(x->acf);
+  free(x->nsdf);
+  free(x->fft);
+
+  x->in = calloc(2 * f, sizeof(double));
+  x->win = calloc(2 * f, sizeof(double));
+  x->acf = calloc(2 * f, sizeof(double));
+  x->nsdf = calloc(f, sizeof(double));
+
+  x->fft = (SDTComplex *)malloc((f + 1) * sizeof(SDTComplex));
+  for (unsigned int i = 0; i <= f; i++) x->fft[i] = SDTComplex_car(0.0, 0.0);
+
+  SDTFFT_free(x->fftPlan);
+  x->fftPlan = SDTFFT_new(f);
+  x->curr = 0;
+  x->count = 0;
+  x->skip = f * x->skip / x->size;
+  x->seek = 0.85 * f;
+  x->size = f;
+}
+
+SDT_TYPE_COPY(SDT_PITCH)
 SDT_DEFINE_HASHMAP(SDT_PITCH, 59)
+SDT_JSON_SERIALIZE(SDT_PITCH)
+SDT_JSON_DESERIALIZE(SDT_PITCH)
+
+unsigned int SDTPitch_getSize(const SDTPitch *x) { return x->size; }
+
+double SDTPitch_getOverlap(const SDTPitch *x) {
+  return 1 - ((double) x->skip) / x->size;
+}
+
+double SDTPitch_getTolerance(const SDTPitch *x) { return x->tol; }
 
 void SDTPitch_setOverlap(SDTPitch *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);

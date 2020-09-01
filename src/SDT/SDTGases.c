@@ -26,7 +26,10 @@ extern void SDTWindFlow_free(SDTWindFlow *x) {
   free(x);
 }
 
+SDT_TYPE_COPY(SDT_WINDFLOW)
 SDT_DEFINE_HASHMAP(SDT_WINDFLOW, 59)
+SDT_JSON_SERIALIZE(SDT_WINDFLOW)
+SDT_JSON_DESERIALIZE(SDT_WINDFLOW)
 
 void SDTWindFlow_setFilters(SDTWindFlow *x) {
   SDTTwoPoles_resonant(x->reso, 800.0, 1.0);
@@ -92,7 +95,23 @@ void SDTWindCavity_free(SDTWindCavity *x) {
   free(x);
 }
 
+void SDTWindCavity_setMaxDelay(SDTWindCavity *x, int f) {
+  SDTComb_free(x->comb);
+  x->comb = SDTComb_new(f, f);
+}
+
+SDT_TYPE_COPY(SDT_WINDCAVITY)
 SDT_DEFINE_HASHMAP(SDT_WINDCAVITY, 59)
+SDT_JSON_SERIALIZE(SDT_WINDCAVITY)
+SDT_JSON_DESERIALIZE(SDT_WINDCAVITY)
+
+int SDTWindCavity_getMaxDelay(const SDTWindCavity *x) {
+  return SDTComb_getMaxXDelay(x->comb);
+}
+
+double SDTWindCavity_getLength(const SDTWindCavity *x) { return x->length; }
+
+double SDTWindCavity_getDiameter(const SDTWindCavity *x) { return x->diameter; }
 
 void SDTWindCavity_setLength(SDTWindCavity *x, double f) {
   x->length = fmax(SDT_MICRO, f);
@@ -149,7 +168,11 @@ extern void SDTWindKarman_free(SDTWindKarman *x) {
   free(x);
 }
 
+SDT_TYPE_COPY(SDT_WINDKARMAN)
 SDT_DEFINE_HASHMAP(SDT_WINDKARMAN, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_WINDKARMAN)
+SDT_JSON_SERIALIZE(SDT_WINDKARMAN)
+SDT_JSON_DESERIALIZE(SDT_WINDKARMAN)
 
 void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
   x->diameter = fmax(SDT_MICRO, f);
@@ -217,7 +240,39 @@ void SDTExplosion_free(SDTExplosion *x) {
   free(x);
 }
 
+void SDTExplosion_setMaxScatter(SDTExplosion *x, long f) {
+  SDTReverb_free(x->scatter);
+  x->scatter = SDTReverb_new(f);
+}
+
+void SDTExplosion_setMaxDelay(SDTExplosion *x, long f) {
+  free(x->waveBuf);
+  free(x->windBuf);
+  x->waveBuf = calloc(f, sizeof(double));
+  x->windBuf = calloc(f, sizeof(double));
+  x->size = f;
+}
+
+SDT_TYPE_COPY(SDT_EXPLOSION)
 SDT_DEFINE_HASHMAP(SDT_EXPLOSION, 59)
+SDT_JSON_SERIALIZE(SDT_EXPLOSION)
+SDT_JSON_DESERIALIZE(SDT_EXPLOSION)
+
+long SDTExplosion_getMaxScatter(const SDTExplosion *x) { return SDTReverb_getMaxDelay(x->scatter); }
+
+long SDTExplosion_getMaxDelay(const SDTExplosion *x) { return x->size; }
+
+double SDTExplosion_getBlastTime(const SDTExplosion *x) { return x->blastTime; }
+
+double SDTExplosion_getScatterTime(const SDTExplosion *x) { return x->scatterTime; }
+
+double SDTExplosion_getDispersion(const SDTExplosion *x) { return x->dispersion; }
+
+double SDTExplosion_getDistance(const SDTExplosion *x) { return x->distance; }
+
+double SDTExplosion_getWaveSpeed(const SDTExplosion *x) { return x->waveSpeed; }
+
+double SDTExplosion_getWindSpeed(const SDTExplosion *x) { return x->windSpeed; }
 
 void SDTExplosion_setBlastTime(SDTExplosion *x, double f) {
   x->blastTime = fmax(0.0, f);

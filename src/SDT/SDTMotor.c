@@ -25,8 +25,6 @@ struct SDTMotor {
   int nCylinders;
 };
 
-SDT_DEFINE_HASHMAP(SDT_MOTOR, 59)
-
 void fourStroke(double phase, double *pressure, double *inValve, double *outValve) {
   double w;
   
@@ -48,7 +46,7 @@ void twoStroke(double phase, double *pressure, double *inValve, double *outValve
 SDTMotor *SDTMotor_new(long maxDelay) {
   SDTMotor *x;
   int i;
-  
+
   x = (SDTMotor *)malloc(sizeof(SDTMotor));
   x->cycle = &fourStroke;
   for (i = 0; i < MAX_CYLINDERS; i++) {
@@ -90,6 +88,53 @@ SDTMotor *SDTMotor_new(long maxDelay) {
   return x;
 }
 
+void SDTMotor_setMaxDelay(SDTMotor *x, long f) {
+  double intake_size = SDTMotor_getIntakeSize(x);
+  double extractor_size = SDTMotor_getExtractorSize(x);
+  double exhaust_size = SDTMotor_getExhaustSize(x);
+  double expansion = SDTMotor_getExpansion(x);
+  double muffler_size = SDTMotor_getMufflerSize(x);
+  double muffler_feedback = SDTMotor_getMufflerFeedback(x);
+  double outlet_size = SDTMotor_getOutletSize(x);
+
+  for (unsigned int i = 0; i < MAX_CYLINDERS; i++) {
+    SDTWaveguide_free(x->intakes[i]);
+    SDTWaveguide_free(x->cylinders[i]);
+    SDTWaveguide_free(x->extractors[i]);
+
+    x->intakes[i] = SDTWaveguide_new(f);
+    SDTWaveguide_setRevFeedback(x->intakes[i], AIR_FEED);
+    x->cylinders[i] = SDTWaveguide_new(f);
+    x->extractors[i] = SDTWaveguide_new(f);
+    SDTWaveguide_setFwdFeedback(x->extractors[i], JOINT_FEED);
+  }
+
+  SDTWaveguide_free(x->exhaust);
+  x->exhaust = SDTWaveguide_new(f);
+  SDTWaveguide_setRevFeedback(x->exhaust, JOINT_FEED);
+  SDTWaveguide_setFwdFeedback(x->exhaust, MUFFLER_FEED);
+
+  for (unsigned int i = 0; i < N_MUFFLERS; i++) {
+    SDTWaveguide_free(x->mufflers[i]);
+    x->mufflers[i] = SDTWaveguide_new(f);
+    SDTWaveguide_setRevFeedback(x->mufflers[i], MUFFLER_FEED);
+    SDTWaveguide_setFwdFeedback(x->mufflers[i], MUFFLER_FEED);
+  }
+
+  SDTWaveguide_free(x->outlet);
+  x->outlet = SDTWaveguide_new(f);
+  SDTWaveguide_setRevFeedback(x->outlet, MUFFLER_FEED);
+  SDTWaveguide_setFwdFeedback(x->outlet, AIR_FEED);
+
+  SDTMotor_setIntakeSize(x, intake_size);
+  SDTMotor_setExtractorSize(x, extractor_size);
+  SDTMotor_setExhaustSize(x, exhaust_size);
+  SDTMotor_setExpansion(x, expansion);
+  SDTMotor_setMufflerSize(x, muffler_size);
+  SDTMotor_setMufflerFeedback(x, muffler_feedback);
+  SDTMotor_setOutletSize(x, outlet_size);
+}
+
 void SDTMotor_free(SDTMotor *x) {
   int i;
   
@@ -109,6 +154,74 @@ void SDTMotor_free(SDTMotor *x) {
   SDTOnePole_free(x->vibrationsDC);
   SDTOnePole_free(x->outletDC);
   free(x);
+}
+
+void SDTMotor_setCycle(SDTMotor *x, double f) {
+  if (f == 0.0)
+    SDTMotor_setFourStroke(x);
+  else
+    SDTMotor_setTwoStroke(x);
+}
+
+SDT_TYPE_COPY(SDT_MOTOR)
+SDT_DEFINE_HASHMAP(SDT_MOTOR, 59)
+SDT_JSON_SERIALIZE(SDT_MOTOR)
+SDT_JSON_DESERIALIZE(SDT_MOTOR)
+
+long SDTMotor_getMaxDelay(const SDTMotor *x) {
+  return SDTWaveguide_getMaxDelay(x->outlet);
+}
+
+double SDTMotor_getCycle(const SDTMotor *x) {
+  return x->step == 60.0;
+}
+
+int SDTMotor_getNCylinders(const SDTMotor *x) { return x->nCylinders; }
+
+double SDTMotor_getCylinderSize(const SDTMotor *x) { return x->cylinderSize; }
+
+double SDTMotor_getCompressionRatio(const SDTMotor *x) { return x->compressionRatio; }
+
+double SDTMotor_getSparkTime(const SDTMotor *x) { return x->sparkTime; }
+
+double SDTMotor_getAsymmetry(const SDTMotor *x) { return x->asymmetry; }
+
+double SDTMotor_getBackfire(const SDTMotor *x) { return x->backfire; }
+
+double SDTMotor_getIntakeSize(const SDTMotor *x) {
+  int i = 0, sign;
+  sign = (i % 2) * 2 - 1;
+  double coeff = sign * floor(i / 2 + 1) / MAX_CYLINDERS;
+  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->intakes[i]) / (1 + coeff));
+}
+
+double SDTMotor_getExtractorSize(const SDTMotor *x) {
+  int i = 0, sign;
+  sign = (i % 2) * 2 - 1;
+  double coeff = sign * floor(i / 2 + 1) / MAX_CYLINDERS;
+  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->extractors[i]) / (1 + coeff));
+}
+
+double SDTMotor_getExhaustSize(const SDTMotor *x) {
+  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->exhaust));
+}
+
+double SDTMotor_getExpansion(const SDTMotor *x) {
+  return SDTWaveguide_getRevFeedback(x->exhaust);
+}
+
+double SDTMotor_getMufflerSize(const SDTMotor *x) {
+  int i = 0;
+  double coeff = (0.7 + 0.6 * i / (N_MUFFLERS - 1));
+  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->mufflers[i]) / coeff);
+}
+
+double SDTMotor_getMufflerFeedback(const SDTMotor *x) {
+  return SDTWaveguide_getFwdFeedback(x->exhaust);
+}
+
+double SDTMotor_getOutletSize(const SDTMotor *x) {
+  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->outlet));
 }
 
 void SDTMotor_setFilters(SDTMotor *x, double damp, double dc) {
