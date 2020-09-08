@@ -1,3 +1,5 @@
+#include "SDTCommonMacros.h"
+
 /** @file SDTDemix.h
 @defgroup demix SDTDemix.h: Transient/tonal/residual components separator
 This algorithm looks for vertical and horizontal structures in the spectrogram to
@@ -44,6 +46,10 @@ extern SDTDemix *SDTDemix_new(int size, int radius);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDemix_free(SDTDemix *x);
+
+#define SDT_DEMIX Demix
+
+SDT_DEFINE_HASHMAP_H(SDT_DEMIX)
 
 /** @brief Sets the window overlapping factor.
 @param[in] f Window overlapping factor */

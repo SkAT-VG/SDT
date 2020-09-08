@@ -15,8 +15,6 @@ struct SDTBouncing {
   double restitution, height, irregularity, targetVelocity, currentVelocity;
 };
 
-DEFINE_HASHMAP(Bouncing, bouncings, 59)
-
 SDTBouncing *SDTBouncing_new() {
   SDTBouncing *x;
   
@@ -32,6 +30,8 @@ SDTBouncing *SDTBouncing_new() {
 void SDTBouncing_free(SDTBouncing *x) {
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_BOUNCING, 59)
 
 void SDTBouncing_setRestitution(SDTBouncing *x, double f) {
   x->restitution = SDT_fclip(f, 0.0, 1.0);
@@ -88,11 +88,11 @@ SDTBreaking *SDTBreaking_new() {
   return x;
 }
 
-DEFINE_HASHMAP(Breaking, breakings, 59)
-
 void SDTBreaking_free(SDTBreaking *x) {
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_BREAKING, 59)
 
 void SDTBreaking_setStoredEnergy(SDTBreaking *x, double f) {
   x->storedEnergy = fmax(SDT_MICRO, f);
@@ -145,8 +145,6 @@ struct SDTCrumpling {
   double crushingEnergy, granularity, fragmentation;
 };
 
-DEFINE_HASHMAP(Crumpling, crumplings, 59)
-
 SDTCrumpling *SDTCrumpling_new() {
   SDTCrumpling *x;
   
@@ -160,6 +158,8 @@ SDTCrumpling *SDTCrumpling_new() {
 void SDTCrumpling_free(SDTCrumpling *x) {
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_CRUMPLING, 59)
 
 void SDTCrumpling_setCrushingEnergy(SDTCrumpling *x, double f) {
   x->crushingEnergy = fmax(SDT_MICRO, f);
@@ -212,11 +212,11 @@ SDTRolling *SDTRolling_new() {
   return x;
 }
 
-DEFINE_HASHMAP(Rolling, rollings, 59)
-
 void SDTRolling_free(SDTRolling *x) {
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_ROLLING, 59)
 
 void SDTRolling_setGrain(SDTRolling *x, double f) {
   x->grain = SDT_fclip(f, 0.0, 1.0);
@@ -261,8 +261,6 @@ struct SDTScraping {
          decay, groundTrace;
 };
 
-DEFINE_HASHMAP(Scraping, scrapings, 59)
-
 SDTScraping *SDTScraping_new() {
   SDTScraping *x;
   
@@ -278,6 +276,8 @@ SDTScraping *SDTScraping_new() {
 void SDTScraping_free(SDTScraping *x) {
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_SCRAPING, 59)
 
 void SDTScraping_setGrain(SDTScraping *x, double f) {
   x->grain = SDT_fclip(f, 0.0, 1.0);

@@ -1,4 +1,5 @@
 #include "SDTJSON.h"
+#include "SDTCommonMacros.h"
 
 /** @file SDTDCMotor.h
 @defgroup dcmotor SDTDCMotor.h: Electric motors
@@ -36,59 +37,28 @@ typedef struct SDTDCMotor SDTDCMotor;
 @return Pointer to the new instance */
 extern SDTDCMotor *SDTDCMotor_new(long maxSize);
 
-/** @brief Copy src into dest
-@param[in] dest Pointer to the instance to overwrite
-@param[in] src Pointer to the instance to copy
-@return Pointer to the dest */
-extern SDTDCMotor *SDTDCMotor_copy(SDTDCMotor *dest, const SDTDCMotor *src);
-
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDCMotor_free(SDTDCMotor *x);
 
-/** @brief Gets the Revolutions Per Minute (RPM) of the engine rotor.
-@return Engine RPM */
-extern double SDTDCMotor_getRpm(const SDTDCMotor *x);
+#define SDT_DCMOTOR DCMotor
+#define SDT_DCMOTOR_NEW_ARGS 1
+#define SDT_DCMOTOR_ATTRIBUTES(T, A) \
+A(T, coils, long, Coils, coils, integer, 2)\
+A(T, size, double, Size, size, double, 0.2)\
+A(T, reson, double, Reson, reson, double, 0.8)\
+A(T, gearRatio, double, GearRatio, gearRatio, double, 1.0)\
+A(T, harshness, double, Harshness, harshness, double, 0.5)\
+A(T, rotorGain, double, RotorGain, rotorGain, double, 0.5)\
+A(T, gearGain, double, GearGain, gearGain, double, 0.3)\
+A(T, brushGain, double, BrushGain, brushGain, double, 0.2)\
+A(T, airGain, double, AirGain, airGain, double, 0.0)
 
-/** @brief Gets the mechanical stress on the rotor.
-@return Engine load */
-extern double SDTDCMotor_getLoad(const SDTDCMotor *x);
-
-/** @brief Gets the number of coils on the rotor.
-@return Number of coils on the rotor */
-extern long SDTDCMotor_getCoils(const SDTDCMotor *x);
-
-/** @brief Gets the size of the chassis.
-@return Chassis length, in m */
-extern double SDTDCMotor_getSize(const SDTDCMotor *x);
-
-/** @brief Gets the amount of resonance caused by the chassis.
-@return Chassis resonance */
-extern double SDTDCMotor_getReson(const SDTDCMotor *x);
-
-/** @brief Gets the gear ratio of the engine.
-@return Gear ratio */
-extern double SDTDCMotor_getGearRatio(const SDTDCMotor *x);
-
-/** @brief Gets the harshness of the engine sound.
-@return Harshness */
-extern double SDTDCMotor_getHarshness(const SDTDCMotor *x);
-
-/** @brief Gets the sound volume coming from the rotor.
-@return Rotor gain */
-extern double SDTDCMotor_getRotorGain(const SDTDCMotor *x);
-
-/** @brief Gets the sound volume coming from the gears.
-@return Gear gain */
-extern double SDTDCMotor_getGearGain(const SDTDCMotor *x);
-
-/** @brief Gets the sound volume coming from the commutator ring and brushes.
-@return Brush gain */
-extern double SDTDCMotor_getBrushGain(const SDTDCMotor *x);
-
-/** @brief Gets the sound volume of the air turbulence caused by rotation.
-@return Air gain */
-extern double SDTDCMotor_getAirGain(const SDTDCMotor *x);
+SDT_TYPE_COPY_H(SDT_DCMOTOR)
+SDT_DEFINE_HASHMAP_H(SDT_DCMOTOR)
+SDT_TYPE_MAKE_GETTERS_H(SDT_DCMOTOR)
+SDT_JSON_SERIALIZE_H(SDT_DCMOTOR)
+SDT_JSON_DESERIALIZE_H(SDT_DCMOTOR)
 
 /** @brief Sets the filter coefficients.
 Call this function whenever the sample rate changes */
@@ -144,39 +114,6 @@ extern void SDTDCMotor_setAirGain(SDTDCMotor *x, double f);
 Call this function at sample rate to synthesize an electric motor sound.
 @return Computed audio sample */
 extern double SDTDCMotor_dsp(SDTDCMotor *x);
-
-/** @brief Registers an electric motor into the electric motors list with a unique ID.
-@param[in] x DCMotor instance to register
-@param[in] key Unique ID assigned to the electric motor instance */
-extern int SDT_registerDCMotor(SDTDCMotor *x, char *key);
-
-/** @brief Queries the electric motors list by its unique ID.
-If an electric motor with the ID is present, a pointer to the electric motor is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the DCMotor instance
-@return DCMotor instance pointer */
-extern SDTDCMotor *SDT_getDCMotor(const char *key);
-
-/** @brief Unregisters an electric motor from the electric motors list.
-If an electric motor with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the DCMotor instance to unregister */
-extern int SDT_unregisterDCMotor(char *key);
-
-/** @defgroup json_dcmotor JSON
-JSON functions for SDT DCMotors
-@{ */
-
-/** @brief Convert an SDTDCMotor object in a JSON object
-@param[in] x Pointer to the SDTDCMotor
-@return Pointer to the JSON object. Memory must be freed with json_builder_free */
-extern json_value *SDTDCMotor_toJSON(const SDTDCMotor *x);
-
-/** @brief Load a SDTDCMotor object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTDCMotor, or 0 on failure. Memory must be freed with ::SDTDCMotor_free */
-extern SDTDCMotor *SDTDCMotor_fromJSON(const json_value *x);
-
-/** @} */
 
 #ifdef __cplusplus
 };

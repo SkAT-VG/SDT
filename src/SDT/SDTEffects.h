@@ -1,3 +1,5 @@
+#include "SDTCommonMacros.h"
+
 /** @file SDTEffects.h
 @defgroup effects SDTEffects.h: Digital audio effects
 Algorithms for audio post-processing, such as reverberation and pitch shifting
@@ -27,6 +29,10 @@ extern SDTReverb *SDTReverb_new(long maxDelay);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTReverb_free(SDTReverb *x);
+
+#define SDT_REVERB Reverb
+
+SDT_DEFINE_HASHMAP_H(SDT_REVERB)
 
 /** @brief Sets the room width.
 @param[in] f Room width, in m */
@@ -63,23 +69,6 @@ Call this function at sample rate to compute the reverberated signal.
 @return Output sample */
 extern double SDTReverb_dsp(SDTReverb *x, double in);
 
-/** @brief Registers a reverb into the reverbs list with a unique ID.
-@param[in] x Reverb instance to register
-@param[in] key Unique ID assigned to the reverb instance */
-extern int SDT_registerReverb(SDTReverb *x, char *key);
-
-/** @brief Queries the reverbs list by its unique ID.
-If a reverb with the ID is present, a pointer to the reverb is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the Reverb instance
-@return Reverb instance pointer */
-extern SDTReverb *SDT_getReverb(const char *key);
-
-/** @brief Unregisters a reverb from the reverbs list.
-If a reverb with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the Reverb instance to unregister */
-extern int SDT_unregisterReverb(char *key);
-
 /** @} */
 
 /** @defgroup pitchshift Pitch shift
@@ -100,6 +89,10 @@ extern SDTPitchShift *SDTPitchShift_new(int size, int oversample);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTPitchShift_free(SDTPitchShift *x);
 
+#define SDT_PITCHSHIFT PitchShift
+
+SDT_DEFINE_HASHMAP_H(SDT_PITCHSHIFT)
+
 /** @brief Sets the pitch shifting ratio.
 @param[in] f New pitch / original pitch ratio */
 extern void SDTPitchShift_setRatio(SDTPitchShift *x, double f);
@@ -116,23 +109,6 @@ Call this function at sample rate to compute the pitch shifted signal.
 @param[in] in Input sample
 @return Output sample */
 extern double SDTPitchShift_dsp(SDTPitchShift *x, double in);
-
-/** @brief Registers a pitch shifter into the pitch shifters list with a unique ID.
-@param[in] x PitchShift instance to register
-@param[in] key Unique ID assigned to the pitch shifter instance */
-extern int SDT_registerPitchShift(SDTPitchShift *x, char *key);
-
-/** @brief Queries the pitch shifters list by its unique ID.
-If a pitch shifter with the ID is present, a pointer to the pitch shifter is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the PitchShift instance
-@return PitchShift instance pointer */
-extern SDTPitchShift *SDT_getPitchShift(const char *key);
-
-/** @brief Unregisters a pitch shifter from the pitch shifters list.
-If a pitch shifter with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the PitchShift instance to unregister */
-extern int SDT_unregisterPitchShift(char *key);
 
 /** @} */
 

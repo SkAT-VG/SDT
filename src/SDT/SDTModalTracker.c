@@ -40,7 +40,7 @@ struct SDTModalTracker {
   long nSamples, nModes, bufferSize, winSize, fftSize, skip;
 };
 
-DEFINE_HASHMAP(ModalTracker, modaltrackers, 59)
+SDT_DEFINE_HASHMAP(SDT_MODALTRACKER, 59)
 
 SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize, long winSize) {
   SDTModalTracker *x;

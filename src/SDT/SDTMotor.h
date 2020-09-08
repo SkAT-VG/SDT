@@ -1,3 +1,5 @@
+#include "SDTCommonMacros.h"
+
 /** @file SDTMotor.h
 @defgroup motor SDTMotor.h: Combustion engines
 From a mechanical point of view, an internal combustion engine converts chemical energy
@@ -33,6 +35,10 @@ extern SDTMotor *SDTMotor_new(long maxDelay);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTMotor_free(SDTMotor *x);
+
+#define SDT_MOTOR Motor
+
+SDT_DEFINE_HASHMAP_H(SDT_MOTOR)
 
 /** @brief Update filter coefficients.
 Should be always called after setting the sampling rate with SDT_setSampleRate().
@@ -118,23 +124,6 @@ represents the engine vibrations, mostly heard inside the cabin; the third and l
 output represents the sound coming from the exhaust outlet, towards the rear of the vehicle.
 @param[out] outs Pointer to an array of three doubles, destination of the output */
 extern void SDTMotor_dsp(SDTMotor *x, double *outs);
-
-/** @brief Registers a motor into the motors list with a unique ID.
-@param[in] x Motor instance to register
-@param[in] key Unique ID assigned to the motor instance */
-extern int SDT_registerMotor(SDTMotor *x, char *key);
-
-/** @brief Queries the motors list by its unique ID.
-If a motor with the ID is present, a pointer to the motor is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the Motor instance
-@return Motor instance pointer */
-extern SDTMotor *SDT_getMotor(const char *key);
-
-/** @brief Unregisters a motor from the motors list.
-If a motor with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the Motor instance to unregister */
-extern int SDT_unregisterMotor(char *key);
 
 /** @} */
 

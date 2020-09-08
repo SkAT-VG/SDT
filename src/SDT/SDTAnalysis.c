@@ -16,8 +16,6 @@ struct SDTZeroCrossing {
   int i, j, size, skip;
 };
 
-DEFINE_HASHMAP(ZeroCrossing, zerocrossings, 59)
-
 SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   SDTZeroCrossing *x;
   int i;
@@ -42,6 +40,8 @@ void SDTZeroCrossing_free(SDTZeroCrossing *x) {
   free(x->win);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_ZEROCROSSING, 59)
 
 void SDTZeroCrossing_setOverlap(SDTZeroCrossing *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
@@ -73,8 +73,6 @@ struct SDTMyoelastic {
          impAct, myoAct, impFreq, myoFreq;
   int impCount, myoCount;
 };
-
-DEFINE_HASHMAP(Myoelastic, myoelastics, 59)
 
 SDTMyoelastic *SDTMyoelastic_new(int bufSize) {
   SDTMyoelastic *x;
@@ -117,6 +115,8 @@ void SDTMyoelastic_free(SDTMyoelastic *x) {
   SDTBiquad_free(x->highHP);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_MYOELASTIC, 59)
 
 void SDTMyoelastic_update(SDTMyoelastic *x) {
   SDTTwoPoles_lowpass(x->inRMS, 1000.0);
@@ -201,8 +201,6 @@ struct SDTSpectralFeats {
   int i, j, size, fftSize, skip, min, max, span;
 };
 
-DEFINE_HASHMAP(SpectralFeats, spectralfeats, 59)
-
 SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
   SDTSpectralFeats *x;
   int i, fftSize;
@@ -252,6 +250,8 @@ void SDTSpectralFeats_free(SDTSpectralFeats *x) {
   SDTFFT_free(x->fftPlan);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_SPECTRALFEATS, 59)
 
 void SDTSpectralFeats_setOverlap(SDTSpectralFeats *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
@@ -339,8 +339,6 @@ struct SDTPitch {
   int curr, count, size, skip, seek;
 };
 
-DEFINE_HASHMAP(Pitch, pitches, 59)
-
 SDTPitch *SDTPitch_new(unsigned int size) {
   SDTPitch *x;
   int i;
@@ -383,6 +381,8 @@ void SDTPitch_free(SDTPitch *x) {
   SDTFFT_free(x->fftPlan);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_PITCH, 59)
 
 void SDTPitch_setOverlap(SDTPitch *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);

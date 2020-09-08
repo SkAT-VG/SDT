@@ -20,8 +20,6 @@ struct SDTDemix {
       bufCount, hopCount, magCount, rowCount, fftCount;
 };
 
-DEFINE_HASHMAP(Demix, demixes, 59)
-
 SDTDemix *SDTDemix_new(int size, int radius) {
   SDTDemix *x;
   int i, fftSize, hopSize, width, center;
@@ -118,6 +116,8 @@ void SDTDemix_free(SDTDemix *x) {
   SDTFFT_free(x->fftPlan);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_DEMIX, 59)
 
 void SDTDemix_setOverlap(SDTDemix *x, double f) {
   x->hopSize = SDT_clip((1.0 - f) * x->size, 1, x->size / 2);

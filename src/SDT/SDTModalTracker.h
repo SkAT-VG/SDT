@@ -1,3 +1,5 @@
+#include "SDTCommonMacros.h"
+
 /** @file SDTModalTracker.h
 @defgroup modaltracker Modal analyzer
 This object detects the prominent modal components
@@ -23,6 +25,10 @@ extern SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize, long w
 /** @brief Destroys a modal analyzer instance.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTModalTracker_free(SDTModalTracker *x);
+
+#define SDT_MODALTRACKER ModalTracker
+
+SDT_DEFINE_HASHMAP_H(SDT_MODALTRACKER)
 
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap
@@ -61,23 +67,6 @@ extern void SDTModalTracker_static(SDTModalTracker *x, double *mags, double *fre
 @param[out] mags Magnitudes array
 @param[out] freqs Frequencies array */
 extern void SDTModalTracker_dynamic(SDTModalTracker *x, double time, double *mags, double *freqs);
-
-/** @brief Registers a modal tracker into the modal trackers list with a unique ID.
-@param[in] x ModalTracker instance to register
-@param[in] key Unique ID assigned to the modal tracker instance */
-extern int SDT_registerModalTracker(SDTModalTracker *x, char *key);
-
-/** @brief Queries the modal trackers list by its unique ID.
-If a modal tracker with the ID is present, a pointer to the modal tracker is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the ModalTracker instance
-@return ModalTracker instance pointer */
-extern SDTModalTracker *SDT_getModalTracker(const char *key);
-
-/** @brief Unregisters a modal tracker from the modal trackers list.
-If a modal tracker with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the ModalTracker instance to unregister */
-extern int SDT_unregisterModalTracker(char *key);
 
 #ifdef __cplusplus
 };

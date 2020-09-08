@@ -1,3 +1,5 @@
+#include "SDTCommonMacros.h"
+
 /** @file SDTAnalysis.h
 @defgroup analysis SDTAnalysis.h: Sound analysis tools
 Tools for the extraction of low level audio descriptors,
@@ -28,6 +30,10 @@ extern SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTZeroCrossing_free(SDTZeroCrossing *x);
 
+#define SDT_ZEROCROSSING ZeroCrossing
+
+SDT_DEFINE_HASHMAP_H(SDT_ZEROCROSSING)
+
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap
 and 1.0 meaning total overlap.
@@ -42,23 +48,6 @@ Call this function at sample rate to perform signal analysis.
 @param[in] in Input sample
 @return 1 if output available (analysis window full), 0 otherwise  */
 extern int SDTZeroCrossing_dsp(SDTZeroCrossing *x, double *out, double in);
-
-/** @brief Registers a zero crossing rate detector into the zero crossing rate detectors list with a unique ID.
-@param[in] x ZeroCrossing instance to register
-@param[in] key Unique ID assigned to the zero crossing rate detector instance */
-extern int SDT_registerZeroCrossing(SDTZeroCrossing *x, char *key);
-
-/** @brief Queries the zero crossing rate detectors list by its unique ID.
-If a zero crossing rate detector with the ID is present, a pointer to the zero crossing rate detector is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the ZeroCrossing instance
-@return ZeroCrossing instance pointer */
-extern SDTZeroCrossing *SDT_getZeroCrossing(const char *key);
-
-/** @brief Unregisters a zero crossing rate detector from the zero crossing rate detectors list.
-If a zero crossing rate detector with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the ZeroCrossing instance to unregister */
-extern int SDT_unregisterZeroCrossing(char *key);
 
 /** @} */
 
@@ -77,6 +66,10 @@ extern SDTMyoelastic *SDTMyoelastic_new(int size);
 /** @brief Destroys a myoelastic feature extractor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTMyoelastic_free(SDTMyoelastic *x);
+
+#define SDT_MYOELASTIC Myoelastic
+
+SDT_DEFINE_HASHMAP_H(SDT_MYOELASTIC)
 
 /** @brief Sets the DC offset cutoff.
 @param[in] x Pointer to the instance
@@ -108,23 +101,6 @@ Call this function at sample rate to perform signal analysis.
 @return 1 if output available, 0 otherwise */
 extern int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
 
-/** @brief Registers a myoelastic feature extractor into the myoelastic feature extractors list with a unique ID.
-@param[in] x Myoelastic instance to register
-@param[in] key Unique ID assigned to the myoelastic feature extractor instance */
-extern int SDT_registerMyoelastic(SDTMyoelastic *x, char *key);
-
-/** @brief Queries the myoelastic feature extractors list by its unique ID.
-If a myoelastic feature extractor with the ID is present, a pointer to the myoelastic feature extractor is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the Myoelastic instance
-@return Myoelastic instance pointer */
-extern SDTMyoelastic *SDT_getMyoelastic(const char *key);
-
-/** @brief Unregisters a myoelastic feature extractor from the myoelastic feature extractors list.
-If a myoelastic feature extractor with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the Myoelastic instance to unregister */
-extern int SDT_unregisterMyoelastic(char *key);
-
 /** @} */
 
 /** @defgroup spectralfeats Spectral audio descriptors
@@ -144,6 +120,10 @@ extern SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size);
 /** @brief Destroys a spectral features extractor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTSpectralFeats_free(SDTSpectralFeats *x);
+
+#define SDT_SPECTRALFEATS SpectralFeats
+
+SDT_DEFINE_HASHMAP_H(SDT_SPECTRALFEATS)
 
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap
@@ -180,23 +160,6 @@ Array members represent the following information respectively:
 @return 1 if output available (analysis window full), 0 otherwise */
 extern int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in);
 
-/** @brief Registers a spectral features extractor into the spectral features extractors list with a unique ID.
-@param[in] x SpectralFeats instance to register
-@param[in] key Unique ID assigned to the spectral features extractor instance */
-extern int SDT_registerSpectralFeats(SDTSpectralFeats *x, char *key);
-
-/** @brief Queries the spectral features extractors list by its unique ID.
-If a spectral features extractor with the ID is present, a pointer to the spectral features extractor is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the SpectralFeats instance
-@return SpectralFeats instance pointer */
-extern SDTSpectralFeats *SDT_getSpectralFeats(const char *key);
-
-/** @brief Unregisters a spectral features extractor from the spectral features extractors list.
-If a spectral features extractor with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the SpectralFeats instance to unregister */
-extern int SDT_unregisterSpectralFeats(char *key);
-
 /** @} */
 
 /** @defgroup pitch Fundamental frequency estimator
@@ -218,6 +181,10 @@ extern SDTPitch *SDTPitch_new(unsigned int size);
 /** @brief Destroys a fundamental frequency estimator instance.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTPitch_free(SDTPitch *x);
+
+#define SDT_PITCH Pitch
+
+SDT_DEFINE_HASHMAP_H(SDT_PITCH)
 
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap
@@ -249,23 +216,6 @@ Array members represent the following information respectively:
 @param[in] in Input sample
 @return 1 if output available (analysis window full), 0 otherwise */
 extern int SDTPitch_dsp(SDTPitch *x, double *outs, double in);
-
-/** @brief Registers a fundamental frequency estimator into the fundamental frequency estimators list with a unique ID.
-@param[in] x Pitch instance to register
-@param[in] key Unique ID assigned to the fundamental frequency estimator instance */
-extern int SDT_registerPitch(SDTPitch *x, char *key);
-
-/** @brief Queries the fundamental frequency estimators list by its unique ID.
-If a fundamental frequency estimator with the ID is present, a pointer to the fundamental frequency estimator is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the Pitch instance
-@return Pitch instance pointer */
-extern SDTPitch *SDT_getPitch(const char *key);
-
-/** @brief Unregisters a fundamental frequency estimator from the fundamental frequency estimators list.
-If a fundamental frequency estimator with the given ID is present, it is unregistered from the list.
-@param[in] key Unique ID of the Pitch instance to unregister */
-extern int SDT_unregisterPitch(char *key);
 
 /** @} */
 

@@ -17,8 +17,6 @@ struct SDTBubble {
          phase, out, lastOut;
 };
 
-DEFINE_HASHMAP(Bubble, bubbles, 59)
-
 SDTBubble *SDTBubble_new() {
   SDTBubble *x;
   
@@ -40,6 +38,8 @@ SDTBubble *SDTBubble_new() {
 void SDTBubble_free(SDTBubble *x) {
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_BUBBLE, 59)
 
 void SDTBubble_setRadius(SDTBubble *x, double f) {
   x->radius = SDT_fclip(f, MIN_RADIUS, MAX_RADIUS);
@@ -93,7 +93,7 @@ struct SDTFluidFlow {
   int nBubbles;
 };
 
-DEFINE_HASHMAP(FluidFlow, fluidflows, 59)
+SDT_DEFINE_HASHMAP(SDT_FLUIDFLOW, 59)
 
 SDTFluidFlow *SDTFluidFlow_new(int nBubbles) {
   SDTFluidFlow *x;

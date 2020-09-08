@@ -25,7 +25,7 @@ struct SDTMotor {
   int nCylinders;
 };
 
-DEFINE_HASHMAP(Motor, motors, 59)
+SDT_DEFINE_HASHMAP(SDT_MOTOR, 59)
 
 void fourStroke(double phase, double *pressure, double *inValve, double *outValve) {
   double w;

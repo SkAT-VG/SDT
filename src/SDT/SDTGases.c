@@ -12,8 +12,6 @@ struct SDTWindFlow {
   double windSpeed;
 };
 
-DEFINE_HASHMAP(WindFlow, windflows, 59)
-
 SDTWindFlow *SDTWindFlow_new() {
   SDTWindFlow *x;
   
@@ -27,6 +25,8 @@ extern void SDTWindFlow_free(SDTWindFlow *x) {
   SDTTwoPoles_free(x->reso);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_WINDFLOW, 59)
 
 void SDTWindFlow_setFilters(SDTWindFlow *x) {
   SDTTwoPoles_resonant(x->reso, 800.0, 1.0);
@@ -51,8 +51,6 @@ struct SDTWindCavity {
   SDTTwoPoles *reso;
   double length, diameter, windSpeed, harmonics, freq, delay;
 };
-
-DEFINE_HASHMAP(WindCavity, windcavities, 59)
 
 void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
   double gain;
@@ -94,6 +92,8 @@ void SDTWindCavity_free(SDTWindCavity *x) {
   free(x);
 }
 
+SDT_DEFINE_HASHMAP(SDT_WINDCAVITY, 59)
+
 void SDTWindCavity_setLength(SDTWindCavity *x, double f) {
   x->length = fmax(SDT_MICRO, f);
   SDTWindCavity_updateGeometry(x);
@@ -127,8 +127,6 @@ struct SDTWindKarman {
   double windSpeed, diameter;
 };
 
-DEFINE_HASHMAP(WindKarman, windkarmans, 59)
-
 void SDTWindKarman_updateResonance(SDTWindKarman *x) {
   double fc;
   
@@ -150,6 +148,8 @@ extern void SDTWindKarman_free(SDTWindKarman *x) {
   SDTTwoPoles_free(x->reso);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_WINDKARMAN, 59)
 
 void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
   x->diameter = fmax(SDT_MICRO, f);
@@ -179,8 +179,6 @@ struct SDTExplosion {
          distance, waveSpeed, windSpeed, time;
   long i, waveDelay, windDelay, size;
 };
-
-DEFINE_HASHMAP(Explosion, explosions, 59)
 
 SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay) {
   SDTExplosion *x;
@@ -218,6 +216,8 @@ void SDTExplosion_free(SDTExplosion *x) {
   free(x->windBuf);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_EXPLOSION, 59)
 
 void SDTExplosion_setBlastTime(SDTExplosion *x, double f) {
   x->blastTime = fmax(0.0, f);

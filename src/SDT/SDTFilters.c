@@ -84,8 +84,6 @@ struct SDTEnvelope {
   double b0a, a1a, b0r, a1r, y1;
 };
 
-DEFINE_HASHMAP(Envelope, envelopes, 59)
-
 SDTEnvelope *SDTEnvelope_new() {
   SDTEnvelope *x;
   
@@ -101,6 +99,8 @@ SDTEnvelope *SDTEnvelope_new() {
 void SDTEnvelope_free(SDTEnvelope *x) {
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_ENVELOPE, 59)
 
 void SDTEnvelope_setAttack(SDTEnvelope *x, double a) {
   double w;
@@ -194,8 +194,6 @@ struct SDTBiquad {
   int nSections;
 };
 
-DEFINE_HASHMAP(Biquad, biquads, 59)
-
 SDTBiquad *SDTBiquad_new(int nSections) {
   SDTBiquad *x;
   int i, n;
@@ -231,6 +229,8 @@ void SDTBiquad_free(SDTBiquad *x) {
   free(x->buf);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_BIQUAD, 59)
 
 void SDTBiquad_common(SDTBiquad *x, int i, double fc, double q) {
   x->w = 2.0 * SDT_PI * fc * SDT_timeStep;

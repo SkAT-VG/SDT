@@ -21,8 +21,6 @@ struct SDTReverb {
          xSize, ySize, zSize, randomness, time, time1k;
 };
 
-DEFINE_HASHMAP(Reverb, reverbs, 59)
-
 SDTReverb *SDTReverb_new(long maxDelay) {
   SDTReverb *x;
   int i;
@@ -54,6 +52,8 @@ void SDTReverb_free(SDTReverb *x) {
   }
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_REVERB, 59)
 
 void SDTReverb_update(SDTReverb *x) {
   double xMode, yMode, zMode, freq, delay, gi, gw, a, b, c, d;
@@ -131,8 +131,6 @@ struct SDTPitchShift {
   int i, j, size, winSize, fftSize, hopSize;
 };
 
-DEFINE_HASHMAP(PitchShift, pitchshifts, 59)
-
 SDTPitchShift *SDTPitchShift_new(int size, int oversample) {
   SDTPitchShift *x;
   int i, winSize, fftSize;
@@ -204,6 +202,8 @@ void SDTPitchShift_free(SDTPitchShift *x) {
   SDTFFT_free(x->fftPlan);
   free(x);
 }
+
+SDT_DEFINE_HASHMAP(SDT_PITCHSHIFT, 59)
 
 void SDTPitchShift_setRatio(SDTPitchShift *x, double f) {
   x->ratio = fmax(f, 0.0);
