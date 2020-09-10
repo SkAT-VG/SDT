@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -10,6 +11,7 @@ typedef struct _spectralfeats {
   SDTSpectralFeats *feats;
   void *outlet, *send;
   double overlap, minFreq, maxFreq, outs[8];
+  t_symbol *key;
 } t_spectralfeats;
 
 static t_class *spectralfeats_class = NULL;
@@ -23,6 +25,8 @@ void spectralfeats_assist(t_spectralfeats *x, void *b, long m, long a, char *s) 
     sprintf(s, "(symbol, float): Audio descriptors");
   }
 }
+
+SDT_MAX_KEY(spectralfeats, SpectralFeats, feats, "spectralfeats", "spectral features extractor")
 
 void spectralfeats_overlap(t_spectralfeats *x, void *attr, long ac, t_atom *av) {
   x->overlap = atom_getfloat(av);
@@ -119,6 +123,7 @@ void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
       windowSize = 1024;
     }
     x->feats = SDTSpectralFeats_new(windowSize);
+    x->key = 0;
     x->outlet = outlet_new((t_object *)x, NULL);
     x->send = qelem_new((t_object *)x, (method)spectralfeats_send);
     attr_args_process(x, argc, argv);
@@ -130,7 +135,7 @@ void spectralfeats_free(t_spectralfeats *x) {
   dsp_free((t_pxobject *)x);
   object_free(x->outlet);
   qelem_free(x->send);
-  SDTSpectralFeats_free(x->feats);
+  SDT_MAX_FREE(SpectralFeats, feats)
 }
 
 void C74_EXPORT ext_main(void *r) {	
@@ -140,6 +145,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)spectralfeats_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)spectralfeats_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(spectralfeats, "1")
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_spectralfeats, overlap);
   CLASS_ATTR_DOUBLE(c, "minFreq", 0, t_spectralfeats, minFreq);
@@ -153,9 +160,9 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "minFreq", NULL, (method)spectralfeats_minFreq);
   CLASS_ATTR_ACCESSORS(c, "maxFreq", NULL, (method)spectralfeats_maxFreq);
   
-  CLASS_ATTR_ORDER(c, "overlap", 0, "1");
-  CLASS_ATTR_ORDER(c, "minFreq", 0, "2");
-  CLASS_ATTR_ORDER(c, "maxFreq", 0, "3");
+  CLASS_ATTR_ORDER(c, "overlap", 0, "2");
+  CLASS_ATTR_ORDER(c, "minFreq", 0, "3");
+  CLASS_ATTR_ORDER(c, "maxFreq", 0, "4");
   
   class_dspinit(c);
   class_register(CLASS_BOX, c);

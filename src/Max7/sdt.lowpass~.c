@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTFilters.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _lowpass {
   t_pxobject ob;
   SDTBiquad *lowpass;
   double cutoff;
+  t_symbol *key;
 } t_lowpass;
 
 static t_class *lowpass_class = NULL;
@@ -27,6 +29,7 @@ void *lowpass_new(t_symbol *s, long argc, t_atom *argv) {
       nSections = 1;
     }
     x->lowpass = SDTBiquad_new(nSections);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -34,7 +37,7 @@ void *lowpass_new(t_symbol *s, long argc, t_atom *argv) {
 
 void lowpass_free(t_lowpass *x) {
   dsp_free((t_pxobject *)x);
-  SDTBiquad_free(x->lowpass);
+  SDT_MAX_FREE(Biquad, lowpass)
 }
 
 void lowpass_assist(t_lowpass *x, void *b, long m, long a, char *s) {
@@ -46,6 +49,8 @@ void lowpass_assist(t_lowpass *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(lowpass, Biquad, lowpass, "lowpass~", "low-pass filter")
 
 void lowpass_cutoff(t_lowpass *x, void *attr, long ac, t_atom *av) {
     x->cutoff = atom_getfloat(av);
@@ -98,6 +103,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)lowpass_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)lowpass_assist, "assist",	A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(lowpass, "1")
 
   CLASS_ATTR_DOUBLE(c, "cutoff", 0, t_lowpass, cutoff);
   CLASS_ATTR_FILTER_MIN(c, "cutoff", 0.0);

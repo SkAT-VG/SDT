@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _scraping {
   t_pxobject ob;
   SDTScraping *scraping;
   double grain, force, velocity;
+  t_symbol *key;
 } t_scraping;
 
 static t_class *scraping_class = NULL;
@@ -21,6 +23,7 @@ void *scraping_new(t_symbol *s, long argc, t_atom *argv) {
     dsp_setup((t_pxobject *)x, 1);
     outlet_new(x, "signal");
     x->scraping = SDTScraping_new();
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -28,7 +31,7 @@ void *scraping_new(t_symbol *s, long argc, t_atom *argv) {
 
 void scraping_free(t_scraping *x) {
   dsp_free((t_pxobject *)x);
-  SDTScraping_free(x->scraping);
+  SDT_MAX_FREE(Scraping, scraping)
 }
 
 void scraping_assist(t_scraping *x, void *b, long m, long a, char *s) {
@@ -40,6 +43,8 @@ void scraping_assist(t_scraping *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Applied force on resonator");
   }
 }
+
+SDT_MAX_KEY(scraping, Scraping, scraping, "scraping~", "scraping process")
 
 void scraping_grain(t_scraping *x, void *attr, long ac, t_atom *av) {
   x->grain = atom_getfloat(av);
@@ -97,6 +102,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)scraping_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)scraping_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(scraping, "1")
   
   CLASS_ATTR_DOUBLE(c, "grain", 0, t_scraping, grain);
   CLASS_ATTR_DOUBLE(c, "force", 0, t_scraping, force);
@@ -110,9 +117,9 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "force", NULL, (method)scraping_force);
   CLASS_ATTR_ACCESSORS(c, "velocity", NULL, (method)scraping_velocity);
    
-  CLASS_ATTR_ORDER(c, "grain", 0, "1");
-  CLASS_ATTR_ORDER(c, "force", 0, "2");
-  CLASS_ATTR_ORDER(c, "velocity", 0, "3");
+  CLASS_ATTR_ORDER(c, "grain", 0, "2");
+  CLASS_ATTR_ORDER(c, "force", 0, "3");
+  CLASS_ATTR_ORDER(c, "velocity", 0, "4");
   
   
   class_dspinit(c);

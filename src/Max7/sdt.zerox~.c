@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -10,6 +11,7 @@ typedef struct _zerocrossing {
   SDTZeroCrossing *zerox;
   void *outlet, *send;
   double overlap, out;
+  t_symbol *key;
 } t_zerocrossing;
 
 static t_class *zerocrossing_class = NULL;
@@ -23,6 +25,8 @@ void zerocrossing_assist(t_zerocrossing *x, void *b, long m, long a, char *s) {
     sprintf(s, "(float): Normalized zero crossing rate [0,1]");
   }
 }
+
+SDT_MAX_KEY(zerocrossing, ZeroCrossing, zerox, "zerox~", "zero crossing rate detector")
 
 void zerocrossing_overlap(t_zerocrossing *x, void *attr, long ac, t_atom *av) {
   x->overlap = atom_getfloat(av);
@@ -84,6 +88,7 @@ void *zerocrossing_new(t_symbol *s, long argc, t_atom *argv) {
       windowSize = 1024;
     }
     x->zerox = SDTZeroCrossing_new(windowSize);
+    x->key = 0;
     x->outlet = floatout(x);
     x->send = qelem_new((t_object *)x, (method)zerocrossing_send);
     x->out = 0.0;
@@ -94,7 +99,7 @@ void *zerocrossing_new(t_symbol *s, long argc, t_atom *argv) {
 
 void zerocrossing_free(t_zerocrossing *x) {
   dsp_free((t_pxobject *)x);
-  SDTZeroCrossing_free(x->zerox);
+  SDT_MAX_FREE(ZeroCrossing, zerox)
   object_free(x->outlet);
   qelem_free(x->send);
 }
@@ -106,6 +111,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)zerocrossing_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)zerocrossing_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(zerocrossing, "1")
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_zerocrossing, overlap);
   CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);

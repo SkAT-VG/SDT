@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -10,6 +11,7 @@ typedef struct _breaking {
   void *size, *energy;
   SDTBreaking *breaking;
   double storedEnergy, crushingEnergy, granularity, fragmentation;
+  t_symbol *key;
 } t_breaking;
 
 static t_class *breaking_class = NULL;
@@ -64,17 +66,20 @@ void *breaking_new(t_symbol *s, short argc, t_atom *argv) {
     x->energy = outlet_new(x, "signal");
     x->size = outlet_new(x, "signal");
     x->breaking = SDTBreaking_new();
+    x->key = 0;
     attr_args_process(x, argc, argv); 
   }
   return (x);
 }
 
 void breaking_free(t_breaking *x)  {
-    dsp_free((t_pxobject *)x);
-    SDTBreaking_free(x->breaking);
-    object_free(x->size);
-    object_free(x->energy);
+  dsp_free((t_pxobject *)x);
+  SDT_MAX_FREE(Breaking, breaking)
+  object_free(x->size);
+  object_free(x->energy);
 }
+
+SDT_MAX_KEY(breaking, Breaking, breaking, "breaking~", "breaking process")
 
 t_int *breaking_perform(t_int *w) {
   t_breaking *x = (t_breaking *)(w[1]);
@@ -125,7 +130,9 @@ void C74_EXPORT ext_main(void *r) {
 	class_addmethod(c, (method)breaking_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)breaking_dsp64, "dsp64", A_CANT, 0);
 	class_addmethod(c, (method)breaking_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(breaking, "1")
 	
 	CLASS_ATTR_DOUBLE(c, "storedEnergy", 0, t_breaking, storedEnergy);
 	CLASS_ATTR_DOUBLE(c, "crushingEnergy", 0, t_breaking, crushingEnergy);
@@ -142,10 +149,10 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "granularity", NULL, (method)breaking_granularity);
   CLASS_ATTR_ACCESSORS(c, "fragmentation", NULL, (method)breaking_fragmentation);
 	
-	CLASS_ATTR_ORDER(c, "storedEnergy", 0, "1");
-	CLASS_ATTR_ORDER(c, "crushingEnergy", 0, "2");
-	CLASS_ATTR_ORDER(c, "granularity", 0, "3");
-	CLASS_ATTR_ORDER(c, "fragmentation", 0, "4");
+	CLASS_ATTR_ORDER(c, "storedEnergy", 0, "2");
+	CLASS_ATTR_ORDER(c, "crushingEnergy", 0, "3");
+	CLASS_ATTR_ORDER(c, "granularity", 0, "4");
+	CLASS_ATTR_ORDER(c, "fragmentation", 0, "5");
 	
 	class_dspinit(c);
 	class_register(CLASS_BOX, c);

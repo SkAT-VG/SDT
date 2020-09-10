@@ -46,7 +46,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *****************************************************************************/
 
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
 #ifdef NT
@@ -60,6 +60,7 @@ typedef struct _fluidflow {
   t_object obj;
   SDTFluidFlow *flow;
   t_outlet *out;
+  char *key;
 } t_fluidflow;
 
 void fluidflow_avgRate(t_fluidflow *x, t_float f) {
@@ -114,20 +115,20 @@ static void fluidflow_dsp(t_fluidflow *x, t_signal **sp) {
 }
 
 static void *fluidflow_new(t_symbol *s, int argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+
   t_fluidflow *x = (t_fluidflow *)pd_new(fluidflow_class);
+  x->flow = SDTFluidFlow_new(GET_ARG(1, atom_getfloat, 64));
+
+  SDT_PD_REGISTER(FluidFlow, flow, "fluid flow", 0)
+
   x->out = outlet_new(&x->obj, gensym("signal"));
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    x->flow = SDTFluidFlow_new(atom_getfloat(argv));
-  }
-  else {
-    x->flow = SDTFluidFlow_new(64);
-  }
   return (x);
 }
 
 static void fluidflow_free(t_fluidflow *x) {
   outlet_free(x->out);
-  SDTFluidFlow_free(x->flow);
+  SDT_PD_FREE(FluidFlow, flow)
 }
 
 void fluidflow_tilde_setup(void) {

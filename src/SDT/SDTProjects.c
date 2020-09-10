@@ -1,3 +1,4 @@
+#include "SDTOSCMisc.h"
 #include "SDTProjects.h"
 #include "SDTDCMotor.h"
 #include "SDTSolids.h"
@@ -25,14 +26,22 @@ static json_value *json_error(const char *err, const json_value *value) {
   return error;
 }
 
+#define SDT_OSC_DICT_DECLARE(TYPE, NAME) json_value *dict_ ## TYPE = json_object_new(0);
+
+#define SDT_OSC_SAVER_SWITCH(TYPE, NAME) if ((v = CONCAT(SDT_get, SDT_ ## TYPE)(argv[i]))) \
+json_object_push(dict_ ## TYPE, argv[i], CONCAT(SDT_TYPE_FULL(SDT_ ## TYPE), _toJSON)(v));
+
+#define SDT_OSC_DICT_PUSH(TYPE, NAME) push_else_free(prj, STRINGIFY(NAME ## s), dict_ ## TYPE, dict_ ## TYPE->u.object.length);
+
 json_value *SDTProject_toJSON(int argc, const char **argv) {
   json_value *prj = json_object_new(0);
+  SDT_OSC_CLASSES(SDT_OSC_DICT_DECLARE)
 
   // Fetch all objects
-  json_value *res = json_object_new(0), *dcm = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0), *fri = json_array_new(0);
+  json_value *res = json_object_new(0), *inter = json_object_new(0), *imp = json_array_new(0), *fri = json_array_new(0);
   SDTResonator *r;
-  void *v;
   SDTInteractor *s;
+  void *v;
   for (unsigned int i = 0; i < argc ; ++i) {
     if ((r = SDT_getResonator(argv[i]))) {
       json_object_push(res, argv[i], SDTResonator_toJSON(r));
@@ -44,16 +53,15 @@ json_value *SDTProject_toJSON(int argc, const char **argv) {
             json_array_push(fri, SDTFriction_toJSON(s, argv[i], argv[j]));
         }
     }
-    if ((v = SDT_getDCMotor(argv[i])))
-      json_object_push(dcm, argv[i], SDTDCMotor_toJSON(v));
+    SDT_OSC_CLASSES(SDT_OSC_SAVER_SWITCH)
   }
 
   push_else_free(prj, "metadata", SDTProjectMetadata_pop(), SDTProjectMetadata_get()->u.object.length);
-  push_else_free(prj, "dcmotors", dcm, dcm->u.object.length);
   push_else_free(prj, "resonators", res, res->u.object.length);
   push_else_free(inter, "impacts", imp, imp->u.array.length);
   push_else_free(inter, "frictions", fri, fri->u.array.length);
   push_else_free(prj, "interactors", inter, inter->u.object.length);
+  SDT_OSC_CLASSES(SDT_OSC_DICT_PUSH)
 
   return prj;
 }
@@ -80,17 +88,22 @@ static int SDTProject_assert(int value, SDTOSCReturnCode *return_code, json_valu
   return 0;
 }
 
-static int SDTProject_loadDCMotor(const json_object_entry *value, SDTOSCReturnCode *return_code, json_value *return_msg) {
-  SDTDCMotor *x;
-  if (!SDTProject_assert(value->value->type == json_object, return_code, return_msg, SDT_OSC_RETURN_JSON_NOT_COMPLIANT, value->name, json_string_new("not a JSON object"))
-      || !SDTProject_assert((uintptr_t) (x = SDT_getDCMotor(value->name)), return_code, return_msg, SDT_OSC_RETURN_OBJECT_NOT_FOUND, value->name, json_string_new("not found")))
-    return 0;
-
-  SDTDCMotor *tmp = SDTDCMotor_fromJSON(value->value);
-  SDTDCMotor_copy(x, tmp);
-  SDTDCMotor_free(tmp);
-  return 1;
+#define SDT_OSC_LOADER(TYPE, NAME) static int CONCAT(SDTProject_load, SDT_ ## TYPE)(const json_object_entry *value, SDTOSCReturnCode *return_code, json_value *return_msg) { \
+  SDT_TYPE_FULL(SDT_ ## TYPE) *x; \
+  if (!SDTProject_assert(value->value->type == json_object, return_code, \
+      return_msg, SDT_OSC_RETURN_JSON_NOT_COMPLIANT, value->name, \
+      json_string_new("not a JSON object")) \
+   || !SDTProject_assert((uintptr_t) (x = CONCAT(SDT_get, SDT_ ## TYPE)(value->name)), return_code, \
+      return_msg, SDT_OSC_RETURN_OBJECT_NOT_FOUND, value->name, \
+      json_string_new("not found"))) \
+    return 0; \
+  SDT_TYPE_FULL(SDT_ ## TYPE) *tmp = CONCAT(SDT_TYPE_FULL(SDT_ ## TYPE), _fromJSON)(value->value); \
+  CONCAT(SDT_TYPE_FULL(SDT_ ## TYPE), _copy)(x, tmp); \
+  CONCAT(SDT_TYPE_FULL(SDT_ ## TYPE), _free)(tmp); \
+  return 1; \
 }
+
+SDT_OSC_CLASSES(SDT_OSC_LOADER)
 
 static int SDTProject_loadResonator(const json_object_entry *value, SDTOSCReturnCode *return_code, json_value *return_msg) {
   SDTResonator *x;
@@ -160,6 +173,16 @@ static int SDTProject_loadInteractors(
   return 1;
 }
 
+#define SDT_OSC_LOAD_MISC(TYPE, NAME) const json_value * dict_ ## TYPE = json_object_get_by_key(prj, STRINGIFY(NAME ## s)); \
+  if (dict_ ## TYPE) { \
+    if (!SDTProject_assert(dict_ ## TYPE ->type == json_object, return_code, msg, SDT_OSC_RETURN_JSON_NOT_COMPLIANT, \
+        STRINGIFY(NAME ## s), json_string_new("not compliant (not a JSON object)"))) \
+      return; \
+    for (unsigned int i = 0; i < dict_ ## TYPE ->u.object.length; ++i) \
+      if (!CONCAT(SDTProject_load, SDT_ ## TYPE)(dict_ ## TYPE ->u.object.values + i, return_code, msg)) \
+        return; \
+}
+
 void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code, json_value *msg) {
   if (!SDTProject_assert(prj && prj->type == json_object, return_code, msg, SDT_OSC_RETURN_JSON_NOT_COMPLIANT,
                          "project", json_string_new("not compliant (not a JSON object)")))
@@ -173,17 +196,6 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code, j
       SDTProjectMetadata_set(json_deepcopy(meta));
     else
       return;
-  }
-
-  // Load DC motors
-  const json_value *dcm = json_object_get_by_key(prj, "dcmotors");
-  if (dcm) {
-    if (!SDTProject_assert(dcm->type == json_object, return_code, msg, SDT_OSC_RETURN_JSON_NOT_COMPLIANT,
-                           "dcmotors", json_string_new("not compliant (not a JSON object)")))
-      return;
-    for (unsigned int i = 0; i < dcm->u.object.length; ++i)
-      if (!SDTProject_loadDCMotor(dcm->u.object.values + i, return_code, msg))
-        return;
   }
 
   // Load resonators
@@ -214,6 +226,9 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code, j
       if (!SDTProject_loadInteractors("frictions", &SDTInteractor_isFriction, &SDTFriction_fromJSON, &SDTFriction_copy, &SDTFriction_free, fri, return_code, msg))
         return;
   }
+
+  // Load misc
+  SDT_OSC_CLASSES(SDT_OSC_LOAD_MISC)
 }
 
 // ----------------------------------------------------------------------------

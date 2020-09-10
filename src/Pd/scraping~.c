@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _scraping {
   SDTScraping *scraping;
   t_float f;
   t_outlet *out;
+  char *key;
 } t_scraping;
 
 void scraping_grain(t_scraping *x, t_float f) {
@@ -45,16 +46,19 @@ void scraping_dsp(t_scraping *x, t_signal **sp) {
 }
 
 void *scraping_new(t_symbol *s, long argc, t_atom *argv) {
-  t_scraping *x;
-  
-  x = (t_scraping *)pd_new(scraping_class);
-  x->scraping = SDTScraping_new(); 
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
+  t_scraping *x = (t_scraping *)pd_new(scraping_class);
+  x->scraping = SDTScraping_new();
+
+  SDT_PD_REGISTER(Scraping, scraping, "scraping process", 0)
+
   x->out = outlet_new(&x->obj, gensym("signal"));
   return x;
 }
 
 void scraping_free(t_scraping *x) {
-  SDTScraping_free(x->scraping);
+  SDT_PD_FREE(Scraping, scraping)
   outlet_free(x->out);
 }
 

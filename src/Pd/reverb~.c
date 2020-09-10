@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _reverb {
   t_float f;
   SDTReverb *reverb;
   t_outlet *out0;
+  char *key;
 } t_reverb;
 
 void reverb_xSize(t_reverb *x, t_float f) {
@@ -65,22 +66,21 @@ void reverb_dsp(t_reverb *x, t_signal **sp) {
 }
 
 static void *reverb_new(t_symbol *s, long argc, t_atom *argv) {
-  t_float maxDelay;
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+
   t_reverb *x = (t_reverb *)pd_new(reverb_class);
-  x->out0 = outlet_new(&x->obj, gensym("signal"));
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    maxDelay = atom_getfloat(argv);
-  }
-  else {
-    maxDelay = 44100.0;
-  }
+  t_float maxDelay = GET_ARG(1, atom_getfloat, 44100.0);
   x->reverb = SDTReverb_new(maxDelay);
+
+  SDT_PD_REGISTER(Reverb, reverb, "reverb", 0)
+
+  x->out0 = outlet_new(&x->obj, gensym("signal"));
   return (x);
 }
 
 static void reverb_free(t_reverb *x) {
   outlet_free(x->out0);
-  SDTReverb_free(x->reverb);
+  SDT_PD_FREE(Reverb, reverb)
 }
 
 void reverb_tilde_setup(void) {	

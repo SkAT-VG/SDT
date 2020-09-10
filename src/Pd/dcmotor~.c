@@ -74,23 +74,12 @@ static void dcmotor_dsp(t_dcmotor *x, t_signal **sp) {
 }
 
 static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
-  long argi[2], uarg;
-  t_atomtype targs[] = {A_SYMBOL, A_FLOAT};
-  if ((uarg = sdt_pd_arg_parse(s, argc, argv, 2, targs, argi)) >= 0) {
-    error("sdt.%s: unused argument in position %ld", s->s_name, uarg);
-    return NULL;
-  }
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
 
   t_dcmotor *x = (t_dcmotor *)pd_new(dcmotor_class);
-  x->motor = SDTDCMotor_new((argi[1] >= 0)? atom_getfloat(argv + argi[1]) : 48000);
-  x->key = (char *)((argi[0] >= 0)? atom_getsymbol(argv + argi[0])->s_name : 0);
+  x->motor = SDTDCMotor_new(GET_ARG(1, atom_getfloat, 48000));
 
-  if (x->key)
-    if (SDT_registerDCMotor(x->motor, x->key)) {
-      error("sdt.%s: Error registering the motor. Probably a duplicate id?", s->s_name);
-      SDTDCMotor_free(x->motor);
-      return NULL;
-    }
+  SDT_PD_REGISTER(DCMotor, motor, "electric motor", 0)
 
   x->in = inlet_new(&x->obj, &x->obj.ob_pd, &s_signal, &s_signal);
   x->out = outlet_new(&x->obj, gensym("signal"));
@@ -100,9 +89,7 @@ static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
 static void dcmotor_free(t_dcmotor *x) {
   inlet_free(x->in);
   outlet_free(x->out);
-  if (x->key)
-    SDT_unregisterDCMotor(x->key);
-  SDTDCMotor_free(x->motor);
+  SDT_PD_FREE(DCMotor, motor)
 }
 
 void dcmotor_tilde_setup(void) {

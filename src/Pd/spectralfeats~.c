@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _spectralfeats {
   SDTSpectralFeats *feats;
   t_float f;
   t_outlet *out0;
+  char *key;
 } t_spectralfeats;
 
 void spectralfeats_overlap(t_spectralfeats *x, t_float f) {
@@ -65,27 +66,21 @@ void spectralfeats_dsp(t_spectralfeats *x, t_signal **sp, short *count) {
 }
 
 void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
-  long tmpSize, windowSize;
-  
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+
   t_spectralfeats *x = (t_spectralfeats *)pd_new(spectralfeats_class);
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    tmpSize = atom_getfloat(&argv[0]);
-    windowSize = SDT_nextPow2(tmpSize);
-    if (tmpSize != windowSize) {
-      post("spectralfeats~: Window size must be a power of 2, setting it to %d", windowSize);
-    }
-  }
-  else {
-    windowSize = 1024;
-  }
+  GET_ARG_WINSIZE(long, windowSize, 1, 1024)
   x->feats = SDTSpectralFeats_new(windowSize);
+
+  SDT_PD_REGISTER(SpectralFeats, feats, "spectral features extractor", 0)
+
   x->out0 = outlet_new(&x->obj, NULL);
   return (x);
 }
 
 void spectralfeats_free(t_spectralfeats *x) {
   outlet_free(x->out0);
-  SDTSpectralFeats_free(x->feats);
+  SDT_PD_FREE(SpectralFeats, feats)
 }
 
 void spectralfeats_tilde_setup(void) {	

@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _windkarman {
 	t_pxobject ob;
 	SDTWindKarman *karman;
 	double diameter;
+	t_symbol *key;
 } t_windkarman;
 
 static t_class *windkarman_class = NULL;
@@ -20,6 +22,7 @@ void *windkarman_new(t_symbol *s, long argc, t_atom *argv) {
     dsp_setup((t_pxobject *)x, 1);
     outlet_new(x, "signal");
     x->karman = SDTWindKarman_new();
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -27,7 +30,7 @@ void *windkarman_new(t_symbol *s, long argc, t_atom *argv) {
 
 void windkarman_free(t_windkarman *x) {
   dsp_free((t_pxobject *)x);
-  SDTWindKarman_free(x->karman);
+  SDT_MAX_FREE(WindKarman, karman)
 }
 
 void windkarman_assist(t_windkarman *x, void *b, long m, long a, char *s) {
@@ -39,6 +42,8 @@ void windkarman_assist(t_windkarman *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(windkarman, WindKarman, karman, "windkarman~", "wind Karman")
 
 void windkarman_diameter(t_windkarman *x, void *attr, long ac, t_atom *av) {
   x->diameter = atom_getfloat(av);
@@ -87,6 +92,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)windkarman_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)windkarman_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(windkarman, "1")
 
   CLASS_ATTR_DOUBLE(c, "diameter", 0, t_windkarman, diameter);
   CLASS_ATTR_FILTER_MIN(c, "diameter", 0.001);

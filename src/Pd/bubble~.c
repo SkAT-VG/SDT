@@ -46,7 +46,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *****************************************************************************/
 
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
 #ifdef NT
@@ -61,6 +61,7 @@ typedef struct _bubble {
   SDTBubble *bubble;
   t_float radius, riseFactor;
   t_outlet *out;
+  char *key;
 } t_bubble;
 
 void bubble_bang(t_bubble *x) {
@@ -94,15 +95,20 @@ static void bubble_dsp(t_bubble *x, t_signal **sp) {
 }
 
 static void *bubble_new(t_symbol *s, int argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
   t_bubble *x = (t_bubble *)pd_new(bubble_class);
-  x->out = outlet_new(&x->obj, gensym("signal"));
   x->bubble = SDTBubble_new();
+
+  SDT_PD_REGISTER(Bubble, bubble, "bubble", 0)
+
+  x->out = outlet_new(&x->obj, gensym("signal"));
   return (x);
 }
 
 static void bubble_free(t_bubble *x) {
   outlet_free(x->out);
-  SDTBubble_free(x->bubble);
+  SDT_PD_FREE(Bubble, bubble)
 }
 
 void bubble_tilde_setup(void) {

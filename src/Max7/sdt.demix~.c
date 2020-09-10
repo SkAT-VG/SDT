@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTDemix.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _demix {
   t_pxobject ob;
   SDTDemix *demix;
   double overlap, noiseThreshold, tonalThreshold;
+  t_symbol *key;
 } t_demix;
 
 static t_class *demix_class = NULL;
@@ -39,6 +41,7 @@ void *demix_new(t_symbol *s, long argc, t_atom *argv) {
       kernelRadius = 2;
     }
     x->demix = SDTDemix_new(windowSize, kernelRadius);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -46,7 +49,7 @@ void *demix_new(t_symbol *s, long argc, t_atom *argv) {
 
 void demix_free(t_demix *x) {
   dsp_free((t_pxobject *)x);
-  SDTDemix_free(x->demix);
+  SDT_MAX_FREE(Demix, demix)
 }
 
 void demix_assist(t_demix *x, void *b, long m, long a, char *s) {
@@ -70,6 +73,8 @@ void demix_assist(t_demix *x, void *b, long m, long a, char *s) {
     }    
   }
 }
+
+SDT_MAX_KEY(demix, Demix, demix, "demix~", "demixer")
 
 void demix_overlap(t_demix *x, void *attr, long ac, t_atom *av) {
   x->overlap = atom_getfloat(av);
@@ -143,6 +148,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)demix_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
+  SDT_CLASS_KEY(demix, "1")
+
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_demix, overlap);
   CLASS_ATTR_DOUBLE(c, "noiseThreshold", 0, t_demix, noiseThreshold);
   CLASS_ATTR_DOUBLE(c, "tonalThreshold", 0, t_demix, tonalThreshold);
@@ -155,9 +162,9 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "noiseThreshold", NULL, (method)demix_noiseThreshold);
   CLASS_ATTR_ACCESSORS(c, "tonalThreshold", NULL, (method)demix_tonalThreshold);
   
-  CLASS_ATTR_ORDER(c, "overlap", 0, "1");
-  CLASS_ATTR_ORDER(c, "noiseThreshold", 0, "2");
-  CLASS_ATTR_ORDER(c, "tonalThreshold", 0, "3");
+  CLASS_ATTR_ORDER(c, "overlap", 0, "2");
+  CLASS_ATTR_ORDER(c, "noiseThreshold", 0, "3");
+  CLASS_ATTR_ORDER(c, "tonalThreshold", 0, "4");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

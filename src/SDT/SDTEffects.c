@@ -6,6 +6,7 @@
 #include "SDTFilters.h"
 #include "SDTFFT.h"
 #include "SDTEffects.h"
+#include "SDTStructs.h"
 
 double modes[15][3] = {{1,0,0},{0,2,1},{1,0,1},
                        {2,1,0},{0,1,1},{1,1,1},
@@ -51,6 +52,35 @@ void SDTReverb_free(SDTReverb *x) {
   }
   free(x);
 }
+
+void SDTReverb_setMaxDelay(SDTReverb *x, long f) {
+  for (unsigned int i = 0; i < 15; i++) {
+    SDTDelay_free(x->delays[i]);
+    x->delays[i] = SDTDelay_new(f);
+  }
+  SDTReverb_update(x);
+}
+
+SDT_TYPE_COPY(SDT_REVERB)
+SDT_DEFINE_HASHMAP(SDT_REVERB, 59)
+SDT_JSON_SERIALIZE(SDT_REVERB)
+SDT_JSON_DESERIALIZE(SDT_REVERB)
+
+long SDTReverb_getMaxDelay(const SDTReverb *x) {
+  return SDTDelay_getMaxDelay(x->delays[0]);
+}
+
+double SDTReverb_getXSize(const SDTReverb *x) { return x->xSize; }
+
+double SDTReverb_getYSize(const SDTReverb *x) { return x->ySize; }
+
+double SDTReverb_getZSize(const SDTReverb *x) { return x->zSize; }
+
+double SDTReverb_getRandomness(const SDTReverb *x) { return x->randomness; }
+
+double SDTReverb_getTime(const SDTReverb *x) { return x->time; }
+
+double SDTReverb_getTime1k(const SDTReverb *x) { return x->time1k; }
 
 void SDTReverb_update(SDTReverb *x) {
   double xMode, yMode, zMode, freq, delay, gi, gw, a, b, c, d;
@@ -198,6 +228,111 @@ void SDTPitchShift_free(SDTPitchShift *x) {
   free(x->phs);
   SDTFFT_free(x->fftPlan);
   free(x);
+}
+
+void SDTPitchShift_setSize(SDTPitchShift *x, int f) {
+  if (f <= 0) return;
+  free(x->buf);
+  free(x->win);
+  free(x->dWin);
+  free(x->out);
+  free(x->aFrame);
+  free(x->dFrame);
+  free(x->sFrame);
+  free(x->pow);
+  free(x->fqs);
+  free(x->aFFT);
+  free(x->dFFT);
+  free(x->sFFT);
+  free(x->phs);
+  SDTFFT_free(x->fftPlan);
+
+  int winSize = f * x->winSize / x->size;
+  int fftSize = winSize / 2 + 1;
+
+  x->buf = (double *)calloc(f, sizeof(double));
+  x->win = (double *)malloc(f * sizeof(double));
+  x->dWin = (double *)malloc(f * sizeof(double));
+  x->pow = (double *)calloc(fftSize, sizeof(double));
+  x->fqs = (double *)malloc(fftSize * sizeof(double));
+  x->aFrame = (double *)calloc(winSize, sizeof(double));
+  x->dFrame = (double *)calloc(winSize, sizeof(double));
+  x->sFrame = (double *)calloc(winSize, sizeof(double));
+  x->phs = (double *)calloc(fftSize, sizeof(double));
+  x->out = (double *)calloc(f, sizeof(double));
+  x->aFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->dFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->sFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->fftPlan = SDTFFT_new(fftSize - 1);
+  for (unsigned int i = 0; i < f; i++) {
+    x->win[i] = 0.5 - 0.5 * cos(SDT_TWOPI * i / f);
+    x->dWin[i] = SDT_PI / f * sin(SDT_TWOPI * i / f);
+  }
+  for (unsigned int i = 0; i < fftSize; i++)
+    x->fqs[i] = SDT_TWOPI * i / winSize;
+
+  x->i = 0;
+  x->j = 0;
+  x->hopSize = f * x->hopSize / x->size;
+  x->winSize = winSize;
+  x->fftSize = fftSize;
+  x->size = f;
+}
+
+void SDTPitchShift_setOversample(SDTPitchShift *x, int f) {
+  if (f < 1) return;
+  free(x->aFrame);
+  free(x->dFrame);
+  free(x->sFrame);
+  free(x->pow);
+  free(x->fqs);
+  free(x->aFFT);
+  free(x->dFFT);
+  free(x->sFFT);
+  free(x->phs);
+  SDTFFT_free(x->fftPlan);
+
+  int winSize = f * x->size;
+  int fftSize = winSize / 2 + 1;
+
+  x->pow = (double *)calloc(fftSize, sizeof(double));
+  x->fqs = (double *)malloc(fftSize * sizeof(double));
+  x->aFrame = (double *)calloc(winSize, sizeof(double));
+  x->dFrame = (double *)calloc(winSize, sizeof(double));
+  x->sFrame = (double *)calloc(winSize, sizeof(double));
+  x->phs = (double *)calloc(fftSize, sizeof(double));
+  x->aFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->dFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->sFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->fftPlan = SDTFFT_new(fftSize - 1);
+  for (unsigned int i = 0; i < fftSize; i++)
+    x->fqs[i] = SDT_TWOPI * i / winSize;
+
+  x->i = 0;
+  x->j = 0;
+  x->winSize = winSize;
+  x->fftSize = fftSize;
+}
+
+SDT_TYPE_COPY(SDT_PITCHSHIFT)
+SDT_DEFINE_HASHMAP(SDT_PITCHSHIFT, 59)
+SDT_JSON_SERIALIZE(SDT_PITCHSHIFT)
+SDT_JSON_DESERIALIZE(SDT_PITCHSHIFT)
+
+int SDTPitchShift_getSize(const SDTPitchShift *x) {
+  return x->size;
+}
+
+int SDTPitchShift_getOversample(const SDTPitchShift *x) {
+  return x->winSize / x->size;
+}
+
+double SDTPitchShift_getRatio(const SDTPitchShift *x) {
+  return x->ratio;
+}
+
+double SDTPitchShift_getOverlap(const SDTPitchShift *x) {
+  return 1 - ((double) x->hopSize) / x->size;
 }
 
 void SDTPitchShift_setRatio(SDTPitchShift *x, double f) {

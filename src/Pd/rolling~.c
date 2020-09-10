@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _rolling {
   SDTRolling *rolling;
   t_float f;
   t_outlet *out;
+  char *key;
 } t_rolling;
 
 void rolling_grain(t_rolling *x, t_float f) {
@@ -49,16 +50,19 @@ void rolling_dsp(t_rolling *x, t_signal **sp) {
 }
 
 void *rolling_new(t_symbol *s, long argc, t_atom *argv) {
-  t_rolling *x;
-  
-  x = (t_rolling *)pd_new(rolling_class);
-  x->rolling = SDTRolling_new(); 
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
+  t_rolling *x = (t_rolling *)pd_new(rolling_class);
+  x->rolling = SDTRolling_new();
+
+  SDT_PD_REGISTER(Rolling, rolling, "rolling process", 0)
+
   x->out = outlet_new(&x->obj, gensym("signal"));
   return x;
 }
 
 void rolling_free(t_rolling *x) {
-  SDTRolling_free(x->rolling);
+  SDT_PD_FREE(Rolling, rolling)
   outlet_free(x->out);
 }
 

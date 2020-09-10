@@ -46,7 +46,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *****************************************************************************/
 
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #ifdef NT
@@ -61,6 +61,7 @@ typedef struct _windkarman {
   SDTWindKarman *karman;
   t_float f;
   t_outlet *out;
+  char *key;
 } t_windkarman;
 
 void windkarman_diameter(t_windkarman *x, t_float f) {
@@ -85,15 +86,20 @@ static void windkarman_dsp(t_windkarman *x, t_signal **sp) {
 }
 
 static void *windkarman_new(t_symbol *s, int argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
   t_windkarman *x = (t_windkarman *)pd_new(windkarman_class);
-  x->out = outlet_new(&x->obj, gensym("signal"));
   x->karman = SDTWindKarman_new();
+
+  SDT_PD_REGISTER(WindKarman, karman, "wind Karman", 0)
+
+  x->out = outlet_new(&x->obj, gensym("signal"));
   return (x);
 }
 
 static void windkarman_free(t_windkarman *x) {
   outlet_free(x->out);
-  SDTWindKarman_free(x->karman);
+  SDT_PD_FREE(WindKarman, karman)
 }
 
 void windkarman_tilde_setup(void) {

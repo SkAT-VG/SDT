@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTFilters.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _envelope {
   t_pxobject ob;
   SDTEnvelope *envelope;
   double attack, release;
+  t_symbol *key;
 } t_envelope;
 
 static t_class *envelope_class = NULL;
@@ -21,6 +23,7 @@ void *envelope_new(t_symbol *s, long argc, t_atom *argv) {
     dsp_setup((t_pxobject *)x, 1);
     outlet_new(x, "signal");
     x->envelope = SDTEnvelope_new();
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -28,7 +31,7 @@ void *envelope_new(t_symbol *s, long argc, t_atom *argv) {
 
 void envelope_free(t_envelope *x) {
   dsp_free((t_pxobject *)x);
-  SDTEnvelope_free(x->envelope);
+  SDT_MAX_FREE(Envelope, envelope)
 }
 
 void envelope_assist(t_envelope *x, void *b, long m, long a, char *s) {
@@ -40,6 +43,8 @@ void envelope_assist(t_envelope *x, void *b, long m, long a, char *s) {
       sprintf(s, "(signal): Amplitude envelope");
   }
 }
+
+SDT_MAX_KEY(envelope, Envelope, envelope, "envelope~", "envelope filter")
 
 void envelope_attack(t_envelope *x, void *attr, long ac, t_atom *av) {
   x->attack = atom_getfloat(av);
@@ -95,6 +100,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)envelope_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)envelope_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(envelope, "1")
   
   CLASS_ATTR_DOUBLE(c, "attack", 0, t_envelope, attack);
   CLASS_ATTR_DOUBLE(c, "release", 0, t_envelope, release);
@@ -105,8 +112,8 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "attack", NULL, (method)envelope_attack);
   CLASS_ATTR_ACCESSORS(c, "release", NULL, (method)envelope_release);
   
-  CLASS_ATTR_ORDER(c, "attack", 0, "1");
-  CLASS_ATTR_ORDER(c, "release", 0, "2");
+  CLASS_ATTR_ORDER(c, "attack", 0, "2");
+  CLASS_ATTR_ORDER(c, "release", 0, "3");
   
   class_dspinit(c);
   class_register(CLASS_BOX, c);

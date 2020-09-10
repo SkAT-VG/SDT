@@ -1,3 +1,6 @@
+#include "SDTCommonMacros.h"
+#include "SDTJSON.h"
+
 /** @file SDTMotor.h
 @defgroup motor SDTMotor.h: Combustion engines
 From a mechanical point of view, an internal combustion engine converts chemical energy
@@ -33,6 +36,35 @@ extern SDTMotor *SDTMotor_new(long maxDelay);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTMotor_free(SDTMotor *x);
+
+#define SDT_MOTOR Motor
+#define SDT_MOTOR_NEW_ARGS 44100
+#define SDT_MOTOR_ATTRIBUTES(T, A) \
+A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100) \
+A(T, cycle, double, Cycle, cycle, double, 0.0) \
+A(T, nCylinders, int, NCylinders, nCylinders, integer, 4) \
+A(T, cylinderSize, double, CylinderSize, cylinderSize, double, 500.0) \
+A(T, compressionRatio, double, CompressionRatio, compressionRatio, double, 10.0) \
+A(T, sparkTime, double, SparkTime, sparkTime, double, 0.1) \
+A(T, asymmetry, double, Asymmetry, asymmetry, double, 0.1) \
+A(T, backfire, double, Backfire, backfire, double, 0.0) \
+A(T, intakeSize, double, IntakeSize, intakeSize, double, 0) \
+A(T, extractorSize, double, ExtractorSize, extractorSize, double, 0) \
+A(T, exhaustSize, double, ExhaustSize, exhaustSize, double, 0) \
+A(T, expansion, double, Expansion, expansion, double, JOINT_FEED) \
+A(T, mufflerSize, double, MufflerSize, mufflerSize, double, 0) \
+A(T, mufflerFeedback, double, MufflerFeedback, mufflerFeedback, double, 0) \
+A(T, outletSize, double, OutletSize, outletSize, double, 0)
+
+SDT_TYPE_COPY_H(SDT_MOTOR)
+SDT_DEFINE_HASHMAP_H(SDT_MOTOR)
+SDT_TYPE_MAKE_GETTERS_H(SDT_MOTOR)
+SDT_JSON_SERIALIZE_H(SDT_MOTOR)
+SDT_JSON_DESERIALIZE_H(SDT_MOTOR)
+
+extern void SDTMotor_setMaxDelay(SDTMotor *x, long f);
+
+extern void SDTMotor_setCycle(SDTMotor *x, double f);
 
 /** @brief Update filter coefficients.
 Should be always called after setting the sampling rate with SDT_setSampleRate().

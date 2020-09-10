@@ -1,3 +1,6 @@
+#include "SDTJSON.h"
+#include "SDTCommonMacros.h"
+
 /** @file SDTEffects.h
 @defgroup effects SDTEffects.h: Digital audio effects
 Algorithms for audio post-processing, such as reverberation and pitch shifting
@@ -27,6 +30,25 @@ extern SDTReverb *SDTReverb_new(long maxDelay);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTReverb_free(SDTReverb *x);
+
+#define SDT_REVERB Reverb
+#define SDT_REVERB_NEW_ARGS 44100
+#define SDT_REVERB_ATTRIBUTES(T, A) \
+A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100) \
+A(T, xSize, double, XSize, xSize, double, 4.0) \
+A(T, ySize, double, YSize, ySize, double, 5.0) \
+A(T, zSize, double, ZSize, zSize, double, 3.0) \
+A(T, randomness, double, Randomness, randomness, double, 0) \
+A(T, time, double, Time, time, double, 4.0) \
+A(T, time1k, double, Time1k, time1k, double, 3.6)
+
+SDT_TYPE_COPY_H(SDT_REVERB)
+SDT_DEFINE_HASHMAP_H(SDT_REVERB)
+SDT_TYPE_MAKE_GETTERS_H(SDT_REVERB)
+SDT_JSON_SERIALIZE_H(SDT_REVERB)
+SDT_JSON_DESERIALIZE_H(SDT_REVERB)
+
+extern void SDTReverb_setMaxDelay(SDTReverb *x, long f);
 
 /** @brief Sets the room width.
 @param[in] f Room width, in m */
@@ -82,6 +104,24 @@ extern SDTPitchShift *SDTPitchShift_new(int size, int oversample);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTPitchShift_free(SDTPitchShift *x);
+
+#define SDT_PITCHSHIFT PitchShift
+#define SDT_PITCHSHIFT_NEW_ARGS 2048, 4
+#define SDT_PITCHSHIFT_ATTRIBUTES(T, A) \
+A(T, size, int, Size, size, integer, 2048)  \
+A(T, oversample, int, Oversample, oversample, integer, 4)  \
+A(T, ratio, double, Ratio, ratio, double, 1.0) \
+A(T, overlap, double, Overlap, overlap, double, 0.75)
+
+SDT_TYPE_COPY_H(SDT_PITCHSHIFT)
+SDT_DEFINE_HASHMAP_H(SDT_PITCHSHIFT)
+SDT_TYPE_MAKE_GETTERS_H(SDT_PITCHSHIFT)
+SDT_JSON_SERIALIZE_H(SDT_PITCHSHIFT)
+SDT_JSON_DESERIALIZE_H(SDT_PITCHSHIFT)
+
+extern void SDTPitchShift_setSize(SDTPitchShift *x, int f);
+
+extern void SDTPitchShift_setOversample(SDTPitchShift *x, int f);
 
 /** @brief Sets the pitch shifting ratio.
 @param[in] f New pitch / original pitch ratio */

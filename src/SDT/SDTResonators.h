@@ -1,4 +1,5 @@
 #include "SDTJSON.h"
+#include "SDTCommonMacros.h"
 
 /** @file SDTResonators.h
 @defgroup resonators SDTResonators.h: Solid resonators
@@ -33,6 +34,12 @@ extern SDTResonator *SDTResonator_new(unsigned int nModes, unsigned int nPickups
 @param[in] x Pointer to the instance to destroy */
 extern void SDTResonator_free(SDTResonator *x);
 
+#define SDT_RESONATOR Resonator
+
+SDT_TYPE_COPY_H(SDT_RESONATOR)
+SDT_JSON_SERIALIZE_H(SDT_RESONATOR)
+SDT_JSON_DESERIALIZE_H(SDT_RESONATOR)
+
 /** @brief Object reinitializer
 @param[in] x Pointer to the instance to renew
 @param[in] nModes New number of resonant modes
@@ -40,58 +47,52 @@ extern void SDTResonator_free(SDTResonator *x);
 @return Pointer to the instance x */
 extern SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned int nPickups);
 
-/** @brief Copy src into dest
-@param[in] dest Pointer to the instance to overwrite
-@param[in] src Pointer to the instance to copy
-@return Pointer to the dest */
-extern SDTResonator *SDTResonator_copy(SDTResonator *dest, const SDTResonator *src);
-
 /** @brief Gets the displacement of the object at a given pickup point.
 @param[in] pickup Pickup point
 @return Object displacement, in m */
-extern double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup);
+extern double SDTResonator_getPosition(const SDTResonator *x, unsigned int pickup);
 
 /** @brief Gets the velocity of the object at a given pickup point.
 @param[in] pickup Pickup point
 @return Object velocity, in m/s */
-extern double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup);
+extern double SDTResonator_getVelocity(const SDTResonator *x, unsigned int pickup);
 
 /** @brief Gets the resonant frequency for a given mode
 @param[in] mode Mode number
 @return Modal frequency, in Hz */
-extern double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode);
+extern double SDTResonator_getFrequency(const SDTResonator *x, unsigned int mode);
 
 /** @brief Gets the decay for a given mode
 @param[in] mode Mode number
 @return Modal decay, in s. A value of 0 means no decay at all (infinite decay time) */
-extern double SDTResonator_getDecay(SDTResonator *x, unsigned int mode);
+extern double SDTResonator_getDecay(const SDTResonator *x, unsigned int mode);
 
 /** @brief Gets the weight for a given mode
 @param[in] mode Mode number
 @return Modal weight, in Kg */
-extern double SDTResonator_getWeight(SDTResonator *x, unsigned int mode);
+extern double SDTResonator_getWeight(const SDTResonator *x, unsigned int mode);
 
 /** @brief Gets the pickup gain for a given mode and pickup
 @param[in] pickup Pickup number
 @param[in] mode Mode number
 @return Pickup gain */
-extern double SDTResonator_getGain(SDTResonator *x, unsigned int pickup, unsigned int mode);
+extern double SDTResonator_getGain(const SDTResonator *x, unsigned int pickup, unsigned int mode);
 
 /** @brief Gets the number of pickup points
 @return Number of pickup points */
-extern int SDTResonator_getNPickups(SDTResonator *x);
+extern int SDTResonator_getNPickups(const SDTResonator *x);
 
 /** @brief Gets the number of resonant modes
 @return Number of resonant modes */
-extern int SDTResonator_getNModes(SDTResonator *x);
+extern int SDTResonator_getNModes(const SDTResonator *x);
 
 /** @brief Gets the number of active modes
 @return Number of active modes */
-extern int SDTResonator_getActiveModes(SDTResonator *x);
+extern int SDTResonator_getActiveModes(const SDTResonator *x);
 
 /** @brief Gets the fragment size
 @return Fragment size */
-extern double SDTResonator_getFragmentSize(SDTResonator *x);
+extern double SDTResonator_getFragmentSize(const SDTResonator *x);
 
 /** @brief Sets a modal displacement at a given pickup point
 @param[in] pickup Pickup point
@@ -153,20 +154,6 @@ Call this function at sample rate to update the internal state of the resonator.
 DO NOT call this function if you plan to use any of the interactor DSP methods instead!
 See the SDTInteractors.h module documentation for further information. */
 extern void SDTResonator_dsp(SDTResonator *x);
-
-/** @defgroup json_resonator JSON
-JSON functions for SDT Resonators
-@{ */
-
-/** @brief Convert an SDTResonator object in a JSON object
-@param[in] x Pointer to the SDTResonator
-@return Pointer to the JSON object. Memory must be freed with json_builder_free */
-extern json_value *SDTResonator_toJSON(SDTResonator *x);
-
-/** @brief Load an SDTResonator object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTResonator, or 0 on failure. Memory must be freed with ::SDTResonator_free */
-extern SDTResonator *SDTResonator_fromJSON(const json_value *x);
 
 /** @} */
 

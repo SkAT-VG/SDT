@@ -13,19 +13,19 @@ struct SDTResonator {
   int nModes, nPickups, activeModes;
 };
 
-double modalPosition(SDTResonator *x, unsigned int mode, double f) {
+double modalPosition(const SDTResonator *x, unsigned int mode, double f) {
   return SDT_fclip(x->b1[mode] * f - x->a1[mode] * x->p0[mode] - x->a2[mode] * x->p1[mode], -MAX_POS, MAX_POS);
 }
 
-double modalVelocity(SDTResonator *x, unsigned int mode, double p) {
+double modalVelocity(const SDTResonator *x, unsigned int mode, double p) {
   return x->b0v[mode] * p + x->b1v[mode] * x->p0[mode];
 }
 
-double modalEnergy(SDTResonator *x, unsigned int mode, double p, double v) {
+double modalEnergy(const SDTResonator *x, unsigned int mode, double p, double v) {
   return 0.5 * (x->k[mode] * p * p + x->m[mode] * v * v);
 }
 
-void distributeForce(SDTResonator *x, unsigned int pickup, double *fs, double f) {
+void distributeForce(const SDTResonator *x, unsigned int pickup, double *fs, double f) {
   int mode;
   
   for (mode = 0; mode < x->activeModes; mode++) {
@@ -262,7 +262,7 @@ SDTResonator *SDTResonator_copy(SDTResonator *dest, const SDTResonator *src) {
   return dest;
 }
 
-double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup) {
+double SDTResonator_getPosition(const SDTResonator *x, unsigned int pickup) {
   double out;
   int mode;
   
@@ -275,7 +275,7 @@ double SDTResonator_getPosition(SDTResonator *x, unsigned int pickup) {
   return out;
 }
 
-double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup) {
+double SDTResonator_getVelocity(const SDTResonator *x, unsigned int pickup) {
   double out;
   int mode;
   
@@ -288,35 +288,35 @@ double SDTResonator_getVelocity(SDTResonator *x, unsigned int pickup) {
   return out;
 }
 
-double SDTResonator_getFrequency(SDTResonator *x, unsigned int mode) {
+double SDTResonator_getFrequency(const SDTResonator *x, unsigned int mode) {
   return x->freqs[mode];
 }
 
-double SDTResonator_getDecay(SDTResonator *x, unsigned int mode) {
+double SDTResonator_getDecay(const SDTResonator *x, unsigned int mode) {
   return x->decays[mode];
 }
 
-double SDTResonator_getWeight(SDTResonator *x, unsigned int mode) {
+double SDTResonator_getWeight(const SDTResonator *x, unsigned int mode) {
   return x->weights[mode];
 }
 
-double SDTResonator_getGain(SDTResonator *x, unsigned int pickup, unsigned int mode) {
+double SDTResonator_getGain(const SDTResonator *x, unsigned int pickup, unsigned int mode) {
   return x->gains[pickup][mode];
 }
 
-int SDTResonator_getNPickups(SDTResonator *x) {
+int SDTResonator_getNPickups(const SDTResonator *x) {
   return x->nPickups;
 }
 
-int SDTResonator_getNModes(SDTResonator *x) {
+int SDTResonator_getNModes(const SDTResonator *x) {
   return x->nModes;
 }
 
-int SDTResonator_getActiveModes(SDTResonator *x) {
+int SDTResonator_getActiveModes(const SDTResonator *x) {
   return x->activeModes;
 }
 
-double SDTResonator_getFragmentSize(SDTResonator *x) {
+double SDTResonator_getFragmentSize(const SDTResonator *x) {
   return x->fragmentSize;
 }
 
@@ -425,7 +425,7 @@ void SDTResonator_dsp(SDTResonator *x) {
 
 //-------------------------------------------------------------------------------------//
 
-json_value *SDTResonator_toJSON(SDTResonator *x) {
+json_value *SDTResonator_toJSON(const SDTResonator *x) {
   json_value *obj = json_object_new(0);
   json_value *f = json_array_new(0);
   json_value *d = json_array_new(0);

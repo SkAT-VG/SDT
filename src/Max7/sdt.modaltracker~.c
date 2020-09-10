@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTModalTracker.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -10,7 +11,8 @@ typedef struct _modaltracker {
   SDTModalTracker *modaltracker;
   void *outlet0, *outlet1;
   double overlap;
-  long nModes, nSamples, pickup, isRecording; 
+  long nModes, nSamples, pickup, isRecording;
+  t_symbol *key;
 } t_modaltracker;
 
 static t_class *modaltracker_class = NULL;
@@ -32,6 +34,8 @@ void modaltracker_assist(t_modaltracker *x, void *b, long m, long a, char *s) {
     }
   }
 }
+
+SDT_MAX_KEY(modaltracker, ModalTracker, modaltracker, "modaltracker~", "modal tracker")
 
 void modaltracker_overlap(t_modaltracker *x, void *attr, long ac, t_atom *av) {
   x->overlap = atom_getfloat(av);
@@ -160,6 +164,7 @@ void *modaltracker_new(t_symbol *s, long argc, t_atom *argv) {
     x->nModes = nModes;
     x->nSamples = nSamples;
     x->isRecording = 0;
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -169,7 +174,7 @@ void modaltracker_free(t_modaltracker *x) {
   dsp_free((t_pxobject *)x);
   object_free(x->outlet0);
   object_free(x->outlet1);
-  SDTModalTracker_free(x->modaltracker);
+  SDT_MAX_FREE(ModalTracker, modaltracker)
 }
 
 void C74_EXPORT ext_main(void *r) {	
@@ -184,6 +189,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)modaltracker_bang, "bang", 0);
   class_addmethod(c, (method)modaltracker_float, "float", A_FLOAT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(modaltracker, "1")
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_modaltracker, overlap);
   CLASS_ATTR_LONG(c, "pickup", 0, t_modaltracker, pickup);
@@ -193,8 +200,8 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)modaltracker_overlap);
   CLASS_ATTR_ACCESSORS(c, "pickup", NULL, (method)modaltracker_pickup);
   
-  CLASS_ATTR_ORDER(c, "overlap", 0, "1");
-  CLASS_ATTR_ORDER(c, "pickup", 0, "2");
+  CLASS_ATTR_ORDER(c, "overlap", 0, "2");
+  CLASS_ATTR_ORDER(c, "pickup", 0, "3");
   
   class_dspinit(c);
   class_register(CLASS_BOX, c);

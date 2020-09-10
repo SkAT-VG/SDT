@@ -6,6 +6,7 @@
 #include "SDTComplex.h"
 #include "SDTFFT.h"
 #include "SDTDemix.h"
+#include "SDTStructs.h"
 
 struct SDTDemix {
   double *kernel, *in, *win, *inFrame, **mag,
@@ -114,6 +115,136 @@ void SDTDemix_free(SDTDemix *x) {
   free(x->restOut);
   SDTFFT_free(x->fftPlan);
   free(x);
+}
+
+void SDTDemix_setSize(SDTDemix *x, int f) {
+  free(x->in);
+  free(x->win);
+  free(x->inFrame);
+
+  x->in = (double *)calloc(f, sizeof(double));
+  x->win = (double *)calloc(f, sizeof(double));
+  x->inFrame = (double *)calloc(f, sizeof(double));
+
+  int fftSize = f / 2 + 1;
+  free(x->diffX);
+  free(x->diffY);
+  free(x->percFFT);
+  free(x->harmFFT);
+  free(x->restFFT);
+  free(x->percFrame);
+  free(x->harmFrame);
+  free(x->restFrame);
+  free(x->percOut);
+  free(x->harmOut);
+  free(x->restOut);
+  SDTFFT_free(x->fftPlan);
+
+  x->diffX = (double *)calloc(fftSize + 8, sizeof(double));
+  x->diffY = (double *)calloc(fftSize + 8, sizeof(double));
+  x->percFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->harmFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->restFFT = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  x->percFrame = (double *)calloc(f, sizeof(double));
+  x->harmFrame = (double *)calloc(f, sizeof(double));
+  x->restFrame = (double *)calloc(f, sizeof(double));
+  x->percOut = (double *)calloc(f, sizeof(double));
+  x->harmOut = (double *)calloc(f, sizeof(double));
+  x->restOut = (double *)calloc(f, sizeof(double));
+  x->fftPlan = SDTFFT_new(fftSize - 1);
+  for (unsigned int i = 0; i < 3; i++) {
+    free(x->mag[i]);
+    x->mag[i] = (double *)calloc(fftSize + 2, sizeof(double));
+  }
+  for (unsigned int i = 0; i < x->width; i++) {
+    free(x->rowXX[i]);
+    x->rowXX[i] = (double *)calloc(fftSize, sizeof(double));
+    free(x->rowXY[i]);
+    x->rowXY[i] = (double *)calloc(fftSize, sizeof(double));
+    free(x->rowYY[i]);
+    x->rowYY[i] = (double *)calloc(fftSize, sizeof(double));
+  }
+  for (unsigned int i = 0; i < x->center; i++) {
+    free(x->inFFT[i]);
+    x->inFFT[i] = (SDTComplex *)calloc(fftSize, sizeof(SDTComplex));
+  }
+  for (unsigned int i = 0; i < f; i++)
+    x->win[i] = 1.0 - cos(SDT_TWOPI * i / f);
+
+  int hopSize = f / 4;
+  x->norm = (double) hopSize / (double)(f * f);
+  x->size = f;
+  x->fftSize = fftSize;
+  x->hopSize = hopSize;
+}
+
+void SDTDemix_setRadius(SDTDemix *x, int f) {
+  int width = 2 * f + 1;
+  int center = f + 2;
+
+  free(x->kernel);
+  for (unsigned int i = 0; i < x->width; i++) {
+    free(x->rowXX[i]);
+    free(x->rowXY[i]);
+    free(x->rowYY[i]);
+  }
+  for (unsigned int i = 0; i < x->center; i++)
+    free(x->inFFT[i]);
+  free(x->rowXX);
+  free(x->rowXY);
+  free(x->rowYY);
+  free(x->inFFT);
+
+  x->kernel = (double *)calloc(width, sizeof(double));
+  x->rowXX = (double **)calloc(width, sizeof(double *));
+  x->rowXY = (double **)calloc(width, sizeof(double *));
+  x->rowYY = (double **)calloc(width, sizeof(double *));
+  for (unsigned int i = 0; i < width; i++) {
+    x->rowXX[i] = (double *)calloc(x->fftSize, sizeof(double));
+    x->rowXY[i] = (double *)calloc(x->fftSize, sizeof(double));
+    x->rowYY[i] = (double *)calloc(x->fftSize, sizeof(double));
+  }
+  x->inFFT = (SDTComplex **)calloc(center, sizeof(SDTComplex *));
+  for (unsigned int i = 0; i < center; i++)
+    x->inFFT[i] = (SDTComplex *)calloc(x->fftSize, sizeof(SDTComplex));
+  SDT_gaussian1D(x->kernel, 0.5, width);
+
+  x->radius = f;
+  x->width = width;
+  x->center = center;
+}
+
+SDT_TYPE_COPY(SDT_DEMIX)
+SDT_DEFINE_HASHMAP(SDT_DEMIX, 59)
+SDT_JSON_SERIALIZE(SDT_DEMIX)
+SDT_JSON_DESERIALIZE(SDT_DEMIX)
+
+int SDTDemix_getSize(const SDTDemix *x) {
+  return x->size;
+}
+
+int SDTDemix_getRadius(const SDTDemix *x) {
+  return x->radius;
+}
+
+double SDTDemix_getOverlap(const SDTDemix *x) {
+  return 1 - ((double) x->hopSize) / x->size;
+}
+
+double SDTDemix_getNoiseThreshold(const SDTDemix *x) {
+  if (!isfinite(x->gammaIso))
+    return 1;
+  if (x->gammaIso <= 0)
+    return 0;
+  return exp2(-1 / x->gammaIso);
+}
+
+double SDTDemix_getTonalThreshold(const SDTDemix *x) {
+  if (!isfinite(x->gammaDir))
+    return 1;
+  if (x->gammaDir <= 0)
+    return 0;
+  return exp2(-1 / x->gammaDir);
 }
 
 void SDTDemix_setOverlap(SDTDemix *x, double f) {
