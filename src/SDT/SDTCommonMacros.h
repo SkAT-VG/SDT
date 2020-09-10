@@ -43,6 +43,8 @@ A(T, p, double, Pi, pi, double, 3.14)\endcode Here it has been declared that
 #define _CONCAT(X, Y) __CONCAT(X, Y)
 #define CONCAT(X, Y) _CONCAT(X, Y)
 
+#define STRINGIFY(X) #X
+
 #define SDT_TYPE_FULL(SDT_TYPE) CONCAT(SDT, SDT_TYPE)
 
 #define SDT_TYPE_COPY_H(SDT_TYPE) extern SDT_TYPE_FULL(SDT_TYPE) *CONCAT(SDT_TYPE_FULL(SDT_TYPE), _copy)(SDT_TYPE_FULL(SDT_TYPE) *dest, const SDT_TYPE_FULL(SDT_TYPE) *src);
