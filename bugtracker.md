@@ -1,6 +1,8 @@
 # SDT
 ## Myoelastic
 `SDTMyoelastic_new` has an unused `bufSize` argument
+## Demix
+Header `SDTDemix.h` is included only if `SDT_EFFECTS_H` is not defined. So, it is mutually exclusive with `SDTEffects.h` (***fixed***)
 ## Biquad
 `SDTBiquad_free` doesn't seem to free all allocated memory (***fixed***)
 ## Delay
