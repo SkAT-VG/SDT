@@ -12,18 +12,27 @@
 #include "SDTModalTracker.h"
 #include "SDTMotor.h"
 
-/** @file SDTOSCMisc.h
-@defgroup OSCMisc SDTOSCMisc.h: Miscellanea OSC Methods
-OSC containers and methods for SDT objects that don't require special treatment and, therefore, are implemented via macros
-@{
-*/
-
 #ifndef SDT_OSC_MISC_H
 #define SDT_OSC_MISC_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/** @file SDTOSCMisc.h
+@defgroup OSCMisc SDTOSCMisc.h: Miscellanea OSC Methods
+OSC containers and methods for SDT objects that don't require special treatment and, therefore, are implemented via macros.
+For a list of SDT classes whose OSC methods are implemented this way, see the `SDT_OSC_CLASSES` macro.
+Every class is associated to a container. The first argument for all methods is the object ID. Every container has the following methods
+ - log: log information about the object. Arguments: key (string)
+ - save: save information about the object. Arguments: key (string), file path (string)
+ - load: load information about the object. Arguments: key (string), file path (string)
+ .
+Additionally, every container has one setter method for setting each attribute of the class. The first argument is the object ID and the second is the attribute value. For a list of attributes of each class, see the macro `SDT_<CLASS>_ATTRIBUTES` in the class's header file.
+
+Also, every object belonging to these classes can be logged, saved, and loaded as part of projects using the `/project` methods.
+@{
+*/
 
 /** @defgroup osc_macros Macros
 Macros for generating OSC methods
@@ -163,6 +172,10 @@ SDT_OSC_ROOT(SDT_ ## TYPE)
 
 /** @} */
 
+/** @brief List of SDT classes whose OSC methods are automatically implemented.
+Each class is defined as `C(SDT_MACRO, OSC_NAME)`, where `SDT_MACRO` is the name of the macro associated to the class (without the leading `SDT_`) and `OSC_NAME` is the name of the OSC container associated to the class
+@param[in] C Macro to apply to each class
+*/
 #define SDT_OSC_CLASSES(C) \
 C(BIQUAD, biquad) \
 C(BOUNCING, bouncing) \
