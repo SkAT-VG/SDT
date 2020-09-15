@@ -53,7 +53,7 @@ A(T, extractorSize, double, ExtractorSize, extractorSize, double, 0) \
 A(T, exhaustSize, double, ExhaustSize, exhaustSize, double, 0) \
 A(T, expansion, double, Expansion, expansion, double, JOINT_FEED) \
 A(T, mufflerSize, double, MufflerSize, mufflerSize, double, 0) \
-A(T, mufflerFeedback, double, MufflerFeedback, mufflerFeedback, double, 0) \
+A(T, mufflerFeedback, double, MufflerFeedback, mufflerFeedback, double, MUFFLER_FEED) \
 A(T, outletSize, double, OutletSize, outletSize, double, 0)
 
 SDT_TYPE_COPY_H(SDT_MOTOR)
