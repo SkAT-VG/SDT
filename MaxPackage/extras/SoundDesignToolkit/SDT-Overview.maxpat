@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 4,
+			"revision" : 5,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -107,7 +107,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 4,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -170,7 +170,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 4,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -233,13 +233,13 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 4,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -280,7 +280,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 4,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -413,7 +413,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 305.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.pitch~",
+									"text" : "sdt.windflow~",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -431,7 +431,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 4,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -477,7 +477,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 4,
+															"revision" : 5,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -1635,8 +1635,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontsize" : [ 12.0 ],
-													"fontname" : [ "Lato" ]
+													"fontname" : [ "Lato" ],
+													"fontsize" : [ 12.0 ]
 												}
 ,
 												"parentstyle" : "",
@@ -1786,13 +1786,12 @@
 								"box" : 								{
 									"fontsize" : 16.0,
 									"id" : "obj-17",
-									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 349.0, 428.0, 45.0 ],
+									"patching_rect" : [ 323.3125, 349.0, 428.0, 26.0 ],
 									"style" : "SDT_package",
-									"text" : "Normalized Squared Difference Function (NSDF) based pitch detector.",
+									"text" : "Turbulence model of gases impacting against a surface.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -1807,7 +1806,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 408.0, 432.0, 179.0 ],
 									"style" : "SDT_package",
-									"text" : "The sdt.pitch~ is an analysis tool which returns the pitch in Hz (leftmost outlet) and the pitch clarity (rightmost outlet). For voice-driven applications , the sdt.pitch~ can be coupled with the skewness descriptor available in the sdt.spectralfeats~ , in order to have a higher level representation of the phonation vocal activity. For better results , the vocal sound is meant to be pre-processed with the sdt.demix~ , in order to feed the sdt.pitch~ and the sdt.spectralfeats~ with the harmonic component only.",
+									"text" : "The sdt.windflow~ simulates noise caused by air turbulences against a solid surface. In this case , turbulence is generated due to the impact of the air molecules on the surface and to their random change of direction caused by the irregularities of the surface itself. The resulting sound is modeled through a white noise generator , filtered by a non-resonant lowpass filter. The cutoff frequency of the filter is empirically set to 800 Hz and the resulting output is modulated in amplitude according to the speed of the air flow.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -1859,23 +1858,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 303.375, 78.875, 221.25, 196.125 ],
-									"proportion" : 0.39
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"angle" : 270.0,
-									"background" : 1,
-									"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
-									"border" : 1,
-									"bordercolor" : [ 0.65098, 0.666667, 0.662745, 1.0 ],
-									"id" : "obj-9",
-									"maxclass" : "panel",
-									"mode" : 0,
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 58.375, 78.875, 221.625, 627.1875 ],
 									"proportion" : 0.39
 								}
 
@@ -1955,7 +1937,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 100.0, 470.0, 138.0, 23.0 ],
-									"text" : "GASSES",
+									"text" : "GASES",
 									"textjustification" : 1
 								}
 
@@ -2004,6 +1986,23 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 20.0, 15.0, 256.0, 54.0 ],
 									"text" : "SDT Objects"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"angle" : 270.0,
+									"background" : 1,
+									"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
+									"border" : 1,
+									"bordercolor" : [ 0.65098, 0.666667, 0.662745, 1.0 ],
+									"id" : "obj-9",
+									"maxclass" : "panel",
+									"mode" : 0,
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 58.375, 78.875, 221.625, 627.1875 ],
+									"proportion" : 0.39
 								}
 
 							}
@@ -2091,13 +2090,13 @@
 							}
  ],
 						"boxgroups" : [ 							{
-								"boxes" : [ "obj-34", "obj-43" ]
-							}
-, 							{
 								"boxes" : [ "obj-33", "obj-42" ]
 							}
 , 							{
 								"boxes" : [ "obj-44", "obj-35" ]
+							}
+, 							{
+								"boxes" : [ "obj-34", "obj-43" ]
 							}
  ],
 						"styles" : [ 							{
@@ -2112,8 +2111,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -2146,7 +2145,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 4,
+							"revision" : 5,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2300,7 +2299,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 4,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2505,8 +2504,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontsize" : [ 12.0 ],
-													"fontname" : [ "Lato" ]
+													"fontname" : [ "Lato" ],
+													"fontsize" : [ 12.0 ]
 												}
 ,
 												"parentstyle" : "",
@@ -2760,12 +2759,12 @@
 									"patching_rect" : [ 20.0, 614.9375, 111.0, 41.0 ],
 									"saved_attribute_attributes" : 									{
 										"valueof" : 										{
+											"parameter_longname" : "live.gain~",
+											"parameter_mmax" : 6.0,
+											"parameter_mmin" : -70.0,
 											"parameter_shortname" : "live.gain~",
 											"parameter_type" : 0,
-											"parameter_unitstyle" : 4,
-											"parameter_mmin" : -70.0,
-											"parameter_longname" : "live.gain~",
-											"parameter_mmax" : 6.0
+											"parameter_unitstyle" : 4
 										}
 
 									}
@@ -2824,7 +2823,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 4,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3067,7 +3066,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 4,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3768,8 +3767,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontsize" : [ 12.0 ],
-													"fontname" : [ "Lato" ]
+													"fontname" : [ "Lato" ],
+													"fontsize" : [ 12.0 ]
 												}
 ,
 												"parentstyle" : "",
@@ -3873,7 +3872,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 4,
+											"revision" : 5,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4165,8 +4164,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -4259,8 +4258,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

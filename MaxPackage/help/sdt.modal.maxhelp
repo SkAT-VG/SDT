@@ -898,8 +898,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 215.0, 523.5, 66.0, 35.0 ],
-					"text" : "velocity \nof object 1"
+					"patching_rect" : [ 198.0, 523.5, 83.0, 35.0 ],
+					"text" : "displacement\nof object 1"
 				}
 
 			}
@@ -1130,7 +1130,7 @@
 						}
 , 						{
 							"number" : 8,
-							"data" : [ 5, "obj-28", "live.gain~", "float", 0.0, 5, "obj-42", "number", "int", 209, 6, "obj-1", "number~", "list", 0.0, 0.0, 5, "obj-23", "slider", "float", 208.0, 5, "obj-66", "flonum", "float", 600.0, 5, "obj-67", "flonum", "float", 2020.0, 5, "obj-68", "flonum", "float", 0.019999999552965, 5, "obj-71", "flonum", "float", 0.009999999776483, 5, "obj-76", "flonum", "float", 150.0, 5, "obj-75", "flonum", "float", 160.0, 5, "obj-7", "number", "int", 2, 5, "obj-27", "flonum", "float", 130.0, 5, "obj-26", "flonum", "float", 150.0 ]
+							"data" : [ 5, "obj-28", "live.gain~", "float", 0.0, 5, "obj-42", "number", "int", 209, 6, "obj-1", "number~", "list", 0.0, 0.0, 5, "obj-23", "slider", "float", 208.0, 5, "obj-66", "flonum", "float", 580.0, 5, "obj-67", "flonum", "float", 1380.0, 5, "obj-68", "flonum", "float", 0.009999999776483, 5, "obj-71", "flonum", "float", 0.014999999664724, 5, "obj-76", "flonum", "float", 160.0, 5, "obj-75", "flonum", "float", 220.0, 5, "obj-7", "number", "int", 2, 5, "obj-27", "flonum", "float", 130.0, 5, "obj-26", "flonum", "float", 150.0 ]
 						}
 , 						{
 							"number" : 9,

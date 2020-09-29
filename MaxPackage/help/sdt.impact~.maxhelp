@@ -171,7 +171,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 241.5, 259.0, 84.0 ],
+					"patching_rect" : [ 635.75, 236.5, 259.0, 84.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Allow to apply respectively the external force [1, 4], the impact velocity [2, 5], and the fragment size [3, 6], to the two resonators, in order to model patterns and textures such as rolling and crumpling."
 				}
@@ -184,7 +184,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 223.0, 83.0, 22.0 ],
+					"patching_rect" : [ 635.75, 218.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "inlets (signal):"
 				}
@@ -417,8 +417,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -436,8 +436,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -1247,7 +1247,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 452.0, 259.0, 194.0 ],
+					"patching_rect" : [ 635.75, 454.0, 259.0, 194.0 ],
 					"style" : "SDT-comments",
 					"text" : "The objects and the interactor form a bidirectional network, wherein the objects' names work as addresses for the interactor. \n\nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the poly~ method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
@@ -1260,7 +1260,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 433.5, 66.0, 22.0 ],
+					"patching_rect" : [ 635.75, 435.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -1275,7 +1275,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 107.21875, 479.5, 83.1875, 35.0 ],
-					"text" : "velocity of object 1"
+					"text" : "displacement of object 1"
 				}
 
 			}
@@ -1816,8 +1816,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -2135,13 +2135,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-8",
-					"linecount" : 5,
+					"linecount" : 6,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 346.5, 259.0, 84.0 ],
+					"patching_rect" : [ 635.75, 339.5, 259.0, 100.0 ],
 					"style" : "SDT-comments",
-					"text" : "- [1] velocity of object 1 \"inertial-object\"\n- [2] displacement @pickup0 of object 2 \"modal object\"\n- [3] displacement @pickup1 of object 2 \"modal object\""
+					"text" : "- [1] displacement of object 1 \"inertial-object\"\n- [2] displacement @pickup0 of object 2 \"modal object\"\n- [3] displacement @pickup1 of object 2 \"modal object\""
 				}
 
 			}
@@ -2152,7 +2152,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 328.0, 83.0, 22.0 ],
+					"patching_rect" : [ 635.75, 321.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlets:"
 				}
@@ -2481,17 +2481,17 @@
 				"boxes" : [ "obj-37", "obj-36" ]
 			}
 , 			{
-				"boxes" : [ "obj-30", "obj-8" ]
+				"boxes" : [ "obj-39", "obj-35" ]
 			}
 , 			{
-				"boxes" : [ "obj-39", "obj-35" ]
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
  ],
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -2509,8 +2509,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

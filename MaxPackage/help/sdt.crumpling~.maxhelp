@@ -307,7 +307,7 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 365.0, 256.0, 50.0, 23.0 ],
 									"style" : "SDT_package",
-									"text" : "128"
+									"text" : "145"
 								}
 
 							}
@@ -435,7 +435,7 @@
 									"numoutlets" : 2,
 									"outlettype" : [ "", "bang" ],
 									"parameter_enable" : 0,
-									"patching_rect" : [ 256.0, 38.0, 50.0, 22.0 ],
+									"patching_rect" : [ 256.0, 38.0, 50.0, 23.0 ],
 									"style" : "SDT_package"
 								}
 
@@ -1093,10 +1093,11 @@
 					"bubble" : 1,
 					"fontface" : 1,
 					"id" : "obj-59",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 562.0, 145.0, 129.0, 26.0 ],
+					"patching_rect" : [ 562.0, 145.0, 81.0, 42.0 ],
 					"style" : "SDT-comments",
 					"text" : "no energy",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
@@ -1539,13 +1540,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-36",
-					"linecount" : 3,
+					"linecount" : 5,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 291.0, 259.0, 53.0 ],
+					"patching_rect" : [ 637.75, 291.0, 260.0, 84.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Crushing energy [0.0, 1.0]\n- Crumpling granularity [0.0, 1.0]\n- Fragmentation [0.0, 1.0]"
+					"text" : "- Crushing energy [0.0, 1.0]\n- Crumpling granularity [0.0, 1.0]\n- Fragmentation [0.0, 1.0], represents the tendency of the object to break into smaller pieces"
 				}
 
 			}
@@ -1714,7 +1715,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 0.0, 640.0, 480.0 ],
+						"rect" : [ 59.0, 104.0, 640.0, 480.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -1744,13 +1745,38 @@
 						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
 								"box" : 								{
+									"id" : "obj-3",
+									"maxclass" : "newobj",
+									"numinlets" : 1,
+									"numoutlets" : 2,
+									"outlettype" : [ "", "" ],
+									"patching_rect" : [ 272.0, 232.0, 67.0, 22.0 ],
+									"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
+									"text" : "thispatcher"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-2",
+									"maxclass" : "message",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 263.0, 167.0, 45.0, 22.0 ],
+									"text" : "wclose"
+								}
+
+							}
+, 							{
+								"box" : 								{
 									"hidden" : 1,
 									"id" : "obj-44",
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 50.0, 124.0, 55.0, 23.0 ],
+									"patching_rect" : [ 50.0, 145.0, 55.0, 22.0 ],
 									"style" : "SDT_package",
 									"text" : "pcontrol"
 								}
@@ -1765,7 +1791,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 50.0, 100.0, 169.0, 23.0 ],
+									"patching_rect" : [ 50.0, 86.0, 169.0, 35.0 ],
 									"style" : "SDT_package",
 									"text" : "sprintf loadunique %s.maxhelp"
 								}
@@ -1786,6 +1812,13 @@
 							}
  ],
 						"lines" : [ 							{
+								"patchline" : 								{
+									"destination" : [ "obj-3", 0 ],
+									"source" : [ "obj-2", 0 ]
+								}
+
+							}
+, 							{
 								"patchline" : 								{
 									"destination" : [ "obj-44", 0 ],
 									"hidden" : 1,
@@ -1991,7 +2024,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -2304,7 +2337,7 @@
 					"id" : "obj-10",
 					"linecount" : 6,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 419.5, 519.0, 140.5, 95.0 ],
 					"style" : "SDT_package",
@@ -2319,7 +2352,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 6,
 					"numoutlets" : 3,
-					"outlettype" : [ "", "", "" ],
+					"outlettype" : [ "signal", "signal", "signal" ],
 					"patching_rect" : [ 44.0, 442.5, 279.0, 52.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 3 @stiffness 150000000. @dissipation 0.05 @shape 1.7 @contact0 0 @contact1 1"
@@ -2344,7 +2377,7 @@
 					"id" : "obj-5",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 419.5, 442.5, 143.0, 37.0 ],
 					"text" : "sdt.inertial inertial-object @mass 0.002"
@@ -2649,6 +2682,18 @@
 		}
 ,
 		"dependency_cache" : [ 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.impact~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+, 			{
 				"name" : "sdt.crumpling~.mxo",
 				"type" : "iLaX"
 			}
@@ -2661,13 +2706,13 @@
 				"boxes" : [ "obj-38", "obj-28", "obj-31" ]
 			}
 , 			{
-				"boxes" : [ "obj-37", "obj-36" ]
-			}
-, 			{
 				"boxes" : [ "obj-30", "obj-8" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-37", "obj-36" ]
 			}
  ],
 		"styles" : [ 			{
