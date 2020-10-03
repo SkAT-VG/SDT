@@ -40,6 +40,34 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"channels" : 1,
+					"id" : "obj-10",
+					"lastchannelcount" : 0,
+					"maxclass" : "live.gain~",
+					"numinlets" : 1,
+					"numoutlets" : 4,
+					"orientation" : 1,
+					"outlettype" : [ "signal", "", "float", "list" ],
+					"parameter_enable" : 1,
+					"patching_rect" : [ 49.5, 216.0, 117.0, 41.0 ],
+					"saved_attribute_attributes" : 					{
+						"valueof" : 						{
+							"parameter_longname" : "live.gain~",
+							"parameter_mmax" : 6.0,
+							"parameter_mmin" : -70.0,
+							"parameter_shortname" : "live.gain~",
+							"parameter_type" : 0,
+							"parameter_unitstyle" : 4
+						}
+
+					}
+,
+					"varname" : "live.gain~"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"hidden" : 1,
 					"id" : "obj-108",
 					"maxclass" : "message",
@@ -84,7 +112,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 199.0, 463.0, 233.0, 22.0 ],
-					"presentation_linecount" : 5,
 					"style" : "SDT-comments",
 					"text" : "click on messages for explanation or here"
 				}
@@ -628,7 +655,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 86.0, 349.0, 618.0, 69.0 ],
-									"presentation_linecount" : 5,
 									"style" : "SDT-comments",
 									"text" : "the spectral flux or variation evaluates the temporal variation of the spectrum across adjacent frames. Measure of how quickly the power spectrum of a signal is changing, calculated by comparing the power spectrum for one frame against the power spectrum from the previous frame. It has been suggested to be useful for the distinction of music and speech signals, since music has a higher rate of change"
 								}
@@ -642,7 +668,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 86.0, 263.0, 618.0, 84.0 ],
-									"presentation_linecount" : 5,
 									"style" : "SDT-comments",
 									"text" : "tonalness of the spectrum, in terms of peakedness. Amount of peaks or resonant structure in a power spectrum, as opposed to flat spectrum of a white noise. A high spectral flatness (approaching 1.0 for white noise) indicates that the spectrum has a similar amount of power in all spectral bands. A low spectral flatness (approaching 0.0 for a pure tone) indicates that the spectral power is concentrated in a relatively small number of bands."
 								}
@@ -656,7 +681,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 86.0, 208.0, 618.0, 53.0 ],
-									"presentation_linecount" : 4,
 									"style" : "SDT-comments",
 									"text" : "measure for how much the shape of the spectrum around the centre of gravity is different from a Gaussian shape. Measure of the flatness of the spectrum around its mean value. K = 3 indicates a normal (Gaussian) distribution, K < 3 a flatter distribution, and K > 3 a peakier distribution."
 								}
@@ -670,7 +694,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 86.0, 153.0, 618.0, 53.0 ],
-									"presentation_linecount" : 3,
 									"style" : "SDT-comments",
 									"text" : "the spectral skewness measures the symmetry of the spectrum around its arithmetic mean. It measures how much the shape of the spectrum below the centre of gravity is different from the shape above the mean frequency. For a white noise, the skewness is zero."
 								}
@@ -684,7 +707,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 86.0, 98.0, 618.0, 53.0 ],
-									"presentation_linecount" : 3,
 									"style" : "SDT-comments",
 									"text" : "average deviation of the spectrum around its centroid, which is commonly associated with the bandwidth of the signal. Noise-like signals have usually a large spectral spread, while individual tonal sounds with isolated peaks will result in a low spectral spread."
 								}
@@ -861,7 +883,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 179.5, 424.0, 54.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"text" : "skewness"
 				}
 
@@ -1018,7 +1039,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 402.5, 120.0, 103.5, 57.0 ],
-					"presentation_linecount" : 3,
 					"style" : "SDT-comments",
 					"text" : "highest frequency in Hz"
 				}
@@ -1047,7 +1067,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 413.75, 220.0, 71.0, 23.0 ],
-					"presentation_linecount" : 2,
 					"text" : "maxFreq $1"
 				}
 
@@ -1074,7 +1093,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 473.0, 293.809734513274236, 226.0, 38.0 ],
-					"presentation_linecount" : 3,
 					"style" : "SDT-comments",
 					"text" : "- (int) Analysis window length, in samples. Default is 1024."
 				}
@@ -1088,7 +1106,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 473.0, 274.65486725663709, 75.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"style" : "SDT-comments",
 					"text" : "arguments"
 				}
@@ -1165,7 +1182,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 473.0, 354.464601769911326, 226.0, 131.0 ],
+					"patching_rect" : [ 473.0, 354.464601769911326, 228.0, 131.0 ],
 					"style" : "SDT-comments",
 					"text" : "- overlap: (float) Window overlap ratio [0.0, 1.0]\n- minFreq (float): Lowest frequency included in the analysis, in Hz (0 for DC)\nmaxFreq (float): Highest frequency included in the analysis, in Hz (0 for Nyquist)"
 				}
@@ -1193,7 +1210,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 232.5, 120.0, 61.0, 57.0 ],
+					"patching_rect" : [ 232.5, 120.0, 65.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "windows overlap"
 				}
@@ -1836,7 +1853,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 27.0, 220.0, 34.0, 23.0 ],
+					"patching_rect" : [ 188.5, 220.0, 34.0, 23.0 ],
 					"text" : "dac~"
 				}
 
@@ -2038,6 +2055,24 @@
  ],
 		"lines" : [ 			{
 				"patchline" : 				{
+					"destination" : [ "obj-31", 1 ],
+					"hidden" : 1,
+					"order" : 0,
+					"source" : [ "obj-10", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-31", 0 ],
+					"hidden" : 1,
+					"order" : 1,
+					"source" : [ "obj-10", 0 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
 					"destination" : [ "obj-108", 0 ],
 					"hidden" : 1,
 					"source" : [ "obj-105", 0 ]
@@ -2070,7 +2105,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 328.875, 251.0, 20.0, 251.0 ],
+					"midpoints" : [ 328.875, 268.0, 20.0, 268.0 ],
 					"source" : [ "obj-15", 0 ]
 				}
 
@@ -2093,18 +2128,10 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-31", 1 ],
+					"destination" : [ "obj-10", 0 ],
 					"hidden" : 1,
+					"midpoints" : [ 15.0, 220.0, 44.25, 220.0, 44.25, 206.0, 59.0, 206.0 ],
 					"order" : 0,
-					"source" : [ "obj-30", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-31", 0 ],
-					"hidden" : 1,
-					"order" : 1,
 					"source" : [ "obj-30", 0 ]
 				}
 
@@ -2113,7 +2140,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
 					"midpoints" : [ 15.0, 214.25, 20.0, 214.25 ],
-					"order" : 2,
+					"order" : 1,
 					"source" : [ "obj-30", 0 ]
 				}
 
@@ -2121,7 +2148,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 247.5, 251.0, 20.0, 251.0 ],
+					"midpoints" : [ 247.5, 268.0, 20.0, 268.0 ],
 					"source" : [ "obj-4", 0 ]
 				}
 
@@ -2185,7 +2212,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 423.25, 251.827433628318545, 20.0, 251.827433628318545 ],
+					"midpoints" : [ 423.25, 268.827433628318545, 20.0, 268.827433628318545 ],
 					"source" : [ "obj-74", 0 ]
 				}
 
@@ -2327,6 +2354,7 @@
 			}
  ],
 		"parameters" : 		{
+			"obj-10" : [ "live.gain~", "live.gain~", 0 ],
 			"obj-30::obj-21::obj-6" : [ "live.tab[3]", "live.tab[1]", 0 ],
 			"obj-30::obj-35" : [ "[5]", "Level", 0 ],
 			"parameterbanks" : 			{
