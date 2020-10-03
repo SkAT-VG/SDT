@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 6,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 700.0, 500.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -46,7 +46,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 153.0, 387.0, 168.0, 87.0 ]
+					"patching_rect" : [ 153.0, 363.0, 168.0, 87.0 ]
 				}
 
 			}
@@ -57,7 +57,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 202.5, 299.0, 57.0, 23.0 ],
+					"patching_rect" : [ 166.5, 275.0, 57.0, 23.0 ],
 					"text" : "radius $1"
 				}
 
@@ -87,7 +87,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -195,7 +195,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 687.5, 91.0, 67.0, 23.0 ],
+					"patching_rect" : [ 544.5, 91.0, 67.0, 23.0 ],
 					"text" : "loadmess 1"
 				}
 
@@ -204,13 +204,13 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
+					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 477.0, 200.0, 150.0, 26.0 ],
+					"patching_rect" : [ 394.0, 203.0, 150.0, 26.0 ],
 					"style" : "SDT-comments",
-					"text" : "on the water surface",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -230,7 +230,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -623,7 +623,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 629.0, 130.0, 53.0, 23.0 ],
+					"patching_rect" : [ 486.0, 130.0, 53.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -643,7 +643,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "preset", "int", "preset", "int" ],
-					"patching_rect" : [ 687.5, 121.0, 89.0, 33.0 ],
+					"patching_rect" : [ 544.5, 121.0, 89.0, 33.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
 							"data" : [ 5, "obj-18", "flonum", "float", 6.0, 5, "obj-28", "live.gain~", "float", 0.0, 5, "obj-30", "flonum", "float", 0.140000000596046, 5, "<invalid>", "number", "int", 1, 5, "<invalid>", "slider", "float", 0.0 ]
@@ -676,7 +676,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 629.0, 317.5, 264.0, 84.0 ],
+					"patching_rect" : [ 417.0, 293.5, 264.0, 84.0 ],
 					"style" : "SDT-comments",
 					"text" : "- radius: represents the size of the bubble, in mm [0.15, 150.0]\n- riseFactor: adds a frequency rise to simulate blooping effects [0.0, 3.0] (~0.1 for bubbles in water). "
 				}
@@ -689,7 +689,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 629.0, 299.0, 66.0, 22.0 ],
+					"patching_rect" : [ 417.0, 275.0, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "attributes:"
 				}
@@ -707,7 +707,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -802,7 +802,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 722.5, 61.5, 65.5, 23.0 ],
+					"patching_rect" : [ 579.5, 61.5, 65.5, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -822,7 +822,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 676.0, 10.0, 112.0, 23.0 ],
+					"patching_rect" : [ 533.0, 10.0, 112.0, 23.0 ],
 					"text" : "See also"
 				}
 
@@ -845,7 +845,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 676.0, 32.0, 112.0, 23.0 ],
+					"patching_rect" : [ 533.0, 32.0, 112.0, 23.0 ],
 					"style" : "SDT_package"
 				}
 
@@ -856,7 +856,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 495.5, 34.0, 23.0 ],
+					"patching_rect" : [ 40.0, 471.5, 34.0, 23.0 ],
 					"text" : "dac~"
 				}
 
@@ -868,7 +868,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 709.5, 192.0, 45.0, 45.0 ]
+					"patching_rect" : [ 566.5, 192.0, 45.0, 45.0 ]
 				}
 
 			}
@@ -884,7 +884,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1024,8 +1024,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -1034,7 +1034,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 40.0, 395.0, 105.0, 23.0 ],
+					"patching_rect" : [ 40.0, 371.0, 105.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1068,7 +1068,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 163.0, 160.0, 129.0, 41.0 ],
+					"patching_rect" : [ 127.0, 160.0, 129.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "bubble radius in mm"
 				}
@@ -1082,7 +1082,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 314.5, 160.0, 116.0, 41.0 ],
+					"patching_rect" : [ 264.5, 160.0, 116.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "rise in frequency"
 				}
@@ -1099,7 +1099,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 348.0, 203.0, 50.0, 23.0 ]
+					"patching_rect" : [ 298.0, 203.0, 50.0, 23.0 ]
 				}
 
 			}
@@ -1114,7 +1114,7 @@
 					"orientation" : 1,
 					"outlettype" : [ "signal", "", "float", "list" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 40.0, 428.5, 105.0, 41.0 ],
+					"patching_rect" : [ 40.0, 404.5, 105.0, 41.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.gain~",
@@ -1144,7 +1144,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1198,9 +1198,9 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 40.0, 93.0, 249.0, 22.0 ],
+									"patching_rect" : [ 40.0, 93.0, 242.0, 22.0 ],
 									"style" : "SDTpackage",
-									"text" : "window size 100 100 1000 750, window exec"
+									"text" : "window size 100 100 800 600, window exec"
 								}
 
 							}
@@ -1234,7 +1234,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 526.0, 32.0, 82.0, 23.0 ],
+					"patching_rect" : [ 383.0, 32.0, 82.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1254,7 +1254,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 526.0, 61.0, 68.0, 23.0 ],
+					"patching_rect" : [ 383.0, 61.0, 68.0, 23.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
 					"style" : "SDTpackage",
 					"text" : "thispatcher"
@@ -1272,7 +1272,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 202.5, 203.0, 50.0, 23.0 ]
+					"patching_rect" : [ 166.5, 203.0, 50.0, 23.0 ]
 				}
 
 			}
@@ -1307,7 +1307,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 348.0, 299.0, 77.0, 23.0 ],
+					"patching_rect" : [ 298.0, 275.0, 77.0, 23.0 ],
 					"text" : "riseFactor $1"
 				}
 
@@ -1335,7 +1335,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 40.0, 342.5, 281.0, 28.0 ],
+					"patching_rect" : [ 40.0, 318.5, 281.0, 28.0 ],
 					"text" : "sdt.bubble~ @radius 3. @riseFactor 0.2"
 				}
 
@@ -1365,7 +1365,7 @@
 					"mode" : 0,
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 133.505431999999928, 140.46875, 329.994568000000072, 106.53125 ],
+					"patching_rect" : [ 120.505431999999928, 140.46875, 267.994568000000072, 102.53125 ],
 					"proportion" : 0.39
 				}
 
@@ -1396,7 +1396,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-12", 0 ],
-					"midpoints" : [ 49.5, 483.5, 331.0, 483.5, 331.0, 376.0, 162.5, 376.0 ],
+					"midpoints" : [ 49.5, 459.5, 331.0, 459.5, 331.0, 352.0, 162.5, 352.0 ],
 					"order" : 0,
 					"source" : [ "obj-28", 0 ]
 				}
@@ -1467,7 +1467,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 743.666666666666629, 165.0, 802.833333333333371, 165.0, 802.833333333333371, 5.0, 685.5, 5.0 ],
+					"midpoints" : [ 600.666666666666629, 165.0, 659.833333333333371, 165.0, 659.833333333333371, 5.0, 542.5, 5.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -1476,7 +1476,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-57", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 720.333333333333371, 164.0, 684.416666666666742, 164.0, 684.416666666666742, 119.0, 638.5, 119.0 ],
+					"midpoints" : [ 577.333333333333371, 164.0, 541.416666666666742, 164.0, 541.416666666666742, 119.0, 495.5, 119.0 ],
 					"source" : [ "obj-56", 1 ]
 				}
 
@@ -1485,7 +1485,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-55", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 672.5, 159.0, 607.0, 159.0, 607.0, 57.0, 535.5, 57.0 ],
+					"midpoints" : [ 529.5, 159.0, 464.0, 159.0, 464.0, 57.0, 392.5, 57.0 ],
 					"source" : [ "obj-57", 1 ]
 				}
 
@@ -1494,7 +1494,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-59", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 638.5, 160.0, 486.5, 160.0 ],
+					"midpoints" : [ 495.5, 160.0, 403.5, 160.0 ],
 					"source" : [ "obj-57", 0 ]
 				}
 
@@ -1502,7 +1502,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 212.0, 331.75, 49.5, 331.75 ],
+					"midpoints" : [ 176.0, 307.75, 49.5, 307.75 ],
 					"source" : [ "obj-7", 0 ]
 				}
 
@@ -1510,7 +1510,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 357.5, 335.5, 49.5, 335.5 ],
+					"midpoints" : [ 307.5, 311.5, 49.5, 311.5 ],
 					"source" : [ "obj-8", 0 ]
 				}
 
@@ -1544,8 +1544,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -1563,8 +1563,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

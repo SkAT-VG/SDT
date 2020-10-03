@@ -123,7 +123,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 380.227272727272748, 326.0, 150.0, 22.0 ],
-									"presentation_linecount" : 9,
 									"text" : "set \"increasing harshness\""
 								}
 
@@ -136,7 +135,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 361.136363636363626, 298.0, 121.0, 22.0 ],
-									"presentation_linecount" : 7,
 									"text" : "set \"adding air noise\""
 								}
 
@@ -149,7 +147,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 332.954545454545496, 269.0, 138.0, 22.0 ],
-									"presentation_linecount" : 8,
 									"text" : "set \"adding brush noise\""
 								}
 
@@ -162,7 +159,6 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 309.318181818181813, 241.0, 136.0, 22.0 ],
-									"presentation_linecount" : 8,
 									"text" : "set \"reducing gear ratio\""
 								}
 
@@ -676,7 +672,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 457.5, 249.0, 49.25, 57.0 ],
-					"presentation_linecount" : 2,
 					"style" : "SDT-comments",
 					"text" : "gear noise"
 				}
@@ -705,7 +700,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 457.5, 337.0, 73.0, 23.0 ],
-					"presentation_linecount" : 2,
 					"text" : "gearGain $1"
 				}
 
@@ -1176,7 +1170,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 147.0, 121.0, 47.0, 57.0 ],
+					"patching_rect" : [ 147.0, 121.0, 48.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "motor load"
 				}
@@ -1343,7 +1337,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 619.25, 250.0, 44.0, 57.0 ],
+					"patching_rect" : [ 619.25, 250.0, 46.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "brush noise"
 				}
@@ -2026,7 +2020,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 171.5, 249.0, 55.0, 57.0 ],
+					"patching_rect" : [ 171.5, 249.0, 58.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "number of coils"
 				}
