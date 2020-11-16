@@ -146,7 +146,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 272.666666666666629, 99.0, 66.0, 57.0 ],
+					"patching_rect" : [ 272.666666666666629, 99.0, 67.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "Dc offset cutoff"
 				}
@@ -187,8 +187,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 147.166666666666629, 99.0, 106.0, 57.0 ],
-					"presentation_linecount" : 2,
+					"patching_rect" : [ 147.166666666666629, 99.0, 108.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "cutoff frequency of fast thrills"
 				}
@@ -216,7 +215,6 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 175.166666666666629, 189.0, 103.0, 23.0 ],
-					"presentation_linecount" : 2,
 					"text" : "highFrequency $1"
 				}
 
@@ -289,6 +287,7 @@
 					"lastchannelcount" : 0,
 					"livemode" : 1,
 					"maxclass" : "live.gain~",
+					"mode" : 1,
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "signal", "", "float", "list" ],
@@ -358,7 +357,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 413.0, 244.464601769911326, 277.0, 100.0 ],
+					"patching_rect" : [ 413.0, 244.464601769911326, 280.0, 100.0 ],
 					"style" : "SDT-comments",
 					"text" : "- lowFrequency (float): Cutoff frequency of the long term amplitude envelope tracking, in Hz\n- highFrequency (float): Cutoff frequency of the short term amplitude envelope tracking, in Hz\n- threshold (float): Input signal gate\n- dcFrequency (float): Dc offset cutoff, in Hz"
 				}
@@ -1170,7 +1169,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "Analysis. Detects myoelastic vocal activity (thrills)"
+					"text" : "Analysis. Detects myoelastic vocal activity (trills)"
 				}
 
 			}
@@ -1435,8 +1434,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1454,8 +1453,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

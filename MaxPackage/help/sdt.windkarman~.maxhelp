@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 6,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -53,7 +53,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -617,7 +617,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -900,7 +900,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1384,7 +1384,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1561,7 +1561,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1778,7 +1778,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1918,7 +1918,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 566.0, 22.0 ],
-					"text" : "Gases. Turbulence model of gases flowing across thin objects, such as branche or wires"
+					"text" : "Gases. Turbulence model of gases flowing across thin objects, such as branches or wires"
 				}
 
 			}
@@ -2144,10 +2144,10 @@
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

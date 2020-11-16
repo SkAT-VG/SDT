@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 8,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -91,7 +91,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 8,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -219,13 +219,13 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 8,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 100.0, 126.0, 900.0, 624.0 ],
+						"rect" : [ 0.0, 26.0, 900.0, 624.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -379,7 +379,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1028,8 +1028,8 @@
 										"styles" : [ 											{
 												"name" : "SDT-comments",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 13.0 ]
+													"fontsize" : [ 13.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -1047,8 +1047,8 @@
 , 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -1231,13 +1231,14 @@
 								"box" : 								{
 									"bubble" : 1,
 									"fontface" : 1,
-									"hidden" : 1,
 									"id" : "obj-59",
+									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 562.0, 170.0, 152.0, 26.0 ],
+									"patching_rect" : [ 562.0, 170.0, 152.0, 42.0 ],
 									"style" : "SDT-comments",
+									"text" : "increasing the width of the tip of the probe",
 									"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 									"textjustification" : 1,
 									"varname" : "bubble"
@@ -1257,7 +1258,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1848,7 +1849,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2052,7 +2053,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2232,8 +2233,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -2310,7 +2311,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2742,8 +2743,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -2761,8 +2762,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -2797,13 +2798,13 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 8,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 900.0, 624.0 ],
+						"rect" : [ 100.0, 126.0, 900.0, 624.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2833,6 +2834,30 @@
 						"showontab" : 2,
 						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
+								"box" : 								{
+									"id" : "obj-3",
+									"maxclass" : "message",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "" ],
+									"patching_rect" : [ 98.0, 392.0, 52.0, 23.0 ],
+									"text" : "force $1"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"id" : "obj-1",
+									"maxclass" : "newobj",
+									"numinlets" : 2,
+									"numoutlets" : 1,
+									"outlettype" : [ "float" ],
+									"patching_rect" : [ 155.5, 392.0, 34.0, 23.0 ],
+									"text" : "/ 10."
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"fontface" : 3,
 									"fontsize" : 16.0,
@@ -3002,7 +3027,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3651,8 +3676,8 @@
 										"styles" : [ 											{
 												"name" : "SDT-comments",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 13.0 ]
+													"fontsize" : [ 13.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -3670,8 +3695,8 @@
 , 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -4008,7 +4033,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4212,7 +4237,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 5,
+											"revision" : 8,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4392,8 +4417,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -4545,6 +4570,14 @@
  ],
 						"lines" : [ 							{
 								"patchline" : 								{
+									"destination" : [ "obj-3", 0 ],
+									"midpoints" : [ 165.0, 417.0, 152.25, 417.0, 152.25, 388.0, 107.5, 388.0 ],
+									"source" : [ "obj-1", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-7", 0 ],
 									"midpoints" : [ 464.75, 258.0, 53.5, 258.0 ],
 									"source" : [ "obj-12", 0 ]
@@ -4607,6 +4640,14 @@
 									"hidden" : 1,
 									"order" : 1,
 									"source" : [ "obj-28", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-9", 0 ],
+									"midpoints" : [ 107.5, 415.94140625, 48.5, 415.94140625 ],
+									"source" : [ "obj-3", 0 ]
 								}
 
 							}
@@ -4677,7 +4718,17 @@
 							}
 , 							{
 								"patchline" : 								{
+									"destination" : [ "obj-1", 0 ],
+									"midpoints" : [ 320.5, 213.0, 408.0, 213.0, 408.0, 391.0, 165.0, 391.0 ],
+									"order" : 1,
+									"source" : [ "obj-68", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
 									"destination" : [ "obj-14", 0 ],
+									"order" : 0,
 									"source" : [ "obj-68", 0 ]
 								}
 
@@ -4754,8 +4805,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -4773,8 +4824,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -4847,8 +4898,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -4866,8 +4917,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

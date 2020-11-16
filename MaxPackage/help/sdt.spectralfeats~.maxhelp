@@ -1092,7 +1092,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 473.0, 293.809734513274236, 226.0, 38.0 ],
+					"patching_rect" : [ 472.0, 293.809734513274236, 226.0, 38.0 ],
 					"style" : "SDT-comments",
 					"text" : "- (int) Analysis window length, in samples. Default is 1024."
 				}
@@ -1105,7 +1105,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 473.0, 274.65486725663709, 75.0, 22.0 ],
+					"patching_rect" : [ 472.0, 274.65486725663709, 75.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments"
 				}
@@ -1182,7 +1182,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 473.0, 354.464601769911326, 228.0, 131.0 ],
+					"patching_rect" : [ 472.0, 354.464601769911326, 228.0, 131.0 ],
 					"style" : "SDT-comments",
 					"text" : "- overlap: (float) Window overlap ratio [0.0, 1.0]\n- minFreq (float): Lowest frequency included in the analysis, in Hz (0 for DC)\nmaxFreq (float): Highest frequency included in the analysis, in Hz (0 for Nyquist)"
 				}
@@ -1195,7 +1195,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 473.0, 335.309734513274179, 66.0, 22.0 ],
+					"patching_rect" : [ 472.0, 335.309734513274179, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "attributes:"
 				}

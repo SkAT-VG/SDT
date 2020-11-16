@@ -44,8 +44,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 139.0, 279.464601769911269, 150.0, 21.0 ],
-					"text" : "zero crossing rate"
+					"patching_rect" : [ 170.0, 293.464601769911269, 172.0, 21.0 ],
+					"text" : "zero crossing rate (noisiness)"
 				}
 
 			}
@@ -60,7 +60,7 @@
 					"orientation" : 1,
 					"outlettype" : [ "signal", "", "float", "list" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 185.0, 422.190265486725821, 104.0, 41.0 ],
+					"patching_rect" : [ 216.0, 436.190265486725821, 104.0, 41.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.gain~[1]",
@@ -84,7 +84,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 185.0, 457.190265486725821, 34.0, 23.0 ],
+					"patching_rect" : [ 216.0, 471.190265486725821, 34.0, 23.0 ],
 					"text" : "dac~"
 				}
 
@@ -96,7 +96,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "bang", "" ],
-					"patching_rect" : [ 85.5, 411.0, 33.0, 23.0 ],
+					"patching_rect" : [ 116.5, 425.0, 33.0, 23.0 ],
 					"text" : "sel 1"
 				}
 
@@ -108,7 +108,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 85.5, 440.190265486725821, 39.0, 23.0 ],
+					"patching_rect" : [ 116.5, 454.190265486725821, 39.0, 23.0 ],
 					"text" : "click~"
 				}
 
@@ -119,8 +119,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 113.0, 383.15486725663709, 150.0, 21.0 ],
-					"text" : "transient"
+					"patching_rect" : [ 144.0, 397.15486725663709, 150.0, 21.0 ],
+					"text" : "noisy!"
 				}
 
 			}
@@ -133,7 +133,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 101.5, 325.464601769911326, 50.0, 23.0 ]
+					"patching_rect" : [ 132.5, 339.464601769911326, 50.0, 23.0 ]
 				}
 
 			}
@@ -145,7 +145,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 85.5, 381.65486725663709, 24.0, 24.0 ]
+					"patching_rect" : [ 116.5, 395.65486725663709, 24.0, 24.0 ]
 				}
 
 			}
@@ -159,7 +159,7 @@
 					"numoutlets" : 4,
 					"outlettype" : [ "signal", "", "float", "list" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 5.5, 222.464601769911269, 47.0, 136.0 ],
+					"patching_rect" : [ 20.5, 236.464601769911269, 47.0, 136.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.gain~",
@@ -184,7 +184,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 185.0, 325.464601769911326, 104.0, 53.690265486725764 ],
+					"patching_rect" : [ 216.0, 339.464601769911326, 104.0, 53.690265486725764 ],
 					"setminmax" : [ 0.0, 1.0 ],
 					"setstyle" : 5
 				}
@@ -197,7 +197,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "int" ],
-					"patching_rect" : [ 85.5, 356.15486725663709, 35.0, 23.0 ],
+					"patching_rect" : [ 116.5, 370.15486725663709, 35.0, 23.0 ],
 					"text" : "> 0.1"
 				}
 
@@ -210,7 +210,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 453.0, 325.464601769911326, 238.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"style" : "SDT-comments",
 					"text" : "- normalized zero crossing rate [0.0, 1.0]"
 				}
@@ -238,7 +237,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 85.5, 279.464601769911269, 52.0, 23.0 ]
+					"patching_rect" : [ 116.5, 293.464601769911269, 52.0, 23.0 ]
 				}
 
 			}
@@ -258,7 +257,7 @@
 					"numoutlets" : 1,
 					"offset" : [ 0.0, 0.0 ],
 					"outlettype" : [ "signal" ],
-					"patching_rect" : [ 5.5, 115.0, 225.0, 95.0 ],
+					"patching_rect" : [ 20.5, 129.0, 225.0, 95.0 ],
 					"viewvisibility" : 1
 				}
 
@@ -298,7 +297,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 260.0, 121.0, 117.0, 41.0 ],
+					"patching_rect" : [ 291.0, 135.0, 117.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "window overlap"
 				}
@@ -315,7 +314,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 293.5, 164.0, 50.0, 23.0 ]
+					"patching_rect" : [ 324.5, 178.0, 50.0, 23.0 ]
 				}
 
 			}
@@ -326,7 +325,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 293.5, 197.0, 64.0, 23.0 ],
+					"patching_rect" : [ 324.5, 211.0, 64.0, 23.0 ],
 					"text" : "overlap $1"
 				}
 
@@ -773,7 +772,7 @@
 					"patching_rect" : [ 529.5, 121.0, 89.0, 33.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
-							"data" : [ 5, "obj-7", "flonum", "float", 0.200000002980232, 5, "obj-47", "flonum", "float", 0.1240234375, 5, "obj-114", "multislider", "list", 0.1240234375, 5, "obj-115", "live.gain~", "float", -9.803205490112305, 5, "obj-117", "toggle", "int", 0, 5, "obj-119", "flonum", "float", 0.150000005960464, 5, "obj-124", "live.gain~", "float", -70.0 ]
+							"data" : [ 5, "obj-7", "flonum", "float", 0.200000002980232, 5, "obj-47", "flonum", "float", 0.1240234375, 5, "obj-114", "multislider", "list", 0.1240234375, 5, "obj-115", "live.gain~", "float", -70.0, 5, "obj-117", "toggle", "int", 0, 5, "obj-119", "flonum", "float", 0.150000005960464, 5, "obj-124", "live.gain~", "float", -70.0 ]
 						}
  ]
 				}
@@ -940,7 +939,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 5.5, 376.15486725663709, 34.0, 23.0 ],
+					"patching_rect" : [ 20.5, 390.15486725663709, 34.0, 23.0 ],
 					"text" : "dac~"
 				}
 
@@ -1102,10 +1101,12 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
+					"patching_rect" : [ 15.0, 86.0, 401.0, 38.0 ],
+					"text" : "Reports how often an audio signal changes from positive to negative and vice versa, for a rough estimation of noisiness",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1119,7 +1120,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "float" ],
-					"patching_rect" : [ 85.5, 245.309734513274179, 186.0, 28.0 ],
+					"patching_rect" : [ 116.5, 259.309734513274179, 186.0, 28.0 ],
 					"text" : "sdt.zerox~ @overlap 0.75"
 				}
 
@@ -1178,7 +1179,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-124", 0 ],
-					"midpoints" : [ 95.0, 473.190265486725821, 144.75, 473.190265486725821, 144.75, 411.190265486725821, 194.5, 411.190265486725821 ],
+					"midpoints" : [ 126.0, 487.190265486725821, 175.75, 487.190265486725821, 175.75, 425.190265486725821, 225.5, 425.190265486725821 ],
 					"source" : [ "obj-122", 0 ]
 				}
 
@@ -1235,7 +1236,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 15.0, 214.25, 95.0, 214.25 ],
+					"midpoints" : [ 30.0, 228.25, 126.0, 228.25 ],
 					"order" : 0,
 					"source" : [ "obj-30", 0 ]
 				}
@@ -1244,7 +1245,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 303.0, 229.0, 95.0, 229.0 ],
+					"midpoints" : [ 334.0, 243.0, 126.0, 243.0 ],
 					"source" : [ "obj-4", 0 ]
 				}
 
@@ -1268,7 +1269,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-114", 0 ],
-					"midpoints" : [ 95.0, 312.732300884955635, 194.5, 312.732300884955635 ],
+					"midpoints" : [ 126.0, 326.732300884955635, 225.5, 326.732300884955635 ],
 					"order" : 0,
 					"source" : [ "obj-47", 0 ]
 				}
@@ -1374,20 +1375,20 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
 				"boxes" : [ "obj-110", "obj-109" ]
 			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
  ],
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1405,8 +1406,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

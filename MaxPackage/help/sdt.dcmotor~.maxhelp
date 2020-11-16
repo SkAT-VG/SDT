@@ -43,13 +43,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"fontface" : 1,
+					"hidden" : 1,
 					"id" : "obj-76",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 398.125, 178.0, 168.75, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "incresing rotor load",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -1698,8 +1698,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -2179,7 +2179,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "Machines. Electric motor model"
+					"text" : "Machines. DC brushed electric motor model"
 				}
 
 			}
@@ -2605,20 +2605,20 @@
 				"boxes" : [ "obj-14", "obj-15", "obj-13" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-4", "obj-1" ]
 			}
 , 			{
 				"boxes" : [ "obj-65", "obj-64" ]
 			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
  ],
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -2636,8 +2636,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

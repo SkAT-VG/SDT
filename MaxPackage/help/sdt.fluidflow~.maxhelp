@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 6,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 117.0, 79.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -59,7 +59,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 497.0, 370.0, 74.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -450,7 +449,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -745,7 +744,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1467,7 +1466,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 433.0, 388.0, 209.0 ],
+					"patching_rect" : [ 497.0, 433.0, 390.0, 209.0 ],
 					"style" : "SDT-comments",
 					"text" : "- avgRate: average number of bubbles per second [0.0, 100000.0]\n- minRadius: minimum bubble radius [0.15, 150.0]\n- maxRadius: maximum bubble radius [0.15, 150.0]\n- expRadius: bubble radius gamma factor to set the distribution of bubbles radii across the range [0.0, 10.0]\n- minDepth: minimum bubble elevation [0.0, 1.0]\n- maxDepth: maximum bubble elevation [0.0, 1.0]\n- expDepth: bubble depth gamma factor to set the distribution of bubbles elevations across the range [0.0, 10.0]\n- riseFactor: audible rise in frequency, ~0.1 for bubbles in water [0.0, 3.0]\n- riseCutoff: bubbles below this elevation do not change frequency [0.0, 1.0]"
 				}
@@ -1498,7 +1497,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1711,7 +1710,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 6,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
