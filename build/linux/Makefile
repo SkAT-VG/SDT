@@ -34,7 +34,7 @@ OSCDOCRST=$(OSCDOCSOURCEDIR)/ordinary_classes.rst
 INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
 INCLUDE_SDT=-I$(SDTDIR)
 
-all: sdt pd oscdoc
+all: sdt pd
 
 .PHONY: sdt pd oscdoc_%
 

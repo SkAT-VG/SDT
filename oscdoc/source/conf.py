@@ -22,7 +22,7 @@ copyright = '2020, Marco Tiraboschi'
 author = 'Marco Tiraboschi'
 
 
-version = '0.0.0'
+version = os.environ.get("SDT_VERSION", "undefined version")
 release = version
 
 language = None

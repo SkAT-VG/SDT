@@ -47,7 +47,7 @@ jobs:
           plt_name: _pd
         - platform: install_max
           plt_name: _max
-    container: chromaticisobar/sdt:build-latest
+    container: chromaticisobar/sdt:build
     steps:
     - uses: actions/checkout@v2
       with:
@@ -156,10 +156,10 @@ jobs:
         asset_path: ./SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
         asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ needs.release-create.outputs.version }}.zip
         asset_content_type: application/zip
-  
+
   doxygen:
     runs-on: ubuntu-latest
-    container: chromaticisobar/doxy
+    container: chromaticisobar/sdt:doxy
     steps:
     - uses: actions/checkout@v2
       with:
@@ -181,6 +181,31 @@ jobs:
         name: refman
         path: doc/latex/refman.pdf
 
+  sphinx:
+    runs-on: ubuntu-latest
+    container: chromaticisobar/sdt:doxy
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          submodules: true
+      - name: Build HTML
+        run: make oscdoc_html
+        working-directory: build/linux
+      - name: Upload HTML
+        uses: actions/upload-artifact@v1
+        with:
+          name: osc-quickreference-html
+          path: oscdoc/build/html
+      - name: Build latex
+        run: make oscdoc_latexpdf
+        working-directory: build/linux
+      - name: Upload pdf
+        uses: actions/upload-artifact@v1
+        with:
+          name: osc-quickreference
+          path: oscdoc/build/latex/SoundDesignToolkitOSCQuickReference.pdf
+
   release-upload-doxygen:
     runs-on: ubuntu-latest
     needs: [release-create, doxygen]
@@ -199,3 +224,22 @@ jobs:
         asset_path: ./refman/refman.pdf
         asset_name: refman_${{ needs.release-create.outputs.version }}.pdf
         asset_content_type: application/pdf
+
+  release-upload-sphinx:
+    runs-on: ubuntu-latest
+    needs: [release-create, sphinx]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: osc-quickreference
+      - name: Upload OSC Quick Reference
+        id: upload-osc-qr
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.release-create.outputs.upload_url }}
+          asset_path: ./osc-quickreference/SoundDesignToolkitOSCQuickReference.pdf
+          asset_name: osc_quick_reference_${{ needs.release-create.outputs.version }}.pdf
+          asset_content_type: application/pdf
