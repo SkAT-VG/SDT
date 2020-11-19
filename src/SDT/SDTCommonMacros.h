@@ -43,7 +43,8 @@ A(T, p, double, Pi, pi, double, 3.14)\endcode Here it has been declared that
 #define _CONCAT(X, Y) __CONCAT(X, Y)
 #define CONCAT(X, Y) _CONCAT(X, Y)
 
-#define STRINGIFY(X) #X
+#define _STRINGIFY(X) #X
+#define STRINGIFY(X) _STRINGIFY(X)
 
 #define SDT_TYPE_FULL(SDT_TYPE) CONCAT(SDT, SDT_TYPE)
 

@@ -10,3 +10,4 @@ doc
 .idea
 CMakeLists.txt
 *.json
+oscdoc
