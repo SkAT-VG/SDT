@@ -190,7 +190,7 @@ jobs:
           persist-credentials: false
           submodules: true
       - name: Build HTML
-        run: make oscdoc_html
+        run: export SDT_VERSION=${GITHUB_REF##*/} && make oscdoc_html
         working-directory: build/linux
       - name: Upload HTML
         uses: actions/upload-artifact@v1
@@ -198,8 +198,10 @@ jobs:
           name: osc-quickreference-html
           path: oscdoc/build/html
       - name: Build latex
-        run: make oscdoc_latexpdf
+        run: export SDT_VERSION=${GITHUB_REF##*/} && make oscdoc_latexpdf
         working-directory: build/linux
+        env:
+          SDT_VERSION: ${{ steps.get_version_sphinx.outputs.VERSION }}
       - name: Upload pdf
         uses: actions/upload-artifact@v1
         with:
