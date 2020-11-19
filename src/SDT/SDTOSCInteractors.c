@@ -1,4 +1,5 @@
 #include "SDTOSCInteractors.h"
+#include "SDTOSCMisc.h"
 #include "SDTResonators.h"
 #include <string.h>
 #include <stdio.h>
@@ -45,25 +46,8 @@ SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCM
 
 //-------------------------------------------------------------------------------------//
 
-SDTOSCReturnCode SDTOSCImpact(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m) {
-  if (!SDTInteractor_isImpact(x))
-    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
-
-  SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-  if (SDTOSCMessage_hasContainer(m)) {
-      char *method = SDTOSCMessage_getContainer(m);
-      const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
-      if (!strcmp("log", method))
-        return_code = SDTOSCImpact_log(log, key0, key1, x);
-      else if (!strcmp("save", method))
-        return_code = SDTOSCImpact_save(log, key0, key1, x, args);
-      else if (!strcmp("load", method))
-        return_code = SDTOSCImpact_load(log, key0, key1, x, args);
-    }
-  else
-    return_code = SDT_OSC_RETURN_MISSING_METHOD;
-  return return_code;
-}
+SDT_OSC_INTERACTOR_ROOT(SDT_IMPACT)
+SDT_OSC_INTERACTOR_MAKE_SETTERS(SDT_IMPACT)
 
 SDTOSCReturnCode SDTOSCImpact_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x) {
   json_value *obj = SDTImpact_toJSON(x, key0, key1);
@@ -103,25 +87,8 @@ SDTOSCReturnCode SDTOSCImpact_load(void (* log)(const char *, ...), const char *
 
 //-------------------------------------------------------------------------------------//
 
-SDTOSCReturnCode SDTOSCFriction(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x, const SDTOSCMessage* m) {
-  if (!SDTInteractor_isFriction(x))
-    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
-
-  SDTOSCReturnCode return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-  if (SDTOSCMessage_hasContainer(m)) {
-      char *method = SDTOSCMessage_getContainer(m);
-      const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
-      if (!strcmp("log", method))
-        return_code = SDTOSCFriction_log(log, key0, key1, x);
-      else if (!strcmp("save", method))
-        return_code = SDTOSCFriction_save(log, key0, key1, x, args);
-      else if (!strcmp("load", method))
-        return_code = SDTOSCFriction_load(log, key0, key1, x, args);
-    }
-  else
-    return_code = SDT_OSC_RETURN_MISSING_METHOD;
-  return return_code;
-}
+SDT_OSC_INTERACTOR_ROOT(SDT_FRICTION)
+SDT_OSC_INTERACTOR_MAKE_SETTERS(SDT_FRICTION)
 
 SDTOSCReturnCode SDTOSCFriction_log(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *x) {
   json_value *obj = SDTFriction_toJSON(x, key0, key1);
