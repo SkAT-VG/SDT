@@ -27,6 +27,11 @@ obtained through the specific SDTImpact and SDTFriction constructors.
 /** @brief Opaque data structure representing the interactor interface */
 typedef struct SDTInteractor SDTInteractor;
 
+#define SDT_INTERACTOR Interactor
+#define SDT_INTERACTOR_ATTRIBUTES(T, A) \
+A(T, contact0, int, FirstPoint, contact0, integer, 0) \
+A(T, contact1, int, SecondPoint, contact1, integer, 0)
+
 /** @brief Sets the pointer to the first interacting resonator
 @param[in] p Pointer to a SDTResonator instance */
 extern void SDTInteractor_setFirstResonator(SDTInteractor *x, SDTResonator *p);

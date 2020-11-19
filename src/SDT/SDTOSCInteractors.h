@@ -46,7 +46,7 @@ extern SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const 
 #define SDT_OSC_INTERACTOR_ROOT(SDT_TYPE) SDTOSCReturnCode CONCAT(SDTOSC, SDT_TYPE)(void (* log)(const char *, ...), const char *key0, const char *key1, SDTInteractor *obj, const SDTOSCMessage* x) { \
   if (! CONCAT(SDTInteractor_is, SDT_TYPE)(obj)) \
     return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE; \
-  SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x); \
+  SDTOSCArgumentList *sub_args = SDTOSCMessage_getArguments(x); \
   SDTOSCReturnCode return_code; \
   if (obj) \
     if (SDTOSCMessage_hasContainer(x)) { \
@@ -54,10 +54,11 @@ extern SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const 
       if (!strcmp("log", method)) \
         return_code = CONCAT(CONCAT(SDTOSC, SDT_TYPE), _log)(log, key0, key1, obj); \
       else if (!strcmp("save", method)) \
-        return_code = CONCAT(CONCAT(SDTOSC, SDT_TYPE), _save)(log, key0, key1, obj, args); \
+        return_code = CONCAT(CONCAT(SDTOSC, SDT_TYPE), _save)(log, key0, key1, obj, sub_args); \
       else if (!strcmp("load", method)) \
         return_code = CONCAT(CONCAT(SDTOSC, SDT_TYPE), _load)(log, key0, key1, obj, sub_args); \
       SDT_TYPE ## _ATTRIBUTES(SDT_TYPE, SDT_OSC_TYPE_SETTER_SWITCH) \
+      SDT_INTERACTOR_ATTRIBUTES(SDT_INTERACTOR, SDT_OSC_TYPE_SETTER_SWITCH) \
       else \
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED; \
     } else \
@@ -66,6 +67,8 @@ extern SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const 
       return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND; \
   return return_code; \
 }
+
+SDT_OSC_TYPE_MAKE_SETTERS_H(SDT_INTERACTOR)
 
 /** @defgroup osc_impact OSC Impact
 OSC containers and methods for SDT Impacts

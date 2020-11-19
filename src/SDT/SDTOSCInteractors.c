@@ -20,17 +20,19 @@ SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCM
 
   const char *key0 = SDTOSCArgumentList_getString(args, 0);
   const char *key1 = SDTOSCArgumentList_getString(args, 1);
-  SDTInteractor *inter = (key0 && key1)? SDT_getInteractor(key0, key1) : 0;
+  SDTInteractor *obj = (key0 && key1)? SDT_getInteractor(key0, key1) : 0;
   SDTOSCReturnCode return_code;
 
-  if (inter)
+  if (obj)
     if (SDTOSCMessage_hasContainer(x)) {
       SDTOSCMessage *sub = SDTOSCMessage_new(SDTOSCMessage_openContainerAddress(x), SDTOSCArgumentList_copyFromTo(SDTOSCMessage_getArguments(x), 2, -1));
+      SDTOSCArgumentList *sub_args = SDTOSCMessage_getArguments(sub);
       char *method = SDTOSCMessage_getContainer(x);
       if (!strcmp("impact", method))
-        return_code = SDTOSCImpact(log, key0, key1, inter, sub);
+        return_code = SDTOSCImpact(log, key0, key1, obj, sub);
       else if (!strcmp("friction", method))
-        return_code = SDTOSCFriction(log, key0, key1, inter, sub);
+        return_code = SDTOSCFriction(log, key0, key1, obj, sub);
+      SDT_INTERACTOR_ATTRIBUTES(SDT_INTERACTOR, SDT_OSC_TYPE_SETTER_SWITCH)
       else
         return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
       SDTOSCMessage_free(sub);
@@ -43,6 +45,8 @@ SDTOSCReturnCode SDTOSCInteractor(void (* log)(const char *, ...), const SDTOSCM
 
   return return_code;
 }
+
+SDT_OSC_TYPE_MAKE_SETTERS(SDT_INTERACTOR)
 
 //-------------------------------------------------------------------------------------//
 
