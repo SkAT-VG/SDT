@@ -229,6 +229,8 @@ jobs:
         run: cp -r osc-quickreference-html html/OSC
       - name: No Jekyll
         run: touch html/.nojekyll
+      - name: Autoredirect from home to SDT
+        run: echo '<meta http-equiv="Refresh", content="0; url=SDT" />' > html/index.html
       - name: Deploy pages
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
