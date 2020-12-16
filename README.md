@@ -30,7 +30,7 @@ expressive articulations of sonic processes.
 
 ### Max package
 To install the provided Max *package* please refer to the `ReadMe.md` file in
-the `/MaxPackage` folder.
+the `MaxPackage` folder.
 
 ### Precompiled binaries for Pure Data
 Precompiled binaries are available for PureData (Mac OS, Windows, Linux). Simply
