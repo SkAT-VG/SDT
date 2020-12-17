@@ -1,24 +1,21 @@
-[![Build status](https://github.com/SkAT-VG/SDT/workflows/build/badge.svg?branch=develop)](https://github.com/SkAT-VG/SDT/actions?query=workflow%3Abuild)
 # SOUND DESIGN TOOLKIT (SDT)
 
 
 ## Overview
-The **Sound Design Toolkit** (**SDT**) is an open-source (GPLv2) software
-consisting in a library of ecologically-founded (e.g. physics-based) sound
-synthesis models, audio processing algorithms and analysis routines.
-It can be considered as a virtual Foley-box of sound synthesis algorithms, each
-representing a specific sound-producing event.
+The **Sound Design Toolkit** (**SDT**) is an open-source (GPLv3) framework for
+ecologically-founded sound synthesis and design. Think of it as a virtual
+Foley-box!
+It can simulate various acoustic phenomena arising from solid interactions
+(e.g., impacts, frictions), liquids (e.g., bubbles, splashes), gasses (e.g.,
+explosions, blowing wind), and machines (e.g., combustion engines, DC motors).
+The library consists of sound synthesis models, audio processing algorithms and
+analysis routines.
+
 The SDT is mainly aimed at research and education in *Sonic Interaction Design*
 (SID), but it's been successfully used in musical contexts as well.
 
-In addition to a programmer-oriented core framework and API -- implemented in
-the C language, and suitable for developing interactive media such as games --
-the SDT algorithms are made available as ready-to-go externals and patches for
-**Cycling '74 Max** and **Pure Data**.
-In particular a *package* is provided for Max which offers an advanced front-end
-GUI, as well as examples with presets and tutorials.
-
-The SDT algorithms have been implemented according to three main points:
+The SDT sound synthesis algorithms have been implemented according to three main
+points:
 1. auditory perceptual relevance;
 2. cartoonification, i.e. simplification and exaggeration of the underlying
 physics in order to increase both computational efficiency and perceptual
@@ -30,6 +27,17 @@ expressive articulations of sonic processes.
 API documentation can be found online here:
 
 https://skat-vg.github.io/SDT/
+
+## Implementation
+The core library (framework and API) is implemented in the C language, making it
+suitable for developing interactive media such as games, audio and VR
+applications.
+
+In addition, the SDT algorithms are made available as ready-to-go externals and
+patches for **Pure Data** and **Cycling '74 Max**. In particular a *package* is
+provided for Max which offers an advanced front-end GUI, as well as examples
+with presets and tutorials.
+
 
 ## Installation
 
@@ -85,7 +93,7 @@ Shared DLL):
         make
 ```
 2. Install the desired products. The script will install the desired product in
-the given destination ``\<path\>``, creating a ``SDT`` subfolder:
+the given destination ``<path>``, creating a ``SDT`` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path> (only for 32 bit)
@@ -117,30 +125,13 @@ to change the install path, provide a ``PREFIX`` argument:
 ```
 
 
-## Contributors / Acknowledgements
+## Acknowledgements
 The SDT was developed through the years with the contribution of the following
 EU-projects:
  - 2001-2003 'SOb' http://www.soundobject.org/
  - 2006-2009 'CLOSED' http://closed.ircam.fr/
  - 2008-2011 'NIW' http://www.niwproject.eu/
- - 2014-2017 'SkAT-VG' http://www.skatvg.eu/
-
-by the following people (either programmers or designers), in alphabetical
-order:
-- Federico Avanzini (federico.avanzini@di.unimi.it)
-- Stefano Baldan (singintime@gmail.com)
-- Nicola Bernardini
-- Gianpaolo Borin
-- Carlo Drioli (carlo.drioli@uniud.it)
-- Stefano Delle Monache (s.dellemonache@tudelft.nl)
-- Delphine Devallez
-- Federico Fontana (federico.fontana@uniud.it)
-- Laura Ottaviani
-- Stefano Papetti (stefano.papetti@zhdk.ch)
-- Pietro Polotti (pietro.polotti@conts.it)
-- Matthias Rath
-- Davide Rocchesso (davide.rocchesso@unipa.it)
-- Stefania Serafin (sts@create.aau.dk)
+ - 2014-2016 'SkAT-VG' http://www.skatvg.eu/
 
 
 ## Contact:

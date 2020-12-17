@@ -1,43 +1,49 @@
 /** @mainpage
- * The 'Sound Design Toolkit' (SDT) is a framework a for education and research
- * in Sonic Interaction Design. It includes a collection of physically informed
- * models, post-processing algorithms and sound analysis routines for 
- * interactive sound synthesis.
- * It can be considered as a virtual Foley box of sound synthesis algorithms,
- * each representing a specific sound-producing event.
+ * The 'Sound Design Toolkit' (SDT) is a framework a for ecologically-founded
+ * sound synthesis, especially aimed at research and education in Sonic
+ * Interaction Design.
+ * It consists in a collection of interactive sound synthesis models, audio
+ * processing algorithms and analysis routines.
+ * The SDT can simulate various acoustic phenomena arising from solid
+ * interactions (e.g., impacts, frictions), liquids (e.g., bubbles, splashes),
+ * gasses (e.g., explosions, blowing wind), and machines (e.g., combustion
+ * engines, DC motors).
  *
  * Developed with the contribution of the following EU-projects:
- * 2001-2003 'SOb' http://www.soundobject.org/
- * 2006-2009 'CLOSED' http://closed.ircam.fr/
- * 2008-2011 'NIW' http://www.niwproject.eu/
- * 2014-2017 'SkAT-VG' http://www.skatvg.eu/
+ *    2001-2003 'SOb' http://www.soundobject.org/
+ *    2006-2009 'CLOSED' http://closed.ircam.fr/
+ *    2008-2011 'NIW' http://www.niwproject.eu/
+ *    2014-2016 'SkAT-VG' http://www.skatvg.eu/
  *
- * Contacts: 
- * 	stefano.papetti@zhdk.ch
- * 	stefano.dellemonache@gmail.com
- *  stefanobaldan@iuav.it
+ * Contacts:
+ *    Stefano Papetti (stefano.papetti@zhdk.ch)
+ * 	  Stefano Delle Monache (s.dellemonache@tudelft.nl)
+ *    Stefano Baldan (singintime@gmail.com)
  *
- * Complete list of authors (either programmers or designers) 
- *  in alphabetical order:
- * 	Federico Avanzini (federico.avanzini@di.unimi.it)
- *  Stefano Baldan (stefanobaldan@iuav.it)
- *	Nicola Bernardini (nicola.bernardini.rome@gmail.com)
- *	Gianpaolo Borin (gianpaolo.borin@tin.it)
- *	Carlo Drioli (carlo.drioli@uniud.it)
- *	Stefano Delle Monache (stefano.dellemonache@gmail.com)
- *	Delphine Devallez
- *	Federico Fontana (federico.fontana@uniud.it)
- *	Laura Ottaviani
- *	Stefano Papetti (stefano.papetti@zhdk.ch)
- *	Pietro Polotti (pietro.polotti@conts.it)
- *	Matthias Rath
- *	Davide Rocchesso (davide.rocchesso@unipa.it)
- *	Stefania Serafin (sts@create.aau.dk)
+ * Authors and contributors (either programmers or designers) in alphabetical
+ * order:
+ *    Federico Avanzini (federico.avanzini@di.unimi.it)
+ *    Stefano Baldan (singintime@gmail.com)
+ *    Nicola Bernardini
+ *    Gianpaolo Borin
+ *    Carlo Drioli (carlo.drioli@uniud.it)
+ *    Stefano Delle Monache (s.dellemonache@tudelft.nl)
+ *    Delphine Devallez
+ *    Federico Fontana (federico.fontana@uniud.it)
+ *    Laura Ottaviani
+ *    Stefano Papetti (stefano.papetti@zhdk.ch)
+ *    Pietro Polotti (pietro.polotti@conts.it)
+ *    Matthias Rath
+ *    Davide Rocchesso (davide.rocchesso@unipa.it)
+ *    Stefania Serafin (sts@create.aau.dk)
  *
- * The SDT is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ *
+ * This file is part of the Sound Design Toolkit (SDT).
+ *
+ * The SDT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * The SDT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -45,9 +51,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with the SDT; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
- * USA.
+ * along with the SDT.  If not, see <https://www.gnu.org/licenses/>.
  *****************************************************************************/
 
 /** @file SDTCommon.h
@@ -60,9 +64,9 @@ SDTCommon.h should always be included when using other SDT modules.
 #define SDT_COMMON_H
 
 /** @brief SDT version number */
-#define SDT_ver          078
+#define SDT_ver          080
 /** @brief SDT version string */
-#define SDT_ver_str     "078"
+#define SDT_ver_str     "080"
 /** @brief Value of Pi */
 #define SDT_PI           3.141592653589793
 /** @brief Value of 2 * Pi */
@@ -176,12 +180,12 @@ extern void SDT_hanning(double *sig, int n);
 
 /** @brief Computes a direct Haar Wavelet Transform of the incoming signal (in place).
 @param[in,out] sig incoming signals
-@param[in] n window size */ 
+@param[in] n window size */
 extern void SDT_haar(double *sig, long n);
 
 /** @brief Computes an inverse Haar Wavelet Transform of the incoming signal (in place).
 @param[in,out] sig incoming signals
-@param[in] n window size */ 
+@param[in] n window size */
 extern void SDT_ihaar(double *sig, long n);
 
 /** @brief Checks if the selected value is the minimum among its neighbors.
@@ -195,7 +199,7 @@ extern int SDT_isHole(double *x, unsigned int i, unsigned int radius);
 @param[in] x Array of data
 @param[in] i Index of the selected value
 @param[in] radius Number of neighbors to check, for each direction
-@return 1 if the selected value is greater than its left neighbors, and greater than or equal to its right neighbors. 0 otherwise */ 
+@return 1 if the selected value is greater than its left neighbors, and greater than or equal to its right neighbors. 0 otherwise */
 extern int SDT_isPeak(double *x, unsigned int i, unsigned int radius);
 
 /** @brief Computes kinetic energy.

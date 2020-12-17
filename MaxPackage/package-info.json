@@ -1,26 +1,26 @@
 {
-	"name" : "SoundDesignToolkit",
-	"author" : "SkAT-VG team",
-	"description" : "A collection of physically informed sound models for the interactive generation of basic and complex acoustic phenomena, including basic and compound interactions involving solids, liquids and gasses, and machines. ",
+	"name" : "Sound Design Toolkit",
+	"author" : "Stefano Delle Monache, Stefano Baldan, Stefano Papetti",
+	"description" : "A framework for ecologically-founded sound synthesis and design. Think of it as a virtual Foley-box!",
 	"displayname" : "Sound Design Toolkit",
 	"extensible" : 0,
 	"homepatcher" : "SDT-Overview.maxpat",
 	"max_version_max" : "none",
-	"max_version_min" : "6.1.7",
-	"os" : 	{
-		"macintosh" : 		{
+	"max_version_min" : "7.1",
+	"os" : {
+		"macintosh" : {
 			"platform" : [ "ia32", "x64" ],
 			"min_version" : "10.7.x"
-		}
-,
-		"windows" : 		{
+		},
+		"windows" : {
 			"platform" : [ "ia32", "x64" ],
 			"min_version" : "7"
 		}
-
-	}
-,
-	"tags" : [ "physics-based synthesis", "procedural audio", "sonic interaction design", "sonification", "analysis" ],
-	"version" : "2.2-0.78",
-	"website" : "http://www.soundobject.org/SDT/"
+	},
+	"package_extra" : {
+	        "copyright" : "Copyright (c) 2001 - 2020"
+	},
+	"tags" : [ "physics-based sound synthesis", "procedural audio", "sonic interaction design", "sound processing", "sound analysis" ],
+	"version" : "3.0-0.79",
+	"website" : "https://github.com/SkAT-VG/SDT"
 }

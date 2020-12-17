@@ -1,0 +1,31 @@
+-------------------------------------------------------------------------------
+Sound Design Toolkit (SDT)
+
+Developed with the contribution of the following EU-projects:
+2001-2003 'SOb' http://www.soundobject.org/
+2006-2009 'CLOSED' http://closed.ircam.fr
+2008-2011 'NIW' http://niw.soundobject.org
+2014-2016 'SkAT-VG' http://www.skatvg.eu
+
+Contacts:
+stefanobaldan@iuav.it
+stefano.papetti@zhdk.ch
+sdellemonache@iuav.it
+-------------------------------------------------------------------------------
+
+Complete list of authors (either programmers or designers):
+
+	Federico Avanzini (avanzini@dei.unipd.it)
+	Nicola Bernardini (nicb@sme-ccppd.org)
+	Gianpaolo Borin (gianpaolo.borin@tin.it)
+	Carlo Drioli (carlo.drioli@univr.it)
+	Stefano Delle Monache (stefano.dellemonache@gmail.com)
+	Delphine Devallez
+	Federico Fontana (federico.fontana@uniud.it)
+	Laura Ottaviani
+	Stefano Papetti (stefano.papetti@zhdk.ch)
+	Pietro Polotti (pietro.polotti@univr.it)
+	Matthias Rath
+	Davide Rocchesso (roc@iuav.it)
+	Stefania Serafin (sts@media.aau.dk)
+	Stefano Baldan (stefanobaldan@iuav.it)
