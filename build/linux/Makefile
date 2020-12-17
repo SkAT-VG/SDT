@@ -3,8 +3,9 @@ SHELL=/bin/bash
 CC=gcc
 CFLAGS=-fPIC -Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=-shared
-SRCDIR=../../src
-THIRDPDIR=../../3rdparty
+ROOT=../..
+SRCDIR=$(ROOT)/src
+THIRDPDIR=$(ROOT)/3rdparty
 PREFIX=/usr
 SDTPATH=SDT
 
@@ -23,11 +24,28 @@ JSONOBJB=$(patsubst %.c,%.o,$(JSONSRCB))
 JSONDIRP=$(THIRDPDIR)/json-parser
 JSONSRCP=$(wildcard $(JSONDIRP)/*.c)
 JSONOBJP=$(patsubst %.c,%.o,$(JSONSRCP))
-
-INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
 JSONOBJS=$(JSONOBJP) $(JSONOBJB)
 
+OSCDOCDIR=$(ROOT)/oscdoc
+OSCDOCGEN=$(OSCDOCDIR)/docgen
+OSCDOCSOURCEDIR=$(OSCDOCDIR)/source
+OSCDOCRST=$(OSCDOCSOURCEDIR)/ordinary_classes.rst
+
+INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
+INCLUDE_SDT=-I$(SDTDIR)
+
 all: sdt pd
+
+.PHONY: sdt pd oscdoc_%
+
+oscdoc_%: $(OSCDOCRST)
+	cd $(OSCDOCDIR) && make $(@:oscdoc_%=%)
+
+$(OSCDOCRST): $(OSCDOCGEN)
+	$< > $@
+
+$(OSCDOCGEN): $(OSCDOCGEN).c
+	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_SDT) $(INCLUDE_JSON) $< -o $@
 
 pd: sdt $(PDOBJS)
 	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
