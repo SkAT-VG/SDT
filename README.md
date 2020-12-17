@@ -1,4 +1,4 @@
-[![Build status](https://github.com/ChromaticIsobar/SDT/workflows/build/badge.svg?branch=develop)](https://github.com/ChromaticIsobar/SDT/actions?query=workflow%3Abuild)
+[![Build status](https://github.com/SkAT-VG/SDT/workflows/build/badge.svg?branch=develop)](https://github.com/SkAT-VG/SDT/actions?query=workflow%3Abuild)
 # SOUND DESIGN TOOLKIT (SDT)
 
 
@@ -29,7 +29,7 @@ expressive articulations of sonic processes.
 ## Documentation
 API documentation can be found online here:
 
-https://chromaticisobar.github.io/SDT/
+https://skat-vg.github.io/SDT/
 
 ## Installation
 
@@ -49,7 +49,7 @@ the desired destination folder.
 ### Precompiled binaries
 Precompiled binaries are available as release assets of this repository:
 
-https://github.com/ChromaticIsobar/SDT/releases
+https://github.com/SkAT-VG/SDT/releases
 
 ### Compiling from source code
 

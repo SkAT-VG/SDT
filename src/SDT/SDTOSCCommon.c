@@ -10,7 +10,7 @@
 
 char *_indent = "  ";
 const unsigned int log_cap = 1 << 9;
-char *_docs_url = "https://chromaticisobar.github.io/SDT";
+char *_docs_url = "https://skat-vg.github.io/SDT";
 
 char *strjoin_free(char *x, int free_x, char* y, int free_y) {
   char *z = malloc(sizeof(char) * (strlen(x) + strlen(y) + 1));
