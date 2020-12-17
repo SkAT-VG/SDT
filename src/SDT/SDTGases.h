@@ -1,3 +1,6 @@
+#include "SDTJSON.h"
+#include "SDTCommonMacros.h"
+
 /** @file SDTGases.h
 @defgroup gases SDTGases.h: Air turbulence and explosions
 Physical models to simulate wooshes, wind gusts and howls, helicopter rotors and so on.
@@ -47,6 +50,16 @@ extern SDTWindFlow *SDTWindFlow_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTWindFlow_free(SDTWindFlow *x);
 
+#define SDT_WINDFLOW WindFlow
+#define SDT_WINDFLOW_NEW_ARGS
+#define SDT_WINDFLOW_ATTRIBUTES(T, A)
+
+SDT_TYPE_COPY_H(SDT_WINDFLOW)
+SDT_DEFINE_HASHMAP_H(SDT_WINDFLOW)
+SDT_TYPE_MAKE_GETTERS_H(SDT_WINDFLOW)
+SDT_JSON_SERIALIZE_H(SDT_WINDFLOW)
+SDT_JSON_DESERIALIZE_H(SDT_WINDFLOW)
+
 /** @brief Update filter coefficients.
 Should be always called after setting the sampling rate with SDT_setSampleRate().
 @param[in] x Pointer to a SDTWindFlow instance */
@@ -92,6 +105,21 @@ extern SDTWindCavity *SDTWindCavity_new(int maxDelay);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTWindCavity_free(SDTWindCavity *x);
 
+#define SDT_WINDCAVITY WindCavity
+#define SDT_WINDCAVITY_NEW_ARGS 48000
+#define SDT_WINDCAVITY_ATTRIBUTES(T, A) \
+A(T, maxDelay, int, MaxDelay, maxDelay, integer, 48000) \
+A(T, length, double, Length, length, double, 1.0) \
+A(T, diameter, double, Diameter, diameter, double, 1.0)
+
+SDT_TYPE_COPY_H(SDT_WINDCAVITY)
+SDT_DEFINE_HASHMAP_H(SDT_WINDCAVITY)
+SDT_TYPE_MAKE_GETTERS_H(SDT_WINDCAVITY)
+SDT_JSON_SERIALIZE_H(SDT_WINDCAVITY)
+SDT_JSON_DESERIALIZE_H(SDT_WINDCAVITY)
+
+extern void SDTWindCavity_setMaxDelay(SDTWindCavity *x, int f);
+
 /** @brief Sets the lenght of the cavity.
 @param[in] f Length of the cavity, in m */
 extern void SDTWindCavity_setLength(SDTWindCavity *x, double f);
@@ -131,6 +159,17 @@ extern SDTWindKarman *SDTWindKarman_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTWindKarman_free(SDTWindKarman *x);
 
+#define SDT_WINDKARMAN WindKarman
+#define SDT_WINDKARMAN_NEW_ARGS
+#define SDT_WINDKARMAN_ATTRIBUTES(T, A) \
+A(T, diameter, double, Diameter, diameter, double, 0.001)
+
+SDT_TYPE_COPY_H(SDT_WINDKARMAN)
+SDT_DEFINE_HASHMAP_H(SDT_WINDKARMAN)
+SDT_TYPE_MAKE_GETTERS_H(SDT_WINDKARMAN)
+SDT_JSON_SERIALIZE_H(SDT_WINDKARMAN)
+SDT_JSON_DESERIALIZE_H(SDT_WINDKARMAN)
+
 /** @brief Sets the diameter of the object.
 @param[in] f Diameter of the object, in m. Works best with very small values (< 0.1) */
 extern void SDTWindKarman_setDiameter(SDTWindKarman *x, double f);
@@ -164,6 +203,28 @@ extern SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTExplosion_free(SDTExplosion *x);
+
+#define SDT_EXPLOSION Explosion
+#define SDT_EXPLOSION_NEW_ARGS 1, 1
+#define SDT_EXPLOSION_ATTRIBUTES(T, A) \
+A(T, scatter, long, MaxScatter, maxScatter, integer, 44100) \
+A(T, size, long, MaxDelay, maxDelay, integer, 441000) \
+A(T, blastTime, double, BlastTime, blastTime, double, 0.0) \
+A(T, scatterTime, double, ScatterTime, scatterTime, double, 0.0) \
+A(T, dispersion, double, Dispersion, dispersion, double, 0.0) \
+A(T, distance, double, Distance, distance, double, 0.0) \
+A(T, waveSpeed, double, WaveSpeed, waveSpeed, double, 0.0) \
+A(T, windSpeed, double, WindSpeed, windSpeed, double, 0.0)
+
+SDT_TYPE_COPY_H(SDT_EXPLOSION)
+SDT_DEFINE_HASHMAP_H(SDT_EXPLOSION)
+SDT_TYPE_MAKE_GETTERS_H(SDT_EXPLOSION)
+SDT_JSON_SERIALIZE_H(SDT_EXPLOSION)
+SDT_JSON_DESERIALIZE_H(SDT_EXPLOSION)
+
+extern void SDTExplosion_setMaxScatter(SDTExplosion *x, long f);
+
+extern void SDTExplosion_setMaxDelay(SDTExplosion *x, long f);
 
 /** @brief Sets the duration of the initial spike.
 @param[in] f Blast time, in s */

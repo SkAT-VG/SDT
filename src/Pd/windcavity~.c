@@ -46,7 +46,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *****************************************************************************/
 
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #ifdef NT
@@ -61,6 +61,7 @@ typedef struct _windcavity {
   SDTWindCavity *cavity;
   t_float f;
   t_outlet *out;
+  char *key;
 } t_windcavity;
 
 void windcavity_length(t_windcavity *x, t_float f) {
@@ -89,20 +90,20 @@ static void windcavity_dsp(t_windcavity *x, t_signal **sp) {
 }
 
 static void *windcavity_new(t_symbol *s, int argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+
   t_windcavity *x = (t_windcavity *)pd_new(windcavity_class);
+  x->cavity = SDTWindCavity_new(GET_ARG(1, atom_getfloat, 48000));
+
+  SDT_PD_REGISTER(WindCavity, cavity, "wind cavity", 0)
+
   x->out = outlet_new(&x->obj, gensym("signal"));
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    x->cavity = SDTWindCavity_new(atom_getfloat(argv));
-  }
-  else {
-    x->cavity = SDTWindCavity_new(48000);
-  }
   return (x);
 }
 
 static void windcavity_free(t_windcavity *x) {
   outlet_free(x->out);
-  SDTWindCavity_free(x->cavity);
+  SDT_PD_FREE(WindCavity, cavity)
 }
 
 void windcavity_tilde_setup(void) {

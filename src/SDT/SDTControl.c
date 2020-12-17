@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTControl.h"
+#include "SDTStructs.h"
 
 #define UNDERSHOOT  0.1
 #define OVERSHOOT  10.0
@@ -29,6 +30,12 @@ SDTBouncing *SDTBouncing_new() {
 void SDTBouncing_free(SDTBouncing *x) {
   free(x);
 }
+
+SDT_TYPE_COPY(SDT_BOUNCING)
+SDT_DEFINE_HASHMAP(SDT_BOUNCING, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_BOUNCING)
+SDT_JSON_SERIALIZE(SDT_BOUNCING)
+SDT_JSON_DESERIALIZE(SDT_BOUNCING)
 
 void SDTBouncing_setRestitution(SDTBouncing *x, double f) {
   x->restitution = SDT_fclip(f, 0.0, 1.0);
@@ -89,6 +96,12 @@ void SDTBreaking_free(SDTBreaking *x) {
   free(x);
 }
 
+SDT_TYPE_COPY(SDT_BREAKING)
+SDT_DEFINE_HASHMAP(SDT_BREAKING, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_BREAKING)
+SDT_JSON_SERIALIZE(SDT_BREAKING)
+SDT_JSON_DESERIALIZE(SDT_BREAKING)
+
 void SDTBreaking_setStoredEnergy(SDTBreaking *x, double f) {
   x->storedEnergy = fmax(SDT_MICRO, f);
 }
@@ -134,8 +147,6 @@ void SDTBreaking_dsp(SDTBreaking *x, double *outs) {
   outs[1] = size;
 }
 
-
-
 //-------------------------------------------------------------------------------------//
 
 struct SDTCrumpling {
@@ -155,6 +166,12 @@ SDTCrumpling *SDTCrumpling_new() {
 void SDTCrumpling_free(SDTCrumpling *x) {
   free(x);
 }
+
+SDT_TYPE_COPY(SDT_CRUMPLING)
+SDT_DEFINE_HASHMAP(SDT_CRUMPLING, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_CRUMPLING)
+SDT_JSON_SERIALIZE(SDT_CRUMPLING)
+SDT_JSON_DESERIALIZE(SDT_CRUMPLING)
 
 void SDTCrumpling_setCrushingEnergy(SDTCrumpling *x, double f) {
   x->crushingEnergy = fmax(SDT_MICRO, f);
@@ -210,6 +227,12 @@ SDTRolling *SDTRolling_new() {
 void SDTRolling_free(SDTRolling *x) {
   free(x);
 }
+
+SDT_TYPE_COPY(SDT_ROLLING)
+SDT_DEFINE_HASHMAP(SDT_ROLLING, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_ROLLING)
+SDT_JSON_SERIALIZE(SDT_ROLLING)
+SDT_JSON_DESERIALIZE(SDT_ROLLING)
 
 void SDTRolling_setGrain(SDTRolling *x, double f) {
   x->grain = SDT_fclip(f, 0.0, 1.0);
@@ -270,6 +293,12 @@ void SDTScraping_free(SDTScraping *x) {
   free(x);
 }
 
+SDT_TYPE_COPY(SDT_SCRAPING)
+SDT_DEFINE_HASHMAP(SDT_SCRAPING, 59)
+SDT_TYPE_MAKE_GETTERS(SDT_SCRAPING)
+SDT_JSON_SERIALIZE(SDT_SCRAPING)
+SDT_JSON_DESERIALIZE(SDT_SCRAPING)
+
 void SDTScraping_setGrain(SDTScraping *x, double f) {
   x->grain = SDT_fclip(f, 0.0, 1.0);
   x->decay = SDT_groundDecay(x->grain, x->velocity);
@@ -283,8 +312,6 @@ void SDTScraping_setVelocity(SDTScraping *x, double f) {
   x->velocity = f;
   x->decay = SDT_groundDecay(x->grain, x->velocity);
 }
-
-
 
 double SDTScraping_dsp(SDTScraping *x, double in) {
   double out, currGround, bump;

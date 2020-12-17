@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #ifdef NT
@@ -12,6 +12,7 @@ typedef struct _bouncing {
   t_object obj;
   SDTBouncing *bouncing;
   t_outlet *out;
+  char *key;
 } t_bouncing;
 
 void bouncing_bang(t_bouncing *x) {
@@ -47,16 +48,19 @@ void bouncing_dsp(t_bouncing *x, t_signal **sp) {
 }
 
 void *bouncing_new(t_symbol *s, long argc, t_atom *argv) {
-  t_bouncing *x;
-  
-  x = (t_bouncing *)pd_new(bouncing_class);
-  x->bouncing = SDTBouncing_new(); 
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
+  t_bouncing *x = (t_bouncing *)pd_new(bouncing_class);
+  x->bouncing = SDTBouncing_new();
+
+  SDT_PD_REGISTER(Bouncing, bouncing, "bouncing process", 0)
+
   x->out = outlet_new(&x->obj, gensym("signal"));
   return x;
 }
 
 void bouncing_free(t_bouncing *x) {
-  SDTBouncing_free(x->bouncing);
+  SDT_PD_FREE(Bouncing, bouncing)
   outlet_free(x->out);
 }
 

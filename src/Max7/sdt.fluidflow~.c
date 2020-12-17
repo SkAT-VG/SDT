@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -12,6 +13,7 @@ typedef struct _fluidflow {
          minRadius, maxRadius, expRadius,
          minDepth, maxDepth, expDepth,
          riseFactor, riseCutoff;
+  t_symbol *key;
 } t_fluidflow;
 
 static t_class *fluidflow_class = NULL;
@@ -30,6 +32,7 @@ void *fluidflow_new(t_symbol *s, long argc, t_atom *argv) {
       voices = 128;
     }
     x->flow = SDTFluidFlow_new(voices);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -37,7 +40,7 @@ void *fluidflow_new(t_symbol *s, long argc, t_atom *argv) {
 
 void fluidflow_free(t_fluidflow *x) {
   dsp_free((t_pxobject *)x);
-  SDTFluidFlow_free(x->flow);
+  SDT_MAX_FREE(FluidFlow, flow)
 }
 
 void fluidflow_assist(t_fluidflow *x, void *b, long m, long a, char *s) {
@@ -50,6 +53,8 @@ void fluidflow_assist(t_fluidflow *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(fluidflow, FluidFlow, flow, "fluidflow~", "fluid flow")
 
 void fluidflow_avgRate(t_fluidflow *x, void *attr, long ac, t_atom *av) {
   x->avgRate = atom_getfloat(av);
@@ -138,6 +143,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)fluidflow_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
+  SDT_CLASS_KEY(fluidflow, "1")
+
   CLASS_ATTR_DOUBLE(c, "avgRate", 0, t_fluidflow, avgRate);
   CLASS_ATTR_DOUBLE(c, "minRadius", 0, t_fluidflow, minRadius);
   CLASS_ATTR_DOUBLE(c, "maxRadius", 0, t_fluidflow, maxRadius);
@@ -168,15 +175,15 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "riseFactor", NULL, (method)fluidflow_riseFactor);
   CLASS_ATTR_ACCESSORS(c, "riseCutoff", NULL, (method)fluidflow_riseCutoff);
 
-  CLASS_ATTR_ORDER(c, "avgRate", 0, "1");
-  CLASS_ATTR_ORDER(c, "minRadius", 0, "2");
-  CLASS_ATTR_ORDER(c, "maxRadius", 0, "3");
-  CLASS_ATTR_ORDER(c, "expRadius", 0, "4");
-  CLASS_ATTR_ORDER(c, "minDepth", 0, "5");
-  CLASS_ATTR_ORDER(c, "maxDepth", 0, "6");
-  CLASS_ATTR_ORDER(c, "expDepth", 0, "7");
-  CLASS_ATTR_ORDER(c, "riseFactor", 0, "8");
-  CLASS_ATTR_ORDER(c, "riseCutoff", 0, "9");
+  CLASS_ATTR_ORDER(c, "avgRate", 0, "2");
+  CLASS_ATTR_ORDER(c, "minRadius", 0, "3");
+  CLASS_ATTR_ORDER(c, "maxRadius", 0, "4");
+  CLASS_ATTR_ORDER(c, "expRadius", 0, "5");
+  CLASS_ATTR_ORDER(c, "minDepth", 0, "6");
+  CLASS_ATTR_ORDER(c, "maxDepth", 0, "7");
+  CLASS_ATTR_ORDER(c, "expDepth", 0, "8");
+  CLASS_ATTR_ORDER(c, "riseFactor", 0, "9");
+  CLASS_ATTR_ORDER(c, "riseCutoff", 0, "10");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

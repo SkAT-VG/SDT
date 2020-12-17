@@ -1,2 +1,13 @@
 .DS_Store
 *.o
+*.pd_linux
+*.so
+doc
+*.dll
+*.def
+*.mxe
+*.mxe64
+.idea
+CMakeLists.txt
+*.json
+oscdoc

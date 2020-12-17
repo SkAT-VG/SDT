@@ -1,3 +1,4 @@
+[![Build status](https://github.com/SkAT-VG/SDT/workflows/build/badge.svg?branch=develop)](https://github.com/SkAT-VG/SDT/actions?query=workflow%3Abuild)
 # SOUND DESIGN TOOLKIT (SDT)
 
 
@@ -25,6 +26,10 @@ clarity;
 3. parametric temporal control, which ensures appropriate, natural and
 expressive articulations of sonic processes.
 
+## Documentation
+API documentation can be found online here:
+
+https://skat-vg.github.io/SDT/
 
 ## Installation
 
@@ -40,6 +45,11 @@ http://www.soundobject.org/SDT
 
 then unpack it and copy the branch for your operating system and platform into
 the desired destination folder.
+
+### Precompiled binaries
+Precompiled binaries are available as release assets of this repository:
+
+https://github.com/SkAT-VG/SDT/releases
 
 ### Compiling from source code
 

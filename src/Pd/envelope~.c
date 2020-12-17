@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTFilters.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _envelope {
   SDTEnvelope *envelope;
   t_float f;
   t_outlet *out0;
+  char *key;
 } t_envelope;
 
 void envelope_attack(t_envelope *x, t_float f) {
@@ -41,15 +42,20 @@ void envelope_dsp(t_envelope *x, t_signal **sp) {
 }
 
 void *envelope_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
   t_envelope *x = (t_envelope *)pd_new(envelope_class);
-  x->out0 = outlet_new(&x->obj, gensym("signal"));
   x->envelope = SDTEnvelope_new();
+
+  SDT_PD_REGISTER(Envelope, envelope, "envelope filter", 0)
+
+  x->out0 = outlet_new(&x->obj, gensym("signal"));
   return (x);
 }
 
 void envelope_free(t_envelope *x) {
   outlet_free(x->out0);
-  SDTEnvelope_free(x->envelope);
+  SDT_PD_FREE(Envelope, envelope)
 }
 
 void envelope_tilde_setup(void) {	

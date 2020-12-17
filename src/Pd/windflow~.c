@@ -46,7 +46,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *****************************************************************************/
 
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #ifdef NT
@@ -61,6 +61,7 @@ typedef struct _windflow {
   SDTWindFlow *flow;
   t_float f;
   t_outlet *out;
+  char *key;
 } t_windflow;
 
 static t_int *windflow_perform(t_int *w) { 
@@ -81,20 +82,25 @@ static void windflow_dsp(t_windflow *x, t_signal **sp) {
   dsp_add(windflow_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
-static void *windflow_new(void) {
+static void *windflow_new(t_symbol *s, int argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
   t_windflow *x = (t_windflow *)pd_new(windflow_class);
-  x->out = outlet_new(&x->obj, gensym("signal"));
   x->flow = SDTWindFlow_new();
+
+  SDT_PD_REGISTER(WindFlow, flow, "wind flow", 0)
+
+  x->out = outlet_new(&x->obj, gensym("signal"));
   return (x);
 }
 
 static void windflow_free(t_windflow *x) {
   outlet_free(x->out);
-  SDTWindFlow_free(x->flow);
+  SDT_PD_FREE(WindFlow, flow)
 }
 
 void windflow_tilde_setup(void) {
-  windflow_class = class_new(gensym("windflow~"), (t_newmethod)windflow_new, (t_method)windflow_free, sizeof(t_windflow), 0, A_DEFFLOAT, 0);
+  windflow_class = class_new(gensym("windflow~"), (t_newmethod)windflow_new, (t_method)windflow_free, sizeof(t_windflow), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(windflow_class, t_windflow, f);
   class_addmethod(windflow_class, (t_method)windflow_dsp, gensym("dsp"), 0);
 }

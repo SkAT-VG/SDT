@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -10,6 +11,7 @@ typedef struct _myoelastic {
   SDTMyoelastic *myo;
   void *outlets[4], *send;
   double dcFrequency, lowFrequency, highFrequency, threshold, out[4];
+  t_symbol *key;
 } t_myoelastic;
 
 static t_class *myoelastic_class = NULL;
@@ -36,6 +38,8 @@ void myoelastic_assist(t_myoelastic *x, void *b, long m, long a, char *s) {
     }
   }
 }
+
+SDT_MAX_KEY(myoelastic, Myoelastic, myo, "myo~", "myoelastic feature extractor")
 
 void myoelastic_dcFrequency(t_myoelastic *x, void *attr, long ac, t_atom *av) {
   x->dcFrequency = atom_getfloat(av);
@@ -122,6 +126,7 @@ void *myoelastic_new(t_symbol *s, long argc, t_atom *argv) {
       windowSize = 4096;
     }
     x->myo = SDTMyoelastic_new(windowSize);
+    x->key = 0;
     x->outlets[3] = floatout(x);
     x->outlets[2] = floatout(x);
     x->outlets[1] = floatout(x);
@@ -138,7 +143,7 @@ void *myoelastic_new(t_symbol *s, long argc, t_atom *argv) {
 
 void myoelastic_free(t_myoelastic *x) {
   dsp_free((t_pxobject *)x);
-  SDTMyoelastic_free(x->myo);
+  SDT_MAX_FREE(Myoelastic, myo)
   object_free(x->outlets[0]);
   object_free(x->outlets[1]);
   object_free(x->outlets[2]);
@@ -153,6 +158,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)myoelastic_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)myoelastic_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(myoelastic, "1")
   
   CLASS_ATTR_DOUBLE(c, "dcFrequency", 0, t_myoelastic, dcFrequency);
   CLASS_ATTR_DOUBLE(c, "lowFrequency", 0, t_myoelastic, lowFrequency);

@@ -4,6 +4,7 @@
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
 #include "SDTDCMotor.h"
+#include "SDTStructs.h"
 
 struct SDTDCMotor {
   SDTComb *chassis;
@@ -43,6 +44,38 @@ void SDTDCMotor_free(SDTDCMotor *x) {
   SDTTwoPoles_free(x->airFilter);
   free(x);
 }
+
+void SDTDCMotor_setMaxSize(SDTDCMotor *x, long f) {
+  SDTComb_free(x->chassis);
+  x->chassis = SDTComb_new(f, f);
+}
+
+SDT_TYPE_COPY(SDT_DCMOTOR)
+SDT_DEFINE_HASHMAP(SDT_DCMOTOR, 59)
+SDT_JSON_SERIALIZE(SDT_DCMOTOR)
+SDT_JSON_DESERIALIZE(SDT_DCMOTOR)
+
+long SDTDCMotor_getMaxSize(const SDTDCMotor *x) {
+  return SDTComb_getMaxXDelay(x->chassis);
+}
+
+long SDTDCMotor_getCoils(const SDTDCMotor *x) { return x->coils; }
+
+double SDTDCMotor_getSize(const SDTDCMotor *x) { return x->size; }
+
+double SDTDCMotor_getReson(const SDTDCMotor *x) { return x->reson; }
+
+double SDTDCMotor_getGearRatio(const SDTDCMotor *x) { return x->gearRatio; }
+
+double SDTDCMotor_getHarshness(const SDTDCMotor *x) { return x->harshness; }
+
+double SDTDCMotor_getRotorGain(const SDTDCMotor *x) { return x->rotorGain; }
+
+double SDTDCMotor_getGearGain(const SDTDCMotor *x) { return x->gearGain; }
+
+double SDTDCMotor_getBrushGain(const SDTDCMotor *x) { return x->brushGain; }
+
+double SDTDCMotor_getAirGain(const SDTDCMotor *x) { return x->airGain; }
 
 void SDTDCMotor_setFilters(SDTDCMotor *x) {
   SDTComb_setYGain(x->chassis, x->reson);

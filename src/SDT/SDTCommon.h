@@ -271,6 +271,11 @@ and/or digital waveguides representing hollow cavities.
 @return Amount of samples to travel the distance at Mach 1 */
 extern double SDT_samplesInAir(double length);
 
+/** @brief Inverse function for SDT_samplesInAir
+@param[in] samples Amount of samples to travel the distance at Mach 1
+@return Distance (m) */
+extern double SDT_samplesInAir_inv(double samples);
+
 /** @brief Rescales a value from a source range to a target range.
 Rescales a value from a source range to a target range.
 @param[in] x Value to rescale

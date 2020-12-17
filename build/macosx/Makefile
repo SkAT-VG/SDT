@@ -6,6 +6,7 @@ MACVERSION=-isysroot ../../3rdparty/MacOSX10.6.sdk -mmacosx-version-min=10.6
 CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -g -O3
 LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib -headerpad_max_install_names
 SRCDIR=../../src
+THIRDPDIR=../../3rdparty
 
 SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
@@ -15,15 +16,26 @@ MAXDIR=$(SRCDIR)/Max7
 MAXSRCS = $(wildcard $(MAXDIR)/*.c)
 MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 
-MAXSDKDIR=../../3rdparty/Max7SDK
+MAXSDKDIR=$(THIRDPDIR)/Max7SDK
 MAXSDKVERSION=6.1.4
 
 PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
 PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
 
-PDSDKDIR=../../3rdparty/Pd
+PDSDKDIR=$(THIRDPDIR)/Pd
 PDVERSION=0.41.4
+
+JSONDIRB=$(THIRDPDIR)/json-builder
+JSONSRCB=$(wildcard $(JSONDIRB)/*.c)
+JSONOBJB=$(patsubst %.c,%.o,$(JSONSRCB))
+
+JSONDIRP=$(THIRDPDIR)/json-parser
+JSONSRCP=$(wildcard $(JSONDIRP)/*.c)
+JSONOBJP=$(patsubst %.c,%.o,$(JSONSRCP))
+
+INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
+JSONOBJS=$(JSONOBJP) $(JSONOBJB)
 
 all: core max pd
 
@@ -49,6 +61,7 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
 	-DMAC_VERSION -DMAC_EXT_VERSION -Dpowerc -fvisibility=hidden \
+	$(INCLUDE_JSON) \
 	-I$(MAXSDKDIR)/max-includes -I$(MAXSDKDIR)/msp-includes -I$(MAXSDKDIR)/jit-includes \
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch -c $< -o $@
@@ -57,7 +70,7 @@ pd: $(SDTOBJS) $(PDOBJS)
 	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) -F$(SDTDIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) $(INCLUDE_JSON) -F$(SDTDIR) -c $< -o $@
 
 fileusage:
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
@@ -67,16 +80,24 @@ fileusage:
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch \
 	-c $(MAXDIR)/SDT_fileusage/SDT_fileusage.c -o $(MAXDIR)/SDT_fileusage.o
 
-core: $(SDTOBJS)
+core: $(SDTOBJS) json
 	rm -rf $(SDTDIR)/SDT.framework
 	cp -a SDT.framework $(SDTDIR)
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
 	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
-	$(CC) $(LDFLAGS) $(SDTOBJS) -o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System
+	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System
 	install_name_tool -id @rpath/SDT $(SDTDIR)/SDT.framework/SDT
 	
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
+
+json: $(JSONOBJP) $(JSONOBJB)
+
+$(JSONDIRP)/%.o: $(JSONDIRP)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
+
+$(JSONDIRB)/%.o: $(JSONDIRB)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
 install_max:
 	@if [ -z "$(DSTDIR)" ]; \
@@ -118,3 +139,5 @@ clean:
 	rm -rf $(MAXDIR)/*.o
 	rm -rf $(PDDIR)/*.pd_darwin
 	rm -rf $(PDDIR)/*.o
+	rm -rf $(JSONDIRP)/*.o
+	rm -rf $(JSONDIRB)/*.o

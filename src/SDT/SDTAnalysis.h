@@ -1,3 +1,6 @@
+#include "SDTJSON.h"
+#include "SDTCommonMacros.h"
+
 /** @file SDTAnalysis.h
 @defgroup analysis SDTAnalysis.h: Sound analysis tools
 Tools for the extraction of low level audio descriptors,
@@ -27,6 +30,20 @@ extern SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size);
 /** @brief Destroys a zero crossing rate detector.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTZeroCrossing_free(SDTZeroCrossing *x);
+
+#define SDT_ZEROCROSSING ZeroCrossing
+#define SDT_ZEROCROSSING_NEW_ARGS 1024
+#define SDT_ZEROCROSSING_ATTRIBUTES(T, A) \
+A(T, size, unsigned int, Size, size, integer, 1024) \
+A(T, overlap, double, Overlap, overlap, double, 0)
+
+SDT_TYPE_COPY_H(SDT_ZEROCROSSING)
+SDT_DEFINE_HASHMAP_H(SDT_ZEROCROSSING)
+SDT_TYPE_MAKE_GETTERS_H(SDT_ZEROCROSSING)
+SDT_JSON_SERIALIZE_H(SDT_ZEROCROSSING)
+SDT_JSON_DESERIALIZE_H(SDT_ZEROCROSSING)
+
+extern void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap
@@ -60,6 +77,20 @@ extern SDTMyoelastic *SDTMyoelastic_new(int size);
 /** @brief Destroys a myoelastic feature extractor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTMyoelastic_free(SDTMyoelastic *x);
+
+#define SDT_MYOELASTIC Myoelastic
+#define SDT_MYOELASTIC_NEW_ARGS 0
+#define SDT_MYOELASTIC_ATTRIBUTES(T, A) \
+A(T, dcCut, double, DcFrequency, dcFrequency, double, 0) \
+A(T, lowCut, double, LowFrequency, lowFrequency, double, 0) \
+A(T, highCut, double, HighFrequency, highFrequency, double, -1) \
+A(T, threshold, double, Threshold, threshold, double, 0)
+
+SDT_TYPE_COPY_H(SDT_MYOELASTIC)
+SDT_DEFINE_HASHMAP_H(SDT_MYOELASTIC)
+SDT_TYPE_MAKE_GETTERS_H(SDT_MYOELASTIC)
+SDT_JSON_SERIALIZE_H(SDT_MYOELASTIC)
+SDT_JSON_DESERIALIZE_H(SDT_MYOELASTIC)
 
 /** @brief Sets the DC offset cutoff.
 @param[in] x Pointer to the instance
@@ -110,6 +141,22 @@ extern SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size);
 /** @brief Destroys a spectral features extractor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTSpectralFeats_free(SDTSpectralFeats *x);
+
+#define SDT_SPECTRALFEATS SpectralFeats
+#define SDT_SPECTRALFEATS_NEW_ARGS 1024
+#define SDT_SPECTRALFEATS_ATTRIBUTES(T, A) \
+A(T, size, unsigned int, Size, size, integer, 1024) \
+A(T, overlap, double, Overlap, overlap, double, 0) \
+A(T, min, double, MinFreq, minFreq, double, 0) \
+A(T, max, double, MaxFreq, maxFreq, double, 0)
+
+SDT_TYPE_COPY_H(SDT_SPECTRALFEATS)
+SDT_DEFINE_HASHMAP_H(SDT_SPECTRALFEATS)
+SDT_TYPE_MAKE_GETTERS_H(SDT_SPECTRALFEATS)
+SDT_JSON_SERIALIZE_H(SDT_SPECTRALFEATS)
+SDT_JSON_DESERIALIZE_H(SDT_SPECTRALFEATS)
+
+extern void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap
@@ -167,6 +214,21 @@ extern SDTPitch *SDTPitch_new(unsigned int size);
 /** @brief Destroys a fundamental frequency estimator instance.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTPitch_free(SDTPitch *x);
+
+#define SDT_PITCH Pitch
+#define SDT_PITCH_NEW_ARGS 1024
+#define SDT_PITCH_ATTRIBUTES(T, A) \
+A(T, size, unsigned int, Size, size, integer, 1024) \
+A(T, overlap, double, Overlap, overlap, double, 0) \
+A(T, tol, double, Tolerance, tolerance, double, 0.2)
+
+SDT_TYPE_COPY_H(SDT_PITCH)
+SDT_DEFINE_HASHMAP_H(SDT_PITCH)
+SDT_TYPE_MAKE_GETTERS_H(SDT_PITCH)
+SDT_JSON_SERIALIZE_H(SDT_PITCH)
+SDT_JSON_DESERIALIZE_H(SDT_PITCH)
+
+extern void SDTPitch_setSize(SDTPitch *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap

@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _reverb {
   t_pxobject ob;
   SDTReverb *reverb;
   double xSize, ySize, zSize, randomness, time, time1k;
+  t_symbol *key;
 } t_reverb;
 
 static t_class *reverb_class = NULL;
@@ -27,6 +29,7 @@ void *reverb_new(t_symbol *s, long argc, t_atom *argv) {
       maxDelay = 44100;
     }
     x->reverb = SDTReverb_new(maxDelay);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -34,7 +37,7 @@ void *reverb_new(t_symbol *s, long argc, t_atom *argv) {
 
 void reverb_free(t_reverb *x) {
   dsp_free((t_pxobject *)x);
-  SDTReverb_free(x->reverb);
+  SDT_MAX_FREE(Reverb, reverb)
 }
 
 void reverb_assist(t_reverb *x, void *b, long m, long a, char *s) {
@@ -46,6 +49,8 @@ void reverb_assist(t_reverb *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(reverb, Reverb, reverb, "reverb~", "reverb")
 
 void reverb_xSize(t_reverb *x, void *attr, long ac, t_atom *av) {
     x->xSize = atom_getfloat(av);
@@ -142,6 +147,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)reverb_assist, "assist",	A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
+  SDT_CLASS_KEY(reverb, "1")
+
   CLASS_ATTR_DOUBLE(c, "xSize", 0, t_reverb, xSize);
   CLASS_ATTR_DOUBLE(c, "ySize", 0, t_reverb, ySize);
   CLASS_ATTR_DOUBLE(c, "zSize", 0, t_reverb, zSize);
@@ -163,12 +170,12 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "time", NULL, (method)reverb_time);
   CLASS_ATTR_ACCESSORS(c, "time1k", NULL, (method)reverb_time1k);
   
-  CLASS_ATTR_ORDER(c, "xSize", 0, "1");
-  CLASS_ATTR_ORDER(c, "ySize", 0, "2");
-  CLASS_ATTR_ORDER(c, "zSize", 0, "3");
-  CLASS_ATTR_ORDER(c, "randomness", 0, "4");
-  CLASS_ATTR_ORDER(c, "time", 0, "5");
-  CLASS_ATTR_ORDER(c, "time1k", 0, "6");
+  CLASS_ATTR_ORDER(c, "xSize", 0, "2");
+  CLASS_ATTR_ORDER(c, "ySize", 0, "3");
+  CLASS_ATTR_ORDER(c, "zSize", 0, "4");
+  CLASS_ATTR_ORDER(c, "randomness", 0, "5");
+  CLASS_ATTR_ORDER(c, "time", 0, "6");
+  CLASS_ATTR_ORDER(c, "time1k", 0, "7");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

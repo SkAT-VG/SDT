@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _rolling {
   t_pxobject ob;
   SDTRolling *rolling;
   double grain, depth, mass, velocity;
+  t_symbol *key;
 } t_rolling;
 
 static t_class *rolling_class = NULL;
@@ -21,6 +23,7 @@ void *rolling_new(t_symbol *s, long argc, t_atom *argv) {
     dsp_setup((t_pxobject *)x, 1);
     outlet_new(x, "signal");
     x->rolling = SDTRolling_new();
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -28,7 +31,7 @@ void *rolling_new(t_symbol *s, long argc, t_atom *argv) {
 
 void rolling_free(t_rolling *x) {
   dsp_free((t_pxobject *)x);
-  SDTRolling_free(x->rolling);
+  SDT_MAX_FREE(Rolling, rolling)
 }
 
 void rolling_assist(t_rolling *x, void *b, long m, long a, char *s) {
@@ -40,6 +43,8 @@ void rolling_assist(t_rolling *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Applied force on resonator");
   }
 }
+
+SDT_MAX_KEY(rolling, Rolling, rolling, "rolling~", "rolling process")
 
 void rolling_grain(t_rolling *x, void *attr, long ac, t_atom *av) {
   x->grain = atom_getfloat(av);
@@ -101,6 +106,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)rolling_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)rolling_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(rolling, "1")
   
   CLASS_ATTR_DOUBLE(c, "grain", 0, t_rolling, grain);
   CLASS_ATTR_DOUBLE(c, "depth", 0, t_rolling, depth);
@@ -116,10 +123,10 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "mass", NULL, (method)rolling_mass);
   CLASS_ATTR_ACCESSORS(c, "velocity", NULL, (method)rolling_velocity);
   
-  CLASS_ATTR_ORDER(c, "grain", 0, "1");
-  CLASS_ATTR_ORDER(c, "depth", 0, "2");
-  CLASS_ATTR_ORDER(c, "mass", 0, "3");
-  CLASS_ATTR_ORDER(c, "velocity", 0, "4");
+  CLASS_ATTR_ORDER(c, "grain", 0, "2");
+  CLASS_ATTR_ORDER(c, "depth", 0, "3");
+  CLASS_ATTR_ORDER(c, "mass", 0, "4");
+  CLASS_ATTR_ORDER(c, "velocity", 0, "5");
   
   class_dspinit(c);
   class_register(CLASS_BOX, c);

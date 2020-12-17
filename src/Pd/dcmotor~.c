@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTDCMotor.h"
 #ifdef NT
@@ -11,6 +11,7 @@ static t_class *dcmotor_class;
 typedef struct _dcmotor {
   t_object obj;
   SDTDCMotor *motor;
+  char *key;
   t_float f;
   t_inlet *in;
   t_outlet *out;
@@ -73,22 +74,22 @@ static void dcmotor_dsp(t_dcmotor *x, t_signal **sp) {
 }
 
 static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+
   t_dcmotor *x = (t_dcmotor *)pd_new(dcmotor_class);
+  x->motor = SDTDCMotor_new(GET_ARG(1, atom_getfloat, 48000));
+
+  SDT_PD_REGISTER(DCMotor, motor, "electric motor", 0)
+
   x->in = inlet_new(&x->obj, &x->obj.ob_pd, &s_signal, &s_signal);
   x->out = outlet_new(&x->obj, gensym("signal"));
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    x->motor = SDTDCMotor_new(atom_getfloat(argv));
-  }
-  else {
-    x->motor = SDTDCMotor_new(48000);
-  }
   return (x);
 }
 
 static void dcmotor_free(t_dcmotor *x) {
   inlet_free(x->in);
   outlet_free(x->out);
-  SDTDCMotor_free(x->motor);
+  SDT_PD_FREE(DCMotor, motor)
 }
 
 void dcmotor_tilde_setup(void) {

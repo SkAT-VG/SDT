@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #ifdef NT
@@ -12,6 +12,7 @@ typedef struct _breaking {
   t_object obj;
   SDTBreaking *breaking;
   t_outlet *out0, *out1;
+  char *key;
 } t_breaking;
 
 void breaking_bang(t_breaking *x) {
@@ -55,17 +56,20 @@ void breaking_dsp(t_breaking *x, t_signal **sp) {
 }
 
 void *breaking_new(t_symbol *s, long argc, t_atom *argv) {
-  t_breaking *x;
-  
-  x = (t_breaking *)pd_new(breaking_class);
-  x->breaking = SDTBreaking_new(); 
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
+  t_breaking *x = (t_breaking *)pd_new(breaking_class);
+  x->breaking = SDTBreaking_new();
+
+  SDT_PD_REGISTER(Breaking, breaking, "breaking process", 0)
+
   x->out0 = outlet_new(&x->obj, gensym("signal"));
   x->out1 = outlet_new(&x->obj, gensym("signal"));
   return x;
 }
 
 void breaking_free(t_breaking *x) {
-  SDTBreaking_free(x->breaking);
+  SDT_PD_FREE(Breaking, breaking)
   outlet_free(x->out0);
   outlet_free(x->out1);
 }
