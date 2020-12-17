@@ -23,10 +23,12 @@ clarity;
 3. parametric temporal control, which ensures appropriate, natural and
 expressive articulations of sonic processes.
 
+
 ## Documentation
 API documentation can be found online here:
 
 https://skat-vg.github.io/SDT/
+
 
 ## Implementation
 The core library (framework and API) is implemented in the C language, making it
@@ -45,19 +47,14 @@ with presets and tutorials.
 To install the provided Max *package* please refer to the `ReadMe.md` file in
 the `MaxPackage` folder.
 
-### Precompiled binaries for Pure Data
-Precompiled binaries are available for PureData (Mac OS, Windows, Linux). Simply
-download the universal SDT package from the official website:
-
-http://www.soundobject.org/SDT
-
-then unpack it and copy the branch for your operating system and platform into
-the desired destination folder.
-
 ### Precompiled binaries
-Precompiled binaries are available as release assets of this repository:
+Precompiled binaries for Pure Data (Mac OS, Windows, Linux) and Max (Mac OS,
+Windows) are available as release assets of this repository:
 
 https://github.com/SkAT-VG/SDT/releases
+
+Unpack the .zip file and copy the branch for your operating system and target
+platform into the desired destination folder.
 
 ### Compiling from source code
 
