@@ -48,15 +48,23 @@ To install the provided Max *package* please refer to the `ReadMe.md` file in
 the `MaxPackage` folder.
 
 ### Precompiled binaries
-Precompiled binaries for Pure Data (Mac OS, Windows, Linux) and Max (Mac OS,
-Windows) are available as release assets of this repository:
+Precompiled binaries for Pure Data (Pd) on Mac OS, Windows and Linux, and Max on
+Mac OS and Windows are available as release assets of this repository:
 
 https://github.com/SkAT-VG/SDT/releases
 
-Unpack the .zip file and copy the branch for your operating system and target
-platform into the desired destination folder.
+Unpack the release .zip file, and copy the branch for your operating system and
+target platform into the desired destination folder.
 
 ### Compiling from source code
+Users may build Pd and Max externals (and the SDT Apple framework or the SDT
+shared/dynamic library) on their machines. In that case, make sure to pull the
+SDT git repository including the submodules under the '3rdparty' directory. If 
+your git client doesn't do that automatically, enter the following git command:
+```
+	git submodule update --init --recursive
+```
+or check the equivalent option in the git preferences of your GUI client.
 
 #### Mac OS
 1. In a terminal, type the following commands to compile the software in all its
@@ -66,7 +74,7 @@ flavors (Max package, Pd library, Apple framework):
 	make
 ```
 2. Install one or more products: The provided scripts will install the desired
-product in the given destination ``\<path\>``, creating a ``SDT`` subfolder:
+product in the given destination ``<path>``, creating a ``SDT`` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path>
