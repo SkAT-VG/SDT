@@ -15,11 +15,6 @@
  *    2008-2011 'NIW' http://www.niwproject.eu/
  *    2014-2016 'SkAT-VG' http://www.skatvg.eu/
  *
- * Contacts:
- *    Stefano Papetti (stefano.papetti@zhdk.ch)
- * 	  Stefano Delle Monache (s.dellemonache@tudelft.nl)
- *    Stefano Baldan (singintime@gmail.com)
- *
  * Authors and contributors (either programmers or designers) in alphabetical
  * order:
  *    Federico Avanzini (federico.avanzini@di.unimi.it)
@@ -36,7 +31,12 @@
  *    Matthias Rath
  *    Davide Rocchesso (davide.rocchesso@unipa.it)
  *    Stefania Serafin (sts@create.aau.dk)
+ *    Marco Tiraboschi (marco.tiraboschi@unimi.it)
  *
+ * Contacts:
+ *    Stefano Papetti (stefano.papetti@zhdk.ch)
+ * 	  Stefano Delle Monache (s.dellemonache@tudelft.nl)
+ *    Stefano Baldan (singintime@gmail.com)
  *
  * This file is part of the Sound Design Toolkit (SDT).
  *
@@ -52,6 +52,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with the SDT.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * The official SDT distribution contains copy of the GNU General Public License
+ * in the file COPYING.txt
  *****************************************************************************/
 
 /** @file SDTCommon.h

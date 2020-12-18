@@ -1,31 +1,24 @@
 -------------------------------------------------------------------------------
 Sound Design Toolkit (SDT)
-
-Developed with the contribution of the following EU-projects:
-2001-2003 'SOb' http://www.soundobject.org/
-2006-2009 'CLOSED' http://closed.ircam.fr
-2008-2011 'NIW' http://niw.soundobject.org
-2014-2016 'SkAT-VG' http://www.skatvg.eu
-
-Contacts:
-stefanobaldan@iuav.it
-stefano.papetti@zhdk.ch
-sdellemonache@iuav.it
+--
+https://github.com/SkAT-VG/SDT
 -------------------------------------------------------------------------------
 
-Complete list of authors (either programmers or designers):
+Authors and contributors (either programmers or designers) in alphabetical
+order:
 
-	Federico Avanzini (avanzini@dei.unipd.it)
-	Nicola Bernardini (nicb@sme-ccppd.org)
-	Gianpaolo Borin (gianpaolo.borin@tin.it)
-	Carlo Drioli (carlo.drioli@univr.it)
-	Stefano Delle Monache (stefano.dellemonache@gmail.com)
+	Federico Avanzini (federico.avanzini@di.unimi.it)
+	Stefano Baldan (singintime@gmail.com)
+	Nicola Bernardini
+	Gianpaolo Borin
+	Carlo Drioli (carlo.drioli@uniud.it)
+	Stefano Delle Monache (s.dellemonache@tudelft.nl)
 	Delphine Devallez
 	Federico Fontana (federico.fontana@uniud.it)
 	Laura Ottaviani
 	Stefano Papetti (stefano.papetti@zhdk.ch)
-	Pietro Polotti (pietro.polotti@univr.it)
+	Pietro Polotti (pietro.polotti@conts.it)
 	Matthias Rath
-	Davide Rocchesso (roc@iuav.it)
-	Stefania Serafin (sts@media.aau.dk)
-	Stefano Baldan (stefanobaldan@iuav.it)
+	Davide Rocchesso (davide.rocchesso@unipa.it)
+	Stefania Serafin (sts@create.aau.dk)
+	Marco Tiraboschi (marco.tiraboschi@unimi.it)
