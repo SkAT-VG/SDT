@@ -40,11 +40,24 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontface" : 1,
+					"id" : "obj-3",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 229.5, 465.5625, 243.0, 22.0 ],
+					"style" : "SDT-comments",
+					"text" : "open the [p interface] and start bowing. "
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-86",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 223.5, 614.5, 658.75, 22.0 ],
+					"patching_rect" : [ 229.5, 614.5, 658.75, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "Noisiness: affect the perceived roughness. Try the following values: 1., 15., 40., 0.5 ."
 				}
@@ -56,7 +69,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 223.5, 581.5625, 658.75, 22.0 ],
+					"patching_rect" : [ 229.5, 581.5625, 658.75, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "Viscosity: affects the timbre and pitch. Try the following values: 2., 5., 8., 0.5 ."
 				}
@@ -68,7 +81,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 223.5, 544.5625, 658.75, 22.0 ],
+					"patching_rect" : [ 229.5, 544.5625, 658.75, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "Dissipation: affects the sound bandwidth. Try the following values: 5., 12. 60., 24. ."
 				}
@@ -80,7 +93,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 223.5, 505.5625, 658.75, 22.0 ],
+					"patching_rect" : [ 229.5, 505.5625, 658.75, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "Stiffness: affects the resonance response of the modes. Try the following values: 0.03, 0.4, 0.9, 0.03 ."
 				}
@@ -101,12 +114,24 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.011765, 0.396078, 0.752941, 1.0 ],
+					"bgcolor2" : [ 0.011765, 0.396078, 0.752941, 1.0 ],
+					"bgfillcolor_angle" : 270.0,
+					"bgfillcolor_autogradient" : 0.0,
+					"bgfillcolor_color" : [ 0.011765, 0.396078, 0.752941, 1.0 ],
+					"bgfillcolor_color1" : [ 0.011765, 0.396078, 0.752941, 1.0 ],
+					"bgfillcolor_color2" : [ 0.2, 0.2, 0.2, 1.0 ],
+					"bgfillcolor_proportion" : 0.5,
+					"bgfillcolor_type" : "color",
+					"fontface" : 1,
+					"fontsize" : 14.0,
+					"gradient" : 1,
 					"id" : "obj-5",
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 577.0, 12.5, 35.0, 23.0 ],
+					"patching_rect" : [ 577.0, 8.5, 40.0, 25.0 ],
 					"style" : "SDT_package",
 					"text" : "open"
 				}
@@ -132,7 +157,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 950.0, 150.0, 440.0, 290.0 ],
+						"rect" : [ 1045.0, 178.0, 440.0, 290.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 1,
 						"default_fontsize" : 12.0,
@@ -4379,9 +4404,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 223.5, 464.5625, 658.75, 22.0 ],
+					"patching_rect" : [ 458.571983546617901, 464.5625, 429.678016453382099, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "open the [p interface] and start bowing. Notice that the modal object' configuration is the same used in Tutorial #2"
+					"text" : "Notice that the modal object' configuration is the same used in Tutorial #2"
 				}
 
 			}
@@ -4392,7 +4417,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 206.5, 320.5, 675.75, 131.0 ],
+					"patching_rect" : [ 206.5, 321.5, 675.75, 131.0 ],
 					"style" : "SDT-comments",
 					"text" : "MAKING SENSE OF THE FRICTION PARAMETERS\n* The rubbing force coupled with the pressure represents the gesture's trajectory and dynamics, e.g. a bowing gesture.\n* Stiffness, dissipation, viscosity and noisiness are high-level parameters that allow to design a great variety of frictions. The remaining (kStatic, kDynamic, break-away and Stribeck) represent low-level parameters and are used to fine-tune the friction behavior.\n* The high-level parameters show a minimum value, but not a maximum. This implies that meaningful ranges have to be found by exploring the relationships between these parameters. "
 				}
@@ -6543,6 +6568,23 @@
 			}
 , 			{
 				"box" : 				{
+					"angle" : 270.0,
+					"background" : 1,
+					"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
+					"border" : 1,
+					"bordercolor" : [ 0.65098, 0.666667, 0.662745, 1.0 ],
+					"id" : "obj-62",
+					"maxclass" : "panel",
+					"mode" : 0,
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 198.5, 316.125, 689.75, 144.375 ],
+					"proportion" : 0.39
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"background" : 1,
 					"bgcolor" : [ 1.0, 0.788235, 0.470588, 1.0 ],
 					"fontface" : 1,
@@ -6556,7 +6598,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 198.5, 506.5625, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 506.5625, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "2",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -6578,7 +6620,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 198.5, 615.5, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 615.5, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "5",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -6600,7 +6642,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 198.5, 582.5625, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 582.5625, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "4",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -6622,7 +6664,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 198.5, 545.5625, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 545.5625, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "3",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -6729,7 +6771,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 198.5, 465.5625, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 467.607954545454561, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "1",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -7468,9 +7510,6 @@
 				"boxes" : [ "obj-109", "obj-110", "obj-58", "obj-4", "obj-10", "obj-121", "obj-1", "obj-11", "obj-122", "obj-136" ]
 			}
 , 			{
-				"boxes" : [ "obj-113", "obj-13" ]
-			}
-, 			{
 				"boxes" : [ "obj-67", "obj-74" ]
 			}
 , 			{
@@ -7481,6 +7520,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-86", "obj-87" ]
+			}
+, 			{
+				"boxes" : [ "obj-113", "obj-13", "obj-3" ]
 			}
  ],
 		"styles" : [ 			{
