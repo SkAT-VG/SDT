@@ -1,3 +1,6 @@
+#include "SDTResonators.h"
+#include "SDTJSON.h"
+
 /** @file SDTInteractors.h
 @defgroup interactors SDTInteractors.h: interactions between solids
 These models simulate basic mechanical interactions that can occur
@@ -24,6 +27,11 @@ obtained through the specific SDTImpact and SDTFriction constructors.
 /** @brief Opaque data structure representing the interactor interface */
 typedef struct SDTInteractor SDTInteractor;
 
+#define SDT_INTERACTOR Interactor
+#define SDT_INTERACTOR_ATTRIBUTES(T, A) \
+A(T, contact0, int, FirstPoint, contact0, integer, 0) \
+A(T, contact1, int, SecondPoint, contact1, integer, 0)
+
 /** @brief Sets the pointer to the first interacting resonator
 @param[in] p Pointer to a SDTResonator instance */
 extern void SDTInteractor_setFirstResonator(SDTInteractor *x, SDTResonator *p);
@@ -39,6 +47,22 @@ extern void SDTInteractor_setFirstPoint(SDTInteractor *x, long l);
 /** @brief Sets the contact point index for the second resonator
 @param[in] Number of the second resonator pickup chosen for interaction */
 extern void SDTInteractor_setSecondPoint(SDTInteractor *x, long l);
+
+/** @brief Gets the pointer to the first interacting resonator
+@param[in] p The pointer to the first interacting resonator */
+extern SDTResonator *SDTInteractor_getFirstResonator(const SDTInteractor *x);
+
+/** @brief Gets the pointer to the second interacting resonator
+@param[in] p The pointer to the second interacting resonator */
+extern SDTResonator *SDTInteractor_getSecondResonator(const SDTInteractor *x);
+
+/** @brief Gets the contact point index for the first resonator
+@return Number of the first resonator pickup chosen for interaction */
+extern long SDTInteractor_getFirstPoint(const SDTInteractor *x);
+
+/** @brief Gets the contact point index for the second resonator
+@return Number of the second resonator pickup chosen for interaction */
+extern long SDTInteractor_getSecondPoint(const SDTInteractor *x);
 
 /** @brief Computes a force to apply to the contact points,
 based on the resonators' state at the chosen pickups */ 
@@ -78,9 +102,37 @@ typedef struct SDTImpact SDTImpact;
 @return Pointer to a SDTInteractor instance, configured for the impact case */
 extern SDTInteractor *SDTImpact_new();
 
+#define SDT_IMPACT Impact
+#define SDT_IMPACT_ATTRIBUTES(T, A) \
+A(T, shape, double, Shape, shape, double, 0) \
+A(T, stiffness, double, Stiffness, stiffness, double, 0) \
+A(T, dissipation, double, Dissipation, dissipation, double, 0)
+
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTInteractor *SDTImpact_copy(SDTInteractor *dest, const SDTInteractor *src);
+
+/** @brief Check if the interactor is an Impact
+@return Truth value of the check */
+extern int SDTInteractor_isImpact(const SDTInteractor *x);
+
 /** @brief Object destructor.
 param[in] Pointer to a SDTInteractor instance, configured for the impact case. */
 extern void SDTImpact_free(SDTInteractor *x);
+
+/** @brief Gets the impact stiffness.
+@return Impact stiffness */
+extern double SDTImpact_getStiffness(const SDTInteractor *x);
+
+/** @brief Gets the dissipation coefficient.
+@return Dissipation coefficient */
+extern double SDTImpact_getDissipation(const SDTInteractor *x);
+
+/** @brief Gets the shape factor.
+@return Shape factor */
+extern double SDTImpact_getShape(const SDTInteractor *x);
 
 /** @brief Sets the impact stiffness.
 @param[in] f Impact stiffness (>> 1) */
@@ -93,6 +145,24 @@ extern void SDTImpact_setDissipation(SDTInteractor *x, double f);
 /** @brief Sets the shape factor.
 @param[in] f Shape factor. Must be > 1, with 1.5 = spherical shape. Optimal range [1,4] */
 extern void SDTImpact_setShape(SDTInteractor *x, double f);
+
+/** @defgroup json_impact JSON
+JSON functions for SDT Impacts
+@{ */
+
+/** @brief Convert an SDTImpact object in a JSON object
+@param[in] x Pointer to the SDTInteractor
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
+
+/** @brief Load an SDTImpact object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with ::SDTImpact_free */
+extern SDTInteractor *SDTImpact_fromJSON(const json_value *x);
+
+/** @} */
 
 /** @} */
 
@@ -119,6 +189,28 @@ typedef struct SDTFriction SDTFriction;
 /** @brief Object constructor.
 @return Pointer to a SDTInteractor instance, configured for the friction case */
 extern SDTInteractor *SDTFriction_new();
+
+#define SDT_FRICTION Friction
+#define SDT_FRICTION_ATTRIBUTES(T, A) \
+A(T, , double, NormalForce, force, double, 0) \
+A(T, , double, StribeckVelocity, stribeck, double, 0) \
+A(T, , double, StaticCoefficient, kStatic, double, 0) \
+A(T, , double, DynamicCoefficient, kDynamic, double, 0) \
+A(T, , double, BreakAway, breakAway, double, 0) \
+A(T, , double, Stiffness, stiffness, double, 0) \
+A(T, , double, Dissipation, dissipation, double, 0) \
+A(T, , double, Viscosity, viscosity, double, 0) \
+A(T, , double, Noisiness, noisiness, double, 0)
+
+/** @brief Copy src into dest
+@param[in] dest Pointer to the instance to overwrite
+@param[in] src Pointer to the instance to copy
+@return Pointer to the dest */
+extern SDTInteractor *SDTFriction_copy(SDTInteractor *dest, const SDTInteractor *src);
+
+/** @brief Check if the interactor is a Friction
+@return Truth value of the check */
+extern int SDTInteractor_isFriction(const SDTInteractor *x);
 
 /** @brief Object destructor.
 param[in] Pointer to a SDTInteractor instance, configured for the friction case. */
@@ -160,7 +252,62 @@ extern void SDTFriction_setViscosity(SDTInteractor *x, double f);
 @param[in] f Surface roughness, positive scalar */
 extern void SDTFriction_setNoisiness(SDTInteractor *x, double f);
 
+/** @brief Gets the perpendicular force (pressure) applied to the two sliding resonators.
+@return Normal force, in N */
+extern double SDTFriction_getNormalForce(const SDTInteractor *x);
+
+/** @brief Gets the Stribeck velocity.
+@return Stribeck velocity, in m/s */
+extern double SDTFriction_getStribeckVelocity(const SDTInteractor *x);
+
+/** @brief Gets the static friction coefficient.
+@return Static friction coefficient [0,1] */
+extern double SDTFriction_getStaticCoefficient(const SDTInteractor *x);
+
+/** @brief Gets the dynamic friction coefficient.
+@return Dynamic friction coefficient [0,1] */
+extern double SDTFriction_getDynamicCoefficient(const SDTInteractor *x);
+
+/** @brief Gets the break away coefficient.
+@return Break away coefficient */
+extern double SDTFriction_getBreakAway(const SDTInteractor *x);
+
+/** @brief Gets the contact stiffness.
+@return Contact stiffness */
+extern double SDTFriction_getStiffness(const SDTInteractor *x);
+
+/** @brief Gets the dissipation coefficient.
+@return Dissipation coefficient */
+extern double SDTFriction_getDissipation(const SDTInteractor *x);
+
+/** @brief Gets the contact viscosity.
+@return Contact viscosity */
+extern double SDTFriction_getViscosity(const SDTInteractor *x);
+
+/** @brief Gets the surface roughness.
+@return Surface roughness */
+extern double SDTFriction_getNoisiness(const SDTInteractor *x);
+
+/** @defgroup json_friction JSON
+JSON functions for SDT Frctions
+@{ */
+
+/** @brief Convert an SDTImpact object in a JSON object
+@param[in] x Pointer to the SDTInteractor
+@param[in] key0 First resonator ID
+@param[in] key1 Second resonator ID
+@return Pointer to the JSON object. Memory must be freed with json_builder_free */
+extern json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0, const char *key1);
+
+/** @brief Load an SDTImpact object from a JSON object
+@param[in] x Pointer to the JSON object
+@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with ::SDTImpact_free */
+extern SDTInteractor *SDTFriction_fromJSON(const json_value *x);
+
 /** @} */
+
+/** @} */
+
 
 #ifdef __cplusplus
 };

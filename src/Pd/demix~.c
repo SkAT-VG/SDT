@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTDemix.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _demix {
   SDTDemix *demix;
   t_float f;
   t_outlet *out0, *out1, *out2;
+  char *key;
 } t_demix;
 
 static t_class *demix_class = NULL;
@@ -54,26 +55,17 @@ void demix_dsp(t_demix *x, t_signal **sp) {
 }
 
 void *demix_new(t_symbol *s, long argc, t_atom *argv) {
-  long tmpSize, windowSize, kernelRadius;
-  
+  SDT_PD_ARG_PARSE(3, A_SYMBOL, A_FLOAT, A_FLOAT)
+
   t_demix *x = (t_demix *)pd_new(demix_class);
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    tmpSize = atom_getfloat(&argv[0]);
-    windowSize = SDT_nextPow2(tmpSize);
-    if (tmpSize != windowSize) {
-      post("sdt.demix~: Window size must be a power of 2, setting it to %d", windowSize);
-    }
-  }
-  else {
-    windowSize = 1024;
-  }
-  if (argc > 1 && argv[1].a_type == A_FLOAT) {
-    kernelRadius = atom_getfloat(&argv[1]);
-  }
-  else {
-    kernelRadius = 4;
-  }
+  long kernelRadius;
+  GET_ARG_WINSIZE(long, windowSize, 1, 1024)
+  kernelRadius = GET_ARG(2, atom_getfloat, 4);
+
   x->demix = SDTDemix_new(windowSize, kernelRadius);
+
+  SDT_PD_REGISTER(Demix, demix, "demixer", 0)
+
   x->out0 = outlet_new(&x->obj, gensym("signal"));
   x->out1 = outlet_new(&x->obj, gensym("signal"));
   x->out2 = outlet_new(&x->obj, gensym("signal"));
@@ -81,7 +73,7 @@ void *demix_new(t_symbol *s, long argc, t_atom *argv) {
 }
 
 void demix_free(t_demix *x) {
-  SDTDemix_free(x->demix);
+  SDT_PD_FREE(Demix, demix)
   outlet_free(x->out0);
   outlet_free(x->out1);
   outlet_free(x->out2);

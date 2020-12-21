@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Sound Design Toolkit (SDT)
+--
+https://github.com/SkAT-VG/SDT
+-------------------------------------------------------------------------------
+
+Authors and contributors (either programmers or designers) in alphabetical
+order:
+
+	Federico Avanzini (federico.avanzini@di.unimi.it)
+	Stefano Baldan (singintime@gmail.com)
+	Nicola Bernardini
+	Gianpaolo Borin
+	Carlo Drioli (carlo.drioli@uniud.it)
+	Stefano Delle Monache (s.dellemonache@tudelft.nl)
+	Delphine Devallez
+	Federico Fontana (federico.fontana@uniud.it)
+	Laura Ottaviani
+	Stefano Papetti (stefano.papetti@zhdk.ch)
+	Pietro Polotti (pietro.polotti@conts.it)
+	Matthias Rath
+	Davide Rocchesso (davide.rocchesso@unipa.it)
+	Stefania Serafin (sts@create.aau.dk)
+	Marco Tiraboschi (marco.tiraboschi@unimi.it)

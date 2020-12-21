@@ -114,7 +114,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -3902,7 +3902,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -4162,14 +4162,14 @@
 , 											{
 												"box" : 												{
 													"id" : "obj-35",
-													"linecount" : 4,
+													"linecount" : 3,
 													"maxclass" : "message",
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 51.0, 250.0, 217.0, 66.0 ],
 													"style" : "SDTpackage",
-													"text" : ";\rmax launchbrowser http://www.academia.edu/download/27648519/vmain.pdf"
+													"text" : ";\rmax launchbrowser https://github.com/SkAT-VG/SDT"
 												}
 
 											}
@@ -4628,7 +4628,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "signal" ],
+													"outlettype" : [ "" ],
 													"patching_rect" : [ 70.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -4653,7 +4653,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "signal" ],
+													"outlettype" : [ "" ],
 													"patching_rect" : [ 139.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -5549,7 +5549,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 2,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 211.0, 501.0, 356.0, 52.0 ],
 									"style" : "SDTpackage",
 									"text" : "sdt.dcmotor~ @coils 20 @harshness 0.25 @size 0.06 @reson 0.85 @gearRatio 2.35 @airGain 0. @brushGain 0. @rotorGain 0.5 @gearGain 0.05"
@@ -5562,7 +5562,7 @@
 									"id" : "obj-11",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 1,
+									"numinlets" : 0,
 									"numoutlets" : 0,
 									"patching_rect" : [ 267.5, 374.0, 320.0, 55.0 ],
 									"text" : "sdt.modal windshield 4 1 @freqs 90. 400. 1240. 1750. @decays 0.1 0.1 0.1 0.1 @pickup0 1300. 1100. 600. 500. @activeModes 4"
@@ -5574,7 +5574,7 @@
 									"color" : [ 0.996078431372549, 0.823529411764706, 0.0, 1.0 ],
 									"id" : "obj-10",
 									"maxclass" : "newobj",
-									"numinlets" : 1,
+									"numinlets" : 0,
 									"numoutlets" : 0,
 									"patching_rect" : [ 359.5, 215.0, 160.0, 23.0 ],
 									"style" : "SDTpackage",
@@ -5589,9 +5589,9 @@
 									"id" : "obj-4",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 6,
+									"numinlets" : 1,
 									"numoutlets" : 2,
-									"outlettype" : [ "signal", "signal" ],
+									"outlettype" : [ "", "" ],
 									"patching_rect" : [ 212.0, 281.0, 423.0, 52.0 ],
 									"text" : "sdt.friction~ wiper windshield 2 @stiffness 350. @dissipation 50. @viscosity 4. @breakAway 0.3 @stribeck 0.1 @kDynamic 0.5 @kStatic 1. @noisiness 3. @force 0.6 @contact0 0 @contact1 0"
 								}
@@ -5629,7 +5629,7 @@
 										}
 ,
 										"classnamespace" : "box",
-										"rect" : [ 342.0, 98.0, 392.0, 358.0 ],
+										"rect" : [ 342.0, 98.0, 388.0, 407.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -5674,12 +5674,12 @@
 												"box" : 												{
 													"fontname" : "Lato ",
 													"id" : "obj-2",
-													"linecount" : 23,
+													"linecount" : 27,
 													"maxclass" : "comment",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 45.0, 50.0, 304.0, 282.0 ],
-													"text" : "The Sound Design Toolkit has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n------------------------------------------------------------------------\nComplete list of authors \n(either programmers or designers):\n\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n------------------------------------------------------------------------\nContacts:\nstefano.papetti@zhdk.ch,\nsingintime@gmail.com \ns.dellemonache@tudelft.nl\n\nThe SDT source is available at https://github.com/SkAT-VG/SDT/"
+													"patching_rect" : [ 45.0, 50.0, 304.0, 330.0 ],
+													"text" : "Copyright (C) 2001-2020 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache s.dellemonache@tudelft.nl\nStefano Papetti stefano.papetti@zhdk.ch\nStefano Baldan singintime@gmail.com \n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/"
 												}
 
 											}
@@ -5695,7 +5695,7 @@
 													"mode" : 0,
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 24.75, 10.0, 340.25, 330.0 ],
+													"patching_rect" : [ 23.875, 9.0, 346.25, 382.0 ],
 													"proportion" : 0.39
 												}
 
@@ -5970,26 +5970,10 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "sdttaxonomy.png",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
+				"bootpath" : "~/SDT_git/MaxPackage/media",
 				"patcherrelativepath" : "../../media",
 				"type" : "PNG",
 				"implicit" : 1
-			}
-, 			{
-				"name" : "sdt.friction~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.dcmotor~.mxo",
-				"type" : "iLaX"
 			}
  ],
 		"autosave" : 0,

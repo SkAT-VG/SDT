@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _pitchshift {
 	t_pxobject ob;
 	SDTPitchShift *shift;
 	double ratio, overlap;
+	t_symbol *key;
 } t_pitchshift;
 
 static t_class *pitchshift_class = NULL;
@@ -33,6 +35,7 @@ void *pitchshift_new(t_symbol *s, long argc, t_atom *argv) {
       oversample = 4;
     }
     x->shift = SDTPitchShift_new(size, oversample);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -40,7 +43,7 @@ void *pitchshift_new(t_symbol *s, long argc, t_atom *argv) {
 
 void pitchshift_free(t_pitchshift *x) {
   dsp_free((t_pxobject *)x);
-  SDTPitchShift_free(x->shift);
+  SDT_MAX_FREE(PitchShift, shift)
 }
 
 void pitchshift_assist(t_pitchshift *x, void *b, long m, long a, char *s) {
@@ -52,6 +55,8 @@ void pitchshift_assist(t_pitchshift *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(pitchshift, PitchShift, shift, "pitchshift~", "pitch shifter")
 
 void pitchshift_ratio(t_pitchshift *x, void *attr, long ac, t_atom *av) {
   x->ratio = atom_getfloat(av);
@@ -103,6 +108,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)pitchshift_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)pitchshift_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(pitchshift, "1")
 
   CLASS_ATTR_DOUBLE(c, "ratio", 0, t_pitchshift, ratio);
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitchshift, overlap);

@@ -1,13 +1,15 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _windflow {
   t_pxobject ob;
-    SDTWindFlow *flow;
+  SDTWindFlow *flow;
+  t_symbol *key;
 } t_windflow;
 
 static t_class *windflow_class = NULL;
@@ -19,13 +21,15 @@ void *windflow_new(t_symbol *s, long argc, t_atom *argv) {
     dsp_setup((t_pxobject *)x, 1);
     outlet_new(x, "signal");
     x->flow = SDTWindFlow_new();
+    x->key = 0;
+    attr_args_process(x, argc, argv);
   }
   return (x);
 }
 
 void windflow_free(t_windflow *x) {
   dsp_free((t_pxobject *)x);
-  SDTWindFlow_free(x->flow);
+  SDT_MAX_FREE(WindFlow, flow)
 }
 
 void windflow_assist(t_windflow *x, void *b, long m, long a, char *s) {
@@ -36,6 +40,8 @@ void windflow_assist(t_windflow *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(windflow, WindFlow, flow, "windflow~", "wind flow")
 
 t_int *windflow_perform(t_int *w) {
   t_windflow *x = (t_windflow *)(w[1]);
@@ -81,6 +87,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)windflow_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)windflow_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(windflow, "1")
 	
   class_dspinit(c);
   class_register(CLASS_BOX, c);

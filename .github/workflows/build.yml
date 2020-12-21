@@ -1,0 +1,277 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    tags:
+      - 'v*.*'
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [linux, win32, win64]
+        platform: [install, install_core, install_max, install_pd]
+        exclude:
+        - target: linux
+          platform: install_core
+        - target: linux
+          platform: install_max
+        - target: linux
+          platform: install_pd
+        - target: win32
+          platform: install
+        - target: win64
+          platform: install
+        - target: win64
+          platform: install_pd
+        include:
+        - target: linux
+          dir: PREFIX
+        - target: win32
+          dir: DSTDIR
+        - target: win64
+          dir: DSTDIR
+        - platform: install
+          plt_name: _pd
+        - platform: install_core
+          plt_name: ""
+        - platform: install_pd
+          plt_name: _pd
+        - platform: install_max
+          plt_name: _max
+    container: chromaticisobar/sdt:build
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Make
+      run: cd build/${{ matrix.target }} && make
+    - name: Prepare package directory
+      run: mkdir SoundDesignToolkit
+    - name: Package
+      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} ${{ matrix.dir }}=../../SoundDesignToolkit
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+        path: SoundDesignToolkit
+
+  # Cannot be run in the previous matrix because there is no way (for now) to specify not to use a container for macos
+  # https://github.community/t/run-matrix-job-on-macos-and-on-ubuntu-in-container/16359/3
+  # Job definiton is ready for merge in case the option is impelemented
+  build-macos:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        target: [macosx]
+        platform: [install, install_core, install_max, install_pd]
+        exclude:
+        - target: macosx
+          platform: install
+        include:
+        - target: macosx
+          dir: DSTDIR
+        - platform: install_core
+          plt_name: ""
+        - platform: install_pd
+          plt_name: _pd
+        - platform: install_max
+          plt_name: _max
+    # notice that steps are the same as build-docker
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Make
+      run: cd build/${{ matrix.target }} && make
+    - name: Prepare package directory
+      run: mkdir SoundDesignToolkit
+    - name: Package
+      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} ${{ matrix.dir }}=../../SoundDesignToolkit
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+        path: SoundDesignToolkit
+
+  release-create:
+    if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
+    runs-on: ubuntu-latest
+    needs: [build-docker, build-macos]
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      version: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: ${{ github.ref }}
+        draft: false
+        prerelease: ${{ contains( github.ref , 'dev' ) }}
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+  release-upload:
+    strategy:
+      matrix:
+        target: [linux, win32, win64, macosx]
+        plt_name: ["", _pd, _max]
+        exclude:
+        - target: linux
+          plt_name: ""
+        - target: linux
+          plt_name: _max
+        - target: win64
+          plt_name: _pd
+    runs-on: ubuntu-latest
+    needs: release-create
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+    - name: Zip artifacts
+      run: zip -r ../SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip *
+      working-directory: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.release-create.outputs.upload_url }}
+        asset_path: ./SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
+        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ needs.release-create.outputs.version }}.zip
+        asset_content_type: application/zip
+
+  doxygen:
+    runs-on: ubuntu-latest
+    container: chromaticisobar/sdt:doxy
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: Build HTML
+      run: doxygen
+    - name: Upload HTML
+      uses: actions/upload-artifact@v1
+      with:
+        name: doxygen-html
+        path: doc/html
+    - name: Build latex
+      run: cd doc/latex && make && cd ../..
+    - name: Upload pdf
+      uses: actions/upload-artifact@v1
+      with:
+        name: refman
+        path: doc/latex/refman.pdf
+
+  sphinx:
+    runs-on: ubuntu-latest
+    container: chromaticisobar/sdt:doxy
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          submodules: true
+      - name: Build HTML
+        run: export SDT_VERSION=${GITHUB_REF##*/} && make oscdoc_html
+        working-directory: build/linux
+      - name: Upload HTML
+        uses: actions/upload-artifact@v1
+        with:
+          name: osc-quickreference-html
+          path: oscdoc/build/html
+      - name: Build latex
+        run: export SDT_VERSION=${GITHUB_REF##*/} && make oscdoc_latexpdf
+        working-directory: build/linux
+        env:
+          SDT_VERSION: ${{ steps.get_version_sphinx.outputs.VERSION }}
+      - name: Upload pdf
+        uses: actions/upload-artifact@v1
+        with:
+          name: osc-quickreference
+          path: oscdoc/build/latex/SoundDesignToolkitOSCQuickReference.pdf
+
+  release-gh-pages:
+    runs-on: ubuntu-latest
+    needs: [ release-create, doxygen, sphinx ]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Make directory
+        run: mkdir html
+      - name: Download doxygen
+        uses: actions/download-artifact@v1
+        with:
+          name: doxygen-html
+      - name: Include doxygen
+        run: cp -r doxygen-html html/SDT
+      - name: Download sphinx
+        uses: actions/download-artifact@v1
+        with:
+          name: osc-quickreference-html
+      - name: Include sphinx
+        run: cp -r osc-quickreference-html html/OSC
+      - name: No Jekyll
+        run: touch html/.nojekyll
+      - name: Autoredirect from home to SDT
+        run: echo '<meta http-equiv="Refresh", content="0; url=SDT" />' > html/index.html
+      - name: Deploy pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: html
+
+  release-upload-doxygen:
+    runs-on: ubuntu-latest
+    needs: [release-create, doxygen]
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: refman
+    - name: Upload Reference Manual
+      id: upload-refman
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ needs.release-create.outputs.upload_url }}
+        asset_path: ./refman/refman.pdf
+        asset_name: refman_${{ needs.release-create.outputs.version }}.pdf
+        asset_content_type: application/pdf
+
+  release-upload-sphinx:
+    runs-on: ubuntu-latest
+    needs: [release-create, sphinx]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: osc-quickreference
+      - name: Upload OSC Quick Reference
+        id: upload-osc-qr
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.release-create.outputs.upload_url }}
+          asset_path: ./osc-quickreference/SoundDesignToolkitOSCQuickReference.pdf
+          asset_name: osc_quick_reference_${{ needs.release-create.outputs.version }}.pdf
+          asset_content_type: application/pdf

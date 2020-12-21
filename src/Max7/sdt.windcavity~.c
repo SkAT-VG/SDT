@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _windcavity {
   t_pxobject ob;
   SDTWindCavity *cavity;
   double length, diameter;
+  t_symbol *key;
 } t_windcavity;
 
 static t_class *windcavity_class = NULL;
@@ -27,6 +29,7 @@ void *windcavity_new(t_symbol *s, long argc, t_atom *argv) {
       maxDelay = 44100;
     }
     x->cavity = SDTWindCavity_new(maxDelay);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -34,7 +37,7 @@ void *windcavity_new(t_symbol *s, long argc, t_atom *argv) {
 
 void windcavity_free(t_windcavity *x)  {
 	dsp_free((t_pxobject *)x);
-    SDTWindCavity_free(x->cavity);
+  SDT_MAX_FREE(WindCavity, cavity)
 }
 
 void windcavity_assist(t_windcavity *x, void *b, long m, long a, char *s) {
@@ -46,6 +49,8 @@ void windcavity_assist(t_windcavity *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(windcavity, WindCavity, cavity, "windcavity~", "wind cavity")
 
 void windcavity_length(t_windcavity *x, void *attr, long ac, t_atom *av) {
   x->length = atom_getfloat(av);
@@ -104,6 +109,8 @@ void C74_EXPORT ext_main(void *r)
   class_addmethod(c, (method)windcavity_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)windcavity_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(windcavity, "1")
   
   CLASS_ATTR_DOUBLE(c, "length", 0, t_windcavity, length);
   CLASS_ATTR_DOUBLE(c, "diameter", 0, t_windcavity, diameter);
@@ -114,8 +121,8 @@ void C74_EXPORT ext_main(void *r)
   CLASS_ATTR_ACCESSORS(c, "length", NULL, (method)windcavity_length);
   CLASS_ATTR_ACCESSORS(c, "diameter", NULL, (method)windcavity_diameter);
 	
-  CLASS_ATTR_ORDER(c, "length", 0, "1");
-  CLASS_ATTR_ORDER(c, "diameter", 0, "2");
+  CLASS_ATTR_ORDER(c, "length", 0, "2");
+  CLASS_ATTR_ORDER(c, "diameter", 0, "3");
   
   class_dspinit(c);
   class_register(CLASS_BOX, c);

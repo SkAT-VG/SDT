@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -11,6 +12,7 @@ typedef struct _bouncing {
   SDTBouncing *bouncing;
   double restitution, height, irregularity;
   int reset;
+  t_symbol *key;
 } t_bouncing;
 
 static t_class *bouncing_class = NULL;
@@ -51,16 +53,19 @@ void *bouncing_new(t_symbol *s, short argc, t_atom *argv) {
     x->velocity = outlet_new(x, "signal");
     x->bouncing = SDTBouncing_new();
     x->reset = 0;
+    x->key = 0;
     attr_args_process(x, argc, argv); 
   }
   return (x);
 }
 
 void bouncing_free(t_bouncing *x)  {
-    dsp_free((t_pxobject *)x);
-    SDTBouncing_free(x->bouncing);
-    object_free(x->velocity);
+  dsp_free((t_pxobject *)x);
+  SDT_MAX_FREE(Bouncing, bouncing)
+  object_free(x->velocity);
 }
+
+SDT_MAX_KEY(bouncing, Bouncing, bouncing, "bouncing~", "bouncing process")
 
 t_int *bouncing_perform(t_int *w) {
   t_bouncing *x = (t_bouncing *)(w[1]);
@@ -111,7 +116,9 @@ void C74_EXPORT ext_main(void *r) {
 	class_addmethod(c, (method)bouncing_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)bouncing_dsp64, "dsp64", A_CANT, 0);
 	class_addmethod(c, (method)bouncing_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);  
+  class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(bouncing, "1")
 	
 	CLASS_ATTR_DOUBLE(c, "restitution", 0, t_bouncing, restitution);
   CLASS_ATTR_DOUBLE(c, "height", 0, t_bouncing, height);
@@ -125,9 +132,9 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "height", NULL, (method)bouncing_height);
 	CLASS_ATTR_ACCESSORS(c, "irregularity", NULL, (method)bouncing_irregularity);
 	
-	CLASS_ATTR_ORDER(c, "restitution", 0, "1");
-	CLASS_ATTR_ORDER(c, "height", 0, "2");
-	CLASS_ATTR_ORDER(c, "irregularity", 0, "3");
+	CLASS_ATTR_ORDER(c, "restitution", 0, "2");
+	CLASS_ATTR_ORDER(c, "height", 0, "3");
+	CLASS_ATTR_ORDER(c, "irregularity", 0, "4");
 	
 	class_dspinit(c);
 	class_register(CLASS_BOX, c);

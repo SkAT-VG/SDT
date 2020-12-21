@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -9,6 +10,7 @@ typedef struct _explosion {
   t_pxobject ob;
   SDTExplosion *blow;
   double blastTime, scatterTime, dispersion, distance, waveSpeed, windSpeed;
+  t_symbol *key;
 } t_explosion;
 
 static t_class *explosion_class = NULL;
@@ -34,6 +36,7 @@ void *explosion_new(t_symbol *s, long argc, t_atom *argv) {
       maxDelay = 4410000;
     }
     x->blow = SDTExplosion_new(maxScatter, maxDelay);
+    x->key = 0;
     attr_args_process(x, argc, argv);
   }
   return (x);
@@ -41,7 +44,7 @@ void *explosion_new(t_symbol *s, long argc, t_atom *argv) {
 
 void explosion_free(t_explosion *x)  {
 	dsp_free((t_pxobject *)x);
-    SDTExplosion_free(x->blow);
+  SDT_MAX_FREE(Explosion, blow)
 }
 
 void explosion_assist(t_explosion *x, void *b, long m, long a, char *s) {
@@ -53,6 +56,8 @@ void explosion_assist(t_explosion *x, void *b, long m, long a, char *s) {
     sprintf(s, "(signal): Output sound");
   }
 }
+
+SDT_MAX_KEY(explosion, Explosion, blow, "explosion~", "explosion")
 
 void explosion_blastTime(t_explosion *x, void *attr, long ac, t_atom *av) {
   x->blastTime = atom_getfloat(av);
@@ -136,6 +141,8 @@ void C74_EXPORT ext_main(void *r)
   class_addmethod(c, (method)explosion_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)explosion_update, "bang", 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(explosion, "1")
   
   CLASS_ATTR_DOUBLE(c, "blastTime", 0, t_explosion, blastTime);
   CLASS_ATTR_DOUBLE(c, "scatterTime", 0, t_explosion, scatterTime);
@@ -158,9 +165,9 @@ void C74_EXPORT ext_main(void *r)
   CLASS_ATTR_ACCESSORS(c, "waveSpeed", NULL, (method)explosion_waveSpeed);
   CLASS_ATTR_ACCESSORS(c, "windSpeed", NULL, (method)explosion_windSpeed);
   
-  CLASS_ATTR_ORDER(c, "blastTime", 0, "1");
-  CLASS_ATTR_ORDER(c, "scatterTime", 0, "2");
-  CLASS_ATTR_ORDER(c, "dispersion", 0, "3");
+  CLASS_ATTR_ORDER(c, "blastTime", 0, "2");
+  CLASS_ATTR_ORDER(c, "scatterTime", 0, "3");
+  CLASS_ATTR_ORDER(c, "dispersion", 0, "4");
   CLASS_ATTR_ORDER(c, "distance", 0, "5");
   CLASS_ATTR_ORDER(c, "waveSpeed", 0, "6");
   CLASS_ATTR_ORDER(c, "windSpeed", 0, "7");

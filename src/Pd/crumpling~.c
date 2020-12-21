@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #ifdef NT
@@ -12,6 +12,7 @@ typedef struct _crumpling {
   t_object obj;
   SDTCrumpling *crumpling;
   t_outlet *out0, *out1;
+  char *key;
 } t_crumpling;
 
 void crumpling_crushingEnergy(t_crumpling *x, t_float f) {
@@ -47,17 +48,20 @@ void crumpling_dsp(t_crumpling *x, t_signal **sp) {
 }
 
 void *crumpling_new(t_symbol *s, long argc, t_atom *argv) {
-  t_crumpling *x;
-  
-  x = (t_crumpling *)pd_new(crumpling_class);
-  x->crumpling = SDTCrumpling_new(); 
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
+
+  t_crumpling *x = (t_crumpling *)pd_new(crumpling_class);
+  x->crumpling = SDTCrumpling_new();
+
+  SDT_PD_REGISTER(Crumpling, crumpling, "crumpling process", 0)
+
   x->out0 = outlet_new(&x->obj, gensym("signal"));
   x->out1 = outlet_new(&x->obj, gensym("signal"));
   return x;
 }
 
 void crumpling_free(t_crumpling *x) {
-  SDTCrumpling_free(x->crumpling);
+  SDT_PD_FREE(Crumpling, crumpling)
   outlet_free(x->out0);
   outlet_free(x->out1);
 }

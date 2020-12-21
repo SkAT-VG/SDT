@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _zerox {
   SDTZeroCrossing *zerox;
   t_float f;
   t_outlet *out0;
+  char *key;
 } t_zerox;
 
 void zerox_overlap(t_zerox *x, t_float f) {
@@ -42,23 +43,21 @@ void zerox_dsp(t_zerox *x, t_signal **sp, short *count) {
 }
 
 void *zerox_new(t_symbol *s, long argc, t_atom *argv) {
-  int windowSize;
-  
+  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+
   t_zerox *x = (t_zerox *)pd_new(zerox_class);
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    windowSize = atom_getfloat(&argv[0]);
-  }
-  else {
-    windowSize = 1024;
-  }
+  int windowSize = GET_ARG(1, atom_getfloat, 1024);
   x->zerox = SDTZeroCrossing_new(windowSize);
+
+  SDT_PD_REGISTER(ZeroCrossing, zerox, "zero crossing rate detector", 0)
+
   x->out0 = outlet_new(&x->obj, gensym("float"));
   return (x);
 }
 
 void zerox_free(t_zerox *x) {
   outlet_free(x->out0);
-  SDTZeroCrossing_free(x->zerox);
+  SDT_PD_FREE(ZeroCrossing, zerox)
 }
 
 void zerox_tilde_setup(void) {	

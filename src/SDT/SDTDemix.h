@@ -1,3 +1,6 @@
+#include "SDTJSON.h"
+#include "SDTCommonMacros.h"
+
 /** @file SDTDemix.h
 @defgroup demix SDTDemix.h: Transient/tonal/residual components separator
 This algorithm looks for vertical and horizontal structures in the spectrogram to
@@ -25,8 +28,8 @@ the Sound Design Toolkit.
 @{
 */
 
-#ifndef SDT_EFFECTS_H
-#define SDT_EFFECTS_H
+#ifndef SDT_DEMIX_H
+#define SDT_DEMIX_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -44,6 +47,25 @@ extern SDTDemix *SDTDemix_new(int size, int radius);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDemix_free(SDTDemix *x);
+
+#define SDT_DEMIX Demix
+#define SDT_DEMIX_NEW_ARGS 1024, 4
+#define SDT_DEMIX_ATTRIBUTES(T, A) \
+A(T, size, int, Size, size, integer, 1024) \
+A(T, radius, int, Radius, radius, integer, 4) \
+A(T, overlap, double, Overlap, overlap, double, 0.75) \
+A(T, gammaIso, double, NoiseThreshold, noiseThreshold, double, 0.0) \
+A(T, gammaDir, double, TonalThreshold, tonalThreshold, double, 0.0)
+
+SDT_TYPE_COPY_H(SDT_DEMIX)
+SDT_DEFINE_HASHMAP_H(SDT_DEMIX)
+SDT_TYPE_MAKE_GETTERS_H(SDT_DEMIX)
+SDT_JSON_SERIALIZE_H(SDT_DEMIX)
+SDT_JSON_DESERIALIZE_H(SDT_DEMIX)
+
+extern void SDTDemix_setSize(SDTDemix *x, int f);
+
+extern void SDTDemix_setRadius(SDTDemix *x, int f);
 
 /** @brief Sets the window overlapping factor.
 @param[in] f Window overlapping factor */
@@ -64,6 +86,23 @@ percussive/harmonic/residual components
 component, outs[1] is the harmonic component and outs[2] is the residual.
 @param[in] in Input sample */
 extern void SDTDemix_dsp(SDTDemix *x, double *outs, double in);
+
+/** @brief Registers a demixer into the demixers list with a unique ID.
+@param[in] x Demix instance to register
+@param[in] key Unique ID assigned to the demixer instance */
+extern int SDT_registerDemix(SDTDemix *x, char *key);
+
+/** @brief Queries the demixers list by its unique ID.
+If a demixer with the ID is present, a pointer to the demixer is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the Demix instance
+@return Demix instance pointer */
+extern SDTDemix *SDT_getDemix(const char *key);
+
+/** @brief Unregisters a demixer from the demixers list.
+If a demixer with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the Demix instance to unregister */
+extern int SDT_unregisterDemix(char *key);
 
 #ifdef __cplusplus
 };

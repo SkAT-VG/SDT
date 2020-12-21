@@ -3,7 +3,9 @@ SHELL=/bin/bash
 CC=gcc
 CFLAGS=-fPIC -Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=-shared
-SRCDIR=../../src
+ROOT=../..
+SRCDIR=$(ROOT)/src
+THIRDPDIR=$(ROOT)/3rdparty
 PREFIX=/usr
 SDTPATH=SDT
 
@@ -15,19 +17,56 @@ PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
 PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
 
+JSONDIRB=$(THIRDPDIR)/json-builder
+JSONSRCB=$(wildcard $(JSONDIRB)/*.c)
+JSONOBJB=$(patsubst %.c,%.o,$(JSONSRCB))
+
+JSONDIRP=$(THIRDPDIR)/json-parser
+JSONSRCP=$(wildcard $(JSONDIRP)/*.c)
+JSONOBJP=$(patsubst %.c,%.o,$(JSONSRCP))
+JSONOBJS=$(JSONOBJP) $(JSONOBJB)
+
+OSCDOCDIR=$(ROOT)/oscdoc
+OSCDOCGEN=$(OSCDOCDIR)/docgen
+OSCDOCSOURCEDIR=$(OSCDOCDIR)/source
+OSCDOCRST=$(OSCDOCSOURCEDIR)/ordinary_classes.rst
+
+INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
+INCLUDE_SDT=-I$(SDTDIR)
+
 all: sdt pd
+
+.PHONY: sdt pd oscdoc_%
+
+oscdoc_%: $(OSCDOCRST)
+	cd $(OSCDOCDIR) && make $(@:oscdoc_%=%)
+
+$(OSCDOCRST): $(OSCDOCGEN)
+	$< > $@
+
+$(OSCDOCGEN): $(OSCDOCGEN).c
+	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_SDT) $(INCLUDE_JSON) $< -o $@
 
 pd: sdt $(PDOBJS)
 	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) -c $< -o $@
 
-sdt: $(SDTOBJS)
-	$(CC) $(LDFLAGS) $(SDTOBJS) -o $(SDTDIR)/libSDT.so -lc -lm
+sdt: $(SDTOBJS) json
+	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/libSDT.so -lc -lm
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
+
+json: $(JSONOBJP) $(JSONOBJB)
+
+$(JSONDIRP)/%.o: $(JSONDIRP)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
+
+$(JSONDIRB)/%.o: $(JSONDIRB)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
+
 	
 install:
 	mkdir -p $(PREFIX)/lib/pd/extra/$(SDTPATH)
@@ -36,6 +75,8 @@ install:
 	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	cp -a ../../Pd/* $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	cp -a $(SDTDIR)/*.h $(PREFIX)/include/$(SDTPATH)
+	cp -a $(JSONDIRP)/*.h $(PREFIX)/include/$(SDTPATH)
+	cp -a $(JSONDIRB)/*.h $(PREFIX)/include/$(SDTPATH)
 
 uninstall:
 	rm -f $(PREFIX)/lib/libSDT.so
@@ -47,3 +88,5 @@ clean:
 	rm -rf $(SDTDIR)/*.o
 	rm -rf $(PDDIR)/*.pd_linux
 	rm -rf $(PDDIR)/*.o
+	rm -rf $(JSONDIRP)/*.o
+	rm -rf $(JSONDIRB)/*.o

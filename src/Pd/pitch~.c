@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
 #ifdef NT
@@ -13,6 +13,7 @@ typedef struct _pitch {
   SDTPitch *pitch;
   t_float f;
   t_outlet *out0, *out1;
+  char *key;
 } t_pitch;
 
 void pitch_overlap(t_pitch *x, t_float f) {
@@ -46,19 +47,14 @@ void pitch_dsp(t_pitch *x, t_signal **sp) {
 }
 
 void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
-  int tmpSize, windowSize;
+  SDT_PD_ARG_PARSE(3, A_SYMBOL, A_FLOAT)
+
   t_pitch *x = (t_pitch *)pd_new(pitch_class);
-  if (argc > 0 && argv[0].a_type == A_FLOAT) {
-    tmpSize = atom_getfloat(&argv[0]);
-    windowSize = SDT_nextPow2(tmpSize);
-    if (tmpSize != windowSize) {
-      post("sdt.pitch~: Window size must be a power of 2, setting it to %d", windowSize);
-    }
-  }
-  else {
-    windowSize = 1024;
-  }
+  GET_ARG_WINSIZE(int, windowSize, 1, 1024)
   x->pitch = SDTPitch_new(windowSize);
+
+  SDT_PD_REGISTER(Pitch, pitch, "fundamental frequency estimator", 0)
+
   x->out0 = outlet_new(&x->obj, gensym("float"));
   x->out1 = outlet_new(&x->obj, gensym("float"));
   return (x);
@@ -67,7 +63,7 @@ void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
 void pitch_free(t_pitch *x) {
   outlet_free(x->out0);
   outlet_free(x->out1);
-  SDTPitch_free(x->pitch);
+  SDT_PD_FREE(Pitch, pitch)
 }
 
 void pitch_tilde_setup(void) {	

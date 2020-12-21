@@ -1,4 +1,4 @@
-#include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTModalTracker.h"
 #ifdef NT
@@ -13,7 +13,8 @@ typedef struct _modaltracker {
   SDTModalTracker *modaltracker;
   t_float f;
   t_outlet *out0, *out1;
-  int nModes, nSamples, pickup, isRecording; 
+  int nModes, nSamples, pickup, isRecording;
+  char *key;
 } t_modaltracker;
 
 void modaltracker_overlap(t_modaltracker *x, t_float f) {
@@ -98,33 +99,30 @@ void modaltracker_dsp(t_modaltracker *x, t_signal **sp) {
 }
 
 void *modaltracker_new(t_symbol *s, long argc, t_atom *argv) {
-  int nModes, nSamples, tmpSize, windowSize;
+  SDT_PD_ARG_PARSE(4, A_SYMBOL, A_FLOAT, A_FLOAT, A_FLOAT)
+
   t_modaltracker *x = (t_modaltracker *)pd_new(modaltracker_class);
-  nModes = argc > 0 && argv[0].a_type == A_FLOAT ? atom_getfloat(&argv[0]) : 8;
-  nSamples = argc > 1 && argv[1].a_type == A_FLOAT ? atom_getfloat(&argv[1]) : 441000;
-  if (argc > 2 && argv[2].a_type == A_FLOAT) {
-    tmpSize = atom_getfloat(&argv[2]);
-    windowSize = SDT_nextPow2(tmpSize);
-    if (tmpSize != windowSize) {
-      post("sdt.modaltracker~: Window size must be a power of 2, setting it to %d", windowSize);
-    }
-  }
-  else {
-    windowSize = 1024;
-  }
-  x->modaltracker = SDTModalTracker_new(nModes, nSamples, windowSize);
-  x->out0 = outlet_new(&x->obj, NULL);
-  x->out1 = outlet_new(&x->obj, gensym("bang"));
+  int nModes, nSamples;
+  nModes = GET_ARG(1, atom_getfloat, 8);
+  nSamples = GET_ARG(2, atom_getfloat, 441000);
+  GET_ARG_WINSIZE(int, windowSize, 3, 1024)
+
   x->nModes = nModes;
   x->nSamples = nSamples;
   x->isRecording = 0;
+  x->modaltracker = SDTModalTracker_new(nModes, nSamples, windowSize);
+
+  SDT_PD_REGISTER(ModalTracker, modaltracker, "modal tracker", 0)
+
+  x->out0 = outlet_new(&x->obj, NULL);
+  x->out1 = outlet_new(&x->obj, gensym("bang"));
   return (x);
 }
 
 void modaltracker_free(t_modaltracker *x) {
   outlet_free(x->out0);
   outlet_free(x->out1);
-  SDTModalTracker_free(x->modaltracker);
+  SDT_PD_FREE(ModalTracker, modaltracker)
 }
 
 void modaltracker_tilde_setup(void) {	

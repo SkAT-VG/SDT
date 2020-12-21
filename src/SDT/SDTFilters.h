@@ -1,3 +1,6 @@
+#include "SDTJSON.h"
+#include "SDTCommonMacros.h"
+
 /** @file SDTFilters.h
 @defgroup filters SDTFilters.h: Audio filters
 Various commonly used LTI systems:
@@ -89,6 +92,18 @@ extern SDTEnvelope *SDTEnvelope_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTEnvelope_free(SDTEnvelope *x);
 
+#define SDT_ENVELOPE Envelope
+#define SDT_ENVELOPE_NEW_ARGS
+#define SDT_ENVELOPE_ATTRIBUTES(T, A) \
+A(T, attack, double, Attack, attack, double, 0.0) \
+A(T, release, double, Release, release, double, 0.0)
+
+SDT_TYPE_COPY_H(SDT_ENVELOPE)
+SDT_DEFINE_HASHMAP_H(SDT_ENVELOPE)
+SDT_TYPE_MAKE_GETTERS_H(SDT_ENVELOPE)
+SDT_JSON_SERIALIZE_H(SDT_ENVELOPE)
+SDT_JSON_DESERIALIZE_H(SDT_ENVELOPE)
+
 /** @brief Sets the attack time.
 @param[in] a Attack time, in ms */
 extern void SDTEnvelope_setAttack(SDTEnvelope *x, double a);
@@ -157,6 +172,15 @@ extern SDTBiquad *SDTBiquad_new(int nSections);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTBiquad_free(SDTBiquad *x);
+
+#define SDT_BIQUAD Biquad
+#define SDT_BIQUAD_NEW_ARGS 1
+#define SDT_BIQUAD_ATTRIBUTES(T, A)
+
+SDT_TYPE_COPY_H(SDT_BIQUAD)
+SDT_DEFINE_HASHMAP_H(SDT_BIQUAD)
+SDT_JSON_SERIALIZE_H(SDT_BIQUAD)
+SDT_JSON_DESERIALIZE_H(SDT_BIQUAD)
 
 /** @brief Designs a Butterworth lowpass filter, at the given cutoff frequency.
 @param[in] fc Cutoff frequency, in Hz */
@@ -236,6 +260,9 @@ extern void SDTDelay_free(SDTDelay *x);
 /** @brief Clears the buffer, therefore silencing the delayed signal. */
 extern void SDTDelay_clear(SDTDelay *x);
 
+extern long SDTDelay_getMaxDelay(const SDTDelay *x);
+extern double SDTDelay_getDelay(const SDTDelay *x);
+
 /** @brief Sets the delay time.
 Fractional values are allowed. The delay time can be
 continuously changed over time without audible glitches.
@@ -269,6 +296,10 @@ extern SDTComb *SDTComb_new(long maxXDelay, long maxYDelay);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTComb_free(SDTComb *x);
+
+extern long SDTComb_getMaxXDelay(const SDTComb *x);
+
+extern long SDTComb_getMaxYDelay(const SDTComb *x);
 
 /** @brief Sets the delay time for the feed forward section.
 @param[in] f Feed forward delay time, in samples */
@@ -319,6 +350,14 @@ extern SDTWaveguide *SDTWaveguide_new(int maxDelay);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTWaveguide_free(SDTWaveguide *x);
+
+extern int SDTWaveguide_getMaxDelay(const SDTWaveguide *x);
+
+extern double SDTWaveguide_getDelay(const SDTWaveguide *x);
+
+extern double SDTWaveguide_getFwdFeedback(const SDTWaveguide *x);
+
+extern double SDTWaveguide_getRevFeedback(const SDTWaveguide *x);
 
 /** @brief Reads the output signal coming from the right side of the waveguide.
 @return Output sample */

@@ -1,3 +1,6 @@
+#include "SDTJSON.h"
+#include "SDTCommonMacros.h"
+
 /** @file SDTModalTracker.h
 @defgroup modaltracker Modal analyzer
 This object detects the prominent modal components
@@ -23,6 +26,26 @@ extern SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize, long w
 /** @brief Destroys a modal analyzer instance.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTModalTracker_free(SDTModalTracker *x);
+
+#define SDT_MODALTRACKER ModalTracker
+#define SDT_MODALTRACKER_NEW_ARGS 8, 441000, 1024
+#define SDT_MODALTRACKER_ATTRIBUTES(T, A) \
+A(T, nModes, long, NModes, nModes, integer, 8) \
+A(T, bufferSize, long, BufferSize, bufferSize, integer, 441000) \
+A(T, winSize, long, WinSize, winSize, integer, 1024) \
+A(T, overlap, double, Overlap, overlap, double, 0.5)
+
+SDT_TYPE_COPY_H(SDT_MODALTRACKER)
+SDT_DEFINE_HASHMAP_H(SDT_MODALTRACKER)
+SDT_TYPE_MAKE_GETTERS_H(SDT_MODALTRACKER)
+SDT_JSON_SERIALIZE_H(SDT_MODALTRACKER)
+SDT_JSON_DESERIALIZE_H(SDT_MODALTRACKER)
+
+extern void SDTModalTracker_setNModes(SDTModalTracker *x, long f);
+
+extern void SDTModalTracker_setBufferSize(SDTModalTracker *x, long f);
+
+extern void SDTModalTracker_setWinSize(SDTModalTracker *x, long f);
 
 /** @brief Sets the analysis window overlapping ratio.
 Accepted values go from 0.0 to 1.0, with 0.0 meaning no overlap

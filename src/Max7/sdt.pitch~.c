@@ -1,6 +1,7 @@
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
+#include "SDTCommonMax.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
 #include "SDT_fileusage/SDT_fileusage.h"
@@ -10,6 +11,7 @@ typedef struct _pitch {
   SDTPitch *pitch;
   void *outlets[2], *send;
   double overlap, tolerance, outs[2];
+  t_symbol *key;
 } t_pitch;
 
 static t_class *pitch_class = NULL;
@@ -30,6 +32,8 @@ void pitch_assist(t_pitch *x, void *b, long m, long a, char *s) {
     }
   }
 }
+
+SDT_MAX_KEY(pitch, Pitch, pitch, "pitch~", "fundamental frequency estimator")
 
 void pitch_overlap(t_pitch *x, void *attr, long ac, t_atom *av) {
   x->overlap = atom_getfloat(av);
@@ -103,6 +107,7 @@ void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
       windowSize = 1024;
     }
     x->pitch = SDTPitch_new(windowSize);
+    x->key = 0;
     x->outlets[1] = floatout(x);
     x->outlets[0] = floatout(x);
     x->send = qelem_new((t_object *)x, (method)pitch_send);
@@ -116,7 +121,7 @@ void pitch_free(t_pitch *x) {
   object_free(x->outlets[0]);
   object_free(x->outlets[1]);
   qelem_free(x->send);
-  SDTPitch_free(x->pitch);
+  SDT_MAX_FREE(Pitch, pitch)
 }
 
 void C74_EXPORT ext_main(void *r) {	
@@ -126,6 +131,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)pitch_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)pitch_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
+
+  SDT_CLASS_KEY(pitch, "1")
   
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitch, overlap);
   CLASS_ATTR_DOUBLE(c, "tolerance", 0, t_pitch, tolerance);
@@ -136,8 +143,8 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)pitch_overlap);
   CLASS_ATTR_ACCESSORS(c, "tolerance", NULL, (method)pitch_tolerance);
   
-  CLASS_ATTR_ORDER(c, "overlap", 0, "1");
-  CLASS_ATTR_ORDER(c, "tolerance", 0, "2");
+  CLASS_ATTR_ORDER(c, "overlap", 0, "2");
+  CLASS_ATTR_ORDER(c, "tolerance", 0, "3");
   
   class_dspinit(c);
   class_register(CLASS_BOX, c);

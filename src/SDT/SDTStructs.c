@@ -15,7 +15,7 @@ struct SDTHashmap {
   int size;
 };
 
-int SDTHashmap_hash(SDTHashmap *x, char *key) {
+int SDTHashmap_hash(SDTHashmap *x, const char *key) {
   unsigned long h;
   int i;
   
@@ -26,7 +26,7 @@ int SDTHashmap_hash(SDTHashmap *x, char *key) {
   return h % x->size;
 }
 
-int SDTHashmap_lookup(SDTHashmap *x, char *key) {
+int SDTHashmap_lookup(SDTHashmap *x, const char *key) {
   int hash;
   
   hash = SDTHashmap_hash(x, key);
@@ -59,7 +59,7 @@ void SDTHashmap_free(SDTHashmap *x) {
   free(x);
 }
 
-void *SDTHashmap_get(SDTHashmap *x, char *key) {
+void *SDTHashmap_get(SDTHashmap *x, const char *key) {
   SDTHashmap_lookup(x, key);
   return x->item ? x->item->value : NULL;
 }

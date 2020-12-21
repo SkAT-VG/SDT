@@ -1,3 +1,6 @@
+#include "SDTJSON.h"
+#include "SDTCommonMacros.h"
+
 /** @file SDTDCMotor.h
 @defgroup dcmotor SDTDCMotor.h: Electric motors
 Physically informed model for the synthesis of electric motor sounds.
@@ -37,6 +40,28 @@ extern SDTDCMotor *SDTDCMotor_new(long maxSize);
 /** @brief Object destructor.
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDCMotor_free(SDTDCMotor *x);
+
+#define SDT_DCMOTOR DCMotor
+#define SDT_DCMOTOR_NEW_ARGS 48000
+#define SDT_DCMOTOR_ATTRIBUTES(T, A) \
+A(T, maxSize, long, MaxSize, maxSize, integer, 48000)\
+A(T, coils, long, Coils, coils, integer, 2)\
+A(T, size, double, Size, size, double, 0.2)\
+A(T, reson, double, Reson, reson, double, 0.8)\
+A(T, gearRatio, double, GearRatio, gearRatio, double, 1.0)\
+A(T, harshness, double, Harshness, harshness, double, 0.5)\
+A(T, rotorGain, double, RotorGain, rotorGain, double, 0.5)\
+A(T, gearGain, double, GearGain, gearGain, double, 0.3)\
+A(T, brushGain, double, BrushGain, brushGain, double, 0.2)\
+A(T, airGain, double, AirGain, airGain, double, 0.0)
+
+SDT_TYPE_COPY_H(SDT_DCMOTOR)
+SDT_DEFINE_HASHMAP_H(SDT_DCMOTOR)
+SDT_TYPE_MAKE_GETTERS_H(SDT_DCMOTOR)
+SDT_JSON_SERIALIZE_H(SDT_DCMOTOR)
+SDT_JSON_DESERIALIZE_H(SDT_DCMOTOR)
+
+extern void SDTDCMotor_setMaxSize(SDTDCMotor *x, long f);
 
 /** @brief Sets the filter coefficients.
 Call this function whenever the sample rate changes */
