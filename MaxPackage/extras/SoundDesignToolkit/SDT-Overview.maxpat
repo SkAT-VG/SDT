@@ -114,7 +114,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -232,12 +232,24 @@
 										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
 												"box" : 												{
+													"id" : "obj-6",
+													"maxclass" : "message",
+													"numinlets" : 2,
+													"numoutlets" : 1,
+													"outlettype" : [ "" ],
+													"patching_rect" : [ 233.0, 176.0, 53.0, 22.0 ],
+													"text" : "Dripping"
+												}
+
+											}
+, 											{
+												"box" : 												{
 													"id" : "obj-5",
 													"maxclass" : "message",
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 432.0, 176.0, 136.0, 22.0 ],
+													"patching_rect" : [ 553.0, 176.0, 136.0, 22.0 ],
 													"text" : "4.compoundinteractions"
 												}
 
@@ -249,7 +261,7 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 313.0, 176.0, 109.0, 22.0 ],
+													"patching_rect" : [ 434.0, 176.0, 109.0, 22.0 ],
 													"text" : "3.controllingfriction"
 												}
 
@@ -261,8 +273,8 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 121.0, 176.0, 96.0, 22.0 ],
-													"text" : "rubbingScraping"
+													"patching_rect" : [ 121.0, 176.0, 101.0, 22.0 ],
+													"text" : "RubbingScraping"
 												}
 
 											}
@@ -273,8 +285,8 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 69.0, 176.0, 49.0, 22.0 ],
-													"text" : "blowing"
+													"patching_rect" : [ 69.0, 176.0, 51.0, 22.0 ],
+													"text" : "Blowing"
 												}
 
 											}
@@ -282,11 +294,11 @@
 												"box" : 												{
 													"id" : "obj-17",
 													"maxclass" : "newobj",
-													"numinlets" : 3,
-													"numoutlets" : 3,
-													"outlettype" : [ "", "", "" ],
-													"patching_rect" : [ 69.0, 115.0, 123.0, 22.0 ],
-													"text" : "route blowing rubbing"
+													"numinlets" : 4,
+													"numoutlets" : 4,
+													"outlettype" : [ "", "", "", "" ],
+													"patching_rect" : [ 69.0, 115.0, 169.0, 22.0 ],
+													"text" : "route blowing rubbing dripping"
 												}
 
 											}
@@ -373,6 +385,13 @@
 											}
 , 											{
 												"patchline" : 												{
+													"destination" : [ "obj-6", 0 ],
+													"source" : [ "obj-17", 2 ]
+												}
+
+											}
+, 											{
+												"patchline" : 												{
 													"destination" : [ "obj-80", 0 ],
 													"source" : [ "obj-2", 0 ]
 												}
@@ -382,6 +401,13 @@
 												"patchline" : 												{
 													"destination" : [ "obj-80", 0 ],
 													"source" : [ "obj-3", 0 ]
+												}
+
+											}
+, 											{
+												"patchline" : 												{
+													"destination" : [ "obj-80", 0 ],
+													"source" : [ "obj-6", 0 ]
 												}
 
 											}
@@ -1801,6 +1827,13 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-1", 0 ],
+									"source" : [ "obj-18", 0 ]
+								}
+
+							}
+, 							{
+								"patchline" : 								{
+									"destination" : [ "obj-1", 0 ],
 									"source" : [ "obj-23", 0 ]
 								}
 
@@ -2156,7 +2189,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 361.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.pitch~",
+									"text" : "sdt.fluidflow~",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3494,7 +3527,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 408.0, 428.0, 30.0 ],
 									"style" : "SDT_package",
-									"text" : "Fundamental frequency estimator",
+									"text" : "Stochastic population of bubbles",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3503,13 +3536,13 @@
 								"box" : 								{
 									"fontsize" : 16.0,
 									"id" : "obj-16",
-									"linecount" : 2,
+									"linecount" : 3,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 470.0, 440.0, 45.0 ],
+									"patching_rect" : [ 323.3125, 470.0, 440.0, 64.0 ],
 									"style" : "SDT_package",
-									"text" : "Pitch detector based on the Normalized Square Difference Function. It returns the pitch in Hz and the pitch clarity. ",
+									"text" : "Simulates the acoustic behavior of a population of bubbles to render water dripping, waterfalls, burbling streams and other liquid phenomena.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3902,7 +3935,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -4628,7 +4661,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "" ],
+													"outlettype" : [ "signal" ],
 													"patching_rect" : [ 70.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -4653,7 +4686,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "" ],
+													"outlettype" : [ "signal" ],
 													"patching_rect" : [ 139.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -5549,7 +5582,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 2,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 211.0, 501.0, 356.0, 52.0 ],
 									"style" : "SDTpackage",
 									"text" : "sdt.dcmotor~ @coils 20 @harshness 0.25 @size 0.06 @reson 0.85 @gearRatio 2.35 @airGain 0. @brushGain 0. @rotorGain 0.5 @gearGain 0.05"
@@ -5562,7 +5595,7 @@
 									"id" : "obj-11",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 0,
+									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 267.5, 374.0, 320.0, 55.0 ],
 									"text" : "sdt.modal windshield 4 1 @freqs 90. 400. 1240. 1750. @decays 0.1 0.1 0.1 0.1 @pickup0 1300. 1100. 600. 500. @activeModes 4"
@@ -5574,7 +5607,7 @@
 									"color" : [ 0.996078431372549, 0.823529411764706, 0.0, 1.0 ],
 									"id" : "obj-10",
 									"maxclass" : "newobj",
-									"numinlets" : 0,
+									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 359.5, 215.0, 160.0, 23.0 ],
 									"style" : "SDTpackage",
@@ -5589,9 +5622,9 @@
 									"id" : "obj-4",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 1,
+									"numinlets" : 6,
 									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"outlettype" : [ "signal", "signal" ],
 									"patching_rect" : [ 212.0, 281.0, 423.0, 52.0 ],
 									"text" : "sdt.friction~ wiper windshield 2 @stiffness 350. @dissipation 50. @viscosity 4. @breakAway 0.3 @stribeck 0.1 @kDynamic 0.5 @kStatic 1. @noisiness 3. @force 0.6 @contact0 0 @contact1 0"
 								}
@@ -5970,10 +6003,26 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "sdttaxonomy.png",
-				"bootpath" : "~/SDT_git/MaxPackage/media",
+				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
 				"patcherrelativepath" : "../../media",
 				"type" : "PNG",
 				"implicit" : 1
+			}
+, 			{
+				"name" : "sdt.friction~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.dcmotor~.mxo",
+				"type" : "iLaX"
 			}
  ],
 		"autosave" : 0,
