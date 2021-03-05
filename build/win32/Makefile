@@ -2,7 +2,7 @@ SHELL=/bin/bash
 
 CC=i686-w64-mingw32-gcc
 CFLAGS=-Wall -Wno-unknown-pragmas -Werror -O3
-LDFLAGS=-shared
+LDFLAGS=-shared -static-libgcc
 SRCDIR=../../src
 THIRDPDIR=../../3rdparty
 DSTDIR=../../SoundDesignToolkit
@@ -39,7 +39,7 @@ JSONOBJS=$(JSONOBJP) $(JSONOBJB)
 all: core max pd
 
 pd: $(SDTOBJS) $(PDOBJS)
-	$(CC) $(LDFLAGS) -L$(SDTDIR) -L$(PDSDKDIR) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.dll -lSDT -lpd
+	$(CC) $(LDFLAGS) -L$(PDSDKDIR) $(JSONOBJS) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.dll -lpd
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) $(INCLUDE_JSON) -c $< -o $@
