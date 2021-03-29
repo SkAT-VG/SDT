@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 6,
+			"revision" : 10,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -443,7 +443,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 10,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -859,7 +859,7 @@
 					"patching_rect" : [ 529.5, 121.0, 89.0, 33.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
-							"data" : [ 5, "obj-7", "flonum", "float", 0.200000002980232, 5, "obj-47", "flonum", "float", 0.1240234375, 5, "<invalid>", "multislider", "list", 0.1240234375, 5, "obj-115", "live.gain~", "float", -9.803205490112305, 5, "<invalid>", "toggle", "int", 0, 5, "<invalid>", "flonum", "float", 0.150000005960464, 5, "<invalid>", "live.gain~", "float", -70.0 ]
+							"data" : [ 5, "obj-7", "flonum", "float", 20.0, 5, "obj-47", "flonum", "float", 0.0, 5, "obj-115", "live.gain~", "float", -9.803205490112305, 5, "obj-1", "flonum", "float", 0.0, 5, "obj-10", "flonum", "float", 0.0, 5, "obj-12", "flonum", "float", 0.0, 5, "obj-16", "flonum", "float", 100.0, 5, "obj-19", "flonum", "float", 1.0, 5, "obj-23", "flonum", "float", 0.004999999888241 ]
 						}
  ]
 				}
@@ -877,7 +877,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 10,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1044,7 +1044,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 10,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1434,8 +1434,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -1453,8 +1453,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 6,
+			"revision" : 10,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -163,7 +163,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 359.0, 294.15486725663709, 48.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"style" : "SDT-comments",
 					"text" : "clarity"
 				}
@@ -191,7 +190,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 490.0, 283.654867256637147, 199.0, 38.0 ],
-					"presentation_linecount" : 3,
 					"style" : "SDT-comments",
 					"text" : "- (int) Analysis window length, in samples. Default is 4096."
 				}
@@ -205,7 +203,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 490.0, 264.5, 75.0, 22.0 ],
-					"presentation_linecount" : 2,
 					"style" : "SDT-comments",
 					"text" : "arguments"
 				}
@@ -241,7 +238,7 @@
 			}
 , 			{
 				"box" : 				{
-					"args" : [ "@module", 2, "@vol", 0 ],
+					"args" : [ "@module", 0, "@vol", 0, "@file", "duduk.aif", "@loop", 1 ],
 					"bgmode" : 0,
 					"border" : 0,
 					"clickthrough" : 0,
@@ -309,7 +306,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 490.0, 344.654867256637147, 199.0, 69.0 ],
+					"patching_rect" : [ 490.0, 344.654867256637147, 200.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "- overlap: (float) Window overlap ratio [0.0, 1.0]\n- tolerance: (float) Peak tolerance [0.0, 1.0]."
 				}
@@ -395,7 +392,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 10,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -876,7 +873,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 10,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1082,7 +1079,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 10,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
