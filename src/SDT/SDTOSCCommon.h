@@ -1,4 +1,4 @@
-#include "../../3rdparty/json-builder/json-builder.h"
+#include "json-builder.h"
 
 /** @file SDTOSCCommon.h
 @defgroup OSCCommon SDTOSCCommon.h: OSC Commons

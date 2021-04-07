@@ -1,4 +1,4 @@
-#include "../../3rdparty/json-builder/json-builder.h"
+#include "json-builder.h"
 
 /** @file SDTJSON.h
 @defgroup JSON SDTJSON.h: JSON

@@ -48,13 +48,13 @@ $(OSCDOCGEN): $(OSCDOCGEN).c
 	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_SDT) $(INCLUDE_JSON) $< -o $@
 
 pd: sdt $(PDOBJS)
-	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
+	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) $(INCLUDE_JSON) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) -c $< -o $@
 
 sdt: $(SDTOBJS) json
-	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/libSDT.so -lc -lm
+	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) $(INCLUDE_JSON) -o $(SDTDIR)/libSDT.so -lc -lm
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
@@ -67,7 +67,7 @@ $(JSONDIRP)/%.o: $(JSONDIRP)/%.c
 $(JSONDIRB)/%.o: $(JSONDIRB)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
-	
+
 install:
 	mkdir -p $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	mkdir -p $(PREFIX)/include/$(SDTPATH)
@@ -75,13 +75,15 @@ install:
 	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	cp -a ../../Pd/* $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	cp -a $(SDTDIR)/*.h $(PREFIX)/include/$(SDTPATH)
-	cp -a $(JSONDIRP)/*.h $(PREFIX)/include/$(SDTPATH)
-	cp -a $(JSONDIRB)/*.h $(PREFIX)/include/$(SDTPATH)
+	cp -a $(JSONDIRP)/*.h $(PREFIX)/include
+	cp -a $(JSONDIRB)/*.h $(PREFIX)/include
 
 uninstall:
 	rm -f $(PREFIX)/lib/libSDT.so
 	rm -rf $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	rm -rf $(PREFIX)/include/$(SDTPATH)
+	rm -rf $(PREFIX)/include/json.h
+	rm -rf $(PREFIX)/include/json-builder.h
 
 clean:
 	rm -rf $(SDTDIR)/*.so
