@@ -18,7 +18,7 @@ MAXOBJS=$(patsubst %.c,%.mxe64,$(MAXSRCS))
 MAXSDKDIR=$(THIRDPDIR)/Max7SDK
 MAXSDKVERSION=6.1.4
 
-MAXPACKDIR=../../Max7
+MAXPACKDIR=../../MaxPackage
 
 JSONDIRB=$(THIRDPDIR)/json-builder
 JSONSRCB=$(wildcard $(JSONDIRB)/*.c)

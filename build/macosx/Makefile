@@ -19,7 +19,7 @@ MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 MAXSDKDIR=$(THIRDPDIR)/Max7SDK
 MAXSDKVERSION=6.1.4
 
-MAXPACKDIR=../../Max7
+MAXPACKDIR=../../MaxPackage
 
 PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
