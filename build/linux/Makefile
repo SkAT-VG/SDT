@@ -75,15 +75,13 @@ install:
 	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	cp -a ../../Pd/* $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	cp -a $(SDTDIR)/*.h $(PREFIX)/include/$(SDTPATH)
-	cp -a $(JSONDIRP)/*.h $(PREFIX)/include
-	cp -a $(JSONDIRB)/*.h $(PREFIX)/include
+	cp -a $(JSONDIRP)/*.h $(PREFIX)/include/$(SDTPATH)
+	cp -a $(JSONDIRB)/*.h $(PREFIX)/include/$(SDTPATH)
 
 uninstall:
 	rm -f $(PREFIX)/lib/libSDT.so
 	rm -rf $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	rm -rf $(PREFIX)/include/$(SDTPATH)
-	rm -rf $(PREFIX)/include/json.h
-	rm -rf $(PREFIX)/include/json-builder.h
 
 clean:
 	rm -rf $(SDTDIR)/*.so

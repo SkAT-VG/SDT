@@ -85,9 +85,11 @@ core: $(SDTOBJS) json
 	cp -a SDT.framework $(SDTDIR)
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
 	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
+	cp -a $(JSONDIRP)/*.h $(SDTDIR)/SDT.framework/Headers
+	cp -a $(JSONDIRB)/*.h $(SDTDIR)/SDT.framework/Headers
 	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System
 	install_name_tool -id @rpath/SDT $(SDTDIR)/SDT.framework/SDT
-	
+
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
