@@ -16,7 +16,7 @@ MAXSRCS=$(wildcard $(MAXDIR)/*.c)
 MAXOBJS=$(patsubst %.c,%.mxe,$(MAXSRCS))
 
 MAXSDKDIR=$(THIRDPDIR)/Max7SDK
-MAXSDKVERSION=6.1.4
+MAXSDKVERSION=7.3.3
 
 MAXPACKDIR=../../MaxPackage
 
@@ -51,7 +51,7 @@ max: core fileusage $(MAXOBJS)
 $(MAXDIR)/%.mxe: EXTNAME=$(patsubst $(MAXDIR)/%.mxe,%,$@)
 $(MAXDIR)/%.mxe: $(MAXDIR)/%.o
 	cp Info.def $(MAXDIR)/$(EXTNAME).def
-	sed -i $(MAXDIR)/$(EXTNAME).def -e s/\$${PRODUCT_NAME}/$(EXTNAME)/g 
+	sed -i $(MAXDIR)/$(EXTNAME).def -e s/\$${PRODUCT_NAME}/$(EXTNAME)/g
 	$(CC) $(LDFLAGS) -L$(MAXSDKDIR)/max-includes -L$(MAXSDKDIR)/msp-includes -L$(MAXSDKDIR)/jit-includes -L$(SDTDIR) \
 	$< $(MAXDIR)/$(EXTNAME).def -o $@ $(MAXDIR)/SDT_fileusage.o -lMaxAPI -lMaxAudio -lSDT
 
@@ -93,7 +93,7 @@ install_max:
 	     cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/SDT/externals && \
 	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
 	fi
-	
+
 install_pd:
 	@if [ -z "$(DSTDIR)" ]; \
         then echo "Usage: make install_pd DSTDIR=<installation_path>"; \

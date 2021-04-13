@@ -17,7 +17,7 @@ MAXSRCS = $(wildcard $(MAXDIR)/*.c)
 MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 
 MAXSDKDIR=$(THIRDPDIR)/Max7SDK
-MAXSDKVERSION=6.1.4
+MAXSDKVERSION=7.3.3
 
 MAXPACKDIR=../../MaxPackage
 
@@ -114,7 +114,7 @@ install_max:
 	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SDT/externals && \
 	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
 	fi
-	
+
 install_pd:
 	@if [ -z "$(DSTDIR)" ]; \
         then echo "Usage: make install_pd DSTDIR=<installation_path>"; \
@@ -134,7 +134,7 @@ install_core:
 	else mkdir -p "$(DSTDIR)"/SDT && \
 		cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT && \
 		echo "Sound Design Toolkit core library installed in $(DSTDIR)"; \
-	fi	
+	fi
 
 clean:
 	rm -rf $(SDTDIR)/*.framework
