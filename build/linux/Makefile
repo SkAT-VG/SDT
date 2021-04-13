@@ -48,13 +48,13 @@ $(OSCDOCGEN): $(OSCDOCGEN).c
 	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_SDT) $(INCLUDE_JSON) $< -o $@
 
 pd: sdt $(PDOBJS)
-	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
+	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) $(INCLUDE_JSON) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) -c $< -o $@
 
 sdt: $(SDTOBJS) json
-	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/libSDT.so -lc -lm
+	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) $(INCLUDE_JSON) -o $(SDTDIR)/libSDT.so -lc -lm
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
@@ -67,7 +67,7 @@ $(JSONDIRP)/%.o: $(JSONDIRP)/%.c
 $(JSONDIRB)/%.o: $(JSONDIRB)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
-	
+
 install:
 	mkdir -p $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	mkdir -p $(PREFIX)/include/$(SDTPATH)

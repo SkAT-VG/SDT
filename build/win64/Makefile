@@ -18,6 +18,8 @@ MAXOBJS=$(patsubst %.c,%.mxe64,$(MAXSRCS))
 MAXSDKDIR=$(THIRDPDIR)/Max7SDK
 MAXSDKVERSION=6.1.4
 
+MAXPACKDIR=../../MaxPackage
+
 JSONDIRB=$(THIRDPDIR)/json-builder
 JSONSRCB=$(wildcard $(JSONDIRB)/*.c)
 JSONOBJB=$(patsubst %.c,%.o,$(JSONSRCB))
@@ -73,7 +75,7 @@ install_max:
 	elif [ ! -d "$(DSTDIR)" ]; \
 	then echo "Error: installation path does not exist or is not a directory"; \
 	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
-	     cp -a ../../Max7/* "$(DSTDIR)"/SDT && \
+	     cp -a $(MAXPACKDIR)/* "$(DSTDIR)"/SDT && \
 	     cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT/support && \
 	     cp -a $(MAXDIR)/*.mxe64 "$(DSTDIR)"/SDT/externals && \
 	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \

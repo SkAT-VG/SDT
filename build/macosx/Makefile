@@ -19,6 +19,8 @@ MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 MAXSDKDIR=$(THIRDPDIR)/Max7SDK
 MAXSDKVERSION=6.1.4
 
+MAXPACKDIR=../../MaxPackage
+
 PDDIR=$(SRCDIR)/Pd
 PDSRCS=$(wildcard $(PDDIR)/*.c)
 PDOBJS=$(patsubst %.c,%.o,$(PDSRCS))
@@ -85,9 +87,11 @@ core: $(SDTOBJS) json
 	cp -a SDT.framework $(SDTDIR)
 	mkdir -p $(SDTDIR)/SDT.framework/Versions/A/Headers
 	cp -a $(SDTDIR)/*.h $(SDTDIR)/SDT.framework/Headers
+	cp -a $(JSONDIRP)/*.h $(SDTDIR)/SDT.framework/Headers
+	cp -a $(JSONDIRB)/*.h $(SDTDIR)/SDT.framework/Headers
 	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/SDT.framework/Versions/A/SDT -framework System
 	install_name_tool -id @rpath/SDT $(SDTDIR)/SDT.framework/SDT
-	
+
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
@@ -105,7 +109,7 @@ install_max:
 	elif [ ! -d "$(DSTDIR)" ]; \
 	then echo "Error: installation path does not exist or is not a directory"; \
 	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
-	     cp -a ../../Max7/* "$(DSTDIR)"/SDT && \
+	     cp -a $(MAXPACKDIR)/* "$(DSTDIR)"/SDT && \
 	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT/support && \
 	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SDT/externals && \
 	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
