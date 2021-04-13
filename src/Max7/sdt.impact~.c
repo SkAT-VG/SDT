@@ -20,7 +20,7 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
   SDTInteractor *impact;
   char *key0, *key1;
   int i, err;
-  
+
   err = 0;
   if (argc < 1 || atom_gettype(&argv[0]) != A_SYM) {
     error("sdt.impact~: Please provide the id of the first resonator as first argument.");
@@ -50,7 +50,7 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
   }
   dsp_setup((t_pxobject *)x, 6);
   x->nOutlets = atom_getlong(&argv[2]);
-  for (i = 0; i < x->nOutlets; i++) { 
+  for (i = 0; i < x->nOutlets; i++) {
     outlet_new(x, "signal");
   }
   x->impact = impact;
@@ -68,30 +68,30 @@ void impact_free(t_impact *x) {
 
 void impact_assist(t_impact *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    switch (a) { 
+    switch (a) {
       case 0:
-        sprintf(s, "(signal): Force applied on first resonator (N)\n"
+        sprintf(s, "(signal): External force applied on object 1 (N)\n"
                    "Object attributes and messages (see help patch)");
         break;
       case 1:
-        sprintf(s, "(signal): Impact velocity of first resonator (m/s)");
+        sprintf(s, "(signal): Impact velocity of object 1 (m/s)");
         break;
       case 2:
-        sprintf(s, "(signal): Fragment size of first resonator [0,1]");
+        sprintf(s, "(signal): Fragment size for object 1 [0,1]");
         break;
       case 3:
-        sprintf(s, "(signal): Force applied on second resonator (N)");
+        sprintf(s, "(signal): External force applied on object 2 (N)");
         break;
       case 4:
-        sprintf(s, "(signal): Impact velocity of second resonator (m/s)");
+        sprintf(s, "(signal): Impact velocity of object 2 (m/s)");
         break;
       case 5:
-        sprintf(s, "(signal): Fragment size of second resonator [0,1]");
+        sprintf(s, "(signal): Fragment size for object 2 [0,1]");
         break;
       default:
         break;
     }
-  } 
+  }
   else {
     sprintf(s, "(signal): Output sound from pickup %ld", a + 1);
   }
@@ -135,7 +135,7 @@ t_int *impact_perform(t_int *w) {
   t_float *out;
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
-  
+
   for (k = 0; k < n; k++) {
     SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
@@ -163,7 +163,7 @@ void impact_perform64(t_impact *x, t_object *dsp64, double **ins, long numins,
   int n = sampleframes;
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
-  
+
   for (k = 0; k < n; k++) {
     SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
@@ -178,10 +178,10 @@ void impact_dsp64(t_impact *x, t_object *dsp64, short *count, double samplerate,
   object_method(dsp64, gensym("dsp_add64"), x, impact_perform64, 0, NULL);
 }
 
-void C74_EXPORT ext_main(void *r) {	
+void C74_EXPORT ext_main(void *r) {
   t_class *c = class_new("sdt.impact~", (method)impact_new, (method)impact_free,
                          (long)sizeof(t_impact), 0L, A_GIMME, 0);
-	
+
   class_addmethod(c, (method)impact_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)impact_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)impact_assist, "assist", A_CANT, 0);
@@ -192,19 +192,19 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_DOUBLE(c, "shape", 0, t_impact, shape);
   CLASS_ATTR_LONG(c, "contact0", 0, t_impact, contact0);
   CLASS_ATTR_LONG(c, "contact1", 0, t_impact, contact1);
-  
+
   CLASS_ATTR_FILTER_MIN(c, "stiffness", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "dissipation", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "shape", 1.0);
   CLASS_ATTR_FILTER_MIN(c, "contact0", 0);
   CLASS_ATTR_FILTER_MIN(c, "contact1", 0);
-  
+
   CLASS_ATTR_ACCESSORS(c, "stiffness", NULL, (method)impact_stiffness);
   CLASS_ATTR_ACCESSORS(c, "dissipation", NULL, (method)impact_dissipation);
   CLASS_ATTR_ACCESSORS(c, "shape", NULL, (method)impact_shape);
   CLASS_ATTR_ACCESSORS(c, "contact0", NULL, (method)impact_contact0);
   CLASS_ATTR_ACCESSORS(c, "contact1", NULL, (method)impact_contact1);
-  
+
   CLASS_ATTR_ORDER(c, "stiffness", 0, "1");
   CLASS_ATTR_ORDER(c, "dissipation", 0, "2");
   CLASS_ATTR_ORDER(c, "shape", 0, "3");

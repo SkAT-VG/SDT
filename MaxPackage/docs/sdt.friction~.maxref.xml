@@ -4,48 +4,50 @@
 <c74object name="sdt.friction~">
 
 	<digest>
-		<m>Solids interaction:</m> Non-linear friction between one inertial and one modal object.
+		Friction interaction between two solid objects <m>[solids]</m>.
 	</digest>
 
 	<description>
-		<o>sdt.friction~</o> simulates a non-linear friction, by computing the friction force from the relative velocity
-		between the two contact points of the interacting resonators, according to the bidirectional structure <o>sdt.inertial</o> &#8596; <o>sdt.friction~</o> &#8596; <o>sdt.modal</o>.
+		<o>sdt.friction~</o> simulates the nonlinear friction force arising when two solid objects rub on each other.
 		<br />
-		The resulting force is the sum of four components: an elastic term, an internal dissipation term, a viscosity term, and the gain of a pseudo-random function,
-		representing noise related to the surface roughness. More subtle phenomena, such as pre-sliding behavior (gradual increase of the friction force for very small displacements),
+		N.B. It must be used in conjuction with two solid object models (either <o>sdt.inertial~</o> or <o>sdt.modal~</o>) forming a structure
+		"object 1 &#8596; <o>sdt.impact~</o> &#8596; object 2".
+		This is achieved by specifying the two objects' IDs as creation arguments.
+		<br />
+		<br />
+		Friction force is computed from the relative velocity between the contact points of two solid objects as the sum of four components:
+		an elastic term, an internal dissipation term, a viscosity term, and the gain of a pseudo-random function representing noise related to the surface roughness.
+		More subtle phenomena, such as pre-sliding behavior (gradual increase of the friction force for very small displacements),
 		are parametrized by several other quantities: dynamic and static friction coefficients, break-away coefficient and Stribeck velocity.
 		These phenomena are mostly related to the transients and they are particularly important for a realistic simulation of friction sounds.
+		In more detail:
 		<br />
+		* Bristle stiffness: affects the evolution of mode lock-in.
 		<br />
-		<m>PHYSICAL TO PHENOMENOLOGICAL DESCRIPTION</m>
+		* Bristle viscosity (dissipation): affects the sound bandwidth.
 		<br />
-		*Bristle stiffness: affects the evolution of mode lock-in.
+		* Linear viscosity: affects the speed of timbre evolution and pitch.
 		<br />
-		*Bristle viscosity (dissipation): affects the sound bandwidth.
+		* kDynamic friction coefficient: high values reduce the sound bandwidth.
 		<br />
-		*Linear viscosity: affects the speed of timbre evolution and pitch.
+		* kStatic friction coefficient: affects the smoothness of sound attack.
 		<br />
-		*kDynamic friction coefficient: high values reduce the sound bandwidth.
+		* Break-away coefficient: affects the transients of the elasto-plastic state.
 		<br />
-		*kStatic friction coefficient: affects the smoothness of sound attack.
+		* Stribeck velocity: affects the smoothness of the sound attack.
 		<br />
-		*Break-away coefficient: affects the transients of the elasto-plastic state.
-		<br />
-		*Stribeck velocity: affects the smoothness of the sound attack.
-		<br />
-		*Noisiness: affects the perceived surface roughness.
-
+		* Noisiness: affects the perceived surface roughness.
 	</description>
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
 		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
-		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+		<metadata name="copyright">© 2001 - 2021</metadata>
+		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
 	<!--INLETS-->
@@ -56,32 +58,32 @@
 		</inlet>
 
 		<inlet id="0" type="signal">
-			<digest>External force on probe / object, in N.</digest>
+			<digest>External force on object 1 (in N).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="1" type="signal">
-			<digest>If not equal to 0, sets probe / object velocity (in m/s) and puts them in contact.</digest>
+			<digest>Strike velocity of object 1 (in m/s).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="2" type="signal">
-			<digest>Fragment size of probe / object [0.0, 1.0]</digest>
+			<digest>Fragment size of object 1 [0.0, 1.0].</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="3" type="signal">
-			<digest>External force on probe / object, in N.</digest>
+			<digest>External force on object 2 (in N).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="4" type="signal">
-			<digest>If not equal to 0, sets probe / object velocity (in m/s) and puts them in contact.</digest>
+			<digest>Strike velocity of object 2 (in m/s).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="5" type="signal">
-			<digest>Fragment size of probe / object [0.0, 1.0].</digest>
+			<digest>Fragment size of object 2 [0.0, 1.0].</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
@@ -205,11 +207,11 @@
 		<seealso name="sdt.inertial"/>
 		<seealso name="sdt.modal"/>
 		<seealso name="sdt.impact~"/>
-		<seealso name="sdt.scraping~"/>
-		<seealso name="sdt.crumpling~"/>
-		<seealso name="sdt.breaking~"/>
 		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.crumpling~"/>
 		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.scraping~"/>
 	</seealsolist>
 
 </c74object>

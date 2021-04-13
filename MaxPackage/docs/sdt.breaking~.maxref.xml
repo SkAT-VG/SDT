@@ -8,38 +8,37 @@
 	</digest>
 
 	<description>
-		Compound model for the generation of breaking phenomena.
+		Control model for the generation of breaking phenomena.
 		<br />
-		<o>sdt.breaking~</o> acts as control layer for the compound impact model <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		<o>sdt.breaking~</o> acts as control layer for the compound impact model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
-		Takes four control parameters, the <i>global energy</i> of the process, the <i>crushing energy</i>, the <i>granularity</i> and the <i>fragmentation</i>.
-		The output are two audio signals [0.0, 1.0], one representing the impact velocity (left-most outlet), and one representing the fragment size compared to the whole object size (righ-most outlet).
-
+		Takes four control parameters: <i>stored energy</i> of the process, <i>crushing energy</i> spent by each micro-impact, <i>granularity</i> and <i>fragmentation</i>.
+		Output: two audio signals [0.0, 1.0], one representing the impact velocity in m/s (leftmost outlet), and one representing the fragment size compared to the whole object size (rightmost outlet).
 	</description>
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
 		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
-		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+		<metadata name="copyright">© 2001 - 2021</metadata>
+		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
 	<!--INLETS-->
 	<inletlist>
 		<inlet id="0" type="messages to the breaking object">
-			<digest>messages to the breaking object.</digest>
-			<description>messages to the breaking object, bang starts the process.</description>
+			<digest>Messages to the breaking object.</digest>
+			<description>Messages to the breaking object, bang starts the process.</description>
 		</inlet>
 	</inletlist>
 
 	<!--OUTLETS-->
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Impact velocity. </digest>
+			<digest>Audio signal: Impact velocity in m/s.</digest>
 		</outlet>
 		<outlet id="1" type="signal">
 			<digest>Audio signal: Fragment size.</digest>
@@ -57,10 +56,10 @@
 	<methodlist>
 		<method name="bang">
 			<digest>
-				Inlet 0: Bang triggers the breaking event.
+				Inlet 0: Bang triggers a breaking event.
 			</digest>
 			<description>
-				Inlet 0: Bang triggers the breaking event.
+				Inlet 0: Bang triggers a breaking event.
 			</description>
 		</method>
 	</methodlist>
@@ -68,23 +67,23 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="storedEnergy" get="1" set="1" type="float" size="1" >
-		    <digest>Global energy of the process.</digest>
-		    <description>Global energy of the process in Newton, between 0.0001 and 1000. or more</description>
+		    <digest>Stored energy.</digest>
+		    <description>Global energy of the process, between 0.0001 and 1000. or more</description>
 	  </attribute>
 
 		<attribute name="crushingEnergy" get="1" set="1" type="float" size="1" >
-		    <digest>Energy of the micro-impacts [0.0, 1.0].</digest>
-		    <description>Energy of the micro-impacts, between 0. and 1.</description>
+		    <digest>Energy of micro-impacts [0.0, 1.0].</digest>
+		    <description>Energy of micro-impacts, between 0. and 1.</description>
 	  </attribute>
 
 		<attribute name="granularity" get="1" set="1" type="float" size="1">
-		    <digest>Crumpling granularity [0.0, 1.0].</digest>
-		    <description>Crumpling granularity, between 0. and 1.</description>
+		    <digest>Granularity [0.0, 1.0].</digest>
+		    <description>Granularity, between 0. and 1.</description>
 	  </attribute>
 
 		<attribute name="fragmentation" get="1" set="1" type="float" size="1" >
-				<digest>Tendency of the object to break in smaller pieces [0.0, 1.0].</digest>
-				<description>Tendency of the object to break in smaller pieces, between 0. and 1.</description>
+				<digest>Fragmentation: tendency of the object to break in smaller pieces [0.0, 1.0].</digest>
+				<description>Fragmentation: tendency of the object to break in smaller pieces, between 0. and 1.</description>
 		</attribute>
 
 	</attributelist>
@@ -94,11 +93,11 @@
 		<seealso name="sdt.inertial"/>
 		<seealso name="sdt.modal"/>
 		<seealso name="sdt.impact~"/>
-		<seealso name="sdt.rolling~"/>
-		<seealso name="sdt.crumpling~"/>
-		<seealso name="sdt.bouncing~"/>
-		<seealso name="sdt.scraping~"/>
 		<seealso name="sdt.friction~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.scraping~"/>
 	</seealsolist>
 
 </c74object>

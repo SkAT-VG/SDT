@@ -9,25 +9,25 @@
 
 	<description>
 		Air bubble model.
-		<o>sdt.bubble~</o> takes two control parameters, the bubble <i>radius</i> in mm [0.15, 150.0], and the <i>rise factor</i> [0.0., 3.0].
+		<o>sdt.bubble~</o> takes two control parameters: bubble <i>radius</i> in mm [0.15, 150.0], and <i>rise factor</i> [0.0., 3.0].
 	</description>
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
 		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
-		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+		<metadata name="copyright">© 2001 - 2021</metadata>
+		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
 	<!--INLETS-->
 	<inletlist>
 		<inlet id="0" type="messages to the bubble object">
-			<digest>messages to the bubble object.</digest>
-			<description>messages to the bubble object, bang triggers the process.</description>
+			<digest>Messages to the bubble object.</digest>
+			<description>Messages to the bubble object, bang triggers the process.</description>
 		</inlet>
 	</inletlist>
 
@@ -52,10 +52,10 @@
 				<arg name="bubble trigger" optional="0" type="bang" />
 			</arglist>-->
 			<digest>
-				Inlet 0: Bang triggers the bubble event.
+				Inlet 0: Bang triggers a bubble event.
 			</digest>
 			<description>
-				Inlet 0: Bang triggers the bubble event.
+				Inlet 0: Bang triggers a bubble event.
 			</description>
 		</method>
 	</methodlist>
@@ -63,13 +63,13 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="radius" get="1" set="1" type="float" size="1" >
-		    <digest>Bubble radius [0.15, 150. mm]</digest>
+		    <digest>Bubble radius [0.15, 150.] mm</digest>
 		    <description>Radius of the spherical bubble, between 0.15 mm and 150 mm.</description>
 	  </attribute>
 
 		<attribute name="riseFactor" get="1" set="1" type="float" size="1">
-		    <digest>Frequency rise factor [0.0, 3.0].</digest>
-		    <description>Audible rise in frequency, ~0.1 for bubbles in water [0.0, 3.0]</description>
+		    <digest>Pitch rise factor [0.0, 3.0].</digest>
+		    <description>Audible rise in pitch, ~0.1 for bubbles in water [0.0, 3.0]</description>
 	  </attribute>
 
 	</attributelist>

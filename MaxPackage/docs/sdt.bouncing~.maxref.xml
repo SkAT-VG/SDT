@@ -8,37 +8,37 @@
 	</digest>
 
 	<description>
-		Control model for the generation of bouncing phenomena.
+		Control for the generation of bouncing events.
 		<br />
 		<o>sdt.bouncing~</o> acts as control layer for the compound impact model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
-		Takes three control parameters: the initial <i> height </i> of the falling object in meters, the shape <i>irregularity</i> and the <i>restitution</i> coefficient.
-		The output is an audio signal representing the impact velocity in m/s.
+		Takes three control parameters: initial <i>height</i> of the falling object in m, shape <i>irregularity</i> and <i>restitution</i> coefficient.
+		Output: audio signal representing the impact velocity in m/s.
 	</description>
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
 		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
-		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+		<metadata name="copyright">© 2001 - 2021</metadata>
+		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
 	<!--INLETS-->
 	<inletlist>
 		<inlet id="0" type="messages to the bouncing object">
-			<digest>messages to the bouncing object.</digest>
-			<description>messages to the bouncing object, bang starts the process.</description>
+			<digest>Messages to the bouncing object.</digest>
+			<description>Messages to the bouncing object. Bang triggers a bouncing event.</description>
 		</inlet>
 	</inletlist>
 
 	<!--OUTLETS-->
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Impact velocity.</digest>
+			<digest>Audio signal: Impact velocity in m/s.</digest>
 		</outlet>
 	</outletlist>
 
@@ -53,10 +53,10 @@
 	<methodlist>
 		<method name="bang">
 			<digest>
-				Inlet 0: Bang triggers the bouncing event.
+				Inlet 0: Bang triggers a bouncing event.
 			</digest>
 			<description>
-				Inlet 0: Bang triggers the bouncing event.
+				Inlet 0: Bang triggers a bouncing event.
 			</description>
 		</method>
 	</methodlist>
@@ -69,8 +69,8 @@
 	  </attribute>
 
 		<attribute name="height" get="1" set="1" type="float" size="1">
-		    <digest>Initial height of the falling objects, in m.</digest>
-		    <description>Initial height of the falling object in meters.</description>
+		    <digest>Initial height of the falling object, in m.</digest>
+		    <description>Initial height of the falling object, in m.</description>
 	  </attribute>
 
 		<attribute name="irregularity" get="1" set="1" type="float" size="1" >
@@ -85,11 +85,11 @@
 		<seealso name="sdt.inertial"/>
 		<seealso name="sdt.modal"/>
 		<seealso name="sdt.impact~"/>
-		<seealso name="sdt.rolling~"/>
-		<seealso name="sdt.crumpling~"/>
-		<seealso name="sdt.breaking~"/>
-		<seealso name="sdt.scraping~"/>
 		<seealso name="sdt.friction~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.scraping~"/>
 	</seealsolist>
 
 </c74object>

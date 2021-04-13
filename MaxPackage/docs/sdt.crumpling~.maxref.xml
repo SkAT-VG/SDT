@@ -4,41 +4,41 @@
 <c74object name="sdt.crumpling~">
 
 	<digest>
-		<m>Solids interaction:</m> Stochastic sequence of impacts to form a crushing sound.
+		<m>Solids interaction:</m> Stochastic sequence of micro-impacts to form a granular, crumpling/crushing sound.
 	</digest>
 
 	<description>
-		Compound model for the generation of crumpling phenomena.
+		Control model for the generation of crumpling/crushing sound.
 		<br />
 		<o>sdt.crumpling~</o> acts as control layer for the compound impact model <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
-		Takes three control parameters, the <i> crushing energy </i>, the <i>granularity</i>, and the <i>fragmentation</i>.
-		The output are two audio signals [0.0, 1.0], one representing the impact velocity (left-most outlet), and one representing the fragment size compared to the whole object size (righ-most outlet).
+		Takes three control parameters: <i>crushing energy</i>, <i>granularity</i>, and <i>fragmentation</i>.
+		Output: two audio signals [0.0, 1.0], one representing the impact velocity in m/s (leftmost outlet), and one representing the fragment size compared to the whole object size (rightmost outlet).
 	</description>
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
 		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
-		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+		<metadata name="copyright">© 2001 - 2021</metadata>
+		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
 	<!--INLETS-->
 	<inletlist>
 		<inlet id="0" type="messages to the crumpling object">
-			<digest>messages to the crumpling object.</digest>
-			<description>messages to the bouncing object.</description>
+			<digest>Messages to the crumpling object.</digest>
+			<description>Messages to the crumpling object.</description>
 		</inlet>
 	</inletlist>
 
 	<!--OUTLETS-->
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Impact velocity. </digest>
+			<digest>Audio signal: Impact velocity in m/s</digest>
 		</outlet>
 		<outlet id="1" type="signal">
 			<digest>Audio signal: Fragment size.</digest>
@@ -70,18 +70,18 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="crushingEnergy" get="1" set="1" type="float" size="1" >
-		    <digest>Energy of the micro-impacts [0.0, 1.0].</digest>
-		    <description>Energy of the micro-impacts, between 0. and 1.</description>
+		    <digest>Energy of micro-impacts [0.0, 1.0].</digest>
+		    <description>Energy of micro-impacts, between 0. and 1.</description>
 	  </attribute>
 
 		<attribute name="granularity" get="1" set="1" type="float" size="1">
-		    <digest>Crumpling granularity [0.0, 1.0].</digest>
-		    <description>Crumpling granularity, between 0. and 1.</description>
+		    <digest>Granularity [0.0, 1.0].</digest>
+		    <description>Granularity, between 0. and 1.</description>
 	  </attribute>
 
 		<attribute name="fragmentation" get="1" set="1" type="float" size="1" >
-				<digest>Tendency of the object to break in smaller pieces [0.0, 1.0].</digest>
-				<description>Tendency of the object to break in smaller pieces, between 0. and 1.</description>
+				<digest>Fragmentation: tendency to break in smaller pieces [0.0, 1.0].</digest>
+				<description>Fragmentation: tendency to break in smaller pieces, between 0. and 1.</description>
 		</attribute>
 
 	</attributelist>
@@ -91,11 +91,11 @@
 		<seealso name="sdt.inertial"/>
 		<seealso name="sdt.modal"/>
 		<seealso name="sdt.impact~"/>
-		<seealso name="sdt.rolling~"/>
-		<seealso name="sdt.breaking~"/>
-		<seealso name="sdt.bouncing~"/>
-		<seealso name="sdt.scraping~"/>
 		<seealso name="sdt.friction~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.scraping~"/>
 	</seealsolist>
 
 </c74object>

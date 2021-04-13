@@ -22,7 +22,7 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
   SDTInteractor *friction;
   char *key0, *key1;
   int i, err;
-  
+
   err = 0;
   if (argc < 1 || atom_gettype(&argv[0]) != A_SYM) {
     error("sdt.friction~: Please provide the id of the first resonator as first argument.");
@@ -52,7 +52,7 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
   }
   dsp_setup((t_pxobject *)x, 6);
   x->nOutlets = atom_getlong(&argv[2]);
-  for (i = 0; i < x->nOutlets; i++) { 
+  for (i = 0; i < x->nOutlets; i++) {
     outlet_new(x, "signal");
   }
   x->friction = friction;
@@ -70,30 +70,30 @@ void friction_free(t_friction *x) {
 
 void friction_assist(t_friction *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) { //inlet
-    switch (a) { 
+    switch (a) {
       case 0:
-        sprintf(s, "(signal): Force applied on first resonator (N)\n"
+        sprintf(s, "(signal): External force applied on object 1 (N)\n"
                    "Object attributes and messages (see help patch)");
         break;
       case 1:
-        sprintf(s, "(signal): Impact velocity of first resonator (m/s)");
+        sprintf(s, "(signal): Strike velocity of object 1 (m/s)");
         break;
       case 2:
-        sprintf(s, "(signal): Fragment size of first resonator [0,1]");
+        sprintf(s, "(signal): Fragment size of object 1 [0,1]");
         break;
       case 3:
-        sprintf(s, "(signal): Force applied on second resonator (N)");
+        sprintf(s, "(signal): External force applied on object 2 (N)");
         break;
       case 4:
-        sprintf(s, "(signal): Impact velocity of second resonator (m/s)");
+        sprintf(s, "(signal): Strike velocity of object 2 (m/s)");
         break;
       case 5:
-        sprintf(s, "(signal): Fragment size of second resonator [0,1]");
+        sprintf(s, "(signal): Fragment size of object 2 [0,1]");
         break;
       default:
         break;
     }
-  } 
+  }
   else {
     sprintf(s, "(signal): Output sound from pickup %ld", a + 1);
   }
@@ -167,7 +167,7 @@ t_int *friction_perform(t_int *w) {
   t_float *out;
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
-  
+
   for (k = 0; k < n; k++) {
     SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
@@ -195,7 +195,7 @@ void friction_perform64(t_friction *x, t_object *dsp64, double **ins, long numin
   int n = sampleframes;
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
-  
+
   for (k = 0; k < n; k++) {
     SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
@@ -210,10 +210,10 @@ void friction_dsp64(t_friction *x, t_object *dsp64, short *count, double sampler
   object_method(dsp64, gensym("dsp_add64"), x, friction_perform64, 0, NULL);
 }
 
-void C74_EXPORT ext_main(void *r) {	
+void C74_EXPORT ext_main(void *r) {
   t_class *c = class_new("sdt.friction~", (method)friction_new, (method)friction_free,
                          (long)sizeof(t_friction), 0L, A_GIMME, 0);
-	
+
   class_addmethod(c, (method)friction_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)friction_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)friction_assist, "assist", A_CANT, 0);
@@ -230,7 +230,7 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_DOUBLE(c, "breakAway", 0, t_friction, breakAway);
   CLASS_ATTR_LONG(c, "contact0", 0, t_friction, contact0);
   CLASS_ATTR_LONG(c, "contact1", 0, t_friction, contact1);
-  
+
   CLASS_ATTR_FILTER_MIN(c, "force", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "stribeck", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "kStatic", 0.0, 1.0);
@@ -242,7 +242,7 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_CLIP(c, "breakAway", 0.0, 1.0);
   CLASS_ATTR_FILTER_MIN(c, "contact0", 0);
   CLASS_ATTR_FILTER_MIN(c, "contact1", 0);
-  
+
   CLASS_ATTR_ACCESSORS(c, "force", NULL, (method)friction_force);
   CLASS_ATTR_ACCESSORS(c, "stribeck", NULL, (method)friction_stribeck);
   CLASS_ATTR_ACCESSORS(c, "kStatic", NULL, (method)friction_kStatic);
@@ -254,7 +254,7 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "breakAway", NULL, (method)friction_breakAway);
   CLASS_ATTR_ACCESSORS(c, "contact0", NULL, (method)friction_contact0);
   CLASS_ATTR_ACCESSORS(c, "contact1", NULL, (method)friction_contact1);
-  
+
   CLASS_ATTR_ORDER(c, "force", 0, "1");
   CLASS_ATTR_ORDER(c, "stribeck", 0, "2");
   CLASS_ATTR_ORDER(c, "kStatic", 0, "3");

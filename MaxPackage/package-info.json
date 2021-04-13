@@ -18,9 +18,9 @@
 		}
 	},
 	"package_extra" : {
-	        "copyright" : "Copyright (c) 2001 - 2020"
+	        "copyright" : "Copyright (c) 2001 - 2021"
 	},
 	"tags" : [ "physics-based sound synthesis", "procedural audio", "sonic interaction design", "sound processing", "sound analysis" ],
-	"version" : "3.0-0.79",
+	"version" : "3.0-0.80 (build 04/2021)",
 	"website" : "https://github.com/SkAT-VG/SDT"
 }

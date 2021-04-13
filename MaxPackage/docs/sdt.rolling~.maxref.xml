@@ -4,13 +4,13 @@
 <c74object name="sdt.rolling~">
 
 	<digest>
-		<m>Solids interaction:</m> Impact model controller for rolling sound.
+		Control algorithm for the impact model, simulating a rolling sound.
 	</digest>
 
 	<description>
-		Compound model that simulates a ball rolling on a surface.
+		<o>sdt.rolling~</o> simulates a round object (e.g. wheel, marble) rolling on a surface.
 		<br />
-		<o>sdt.rolling~</o> acts as control layer for the compound impact model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		It acts as control layer for the compound model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
 		Takes four control parameters, the <i> depth </i> and the <i> granularity</i> of the surface, the <i>mass</i> and the <i>velocity</i> of the rolling object.
 		<br />
@@ -20,13 +20,13 @@
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
 		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
-		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+		<metadata name="copyright">© 2001 - 2021</metadata>
+		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
 	<!--INLETS-->
@@ -96,11 +96,11 @@
 		<seealso name="sdt.inertial"/>
 		<seealso name="sdt.modal"/>
 		<seealso name="sdt.impact~"/>
-		<seealso name="sdt.crumpling~"/>
-		<seealso name="sdt.breaking~"/>
-		<seealso name="sdt.bouncing~"/>
-		<seealso name="sdt.scraping~"/>
 		<seealso name="sdt.friction~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.scraping~"/>
 	</seealsolist>
 
 	<misc name="Input">

@@ -4,22 +4,22 @@
 <c74object name="sdt.modal">
 
 	<digest>
-		<m>Solids interaction:</m> Physical model of modal resonator.
+		Modal resonator object <m>[solids]</m>.
 	</digest>
 
 	<description>
-		<o>sdt.modal</o> is a resonator object implemented according to modal synthesis: a set of parallel mass–spring–damper mechanical oscillators, where each oscillator represents a resonant mode of the object.
+		<o>sdt.modal</o> is a resonator implemented according to modal synthesis: i.e. a set of parallel mass–spring–damper mechanical oscillators, each of which represents a mode of resonance of the object.
 	</description>
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">SkAT-VG</metadata>
+		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
 		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based synthesis</metadata>
+		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2020 SOb, CLOSED, NIW, SkAT-VG</metadata>
-		<metadata name="version">v2.2-0.78 (build 09/2018)</metadata>
+		<metadata name="copyright">© 2001 - 2021</metadata>
+		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
 	<!--INLETS
@@ -98,12 +98,12 @@
 	<seealsolist>
 		<seealso name="sdt.inertial"/>
 		<seealso name="sdt.impact~"/>
-		<seealso name="sdt.rolling~"/>
-		<seealso name="sdt.crumpling~"/>
-		<seealso name="sdt.breaking~"/>
-		<seealso name="sdt.bouncing~"/>
-		<seealso name="sdt.scraping~"/>
 		<seealso name="sdt.friction~"/>
+		<seealso name="sdt.bouncing~"/>
+		<seealso name="sdt.breaking~"/>
+		<seealso name="sdt.crumpling~"/>
+		<seealso name="sdt.rolling~"/>
+		<seealso name="sdt.scraping~"/>
 	</seealsolist>
 
 </c74object>
