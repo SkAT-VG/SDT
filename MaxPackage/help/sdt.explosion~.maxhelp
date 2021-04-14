@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -78,7 +78,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -153,7 +153,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -319,7 +319,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 242.0, 36.0, 451.0, 22.0 ],
 									"style" : "SDT-comments",
-									"text" : "This event is simulated with a "
+									"text" : "This event is simulated by a "
 								}
 
 							}
@@ -346,7 +346,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 17.0, 7.0, 571.0, 22.0 ],
-									"text" : "The sdt.explosion~ object simulates a supersonic shock wave. "
+									"text" : "[sdt.explosion~] simulates a supersonic shock wave. "
 								}
 
 							}
@@ -357,7 +357,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 242.0, 58.0, 494.0, 131.0 ],
+									"patching_rect" : [ 242.0, 58.0, 498.0, 131.0 ],
 									"style" : "SDT-comments",
 									"text" : "The Friedlander waveform approximates the pressure change caused by an exploding point source emitting a spherical shock wave: the explosion instantly blows away all the air surrounding the object, generating a sudden increase in pressure (initial peak) and leaving a vacuum behind (negative tail). Finally, the air slowly fills the empty space, generating a blast wind and restoring atmospheric pressure. Turbulence caused by the blast wind is rendered by bandpass filtered white noise, modulated in amplitude by the Friedlander waveform as the wind intensity loosely follows the profile of the initial shock wave"
 								}
@@ -525,13 +525,13 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
-					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 583.0, 185.0, 157.0, 26.0 ],
 					"style" : "SDT-comments",
+					"text" : "slower blast wave",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -563,7 +563,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -898,13 +898,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-9",
-					"linecount" : 11,
+					"linecount" : 7,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 310.654867256637147, 336.0, 178.0 ],
+					"patching_rect" : [ 553.5, 316.654867256637147, 337.0, 116.0 ],
 					"style" : "SDT-comments",
-					"text" : "- blastTime [float]: duration of the initial pressure peak, in seconds\n- scatterTime [float]: duration of the turbulence tail, in seconds\n- dispersion [float]: amount of turbulence [0.0, 1.0]\n- distance [float]: distance of the explosion from the listener, in meters\n- waveSpeed [float]: propagation speed of the blast wave, in meters per second\n- windSpeed [float]: propagation speed of the blast wind, in meters per second"
+					"text" : "- blastTime: duration of the initial pressure peak (s).\n- scatterTime: duration of the turbulence tail (s).\n- dispersion: amount of turbulence [0.0, 1.0].\n- distance: distance of the explosion from the listener (m).\n- waveSpeed: propagation speed of the blast wave (m/s).\n- windSpeed [float]: propagation speed of the blast wind (m/s)."
 				}
 
 			}
@@ -915,9 +915,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 291.5, 66.0, 22.0 ],
+					"patching_rect" : [ 553.5, 297.5, 147.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -1000,7 +1000,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1708,7 +1708,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 509.154867256637147, 330.0, 69.0 ],
+					"patching_rect" : [ 553.5, 480.154867256637147, 330.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Size of the scattering delay lines, in samples (default 44100)\n- Size of the wave propagation delay lines, in samples (default 4410000)"
 				}
@@ -1721,7 +1721,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 490.654867256637147, 81.0, 22.0 ],
+					"patching_rect" : [ 553.5, 461.654867256637147, 81.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -1739,7 +1739,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1916,7 +1916,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2134,7 +2134,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2273,7 +2273,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 566.0, 22.0 ],
-					"text" : "Gases. Supersonic explosion model"
+					"text" : "[gases] Supersonic explosion sounds"
 				}
 
 			}
@@ -2601,9 +2601,6 @@
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
-			}
-, 			{
 				"boxes" : [ "obj-30", "obj-27" ]
 			}
 , 			{
@@ -2611,6 +2608,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
  ],
 		"styles" : [ 			{

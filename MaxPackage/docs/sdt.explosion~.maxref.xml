@@ -4,14 +4,15 @@
 <c74object name="sdt.explosion~">
 
 	<digest>
-		<m>Gases:</m> Blast wave model for explosion sounds.
+		[gases] Supersonic explosion sounds.
 	</digest>
 
 	<description>
-		<o>sdt.explosion~</o> simulates explosions with a Friedlander waveform. A feedback delay network is used to render scattering and turbulences.
-		The sound model takes six control parameters, the <i>blast time</i> in seconds, the <i> scatter time</i> in seconds, the <i>dispersion</i>,
-		the <i>distance</i> of the explosion in meters, the <i> wave speed</i> in meters per seconds, and <i> wind speed</i>, that is the propagation of the blast wind, in meters per seconds.
-		The output is two audio signals representing respectively the blast wave and the blast wind.
+		<o>sdt.explosion~</o> simulates the shock wave produced by an object travelling in the air at supersonic speed by means of a Friedlander waveform.
+		A feedback delay network is used to render scattering and turbulences.
+		It takes six control parameters: the <i>blast time</i>, the <i> scatter time</i>, the <i>dispersion</i>,
+		the <i>distance</i> of the explosion, the <i> wave speed</i>, and <i> wind speed</i>, that is the propagation of the blast wind.
+		It outputs two audio signals representing respectively the blast wave and the blast wind.
 	</description>
 
 	<!--METADATA-->
@@ -25,34 +26,34 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="bang">
 			<digest>Bang triggers the blast wave.</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Blast wave.</digest>
+			<digest>Blast wave.</digest>
 		</outlet>
 
 		<outlet id="1" type="signal">
-			<digest>Audio signal: Blast wind.</digest>
+			<digest>Blast wind.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="scatter-size" optional="1" type="int">
-			<digest>
-				Size of the scattering delay lines, in samples (default is 44100)
-			</digest>
+			<digest>Size of the scattering delay lines, in samples (default is 44100)</digest>
 			<description>
 				Average length of the reverberation delay lines, in samples.
-					Default is 44100, which allows for a maximum scatter time of approximately 100 s at a sampling rate of 44.1 kHz
+				Defaults to 44100, which allows for a maximum scatter time of approximately 100 s at a sampling rate of 44.1 kHz.
 			</description>
 		</objarg>
 
@@ -62,7 +63,7 @@
 			</digest>
 			<description>
 				Length of the propagation delay lines, in samples.
-				Default is 4410000, which allows for a maximum propagation time of approximately 100 s at a sampling rate of 44.1 kHz.
+				Defaults to 4410000, which allows for a maximum propagation time of approximately 100 s at a sampling rate of 44.1 kHz.
 			</description>
 		</objarg>
 	</objarglist>
@@ -81,35 +82,34 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="blastTime" get="1" set="1" type="float" size="1" >
-		    <digest>Duration of the initial pressure peak, in seconds.</digest>
+		    <digest>Duration of the initial pressure peak (s).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="scatterTime" get="1" set="1" type="float" size="1">
-		    <digest>Duration of the turbulence tail, in seconds.</digest>
+		    <digest>Duration of the turbulence tail (s).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="dispersion" get="1" set="1" type="float" size="1" >
-				<digest>Amount of turbulence.</digest>
-				<description>Amount of turbulence, between 0. and 1.</description>
+				<digest>Amount of turbulence [0., 1.].</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="distance" get="1" set="1" type="float" size="1" >
-				<digest>Distance of the explosion.</digest>
-				<description>Distance of the explosion from the listener, in meters.</description>
+				<digest>Distance of the explosion (m).</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="waveSpeed" get="1" set="1" type="float" size="1" >
-				<digest>Propagation ot the blast wave.</digest>
-				<description>Propagation speed of the blast wave, in meters per seconds.</description>
+				<digest>Propagation speed of the blast wave (m/s).</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="windSpeed" get="1" set="1" type="float" size="1" >
-				<digest>Propagation ot the blast wave.</digest>
-				<description>Propagation speed of the blast wind, in meters per seconds.</description>
+				<digest>Propagation speed of the blast wind (m/s).</digest>
+				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
@@ -119,15 +119,15 @@
 		<seealso name="sdt.windkarman~"/>
 	</seealsolist>
 
+	<!--MISC
 	<misc name="Output">
 		<entry name="signal">
 			<description>
-				Outlet 0: Blast wave.
-				<br />
-				<br />
+				Outlet 0: Blast wave.<br />
 				Outlet 1: Blast wind.
 			</description>
 		</entry>
 	</misc>
+	-->
 
 </c74object>

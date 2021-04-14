@@ -40,6 +40,18 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"hidden" : 1,
+					"id" : "obj-19",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 639.0, 472.0, 54.0, 23.0 ],
+					"text" : "onecopy"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"id" : "obj-17",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -1256,7 +1268,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 459.0, 396.5, 225.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (signal) gas velocity [0., 1.]"
+					"text" : "- (signal) wind velocity [0., 1.]"
 				}
 
 			}
@@ -1819,7 +1831,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 566.0, 22.0 ],
-					"text" : "[gases] Sound of gases passing through cavities, such as tunnels, pipes, valves, etc."
+					"text" : "[gases] Sound of airflows passing through cavities, such as tunnels, pipes, valves, etc."
 				}
 
 			}
@@ -2049,13 +2061,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
+				"boxes" : [ "obj-13", "obj-9" ]
+			}
+, 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
-			}
-, 			{
-				"boxes" : [ "obj-13", "obj-9" ]
 			}
  ],
 		"styles" : [ 			{

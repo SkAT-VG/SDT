@@ -40,6 +40,18 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"hidden" : 1,
+					"id" : "obj-4",
+					"maxclass" : "newobj",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 635.0, 468.5, 54.0, 23.0 ],
+					"text" : "onecopy"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"color" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
 					"fontface" : 0,
 					"fontsize" : 12.0,
@@ -1133,7 +1145,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 460.0, 343.0, 192.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (signal) gas velocity [0., 1.]"
+					"text" : "- (signal) wind velocity [0., 1.]"
 				}
 
 			}

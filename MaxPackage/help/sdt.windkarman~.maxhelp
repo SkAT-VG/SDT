@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 700.0, 500.0 ],
+		"rect" : [ 565.0, 163.0, 700.0, 500.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -65,7 +65,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -629,7 +629,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -767,7 +767,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 505.0, 336.0, 166.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- diameter [float]: size of the cylindrical object (mm)"
+					"text" : "- diameter: size of the obstacle (mm)"
 				}
 
 			}
@@ -778,9 +778,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 505.0, 317.5, 66.0, 22.0 ],
+					"patching_rect" : [ 505.0, 317.5, 152.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -912,7 +912,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1340,11 +1340,11 @@
 						}
 , 						{
 							"number" : 4,
-							"data" : [ 5, "obj-18", "flonum", "float", 0.600000023841858, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 0, 5, "obj-7", "flonum", "float", 4.0 ]
+							"data" : [ 5, "obj-18", "flonum", "float", 0.747126460075378, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 1, 5, "obj-7", "flonum", "float", 4.0 ]
 						}
 , 						{
 							"number" : 5,
-							"data" : [ 5, "obj-18", "flonum", "float", 0.600000023841858, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 0, 5, "obj-7", "flonum", "float", 12.0 ]
+							"data" : [ 5, "obj-18", "flonum", "float", 0.847010910511017, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 1, 5, "obj-7", "flonum", "float", 12.0 ]
 						}
 , 						{
 							"number" : 6,
@@ -1365,9 +1365,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 505.0, 394.5, 182.0, 22.0 ],
+					"patching_rect" : [ 505.0, 406.5, 182.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (signal) gas velocity [0.0, 1.0]"
+					"text" : "- (signal) wind velocity [0., 1.]"
 				}
 
 			}
@@ -1378,7 +1378,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 505.0, 376.0, 66.0, 22.0 ],
+					"patching_rect" : [ 505.0, 388.0, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "inlet:"
 				}
@@ -1396,7 +1396,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1573,7 +1573,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1790,7 +1790,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1929,8 +1929,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 566.0, 22.0 ],
-					"text" : "Gases. Turbulence model of gases flowing across thin objects, such as branches or wires"
+					"patching_rect" : [ 15.0, 62.0, 566.0, 38.0 ],
+					"text" : "\t\t[gases] Sound of whistling/howling wind.\n"
 				}
 
 			}
@@ -1943,7 +1943,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 544.0, 38.0 ],
-					"text" : "Simulates the singing or howling sound produced by the repeating pattern of swirling vortices caused by the unsteady separation of flow of a fluid around the object.",
+					"text" : "Simulates Kármán vortices caused by airflows across thin obstacles, such as a tree branch or a suspended wire.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2153,13 +2153,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
 				"boxes" : [ "obj-13", "obj-9" ]
-			}
-, 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

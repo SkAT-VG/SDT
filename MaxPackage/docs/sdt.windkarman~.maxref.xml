@@ -4,12 +4,13 @@
 <c74object name="sdt.windkarman~">
 
 	<digest>
-		<m>Gases:</m> Turbulence model of gases across thin objects.
+		[gases] Howling / whistling wind sound.
 	</digest>
 
 	<description>
-		<o>sdt.windkarman~</o> simulates Kármán vortices caused by air turbulences across thin objects, such as a tree branch or a suspended wire.
-		Takes two control parameters, the wind <i>speed</i>, and the <i>diameter</i> of the cavity.
+		<o>sdt.windkarman~</o> simulates Kármán vortices caused by airflows across thin obstacles, such as a tree branch or a suspended wire.
+		Whistling / howling is produced by the repeating pattern of swirling vortices caused by the unsteady separation of airflow around the object.
+		It takes two control parameters: the wind <i>speed</i>, and the <i>diameter</i> of the obstacle.
 	</description>
 
 	<!--METADATA-->
@@ -23,20 +24,22 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
 			<digest>Wind speed [0.0, 1.0]</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -47,22 +50,18 @@
 
 	<!--MESSAGES-->
 	<methodlist>
-	<method name="signal">
-		<digest>
-			Wind speed [0.0, 1.0].
-		</digest>
-			<description>
-			</description>
+		<method name="signal">
+			<digest>Wind speed [0., 1.].</digest>
+			<description></description>
 		</method>
 	</methodlist>
 
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="diameter" get="1" set="1" type="float" size="1" >
-		    <digest>Object diameter, in mm.</digest>
+		    <digest>Size of the obstacle (mm).</digest>
 		    <description></description>
 	  </attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
