@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -40,6 +40,59 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontface" : 0,
+					"id" : "obj-8",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 122.09375, 513.240257472914436, 110.0, 22.0 ],
+					"style" : "SDT-comments",
+					"text" : "See sdt.impact~."
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 3,
+					"id" : "obj-30",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 122.09375, 496.0, 110.0, 22.0 ],
+					"style" : "SDT-comments",
+					"text" : "outlets (signal):"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 0,
+					"id" : "obj-36",
+					"linecount" : 4,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 635.75, 372.234375, 259.0, 69.0 ],
+					"style" : "SDT-comments",
+					"text" : "- Unique ID of object 1. \n- Unique ID of object 2.\n- Number of outlets = number of pickup     points of object 1 + object 2."
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 3,
+					"id" : "obj-37",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 635.75, 353.734375, 83.0, 22.0 ],
+					"style" : "SDT-comments",
+					"text" : "arguments:"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"fontface" : 3,
 					"id" : "obj-110",
 					"maxclass" : "comment",
@@ -66,7 +119,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -269,8 +322,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 472.0, 430.5, 66.0, 21.0 ],
-					"text" : "@pickup1"
+					"patching_rect" : [ 472.0, 430.5, 75.0, 21.0 ],
+					"text" : "... @pickup1"
 				}
 
 			}
@@ -281,8 +334,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 292.0, 430.5, 66.0, 21.0 ],
-					"text" : "@pickup0"
+					"patching_rect" : [ 292.0, 430.5, 74.0, 21.0 ],
+					"text" : "... @pickup0"
 				}
 
 			}
@@ -295,7 +348,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 198.59375, 430.5, 82.1875, 35.0 ],
-					"text" : "displacement of object 2"
+					"text" : "displacement of object 2 ..."
 				}
 
 			}
@@ -328,7 +381,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -750,7 +803,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1312,7 +1365,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1446,7 +1499,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2461,7 +2514,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2663,7 +2716,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3086,33 +3139,6 @@
 			}
 , 			{
 				"box" : 				{
-					"fontface" : 0,
-					"id" : "obj-36",
-					"linecount" : 4,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 374.5, 259.0, 69.0 ],
-					"style" : "SDT-comments",
-					"text" : "- Resonator ID of the first object \n- Resonator ID of the second object\n- Number of outlets = number of pickup     points"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"id" : "obj-37",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 352.0, 83.0, 22.0 ],
-					"style" : "SDT-comments",
-					"text" : "arguments:"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-24",
 					"logfreq" : 1,
 					"maxclass" : "spectroscope~",
@@ -3144,9 +3170,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 456.0, 259.0, 178.0 ],
+					"patching_rect" : [ 635.75, 468.0, 259.0, 178.0 ],
 					"style" : "SDT-comments",
-					"text" : "The objects and the interactor form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the poly~ method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
+					"text" : "The objects and the interactor form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
 
 			}
@@ -3157,7 +3183,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 437.5, 66.0, 22.0 ],
+					"patching_rect" : [ 635.75, 449.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -3167,12 +3193,12 @@
 				"box" : 				{
 					"fontface" : 1,
 					"id" : "obj-82",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 25.5, 430.5, 124.0, 35.0 ],
-					"text" : "pickup displacement of object 1"
+					"patching_rect" : [ 25.5, 430.5, 143.0, 50.0 ],
+					"text" : "displacement of object 1 @pickup0 (motion for inertial object)"
 				}
 
 			}
@@ -3231,7 +3257,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3422,7 +3448,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "float" ],
-					"patching_rect" : [ 22.0, 472.5, 68.0, 23.0 ],
+					"patching_rect" : [ 22.0, 483.5, 68.0, 23.0 ],
 					"sig" : 0.0
 				}
 
@@ -3451,7 +3477,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3726,7 +3752,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3959,7 +3985,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4646,13 +4672,16 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
 				"boxes" : [ "obj-37", "obj-36" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
  ],
 		"styles" : [ 			{

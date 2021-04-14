@@ -4,7 +4,7 @@
 <c74object name="sdt.modal">
 
 	<digest>
-		Modal resonator object <m>[solids]</m>.
+		[solids] Modal resonator object.
 	</digest>
 
 	<description>
@@ -24,31 +24,31 @@
 
 	<!--INLETS
 	<inletlist>
-		<inlet id="0" type="messages to the bouncing object">
-			<digest>messages to the bouncing object.</digest>
-			<description>messages to the bouncing object, bang starts the process.</description>
+		<inlet id="0" type="messages to the resonator object">
+			<digest>messages to the resonator object.</digest>
+			<description>messages to the resonator object.</description>
 		</inlet>
 	</inletlist>-->
 
 	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Impact velocity.</digest>
+			<digest>Impact velocity (m/s).</digest>
 		</outlet>
 	</outletlist>-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
-		<objarg name="Unique_ID-obj2" optional="0" type="symbol, required">
-			<digest>Mandatory: Unique ID name set for the sdt.inertial object.</digest>
+		<objarg name="Unique_ID" optional="0" type="symbol, required">
+			<digest>Mandatory: Unique identificator name for the resonator.</digest>
 		</objarg>
 
 		<objarg name="Modes" optional="0" type="int">
-			<digest>Mandatory: Number of the available modes.</digest>
+			<digest>Mandatory: Number of available modes.</digest>
 		</objarg>
 
 		<objarg name="Pickup-points" optional="0" type="int">
-			<digest>Mandatory: Number of the available pickup points.</digest>
+			<digest>Mandatory: Number of available pickup points.</digest>
 		</objarg>
 	</objarglist>
 
@@ -68,30 +68,29 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="freqs" get="1" set="1" type="float, list" size="1" >
-		    <digest>Frequency of each mode, in Hz.</digest>
+		    <digest>Frequency of each mode (Hz).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="decays" get="1" set="1" type="float, list" size="1">
-		    <digest>Decay of each mode, in seconds.</digest>
+		    <digest>Decay of each mode (s).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="fragmentSize" get="1" set="1" type="float" size="1">
-				<digest>Fraction of the whole object. Used by control layer algorithms to simulate fragmentation [0.0, 1.0].</digest>
+				<digest>Fraction of the whole object [0.0, 1.0]. Used by control algorithms (e.g. <o>sdt.breaking~</o>) to simulate fragmentation.</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="activeModes" get="1" set="1" type="int" size="1">
-				<digest>Number of currently active modes out of all the available ones.</digest>
+				<digest>Number of currently active modes (maximum = argument <m>Modes</m>).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="pickup" get="1" set="1" type="float, list" size="1">
-				<digest>Modal weights for each pickup, in 1/Kg, starting from pickup0, pickup1, ..., pickupN.</digest>
+				<digest>Modal weights for each pickup (kg^-1), starting from pickup0, pickup1, ..., pickupN.</digest>
 				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->

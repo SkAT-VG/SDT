@@ -4,11 +4,11 @@
 <c74object name="sdt.inertial">
 
 	<digest>
-		Point-mass inertial object <m>[solids]</m>.
+		[solids] Point-mass inertial object.
 	</digest>
 
 	<description>
-		<o>sdt.inertial</o> simulates a simple point-mass. Mostly used as an exciter for modal resonators.
+		<o>sdt.inertial</o> simulates a simple point-mass. Mostly used as exciter for modal resonators.
 	</description>
 
 	<!--METADATA-->
@@ -27,7 +27,7 @@
 		<method name="strike" >
 			<arglist>
 				<arg name="0." optional="0" type="float, list" />
-				<arg name="v., strike velocity in m/s." optional="0" type="float, list" />
+				<arg name="v., strike velocity (m/s)." optional="0" type="float, list" />
 			</arglist>
 			<digest>
 				The strike message (list) resets displacement and velocity to the given values.
@@ -41,26 +41,26 @@
 	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Impact velocity.</digest>
+			<digest>Impact velocity (m/s).</digest>
 		</outlet>
 	</outletlist> -->
 
 	<!--ARGUMENTS-->
 	<objarglist>
-		<objarg name="Unique_ID-obj1" optional="0" type="symbol, required">
-			<digest>Mandatory: Unique ID name set for the sdt.inertial object.</digest>
+		<objarg name="Unique_ID" optional="0" type="symbol, required">
+			<digest>Mandatory: Unique identificator name for the point-mass.</digest>
 		</objarg>
 	</objarglist>
 
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="mass" get="1" set="1" type="float" size="1" >
-		    <digest>Mass of the inertial object, in Kg.</digest>
+		    <digest>Mass of the inertial object (kg).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="fragmentSize" get="1" set="1" type="float" size="1">
-		    <digest>Fraction of the whole object. Used by control layer algorithms to simulate fragmentation [0.0, 1.0].</digest>
+		    <digest>Fraction of the whole object [0.0, 1.0]. Used by control algorithms (e.g. <o>sdt.breaking~</o>) to simulate fragmentation.</digest>
 		    <description></description>
 	  </attribute>
 	</attributelist>

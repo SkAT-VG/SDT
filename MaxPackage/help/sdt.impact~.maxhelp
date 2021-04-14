@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -63,7 +63,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -171,9 +171,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 236.5, 259.0, 84.0 ],
+					"patching_rect" : [ 635.75, 203.5, 259.0, 84.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Allow to apply respectively the external force [1, 4], the impact velocity [2, 5], and the fragment size [3, 6], to the two resonators, in order to model patterns and textures such as rolling and crumpling."
+					"text" : "- Respectively apply external forces [1, 4],  impact velocities [2, 5], and fragment sizes [3, 6] to the two objects, in order to model patterns and textures such as rolling and crumpling."
 				}
 
 			}
@@ -184,7 +184,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 218.0, 83.0, 22.0 ],
+					"patching_rect" : [ 635.75, 187.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "inlets (signal):"
 				}
@@ -344,7 +344,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -536,7 +536,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -756,7 +756,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 547.5, 80.0, 140.0, 41.0 ],
+					"patching_rect" : [ 474.5, 86.0, 140.0, 41.0 ],
 					"style" : "SDT-comments",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
@@ -777,7 +777,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1174,7 +1174,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 693.5, 104.734375, 53.0, 23.0 ],
+					"patching_rect" : [ 693.5, 72.0, 53.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1194,9 +1194,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 150.234375, 259.0, 69.0 ],
+					"patching_rect" : [ 635.75, 110.234375, 259.0, 69.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Resonator ID of the first object \n- Resonator ID of the second object\n- Number of outlets = number of pickup     points"
+					"text" : "- Unique ID of object 1. \n- Unique ID of object 2.\n- Number of outlets = number of pickup     points of object 1 + object 2."
 				}
 
 			}
@@ -1207,7 +1207,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 131.734375, 83.0, 22.0 ],
+					"patching_rect" : [ 635.75, 91.734375, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -1243,13 +1243,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-54",
-					"linecount" : 12,
+					"linecount" : 11,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 454.0, 259.0, 194.0 ],
+					"patching_rect" : [ 635.75, 468.0, 259.0, 178.0 ],
 					"style" : "SDT-comments",
-					"text" : "The objects and the interactor form a bidirectional network, wherein the objects' names work as addresses for the interactor. \n\nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the poly~ method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
+					"text" : "The objects and the interactor form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
 
 			}
@@ -1260,7 +1260,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 435.5, 66.0, 22.0 ],
+					"patching_rect" : [ 635.75, 449.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -1274,8 +1274,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 107.21875, 479.5, 83.1875, 35.0 ],
-					"text" : "displacement of object 1"
+					"patching_rect" : [ 107.21875, 479.5, 198.0, 35.0 ],
+					"text" : "displacement of object 1 @pickup0 (motion for inertial object)"
 				}
 
 			}
@@ -1363,7 +1363,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "preset", "int", "preset", "int" ],
-					"patching_rect" : [ 693.5, 82.0, 146.0, 19.0 ],
+					"patching_rect" : [ 620.5, 51.0, 146.0, 19.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
 							"data" : [ 5, "obj-28", "live.gain~", "float", 0.0, 5, "obj-42", "number", "int", 304, 6, "obj-1", "number~", "list", 0.0, 0.0, 5, "obj-23", "slider", "float", 303.0, 5, "obj-66", "flonum", "float", 0.5, 5, "obj-68", "flonum", "float", 1.299999952316284, 5, "obj-76", "flonum", "float", 0.5, 5, "obj-26", "flonum", "float", 0.0, 5, "obj-17", "number", "int", 9375468 ]
@@ -1416,7 +1416,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1511,7 +1511,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 740.0, 57.0, 65.5, 23.0 ],
+					"patching_rect" : [ 814.0, 43.0, 65.5, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1531,7 +1531,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 693.5, 10.0, 112.0, 23.0 ],
+					"patching_rect" : [ 767.5, -4.0, 112.0, 23.0 ],
 					"text" : "See also"
 				}
 
@@ -1554,7 +1554,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 693.5, 32.0, 112.0, 23.0 ],
+					"patching_rect" : [ 767.5, 18.0, 112.0, 23.0 ],
 					"style" : "SDT_package"
 				}
 
@@ -1636,7 +1636,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1715,7 +1715,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1909,7 +1909,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2068,7 +2068,7 @@
 					"id" : "obj-10",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 270.75, 594.0, 281.0, 52.0 ],
 					"style" : "SDT_package",
@@ -2083,9 +2083,9 @@
 					"id" : "obj-9",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 6,
 					"numoutlets" : 3,
-					"outlettype" : [ "", "", "" ],
+					"outlettype" : [ "signal", "signal", "signal" ],
 					"patching_rect" : [ 40.0, 373.5, 477.0, 47.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 3 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 1"
@@ -2100,7 +2100,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 523.0, 38.0 ],
+					"patching_rect" : [ 15.0, 86.0, 460.0, 38.0 ],
 					"text" : "Simulates the nonlinear impact force generated by two objects colliding (e.g. a hammer hitting a resonator).",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
@@ -2135,13 +2135,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-8",
-					"linecount" : 6,
+					"linecount" : 7,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 339.5, 259.0, 100.0 ],
+					"patching_rect" : [ 635.75, 316.331223628691987, 259.0, 116.0 ],
 					"style" : "SDT-comments",
-					"text" : "- [1] displacement of object 1 \"inertial-object\"\n- [2] displacement @pickup0 of object 2 \"modal object\"\n- [3] displacement @pickup1 of object 2 \"modal object\""
+					"text" : "Their number depends on the respective creation argument, and they respectively refer the pickup points available at object 1 and 2. In this case:\n- [1] displacement @pickup0 of object 1.\n- [2] displacement @pickup0 of object 2.\n- [3] displacement @pickup1 of object 2."
 				}
 
 			}
@@ -2152,9 +2152,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 321.0, 83.0, 22.0 ],
+					"patching_rect" : [ 635.75, 298.0, 259.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "outlets:"
+					"text" : "outlets (signal):"
 				}
 
 			}
@@ -2344,7 +2344,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 787.666666666666629, 116.0, 888.833333333333371, 116.0, 888.833333333333371, 5.0, 703.0, 5.0 ],
+					"midpoints" : [ 714.666666666666629, 116.0, 888.833333333333371, 116.0, 888.833333333333371, 5.0, 777.0, 5.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -2370,7 +2370,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-59", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 737.0, 132.5, 557.0, 132.5 ],
+					"midpoints" : [ 737.0, 132.5, 484.0, 132.5 ],
 					"source" : [ "obj-57", 1 ]
 				}
 
@@ -2454,10 +2454,25 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [  ],
+		"dependency_cache" : [ 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.impact~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+ ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
@@ -2470,9 +2485,6 @@
 			}
 , 			{
 				"boxes" : [ "obj-30", "obj-8" ]
-			}
-, 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{
