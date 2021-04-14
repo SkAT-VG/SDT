@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 622.0, 142.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -64,7 +64,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -876,8 +876,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -895,8 +895,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -927,9 +927,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 112.0, 381.0, 169.0, 57.0 ],
+					"patching_rect" : [ 112.0, 381.0, 172.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "note: the velocity is applied to the first resonator only",
+					"text" : "the velocity signal is applied to [sdt.inertial]",
 					"textjustification" : 1
 				}
 
@@ -946,7 +946,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 313.75, 381.0, 167.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "note: the fragmentation is applied to  both resonators",
+					"text" : "the fragmentation signal is applied to both objects",
 					"textjustification" : 1
 				}
 
@@ -960,7 +960,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 412.5, 316.5, 147.5, 35.0 ],
-					"text" : "fragment size compared to the whole object size "
+					"text" : "fragment size as fraction of the whole object "
 				}
 
 			}
@@ -1092,13 +1092,13 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
-					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 562.0, 145.0, 133.0, 26.0 ],
 					"style" : "SDT-comments",
+					"text" : "no energy",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -1118,7 +1118,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1545,7 +1545,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 637.75, 291.0, 260.0, 84.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Crushing energy [0.0, 1.0]\n- Crumpling granularity [0.0, 1.0]\n- Fragmentation [0.0, 1.0], represents the tendency of the object to break into smaller pieces"
+					"text" : "- Crushing energy [0., 1.].\n- Granularity [0., 1.].\n- Fragmentation [0., 1.], represents the tendency of the object to break into smaller pieces."
 				}
 
 			}
@@ -1708,7 +1708,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1944,7 +1944,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2023,7 +2023,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -2124,8 +2124,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -2156,7 +2156,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 221.5, 145.0, 132.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "crumpling granularity",
+					"text" : "granularity",
 					"textjustification" : 1
 				}
 
@@ -2202,7 +2202,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2327,7 +2327,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-					"text" : "Compound interactions between solids. Impact model controller for crumpling sounds"
+					"text" : "[solids, control] Control algorithm to simulate granular crumpling/crushing sounds."
 				}
 
 			}
@@ -2336,7 +2336,7 @@
 					"id" : "obj-10",
 					"linecount" : 6,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 419.5, 519.0, 140.5, 95.0 ],
 					"style" : "SDT_package",
@@ -2351,7 +2351,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 6,
 					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
+					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 44.0, 442.5, 279.0, 52.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 3 @stiffness 150000000. @dissipation 0.05 @shape 1.7 @contact0 0 @contact1 1"
@@ -2366,7 +2366,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-					"text" : "Generates a stochastic sequence of impacts to model crushing sound textures",
+					"text" : "Generates a stochastic sequence of impacts events.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2376,7 +2376,7 @@
 					"id" : "obj-5",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 419.5, 442.5, 143.0, 37.0 ],
 					"text" : "sdt.inertial inertial-object @mass 0.002"
@@ -2404,9 +2404,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 399.5, 259.0, 69.0 ],
+					"patching_rect" : [ 637.75, 424.5, 259.0, 69.0 ],
 					"style" : "SDT-comments",
-					"text" : "- [1] velocity of the crushing events applied to the object 1 (sdt.inertial)\n- [2] fragment size compared to the whole object size, applied to both resonators"
+					"text" : "- [1] velocity (m/s) of impact events applied to [sdt.inertial].\n- [2] fragment size [0., 1.], as fraction of the whole object, applied to both objects."
 				}
 
 			}
@@ -2417,7 +2417,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 381.0, 83.0, 22.0 ],
+					"patching_rect" : [ 637.75, 406.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlets:"
 				}
@@ -2452,7 +2452,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-9", 1 ],
-					"midpoints" : [ 53.5, 413.75, 105.5, 413.75 ],
+					"midpoints" : [ 53.5, 413.75, 313.5, 413.75 ],
 					"source" : [ "obj-13", 0 ]
 				}
 
@@ -2681,18 +2681,6 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.impact~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
-, 			{
 				"name" : "sdt.crumpling~.mxo",
 				"type" : "iLaX"
 			}
@@ -2717,8 +2705,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -2736,8 +2724,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

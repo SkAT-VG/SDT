@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 583.0, 105.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -49,7 +49,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -151,7 +151,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 593.75, 414.0, 39.0, 23.0 ],
+					"patching_rect" : [ 803.5, 399.5, 39.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -173,7 +173,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 601.75, 388.5, 23.0, 23.0 ]
+					"patching_rect" : [ 811.5, 374.0, 23.0, 23.0 ]
 				}
 
 			}
@@ -278,7 +278,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -403,7 +403,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 103.5, 382.5, 169.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "note: the velocity is applied to the inertial mass",
+					"text" : "the velocity signal is applied to [sdt.inertial]",
 					"textjustification" : 1
 				}
 
@@ -508,7 +508,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 562.0, 153.8828125, 168.75, 26.0 ],
 					"style" : "SDT-comments",
-					"text" : "round, highly regular",
+					"text" : "sharp and pointy",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -528,7 +528,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -949,13 +949,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-36",
-					"linecount" : 9,
+					"linecount" : 6,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 291.0, 259.0, 147.0 ],
+					"patching_rect" : [ 637.75, 291.0, 259.0, 100.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Irregularity [0.0, 1.0]: deviation from a spherical shape\n\n- height in m, initial height of the falling object\n\n- restitution coefficient (e) of the bounce [0.0, 1.0] where e = 1. would be a perfectly elastic collision"
+					"text" : "- Irregularity [0., 1.]: deviation from a spherical shape.\n- Initial height (m) of the object being dropped.\n- Restitution coefficient [0., 1.]; 1. results in a perfectly elastic collision."
 				}
 
 			}
@@ -1116,7 +1116,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1320,7 +1320,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1578,7 +1578,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1703,7 +1703,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-					"text" : "Compound interactions between solids. Impact model controller for bouncing sounds"
+					"text" : "[solids, control] Control algorithm to simulate bouncing sounds."
 				}
 
 			}
@@ -1742,7 +1742,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-					"text" : "Generates a stochastic sequence of impacts to model bouncing events",
+					"text" : "Generates a sequence of impacts.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2052,10 +2052,10 @@
 				"boxes" : [ "obj-38", "obj-28", "obj-31" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-52", "obj-42", "obj-23" ]
 			}
 , 			{
-				"boxes" : [ "obj-52", "obj-42", "obj-23" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-37", "obj-36" ]

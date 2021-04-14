@@ -756,9 +756,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 306.0, 259.0, 53.0 ],
+					"patching_rect" : [ 637.0, 306.0, 259.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "- object's name \n- max number of modes \n- number of pickup points"
+					"text" : "- unique ID of object\n- max number of modes \n- number of pickup points"
 				}
 
 			}
@@ -769,7 +769,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 287.5, 83.0, 22.0 ],
+					"patching_rect" : [ 637.0, 287.5, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -871,7 +871,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 447.0, 259.0, 178.0 ],
+					"patching_rect" : [ 637.0, 446.0, 259.0, 178.0 ],
 					"style" : "SDT-comments",
 					"text" : "Solid objects and interactors form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
@@ -884,7 +884,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 428.5, 66.0, 22.0 ],
+					"patching_rect" : [ 637.0, 427.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -939,9 +939,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 19.25, 357.0, 310.0, 72.0 ],
+					"patching_rect" : [ 23.25, 357.0, 323.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate framentation in the crumpling and breaking processes."
+					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate fragmentation with sdt.crumpling~ and sdt.breaking~"
 				}
 
 			}
@@ -1087,7 +1087,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 360.25, 357.0, 226.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "object's name here is \"modal-object\".  This object has 2 modes and 2 pickups."
+					"text" : "Object's unique ID is \"modal-object\".  This object has 2 modes and 2 pickups."
 				}
 
 			}
@@ -1330,7 +1330,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 377.0, 45.0, 45.0 ]
+					"patching_rect" : [ 572.5, 462.5, 45.0, 45.0 ]
 				}
 
 			}
@@ -1467,7 +1467,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1831,7 +1831,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 7.0, 51.186214625945652, 460.0, 22.0 ],
-					"text" : "Modal resonator [solid model]."
+					"text" : "[solids, object] Modal resonator."
 				}
 
 			}
@@ -1855,9 +1855,9 @@
 					"id" : "obj-9",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 6,
+					"numinlets" : 0,
 					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
+					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 277.25, 462.5, 234.75, 52.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 3 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 0"
@@ -2192,31 +2192,19 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.impact~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
+			}
+, 			{
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
 				"boxes" : [ "obj-37", "obj-36" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
-				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{

@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 259.0, 154.0, 950.0, 740.0 ],
+		"rect" : [ 112.0, 243.0, 950.0, 740.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 14.0,
@@ -4000,7 +4000,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 259.0, 180.0, 950.0, 714.0 ],
+						"rect" : [ 112.0, 269.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -4038,7 +4038,6 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 630.0, 609.0, 306.0, 74.0 ],
-									"presentation_linecount" : 4,
 									"text" : "See the \"externals\" tab for a complete list of the available algorithms, and the \"examples\" tab for a taxonomy of sound-producing phenomena referencing the respective externals."
 								}
 
@@ -4574,8 +4573,8 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 660.0, 176.0, 276.0, 135.0 ],
-									"text" : "The friction model references two solid objects, an inertial mass [sdt.inertial] and a modal resonator [sdt.modal], that communicate by means a third entity, the [sdt.friction~] interactor.\n\nThis architecture is shared with all the other sound models of solids interactions."
+									"patching_rect" : [ 660.0, 176.0, 278.0, 135.0 ],
+									"text" : "The friction model references two solid objects, an inertial point-mass [sdt.inertial] and a modal resonator [sdt.modal], that communicate by means a third entity, the interactor [sdt.friction~].\n\nThis architecture is shared with all the other sound models of solids interactions."
 								}
 
 							}

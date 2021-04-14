@@ -40,6 +40,32 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontface" : 0,
+					"id" : "obj-36",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 631.75, 282.0, 259.0, 22.0 ],
+					"style" : "SDT-comments",
+					"text" : "- unique ID of object"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 3,
+					"id" : "obj-37",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 631.75, 263.5, 83.0, 22.0 ],
+					"style" : "SDT-comments",
+					"text" : "arguments:"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"fontface" : 1,
 					"id" : "obj-19",
 					"maxclass" : "comment",
@@ -608,7 +634,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 633.5, 208.5, 259.0, 178.0 ],
+					"patching_rect" : [ 631.75, 379.5, 259.0, 178.0 ],
 					"style" : "SDT-comments",
 					"text" : "Solid objects and interactors form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
@@ -621,7 +647,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 633.5, 190.0, 66.0, 22.0 ],
+					"patching_rect" : [ 631.75, 361.0, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -806,7 +832,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 350.0, 208.5, 244.0, 88.0 ],
 					"style" : "SDT-comments",
-					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate framentation in the crumpling and breaking processes"
+					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate fragmentation with sdt.crumpling~ and sdt.breaking~"
 				}
 
 			}
@@ -828,7 +854,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 749.0, 503.5, 45.0, 45.0 ]
+					"patching_rect" : [ 549.0, 559.5, 45.0, 45.0 ]
 				}
 
 			}
@@ -854,9 +880,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 458.0, 296.5, 136.0, 42.0 ],
+					"patching_rect" : [ 434.0, 296.5, 136.0, 42.0 ],
 					"style" : "SDT-comments",
-					"text" : "object's name here is \"inertial-object\""
+					"text" : "Object's unique ID is \"inertial-object\""
 				}
 
 			}
@@ -1027,7 +1053,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1433,7 +1459,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 13.0, 59.0, 460.0, 22.0 ],
-					"text" : "Point-mass inertial object [solid model]."
+					"text" : "[solids, object] Point-mass inertial object."
 				}
 
 			}
@@ -1442,7 +1468,7 @@
 					"id" : "obj-10",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 563.5, 312.0, 37.0 ],
 					"text" : "sdt.modal modal-object 1 1 @freqs 2200. @decays 0.05 @pickup0 200. @activeModes 1"
@@ -1454,9 +1480,9 @@
 					"id" : "obj-9",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 6,
+					"numinlets" : 0,
 					"numoutlets" : 2,
-					"outlettype" : [ "signal", "signal" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 41.0, 406.75, 360.0, 37.0 ],
 					"text" : "sdt.impact~ inertial-object modal-object 2 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 0"
 				}
@@ -1720,28 +1746,19 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.impact~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-37", "obj-36" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

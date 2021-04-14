@@ -4,7 +4,7 @@
 <c74object name="sdt.inertial">
 
 	<digest>
-		[solids] Point-mass inertial object.
+		[solids, object] Point-mass inertial object.
 	</digest>
 
 	<description>
@@ -26,14 +26,18 @@
 	<methodlist>
 		<method name="strike" >
 			<arglist>
-				<arg name="0." optional="0" type="float, list" />
-				<arg name="v., strike velocity (m/s)." optional="0" type="float, list" />
+				<arg name="displacement (m)" optional="0" type="float" />
+				<arg name="strike velocity (m/s)" optional="0" type="float" />
 			</arglist>
 			<digest>
-				The strike message (list) resets displacement and velocity to the given values.
+				A <m>strike</m> message followed by a list of two float arguments resets displacement and
+				velocity of the point-mass to the given values.
 			</digest>
 			<description>
-				The strike message (list) resets displacement and velocity to the given values.
+				The <m>strike</m> message followed by a list of two float arguments forcedly sets the displacement and
+				velocity of the point-mass.<br />
+				Displacement = 0. typically results in immediate contact with a second object.<br />
+				Velocity towards a second object must be negative.
 			</description>
 		</method>
 	</methodlist>
@@ -48,20 +52,18 @@
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="Unique_ID" optional="0" type="symbol, required">
-			<digest>Mandatory: Unique identificator name for the point-mass.</digest>
+			<digest>Mandatory: Unique name for the point-mass.</digest>
 		</objarg>
 	</objarglist>
 
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="mass" get="1" set="1" type="float" size="1" >
-		    <digest>Mass of the inertial object (kg).</digest>
-		    <description></description>
+		    <digest>Mass (kg).</digest>
 	  </attribute>
 
 		<attribute name="fragmentSize" get="1" set="1" type="float" size="1">
-		    <digest>Fraction of the whole object [0.0, 1.0]. Used by control algorithms (e.g. <o>sdt.breaking~</o>) to simulate fragmentation.</digest>
-		    <description></description>
+		    <digest>Fraction of the whole object [0., 1.]. Used by control algorithms (e.g. <o>sdt.breaking~</o>) to simulate fragmentation.</digest>
 	  </attribute>
 	</attributelist>
 

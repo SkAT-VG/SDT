@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 795.0, 160.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -50,7 +50,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 273.0, 403.0, 167.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "note: the fragmentation is applied to  both resonators",
+					"text" : "the fragmentation signal is applied to both objects",
 					"textjustification" : 1
 				}
 
@@ -64,7 +64,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 445.5, 340.5, 147.5, 35.0 ],
-					"text" : "fragment size compared to the whole object size "
+					"text" : "fragment size as fraction of the whole object "
 				}
 
 			}
@@ -77,7 +77,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 202.5, 340.5, 136.1875, 35.0 ],
-					"text" : "fractures (micro-impacts velocity)"
+					"text" : "fracture events (micro-impacts velocity)"
 				}
 
 			}
@@ -199,7 +199,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -324,7 +324,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 86.5, 403.0, 169.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "note: the velocity is applied to the inertial mass",
+					"text" : "the velocity signal is applied to [sdt.inertial]",
 					"textjustification" : 1
 				}
 
@@ -451,7 +451,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -897,7 +897,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 637.75, 291.0, 259.0, 178.0 ],
 					"style" : "SDT-comments",
-					"text" : "- storedEnergy: global energy of the breaking process, in Newton. Combined with the crushing energy, it affects the overall duration of the breaking\n- crushingEnergy: energy of the micro-impacts in Newton.\n- granularity [0.0, 1.0]: density of the fractures in the breaking process, representing the crushing resistance\n- fragmentation [0.0, 1.0]: tendency of the object to break into smaller pieces"
+					"text" : "- storedEnergy: global energy of the breaking process. Combined with crushingEnergy, it affects the overall duration of the breaking.\n- crushingEnergy: energy of the micro-impacts.\n- granularity [0., 1.]: density of fractures in the breaking process, representing the crushing resistance.\n- fragmentation [0., 1.]: tendency of the object to break into smaller pieces."
 				}
 
 			}
@@ -1062,7 +1062,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1266,7 +1266,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1446,8 +1446,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -1479,7 +1479,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 219.5, 125.8828125, 112.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "energy of the micro-impacts",
+					"text" : "energy of micro-impacts",
 					"textjustification" : 1
 				}
 
@@ -1525,7 +1525,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1650,7 +1650,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-					"text" : "Compound interactions between solids. Impact model controller for breaking sounds"
+					"text" : "[solids, control] Control algorithm to simulate breaking sounds."
 				}
 
 			}
@@ -1689,7 +1689,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-					"text" : "Generates a stochastic sequence of impacts to model breaking events",
+					"text" : "Generates a sequence of impact events.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2020,8 +2020,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -2039,8 +2039,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

@@ -4,7 +4,7 @@
 <c74object name="sdt.modal">
 
 	<digest>
-		[solids] Modal resonator object.
+		[solids, object] Modal resonator object.
 	</digest>
 
 	<description>
@@ -40,7 +40,7 @@
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="Unique_ID" optional="0" type="symbol, required">
-			<digest>Mandatory: Unique identificator name for the resonator.</digest>
+			<digest>Mandatory: Unique name for the resonator.</digest>
 		</objarg>
 
 		<objarg name="Modes" optional="0" type="int">
@@ -78,7 +78,7 @@
 	  </attribute>
 
 		<attribute name="fragmentSize" get="1" set="1" type="float" size="1">
-				<digest>Fraction of the whole object [0.0, 1.0]. Used by control algorithms (e.g. <o>sdt.breaking~</o>) to simulate fragmentation.</digest>
+				<digest>Fraction of the whole object [0., 1.]. Used by control algorithms (e.g. <o>sdt.breaking~</o>) to simulate fragmentation.</digest>
 				<description></description>
 		</attribute>
 

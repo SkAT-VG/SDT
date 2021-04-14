@@ -4,16 +4,21 @@
 <c74object name="sdt.bouncing~">
 
 	<digest>
-		<m>Solids interaction:</m> Stochastic sequence of impacts to form a bouncing sound.
+		[solids, control] Control algorithm to simulate bouncing sounds.
 	</digest>
 
 	<description>
-		Control for the generation of bouncing events.
+		<o>sdt.bouncing~</o> generates a sequence of velocity events
+		meant to drive a point-mass hitting a resonator.
 		<br />
-		<o>sdt.bouncing~</o> acts as control layer for the compound impact model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		N.B. It must be used as a control layer for the structure formed by
+		<o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
-		Takes three control parameters: initial <i>height</i> of the falling object in m, shape <i>irregularity</i> and <i>restitution</i> coefficient.
-		Output: audio signal representing the impact velocity in m/s.
+		<br />
+		It takes three control parameters:
+		initial <i>height</i> of the falling object (m), shape <i>irregularity</i> and
+		<i>restitution coefficient</i>.
+		Output: signal representing the impact velocity (m/s).
 	</description>
 
 	<!--METADATA-->
@@ -27,20 +32,22 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the bouncing object">
 			<digest>Messages to the bouncing object.</digest>
 			<description>Messages to the bouncing object. Bang triggers a bouncing event.</description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Impact velocity in m/s.</digest>
+			<digest>Impact velocity (m/s).</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -55,27 +62,25 @@
 			<digest>
 				Inlet 0: Bang triggers a bouncing event.
 			</digest>
-			<description>
-				Inlet 0: Bang triggers a bouncing event.
-			</description>
+			<description></description>
 		</method>
 	</methodlist>
 
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="restitution" get="1" set="1" type="float" size="1" >
-		    <digest>Restitution coefficient of the bounce [0.0, 1.0].</digest>
+		    <digest>Restitution coefficient of the bounce [0., 1.].</digest>
 		    <description>Restitution coefficient of the bounce, between 0. and 1.</description>
 	  </attribute>
 
 		<attribute name="height" get="1" set="1" type="float" size="1">
-		    <digest>Initial height of the falling object, in m.</digest>
-		    <description>Initial height of the falling object, in m.</description>
+		    <digest>Initial height (m) of the object being dropped.</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="irregularity" get="1" set="1" type="float" size="1" >
-				<digest>Object shape irregularity [0.0, 1.0].</digest>
-				<description>Deviation from a spherical shape, between 0. and 1.</description>
+				<digest>Object shape irregularity [0., 1.].</digest>
+				<description>Deviation from a spherical shape</description>
 		</attribute>
 
 	</attributelist>

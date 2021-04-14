@@ -199,7 +199,7 @@
 					"numoutlets" : 1,
 					"numpoints" : 401,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 40.0, 422.5, 68.0, 57.0 ],
+					"patching_rect" : [ 40.0, 423.5, 68.0, 57.0 ],
 					"subplots" : [ 						{
 							"color" : [ 0.4, 0.4, 0.75, 1.0 ],
 							"thickness" : 1.2,
@@ -234,9 +234,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 329.75, 422.5, 221.0, 57.0 ],
+					"patching_rect" : [ 340.0, 422.5, 199.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "here, pickup 1 is set as contact point for the second object (sdt.modal)"
+					"text" : "The contact point for object 2 (indexed as N-1=1) is its pickup1"
 				}
 
 			}
@@ -1349,9 +1349,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 146.0, 422.5, 170.0, 57.0 ],
+					"patching_rect" : [ 139.0, 422.5, 196.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "pickup index of the contact point for the first object"
+					"text" : "The contact point for object 1 (indexed as N-1=0) is its pickup0"
 				}
 
 			}
@@ -1715,7 +1715,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -2059,7 +2059,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "Impact interaction between two solid objects [solids]."
+					"text" : "[solids, interactor] Impact interaction between two solid objects."
 				}
 
 			}
@@ -2068,7 +2068,7 @@
 					"id" : "obj-10",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 270.75, 594.0, 281.0, 52.0 ],
 					"style" : "SDT_package",
@@ -2083,10 +2083,10 @@
 					"id" : "obj-9",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 6,
+					"numinlets" : 1,
 					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
-					"patching_rect" : [ 40.0, 373.5, 477.0, 47.0 ],
+					"outlettype" : [ "", "", "" ],
+					"patching_rect" : [ 40.0, 373.5, 475.0, 47.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 3 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 1"
 				}
@@ -2423,7 +2423,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 507.5, 425.0, 323.25, 425.0 ],
+					"midpoints" : [ 505.5, 425.0, 323.25, 425.0 ],
 					"source" : [ "obj-9", 2 ]
 				}
 
@@ -2431,7 +2431,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 278.5, 424.0, 323.25, 424.0 ],
+					"midpoints" : [ 277.5, 424.0, 323.25, 424.0 ],
 					"source" : [ "obj-9", 1 ]
 				}
 
@@ -2454,25 +2454,10 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.impact~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
-			}
-, 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
@@ -2485,6 +2470,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-30", "obj-8" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

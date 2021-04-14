@@ -4,17 +4,24 @@
 <c74object name="sdt.breaking~">
 
 	<digest>
-		<m>Solids interaction:</m> Stochastic sequence of impacts to form a breaking sound.
+		[solids, control] Control algorithm to simulate breaking sounds.
 	</digest>
 
 	<description>
-		Control model for the generation of breaking phenomena.
+		<o>sdt.breaking~</o> generates a sequence of velocity and fragmentation events
+		meant to drive a point-mass hitting a resonator.
 		<br />
-		<o>sdt.breaking~</o> acts as control layer for the compound impact model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		N.B. It must be used as a control layer for the structure formed by
+		<o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
-		Takes four control parameters: <i>stored energy</i> of the process, <i>crushing energy</i> spent by each micro-impact, <i>granularity</i> and <i>fragmentation</i>.
-		Output: two audio signals [0.0, 1.0], one representing the impact velocity in m/s (leftmost outlet), and one representing the fragment size compared to the whole object size (rightmost outlet).
-	</description>
+		<br />
+		It takes four control parameters:
+		<i>stored energy</i> of the process, <i>crushing energy</i> spent by each micro-impact,
+		<i>granularity</i> and <i>fragmentation</i>.
+		<br />
+		It outputs two signals:
+		Outlet 0: impact velocity (m/s) [0., 1.];
+		Outlet 1: fragment size, as fraction of the whole object [0., 1.].</description>
 
 	<!--METADATA-->
 	<metadatalist>
@@ -27,23 +34,25 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the breaking object">
 			<digest>Messages to the breaking object.</digest>
 			<description>Messages to the breaking object, bang starts the process.</description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Impact velocity in m/s.</digest>
+			<digest>Impact velocity (m/s).</digest>
 		</outlet>
 		<outlet id="1" type="signal">
-			<digest>Audio signal: Fragment size.</digest>
+			<digest>Fragment size [0., 1.].</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -58,9 +67,7 @@
 			<digest>
 				Inlet 0: Bang triggers a breaking event.
 			</digest>
-			<description>
-				Inlet 0: Bang triggers a breaking event.
-			</description>
+			<description></description>
 		</method>
 	</methodlist>
 
@@ -68,24 +75,23 @@
 	<attributelist>
 		<attribute name="storedEnergy" get="1" set="1" type="float" size="1" >
 		    <digest>Stored energy.</digest>
-		    <description>Global energy of the process, between 0.0001 and 1000. or more</description>
+		    <description>Global energy of the process. Typical interval [0.0001, 1000.].</description>
 	  </attribute>
 
 		<attribute name="crushingEnergy" get="1" set="1" type="float" size="1" >
-		    <digest>Energy of micro-impacts [0.0, 1.0].</digest>
-		    <description>Energy of micro-impacts, between 0. and 1.</description>
+		    <digest>Energy of micro-impacts [0., 1.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="granularity" get="1" set="1" type="float" size="1">
-		    <digest>Granularity [0.0, 1.0].</digest>
-		    <description>Granularity, between 0. and 1.</description>
+		    <digest>Granularity [0., 1.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="fragmentation" get="1" set="1" type="float" size="1" >
-				<digest>Fragmentation: tendency of the object to break in smaller pieces [0.0, 1.0].</digest>
-				<description>Fragmentation: tendency of the object to break in smaller pieces, between 0. and 1.</description>
+				<digest>Fragmentation: tendency to break into smaller pieces [0., 1.].</digest>
+				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->

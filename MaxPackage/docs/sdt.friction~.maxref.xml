@@ -4,7 +4,7 @@
 <c74object name="sdt.friction~">
 
 	<digest>
-		[solids] Friction interaction between two solid objects.
+		[solids, interactor] Friction interaction between two solid objects.
 	</digest>
 
 	<description>
@@ -14,10 +14,10 @@
 		"object 1 &#8596; <o>sdt.impact~</o> &#8596; object 2".
 		This is achieved by specifying the two objects' IDs as creation arguments.
 		<br />
-		Outlets: Their number depends on the creation argument <m>Max-outlets</m>.
-		They respectively output the displacement (m) at each pickup point of the interacting objects, starting
+		Outlets: Their number depends on the creation argument <ar>Max-outlets</ar>.
+		They output signals respectively representing the displacement (m) at each pickup point of the interacting objects, starting
 		from those of object 1 and then of object 2.
-		Such displacement represent the sound (actually, vibration) produced at various locations across the objects.
+		Such displacement represent the sound (actually, vibration) produced at various locations on the objects.
 		<br />
 		<br />
 		Friction force is computed from the relative velocity between the contact points of two solid objects as the sum of four components:
@@ -73,7 +73,7 @@
 		</inlet>
 
 		<inlet id="2" type="signal">
-			<digest>Fragment size of object 1 [0.0, 1.0].</digest>
+			<digest>Fragment size of object 1 [0., 1.].</digest>
 			<description></description>
 		</inlet>
 
@@ -88,13 +88,13 @@
 		</inlet>
 
 		<inlet id="5" type="signal">
-			<digest>Fragment size of object 2 [0.0, 1.0].</digest>
+			<digest>Fragment size of object 2 [0., 1.].</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
 	-->
 
-	<!--OUTLETS The number of outlets dynamically changes according to the creation argument <m>Max-outlets</m>
+	<!--OUTLETS The number of outlets dynamically changes according to the creation argument <ar>Max-outlets</ar>
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Output sound / displacement at the respective pickup point (m).</digest>
@@ -105,15 +105,15 @@
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="Unique_ID-Obj1" optional="0" type="symbol, required">
-			<digest>Mandatory: Object 1 to be referenced.</digest>
+			<digest>Mandatory: Name of object 1 to be referenced.</digest>
 		</objarg>
 
 		<objarg name="Unique_ID-Obj2" optional="0" type="symbol, required">
-			<digest>Mandatory: Object 2 to be referenced.</digest>
+			<digest>Mandatory: Name of object 2 to be referenced.</digest>
 		</objarg>
 
 		<objarg name="Max-outlets" optional="0" type="int, required">
-			<digest>Mandatory: Max number of outlets. They should correspond to the total number of pickups.
+			<digest>Mandatory: Maximum number of outlets. They should correspond to the total number of pickups.
 							If greater than the number of pickup points, the unused outlets are disabled;
 							if lower than the number of pickup points, only the first ones are output,
 							always starting from pickup0.
@@ -127,8 +127,6 @@
 			<digest>
 				Inlet 0: Messages and attributes to the object.
 			</digest>
-			<description>
-			</description>
 		</method>
 
 		<method name="signal">
@@ -138,10 +136,10 @@
 			<description>
 				Inlet 0: External force on object 1 (N). <br />
 			  Inlet 1: Sets the velocity of object 1 (m/s) and puts the two objects in contact. <br />
-				Inlet 2: Fragment size of object 1 [0.0, 1.0].<br />
+				Inlet 2: Fragment size of object 1 [0., 1.].<br />
 			  Inlet 3: External force on object 2 (N). <br />
 			  Inlet 4: Sets the velocity of object 2 (m/s) and puts the two objects in contact. <br />
-				Inlet 5: Fragment size of the object 2 [0.0, 1.0].
+				Inlet 5: Fragment size of the object 2 [0., 1.].
 			</description>
 		</method>
 	</methodlist>
@@ -169,17 +167,17 @@
 		</attribute>
 
 		<attribute name="kStatic" get="1" set="1" type="float" size="1" >
-				<digest>Static friction coefficient [0.0, 1.0].</digest>
+				<digest>Static friction coefficient [0., 1.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="kDynamic" get="1" set="1" type="float" size="1" >
-				<digest>Dynamic friction coefficient [0.0, 1.0].</digest>
+				<digest>Dynamic friction coefficient [0., 1.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="breakAway" get="1" set="1" type="float" size="1" >
-				<digest>Break-away coefficient [0.0, 1.0].</digest>
+				<digest>Break-away coefficient [0., 1.].</digest>
 				<description></description>
 		</attribute>
 

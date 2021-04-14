@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -91,7 +91,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -219,13 +219,13 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 900.0, 624.0 ],
+						"rect" : [ 100.0, 126.0, 900.0, 624.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -264,7 +264,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 623.75, 246.0, 260.0, 53.0 ],
 									"style" : "SDT-comments",
-									"text" : "The audio signal, either a sample or a noise generator, is used to represent the surface profile"
+									"text" : "The audio signal, either a sample or a noise generator, is used to represent the surface profile."
 								}
 
 							}
@@ -285,13 +285,13 @@
 								"box" : 								{
 									"bubble" : 1,
 									"id" : "obj-3",
-									"linecount" : 2,
+									"linecount" : 3,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 406.25, 258.5, 173.0, 42.0 ],
+									"patching_rect" : [ 406.25, 258.5, 173.0, 57.0 ],
 									"style" : "SDT-comments",
-									"text" : "It is meant to be directly applied to a resonator",
+									"text" : "Generates a force to be  applied to [sdt.modal] through an interactor.",
 									"textjustification" : 1
 								}
 
@@ -315,13 +315,13 @@
 								"box" : 								{
 									"fontface" : 0,
 									"id" : "obj-16",
-									"linecount" : 9,
+									"linecount" : 7,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 449.3828125, 260.0, 147.0 ],
+									"patching_rect" : [ 623.75, 449.3828125, 260.0, 116.0 ],
 									"style" : "SDT-comments",
-									"text" : "The sdt.impact~ interactor is used as node to pass the scraping control signal to the sdt.modal~ object. See sdt.impact~ help patcher for the explanation of the network architecture\n\nFriction with a second object (e.g., sdt.inertial) can also simulate rubbing phenomena"
+									"text" : "[sdt.impact~] is used as node to pass the scraping control signal to the [sdt.modal] object. See the [sdt.impact~] help patcher for more details.\n\nRubbing sounds can be simulated by using [sdt.friction~] instead (see next tab)."
 								}
 
 							}
@@ -379,7 +379,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1109,9 +1109,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 62.90625, 400.0, 171.09375, 57.0 ],
+									"patching_rect" : [ 54.90625, 400.8828125, 183.0, 57.0 ],
 									"style" : "SDT-comments",
-									"text" : "the Normal force is applied to the first resonator only"
+									"text" : "Normal force is applied to [sdt.modal] (first object)"
 								}
 
 							}
@@ -1236,9 +1236,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 562.0, 170.0, 152.0, 42.0 ],
+									"patching_rect" : [ 562.0, 170.0, 88.0, 42.0 ],
 									"style" : "SDT-comments",
-									"text" : "increasing the width of the tip of the probe",
+									"text" : "no velocity",
 									"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 									"textjustification" : 1,
 									"varname" : "bubble"
@@ -1258,7 +1258,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1683,9 +1683,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 321.0, 260.0, 100.0 ],
+									"patching_rect" : [ 623.75, 321.0, 261.0, 100.0 ],
 									"style" : "SDT-comments",
-									"text" : "- Velocity in m/s [0.0, 3.0]\n- Force [0.0, 10.], in Newton.\n- Grain  [0.0, 1.0]: Horizontal smoothness of the surface grain. More intuitively, it can be seen as the width of probe's tip, e.g., a nail vs sandpaper"
+									"text" : "- Velocity (m/s) [0., 3.]\n- Force (N) [0., 10.]\n- Grain [0., 1.]: smoothness of the surface profile (e.g. sandpaper). More intuitively, it can be seen as the width of the probe tip (e.g. a nail)"
 								}
 
 							}
@@ -1849,7 +1849,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2053,7 +2053,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2311,7 +2311,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2436,7 +2436,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-									"text" : "Compound interactions between solids. Friction model controller for scraping sounds"
+									"text" : "[solids, control] Control algorithm to simulate scraping/sliding/rubbing sound textures."
 								}
 
 							}
@@ -2445,7 +2445,7 @@
 									"id" : "obj-10",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 1,
+									"numinlets" : 0,
 									"numoutlets" : 0,
 									"patching_rect" : [ 321.25, 430.8828125, 209.0, 52.0 ],
 									"style" : "SDT_package",
@@ -2474,7 +2474,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-									"text" : "Generates a stochastic sequence of impacts to model scraping / sliding sound textures",
+									"text" : "Generates a force to be applied to a modal resonator.",
 									"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 								}
 
@@ -2722,15 +2722,6 @@
 							}
  ],
 						"boxgroups" : [ 							{
-								"boxes" : [ "obj-17", "obj-16" ]
-							}
-, 							{
-								"boxes" : [ "obj-37", "obj-36" ]
-							}
-, 							{
-								"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-							}
-, 							{
 								"boxes" : [ "obj-38", "obj-28", "obj-31" ]
 							}
 , 							{
@@ -2738,6 +2729,15 @@
 							}
 , 							{
 								"boxes" : [ "obj-13", "obj-8" ]
+							}
+, 							{
+								"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+							}
+, 							{
+								"boxes" : [ "obj-17", "obj-16" ]
+							}
+, 							{
+								"boxes" : [ "obj-37", "obj-36" ]
 							}
  ],
 						"styles" : [ 							{
@@ -2798,13 +2798,13 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 100.0, 126.0, 900.0, 624.0 ],
+						"rect" : [ 0.0, 26.0, 900.0, 624.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2834,6 +2834,71 @@
 						"showontab" : 2,
 						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
+								"box" : 								{
+									"fontface" : 0,
+									"id" : "obj-36",
+									"linecount" : 6,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 623.75, 295.0, 261.0, 100.0 ],
+									"style" : "SDT-comments",
+									"text" : "- Velocity (m/s) [0., 3.]\n- Force (N) [0., 10.]\n- Grain [0., 1.]: smoothness of the surface profile (e.g. sandpaper). More intuitively, it can be seen as the width of the probe tip (e.g. a nail)"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontface" : 3,
+									"id" : "obj-37",
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 623.75, 276.5, 83.0, 22.0 ],
+									"style" : "SDT-comments",
+									"text" : "attributes:"
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontsize" : 13.0,
+									"id" : "obj-11",
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
+									"text" : "[solids, control] Control algorithm to simulate scraping/sliding/rubbing sound textures."
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontsize" : 13.0,
+									"id" : "obj-6",
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
+									"text" : "Generates a force to be applied to a modal resonator.",
+									"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontface" : 1,
+									"fontsize" : 36.0,
+									"id" : "obj-2",
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 15.0, 10.0, 425.0, 50.0 ],
+									"text" : "sdt.scraping~"
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"id" : "obj-3",
 									"maxclass" : "message",
@@ -2926,7 +2991,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 1,
 									"outlettype" : [ "signal" ],
-									"patching_rect" : [ 39.0, 392.0, 44.0, 23.0 ],
+									"patching_rect" : [ 39.0, 385.0, 44.0, 23.0 ],
 									"text" : "sig~ 0."
 								}
 
@@ -2975,13 +3040,13 @@
 								"box" : 								{
 									"fontface" : 0,
 									"id" : "obj-16",
-									"linecount" : 10,
+									"linecount" : 9,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 449.3828125, 260.0, 162.0 ],
+									"patching_rect" : [ 623.75, 449.3828125, 260.0, 147.0 ],
 									"style" : "SDT-comments",
-									"text" : "A more complex scraping / rubbing sound can be obtained by adding a friction with a second object (sdt.inertial)\n\n- the sdt.scraping~ control signal is still directly applied to the modal resonator (object 2 in the sdt.friction~, inlet [4])\n- in addition, the scraping profile is applied to the inertial object (object 1 in the sdt.friction~, inlet [1])"
+									"text" : "A more complex scraping / rubbing sound can be obtained by using [sdt.friction~]:\n- the force signal generated by [sdt.scraping~] is still directly applied to the modal resonator (object 2 in [sdt.friction~], inlet [4]).\n- in addition, the scraping profile is applied to the inertial object (object 1 in [sdt.friction~], inlet [1])."
 								}
 
 							}
@@ -3027,7 +3092,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3861,33 +3926,6 @@
 							}
 , 							{
 								"box" : 								{
-									"fontface" : 0,
-									"id" : "obj-36",
-									"linecount" : 6,
-									"maxclass" : "comment",
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 285.0, 260.0, 100.0 ],
-									"style" : "SDT-comments",
-									"text" : "- Velocity in m/s [0.0, 3.0]\n- Force [0.0, 10.], in Newton.\n- Grain  [0.0, 1.0]: Horizontal smoothness of the surface grain. More intuitively, it can be seen as the width of probe's tip, e.g., a nail vs sandpaper"
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontface" : 3,
-									"id" : "obj-37",
-									"maxclass" : "comment",
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 266.5, 83.0, 22.0 ],
-									"style" : "SDT-comments",
-									"text" : "attributes:"
-								}
-
-							}
-, 							{
-								"box" : 								{
 									"id" : "obj-24",
 									"logfreq" : 1,
 									"maxclass" : "spectroscope~",
@@ -4033,7 +4071,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4237,7 +4275,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4484,18 +4522,6 @@
 							}
 , 							{
 								"box" : 								{
-									"fontsize" : 13.0,
-									"id" : "obj-11",
-									"maxclass" : "comment",
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-									"text" : "Compound interactions between solids. Friction model controller for scraping sounds"
-								}
-
-							}
-, 							{
-								"box" : 								{
 									"id" : "obj-10",
 									"linecount" : 3,
 									"maxclass" : "newobj",
@@ -4504,32 +4530,6 @@
 									"patching_rect" : [ 330.25, 445.8828125, 215.0, 52.0 ],
 									"style" : "SDT_package",
 									"text" : "sdt.modal _modal-object 2 1 @freqs 350. 3500. @decays 0.004 0.0015 @pickup0 210. 210. @activeModes 2"
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontsize" : 13.0,
-									"id" : "obj-6",
-									"maxclass" : "comment",
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-									"text" : "Generates a stochastic sequence of impacts to model scraping / sliding sound textures",
-									"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontface" : 1,
-									"fontsize" : 36.0,
-									"id" : "obj-2",
-									"maxclass" : "comment",
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 15.0, 10.0, 425.0, 50.0 ],
-									"text" : "sdt.scraping~"
 								}
 
 							}
@@ -4793,13 +4793,13 @@
 								"boxes" : [ "obj-38", "obj-28", "obj-31" ]
 							}
 , 							{
+								"boxes" : [ "obj-17", "obj-16" ]
+							}
+, 							{
 								"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 							}
 , 							{
 								"boxes" : [ "obj-37", "obj-36" ]
-							}
-, 							{
-								"boxes" : [ "obj-17", "obj-16" ]
 							}
  ],
 						"styles" : [ 							{

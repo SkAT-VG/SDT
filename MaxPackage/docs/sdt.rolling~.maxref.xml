@@ -4,18 +4,25 @@
 <c74object name="sdt.rolling~">
 
 	<digest>
-		Control algorithm for the impact model, simulating a rolling sound.
+		[solids, control] Control algorithm to simulate a rolling sound.
 	</digest>
 
 	<description>
-		<o>sdt.rolling~</o> simulates a round object (e.g. wheel, marble) rolling on a surface.
+		<o>sdt.rolling~</o> simulates a round object (e.g. wheel, marble) rolling over a surface.
+		It produces a force signal to be applied to a point-mass hitting a resonator: rolling sound
+		is generated as a dense series of micro-impacts modulated by the speed and
+		geometry of the rotating object and the roughness of the surface.
 		<br />
-		It acts as control layer for the compound model formed by <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		N.B. It must be used as a control layer for the structure formed by
+		<o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
-		Takes four control parameters, the <i> depth </i> and the <i> granularity</i> of the surface, the <i>mass</i> and the <i>velocity</i> of the rolling object.
 		<br />
-		<o>sdt.rolling~</o> is fed by an audio signal, representing the profile surface.
-		The output is an audio signal representing the force applied to the resonator, i.e. the bounces on the surface.
+		It is fed by a signal representing the profile of the rolling surface, and it takes
+		four control parameters: the <i> depth </i> and <i> granularity</i> of the surface,
+		the <i>mass</i> and <i>velocity</i> of the rolling object.
+		<br />
+		It outputs a signal representing a force (N) to be applied to <o>sdt.inertial</o>
+		(through <o>sdt.impact~</o>), resulting in modulated bounces on the surface.
 	</description>
 
 	<!--METADATA-->
@@ -29,7 +36,7 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the rolling object">
 			<digest>messages to the rolling object.</digest>
@@ -37,17 +44,19 @@
 		</inlet>
 
 		<inlet id="0" type="signal">
-			<digest>Surface profile, as audio signal.</digest>
+			<digest>Surface profile (in m), as audio signal.</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Force applied to the first resonator (sdt.inertial).</digest>
+			<digest>Force applied to object 1 (sdt.inertial).</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -60,7 +69,7 @@
 	<methodlist>
 		<method name="signal">
 			<digest>
-				Input signal representing the morphology of the surface.
+				Input representing the profile of the rolling surface.
 			</digest>
 			<description>
 			</description>
@@ -70,7 +79,7 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="depth" get="1" set="1" type="float" size="1" >
-		    <digest>Depth of the surface irregularities, affects the amplitude of the micro-impacts.</digest>
+		    <digest>Depth of surface irregularities, affects the amplitude of the micro-impacts.</digest>
 		    <description></description>
 	  </attribute>
 
@@ -80,15 +89,14 @@
 	  </attribute>
 
 		<attribute name="mass" get="1" set="1" type="float" size="1" >
-				<digest>Mass of the rolling object (shared with the mass of the first resonator, sdt.inertial).</digest>
+				<digest>Mass of the rolling object (to be used also as the mass of <o>sdt.inertial</o>).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="velocity" get="1" set="1" type="float" size="1" >
-				<digest>Rolling velocity, in m/s</digest>
+				<digest>Rolling velocity (m/s)</digest>
 				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
@@ -103,6 +111,7 @@
 		<seealso name="sdt.scraping~"/>
 	</seealsolist>
 
+	<!--MISC
 	<misc name="Input">
 		<entry name="signal">
 			<description>
@@ -122,5 +131,6 @@
 			</description>
 		</entry>
 	</misc>
+	-->
 
 </c74object>

@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -63,7 +63,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -176,7 +176,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -614,7 +614,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 627.75, 302.5, 260.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "The audio signal, either a sample or a noise generator, is used to represent the surface profile"
+					"text" : "The audio signal, either a sample or a noise generator, is used to represent the surface profile."
 				}
 
 			}
@@ -641,7 +641,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 623.75, 424.375, 260.0, 131.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Mass of the rolling object shared by both sdt.rolling~ ans sdt.inertial\n- Velocity in m/s \n- Grain  [0.0, 1.0]: surface granularity representing the roughness. It affects the density of the micro-impacts.\n- Depth of the irregularities, affecting the amplitude of the micro-impacts"
+					"text" : "- Mass of the rolling object (kg) shared by both [sdt.rolling~] and [sdt.inertial].\n- Velocity (m/s).\n- Grain  [0., 1.]: surface granularity representing the roughness. It affects the density of the micro-impacts.\n- Depth of the irregularities, affecting the amplitude of the micro-impacts."
 				}
 
 			}
@@ -666,8 +666,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 231.90625, 408.875, 100.0, 35.0 ],
-					"text" : "Normal force on the inertial mass"
+					"patching_rect" : [ 231.90625, 414.875, 141.0, 35.0 ],
+					"text" : "Normal force on [sdt.inertial] (first object)"
 				}
 
 			}
@@ -945,7 +945,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1134,7 +1134,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 425.0, 293.0, 183.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "It is meant to be applied to an inertial mass impacting with another resonator"
+					"text" : "It is meant to be applied to an inertial mass impacting with a resonator"
 				}
 
 			}
@@ -1196,7 +1196,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1275,7 +1275,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1376,8 +1376,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -1494,7 +1494,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1654,7 +1654,7 @@
 					"id" : "obj-10",
 					"linecount" : 5,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 35.5, 508.5, 172.0, 80.0 ],
 					"text" : "sdt.modal modal-object 3 1 @freqs 900. 1950. 2500. @decays 0.002 0.002 0.002 @pickup0 350. 450. 450. @activeModes 3"
@@ -1666,9 +1666,9 @@
 					"id" : "obj-9",
 					"linecount" : 5,
 					"maxclass" : "newobj",
-					"numinlets" : 6,
+					"numinlets" : 1,
 					"numoutlets" : 2,
-					"outlettype" : [ "signal", "signal" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 224.0, 458.75, 190.0, 80.0 ],
 					"text" : "sdt.impact~ inertial-object modal-object 2 @stiffness 200000000. @dissipation 0.1 @shape 1.5 @contact0 0 @contact1 0"
 				}
@@ -1707,7 +1707,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-					"text" : "Compound interactions between solids. Impact model controller for rolling sounds"
+					"text" : "[solids, control] Control algorithm for [sdt.impact~]."
 				}
 
 			}
@@ -1719,7 +1719,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-					"text" : "Generates a stochastic sequence of impacts to model rolling sound textures",
+					"text" : "Generates a force that modulates micro-impacts, resulting in a rolling sound.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1989,18 +1989,6 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.impact~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
-, 			{
 				"name" : "sdt.rolling~.mxo",
 				"type" : "iLaX"
 			}
@@ -2008,9 +1996,6 @@
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
-			}
-, 			{
-				"boxes" : [ "obj-4", "obj-12", "obj-7" ]
 			}
 , 			{
 				"boxes" : [ "obj-28", "obj-38", "obj-31" ]
@@ -2022,14 +2007,17 @@
 				"boxes" : [ "obj-58", "obj-54" ]
 			}
 , 			{
+				"boxes" : [ "obj-4", "obj-12", "obj-7" ]
+			}
+, 			{
 				"boxes" : [ "obj-62", "obj-61" ]
 			}
  ],
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -2047,8 +2035,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

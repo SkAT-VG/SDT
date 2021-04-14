@@ -4,16 +4,24 @@
 <c74object name="sdt.crumpling~">
 
 	<digest>
-		<m>Solids interaction:</m> Stochastic sequence of micro-impacts to form a granular, crumpling/crushing sound.
+		[solids, control] Control algorithm to simulate a granular, crumpling/crushing sound.
 	</digest>
 
 	<description>
-		Control model for the generation of crumpling/crushing sound.
+		<o>sdt.crumpling~</o> generates a stochastic sequence of velocity and fragmentation events
+		meant to drive a point-mass hitting a resonator.
+		This results in a granular, crumpling/crushing sound.
 		<br />
-		<o>sdt.crumpling~</o> acts as control layer for the compound impact model <o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
+		N.B. It must be used as a control layer for the structure formed by
+		<o>sdt.inertial</o> &#8596; <o>sdt.impact~</o> &#8596; <o>sdt.modal</o>.
 		<br />
-		Takes three control parameters: <i>crushing energy</i>, <i>granularity</i>, and <i>fragmentation</i>.
-		Output: two audio signals [0.0, 1.0], one representing the impact velocity in m/s (leftmost outlet), and one representing the fragment size compared to the whole object size (rightmost outlet).
+		<br />
+		It takes three control parameters:
+		<i>crushing energy</i>, <i>granularity</i>, and <i>fragmentation</i>
+		.<br />
+		It outputs two signals:
+		Outlet 0: impact velocity (m/s) [0., 1.];
+		Outlet 1: fragment size, as fraction of the whole object [0., 1.].
 	</description>
 
 	<!--METADATA-->
@@ -27,15 +35,16 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the crumpling object">
 			<digest>Messages to the crumpling object.</digest>
 			<description>Messages to the crumpling object.</description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal: Impact velocity in m/s</digest>
@@ -44,6 +53,7 @@
 			<digest>Audio signal: Fragment size.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -70,20 +80,19 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="crushingEnergy" get="1" set="1" type="float" size="1" >
-		    <digest>Energy of micro-impacts [0.0, 1.0].</digest>
-		    <description>Energy of micro-impacts, between 0. and 1.</description>
+		    <digest>Energy of micro-impacts [0., 1.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="granularity" get="1" set="1" type="float" size="1">
-		    <digest>Granularity [0.0, 1.0].</digest>
-		    <description>Granularity, between 0. and 1.</description>
+		    <digest>Granularity [0., 1.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="fragmentation" get="1" set="1" type="float" size="1" >
-				<digest>Fragmentation: tendency to break in smaller pieces [0.0, 1.0].</digest>
-				<description>Fragmentation: tendency to break in smaller pieces, between 0. and 1.</description>
+				<digest>Fragmentation: tendency to break into smaller pieces [0., 1.].</digest>
+				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->

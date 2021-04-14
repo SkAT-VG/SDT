@@ -4,18 +4,23 @@
 <c74object name="sdt.scraping~">
 
 	<digest>
-			<m>Solids interaction:</m> control layer for a probe sliding on a surface.
+			[solids, control] Control algorithm to simulate scraping/sliding/rubbing sound textures.
 	</digest>
 
 	<description>
-		Compound model that simulates a probe slliding on a surface.
+		<o>sdt.scraping~</o> simulates a probe sliding over a surface.
+		The resulting interaction force is applied to a resonator object.
 		<br />
-		<o>sdt.scraping~</o> acts as control layer for the <o>sdt.modal</o> resonator.
+		N.B. It must be used as a control layer for either <o>sdt.impact~</o> or <o>sdt.friction~</o>
+		in conjuction with at least one <o>sdt.modal</o> object.
 		<br />
-		Takes three control parameters, the <i> granularity</i> of the surface, that is the probe width, the <i>velocity</i> and the external <i>force</i> on the probe.
 		<br />
-		<o>sdt.scraping~</o> is fed by an audio signal, representing the profile surface.
-		The output is an audio signal representing the normal force in N, applied to the resonator.
+		It is fed by a signal representing the surface profile, and it takes three control
+		parameters: the <i> granularity</i> of the surface (or equivalently, the probe width),
+		the <i>velocity</i> and the external <i>force</i> applied to the probe.
+		<br />
+		It outputs a signal representing a normal force (N) to be applied to <o>sdt.modal</o>
+		(through <o>sdt.impact~</o> or <o>sdt.friction~</o>).
 	</description>
 
 	<!--METADATA-->
@@ -29,25 +34,27 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the scraping object">
-			<digest>messages to the bouncing object.</digest>
+			<digest>Messages to the bouncing object.</digest>
 			<description>messages to the bouncing object, bang starts the process.</description>
 		</inlet>
 
 		<inlet id="0" type="signal">
-			<digest>Audio signal, representing the surface profile.</digest>
+			<digest>Input representing the surface profile.</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal: Normal force in N.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -60,7 +67,7 @@
 	<methodlist>
 		<method name="signal">
 			<digest>
-				Input signal representing the morphology of the surface.
+				Input representing the morphology of the surface.
 			</digest>
 			<description>
 			</description>
@@ -70,20 +77,19 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="grain" get="1" set="1" type="float" size="1" >
-		    <digest>Density of the micro-impacts, that is the probe width [0.0, 1.0].</digest>
+		    <digest>Granularity of micro-impacts [0., 1.]. Can bee also iterpreted as the probe width.</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="velocity" get="1" set="1" type="float" size="1">
-		    <digest>Velocity of the probe, in m/s.</digest>
+		    <digest>Velocity of the probe (m/s).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="force" get="1" set="1" type="float" size="1" >
-				<digest>External force on probe, in N.</digest>
+				<digest>Normal force applied to the probe (N).</digest>
 				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
@@ -98,6 +104,7 @@
 		<seealso name="sdt.rolling~"/>
 	</seealsolist>
 
+	<!--MISC
 	<misc name="Input">
 		<entry name="signal">
 			<description>
@@ -116,5 +123,6 @@
 			</description>
 		</entry>
 	</misc>
+	-->
 
 </c74object>

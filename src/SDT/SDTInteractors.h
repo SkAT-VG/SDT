@@ -19,7 +19,7 @@ This abstract object acts as a generic interface implemented by all interactors.
 It contains two pointers to the interacting objects, information
 on the chosen contact points, and an algorithm that, after reading the state
 of the objects (displacement and velocity) at the specified contact points, accordingly
-computes a force to apply to those contact points.
+computes a force to be applied to those contact points.
 The generic interactor should never be directly instantiated, instead it should be
 obtained through the specific SDTImpact and SDTFriction constructors.
 @{ */
@@ -65,7 +65,7 @@ extern long SDTInteractor_getFirstPoint(const SDTInteractor *x);
 extern long SDTInteractor_getSecondPoint(const SDTInteractor *x);
 
 /** @brief Computes a force to apply to the contact points,
-based on the resonators' state at the chosen pickups */ 
+based on the resonators' state at the chosen pickups */
 extern double SDTInteractor_computeForce(SDTInteractor *x);
 
 /** @brief Signal processing routine.
