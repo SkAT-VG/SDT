@@ -1685,7 +1685,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 623.75, 321.0, 261.0, 100.0 ],
 									"style" : "SDT-comments",
-									"text" : "- Velocity (m/s) [0., 3.]\n- Force (N) [0., 10.]\n- Grain [0., 1.]: smoothness of the surface profile (e.g. sandpaper). More intuitively, it can be seen as the width of the probe tip (e.g. a nail)"
+									"text" : "- velocity: probe velocity (m/s) [0., 3.].\n- force: pressing force on the probe (N) [0., 10.]\n- grain: smoothness of the surface profile [0., 1.]. Equivalently it can be seen also as the width of the probe tip."
 								}
 
 							}
@@ -1696,9 +1696,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 302.5, 83.0, 22.0 ],
+									"patching_rect" : [ 623.75, 302.5, 145.0, 22.0 ],
 									"style" : "SDT-comments",
-									"text" : "attributes:"
+									"text" : "messages and attributes:"
 								}
 
 							}
@@ -1736,9 +1736,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 139.0, 127.0, 115.0, 41.0 ],
+									"patching_rect" : [ 131.0, 127.0, 128.0, 41.0 ],
 									"style" : "SDT-comments",
-									"text" : "velocity (m/s)",
+									"text" : "probe velocity (m/s)",
 									"textjustification" : 1
 								}
 

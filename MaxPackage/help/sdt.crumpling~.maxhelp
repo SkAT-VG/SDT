@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 622.0, 142.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -1539,13 +1539,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-36",
-					"linecount" : 5,
+					"linecount" : 4,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 291.0, 260.0, 84.0 ],
+					"patching_rect" : [ 628.75, 291.0, 268.0, 69.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Crushing energy [0., 1.].\n- Granularity [0., 1.].\n- Fragmentation [0., 1.], represents the tendency of the object to break into smaller pieces."
+					"text" : "- crushingEnergy [0., 1.].\n- granularity [0., 1.].\n- fragmentation: represents the tendency of the object to break into smaller pieces [0., 1.]."
 				}
 
 			}
@@ -1556,9 +1556,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 272.5, 83.0, 22.0 ],
+					"patching_rect" : [ 628.75, 272.5, 167.75, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -2404,7 +2404,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 424.5, 259.0, 69.0 ],
+					"patching_rect" : [ 628.75, 421.5, 259.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "- [1] velocity (m/s) of impact events applied to [sdt.inertial].\n- [2] fragment size [0., 1.], as fraction of the whole object, applied to both objects."
 				}
@@ -2417,7 +2417,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 406.0, 83.0, 22.0 ],
+					"patching_rect" : [ 628.75, 403.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlets:"
 				}

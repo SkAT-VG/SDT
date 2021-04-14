@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 795.0, 160.0, 900.0, 650.0 ],
+		"rect" : [ 602.0, 165.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -322,7 +322,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 86.5, 403.0, 169.0, 57.0 ],
+					"patching_rect" : [ 86.5, 403.0, 172.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "the velocity signal is applied to [sdt.inertial]",
 					"textjustification" : 1
@@ -897,7 +897,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 637.75, 291.0, 259.0, 178.0 ],
 					"style" : "SDT-comments",
-					"text" : "- storedEnergy: global energy of the breaking process. Combined with crushingEnergy, it affects the overall duration of the breaking.\n- crushingEnergy: energy of the micro-impacts.\n- granularity [0., 1.]: density of fractures in the breaking process, representing the crushing resistance.\n- fragmentation [0., 1.]: tendency of the object to break into smaller pieces."
+					"text" : "- storedEnergy: global energy of the breaking process. Combined with crushingEnergy it affects the overall duration of the breaking process.\n- crushingEnergy: energy of the micro-impacts.\n- granularity: density of fractures in the breaking process, representing the crushing resistance [0., 1.].\n- fragmentation: tendency of the object to break into smaller pieces [0., 1.]."
 				}
 
 			}
@@ -908,9 +908,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 272.5, 83.0, 22.0 ],
+					"patching_rect" : [ 637.75, 272.5, 167.75, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}

@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -53,7 +53,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -551,8 +551,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -570,8 +570,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -694,7 +694,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1118,7 +1118,7 @@
 						}
 , 						{
 							"number" : 3,
-							"data" : [ 5, "obj-18", "flonum", "float", 1.0, 5, "obj-28", "live.gain~", "float", -0.703412055969238 ]
+							"data" : [ 5, "obj-18", "flonum", "float", 0.770114958286285, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 1 ]
 						}
  ]
 				}
@@ -1133,7 +1133,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 460.0, 343.0, 192.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (signal) gas velocity [0.0, 1.0]"
+					"text" : "- (signal) gas velocity [0., 1.]"
 				}
 
 			}
@@ -1162,7 +1162,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1339,7 +1339,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1479,8 +1479,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -1556,7 +1556,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1696,7 +1696,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "Gases. Turbulence model of gases impacting against a surface"
+					"text" : "[gases] Wind sound"
 				}
 
 			}
@@ -1704,12 +1704,11 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 347.0, 38.0 ],
-					"text" : "Simulates the turbulence caused by the impact of the air molecules on a large solid surface",
+					"patching_rect" : [ 15.0, 86.0, 347.0, 22.0 ],
+					"text" : "Simulates the noise caused by air turbulences",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1897,17 +1896,17 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -1925,8 +1924,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 5,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -100,7 +100,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 459.0, 324.654867256637147, 225.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- diameter [float]: cavity diameter (m)\n- length [float]: cavity length (m)"
+					"text" : "- diameter: cavity diameter (m).\n- length: cavity length (m)."
 				}
 
 			}
@@ -111,9 +111,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 459.0, 305.5, 66.0, 22.0 ],
+					"patching_rect" : [ 459.0, 305.5, 149.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -211,7 +211,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -709,8 +709,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -728,8 +728,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -801,7 +801,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1233,7 +1233,7 @@
 						}
 , 						{
 							"number" : 5,
-							"data" : [ 5, "obj-18", "flonum", "float", 0.899999976158142, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 0, 5, "obj-7", "flonum", "float", 0.5, 5, "obj-14", "flonum", "float", 1.0 ]
+							"data" : [ 5, "obj-18", "flonum", "float", 0.770114958286285, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 1, 5, "obj-7", "flonum", "float", 0.5, 5, "obj-14", "flonum", "float", 1.0 ]
 						}
 , 						{
 							"number" : 6,
@@ -1254,9 +1254,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 459.0, 382.5, 225.0, 22.0 ],
+					"patching_rect" : [ 459.0, 396.5, 225.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (signal) gas velocity [0.0, 1.0]"
+					"text" : "- (signal) gas velocity [0., 1.]"
 				}
 
 			}
@@ -1267,7 +1267,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 459.0, 364.0, 66.0, 22.0 ],
+					"patching_rect" : [ 459.0, 378.0, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "inlet:"
 				}
@@ -1285,7 +1285,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1462,7 +1462,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1602,8 +1602,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -1679,7 +1679,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 5,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1819,7 +1819,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 566.0, 22.0 ],
-					"text" : "Gases. Turbulence model of gases passing through cylindrical cavities."
+					"text" : "[gases] Sound of gases passing through cavities, such as tunnels, pipes, valves, etc."
 				}
 
 			}
@@ -1831,7 +1831,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
-					"text" : "Simulates the resonant behavior of air motion in hollow objects",
+					"text" : "Simulates howling phenomena caused by air turbulences inside resonant cylindrical cavities.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2049,10 +2049,10 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
 				"boxes" : [ "obj-13", "obj-9" ]
@@ -2061,8 +2061,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 13.0 ]
+					"fontsize" : [ 13.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
@@ -2080,8 +2080,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",

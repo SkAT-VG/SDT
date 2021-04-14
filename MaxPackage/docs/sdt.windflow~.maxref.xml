@@ -4,16 +4,15 @@
 <c74object name="sdt.windflow~">
 
 	<digest>
-		<m>Gases:</m> Turbulence model of gases impacting against a surface.
+		[gases] Wind sound.
 	</digest>
 
 	<description>
-		<o>sdt.windflow~</o> simulates noise caused by air turbulences against a solid surface.
-		In this case, turbulence is generated due to the impact of the air molecules on the surface and to their random change of direction
-		caused by the irregularities of the surface itself. The resulting sound is modeled through a white noise generator,
-		filtered by a non-resonant lowpass filter.
-		The cutoff frequency of the filter is empirically set to 800 Hz and the resulting output is modulated in amplitude according
-		to the <i>speed</i> of the air flow.
+		<o>sdt.windflow~</o> simulates the noise caused by air turbulences.
+		Turbulence arises when airflows hit a surface, whose irregularities cause random change of direction of air molecules.
+		The resulting sound is modeled as a white noise filtered by a non-resonant lowpass filter.
+		The cutoff frequency of the filter is empirically set to 800 Hz, and the resulting output is modulated in amplitude according
+		to the airflow speed.
 	</description>
 
 	<!--METADATA-->
@@ -27,20 +26,22 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
-			<digest>Wind speed [0.0, 1.0].</digest>
+			<digest>Wind speed [0., 1.].</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -56,7 +57,7 @@
 				<arg name="Wind speed [0.0, 1.0]." optional="0" type="signal" />
 			</arglist>-->
 			<digest>
-				Wind speed [0.0, 1.0].
+				Wind speed [0., 1.].
 			</digest>
 			<description>
 			</description>

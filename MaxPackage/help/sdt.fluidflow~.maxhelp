@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 561.0, 149.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -45,7 +45,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 385.5, 359.0, 22.0 ],
+					"patching_rect" : [ 497.0, 374.5, 359.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "- object polyphony (int). Default number of voices is 128."
 				}
@@ -58,7 +58,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 366.0, 74.0, 22.0 ],
+					"patching_rect" : [ 497.0, 355.0, 74.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -1466,9 +1466,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 433.0, 390.0, 225.0 ],
+					"patching_rect" : [ 497.0, 422.0, 390.0, 225.0 ],
 					"style" : "SDT-comments",
-					"text" : "- avgRate [0., 100000.]: average number of bubbles generated per second.\n- minRadius (mm) [0.15, 150.]: minimum bubble radius.\n- maxRadius (mm) [0.15, 150.]: maximum bubble radius.\n- expRadius [0., 10.]: bubble radius gamma factor to set the distribution of bubbles radii across the range.\n- minDepth  [0., 1.]: minimum bubble elevation.\n- maxDepth [0., 1.]: maximum bubble elevation.\n- expDepth [0., 10.]: bubble depth gamma factor to set the distribution of bubbles elevations across the range.\n- riseFactor [0., 3.]: rise in pitch occurring when bubbles shrink and collapse.\n- riseCutoff  [0., 1.]: elevation threshold under which bubbles do not change pitch."
+					"text" : "- avgRate: average number of bubbles generated per second [0., 100000.].\n- minRadius: minimum bubble radius (mm) [0.15, 150.].\n- maxRadius: maximum bubble radius (mm) [0.15, 150.].\n- expRadius: bubble radius gamma factor to set the distribution of bubbles radii across the range [0., 10.].\n- minDepth: minimum bubble elevation [0., 1.].\n- maxDepth: maximum bubble elevation [0., 1.].\n- expDepth: bubble depth gamma factor to set the distribution of bubbles elevations across the range [0., 10.].\n- riseFactor: rise in pitch occurring when bubbles shrink and collapse [0., 3.].\n- riseCutoff: elevation threshold under which bubbles do not change pitch [0., 1.]."
 				}
 
 			}
@@ -1479,9 +1479,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 413.5, 66.0, 22.0 ],
+					"patching_rect" : [ 497.0, 402.5, 146.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}

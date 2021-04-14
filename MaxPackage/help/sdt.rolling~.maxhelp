@@ -635,13 +635,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-61",
-					"linecount" : 8,
+					"linecount" : 7,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 623.75, 424.375, 260.0, 131.0 ],
+					"patching_rect" : [ 623.75, 424.375, 260.0, 116.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Mass of the rolling object (kg) shared by both [sdt.rolling~] and [sdt.inertial].\n- Velocity (m/s).\n- Grain  [0., 1.]: surface granularity representing the roughness. It affects the density of the micro-impacts.\n- Depth of the irregularities, affecting the amplitude of the micro-impacts."
+					"text" : "- mass: mass of the rolling object (kg) shared by both [sdt.rolling~] and [sdt.inertial].\n- velocity: velocity of the rolling object (m/s).\n- grain: surface roughness [0., 1.]. It affects the density of the micro-impacts.\n- depth: depth of irregularities, affecting the amplitude of micro-impacts."
 				}
 
 			}
@@ -652,9 +652,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 623.75, 405.875, 83.0, 22.0 ],
+					"patching_rect" : [ 623.75, 405.875, 149.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}

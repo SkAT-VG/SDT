@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 495.0, 342.0, 700.0, 500.0 ],
+		"rect" : [ 100.0, 100.0, 700.0, 500.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -204,13 +204,13 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
+					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 394.0, 203.0, 150.0, 26.0 ],
 					"style" : "SDT-comments",
-					"text" : "big bubble",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -676,9 +676,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 417.0, 293.5, 264.0, 53.0 ],
+					"patching_rect" : [ 417.0, 293.5, 265.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "- radius (mm) [0.15, 150.]: size of the bubble. \n- riseFactor [0., 3.]: rise in pitch to simulate a bubble shrinking and collapsing."
+					"text" : "- radius: size of the bubble (mm) [0.15, 150.]. \n- riseFactor: rise in pitch to simulate a bubble shrinking and collapsing [0., 3.]."
 				}
 
 			}
@@ -689,9 +689,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 417.0, 275.0, 66.0, 22.0 ],
+					"patching_rect" : [ 417.0, 275.0, 148.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}

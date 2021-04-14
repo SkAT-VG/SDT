@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 583.0, 105.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -151,7 +151,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 803.5, 399.5, 39.0, 23.0 ],
+					"patching_rect" : [ 858.5, 401.5, 39.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -173,7 +173,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 811.5, 374.0, 23.0, 23.0 ]
+					"patching_rect" : [ 866.5, 376.5, 23.0, 23.0 ]
 				}
 
 			}
@@ -401,7 +401,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 103.5, 382.5, 169.0, 57.0 ],
+					"patching_rect" : [ 103.5, 382.5, 172.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "the velocity signal is applied to [sdt.inertial]",
 					"textjustification" : 1
@@ -955,7 +955,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 637.75, 291.0, 259.0, 100.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Irregularity [0., 1.]: deviation from a spherical shape.\n- Initial height (m) of the object being dropped.\n- Restitution coefficient [0., 1.]; 1. results in a perfectly elastic collision."
+					"text" : "- irregularity: deviation from a spherical shape [0., 1.].\n- height: initial height (m) of the object being dropped.\n- restitution: restitution coefficient [0., 1.]; 1. results in a perfectly elastic collision."
 				}
 
 			}
@@ -966,9 +966,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.75, 272.5, 83.0, 22.0 ],
+					"patching_rect" : [ 637.75, 272.5, 221.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -1399,7 +1399,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1712,7 +1712,7 @@
 					"id" : "obj-10",
 					"linecount" : 5,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 403.25, 501.5, 159.0, 80.0 ],
 					"style" : "SDT_package",
@@ -1725,9 +1725,9 @@
 					"id" : "obj-9",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 6,
+					"numinlets" : 2,
 					"numoutlets" : 2,
-					"outlettype" : [ "signal", "signal" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 44.0, 442.5, 235.0, 52.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 2 @stiffness 150000000. @dissipation 0.7 @shape 1.7 @contact0 0"
@@ -1752,7 +1752,7 @@
 					"id" : "obj-5",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 403.25, 457.5, 157.25, 37.0 ],
 					"text" : "sdt.inertial inertial-object @mass 0.003"
@@ -1801,7 +1801,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-9", 1 ],
-					"midpoints" : [ 53.5, 419.75, 96.700000000000003, 419.75 ],
+					"midpoints" : [ 53.5, 419.75, 269.5, 419.75 ],
 					"source" : [ "obj-13", 0 ]
 				}
 
@@ -2028,18 +2028,6 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.impact~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
-, 			{
 				"name" : "sdt.bouncing~.mxo",
 				"type" : "iLaX"
 			}

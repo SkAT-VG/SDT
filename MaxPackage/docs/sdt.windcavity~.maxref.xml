@@ -4,13 +4,12 @@
 <c74object name="sdt.windcavity~">
 
 	<digest>
-		<m>Gases:</m> Turbulence model of gases passing through cylindrical cavities.
+		[gases] Sound of gases passing through cavities, such as tunnels, pipes, valves, etc.
 	</digest>
 
 	<description>
-		<o>sdt.wincavity~</o> simulates howling phenomena caused by air turbulences inside resonant cavities, such as tunnels, pipes, valves.
-		Takes three control parameters, the wind <i>speed</i>, the <i>length</i> and the <i>diameter</i> of the cavity.
-
+		<o>sdt.wincavity~</o> simulates howling phenomena caused by air turbulences inside resonant cylindrical cavities.
+		It takes three control parameters: the wind <i>speed</i>, the <i>length</i> and <i>diameter</i> of the cavity.
 	</description>
 
 	<!--METADATA-->
@@ -24,7 +23,7 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the sdt.windcavity~ object">
 			<digest></digest>
@@ -32,17 +31,19 @@
 		</inlet>
 
 		<inlet id="0" type="signal">
-			<digest>Wind speed</digest>
-			<description>Wind speed [0.0, 1.0].</description>
+			<digest>Wind speed [0., 1.].</digest>
+			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
@@ -53,31 +54,26 @@
 
 	<!--MESSAGES-->
 	<methodlist>
-	<method name="signal">
+		<method name="signal">
 	<!--	<arglist>
 			<arg name="Wind speed [0.0, 1.0]." optional="0" type="signal" />
 		</arglist>-->
-		<digest>
-			Wind speed [0.0, 1.0].
-		</digest>
-			<description>
-
-			</description>
+			<digest>Wind speed [0., 1.].</digest>
+			<description></description>
 		</method>
 	</methodlist>
 
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="diameter" get="1" set="1" type="float" size="1" >
-		    <digest>Diameter of the cavity, in m.</digest>
+		    <digest>Diameter of the cavity (m).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="length" get="1" set="1" type="float" size="1">
-		    <digest>Length of the cavity, in m.</digest>
+		    <digest>Length of the cavity (m).</digest>
 		    <description></description>
 	  </attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
