@@ -4,12 +4,12 @@
 <c74object name="sdt.bubble~">
 
 	<digest>
-		<m>Liquids:</m> Single, spherical air bubble model.
+		[liquids] Bubble popping sound.
 	</digest>
 
 	<description>
-		Air bubble model.
-		<o>sdt.bubble~</o> takes two control parameters: bubble <i>radius</i> in mm [0.15, 150.0], and <i>rise factor</i> [0.0., 3.0].
+		<o>sdt.bubble~</o> simulates a single spherical bubble collapsing. Indeed an exponentially decaying sinusoidal oscillator.
+		It takes two control parameters: the bubble <i>radius</i> and the pitch <i>rise factor</i>.
 	</description>
 
 	<!--METADATA-->
@@ -23,20 +23,22 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the bubble object">
 			<digest>Messages to the bubble object.</digest>
 			<description>Messages to the bubble object, bang triggers the process.</description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal: Bubble sound.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -54,29 +56,26 @@
 			<digest>
 				Inlet 0: Bang triggers a bubble event.
 			</digest>
-			<description>
-				Inlet 0: Bang triggers a bubble event.
-			</description>
+			<description></description>
 		</method>
 	</methodlist>
 
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="radius" get="1" set="1" type="float" size="1" >
-		    <digest>Bubble radius [0.15, 150.] mm</digest>
-		    <description>Radius of the spherical bubble, between 0.15 mm and 150 mm.</description>
+		    <digest>Bubble radius (mm) [0.15, 150.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="riseFactor" get="1" set="1" type="float" size="1">
-		    <digest>Pitch rise factor [0.0, 3.0].</digest>
-		    <description>Audible rise in pitch, ~0.1 for bubbles in water [0.0, 3.0]</description>
+		    <digest>Pitch rise factor [0., 3.]. Simulates the rise in pitch occurring when a bubble shrinks before collapsing.</digest>
+		    <description></description>
 	  </attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
 	<seealsolist>
 		<seealso name="sdt.fluidflow~"/>
-			</seealsolist>
+	</seealsolist>
 
 </c74object>

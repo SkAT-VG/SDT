@@ -4,13 +4,18 @@
 <c74object name="sdt.fluidflow~">
 
 	<digest>
-		<m>Liquids:</m> stochastic population of bubbles.
+		[liquids] Simulates the sound of water dripping, waterfalls, burbling streams, etc.
 	</digest>
 
 	<description>
-		<o>sdt.fluidflow~</o> simulates the acoustic behavior of a population of independent, spherical bubbles, to render various phenomena such as water dripping, waterfalls, burbling streams, gushing, etc.
-		The sound model takes nine control parameters, the <i>average rate</i> of bubbles per seconds, the <i>minimum radius</i> and the <i>maximum radius</i>, the <i>exponential radius</i> that is the distribution of bubble radii across the range,
-		the <i>minimum depth</i> and the <i>maximum depth</i>, that is the bubble elevation from deep to shallow, the <i>exponential depth</i> affecting the distribution of bubble elevation across the range, the <i> rise factor</i> and the <i>rise cut off</i>.
+		<o>sdt.fluidflow~</o> simulates a distribution of bubbles that keep popping and regenerating.
+		It takes nine control parameters: the <i>average rate</i> of bubbles generated per second;
+		their <i>minimum radius</i> and <i>maximum radius</i>;
+		the <i>exponential radius</i>, the distribution of bubble radii across the range;
+		the <i>minimum depth</i> and <i>maximum depth</i>, the elevation of bubbles, from deep to shallow;
+		the <i>exponential depth</i> affecting the distribution of bubbles elevation across the range;
+		the <i>rise factor</i> simulating the rise in pitch occurring when bubbles shrink before collapsing;
+		and <i>rise cut off</i>, the elevation threshold below which bubbles do not change pitch.
 	</description>
 
 	<!--METADATA-->
@@ -24,20 +29,22 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="messages to the fluidflow object">
 			<digest>messages to the fluidflow object.</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
-			<digest>Audio signal: Liquid sound.</digest>
+			<digest>Liquid sound.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
@@ -62,50 +69,49 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="avgRate" get="1" set="1" type="float" size="1" >
-		    <digest>Bubbles/s.</digest>
-		    <description>Average number of bubbles per second [0.0, 100000.0],</description>
+		    <digest>Average number of bubbles generated per second [0., 100000.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="minRadius" get="1" set="1" type="float" size="1">
-		    <digest>Minimum bubble radius, in mm [0.15, 150.0].</digest>
-		    <description>Minimum bubble radius, in mm [0.15, 150.0].</description>
+		    <digest>Minimum bubble radius (mm) [0.15, 150.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="maxRadius" get="1" set="1" type="float" size="1" >
-				<digest>Maximum bubble radius, in mm [0.15, 150.0].</digest>
-				<description> Maximum bubble radius, in mm [0.15, 150.0].</description>
+				<digest>Maximum bubble radius (mm) [0.15, 150.].</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="expRadius" get="1" set="1" type="float" size="1" >
-				<digest>Bubble radius gamma factor, determines the distribution of bubble radii across the range [0.0, 10.0].</digest>
-				<description> Bubble radius gamma factor, determines the distribution of bubble radii across the range [0.0, 10.0].</description>
+				<digest>Bubble radius gamma factor, determines the distribution of radii across the range [0., 10.].</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="minDepth" get="1" set="1" type="float" size="1" >
-				<digest>Minimum bubble elevation (deep) [0.0, 1.0]</digest>
-				<description> Minimum bubble elevation (deep) [0.0, 1.0].</description>
+				<digest>Minimum bubble elevation (deep) [0., 1.].</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="maxDepth" get="1" set="1" type="float" size="1" >
-				<digest>Maximum bubble elevation (shallow) [0.0, 1.0]</digest>
-				<description> Maximum bubble elevation (shallow) [0.0, 1.0].</description>
+				<digest>Maximum bubble elevation (shallow) [0., 1.].</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="expDepth" get="1" set="1" type="float" size="1" >
-				<digest>Bubble depth gamma factor, determines the distribution of bubble elevations across the range [0.0, 10.0].</digest>
-				<description> Bubble depth gamma factor, determines the distribution of bubble elevations across the range [0.0, 10.0].</description>
+				<digest>Bubble depth gamma factor, determines the distribution of elevations across the range [0., 10.].</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="riseFactor" get="1" set="1" type="float" size="1" >
-				<digest>Audible rise in frequency, approx. 0.1 for bubbles in water [0.0, 3.0].</digest>
-				<description> Audible rise in frequency, approx. 0.1 for bubbles in water [0.0, 3.0].</description>
+				<digest>Pitch rise factor [0., 3.]. When collapsing, bubbles reduce their size resulting in progressively higher pitch.</digest>
+				<description></description>
 		</attribute>
 
 		<attribute name="riseCutoff" get="1" set="1" type="float" size="1" >
-				<digest>Bubbles below this elevation do not change frequency [0.0, 1.0].</digest>
-				<description> Bubbles below this elevation do not change frequency [0.0, 1.0].</description>
+				<digest>Rise elevation threshold [0., 1.]. The pitch of bubbles below this value stay constant.</digest>
+				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->

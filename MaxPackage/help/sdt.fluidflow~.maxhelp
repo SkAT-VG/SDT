@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 6,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 561.0, 149.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -45,9 +45,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 389.5, 359.0, 22.0 ],
+					"patching_rect" : [ 497.0, 385.5, 359.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- object polypphony (int). Default number of voices is 128"
+					"text" : "- object polyphony (int). Default number of voices is 128."
 				}
 
 			}
@@ -58,7 +58,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 370.0, 74.0, 22.0 ],
+					"patching_rect" : [ 497.0, 366.0, 74.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -180,7 +180,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 194.0, 188.0, 75.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "max radius in mm"
+					"text" : "max radius (mm)"
 				}
 
 			}
@@ -195,7 +195,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 110.0, 188.0, 73.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "min radius in mm"
+					"text" : "min radius (mm)"
 				}
 
 			}
@@ -449,7 +449,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -744,7 +744,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1404,7 +1404,7 @@
 					"patching_rect" : [ 693.5, 108.0, 105.0, 46.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
-							"data" : [ 5, "obj-18", "flonum", "float", 2.0, 5, "obj-30", "flonum", "float", 0.059999998658895, 5, "obj-15", "live.gain~", "float", 0.0, 5, "obj-42", "number", "int", 25, 5, "obj-23", "slider", "float", 24.0, 5, "obj-26", "flonum", "float", 2.0, 5, "obj-27", "flonum", "float", 0.100000001490116, 5, "obj-28", "flonum", "float", 0.100000001490116, 5, "obj-31", "flonum", "float", 0.100000001490116, 5, "obj-35", "flonum", "float", 0.100000001490116, 5, "obj-36", "flonum", "float", 0.0, 5, "obj-38", "flonum", "float", 8.0 ]
+							"data" : [ 5, "obj-18", "flonum", "float", 1.799999952316284, 5, "obj-30", "flonum", "float", 0.259999990463257, 5, "obj-15", "live.gain~", "float", 0.0, 5, "obj-42", "number", "int", 50, 5, "obj-23", "slider", "float", 49.0, 5, "obj-26", "flonum", "float", 7.400000095367432, 5, "obj-27", "flonum", "float", 3.0, 5, "obj-28", "flonum", "float", 0.100000001490116, 5, "obj-31", "flonum", "float", 0.100000001490116, 5, "obj-35", "flonum", "float", 0.100000001490116, 5, "obj-36", "flonum", "float", 0.0, 5, "obj-38", "flonum", "float", 0.600000023841858 ]
 						}
 , 						{
 							"number" : 2,
@@ -1462,13 +1462,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-54",
-					"linecount" : 13,
+					"linecount" : 14,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 497.0, 433.0, 390.0, 209.0 ],
+					"patching_rect" : [ 497.0, 433.0, 390.0, 225.0 ],
 					"style" : "SDT-comments",
-					"text" : "- avgRate: average number of bubbles per second [0.0, 100000.0]\n- minRadius: minimum bubble radius [0.15, 150.0]\n- maxRadius: maximum bubble radius [0.15, 150.0]\n- expRadius: bubble radius gamma factor to set the distribution of bubbles radii across the range [0.0, 10.0]\n- minDepth: minimum bubble elevation [0.0, 1.0]\n- maxDepth: maximum bubble elevation [0.0, 1.0]\n- expDepth: bubble depth gamma factor to set the distribution of bubbles elevations across the range [0.0, 10.0]\n- riseFactor: audible rise in frequency, ~0.1 for bubbles in water [0.0, 3.0]\n- riseCutoff: bubbles below this elevation do not change frequency [0.0, 1.0]"
+					"text" : "- avgRate [0., 100000.]: average number of bubbles generated per second.\n- minRadius (mm) [0.15, 150.]: minimum bubble radius.\n- maxRadius (mm) [0.15, 150.]: maximum bubble radius.\n- expRadius [0., 10.]: bubble radius gamma factor to set the distribution of bubbles radii across the range.\n- minDepth  [0., 1.]: minimum bubble elevation.\n- maxDepth [0., 1.]: maximum bubble elevation.\n- expDepth [0., 10.]: bubble depth gamma factor to set the distribution of bubbles elevations across the range.\n- riseFactor [0., 3.]: rise in pitch occurring when bubbles shrink and collapse.\n- riseCutoff  [0., 1.]: elevation threshold under which bubbles do not change pitch."
 				}
 
 			}
@@ -1497,7 +1497,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1710,7 +1710,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1800,7 +1800,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 526.0, 32.0, 82.0, 23.0 ],
+					"patching_rect" : [ 561.0, 18.0, 82.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1820,7 +1820,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 526.0, 61.0, 68.0, 23.0 ],
+					"patching_rect" : [ 561.0, 47.0, 68.0, 23.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
 					"style" : "SDTpackage",
 					"text" : "thispatcher"
@@ -1849,8 +1849,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "Liquid sounds. Stochastic population of bubbles"
+					"patching_rect" : [ 15.0, 62.0, 532.0, 22.0 ],
+					"text" : "[liquids] Simulates the sound of water dripping, waterfalls, burbling streams, etc."
 				}
 
 			}
@@ -1870,12 +1870,11 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 460.0, 38.0 ],
-					"text" : "Simulates the acoustic behavior of a population of bubbles to render water dripping, waterfalls, burbling streams and other liquid phenomena",
+					"patching_rect" : [ 15.0, 86.0, 532.0, 22.0 ],
+					"text" : "Fluid flows are simulated as distributions of bubbles that keep popping and regenerating.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2288,19 +2287,19 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-14", "obj-15", "obj-13" ]
 			}
 , 			{
 				"boxes" : [ "obj-52", "obj-23", "obj-42" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-4", "obj-1" ]
 			}
 , 			{
-				"boxes" : [ "obj-4", "obj-1" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{

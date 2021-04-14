@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 6,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 700.0, 500.0 ],
+		"rect" : [ 495.0, 342.0, 700.0, 500.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -87,7 +87,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -204,13 +204,13 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
-					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 394.0, 203.0, 150.0, 26.0 ],
 					"style" : "SDT-comments",
+					"text" : "big bubble",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -230,7 +230,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -672,13 +672,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-54",
-					"linecount" : 5,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 417.0, 293.5, 264.0, 84.0 ],
+					"patching_rect" : [ 417.0, 293.5, 264.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "- radius: represents the size of the bubble, in mm [0.15, 150.0]\n- riseFactor: adds a frequency rise to simulate blooping effects [0.0, 3.0] (~0.1 for bubbles in water). "
+					"text" : "- radius (mm) [0.15, 150.]: size of the bubble. \n- riseFactor [0., 3.]: rise in pitch to simulate a bubble shrinking and collapsing."
 				}
 
 			}
@@ -707,7 +707,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -884,7 +884,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1070,7 +1070,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 127.0, 160.0, 129.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "bubble radius in mm"
+					"text" : "bubble radius (mm)"
 				}
 
 			}
@@ -1082,9 +1082,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 264.5, 160.0, 116.0, 41.0 ],
+					"patching_rect" : [ 264.5, 160.0, 136.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "rise in frequency"
+					"text" : "pitch rise factor"
 				}
 
 			}
@@ -1144,7 +1144,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1296,7 +1296,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "Liquid sounds. Single, spherical bubble model"
+					"text" : "[liquids] Bubble popping sound."
 				}
 
 			}
@@ -1320,8 +1320,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 347.0, 38.0 ],
-					"text" : "Simulates the excitation of the gas trapped in the bubble, by means of an exponentially decaying sinusoidal oscillator ",
+					"patching_rect" : [ 15.0, 86.0, 460.0, 38.0 ],
+					"text" : "A single spherical bubble collapsing is simulated as an exponentially decaying sinusoidal oscillator. ",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1535,10 +1535,10 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{
