@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 496.0, 218.0, 950.0, 740.0 ],
+		"rect" : [ 259.0, 154.0, 950.0, 740.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 14.0,
@@ -2079,7 +2079,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 496.0, 244.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2253,7 +2253,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 361.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.scraping~",
+									"text" : "sdt.demix~",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3592,7 +3592,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 408.0, 428.0, 54.0 ],
 									"style" : "SDT_package",
-									"text" : "Friction/impact model controller for scraping sounds",
+									"text" : "Transient / tonal / residual component separator",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3601,13 +3601,13 @@
 								"box" : 								{
 									"fontsize" : 16.0,
 									"id" : "obj-16",
-									"linecount" : 3,
+									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 470.0, 440.0, 64.0 ],
+									"patching_rect" : [ 323.3125, 470.0, 440.0, 45.0 ],
 									"style" : "SDT_package",
-									"text" : "Control layer for a probe sliding on a surface. The sdt.scraping~ generates a stochastice sequence of impacts to model scraping to sliding sound textures",
+									"text" : "The sdt.demix~ separates an audio signal in its three main components, percussive, harmonic, and noisy.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -4000,7 +4000,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 259.0, 180.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -4030,6 +4030,20 @@
 						"showontab" : 1,
 						"assistshowspatchername" : 0,
 						"boxes" : [ 							{
+								"box" : 								{
+									"fontsize" : 14.0,
+									"id" : "obj-13",
+									"linecount" : 4,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 630.0, 609.0, 306.0, 74.0 ],
+									"presentation_linecount" : 4,
+									"text" : "See the \"externals\" tab for a complete list of the available algorithms, and the \"examples\" tab for a taxonomy of sound-producing phenomena referencing the respective externals."
+								}
+
+							}
+, 							{
 								"box" : 								{
 									"hidden" : 1,
 									"id" : "obj-6",
@@ -4423,12 +4437,12 @@
 									"bubble" : 1,
 									"fontsize" : 13.0,
 									"id" : "obj-53",
-									"linecount" : 7,
+									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 660.0, 457.46875, 276.0, 120.0 ],
-									"text" : "The DC motor model belongs to the family of machine sounds.\n\nSee the \"externals\" tab for the complete list of sound models, and the \"tutorials\" tab for the organization of the externals in a taxonomy of sound-producing mechanisms."
+									"patching_rect" : [ 660.0, 457.46875, 276.0, 42.0 ],
+									"text" : "The DC motor model belongs to the family of machine sounds."
 								}
 
 							}
@@ -4513,8 +4527,8 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 152.5, 374.0, 120.0, 26.0 ],
-									"text" : "2. modal object",
+									"patching_rect" : [ 137.0, 374.0, 135.5, 26.0 ],
+									"text" : "2. modal resonator",
 									"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 								}
 
@@ -4556,12 +4570,12 @@
 									"bubble" : 1,
 									"fontsize" : 13.0,
 									"id" : "obj-43",
-									"linecount" : 7,
+									"linecount" : 8,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 660.0, 176.0, 282.0, 120.0 ],
-									"text" : "The friction model takes in account two objects, an inertial mass and a modal object, that communicate by means a third object, the interactor.\n\nThis architecture is shared with all the other sound models of solids interactions."
+									"patching_rect" : [ 660.0, 176.0, 276.0, 135.0 ],
+									"text" : "The friction model references two solid objects, an inertial mass [sdt.inertial] and a modal resonator [sdt.modal], that communicate by means a third entity, the [sdt.friction~] interactor.\n\nThis architecture is shared with all the other sound models of solids interactions."
 								}
 
 							}
@@ -5777,7 +5791,7 @@
 													"numinlets" : 1,
 													"numoutlets" : 0,
 													"patching_rect" : [ 45.0, 50.0, 304.0, 330.0 ],
-													"text" : "Copyright (C) 2001-2020 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache s.dellemonache@tudelft.nl\nStefano Papetti stefano.papetti@zhdk.ch\nStefano Baldan singintime@gmail.com \n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/"
+													"text" : "Copyright (C) 2001-2021 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache s.dellemonache@tudelft.nl\nStefano Baldan singintime@gmail.com \nStefano Papetti stefano.papetti@zhdk.ch\n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/"
 												}
 
 											}
