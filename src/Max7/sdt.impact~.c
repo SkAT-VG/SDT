@@ -93,7 +93,7 @@ void impact_assist(t_impact *x, void *b, long m, long a, char *s) {
     }
   }
   else {
-    sprintf(s, "(signal): Output sound from pickup %ld", a + 1);
+    sprintf(s, "(signal): Output sound from / displacement (m) at pickup %ld", a);
   }
 }
 
