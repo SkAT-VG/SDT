@@ -4,11 +4,11 @@
 <c74object name="sdt.envelope~">
 
 	<digest>
-		<m>Sound analysis:</m> Envelope follower with different attack and release times.
+		[analysis] Envelope follower with settable attack and release times.
 	</digest>
 
 	<description>
-		<o>sdt.envelope~</o> is an envelope follower based on a one-pole lowpass filter with different attack and release times.
+		<o>sdt.envelope~</o> is an envelope follower with different attack and release times based on a one-pole lowpass filter.
 	</description>
 
 	<!--METADATA-->
@@ -22,20 +22,22 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
 			<digest>Audio signal.</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal: Signal envelope.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS
 	<objarglist>
@@ -62,15 +64,14 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="attack" get="1" set="1" type="float" size="1" >
-		    <digest>Attack in milliseconds.</digest>
+		    <digest>Attack (ms).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="release" get="1" set="1" type="float" size="1">
-		    <digest>Release in milliseconds.</digest>
+		    <digest>Release (ms).</digest>
 		    <description></description>
 	  </attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->

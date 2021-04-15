@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -141,7 +141,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -186,7 +186,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1046,13 +1046,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-75",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 402.5, 120.0, 103.5, 57.0 ],
+					"patching_rect" : [ 402.5, 112.5, 103.5, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "highest frequency in Hz"
+					"text" : "highest considered frequency (Hz)"
 				}
 
 			}
@@ -1104,7 +1104,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 472.0, 293.809734513274236, 226.0, 38.0 ],
+					"patching_rect" : [ 472.0, 279.809734513274236, 226.0, 38.0 ],
 					"style" : "SDT-comments",
 					"text" : "- (int) Analysis window length, in samples. Default is 1024."
 				}
@@ -1117,7 +1117,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 472.0, 274.65486725663709, 75.0, 22.0 ],
+					"patching_rect" : [ 472.0, 260.65486725663709, 75.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments"
 				}
@@ -1149,13 +1149,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-1",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 298.0, 120.0, 101.5, 57.0 ],
+					"patching_rect" : [ 298.0, 112.5, 101.5, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "lowest frequency in Hz"
+					"text" : "lowest considered frequency (Hz)"
 				}
 
 			}
@@ -1190,13 +1190,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-9",
-					"linecount" : 8,
+					"linecount" : 5,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 472.0, 354.464601769911326, 228.0, 131.0 ],
+					"patching_rect" : [ 469.0, 350.464601769911326, 231.0, 84.0 ],
 					"style" : "SDT-comments",
-					"text" : "- overlap: (float) Window overlap ratio [0.0, 1.0]\n- minFreq (float): Lowest frequency included in the analysis, in Hz (0 for DC)\nmaxFreq (float): Highest frequency included in the analysis, in Hz (0 for Nyquist)"
+					"text" : "- overlap: Window overlap ratio [0., 1.];\n- minFreq: Lowest frequency included in the analysis (Hz), 0 for DC;\nmaxFreq: Highest frequency included in the analysis (Hz), 0 for Nyquist."
 				}
 
 			}
@@ -1207,9 +1207,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 472.0, 335.309734513274179, 66.0, 22.0 ],
+					"patching_rect" : [ 469.0, 330.464601769911269, 155.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -1224,7 +1224,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 232.5, 120.0, 65.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "windows overlap"
+					"text" : "window overlap"
 				}
 
 			}
@@ -1281,7 +1281,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1715,7 +1715,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1894,7 +1894,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2018,8 +2018,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "Analysis. Spectral analyzer, extracting several audio descriptors"
+					"patching_rect" : [ 15.0, 62.0, 425.0, 38.0 ],
+					"text" : "\t\t[analysis] Spectral analyzer extracting several audio descriptors.\n"
 				}
 
 			}
@@ -2031,7 +2031,6 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
-					"text" : "Statistical moments of the spectrum and other spectral information",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2422,13 +2421,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-45", "obj-44" ]
 			}
 , 			{
 				"boxes" : [ "obj-13", "obj-9" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

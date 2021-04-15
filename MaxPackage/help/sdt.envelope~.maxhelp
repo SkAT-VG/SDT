@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 700.0, 500.0 ],
+		"rect" : [ 668.0, 497.0, 700.0, 500.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -54,12 +54,13 @@
 				"box" : 				{
 					"fontface" : 1,
 					"id" : "obj-42",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 374.0, 452.0, 87.0, 22.0 ],
+					"patching_rect" : [ 374.0, 452.0, 87.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "dry/wet ?"
+					"text" : "tracked amplitude"
 				}
 
 			}
@@ -150,9 +151,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 383.25, 120.0, 119.5, 41.0 ],
+					"patching_rect" : [ 402.75, 126.0, 80.5, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "release in ms"
+					"text" : "release (ms)"
 				}
 
 			}
@@ -190,9 +191,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 545.0, 312.654867256637147, 148.0, 38.0 ],
+					"patching_rect" : [ 526.0, 292.654867256637147, 163.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- attack [float]: in ms\n- release [float]: in ms"
+					"text" : "- attack: attack time (ms)\n- release: release time (ms)"
 				}
 
 			}
@@ -203,9 +204,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 545.0, 293.5, 66.0, 22.0 ],
+					"patching_rect" : [ 526.0, 273.5, 163.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -217,9 +218,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 232.5, 120.0, 139.0, 41.0 ],
+					"patching_rect" : [ 263.5, 126.0, 77.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "attack in ms"
+					"text" : "attack (ms)"
 				}
 
 			}
@@ -275,7 +276,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -728,9 +729,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 545.0, 369.5, 148.0, 22.0 ],
+					"patching_rect" : [ 526.0, 384.5, 148.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- envelope [signal]"
+					"text" : "- (signal) envelope"
 				}
 
 			}
@@ -741,7 +742,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 545.0, 355.0, 66.0, 22.0 ],
+					"patching_rect" : [ 526.0, 370.0, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlet:"
 				}
@@ -759,7 +760,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -965,7 +966,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1086,12 +1087,11 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-11",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 425.0, 38.0 ],
-					"text" : "Analysis. Envelope follower, based on a one-pole lowpass filter with different attack and release times"
+					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
+					"text" : "[analysis] Envelope follower with settable attack and release times"
 				}
 
 			}
@@ -1339,13 +1339,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
 				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
-			}
-, 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

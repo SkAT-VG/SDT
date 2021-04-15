@@ -4,14 +4,17 @@
 <c74object name="sdt.pitch~">
 
 	<digest>
-		<m>Sound analysis:</m> NSDF (Normalized Squared Difference Function) based pitch detector.
+		[analysis] Fundamental frequency (f0) estimator.
 	</digest>
 
 	<description>
-		<o>sdt.pitch~</o> is an analysis tool which returns the <i>pitch</i> in Hz (leftmost outlet) and the <i>pitch clarity</i> (rightmost outlet).
-		For voice-driven applications, <o>sdt.pitch~</o> can be coupled with the <i>skewness</i> descriptor available in <o>sdt.spectralfeats~</o>, in order to have a higher level representation of the phonation vocal activity.
+		<o>sdt.pitch~</o> estimates the fundamental frequency (f0) of the incoming signal based on the Normalized Square Difference Function (NSDF).
+		It outputs the estimated pitch (Hz) (leftmost outlet) and a pitch clarity value [0., 1.] (rightmost outlet).
 		<br/><br/>
-		For better results, the vocal sound is meant to be pre-processed with <o>sdt.demix~</o>, in order to feed <o>sdt.pitch~</o> and <o>sdt.spectralfeats~</o> with the harmonic component only.
+		For voice-driven applications, <o>sdt.pitch~</o> can be coupled with the <i>skewness</i> descriptor
+		available in <o>sdt.spectralfeats~</o>, so as to have a higher level representation of the phonation vocal activity.
+		For better results, a vocal sound should be pre-processed with <o>sdt.demix~</o> in order to feed
+		<o>sdt.pitch~</o> and <o>sdt.spectralfeats~</o> with the harmonic component only.
 	</description>
 
 	<!--METADATA-->
@@ -65,15 +68,14 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="overlap" get="1" set="1" type="float" size="1" >
-		    <digest>Window overlap ratio [0.0, 1.0].</digest>
+		    <digest>Window overlap ratio [0., 1.].</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="tolerance" get="1" set="1" type="float" size="1">
-		    <digest>Peak tolerance [0.0, 1.0].</digest>
+		    <digest>Peak tolerance [0., 1.].</digest>
 		    <description></description>
 	  </attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
@@ -85,6 +87,7 @@
 		<seealso name="sdt.zerox~"/>
 	</seealsolist>
 
+	<!--MISC
 	<misc name="Output">
 		<entry name="float">
 			<description>
@@ -93,4 +96,6 @@
 			</description>
 		</entry>
 	</misc>
+	-->
+
 </c74object>

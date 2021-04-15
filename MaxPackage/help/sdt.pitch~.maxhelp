@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -201,9 +201,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 490.0, 283.654867256637147, 199.0, 38.0 ],
+					"patching_rect" : [ 490.0, 274.654867256637147, 199.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (int) Analysis window length, in samples. Default is 4096."
+					"text" : "- (int) Analysis window size, in samples. Default is 4096."
 				}
 
 			}
@@ -214,7 +214,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 490.0, 264.5, 75.0, 22.0 ],
+					"patching_rect" : [ 490.0, 255.5, 75.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments"
 				}
@@ -274,12 +274,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-1",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 383.25, 120.0, 119.5, 41.0 ],
+					"patching_rect" : [ 394.25, 109.0, 98.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "peak tolerance"
+					"text" : "peak tolerance ratio"
 				}
 
 			}
@@ -314,13 +315,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-9",
-					"linecount" : 4,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 490.0, 344.654867256637147, 200.0, 69.0 ],
+					"patching_rect" : [ 490.0, 344.654867256637147, 203.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "- overlap: (float) Window overlap ratio [0.0, 1.0]\n- tolerance: (float) Peak tolerance [0.0, 1.0]."
+					"text" : "- overlap: Window overlap ratio [0., 1.]\n- tolerance: Peak tolerance [0., 1.]."
 				}
 
 			}
@@ -331,9 +332,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 490.0, 325.5, 66.0, 22.0 ],
+					"patching_rect" : [ 490.0, 325.5, 147.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -342,12 +343,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-8",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 232.5, 120.0, 139.0, 41.0 ],
+					"patching_rect" : [ 250.5, 109.0, 104.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "windows overlap"
+					"text" : "window overlap ratio"
 				}
 
 			}
@@ -404,7 +406,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -856,7 +858,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 490.0, 436.5, 199.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (float) Detected pitch, in Hz\n- (float) Pitch clarity [0.0, 1.0"
+					"text" : "- (float) Detected pitch (Hz)\n- (float) Pitch clarity [0., 1.]"
 				}
 
 			}
@@ -869,7 +871,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 490.0, 418.0, 199.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "outlet: (from left to right)"
+					"text" : "outlets: (from left to right)"
 				}
 
 			}
@@ -885,7 +887,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1091,7 +1093,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1212,12 +1214,11 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-11",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 425.0, 38.0 ],
-					"text" : "Analysis. Fundamental frequency estimator based on the Normalized Square Difference Function"
+					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
+					"text" : "[analysis] Fundamental frequency (f0) estimator"
 				}
 
 			}
@@ -1530,10 +1531,10 @@
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-45", "obj-44" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-45", "obj-44" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]

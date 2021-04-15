@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -40,47 +40,47 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"fontface" : 3,
+					"id" : "obj-37",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 251.964601769911326, 375.5, 123.0, 21.0 ],
+					"text" : "fast myolastic activity"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-35",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 300.0, 427.5, 111.0, 21.0 ],
+					"text" : "avg. frequency (Hz)"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"id" : "obj-36",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 238.131268436577983, 427.5, 54.0, 21.0 ],
+					"text" : "amount"
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"hidden" : 1,
 					"id" : "obj-25",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 627.0, 471.0, 54.0, 23.0 ],
+					"patching_rect" : [ 310.964601769911269, 468.0, 54.0, 23.0 ],
 					"text" : "onecopy"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-30",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 360.166666666666629, 382.5, 50.083333333333371, 21.0 ],
-					"text" : "Hz"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"id" : "obj-31",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 287.166666666666629, 365.5, 62.0, 21.0 ],
-					"text" : "fast thrills"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"id" : "obj-32",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 250.166666666666629, 382.5, 54.0, 21.0 ],
-					"text" : "activity"
 				}
 
 			}
@@ -90,8 +90,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 146.166666666666629, 382.5, 50.083333333333371, 21.0 ],
-					"text" : "Hz"
+					"patching_rect" : [ 95.166666666666629, 429.619469026548472, 111.0, 21.0 ],
+					"text" : "avg. frequency (Hz)"
 				}
 
 			}
@@ -102,8 +102,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 75.464601769911326, 365.5, 64.809365781710966, 21.0 ],
-					"text" : "slow thrills"
+					"patching_rect" : [ 33.595317109144517, 375.5, 122.809365781710966, 21.0 ],
+					"text" : "slow myolastic activity"
 				}
 
 			}
@@ -116,7 +116,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 370.0, 99.0, 71.0, 57.0 ],
+					"patching_rect" : [ 47.0, 121.0, 71.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "input signal gate"
 				}
@@ -133,7 +133,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 380.5, 156.0, 50.0, 23.0 ]
+					"patching_rect" : [ 57.5, 179.5, 50.0, 23.0 ]
 				}
 
 			}
@@ -144,7 +144,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 380.5, 189.0, 75.0, 23.0 ],
+					"patching_rect" : [ 57.5, 208.0, 75.0, 23.0 ],
 					"text" : "threshold $1"
 				}
 
@@ -158,9 +158,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 272.666666666666629, 99.0, 67.0, 57.0 ],
+					"patching_rect" : [ 128.208333333333314, 121.0, 76.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "Dc offset cutoff"
+					"text" : "DC offset cutoff (Hz)"
 				}
 
 			}
@@ -174,7 +174,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 280.666666666666629, 156.0, 50.0, 23.0 ]
+					"patching_rect" : [ 141.208333333333314, 179.5, 50.0, 23.0 ]
 				}
 
 			}
@@ -185,7 +185,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 280.666666666666629, 189.0, 93.0, 23.0 ],
+					"patching_rect" : [ 141.208333333333314, 208.0, 93.0, 23.0 ],
 					"text" : "dcFrequency $1"
 				}
 
@@ -195,13 +195,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-15",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 147.166666666666629, 99.0, 108.0, 57.0 ],
+					"patching_rect" : [ 342.464601769911326, 105.5, 117.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "cutoff frequency of fast thrills"
+					"text" : "cutoff frequency for fast activity (Hz)"
 				}
 
 			}
@@ -215,7 +215,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 175.166666666666629, 156.0, 50.0, 23.0 ]
+					"patching_rect" : [ 356.464601769911326, 179.5, 50.0, 23.0 ]
 				}
 
 			}
@@ -226,7 +226,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 175.166666666666629, 189.0, 103.0, 23.0 ],
+					"patching_rect" : [ 356.464601769911326, 208.0, 103.0, 23.0 ],
 					"text" : "highFrequency $1"
 				}
 
@@ -277,7 +277,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 130.29793510324464, 402.5, 52.0, 23.0 ]
+					"patching_rect" : [ 130.29793510324464, 404.619469026548472, 52.0, 23.0 ]
 				}
 
 			}
@@ -287,8 +287,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 36.166666666666629, 382.5, 54.0, 21.0 ],
-					"text" : "activity"
+					"patching_rect" : [ 22.464601769911326, 429.619469026548472, 54.0, 21.0 ],
+					"text" : "amount"
 				}
 
 			}
@@ -329,9 +329,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 413.0, 375.619469026548472, 277.0, 100.0 ],
+					"patching_rect" : [ 413.0, 390.619469026548472, 277.0, 100.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (float) slow myoelastic activity amount\n- (float) slow myoelastic actvity average frequency, in Hz\n- (float) fast myoelastic activity amount\n- (float) fast myoelastic actvity average frequency, in Hz"
+					"text" : "- (float) slow myoelastic activity amount;\n- (float) slow myoelastic actvity average frequency (Hz);\n- (float) fast myoelastic activity amount;\n- (float) fast myoelastic actvity average frequency (Hz)."
 				}
 
 			}
@@ -342,9 +342,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 413.0, 356.464601769911326, 158.0, 22.0 ],
+					"patching_rect" : [ 413.0, 371.464601769911326, 158.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "output: (from left to right)"
+					"text" : "outlets: (from left to right)"
 				}
 
 			}
@@ -357,7 +357,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 22.464601769911326, 402.5, 52.0, 23.0 ]
+					"patching_rect" : [ 22.464601769911326, 404.619469026548472, 52.0, 23.0 ]
 				}
 
 			}
@@ -369,9 +369,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 413.0, 244.464601769911326, 280.0, 100.0 ],
+					"patching_rect" : [ 413.0, 256.464601769911326, 280.0, 100.0 ],
 					"style" : "SDT-comments",
-					"text" : "- lowFrequency (float): Cutoff frequency of the long term amplitude envelope tracking, in Hz\n- highFrequency (float): Cutoff frequency of the short term amplitude envelope tracking, in Hz\n- threshold (float): Input signal gate\n- dcFrequency (float): Dc offset cutoff, in Hz"
+					"text" : "- threshold: Input signal gate;\n- dcFrequency: DC offset cutoff (Hz);\n- lowFrequency: Cutoff frequency of the long term amplitude envelope tracking (Hz);\n- highFrequency: Cutoff frequency of the short term amplitude envelope tracking (Hz)."
 				}
 
 			}
@@ -382,9 +382,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 413.0, 220.464601769911326, 66.0, 22.0 ],
+					"patching_rect" : [ 413.0, 235.464601769911326, 146.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -393,13 +393,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-8",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 37.166666666666629, 99.0, 108.0, 57.0 ],
+					"patching_rect" : [ 214.964601769911326, 105.5, 124.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "cutoff frequency of slow thrills"
+					"text" : "cutoff frequency for slow activity (Hz)"
 				}
 
 			}
@@ -413,7 +413,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 70.666666666666629, 156.0, 50.0, 23.0 ]
+					"patching_rect" : [ 251.964601769911326, 179.5, 50.0, 23.0 ]
 				}
 
 			}
@@ -424,7 +424,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 70.666666666666629, 189.0, 99.0, 23.0 ],
+					"patching_rect" : [ 251.964601769911326, 208.0, 99.0, 23.0 ],
 					"text" : "lowFrequency $1"
 				}
 
@@ -455,7 +455,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -889,7 +889,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1056,7 +1056,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1180,8 +1180,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "Analysis. Detects myoelastic vocal activity (trills)"
+					"patching_rect" : [ 15.0, 54.0, 425.0, 22.0 ],
+					"text" : "[analysis] Myoelastic vocal activity detector"
 				}
 
 			}
@@ -1192,7 +1192,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
+					"patching_rect" : [ 15.0, 78.0, 544.0, 22.0 ],
+					"text" : "Myoelastic vocal activity include: bilabial trills, vocal fry, palate grind",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1220,7 +1221,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 10.0, 425.0, 50.0 ],
+					"patching_rect" : [ 15.0, 2.0, 425.0, 50.0 ],
 					"text" : "sdt.myo~"
 				}
 
@@ -1237,7 +1238,7 @@
 					"mode" : 0,
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 5.464601769911326, 365.5, 190.785398230088674, 75.964601769911269 ],
+					"patching_rect" : [ 5.464601769911326, 367.619469026548472, 190.785398230088674, 75.964601769911269 ],
 					"proportion" : 0.39
 				}
 
@@ -1285,7 +1286,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 184.666666666666629, 288.5, 31.964601769911326, 288.5 ],
+					"midpoints" : [ 365.964601769911326, 288.5, 31.964601769911326, 288.5 ],
 					"source" : [ "obj-17", 0 ]
 				}
 
@@ -1300,7 +1301,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 290.166666666666629, 288.5, 31.964601769911326, 288.5 ],
+					"midpoints" : [ 150.708333333333314, 288.5, 31.964601769911326, 288.5 ],
 					"source" : [ "obj-20", 0 ]
 				}
 
@@ -1323,7 +1324,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 390.0, 288.5, 31.964601769911326, 288.5 ],
+					"midpoints" : [ 67.0, 288.5, 31.964601769911326, 288.5 ],
 					"source" : [ "obj-24", 0 ]
 				}
 
@@ -1339,7 +1340,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-5", 0 ],
-					"midpoints" : [ 80.166666666666629, 288.5, 31.964601769911326, 288.5 ],
+					"midpoints" : [ 261.464601769911326, 288.5, 31.964601769911326, 288.5 ],
 					"source" : [ "obj-4", 0 ]
 				}
 
