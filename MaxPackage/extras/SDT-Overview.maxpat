@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -120,7 +120,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -223,7 +223,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -839,7 +839,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1159,7 +1159,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2085,13 +2085,13 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2132,7 +2132,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2265,7 +2265,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 361.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.scraping~",
+									"text" : "sdt.inertial",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -2283,7 +2283,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2329,7 +2329,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 10,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -3598,13 +3598,12 @@
 								"box" : 								{
 									"fontsize" : 20.0,
 									"id" : "obj-17",
-									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 408.0, 428.0, 54.0 ],
+									"patching_rect" : [ 323.3125, 408.0, 428.0, 30.0 ],
 									"style" : "SDT_package",
-									"text" : "Friction/impact model controller for scraping sounds",
+									"text" : "Physical model of an inertial mass",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3613,13 +3612,13 @@
 								"box" : 								{
 									"fontsize" : 16.0,
 									"id" : "obj-16",
-									"linecount" : 3,
+									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 470.0, 440.0, 64.0 ],
+									"patching_rect" : [ 323.3125, 470.0, 440.0, 45.0 ],
 									"style" : "SDT_package",
-									"text" : "Control layer for a probe sliding on a surface. The sdt.scraping~ generates a stochastice sequence of impacts to model scraping to sliding sound textures",
+									"text" : "Simulates a simple inertial point mass. Mostly used as exciter for modal resonators.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -4006,13 +4005,13 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -4173,7 +4172,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4571,7 +4570,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 523.5, 215.0, 119.0, 26.0 ],
-									"text" : "1. inertial mass",
+									"text" : "1. point-mass",
 									"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 								}
 
@@ -4586,7 +4585,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 660.0, 176.0, 278.0, 135.0 ],
-									"text" : "The friction model references two solid objects, an inertial point-mass [sdt.inertial] and a modal resonator [sdt.modal], that communicate by means a third entity, the interactor [sdt.friction~].\n\nThis architecture is shared with all the other sound models of solids interactions."
+									"text" : "The friction model references two solid objects, an inertial point-mass [sdt.inertial] and a modal resonator [sdt.modal], that communicate by means of a third entity, the interactor [sdt.friction~].\n\nThis architecture is shared with all the other sound models of solids interactions."
 								}
 
 							}
@@ -4697,7 +4696,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4940,7 +4939,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -5746,7 +5745,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -6093,7 +6092,7 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "sdttaxonomy.png",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
+				"bootpath" : "~/SDT_git/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1

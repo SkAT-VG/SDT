@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 782.0, 367.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -59,7 +59,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 506.5, 151.0, 80.75, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "city car",
+					"text" : "sport car",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"varname" : "bubble"
 				}
@@ -102,7 +102,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -232,7 +232,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -729,7 +729,7 @@
 							}
 , 							{
 								"box" : 								{
-									"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 101.063829787234042, 0.0, 0, 0.0, 340.425531914893611, 0.493333333333333, 0, 0.3, 500.0, 1.0, 0, -0.3, 1000.0, 0.0, 0, -0.25 ],
+									"addpoints_with_curve" : [ 0.0, 0.0, 0, 0.0, 234.042553191489361, 0.146666666666667, 0, 0.2, 478.723404255319167, 0.4, 0, 0.15, 723.404255319148888, 0.28, 0, 0.0, 1000.0, 0.0, 0, 0.15 ],
 									"id" : "obj-1",
 									"maxclass" : "function",
 									"mode" : 1,
@@ -1414,7 +1414,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 650.5, 469.5, 247.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "-Revolutions Per Minute (RPM)\n- throttle load [0.0, 1.0"
+					"text" : "- (signal) Revolutions Per Minute (RPM);\n- (signal) throttle load [0., 1.]."
 				}
 
 			}
@@ -1427,7 +1427,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 650.5, 450.0, 191.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "input: (signal, from left to right)"
+					"text" : "inlets:"
 				}
 
 			}
@@ -1441,7 +1441,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 650.5, 584.0, 247.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "- intake noise\n- engine vibrations\n- exhaust noise"
+					"text" : "- (signal) intake noise\n- (signal) engine vibrations\n- (signal) exhaust noise"
 				}
 
 			}
@@ -1454,7 +1454,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 650.5, 564.5, 191.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "output: (signal, from left to right)"
+					"text" : "outlets:"
 				}
 
 			}
@@ -1486,7 +1486,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1691,33 +1691,6 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 401.0, 404.0, 85.0, 23.0 ],
 					"text" : "mufflerSize $1"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 0,
-					"id" : "obj-1",
-					"linecount" : 2,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 650.5, 527.0, 247.0, 38.0 ],
-					"style" : "SDT-comments",
-					"text" : "- buffer size of the internal digital waveguides, in samples. Default is 44100."
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"id" : "obj-4",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 650.5, 507.5, 74.0, 22.0 ],
-					"style" : "SDT-comments",
-					"text" : "arguments:"
 				}
 
 			}
@@ -1991,7 +1964,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2234,7 +2207,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2556,7 +2529,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2767,7 +2740,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2892,7 +2865,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "Machines. Combustion engine model"
+					"text" : "[machines] Combustion engine sound"
 				}
 
 			}
@@ -2912,12 +2885,11 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 539.0, 38.0 ],
-					"text" : "Models the behavior of the engine block (four-stroke cycle) and simulates the acoustic interactions in the exhaust system, by means of a series of interconnected digital waveguides",
+					"patching_rect" : [ 15.0, 86.0, 539.0, 22.0 ],
+					"text" : "Simulates the sound produced by 2 or 4-stroke engines",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -3465,14 +3437,14 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "enginemodel.png",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
+				"bootpath" : "~/SDT_git/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "fourstrokegraphs.png",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
+				"bootpath" : "~/SDT_git/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1
@@ -3490,16 +3462,13 @@
 				"boxes" : [ "obj-14", "obj-15", "obj-13" ]
 			}
 , 			{
-				"boxes" : [ "obj-54", "obj-53" ]
-			}
-, 			{
-				"boxes" : [ "obj-4", "obj-1" ]
-			}
-, 			{
 				"boxes" : [ "obj-65", "obj-64" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-54", "obj-53" ]
 			}
  ],
 		"styles" : [ 			{

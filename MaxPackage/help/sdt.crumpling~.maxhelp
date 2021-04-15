@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -76,7 +76,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1130,7 +1130,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1720,7 +1720,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1956,7 +1956,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2214,7 +2214,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2418,7 +2418,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 628.75, 421.5, 259.0, 69.0 ],
 					"style" : "SDT-comments",
-					"text" : "- [1] velocity (m/s) of impact events applied to [sdt.inertial].\n- [2] fragment size [0., 1.], as fraction of the whole object, applied to both objects."
+					"text" : "- velocity (m/s) of impact events applied to [sdt.inertial].\n- fragment size [0., 1.], as fraction of the whole object, applied to both objects."
 				}
 
 			}
@@ -2717,13 +2717,13 @@
 				"boxes" : [ "obj-38", "obj-28", "obj-31" ]
 			}
 , 			{
-				"boxes" : [ "obj-30", "obj-8" ]
-			}
-, 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-37", "obj-36" ]
+			}
+, 			{
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
  ],
 		"styles" : [ 			{

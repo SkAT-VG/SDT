@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -75,7 +75,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -188,7 +188,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -626,7 +626,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 627.75, 302.5, 260.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "The audio signal, either a sample or a noise generator, is used to represent the surface profile."
+					"text" : "An audio signal, either a sample or a noise generator, is used to represent the surface profile."
 				}
 
 			}
@@ -639,7 +639,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 627.75, 284.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "inlet:"
+					"text" : "input:"
 				}
 
 			}
@@ -651,7 +651,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 623.75, 424.375, 260.0, 116.0 ],
+					"patching_rect" : [ 623.75, 424.375, 263.0, 116.0 ],
 					"style" : "SDT-comments",
 					"text" : "- mass: mass of the rolling object (kg) shared by both [sdt.rolling~] and [sdt.inertial].\n- velocity: velocity of the rolling object (m/s).\n- grain: surface roughness [0., 1.]. It affects the density of the micro-impacts.\n- depth: depth of irregularities, affecting the amplitude of micro-impacts."
 				}
@@ -957,7 +957,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1208,7 +1208,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1506,7 +1506,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2028,13 +2028,13 @@
 				"boxes" : [ "obj-23", "obj-42", "obj-52" ]
 			}
 , 			{
-				"boxes" : [ "obj-58", "obj-54" ]
-			}
-, 			{
 				"boxes" : [ "obj-4", "obj-12", "obj-7" ]
 			}
 , 			{
 				"boxes" : [ "obj-62", "obj-61" ]
+			}
+, 			{
+				"boxes" : [ "obj-58", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{

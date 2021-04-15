@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -91,7 +91,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -219,7 +219,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -276,7 +276,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 623.75, 246.0, 260.0, 53.0 ],
 									"style" : "SDT-comments",
-									"text" : "The audio signal, either a sample or a noise generator, is used to represent the surface profile."
+									"text" : "An audio signal, either a sample or a noise generator, is used to represent the surface profile."
 								}
 
 							}
@@ -289,7 +289,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 623.75, 227.5, 83.0, 22.0 ],
 									"style" : "SDT-comments",
-									"text" : "inlet:"
+									"text" : "input:"
 								}
 
 							}
@@ -391,7 +391,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1270,7 +1270,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1861,7 +1861,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2065,7 +2065,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2323,7 +2323,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2740,9 +2740,6 @@
 								"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 							}
 , 							{
-								"boxes" : [ "obj-13", "obj-8" ]
-							}
-, 							{
 								"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 							}
 , 							{
@@ -2750,6 +2747,9 @@
 							}
 , 							{
 								"boxes" : [ "obj-37", "obj-36" ]
+							}
+, 							{
+								"boxes" : [ "obj-13", "obj-8" ]
 							}
  ],
 						"styles" : [ 							{
@@ -2810,7 +2810,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2853,9 +2853,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 295.0, 261.0, 100.0 ],
+									"patching_rect" : [ 623.75, 305.0, 261.0, 100.0 ],
 									"style" : "SDT-comments",
-									"text" : "- Velocity (m/s) [0., 3.]\n- Force (N) [0., 10.]\n- Grain [0., 1.]: smoothness of the surface profile (e.g. sandpaper). More intuitively, it can be seen as the width of the probe tip (e.g. a nail)"
+									"text" : "- velocity: probe velocity (m/s) [0., 3.].\n- force: pressing force on the probe (N) [0., 10.]\n- grain: smoothness of the surface profile [0., 1.]. Equivalently it can be seen also as the width of the probe tip."
 								}
 
 							}
@@ -2866,9 +2866,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 623.75, 276.5, 83.0, 22.0 ],
+									"patching_rect" : [ 623.75, 286.5, 145.0, 22.0 ],
 									"style" : "SDT-comments",
-									"text" : "attributes:"
+									"text" : "messages and attributes:"
 								}
 
 							}
@@ -3104,7 +3104,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4083,7 +4083,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -4287,7 +4287,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}

@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 196.0, 178.0, 895.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -81,7 +81,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -779,7 +779,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1278,9 +1278,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 534.0, 450.5, 247.0, 38.0 ],
+					"patching_rect" : [ 534.0, 450.5, 266.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "-Revolutions Per Minute (RPM)\n- mechanical load on the rotor [0.0, 1.0]"
+					"text" : "- (signal) Revolutions Per Minute (RPM);\n- (signal) mechanical load on the rotor [0., 1.]."
 				}
 
 			}
@@ -1293,34 +1293,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 534.0, 431.0, 191.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "input: (signal, from left to right)"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 0,
-					"id" : "obj-1",
-					"linecount" : 4,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 534.0, 513.0, 247.0, 69.0 ],
-					"style" : "SDT-comments",
-					"text" : "- (int) Buffer size of the internal comb filter, in samples. Default is 44100, which allows for a maximum chassis length of ∼343 m at a sampling rate of 44.1 kHz."
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"id" : "obj-4",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 534.0, 493.5, 129.0, 22.0 ],
-					"style" : "SDT-comments",
-					"text" : "arguments (optional):"
+					"text" : "inlets:"
 				}
 
 			}
@@ -1570,7 +1543,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1869,7 +1842,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2081,7 +2054,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2190,8 +2163,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "Machines. DC brushed electric motor model"
+					"patching_rect" : [ 15.0, 62.0, 460.0, 38.0 ],
+					"text" : "\t\t[machines] Electric motor sound.\n"
 				}
 
 			}
@@ -2215,7 +2188,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 539.0, 22.0 ],
-					"text" : "Simulates the acoustic contribution of rotor, gears and brushes in a DC motor",
+					"text" : "Simulates the sound produced by the rotor, gears and brushes in a DC motor",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2615,12 +2588,6 @@
 			}
 , 			{
 				"boxes" : [ "obj-14", "obj-15", "obj-13" ]
-			}
-, 			{
-				"boxes" : [ "obj-4", "obj-1" ]
-			}
-, 			{
-				"boxes" : [ "obj-65", "obj-64" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]

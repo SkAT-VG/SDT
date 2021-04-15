@@ -4,14 +4,15 @@
 <c74object name="sdt.motor~">
 
 	<digest>
-		<m>Sound model - Machines:</m> Combustion engine model.
+		[machines] Combustion engine sound.
 	</digest>
 
 	<description>
-		<o>sdt.motor~</o>: The engine block is modeled by means of four periodic waveforms,
-		representing the moving parts of each combustion chamber (intake and outtake valves, piston, fuel ignition).
-		These waveforms are then used as input signals or feedback gain modifiers for a set of interconnected digital waveguides,
-		which model the pipes composing the exhaust system.
+		<o>sdt.motor~</o>: Simulates a 2 or 4-stroke engine by means of two or four periodic waveforms.
+		For a 4-stroke engine, these represent the moving parts of each combustion chamber (intake and
+		outtake valves, piston, fuel ignition).
+		These waveforms are then used as input signals or feedback gain modifiers for a set of
+		interconnected digital waveguides which model the pipes composing the exhaust system.
 	</description>
 
 	<!--METADATA-->
@@ -25,7 +26,7 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
 			<digest>Revolutions Per Minute (RPM)</digest>
@@ -33,12 +34,13 @@
 		</inlet>
 
 		<inlet id="1" type="signal">
-			<digest>Throttle load [0.0, 1.0]</digest>
+			<digest>Throttle load [0., 1.]</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Intake noise, from the front of the vehicle.</digest>
@@ -52,12 +54,14 @@
 			<digest>Exhaust noise, from the back of the vehicle.</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="Buffer-size" optional="1" type="int">
-			<digest>Buffer size of the internal digital waveguides, in samples. Default is 44100,
-				which allows for a maximum length of approximately 343 m for each tube section at a sampling rate of 44.1 kHz.</digest>
+			<digest>Buffer size of the internal digital waveguides, in samples.</digest>
+			<description>Buffer size of the internal digital waveguides, in samples. Default to 44100,
+				which allows for a maximum length of ca. 343 m for each tube section at 44.1 kHz sampling rate.</description>
 		</objarg>
 	</objarglist>
 
@@ -65,11 +69,10 @@
 	<methodlist>
 		<method name="signal">
 			<digest>
-				Inlet 0: Revolutions Per Minute (RPM). <br/><br/>
-				Inlet 1: Throttle load [0.0, 1.0].
+				Inlet 0: Revolutions Per Minute (RPM). <br/>
+				Inlet 1: Throttle load [0., 1.].
 			</digest>
-			<description>
-			</description>
+			<description></description>
 		</method>
 	</methodlist>
 
@@ -86,66 +89,65 @@
 	  </attribute>
 
 		<attribute name="sparkTime" get="1" set="1" type="float" size="1" >
-				<digest>Fuel ignition time, compared to a full cycle [0.000001, 1.0].</digest>
+				<digest>Fuel ignition time, compared to a full cycle [0.000001, 1.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="compressionRatio" get="1" set="1" type="float" size="1" >
-				<digest>Engine compression ratio [5.0, 20.0].</digest>
+				<digest>Engine compression ratio [5., 20.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="asymmetry" get="1" set="1" type="float" size="1" >
-				<digest>Engine eccentricity [0.0, 1.0].</digest>
+				<digest>Engine eccentricity [0., 1.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="cylinderSize" get="1" set="1" type="float" size="1" >
-				<digest>Volume of each cylinder, in cc.</digest>
+				<digest>Volume of each cylinder (cc).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="intakeSize" get="1" set="1" type="float" size="1" >
-				<digest>Average length of the intake collectors, in m.</digest>
+				<digest>Average length of the intake collectors (m).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="extractorSize" get="1" set="1" type="float" size="1" >
-				<digest>Average length of the exhaust collectors, in m.</digest>
+				<digest>Average length of the exhaust collectors (m).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="exhaustSize" get="1" set="1" type="float" size="1" >
-				<digest>Length of the main exhaust pipe, in m.</digest>
+				<digest>Length of the main exhaust pipe (m).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="expansion" get="1" set="1" type="float" size="1" >
 				<digest>Impedance mismatch between extractors and exhaust pipe,
-					present in two-stroke engines to limit the expulsion of unburnt fuel [0.0, 1.0].</digest>
+					present in two-stroke engines to limit the expulsion of unburnt fuel [0., 1.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="mufflerSize" get="1" set="1" type="float" size="1" >
-				<digest>Average size of the muffler resonators, in m.</digest>
+				<digest>Average size of the muffler resonators (m).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="mufflerFeedback" get="1" set="1" type="float" size="1" >
-				<digest>Muffler efficiency [0.0, 1.0].</digest>
+				<digest>Muffler efficiency [0., 1.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="outletSize" get="1" set="1" type="float" size="1" >
-				<digest>Length of the exhaust outlet, in m.</digest>
+				<digest>Length of the exhaust outlet (m).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="backfire" get="1" set="1" type="float" size="1" >
-				<digest>Amount of backfiring when the engine revs down [0.0, 1.0].</digest>
+				<digest>Amount of backfiring when the engine revs down [0., 1.].</digest>
 				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
@@ -153,6 +155,7 @@
 		<seealso name="sdt.dcmotor~"/>
 	</seealsolist>
 
+	<!--MISC
 	<misc name="Output">
 		<entry name="signal">
 			<description>
@@ -166,4 +169,6 @@
 			</description>
 		</entry>
 	</misc>
+	-->
+	
 </c74object>

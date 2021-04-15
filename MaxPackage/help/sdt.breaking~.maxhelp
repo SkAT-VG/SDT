@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 570.0, 131.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -39,6 +39,33 @@
 		"subpatcher_template" : "",
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
+				"box" : 				{
+					"fontface" : 0,
+					"id" : "obj-8",
+					"linecount" : 4,
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 637.75, 517.5, 259.0, 69.0 ],
+					"style" : "SDT-comments",
+					"text" : "- velocity (m/s) of impact events applied to [sdt.inertial].\n- fragment size [0., 1.], as fraction of the whole object, applied to both objects."
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 3,
+					"id" : "obj-30",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 637.75, 499.0, 83.0, 22.0 ],
+					"style" : "SDT-comments",
+					"text" : "outlets:"
+				}
+
+			}
+, 			{
 				"box" : 				{
 					"hidden" : 1,
 					"id" : "obj-3",
@@ -2027,6 +2054,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-37", "obj-36" ]
+			}
+, 			{
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
  ],
 		"styles" : [ 			{
