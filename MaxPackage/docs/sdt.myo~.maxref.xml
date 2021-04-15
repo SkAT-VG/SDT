@@ -124,9 +124,9 @@
 	<!--SEEALSO-->
 	<seealsolist>
 		<seealso name="sdt.demix~"/>
-		<seealso name="sdt.spectralfeats~"/>
-		<seealso name="sdt.pitch~"/>
 		<seealso name="sdt.envelope~"/>
+		<seealso name="sdt.pitch~"/>
+		<seealso name="sdt.spectralfeats~"/>
 		<seealso name="sdt.zerox~"/>
 	</seealsolist>
 

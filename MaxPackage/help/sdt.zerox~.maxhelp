@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -223,7 +223,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 453.0, 325.464601769911326, 238.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- normalized zero crossing rate [0.0, 1.0]"
+					"text" : "- normalized zero crossing rate [0., 1.]"
 				}
 
 			}
@@ -236,7 +236,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 453.0, 306.309734513274179, 66.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "output:"
+					"text" : "outlet:"
 				}
 
 			}
@@ -278,13 +278,12 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-9",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 453.0, 264.464601769911326, 238.0, 38.0 ],
+					"patching_rect" : [ 453.0, 264.464601769911326, 238.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "- overlap: (float) Window overlap ratio [0.0, 1.0]"
+					"text" : "- overlap: Window overlap ratio [0., 1.]"
 				}
 
 			}
@@ -295,9 +294,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 453.0, 245.309734513274179, 66.0, 22.0 ],
+					"patching_rect" : [ 453.0, 245.309734513274179, 147.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "attributes:"
+					"text" : "messages and attributes:"
 				}
 
 			}
@@ -306,12 +305,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-8",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 291.0, 135.0, 117.0, 41.0 ],
+					"patching_rect" : [ 283.0, 121.0, 133.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "window overlap"
+					"text" : "analysis window overlap ratio"
 				}
 
 			}
@@ -368,7 +368,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -802,7 +802,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -980,7 +980,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1105,7 +1105,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "Analysis. Extract the zero crossing rate of an input signal"
+					"text" : "[analysis] Zero crossings detector and counter"
 				}
 
 			}
@@ -1113,12 +1113,11 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
-					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 401.0, 38.0 ],
-					"text" : "Reports how often an audio signal changes from positive to negative and vice versa, for a rough estimation of noisiness",
+					"patching_rect" : [ 15.0, 86.0, 401.0, 22.0 ],
+					"text" : "The zero crossing rate can be used as a rough estimation of noisiness",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 

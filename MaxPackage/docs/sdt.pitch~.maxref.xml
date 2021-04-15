@@ -10,7 +10,8 @@
 	<description>
 		<o>sdt.pitch~</o> estimates the fundamental frequency (f0) of the incoming signal based on the Normalized Square Difference Function (NSDF).
 		It outputs the estimated pitch (Hz) (leftmost outlet) and a pitch clarity value [0., 1.] (rightmost outlet).
-		<br/><br/>
+		<br/>
+		<br/>
 		For voice-driven applications, <o>sdt.pitch~</o> can be coupled with the <i>skewness</i> descriptor
 		available in <o>sdt.spectralfeats~</o>, so as to have a higher level representation of the phonation vocal activity.
 		For better results, a vocal sound should be pre-processed with <o>sdt.demix~</o> in order to feed
@@ -28,15 +29,16 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
 			<digest>Audio signal.</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="float">
 			<digest>Detected pitch, in Hz.</digest>
@@ -46,6 +48,7 @@
 			<digest>Pitch clarity [0.0, 1.0].</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
@@ -81,9 +84,9 @@
 	<!--SEEALSO-->
 	<seealsolist>
 		<seealso name="sdt.demix~"/>
-		<seealso name="sdt.spectralfeats~"/>
-		<seealso name="sdt.myo~"/>
 		<seealso name="sdt.envelope~"/>
+		<seealso name="sdt.myo~"/>
+		<seealso name="sdt.spectralfeats~"/>
 		<seealso name="sdt.zerox~"/>
 	</seealsolist>
 

@@ -76,10 +76,10 @@
 
 	<!--SEEALSO-->
 	<seealsolist>
+		<seealso name="sdt.myo~"/>
 		<seealso name="sdt.pitch~"/>
 		<seealso name="sdt.spectralfeats~"/>
 		<seealso name="sdt.zerox~"/>
-		<seealso name="sdt.myo~"/>
 	</seealsolist>
 
 </c74object>
