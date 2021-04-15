@@ -4,12 +4,11 @@
 <c74object name="sdt.zerox~">
 
 	<digest>
-		<m>Sound analysis:</m> Zero crossings detector.
+		[analysis] Zero crossings detector.
 	</digest>
 
 	<description>
-		The <m>sdt.zerox~</m> returns the normalized zero crossing rate of an input signal [0.0, 1.0].
-
+		The <m>sdt.zerox~</m> returns the normalized zero crossing rate of an input signal [0., 1.].
 	</description>
 
 	<!--METADATA-->
@@ -23,25 +22,27 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
 			<digest>Audio signal</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="float">
 			<digest>Normalized zero crossing rate [0.0, 1.0].</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="Analysis-window-length" optional="1" type="int">
-			<digest>Analysis window length, in samples (default is 4096).</digest>
+			<digest>Analysis window length, in samples (defaults to 4096).</digest>
 		</objarg>
 	</objarglist>
 
@@ -59,10 +60,9 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="overlap" get="1" set="1" type="float" size="1" >
-		    <digest>Window overlap ratio [0.0, 1.0].</digest>
+		    <digest>Window overlap ratio [0., 1.].</digest>
 		    <description></description>
 	  </attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->
