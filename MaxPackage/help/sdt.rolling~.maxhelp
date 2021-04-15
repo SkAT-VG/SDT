@@ -1433,7 +1433,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 20.5, 145.0, 98.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "velocity in m/s"
+					"text" : "velocity (m/s)"
 				}
 
 			}
@@ -1447,7 +1447,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 133.25, 145.0, 73.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "mass in Kg"
+					"text" : "mass (kg)"
 				}
 
 			}

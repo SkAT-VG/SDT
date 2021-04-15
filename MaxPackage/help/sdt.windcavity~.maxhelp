@@ -70,9 +70,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 383.25, 123.0, 119.5, 41.0 ],
+					"patching_rect" : [ 383.25, 121.0, 119.5, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "object length in m"
+					"text" : "object length (m)"
 				}
 
 			}
@@ -86,7 +86,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 418.0, 189.0, 50.0, 23.0 ]
+					"patching_rect" : [ 418.0, 164.0, 50.0, 23.0 ]
 				}
 
 			}
@@ -97,7 +97,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 418.0, 222.0, 59.0, 23.0 ],
+					"patching_rect" : [ 418.0, 197.0, 59.0, 23.0 ],
 					"text" : "length $1"
 				}
 
@@ -137,9 +137,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 232.5, 123.0, 139.0, 41.0 ],
+					"patching_rect" : [ 232.5, 121.0, 139.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "object diameter in m"
+					"text" : "object diameter (m)"
 				}
 
 			}
@@ -153,7 +153,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 277.0, 189.0, 50.0, 23.0 ]
+					"patching_rect" : [ 277.0, 164.0, 50.0, 23.0 ]
 				}
 
 			}
@@ -164,7 +164,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 277.0, 222.0, 72.0, 23.0 ],
+					"patching_rect" : [ 277.0, 197.0, 72.0, 23.0 ],
 					"text" : "diameter $1"
 				}
 
@@ -201,7 +201,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 153.0, 164.0, 86.0, 22.0 ],
+					"patching_rect" : [ 137.0, 164.0, 86.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "<-- look inside",
 					"textjustification" : 1
@@ -1644,9 +1644,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 79.5, 123.0, 79.0, 41.0 ],
+					"patching_rect" : [ 80.5, 121.0, 105.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "gas velocity"
+					"text" : "wind velocity"
 				}
 
 			}
@@ -1819,7 +1819,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 94.0, 189.0, 50.0, 23.0 ]
+					"patching_rect" : [ 94.0, 192.0, 50.0, 23.0 ]
 				}
 
 			}

@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 196.0, 178.0, 895.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -55,13 +55,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"fontface" : 1,
-					"hidden" : 1,
 					"id" : "obj-76",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 398.125, 178.0, 168.75, 41.0 ],
 					"style" : "SDT-comments",
+					"text" : "adding air noise",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -762,13 +762,12 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 25.5, 178.0, 23.0, 23.0 ]
+					"patching_rect" : [ 19.375, 178.0, 23.0, 23.0 ]
 				}
 
 			}
 , 			{
 				"box" : 				{
-					"hidden" : 1,
 					"id" : "obj-18",
 					"maxclass" : "newobj",
 					"numinlets" : 1,
@@ -1147,7 +1146,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 57.0, 146.0, 45.0, 23.0 ],
+					"patching_rect" : [ 8.375, 209.0, 45.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1196,7 +1195,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 57.0, 121.0, 45.0, 41.0 ],
+					"patching_rect" : [ 66.0, 137.0, 45.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "RPM"
 				}
@@ -1369,7 +1368,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 226.5, 249.0, 78.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "size of the chassis in m"
+					"text" : "size of the chassis (m)"
 				}
 
 			}
@@ -2005,7 +2004,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 171.5, 249.0, 58.0, 57.0 ],
+					"patching_rect" : [ 163.0, 249.0, 58.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "number of coils"
 				}
@@ -2311,7 +2310,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
-					"hidden" : 1,
 					"source" : [ "obj-18", 1 ]
 				}
 
@@ -2319,7 +2317,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-90", 0 ],
-					"hidden" : 1,
 					"source" : [ "obj-18", 0 ]
 				}
 
@@ -2422,7 +2419,6 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-18", 0 ],
-					"hidden" : 1,
 					"source" : [ "obj-38", 0 ]
 				}
 
@@ -2446,7 +2442,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-18", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 735.666666666666629, 143.5, 66.5, 143.5 ],
+					"midpoints" : [ 735.666666666666629, 143.5, 17.875, 143.5 ],
 					"order" : 1,
 					"source" : [ "obj-56", 1 ]
 				}

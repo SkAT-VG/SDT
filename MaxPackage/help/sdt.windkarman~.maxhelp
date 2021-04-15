@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 565.0, 163.0, 700.0, 500.0 ],
+		"rect" : [ 100.0, 100.0, 700.0, 500.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -794,7 +794,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 232.5, 130.0, 139.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "object diameter in mm"
+					"text" : "object diameter (mm)"
 				}
 
 			}
@@ -856,7 +856,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 146.0, 174.0, 86.0, 22.0 ],
+					"patching_rect" : [ 137.0, 174.0, 86.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "<-- look inside",
 					"textjustification" : 1
@@ -1743,9 +1743,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 79.5, 130.0, 79.0, 41.0 ],
+					"patching_rect" : [ 79.5, 130.0, 93.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "gas velocity"
+					"text" : "wind velocity"
 				}
 
 			}

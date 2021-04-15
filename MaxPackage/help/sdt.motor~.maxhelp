@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 782.0, 367.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -59,7 +59,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 506.5, 151.0, 80.75, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "sport car",
+					"text" : "city car",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"varname" : "bubble"
 				}
@@ -1192,13 +1192,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-85",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 595.0, 317.0, 77.0, 57.0 ],
+					"patching_rect" : [ 595.0, 302.0, 77.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "exhaust outlet in m"
+					"text" : "size of exhaust outlet (m)"
 				}
 
 			}
@@ -1228,7 +1228,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 372.0, 317.0, 101.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "muffler resonators in m"
+					"text" : "size of muffler resonators (m)"
 				}
 
 			}
@@ -1338,13 +1338,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-75",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 212.0, 317.0, 89.0, 57.0 ],
+					"patching_rect" : [ 216.0, 302.0, 89.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "main exhaust pipe in m"
+					"text" : "size of main exhaust pipe (m)"
 				}
 
 			}
@@ -1353,13 +1353,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-74",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 117.0, 317.0, 94.0, 57.0 ],
+					"patching_rect" : [ 117.0, 302.0, 94.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "exhaust collectors in m"
+					"text" : "size of exhaust collectors (m)"
 				}
 
 			}
@@ -1705,7 +1705,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 20.0, 317.0, 96.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "intake collectors in m"
+					"text" : "size of intake collectors (m)"
 				}
 
 			}
@@ -1748,9 +1748,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 163.5, 147.0, 83.0, 41.0 ],
+					"patching_rect" : [ 171.0, 155.0, 75.0, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "volume in cc"
+					"text" : "volume (cc)"
 				}
 
 			}
@@ -1763,7 +1763,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 89.0, 147.0, 78.0, 41.0 ],
+					"patching_rect" : [ 91.0, 155.0, 78.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "N cylinders "
 				}

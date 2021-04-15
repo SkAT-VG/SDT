@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -75,7 +75,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -218,7 +218,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -966,9 +966,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 323.0, 143.0, 189.0, 57.0 ],
+					"patching_rect" : [ 318.5, 150.734375, 236.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "modal weights for each pickup in 1/Kg (starting from pickup0)",
+					"text" : "modal weights for each pickup (kg^-1) (starting from pickup0)",
 					"textjustification" : 1
 				}
 
@@ -1180,7 +1180,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1400,7 +1400,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1608,13 +1608,13 @@
 					"bubblepoint" : 0.6,
 					"bubbleside" : 2,
 					"id" : "obj-34",
-					"linecount" : 2,
+					"linecount" : 3,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 19.25, 143.0, 119.0, 57.0 ],
+					"patching_rect" : [ 59.5, 129.734375, 99.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "modal frequencies in Hz",
+					"text" : "modal frequencies (Hz)",
 					"textjustification" : 1
 				}
 
@@ -1629,9 +1629,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 198.0, 143.0, 92.0, 57.0 ],
+					"patching_rect" : [ 191.0, 143.0, 99.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "modal decays in s",
+					"text" : "modal decays (s)",
 					"textjustification" : 1
 				}
 
@@ -1693,7 +1693,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}

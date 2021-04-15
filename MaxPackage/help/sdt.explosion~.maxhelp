@@ -525,13 +525,13 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
+					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 583.0, 185.0, 157.0, 26.0 ],
 					"style" : "SDT-comments",
-					"text" : "slower blast wave",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -728,7 +728,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 484.0, 126.0, 83.5, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "propagation speed in m/s"
+					"text" : "blast wind speed (m/s)"
 				}
 
 			}
@@ -741,9 +741,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 391.0, 126.0, 83.5, 57.0 ],
+					"patching_rect" : [ 390.0, 126.0, 83.5, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "propagation speed in m/s"
+					"text" : "blast wave speed (m/s)"
 				}
 
 			}
@@ -863,7 +863,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 281.0, 126.0, 102.5, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "distance from the listener in m"
+					"text" : "distance from the listener (m)"
 				}
 
 			}
@@ -932,7 +932,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 116.0, 126.0, 76.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "turbulence tail in s"
+					"text" : "turbulence tail (s)"
 				}
 
 			}

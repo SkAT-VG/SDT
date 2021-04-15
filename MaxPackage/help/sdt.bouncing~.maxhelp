@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -61,7 +61,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -290,7 +290,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -540,7 +540,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1128,7 +1128,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1332,7 +1332,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1411,7 +1411,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1539,12 +1539,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"id" : "obj-33",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 284.0, 130.0, 95.0, 41.0 ],
+					"patching_rect" : [ 284.0, 122.0, 95.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "falling height",
+					"text" : "falling height (m)",
 					"textjustification" : 1
 				}
 
@@ -1590,7 +1591,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1724,7 +1725,7 @@
 					"id" : "obj-10",
 					"linecount" : 5,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 403.25, 501.5, 159.0, 80.0 ],
 					"style" : "SDT_package",
@@ -1737,9 +1738,9 @@
 					"id" : "obj-9",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 2,
+					"numinlets" : 6,
 					"numoutlets" : 2,
-					"outlettype" : [ "", "" ],
+					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 44.0, 442.5, 235.0, 52.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 2 @stiffness 150000000. @dissipation 0.7 @shape 1.7 @contact0 0"
@@ -1764,7 +1765,7 @@
 					"id" : "obj-5",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 403.25, 457.5, 157.25, 37.0 ],
 					"text" : "sdt.inertial inertial-object @mass 0.003"
@@ -1813,7 +1814,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-9", 1 ],
-					"midpoints" : [ 53.5, 419.75, 269.5, 419.75 ],
+					"midpoints" : [ 53.5, 419.75, 96.700000000000003, 419.75 ],
 					"source" : [ "obj-13", 0 ]
 				}
 
@@ -2040,6 +2041,18 @@
 		}
 ,
 		"dependency_cache" : [ 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.impact~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+, 			{
 				"name" : "sdt.bouncing~.mxo",
 				"type" : "iLaX"
 			}
