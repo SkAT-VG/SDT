@@ -980,7 +980,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 637.75, 272.5, 221.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "messages and attributes:"
+					"text" : "attributes:"
 				}
 
 			}

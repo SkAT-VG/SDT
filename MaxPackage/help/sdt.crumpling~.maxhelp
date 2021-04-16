@@ -1570,7 +1570,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 628.75, 272.5, 167.75, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "messages and attributes:"
+					"text" : "attributes:"
 				}
 
 			}
@@ -2720,10 +2720,10 @@
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-37", "obj-36" ]
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
 , 			{
-				"boxes" : [ "obj-30", "obj-8" ]
+				"boxes" : [ "obj-37", "obj-36" ]
 			}
  ],
 		"styles" : [ 			{

@@ -902,7 +902,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 316.654867256637147, 337.0, 116.0 ],
+					"patching_rect" : [ 553.5, 436.654867256637147, 337.0, 116.0 ],
 					"style" : "SDT-comments",
 					"text" : "- blastTime: duration of the initial pressure peak (s).\n- scatterTime: duration of the turbulence tail (s).\n- dispersion: amount of turbulence [0.0, 1.0].\n- distance: distance of the explosion from the listener (m).\n- waveSpeed: propagation speed of the blast wave (m/s).\n- windSpeed [float]: propagation speed of the blast wind (m/s)."
 				}
@@ -915,9 +915,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 297.5, 147.0, 22.0 ],
+					"patching_rect" : [ 553.5, 417.5, 147.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "messages and attributes:"
+					"text" : "attributes:"
 				}
 
 			}
@@ -1708,7 +1708,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 480.154867256637147, 330.0, 69.0 ],
+					"patching_rect" : [ 553.5, 323.154867256637147, 330.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Size of the scattering delay lines, in samples (default 44100)\n- Size of the wave propagation delay lines, in samples (default 4410000)"
 				}
@@ -1721,7 +1721,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.5, 461.654867256637147, 81.0, 22.0 ],
+					"patching_rect" : [ 553.5, 304.654867256637147, 81.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}

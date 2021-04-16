@@ -102,7 +102,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 33.595317109144517, 375.5, 122.809365781710966, 21.0 ],
+					"patching_rect" : [ 33.595317109144517, 375.5, 123.0, 21.0 ],
 					"text" : "slow myolastic activity"
 				}
 
@@ -384,7 +384,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 413.0, 235.464601769911326, 146.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "messages and attributes:"
+					"text" : "attributes:"
 				}
 
 			}
@@ -1438,10 +1438,10 @@
 				"boxes" : [ "obj-110", "obj-109" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
  ],
 		"styles" : [ 			{

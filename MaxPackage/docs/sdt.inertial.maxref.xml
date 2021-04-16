@@ -8,7 +8,8 @@
 	</digest>
 
 	<description>
-		<o>sdt.inertial</o> simulates a simple point-mass. Mostly used as exciter for modal resonators.
+		<o>sdt.inertial</o> Simulates a simple point-mass whose displacement and velocity can be set.
+		Mostly used as exciter for modal resonators.
 	</description>
 
 	<!--METADATA-->

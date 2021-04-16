@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 904.0, 657.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -1523,7 +1523,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 814.0, 43.0, 65.5, 23.0 ],
+					"patching_rect" : [ 814.0, 50.0, 65.5, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1543,7 +1543,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 767.5, -4.0, 112.0, 23.0 ],
+					"patching_rect" : [ 767.5, 3.0, 112.0, 23.0 ],
 					"text" : "See also"
 				}
 
@@ -1566,7 +1566,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "int", "", "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 767.5, 18.0, 112.0, 23.0 ],
+					"patching_rect" : [ 767.5, 25.0, 112.0, 23.0 ],
 					"style" : "SDT_package"
 				}
 
@@ -1858,7 +1858,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 10.5, 132.734375, 109.0, 41.0 ],
+					"patching_rect" : [ 10.5, 132.734375, 113.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "external force (N) ",
 					"textjustification" : 1

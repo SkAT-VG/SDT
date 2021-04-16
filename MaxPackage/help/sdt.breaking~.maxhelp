@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 570.0, 131.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -949,7 +949,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 637.75, 272.5, 167.75, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "messages and attributes:"
+					"text" : "attributes:"
 				}
 
 			}
@@ -2053,10 +2053,10 @@
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-37", "obj-36" ]
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
 , 			{
-				"boxes" : [ "obj-30", "obj-8" ]
+				"boxes" : [ "obj-37", "obj-36" ]
 			}
  ],
 		"styles" : [ 			{

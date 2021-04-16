@@ -4,14 +4,20 @@
 <c74object name="sdt.demix~">
 
 	<digest>
-		<m>Sound processor:</m> Transient / tonal / residual component separator.
+		[processing] Transient / tonal / residual component separator.
 	</digest>
 
 	<description>
-		<o>sdt.demix~</o> is a sound processor which separates an audio signal in its three main components, transients, tonal, and residual.
-		Takes three control parameters, the window <i>overlap</i> factor, the <i> noise threshold</i>, that is the amount of signal classified as residual,
-		and the <i> tonal threshold</i>, that is the amount of <i>non-residual</i> signal classified as tonal.
-		The object returns three audio signals representing the percussive component, the harmonic component, and the noisy component.
+		<o>sdt.demix~</o> first separates an audio signal in its residual (noisy) and non-residual components.
+		The latter is then further separated into transients (percussive) and tonal (harmonic) components.
+		<br />
+		<br />
+		It takes three control parameters:
+		the window <i>overlap</i> factor,
+		the <i>noise threshold</i>, that is the amount of signal classified as residual,
+		and the <i>tonal threshold</i>, that is the amount of <i>non-residual</i> signal classified as tonal.
+		<br />
+		It outputs three signals representing the mentioned components.
 	</description>
 
 	<!--METADATA-->
@@ -25,15 +31,16 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
 			<digest>Sound source.</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Audio signal: Transients (percussive).</digest>
@@ -47,15 +54,16 @@
 			<digest>Audio signal: Residual (noisy).</digest>
 		</outlet>
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="window-size" optional="1" type="int">
-			<digest>Window size in samples (default 1024)</digest>
+			<digest>Window size in samples (defaults to 1024)</digest>
 		</objarg>
 
 		<objarg name="smoothing-kernel-radius" optional="1" type="float">
-			<digest>Smoothing kernel radius (default 2.)</digest>
+			<digest>Smoothing kernel radius (defaults to 2.)</digest>
 		</objarg>
 	</objarglist>
 
@@ -65,28 +73,26 @@
 			<digest>
 				Input signal.
 			</digest>
-			<description>
-			</description>
+			<description></description>
 		</method>
 	</methodlist>
 
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="overlap" get="1" set="1" type="float" size="1" >
-		    <digest>Window overlap factor .</digest>
-		    <description>Window overlap factor, between 0.5 and 1.</description>
+		    <digest>Window overlap ratio [0.5, 1.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="noiseThreshold" get="1" set="1" type="float" size="1">
-		    <digest>Amount of residual component.</digest>
-		    <description>Amount of signal classified as residual component, between 0. and 1.</description>
+		    <digest>Threshold for classifying a signal as residual (noisy) [0., 1.].</digest>
+		    <description></description>
 	  </attribute>
 
 		<attribute name="tonalThreshold" get="1" set="1" type="float" size="1" >
-				<digest>Amount of harmonic component.</digest>
-				<description>Amount of non-residual signal, classified as tonal, between 0. and 1.</description>
+				<digest>Threshold for classifying the non-residual signal as harmonic (tonal) [0., 1.].</digest>
+				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->

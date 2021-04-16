@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 700.0, 500.0 ],
+		"rect" : [ 234.0, 354.0, 692.0, 562.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -75,9 +75,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 452.0, 272.499999999999943, 238.0, 38.0 ],
+					"patching_rect" : [ 445.0, 268.499999999999943, 238.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- window size, in samples (default 1024)\n- smoothing kernel radius (default 2)"
+					"text" : "- window size, in samples (default 1024)\n- smoothing kernel radius (default 2.)"
 				}
 
 			}
@@ -88,9 +88,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 452.0, 253.345132743362797, 87.0, 22.0 ],
+					"patching_rect" : [ 445.0, 249.345132743362797, 190.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "arguments:"
+					"text" : "messages and arguments:"
 				}
 
 			}
@@ -363,7 +363,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 284.125, 91.0, 66.75, 57.0 ],
+					"patching_rect" : [ 289.125, 91.0, 66.75, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "noise threshold"
 				}
@@ -404,9 +404,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 452.0, 329.654867256637147, 237.0, 84.0 ],
+					"patching_rect" : [ 445.0, 329.654867256637147, 245.0, 84.0 ],
 					"style" : "SDT-comments",
-					"text" : "- overlap (float): window overlap factor\n- noiseThreshold (float): amount of signal classified as residual\n- tonalThreshold (float): amount of non-residual signal classified as tonal"
+					"text" : "- overlap: window overlap ratio [0.5, 1.];\n- noiseThreshold: amount of signal classified as residual (noisy) [0., 1.];\n- tonalThreshold: amount of non-residual signal classified as tonal [0., 1.];"
 				}
 
 			}
@@ -417,7 +417,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 452.0, 310.5, 66.0, 22.0 ],
+					"patching_rect" : [ 445.0, 312.499999999999943, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "attributes:"
 				}
@@ -432,9 +432,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 205.5, 91.0, 59.0, 57.0 ],
+					"patching_rect" : [ 190.0, 91.0, 90.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "window overlap"
+					"text" : "window overlap ratio"
 				}
 
 			}
@@ -491,7 +491,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -950,9 +950,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 452.0, 433.154867256637147, 237.0, 53.0 ],
+					"patching_rect" : [ 445.0, 439.154867256637147, 237.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Transient (percussive) component \n- Tonal (harmonic) component\n- Residual (noisy) component"
+					"text" : "- Transient (percussive) component; \n- Tonal (harmonic) component;\n- Residual (noisy) component."
 				}
 
 			}
@@ -963,9 +963,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 452.0, 414.654867256637147, 155.0, 22.0 ],
+					"patching_rect" : [ 445.0, 420.654867256637147, 155.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "outlet: (from left to right)"
+					"text" : "outlets: (from left to right)"
 				}
 
 			}
@@ -981,7 +981,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1186,7 +1186,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1310,8 +1310,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "Processors. Transient / tonal / residual component separator"
+					"patching_rect" : [ 9.0, 57.0, 425.0, 22.0 ],
+					"text" : "[processing] Transient / tonal / residual component separator"
 				}
 
 			}
@@ -1322,7 +1322,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
+					"patching_rect" : [ 9.0, 81.0, 544.0, 22.0 ],
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1337,8 +1337,8 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "signal", "signal", "signal" ],
-					"patching_rect" : [ 63.0, 268.0, 327.0, 47.0 ],
-					"text" : "sdt.demix~ 2048 4 @overlap 0.75 @noiseThreshold 0.1 @tonalThreshold 0.75"
+					"patching_rect" : [ 63.0, 268.0, 371.0, 47.0 ],
+					"text" : "sdt.demix~ 2048 4. @overlap 0.75 @noiseThreshold 0.1 @tonalThreshold 0.75"
 				}
 
 			}
@@ -1350,7 +1350,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 10.0, 425.0, 50.0 ],
+					"patching_rect" : [ 9.0, 5.0, 425.0, 50.0 ],
 					"text" : "sdt.demix~"
 				}
 
@@ -1658,16 +1658,16 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-44", "obj-42" ]
-			}
-, 			{
-				"boxes" : [ "obj-13", "obj-9" ]
-			}
-, 			{
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
+				"boxes" : [ "obj-44", "obj-42" ]
+			}
+, 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
  ],
 		"styles" : [ 			{

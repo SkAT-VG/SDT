@@ -666,7 +666,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 623.75, 405.875, 149.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "messages and attributes:"
+					"text" : "attributes:"
 				}
 
 			}
@@ -2031,10 +2031,10 @@
 				"boxes" : [ "obj-4", "obj-12", "obj-7" ]
 			}
 , 			{
-				"boxes" : [ "obj-62", "obj-61" ]
+				"boxes" : [ "obj-58", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-58", "obj-54" ]
+				"boxes" : [ "obj-62", "obj-61" ]
 			}
  ],
 		"styles" : [ 			{
