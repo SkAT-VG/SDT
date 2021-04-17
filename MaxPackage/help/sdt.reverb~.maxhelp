@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 386.0, 341.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -111,7 +111,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -277,7 +277,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 599.5, 513.0, 289.0, 69.0 ],
 					"style" : "SDT-comments",
-					"text" : "Beyond the conventional simulation of room resonances, the sdt.reverb~ is especially used to enhance the texturization of acoustic elements, such as turbulence and scattering. "
+					"text" : "Beyond the conventional simulation of room resonances, [sdt.reverb~] is especially suitable to enhance the texturization of acoustic elements, such as turbulence and scattering. "
 				}
 
 			}
@@ -301,9 +301,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 111.5, 288.3515625, 98.0, 22.0 ],
+					"patching_rect" : [ 97.0, 288.3515625, 128.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "Room size, in m"
+					"text" : "Room dimensions (m)"
 				}
 
 			}
@@ -419,7 +419,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -756,7 +756,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 599.5, 335.809734513274179, 289.0, 116.0 ],
 					"style" : "SDT-comments",
-					"text" : "- xSize (float): room width, in m\n- ySize (float): room height, in m\n- zSize (float): room depth, in m\n- randomness (float): shape deviation from a rectangular room [0.0, 1.0]\n- time (float): Global reverberation time, in s\n- time1k (float): Reverberation time at 1 kHz, in s"
+					"text" : "- xSize: room width (m);\n- ySize: room height (m);\n- zSize: room depth (m);\n- randomness: shape deviation from a rectangular room [0., 1.];\n- time: Global reverberation time (s);\n- time1k: Reverberation time at 1 kHz (s);"
 				}
 
 			}
@@ -839,7 +839,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1311,7 +1311,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 599.5, 276.65486725663709, 289.0, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- (long): Maximum length of the delay lines, in samples (default 44100)."
+					"text" : "- Maximum length of the delay lines, in samples (default 44100)."
 				}
 
 			}
@@ -1340,7 +1340,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1546,7 +1546,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1670,8 +1670,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "Processors. Reverberator based on Feedback Delay Network"
+					"patching_rect" : [ 15.0, 62.0, 457.0, 22.0 ],
+					"text" : "[processing] A computationally efficient yet maximally diffusive reverb"
 				}
 
 			}
@@ -1683,7 +1683,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
-					"text" : " A computationally efficient yet maximally diffusive matrix reverb",
+					"text" : "Feedback Delay Network (FDN) reverberator",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2067,10 +2067,10 @@
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
 				"boxes" : [ "obj-69", "obj-72" ]

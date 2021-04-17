@@ -4,7 +4,7 @@
 <c74object name="sdt.reverb~">
 
 	<digest>
-		<m>Sound processor:</m>  A computationally efficient yet maximally diffusive matrix reverb.
+		[processing] A computationally efficient yet maximally diffusive reverb.
 	</digest>
 
 	<description>
@@ -24,7 +24,7 @@
 		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
 	</metadatalist>
 
-	<!--INLETS-->
+	<!--INLETS
 	<inletlist>
 		<inlet id="0" type="signal">
 			<digest>Dry audio signal</digest>
@@ -36,19 +36,20 @@
 			<description></description>
 		</inlet>
 	</inletlist>
+	-->
 
-	<!--OUTLETS-->
+	<!--OUTLETS
 	<outletlist>
 		<outlet id="0" type="signal">
 			<digest>Reverb audio signal.</digest>
 		</outlet>
-
 	</outletlist>
+	-->
 
 	<!--ARGUMENTS-->
 	<objarglist>
 		<objarg name="Maximum-length-of-delay-lines" optional="1" type="long">
-			<digest>Maximum length of delay lines, in samples (defaul is 44100).</digest>
+			<digest>Maximum length of delay lines, in samples (default to 44100).</digest>
 		</objarg>
 	</objarglist>
 
@@ -68,35 +69,34 @@
 	<!--ATTRIBUTES-->
 	<attributelist>
 		<attribute name="xSize" get="1" set="1" type="float" size="1" >
-		    <digest>Room width, in m.</digest>
+		    <digest>Room width (m).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="ySize" get="1" set="1" type="float" size="1">
-		    <digest>Room height, in m.</digest>
+		    <digest>Room height (m).</digest>
 		    <description></description>
 	  </attribute>
 
 		<attribute name="zSize" get="1" set="1" type="float" size="1" >
-				<digest>Room width, in m.</digest>
+				<digest>Room width (m).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="randomness" get="1" set="1" type="float" size="1" >
-				<digest>Shape deviation from a rectangular room [0.0, 1.0].</digest>
+				<digest>Shape deviation from a rectangular room [0., 1.].</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="time" get="1" set="1" type="float" size="1" >
-				<digest>Global reverberation time, in s.</digest>
+				<digest>Global reverberation time (s).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="time1k" get="1" set="1" type="float" size="1" >
-				<digest>Reverberation time at 1kHz, in s.</digest>
+				<digest>Reverberation time at 1 kHz (s).</digest>
 				<description></description>
 		</attribute>
-
 	</attributelist>
 
 	<!--SEEALSO-->

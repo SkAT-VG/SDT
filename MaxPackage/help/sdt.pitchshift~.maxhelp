@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -62,7 +62,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -405,9 +405,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 460.5, 357.154867256637147, 236.0, 38.0 ],
+					"patching_rect" : [ 433.5, 357.154867256637147, 250.5, 38.0 ],
 					"style" : "SDT-comments",
-					"text" : "- overlap [float]: window overlap factor\n- ratio [float]: pitch shifting ratio"
+					"text" : "- overlap: window overlap ratio [0.5, 0.9];\n- ratio: pitch shifting ratio [0.125, 8]."
 				}
 
 			}
@@ -418,7 +418,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 460.5, 338.0, 66.0, 22.0 ],
+					"patching_rect" : [ 433.5, 338.0, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "attributes:"
 				}
@@ -491,7 +491,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -928,7 +928,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 460.5, 312.0, 236.0, 22.0 ],
+					"patching_rect" : [ 433.5, 287.0, 236.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "- window size, in samples (default 4096)"
 				}
@@ -941,7 +941,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 460.5, 293.5, 82.0, 22.0 ],
+					"patching_rect" : [ 433.5, 268.5, 82.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -959,7 +959,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1165,7 +1165,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1290,7 +1290,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "Processors. Frequency domain pitch shifter"
+					"text" : "\t\t[processing] Frequency domain pitch shifter"
 				}
 
 			}
@@ -1542,7 +1542,7 @@
 , 			{
 				"name" : "transratio.maxpat",
 				"bootpath" : "~/Library/Application Support/Cycling '74/Max 8/Examples/max-tricks/notes-and-pitch/pitch-to-freq-ratio",
-				"patcherrelativepath" : "../../../../../Library/Application Support/Cycling '74/Max 8/Examples/max-tricks/notes-and-pitch/pitch-to-freq-ratio",
+				"patcherrelativepath" : "../../../Library/Application Support/Cycling '74/Max 8/Examples/max-tricks/notes-and-pitch/pitch-to-freq-ratio",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -1556,10 +1556,10 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-13", "obj-9" ]

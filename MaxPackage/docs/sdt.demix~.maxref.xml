@@ -13,7 +13,7 @@
 		<br />
 		<br />
 		It takes three control parameters:
-		the window <i>overlap</i> factor,
+		the analysis window <i>overlap</i> factor,
 		the <i>noise threshold</i>, that is the amount of signal classified as residual,
 		and the <i>tonal threshold</i>, that is the amount of <i>non-residual</i> signal classified as tonal.
 		<br />
