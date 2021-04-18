@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 896.0, 675.0 ],
+		"rect" : [ 100.0, 100.0, 893.0, 676.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -248,7 +248,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 340.0, 422.5, 199.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "The contact point for object 2 (indexed as N-1=1) is its pickup1"
+					"text" : "The contact point for object1 is its pickup1"
 				}
 
 			}
@@ -1208,7 +1208,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 635.75, 96.234375, 259.0, 69.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Unique ID of object 1. \n- Unique ID of object 2.\n- Number of outlets = number of pickup     points of object 1 + object 2."
+					"text" : "- Unique ID of first object (object0). \n- Unique ID of second object (object1).\n- Number of outlets = total number of pickup locations of the two objects."
 				}
 
 			}
@@ -1287,7 +1287,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 107.21875, 479.5, 198.0, 35.0 ],
-					"text" : "displacement of object 1 @pickup0 (motion for inertial object)"
+					"text" : "displacement of object0 @pickup0 (motion for inertial object)"
 				}
 
 			}
@@ -1363,7 +1363,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 139.0, 422.5, 196.0, 57.0 ],
 					"style" : "SDT-comments",
-					"text" : "The contact point for object 1 (indexed as N-1=0) is its pickup0"
+					"text" : "The contact point for object0 is its pickup0"
 				}
 
 			}
@@ -2153,7 +2153,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 635.75, 302.331223628691987, 259.0, 116.0 ],
 					"style" : "SDT-comments",
-					"text" : "Their number depends on the respective creation argument, and they respectively refer the pickup points available at object 1 and 2. In this case:\n- [1] displacement @pickup0 of object 1.\n- [2] displacement @pickup0 of object 2.\n- [3] displacement @pickup1 of object 2."
+					"text" : "Their number depends on the respective creation argument, and they respectively refer the pickup points available at object0 and object1. In this case:\n- [1] displacement @pickup0 of object0.\n- [2] displacement @pickup0 of object1.\n- [3] displacement @pickup1 of object1."
 				}
 
 			}
@@ -2484,19 +2484,19 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-37", "obj-36" ]
-			}
-, 			{
 				"boxes" : [ "obj-39", "obj-35" ]
-			}
-, 			{
-				"boxes" : [ "obj-30", "obj-8" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-37", "obj-36" ]
+			}
+, 			{
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
  ],
 		"styles" : [ 			{

@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 250.0, 157.0, 899.0, 676.0 ],
+		"rect" : [ 100.0, 100.0, 897.0, 678.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -59,7 +59,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 122.09375, 513.240257472914436, 110.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "See sdt.impact~."
+					"text" : "See [sdt.impact~]"
 				}
 
 			}
@@ -86,7 +86,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 635.75, 367.234375, 259.0, 69.0 ],
 					"style" : "SDT-comments",
-					"text" : "- Unique ID of object 1. \n- Unique ID of object 2.\n- Number of outlets = number of pickup     points of object 1 + object 2."
+					"text" : "- Unique ID of first object (object0). \n- Unique ID of second object (object1).\n- Number of outlets = total number of pickup locations of the two objects."
 				}
 
 			}
@@ -360,7 +360,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 198.59375, 430.5, 82.1875, 35.0 ],
-					"text" : "displacement of object 2 ..."
+					"text" : "displacement of object1 ..."
 				}
 
 			}
@@ -3210,7 +3210,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 25.5, 430.5, 143.0, 50.0 ],
-					"text" : "displacement of object 1 @pickup0 (motion for inertial object)"
+					"text" : "displacement of object0 @pickup0 (motion for inertial object)"
 				}
 
 			}
@@ -3568,7 +3568,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -3923,7 +3923,7 @@
 					"id" : "obj-10",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 254.5, 582.0, 297.5, 52.0 ],
 					"style" : "SDT_package",
@@ -3938,9 +3938,9 @@
 					"id" : "obj-9",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 6,
 					"numoutlets" : 3,
-					"outlettype" : [ "", "", "" ],
+					"outlettype" : [ "signal", "signal", "signal" ],
 					"patching_rect" : [ 22.0, 364.0, 533.0, 66.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.friction~ inertial-object modal-object 3 @stiffness 10000. @dissipation 10. @viscosity 0.4 @breakAway 0.2 @kDynamic 0.4 @kStatic 0.7 @stribeck 0.1 @noisiness 1. @force 0.5 @contact0 0 @contact1 1"
@@ -4679,10 +4679,25 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [  ],
+		"dependency_cache" : [ 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.friction~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+ ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-37", "obj-36" ]
@@ -4692,9 +4707,6 @@
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
-			}
-, 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

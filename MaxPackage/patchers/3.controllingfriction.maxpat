@@ -4,7 +4,7 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 8,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -45,7 +45,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 229.5, 465.5625, 243.0, 22.0 ],
+					"patching_rect" : [ 229.5, 467.5625, 243.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "open the [p interface] and start bowing. "
 				}
@@ -69,7 +69,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 229.5, 581.5625, 658.75, 22.0 ],
+					"patching_rect" : [ 229.5, 579.5625, 658.75, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "Viscosity: affects the timbre and pitch. Try the following values: 2., 5., 8., 0.5 ."
 				}
@@ -81,7 +81,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 229.5, 544.5625, 658.75, 22.0 ],
+					"patching_rect" : [ 229.5, 542.5625, 658.75, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "Dissipation: affects the sound bandwidth. Try the following values: 5., 12. 60., 24. ."
 				}
@@ -151,7 +151,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -211,7 +211,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -512,7 +512,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -724,7 +724,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1762,7 +1762,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2020,7 +2020,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2167,7 +2167,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2226,7 +2226,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -2827,7 +2827,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2911,7 +2911,7 @@
 														"appversion" : 														{
 															"major" : 8,
 															"minor" : 1,
-															"revision" : 8,
+															"revision" : 11,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -4036,7 +4036,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4375,12 +4375,13 @@
 				"box" : 				{
 					"fontface" : 3,
 					"id" : "obj-1",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 81.0, 84.0, 54.0, 21.0 ],
+					"patching_rect" : [ 81.0, 70.0, 54.0, 35.0 ],
 					"style" : "SDT_package",
-					"text" : "pressure"
+					"text" : "pressure (N)"
 				}
 
 			}
@@ -4404,7 +4405,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 458.571983546617901, 464.5625, 429.678016453382099, 22.0 ],
+					"patching_rect" : [ 459.571983546617901, 467.5625, 429.678016453382099, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "Notice that the modal object' configuration is the same used in Tutorial #2"
 				}
@@ -4419,7 +4420,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 206.5, 321.5, 675.75, 131.0 ],
 					"style" : "SDT-comments",
-					"text" : "MAKING SENSE OF THE FRICTION PARAMETERS\n* The rubbing force coupled with the pressure represents the gesture's trajectory and dynamics, e.g. a bowing gesture.\n* Stiffness, dissipation, viscosity and noisiness are high-level parameters that allow to design a great variety of frictions. The remaining (kStatic, kDynamic, break-away and Stribeck) represent low-level parameters and are used to fine-tune the friction behavior.\n* The high-level parameters show a minimum value, but not a maximum. This implies that meaningful ranges have to be found by exploring the relationships between these parameters. "
+					"text" : "MAKING SENSE OF THE FRICTION PARAMETERS\n* The rubbing force coupled with the pressure variable represents the gesture's trajectory and dynamics, e.g. a bowing gesture.\n* Stiffness, dissipation, viscosity and noisiness are high-level parameters that allow to design a great variety of frictions. The remaining (kStatic, kDynamic, break-away and Stribeck) are lower-level parameters and are used to fine-tune the friction behavior.\n* High-level parameters show a minimum value, but not a maximum one. This implies that meaningful ranges have to be found by exploring the relationships between these parameters. "
 				}
 
 			}
@@ -4597,7 +4598,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4738,7 +4739,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4985,7 +4986,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 8,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -5363,12 +5364,13 @@
 				"box" : 				{
 					"fontface" : 3,
 					"id" : "obj-109",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 5.0, 84.0, 76.0, 21.0 ],
+					"patching_rect" : [ 5.0, 70.0, 76.0, 35.0 ],
 					"style" : "SDT_package",
-					"text" : "rubbing force",
+					"text" : "rubbing force (N)",
 					"textjustification" : 1
 				}
 
@@ -5482,7 +5484,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -6168,7 +6170,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -6434,7 +6436,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 8,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -6642,7 +6644,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 204.5, 582.5625, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 580.5625, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "4",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -6664,7 +6666,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 204.5, 545.5625, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 543.5625, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "3",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -6771,7 +6773,7 @@
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "int" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 204.5, 467.607954545454561, 20.0, 20.0 ],
+					"patching_rect" : [ 204.5, 469.607954545454561, 20.0, 20.0 ],
 					"rounded" : 60.0,
 					"text" : "1",
 					"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -7481,7 +7483,7 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "Friction6modes.maxpat",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/patchers",
+				"bootpath" : "~/SDT_git/MaxPackage/patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
@@ -7507,9 +7509,6 @@
 				"boxes" : [ "obj-102", "obj-101", "obj-107", "obj-111", "obj-105", "obj-104", "obj-103", "obj-100", "obj-12", "obj-16", "obj-60", "obj-118", "obj-15", "obj-17", "obj-19", "obj-20", "obj-24", "obj-43", "obj-47", "obj-48", "obj-50", "obj-18", "obj-26", "obj-30", "obj-35", "obj-139", "obj-140", "obj-142", "obj-117" ]
 			}
 , 			{
-				"boxes" : [ "obj-109", "obj-110", "obj-58", "obj-4", "obj-10", "obj-121", "obj-1", "obj-11", "obj-122", "obj-136" ]
-			}
-, 			{
 				"boxes" : [ "obj-67", "obj-74" ]
 			}
 , 			{
@@ -7523,6 +7522,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-113", "obj-13", "obj-3" ]
+			}
+, 			{
+				"boxes" : [ "obj-109", "obj-110", "obj-58", "obj-4", "obj-10", "obj-121", "obj-1", "obj-11", "obj-122", "obj-136" ]
 			}
  ],
 		"styles" : [ 			{

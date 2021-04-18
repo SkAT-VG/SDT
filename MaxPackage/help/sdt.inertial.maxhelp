@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 868.0, 611.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -844,7 +844,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 350.0, 208.5, 244.0, 88.0 ],
 					"style" : "SDT-comments",
-					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate fragmentation with sdt.crumpling~ and sdt.breaking~"
+					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate fragmentation with [sdt.crumpling~] and [sdt.breaking~]"
 				}
 
 			}
@@ -892,9 +892,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 434.0, 296.5, 136.0, 42.0 ],
+					"patching_rect" : [ 434.0, 296.5, 157.0, 42.0 ],
 					"style" : "SDT-comments",
-					"text" : "Object's unique ID is \"inertial-object\""
+					"text" : "The object's unique ID is \"inertial-object\""
 				}
 
 			}
@@ -906,9 +906,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 185.5, 478.0, 153.0, 42.0 ],
+					"patching_rect" : [ 185.5, 478.0, 104.0, 42.0 ],
 					"style" : "SDT-comments",
-					"text" : "displacement of the inertial mass (object 1)"
+					"text" : "motion of the inertial mass"
 				}
 
 			}
@@ -1065,7 +1065,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1480,7 +1480,7 @@
 					"id" : "obj-10",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 563.5, 312.0, 37.0 ],
 					"text" : "sdt.modal modal-object 1 1 @freqs 2200. @decays 0.05 @pickup0 200. @activeModes 1"
@@ -1492,9 +1492,9 @@
 					"id" : "obj-9",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 6,
+					"numinlets" : 0,
 					"numoutlets" : 2,
-					"outlettype" : [ "signal", "signal" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 41.0, 406.75, 360.0, 37.0 ],
 					"text" : "sdt.impact~ inertial-object modal-object 2 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 0"
 				}
@@ -1758,19 +1758,7 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.impact~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]

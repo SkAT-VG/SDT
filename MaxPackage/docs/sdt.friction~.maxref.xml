@@ -12,12 +12,12 @@
 		rubs against another (e.g. a singing glass, squeaky hinges).
 		<br />
 		N.B. It must be used in conjuction with two solid object models (either <o>sdt.inertial~</o> or <o>sdt.modal~</o>) forming a structure
-		"object 1 &#8596; <o>sdt.impact~</o> &#8596; object 2".
+		"object0 &#8596; <o>sdt.impact~</o> &#8596; object1".
 		This is achieved by specifying the two objects' IDs as creation arguments.
 		<br />
 		Outlets: Their number depends on the creation argument <ar>Max-outlets</ar>.
 		They output signals respectively representing the displacement (m) at each pickup point of the interacting objects, starting
-		from those of object 1 and then of object 2.
+		from those of object0 and then of object1.
 		Such displacement represent the sound (actually, vibration) produced at various locations on the objects.
 		<br />
 		<br />
@@ -64,32 +64,32 @@
 		</inlet>
 
 		<inlet id="0" type="signal">
-			<digest>External force on object 1 (N).</digest>
+			<digest>External force on object0 (N).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="1" type="signal">
-			<digest>Strike velocity of object 1 (m/s).</digest>
+			<digest>Strike velocity of object0 (m/s).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="2" type="signal">
-			<digest>Fragment size of object 1 [0., 1.].</digest>
+			<digest>Fragment size of object0 [0., 1.].</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="3" type="signal">
-			<digest>External force on object 2 (N).</digest>
+			<digest>External force on object1 (N).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="4" type="signal">
-			<digest>Strike velocity of object 2 (m/s).</digest>
+			<digest>Strike velocity of object1 (m/s).</digest>
 			<description></description>
 		</inlet>
 
 		<inlet id="5" type="signal">
-			<digest>Fragment size of object 2 [0., 1.].</digest>
+			<digest>Fragment size of object1 [0., 1.].</digest>
 			<description></description>
 		</inlet>
 	</inletlist>
@@ -105,16 +105,16 @@
 
 	<!--ARGUMENTS-->
 	<objarglist>
-		<objarg name="Unique_ID-Obj1" optional="0" type="symbol, required">
-			<digest>Mandatory: Name of object 1 to be referenced.</digest>
+		<objarg name="Unique_ID-object0" optional="0" type="symbol, required">
+			<digest>Mandatory: Name of object0 to be referenced.</digest>
 		</objarg>
 
-		<objarg name="Unique_ID-Obj2" optional="0" type="symbol, required">
-			<digest>Mandatory: Name of object 2 to be referenced.</digest>
+		<objarg name="Unique_ID-object1" optional="0" type="symbol, required">
+			<digest>Mandatory: Name of object1 to be referenced.</digest>
 		</objarg>
 
 		<objarg name="Max-outlets" optional="0" type="int, required">
-			<digest>Mandatory: Maximum number of outlets. They should correspond to the total number of pickups.
+			<digest>Mandatory: Maximum number of outlets. They should correspond to the total number of pickups of object0 + object1.
 							If greater than the number of pickup points, the unused outlets are disabled;
 							if lower than the number of pickup points, only the first ones are output,
 							always starting from pickup0.
@@ -135,12 +135,12 @@
 				All inlets accept signals (see description below).
 			</digest>
 			<description>
-				Inlet 0: External force on object 1 (N). <br />
-			  Inlet 1: Sets the velocity of object 1 (m/s) and puts the two objects in contact. <br />
-				Inlet 2: Fragment size of object 1 [0., 1.].<br />
-			  Inlet 3: External force on object 2 (N). <br />
-			  Inlet 4: Sets the velocity of object 2 (m/s) and puts the two objects in contact. <br />
-				Inlet 5: Fragment size of the object 2 [0., 1.].
+				Inlet 0: External force on object0 (N). <br />
+			  Inlet 1: Sets the velocity of object0 (m/s) and puts the two objects in contact. <br />
+				Inlet 2: Fragment size of object0 [0., 1.].<br />
+			  Inlet 3: External force on object1 (N). <br />
+			  Inlet 4: Sets the velocity of object1 (m/s) and puts the two objects in contact. <br />
+				Inlet 5: Fragment size of the object1 [0., 1.].
 			</description>
 		</method>
 	</methodlist>
@@ -188,17 +188,17 @@
 		</attribute>
 
 		<attribute name="force" get="1" set="1" type="float" size="1" >
-				<digest>Normal force on object 1 (N).</digest>
+				<digest>Normal force on object0 (N).</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="contact0" get="1" set="1" type="int" size="1" >
-				<digest>Pickup index of the contact point for object 1.</digest>
+				<digest>Pickup index of the contact point for object0.</digest>
 				<description></description>
 		</attribute>
 
 		<attribute name="contact1" get="1" set="1" type="int" size="1" >
-				<digest>Pickup index of the contact point for object 2.</digest>
+				<digest>Pickup index of the contact point for object1.</digest>
 				<description></description>
 		</attribute>
 	</attributelist>

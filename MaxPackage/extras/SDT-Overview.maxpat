@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 434.0, 182.0, 950.0, 740.0 ],
+		"rect" : [ 90.0, 90.0, 950.0, 740.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 14.0,
@@ -126,7 +126,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -503,7 +503,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 20.0, 612.0, 636.0, 38.0 ],
 									"style" : "SDT-comments",
-									"text" : "The bottom-up hierarchy represents the dependencies between low-level models and temporally patterned textures and processes, for the four classes of sounds: solids, liquids, gases, and machines."
+									"text" : "This bottom-up hierarchy represents the dependencies between low-level models and temporally patterned textures and processes, for the four classes of sounds available in SDT: solids, liquids, gases, and machines."
 								}
 
 							}
@@ -515,7 +515,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 728.0, 556.073170731707251, 58.0, 23.0 ],
+									"patching_rect" : [ 728.0, 558.073170731707251, 58.0, 23.0 ],
 									"style" : "SDT_package",
 									"text" : "Video:: ",
 									"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
@@ -540,7 +540,7 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 780.0, 556.073170731707251, 146.0, 24.0 ],
+									"patching_rect" : [ 780.0, 558.073170731707251, 146.0, 24.0 ],
 									"style" : "SDT-comments",
 									"text" : "#7 - processing / analysis",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -635,7 +635,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 728.0, 442.0, 58.0, 23.0 ],
+									"patching_rect" : [ 728.0, 440.0, 58.0, 23.0 ],
 									"style" : "SDT_package",
 									"text" : "Video:: ",
 									"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
@@ -660,7 +660,7 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 780.0, 442.0, 105.0, 24.0 ],
+									"patching_rect" : [ 780.0, 440.0, 105.0, 24.0 ],
 									"style" : "SDT-comments",
 									"text" : "#4 - liquid sounds",
 									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
@@ -750,40 +750,16 @@
 , 							{
 								"box" : 								{
 									"fontface" : 3,
+									"fontname" : "Lato Bold",
 									"fontsize" : 14.0,
 									"id" : "obj-49",
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 728.0, 184.0, 58.0, 23.0 ],
+									"patching_rect" : [ 728.0, 188.0, 128.0, 23.0 ],
 									"style" : "SDT_package",
-									"text" : "Video:: ",
+									"text" : "VIDEO TUTORIALS",
 									"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"bgcolor" : [ 0.301961, 0.301961, 0.301961, 1.0 ],
-									"bgcolor2" : [ 0.301961, 0.301961, 0.301961, 1.0 ],
-									"bgfillcolor_angle" : 270.0,
-									"bgfillcolor_autogradient" : 0.0,
-									"bgfillcolor_color" : [ 1.0, 1.0, 1.0, 1.0 ],
-									"bgfillcolor_color1" : [ 0.301961, 0.301961, 0.301961, 1.0 ],
-									"bgfillcolor_color2" : [ 0.2, 0.2, 0.2, 1.0 ],
-									"bgfillcolor_proportion" : 0.5,
-									"bgfillcolor_type" : "color",
-									"fontface" : 3,
-									"gradient" : 1,
-									"id" : "obj-50",
-									"maxclass" : "message",
-									"numinlets" : 2,
-									"numoutlets" : 1,
-									"outlettype" : [ "" ],
-									"patching_rect" : [ 780.0, 184.0, 109.0, 24.0 ],
-									"style" : "SDT-comments",
-									"text" : "tutorials on Vimeo",
-									"textcolor" : [ 0.0, 0.0, 0.0, 1.0 ]
 								}
 
 							}
@@ -1542,18 +1518,6 @@
 , 							{
 								"box" : 								{
 									"fontface" : 3,
-									"id" : "obj-8",
-									"maxclass" : "comment",
-									"numinlets" : 1,
-									"numoutlets" : 0,
-									"patching_rect" : [ 660.0, 184.0, 86.0, 22.0 ],
-									"text" : "click me! -->"
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"fontface" : 3,
 									"fontsize" : 14.0,
 									"id" : "obj-28",
 									"maxclass" : "comment",
@@ -1772,9 +1736,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 20.0, 120.0, 682.0, 26.0 ],
+									"patching_rect" : [ 20.0, 126.0, 682.0, 26.0 ],
 									"style" : "SDT_package",
-									"text" : "A taxonomy of physically-informed algorithms for sonic interactive synthesis"
+									"text" : "A taxonomy of physically informed algorithms for sonic interaction design"
 								}
 
 							}
@@ -1950,14 +1914,6 @@
 								"patchline" : 								{
 									"destination" : [ "obj-3", 0 ],
 									"hidden" : 1,
-									"source" : [ "obj-50", 0 ]
-								}
-
-							}
-, 							{
-								"patchline" : 								{
-									"destination" : [ "obj-3", 0 ],
-									"hidden" : 1,
 									"source" : [ "obj-52", 0 ]
 								}
 
@@ -2023,7 +1979,7 @@
 								"boxes" : [ "obj-10", "obj-28", "obj-22", "obj-11", "obj-20", "obj-12", "obj-15", "obj-14", "obj-16", "obj-19", "obj-23", "obj-13", "obj-17", "obj-18" ]
 							}
 , 							{
-								"boxes" : [ "obj-50", "obj-49", "obj-44", "obj-45", "obj-52", "obj-51", "obj-36", "obj-54", "obj-53", "obj-56", "obj-55", "obj-58", "obj-57", "obj-37", "obj-5", "obj-38", "obj-60", "obj-59", "obj-62", "obj-61", "obj-3" ]
+								"boxes" : [ "obj-49", "obj-44", "obj-45", "obj-52", "obj-51", "obj-36", "obj-54", "obj-53", "obj-56", "obj-55", "obj-58", "obj-57", "obj-37", "obj-5", "obj-38", "obj-60", "obj-59", "obj-62", "obj-61", "obj-3" ]
 							}
  ],
 						"styles" : [ 							{
@@ -2091,7 +2047,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 434.0, 208.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -5852,7 +5808,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 402.0, 23.0, 431.0, 46.0 ],
 									"style" : "SDT_package",
-									"text" : "A toolkit of physically informed sound synthesis models for sonic interaction design"
+									"text" : "A toolkit of physically informed sound synthesis algorithms for sonic interaction design"
 								}
 
 							}

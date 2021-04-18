@@ -770,7 +770,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 637.0, 306.0, 259.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "- unique ID of object\n- max number of modes \n- number of pickup points"
+					"text" : "- unique ID of object\n- max number of modes \n- number of pickup locations"
 				}
 
 			}
@@ -910,8 +910,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 198.0, 523.5, 83.0, 35.0 ],
-					"text" : "displacement\nof object 1"
+					"patching_rect" : [ 174.0, 523.5, 107.0, 35.0 ],
+					"text" : "displacement\nof the first object"
 				}
 
 			}
@@ -953,7 +953,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 23.25, 357.0, 323.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate fragmentation with sdt.crumpling~ and sdt.breaking~"
+					"text" : "The fragmentSize attribute represents a portion of the whole object. It is used to simulate fragmentation with [sdt.crumpling~] and [sdt.breaking~]"
 				}
 
 			}
@@ -1099,7 +1099,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 360.25, 357.0, 226.0, 72.0 ],
 					"style" : "SDT-comments",
-					"text" : "Object's unique ID is \"modal-object\".  This object has 2 modes and 2 pickups."
+					"text" : "The object's unique ID is \"modal-object\".  This object has 2 modes and 2 pickup locations"
 				}
 
 			}
@@ -2222,13 +2222,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-37", "obj-36" ]
-			}
-, 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
 				"boxes" : [ "obj-53", "obj-54" ]
+			}
+, 			{
+				"boxes" : [ "obj-37", "obj-36" ]
 			}
  ],
 		"styles" : [ 			{

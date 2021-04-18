@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 6,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 200.0, 150.0, 900.0, 650.0 ],
+		"rect" : [ 717.0, 415.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 13.0,
@@ -50,7 +50,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -245,9 +245,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 414.25, 70.0, 205.0, 22.0 ],
+					"patching_rect" : [ 413.25, 67.0, 187.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "‘‘resonator–interactor–resonator’’"
+					"text" : "‘‘object 1–interactor–object 2’’"
 				}
 
 			}
@@ -258,9 +258,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 70.0, 861.0, 53.0 ],
+					"patching_rect" : [ 15.0, 67.0, 861.0, 53.0 ],
 					"style" : "SDT-comments",
-					"text" : "Basic solid interaction algorithms share a common, modular structure ‘‘resonator–interactor–resonator’’       representing the interaction between two resonating objects. The objects and the interactor form a bidirectional network, where in the connection between the externals is implemented by means of unique ID addresses provided as arguments."
+					"text" : "Basic solid interaction algorithms share a common, modular structure ‘‘object 1–interactor–object 2’’    representing the interaction between two  objects and forming a bidirectional network. \nWhat comes to implementing the above structure with SDT externals, they are connected by means of unique ID addresses provided as arguments."
 				}
 
 			}
@@ -273,7 +273,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 53.0, 347.0, 446.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "e.g. [sdt.inertial hammer] ↔ [sdt.impact~ hammer nail] ↔ [sdt.modal nail]"
+					"text" : "e.g. [sdt.inertial hammer] ↔ [sdt.impact~ hammer bell] ↔ [sdt.modal bell]"
 				}
 
 			}
@@ -285,7 +285,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 514.0, 430.481481481481524, 61.0, 22.0 ],
+					"patching_rect" : [ 521.0, 455.481481481481524, 61.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "prefix #0"
 				}
@@ -366,7 +366,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -550,7 +550,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -753,13 +753,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-1",
-					"linecount" : 5,
+					"linecount" : 6,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 383.481481481481524, 862.0, 84.0 ],
+					"patching_rect" : [ 15.0, 394.481481481481524, 862.0, 100.0 ],
 					"style" : "SDT-comments",
-					"text" : "For this reason, each instance of solid basic interactions is required to have unique IDs.\nIn case of duplicated IDs are displayed in tha Max console, and the duplicated externals are disabled.\n\nTo load multiple instances of solids interactions either use the poly~ method or put the prefix #0    to the objects' names and save the configuration as abstraction. "
+					"text" : "Each instance of solid basic interactions is required to have unique IDs.\nIn case of duplicate IDs, a warning is displayed in the Max console and the respective externals are disabled.\n\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0    before the objects' names and save the configuration as an abstraction:"
 				}
 
 			}
@@ -770,7 +770,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 506.0, 262.740740740740762, 51.0, 23.0 ],
+					"patching_rect" : [ 506.0, 261.740740740740762, 51.0, 23.0 ],
 					"style" : "SDTpackage",
 					"text" : "Friction:"
 				}
@@ -783,7 +783,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 506.0, 200.740740740740762, 47.0, 23.0 ],
+					"patching_rect" : [ 510.0, 200.740740740740762, 47.0, 23.0 ],
 					"style" : "SDTpackage",
 					"text" : "Impact:"
 				}
@@ -792,13 +792,13 @@
 , 			{
 				"box" : 				{
 					"id" : "obj-9",
-					"linecount" : 7,
+					"linecount" : 6,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 555.337931034482835, 200.740740740740762, 320.0, 116.0 ],
+					"patching_rect" : [ 557.337931034482835, 200.740740740740762, 320.0, 100.0 ],
 					"style" : "SDT-comments",
-					"text" : "Simulates a non-linear impact, by computing the contact force from the total compression (i.e., the relative displacement between the two contact points).\n\nSimulates a non-linear friction, by computing the friction force from the relative velocity between the two contact points. "
+					"text" : "Simulates two objects colliding (e.g. a hammer and a bell).\n\n\nSimulates one object rubbing against another one (e.g. a singing glass, or squeaky hinges)."
 				}
 
 			}
@@ -832,7 +832,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 6,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -922,7 +922,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 551.25, 25.0, 84.0, 40.0 ],
+					"patching_rect" : [ 590.25, 10.0, 84.0, 40.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -944,7 +944,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 551.25, 54.0, 68.0, 40.0 ],
+					"patching_rect" : [ 681.337931034482835, 10.0, 68.0, 40.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
 					"style" : "SDT_package",
 					"text" : "thispatcher"
@@ -961,7 +961,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 10.0, 560.0, 50.0 ],
 					"style" : "SDT_package",
-					"text" : "#1 - instantiating the solids models"
+					"text" : "#1 - instantiating solids interactions"
 				}
 
 			}
@@ -993,21 +993,21 @@
  ],
 		"dependency_cache" : [ 			{
 				"name" : "SDT_obj1_int_obj2.png",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
+				"bootpath" : "~/SDT_git/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "basicImpact.maxpat",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/patchers",
+				"bootpath" : "~/SDT_git/MaxPackage/patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "basicFriction.maxpat",
-				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/patchers",
+				"bootpath" : "~/SDT_git/MaxPackage/patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
@@ -1034,10 +1034,10 @@
 				"boxes" : [ "obj-9", "obj-17", "obj-16", "obj-10" ]
 			}
 , 			{
-				"boxes" : [ "obj-14", "obj-18" ]
+				"boxes" : [ "obj-1", "obj-15" ]
 			}
 , 			{
-				"boxes" : [ "obj-1", "obj-15" ]
+				"boxes" : [ "obj-14", "obj-18" ]
 			}
  ],
 		"styles" : [ 			{
