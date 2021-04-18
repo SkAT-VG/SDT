@@ -9,7 +9,7 @@
 
 	<description>
 		<o>sdt.windflow~</o> simulates the noise caused by air turbulences.
-		Turbulence arises when airflows hit a surface, whose irregularities cause random change of direction of air molecules.
+		Turbulence arises when an airflow hits a surface, whose irregularities cause random change of direction of air molecules.
 		The resulting sound is modeled as a white noise filtered by a non-resonant lowpass filter.
 		The cutoff frequency of the filter is empirically set to 800 Hz, and the resulting output is modulated in amplitude according
 		to the airflow speed.

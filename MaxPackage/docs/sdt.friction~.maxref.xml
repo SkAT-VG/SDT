@@ -8,7 +8,8 @@
 	</digest>
 
 	<description>
-		<o>sdt.friction~</o> simulates the nonlinear friction force arising when two solid objects rub on each other.
+		<o>sdt.friction~</o> simulates the nonlinear friction force arising when a solid object
+		rubs against another (e.g. a singing glass, squeaky hinges).
 		<br />
 		N.B. It must be used in conjuction with two solid object models (either <o>sdt.inertial~</o> or <o>sdt.modal~</o>) forming a structure
 		"object 1 &#8596; <o>sdt.impact~</o> &#8596; object 2".

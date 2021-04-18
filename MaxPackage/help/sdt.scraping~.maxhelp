@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 397.0, 222.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -225,7 +225,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 100.0, 126.0, 900.0, 624.0 ],
+						"rect" : [ 397.0, 248.0, 900.0, 624.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2448,7 +2448,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-									"text" : "[solids, control] Control algorithm to simulate scraping/sliding/rubbing sound textures."
+									"text" : "[solids, control] Control algorithm to render scraping/sliding/rubbing sound textures."
 								}
 
 							}
@@ -2486,7 +2486,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-									"text" : "Generates a force to be applied to a modal resonator.",
+									"text" : "Generates a force to be applied to a modal resonator [sdt.modal].",
 									"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 								}
 
@@ -2740,9 +2740,6 @@
 								"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 							}
 , 							{
-								"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-							}
-, 							{
 								"boxes" : [ "obj-17", "obj-16" ]
 							}
 , 							{
@@ -2750,6 +2747,9 @@
 							}
 , 							{
 								"boxes" : [ "obj-37", "obj-36" ]
+							}
+, 							{
+								"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 							}
  ],
 						"styles" : [ 							{

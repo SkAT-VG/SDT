@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 386.0, 341.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -754,7 +754,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 599.5, 335.809734513274179, 289.0, 116.0 ],
+					"patching_rect" : [ 599.5, 341.809734513274179, 292.0, 116.0 ],
 					"style" : "SDT-comments",
 					"text" : "- xSize: room width (m);\n- ySize: room height (m);\n- zSize: room depth (m);\n- randomness: shape deviation from a rectangular room [0., 1.];\n- time: Global reverberation time (s);\n- time1k: Reverberation time at 1 kHz (s);"
 				}
@@ -767,7 +767,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 599.5, 316.65486725663709, 66.0, 22.0 ],
+					"patching_rect" : [ 599.5, 322.65486725663709, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "attributes:"
 				}
@@ -1670,8 +1670,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 457.0, 22.0 ],
-					"text" : "[processing] A computationally efficient yet maximally diffusive reverb"
+					"patching_rect" : [ 15.0, 59.0, 457.0, 22.0 ],
+					"text" : "[processing] A computationally efficient yet maximally diffusive reverb."
 				}
 
 			}
@@ -1682,8 +1682,8 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
-					"text" : "Feedback Delay Network (FDN) reverberator",
+					"patching_rect" : [ 15.0, 83.0, 544.0, 22.0 ],
+					"text" : "Feedback Delay Network (FDN) reverberator.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1711,7 +1711,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 10.0, 425.0, 50.0 ],
+					"patching_rect" : [ 15.0, 7.0, 425.0, 50.0 ],
 					"text" : "sdt.reverb~"
 				}
 
@@ -2064,9 +2064,6 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
@@ -2074,6 +2071,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-69", "obj-72" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

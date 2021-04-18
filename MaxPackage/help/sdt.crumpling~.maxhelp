@@ -2339,7 +2339,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-					"text" : "[solids, control] Control algorithm to simulate granular crumpling/crushing sounds."
+					"text" : "[solids, control] Control algorithm to render granular crumpling/crushing sounds."
 				}
 
 			}
@@ -2378,7 +2378,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-					"text" : "Generates a stochastic sequence of impacts events.",
+					"text" : "Generates a stochastic series of impacts events to drive [sdt.impact~].",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2717,13 +2717,13 @@
 				"boxes" : [ "obj-38", "obj-28", "obj-31" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-30", "obj-8" ]
 			}
 , 			{
 				"boxes" : [ "obj-37", "obj-36" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

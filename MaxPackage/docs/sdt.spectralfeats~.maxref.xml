@@ -8,10 +8,8 @@
 	</digest>
 
 	<description>
-		<o>sdt.spectralfeats~</o> provides statistical moments (sets of parameters) of the spectrum and other spectral information.
-		<br/>
-		<br/>
-		It extracts the following features: <br/>
+		<o>sdt.spectralfeats~</o> provides statistical moments (sets of parameters) of the spectrum and
+		other spectral information: <br/>
 		* spectral magnitude <br/>
 		* spectral centroid <br/>
 		* spectral spread <br/>

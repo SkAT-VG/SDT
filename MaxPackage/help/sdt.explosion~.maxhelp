@@ -2273,7 +2273,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 566.0, 22.0 ],
-					"text" : "[gases] Supersonic explosion sounds"
+					"text" : "[gases] Supersonic explosion sounds."
 				}
 
 			}
@@ -2285,7 +2285,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 544.0, 22.0 ],
-					"text" : "Simulates the shock wave produced by an object travelling in the air at supersonic speed",
+					"text" : "Simulates the shock wave produced by an object travelling in the air at supersonic speed.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2607,10 +2607,10 @@
 				"boxes" : [ "obj-83", "obj-51" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

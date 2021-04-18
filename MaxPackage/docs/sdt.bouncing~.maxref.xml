@@ -4,7 +4,7 @@
 <c74object name="sdt.bouncing~">
 
 	<digest>
-		[solids, control] Control algorithm to simulate bouncing sounds.
+		[solids, control] Control algorithm to render bouncing sounds.
 	</digest>
 
 	<description>

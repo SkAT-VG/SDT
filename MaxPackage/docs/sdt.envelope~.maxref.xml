@@ -8,7 +8,7 @@
 	</digest>
 
 	<description>
-		<o>sdt.envelope~</o> is an envelope follower with different attack and release times based on a one-pole lowpass filter.
+		<o>sdt.envelope~</o> is an envelope follower with settable attack and release times based on a one-pole lowpass filter.
 	</description>
 
 	<!--METADATA-->

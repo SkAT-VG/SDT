@@ -2865,7 +2865,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
-					"text" : "[machines] Combustion engine sound"
+					"text" : "[machines] Combustion engine sound."
 				}
 
 			}
@@ -2889,7 +2889,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 539.0, 22.0 ],
-					"text" : "Simulates the sound produced by 2 or 4-stroke engines",
+					"text" : "Simulates the sound produced by 2 or 4-stroke engines.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -3465,10 +3465,10 @@
 				"boxes" : [ "obj-65", "obj-64" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-54", "obj-53" ]
 			}
 , 			{
-				"boxes" : [ "obj-54", "obj-53" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

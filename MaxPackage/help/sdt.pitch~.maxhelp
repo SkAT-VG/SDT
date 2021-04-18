@@ -1218,7 +1218,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "[analysis] Fundamental frequency (f0) estimator"
+					"text" : "[analysis] Fundamental frequency (f0) estimator."
 				}
 
 			}
@@ -1528,9 +1528,6 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-45", "obj-44" ]
 			}
 , 			{
@@ -1538,6 +1535,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-13", "obj-9" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

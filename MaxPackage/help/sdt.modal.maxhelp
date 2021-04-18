@@ -879,13 +879,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-54",
-					"linecount" : 11,
+					"linecount" : 13,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.0, 446.0, 259.0, 178.0 ],
+					"patching_rect" : [ 637.0, 425.0, 259.0, 209.0 ],
 					"style" : "SDT-comments",
-					"text" : "Solid objects and interactors form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
+					"text" : "When two solid objects ([sdt.inertial] or [sdt.modal]) interact via an interactor ([sdt.impact~] or [sdt.friction~]), a bidirectional network is established, wherein the objects' IDs work as addresses for the interactor. \nTherefore, objects' IDs must be unique.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
 
 			}
@@ -896,7 +896,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 637.0, 427.5, 66.0, 22.0 ],
+					"patching_rect" : [ 637.0, 406.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -1880,11 +1880,11 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
-					"linecount" : 3,
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 7.0, 73.887544453305168, 490.0, 53.0 ],
+					"patching_rect" : [ 7.0, 73.887544453305168, 532.0, 38.0 ],
 					"text" : "Resonator implemented according to modal synthesis: i.e. a set of parallel mass–spring–damper mechanical oscillators, each of which represents a mode of resonance.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
@@ -2222,13 +2222,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
-			}
-, 			{
 				"boxes" : [ "obj-37", "obj-36" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{

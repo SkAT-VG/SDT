@@ -4,7 +4,7 @@
 <c74object name="sdt.rolling~">
 
 	<digest>
-		[solids, control] Control algorithm to simulate a rolling sound.
+		[solids, control] Control algorithm to render rolling sounds.
 	</digest>
 
 	<description>

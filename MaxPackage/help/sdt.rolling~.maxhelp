@@ -624,7 +624,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 627.75, 302.5, 260.0, 53.0 ],
+					"patching_rect" : [ 625.75, 335.5, 260.0, 53.0 ],
 					"style" : "SDT-comments",
 					"text" : "An audio signal, either a sample or a noise generator, is used to represent the surface profile."
 				}
@@ -637,7 +637,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 627.75, 284.0, 83.0, 22.0 ],
+					"patching_rect" : [ 625.75, 317.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "input:"
 				}
@@ -651,7 +651,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 623.75, 424.375, 263.0, 116.0 ],
+					"patching_rect" : [ 623.75, 436.375, 263.0, 116.0 ],
 					"style" : "SDT-comments",
 					"text" : "- mass: mass of the rolling object (kg) shared by both [sdt.rolling~] and [sdt.inertial].\n- velocity: velocity of the rolling object (m/s).\n- grain: surface roughness [0., 1.]. It affects the density of the micro-impacts.\n- depth: depth of irregularities, affecting the amplitude of micro-impacts."
 				}
@@ -664,7 +664,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 623.75, 405.875, 149.0, 22.0 ],
+					"patching_rect" : [ 623.75, 417.875, 149.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "attributes:"
 				}
@@ -1719,7 +1719,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 502.0, 22.0 ],
-					"text" : "[solids, control] Control algorithm for [sdt.impact~]."
+					"text" : "[solids, control] Control algorithm to render rolling sounds."
 				}
 
 			}
@@ -1731,7 +1731,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-					"text" : "Generates a force that modulates micro-impacts, resulting in a rolling sound.",
+					"text" : "Generates a force that modulates micro-impacts via [sdt.impact~].",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -2028,13 +2028,13 @@
 				"boxes" : [ "obj-23", "obj-42", "obj-52" ]
 			}
 , 			{
-				"boxes" : [ "obj-4", "obj-12", "obj-7" ]
-			}
-, 			{
 				"boxes" : [ "obj-58", "obj-54" ]
 			}
 , 			{
 				"boxes" : [ "obj-62", "obj-61" ]
+			}
+, 			{
+				"boxes" : [ "obj-4", "obj-12", "obj-7" ]
 			}
  ],
 		"styles" : [ 			{

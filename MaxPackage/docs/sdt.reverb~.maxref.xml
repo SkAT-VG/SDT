@@ -9,6 +9,7 @@
 
 	<description>
 		<o>sdt.reverb~</o> implements a Feedback Delay Network (FDN) reverberator.
+		Useful to enhance the texturization of acoustic elements, such as turbulence and scattering.
 		The reverberation effect is parametrized according to the room size in the three dimensions (width, height, depth), the shape
 		deviation from a rectangular room, the global reverberation time, and the reverberation time at 1 kHz.
 	</description>

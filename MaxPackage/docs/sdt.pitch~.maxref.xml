@@ -8,7 +8,8 @@
 	</digest>
 
 	<description>
-		<o>sdt.pitch~</o> estimates the fundamental frequency (f0) of the incoming signal based on the Normalized Square Difference Function (NSDF).
+		<o>sdt.pitch~</o> estimates the fundamental frequency (f0) and pitch clarity of the incoming signal.
+		Based on the Normalized Square Difference Function (NSDF).
 		It outputs the estimated pitch (Hz) (leftmost outlet) and a pitch clarity value [0., 1.] (rightmost outlet).
 		<br/>
 		<br/>

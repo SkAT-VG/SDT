@@ -4,7 +4,7 @@
 <c74object name="sdt.breaking~">
 
 	<digest>
-		[solids, control] Control algorithm to simulate breaking sounds.
+		[solids, control] Control algorithm to render breaking sounds.
 	</digest>
 
 	<description>

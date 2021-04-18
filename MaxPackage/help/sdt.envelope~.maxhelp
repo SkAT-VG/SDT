@@ -1091,7 +1091,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "[analysis] Envelope follower with settable attack and release times"
+					"text" : "[analysis] Envelope follower with settable attack and release times."
 				}
 
 			}
@@ -1339,13 +1339,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
-			}
-, 			{
 				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
 				"boxes" : [ "obj-13", "obj-9" ]
+			}
+, 			{
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

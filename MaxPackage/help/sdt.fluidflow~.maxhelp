@@ -1862,7 +1862,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 532.0, 22.0 ],
-					"text" : "[liquids] Simulates the sound of water dripping, waterfalls, burbling streams, etc."
+					"text" : "[liquids] Sound of water dripping, waterfalls, burbling streams, etc."
 				}
 
 			}
@@ -2308,10 +2308,10 @@
 				"boxes" : [ "obj-4", "obj-1" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

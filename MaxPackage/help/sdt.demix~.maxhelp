@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 234.0, 354.0, 692.0, 562.0 ],
+		"rect" : [ 193.0, 314.0, 700.0, 500.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -1311,7 +1311,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 9.0, 57.0, 425.0, 22.0 ],
-					"text" : "[processing] Transient / tonal / residual component separator"
+					"text" : "[processing] Transient / tonal / residual component separator."
 				}
 
 			}
@@ -1664,10 +1664,10 @@
 				"boxes" : [ "obj-44", "obj-42" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{

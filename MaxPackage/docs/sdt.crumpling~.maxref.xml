@@ -4,11 +4,11 @@
 <c74object name="sdt.crumpling~">
 
 	<digest>
-		[solids, control] Control algorithm to simulate a granular, crumpling/crushing sound.
+		[solids, control] Control algorithm to render a granular, crumpling/crushing sound.
 	</digest>
 
 	<description>
-		<o>sdt.crumpling~</o> generates a stochastic sequence of velocity and fragmentation events
+		<o>sdt.crumpling~</o> generates a stochastic series of velocity and fragmentation events
 		meant to drive a point-mass hitting a resonator.
 		This results in a granular, crumpling/crushing sound.
 		<br />

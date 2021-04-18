@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 100.0, 100.0, 868.0, 611.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -45,7 +45,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 842.0, 625.0, 54.0, 23.0 ],
+					"patching_rect" : [ 808.75, 583.5, 54.0, 23.0 ],
 					"text" : "onecopy"
 				}
 
@@ -57,7 +57,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 282.0, 259.0, 22.0 ],
+					"patching_rect" : [ 608.5, 273.5, 259.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "- unique ID of object"
 				}
@@ -70,7 +70,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 263.5, 83.0, 22.0 ],
+					"patching_rect" : [ 608.5, 255.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -642,13 +642,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-54",
-					"linecount" : 11,
+					"linecount" : 13,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 379.5, 259.0, 178.0 ],
+					"patching_rect" : [ 608.5, 371.0, 259.0, 209.0 ],
 					"style" : "SDT-comments",
-					"text" : "Solid objects and interactors form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
+					"text" : "When two solid objects ([sdt.inertial] or [sdt.modal]) interact via an interactor ([sdt.impact~] or [sdt.friction~]), a bidirectional network is established, wherein the objects' IDs work as addresses for the interactor. \nTherefore, objects' IDs must be unique.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
 
 			}
@@ -659,7 +659,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 631.75, 361.0, 66.0, 22.0 ],
+					"patching_rect" : [ 608.5, 352.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -866,7 +866,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 549.0, 559.5, 45.0, 45.0 ]
+					"patching_rect" : [ 526.0, 559.5, 45.0, 45.0 ]
 				}
 
 			}
@@ -1471,7 +1471,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 13.0, 59.0, 460.0, 22.0 ],
-					"text" : "[solids, object] Point-mass inertial object."
+					"text" : "[solids, object] Inertial point-mass."
 				}
 
 			}
@@ -1520,7 +1520,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 13.0, 83.0, 490.0, 22.0 ],
-					"text" : "Simulates a simple inertial point mass, mostly used as exciter for modal resonators.",
+					"text" : "Simulates a simple inertial point-mass, mostly used as exciter for modal resonators.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1776,13 +1776,13 @@
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
-			}
-, 			{
 				"boxes" : [ "obj-37", "obj-36" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+			}
+, 			{
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{

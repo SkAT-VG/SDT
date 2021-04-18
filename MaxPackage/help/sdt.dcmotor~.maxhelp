@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 123.0, 255.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -55,13 +55,13 @@
 					"bubble" : 1,
 					"bubbleside" : 2,
 					"fontface" : 1,
+					"hidden" : 1,
 					"id" : "obj-76",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 398.125, 178.0, 168.75, 41.0 ],
 					"style" : "SDT-comments",
-					"text" : "adding air noise",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -2187,7 +2187,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 86.0, 539.0, 22.0 ],
-					"text" : "Simulates the sound produced by the rotor, gears and brushes in a DC motor",
+					"text" : "Simulates the sound produced by the rotor, gears and brushes in a DC motor.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 

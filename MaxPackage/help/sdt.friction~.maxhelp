@@ -4,13 +4,13 @@
 		"appversion" : 		{
 			"major" : 8,
 			"minor" : 1,
-			"revision" : 10,
+			"revision" : 11,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
+		"rect" : [ 250.0, 157.0, 899.0, 676.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -45,7 +45,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 840.75, 623.0, 54.0, 23.0 ],
+					"patching_rect" : [ 522.75, 649.0, 54.0, 23.0 ],
 					"text" : "onecopy"
 				}
 
@@ -84,7 +84,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 372.234375, 259.0, 69.0 ],
+					"patching_rect" : [ 635.75, 367.234375, 259.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Unique ID of object 1. \n- Unique ID of object 2.\n- Number of outlets = number of pickup     points of object 1 + object 2."
 				}
@@ -97,7 +97,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 353.734375, 83.0, 22.0 ],
+					"patching_rect" : [ 635.75, 348.734375, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -131,7 +131,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -273,7 +273,7 @@
 									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 17.0, 7.0, 571.0, 22.0 ],
-									"text" : "The sdt.friction~ object adopts a \"bristle-based\" interpretation of frictional contact."
+									"text" : "[sdt.friction~] adopts a \"bristle-based\" interpretation of frictional contact."
 								}
 
 							}
@@ -393,7 +393,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -815,7 +815,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1377,7 +1377,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1511,7 +1511,7 @@
 										"appversion" : 										{
 											"major" : 8,
 											"minor" : 1,
-											"revision" : 10,
+											"revision" : 11,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2392,7 +2392,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 97.5, 313.0, 52.0, 23.0 ],
+					"patching_rect" : [ 97.5, 307.0, 52.0, 23.0 ],
 					"text" : "force $1"
 				}
 
@@ -2404,7 +2404,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 437.0, 313.0, 73.0, 23.0 ],
+					"patching_rect" : [ 437.0, 307.0, 73.0, 23.0 ],
 					"text" : "noisiness $1"
 				}
 
@@ -2416,7 +2416,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 793.5, 313.0, 67.0, 23.0 ],
+					"patching_rect" : [ 793.5, 307.0, 67.0, 23.0 ],
 					"text" : "stribeck $1"
 				}
 
@@ -2428,7 +2428,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 705.5, 313.0, 84.0, 23.0 ],
+					"patching_rect" : [ 705.5, 307.0, 84.0, 23.0 ],
 					"text" : "breakAway $1"
 				}
 
@@ -2440,7 +2440,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 538.75, 313.0, 61.0, 23.0 ],
+					"patching_rect" : [ 538.75, 307.0, 61.0, 23.0 ],
 					"text" : "kStatic $1"
 				}
 
@@ -2452,7 +2452,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 361.5, 313.0, 70.0, 23.0 ],
+					"patching_rect" : [ 361.5, 307.0, 70.0, 23.0 ],
 					"text" : "viscosity $1"
 				}
 
@@ -2526,7 +2526,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2669,7 +2669,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 277.0, 313.0, 82.0, 23.0 ],
+					"patching_rect" : [ 277.0, 307.0, 82.0, 23.0 ],
 					"text" : "dissipation $1"
 				}
 
@@ -2681,7 +2681,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 620.0, 313.0, 78.0, 23.0 ],
+					"patching_rect" : [ 620.0, 307.0, 78.0, 23.0 ],
 					"text" : "kDynamic $1"
 				}
 
@@ -2693,7 +2693,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 198.59375, 313.0, 70.0, 23.0 ],
+					"patching_rect" : [ 198.59375, 307.0, 70.0, 23.0 ],
 					"text" : "stiffness $1"
 				}
 
@@ -2728,7 +2728,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3178,13 +3178,13 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-54",
-					"linecount" : 11,
+					"linecount" : 13,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 468.0, 259.0, 178.0 ],
+					"patching_rect" : [ 635.75, 463.0, 259.0, 209.0 ],
 					"style" : "SDT-comments",
-					"text" : "The objects and the interactor form a bidirectional network, wherein the objects' names work as addresses for the interactor. \nTherefore, the objects must have unique ID names / addresses.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
+					"text" : "When two solid objects ([sdt.inertial] or [sdt.modal]) interact via an interactor ([sdt.impact~] or [sdt.friction~]), a bidirectional network is established, wherein the objects' IDs work as addresses for the interactor. \nTherefore, objects' IDs must be unique.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
 
 			}
@@ -3195,7 +3195,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 449.5, 66.0, 22.0 ],
+					"patching_rect" : [ 635.75, 444.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "note:"
 				}
@@ -3269,7 +3269,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3489,7 +3489,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3568,7 +3568,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "signal" ],
+									"outlettype" : [ "" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -3764,7 +3764,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3913,7 +3913,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 62.0, 460.0, 22.0 ],
+					"patching_rect" : [ 15.0, 57.0, 460.0, 22.0 ],
 					"text" : "[solids, interactor] Friction between two solid objects."
 				}
 
@@ -3923,7 +3923,7 @@
 					"id" : "obj-10",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 1,
+					"numinlets" : 0,
 					"numoutlets" : 0,
 					"patching_rect" : [ 254.5, 582.0, 297.5, 52.0 ],
 					"style" : "SDT_package",
@@ -3938,9 +3938,9 @@
 					"id" : "obj-9",
 					"linecount" : 3,
 					"maxclass" : "newobj",
-					"numinlets" : 6,
+					"numinlets" : 1,
 					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
+					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 22.0, 364.0, 533.0, 66.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.friction~ inertial-object modal-object 3 @stiffness 10000. @dissipation 10. @viscosity 0.4 @breakAway 0.2 @kDynamic 0.4 @kStatic 0.7 @stribeck 0.1 @noisiness 1. @force 0.5 @contact0 0 @contact1 1"
@@ -3951,11 +3951,12 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 523.0, 22.0 ],
-					"text" : "Simulates the nonlinear friction force arising when two solid objects rub on each other.",
+					"patching_rect" : [ 15.0, 81.0, 510.0, 38.0 ],
+					"text" : "Simulates the nonlinear friction force arising when a solid object rubs against another (e.g. a singing glass, squeaky hinges). ",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -3980,7 +3981,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 10.0, 425.0, 50.0 ],
+					"patching_rect" : [ 15.0, 5.0, 425.0, 50.0 ],
 					"text" : "sdt.friction~"
 				}
 
@@ -3997,7 +3998,7 @@
 						"appversion" : 						{
 							"major" : 8,
 							"minor" : 1,
-							"revision" : 10,
+							"revision" : 11,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -4678,19 +4679,7 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.friction~.mxo",
-				"type" : "iLaX"
-			}
-, 			{
-				"name" : "sdt.modal.mxo",
-				"type" : "iLaX"
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
@@ -4699,10 +4688,10 @@
 				"boxes" : [ "obj-37", "obj-36" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
+				"boxes" : [ "obj-30", "obj-8" ]
 			}
 , 			{
-				"boxes" : [ "obj-30", "obj-8" ]
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]

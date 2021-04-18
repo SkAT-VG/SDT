@@ -4,7 +4,7 @@
 <c74object name="sdt.scraping~">
 
 	<digest>
-			[solids, control] Control algorithm to simulate scraping/sliding/rubbing sound textures.
+			[solids, control] Control algorithm to render scraping/sliding/rubbing sound textures.
 	</digest>
 
 	<description>
