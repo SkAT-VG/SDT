@@ -2,7 +2,7 @@ SHELL=/bin/bash
 
 CC=clang
 MACARCH=-arch i386 -arch x86_64
-MACVERSION=-isysroot ../../3rdparty/MacOSX10.6.sdk -mmacosx-version-min=10.6
+MACVERSION=-isysroot ../../3rdparty/MacOSX10.7.sdk -mmacosx-version-min=10.7
 CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -g -O3
 LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib -headerpad_max_install_names
 SRCDIR=../../src
@@ -12,12 +12,14 @@ SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
 SDTOBJS=$(patsubst %.c,%.o,$(SDTSRCS))
 
+SDTVERSION=
+
 MAXDIR=$(SRCDIR)/Max7
 MAXSRCS = $(wildcard $(MAXDIR)/*.c)
 MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 
 MAXSDKDIR=$(THIRDPDIR)/Max7SDK
-MAXSDKVERSION=7.3.3
+# MAXSDKVERSION=7.3.3
 
 MAXPACKDIR=../../MaxPackage
 
@@ -51,7 +53,7 @@ $(MAXDIR)/%.mxo: $(MAXDIR)/%.o
 	mkdir -p $@/Contents/MacOS
 	sed -i "" s/\$${PRODUCT_NAME}/$(EXTNAME)/g $@/Contents/Info.plist
 	sed -i "" s/\$${PRODUCT_NAME:rfc1034identifier}/$(RFC1034)/g $@/Contents/Info.plist
-	sed -i "" s/\$${PRODUCT_VERSION}/$(MAXSDKVERSION)/g $@/Contents/Info.plist
+	sed -i "" s/\$${PRODUCT_VERSION}/$(SDTVERSION)/g $@/Contents/Info.plist
 	$(CC) $(LDFLAGS) @$(MAXSDKDIR)/max-includes/c74_linker_flags.txt \
 	-L$(MAXSDKDIR)/max-includes -L$(MAXSDKDIR)/msp-includes -L$(MAXSDKDIR)/jit-includes \
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
@@ -112,7 +114,7 @@ install_max:
 	     cp -a $(MAXPACKDIR)/* "$(DSTDIR)"/SDT && \
 	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT/support && \
 	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SDT/externals && \
-	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
+	     echo "Sound Design Toolkit 'package for Max' installed in $(DSTDIR)"; \
 	fi
 
 install_pd:
@@ -133,7 +135,7 @@ install_core:
 		then echo "Error: installation path does not exist or is not a directory"; \
 	else mkdir -p "$(DSTDIR)"/SDT && \
 		cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT && \
-		echo "Sound Design Toolkit core library installed in $(DSTDIR)"; \
+		echo "Sound Design Toolkit 'core library' installed in $(DSTDIR)"; \
 	fi
 
 clean:

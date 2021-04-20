@@ -24,7 +24,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>${PRODUCT_VERSION}</string>
 	<key>CFBundleLongVersionString</key>
-	<string>${PRODUCT_NAME} ${PRODUCT_VERSION}, Copyright 2014 Cycling '74</string>
+	<string>${PRODUCT_NAME}, Sound Design Toolkit (SDT)</string>
 
 	<key>CSResourcesFileMapped</key>
 	<true/>

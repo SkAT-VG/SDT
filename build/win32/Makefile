@@ -91,7 +91,7 @@ install_max:
 	     cp -a $(MAXPACKDIR)/* "$(DSTDIR)"/SDT && \
 	     cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT/support && \
 	     cp -a $(MAXDIR)/*.mxe "$(DSTDIR)"/SDT/externals && \
-	     echo "Sound Design Toolkit installed in $(DSTDIR)"; \
+	     echo "Sound Design Toolkit 'package for Max' installed in $(DSTDIR)"; \
 	fi
 
 install_pd:
@@ -102,7 +102,7 @@ install_pd:
 	else mkdir -p "$(DSTDIR)"/SDT && \
 	     cp -a ../../Pd/* "$(DSTDIR)"/SDT && \
 	     cp -a $(PDDIR)/SDT.dll "$(DSTDIR)"/SDT && \
-	     echo "Sound Design Toolkit for PureData installed in $(DSTDIR)"; \
+	     echo "Sound Design Toolkit for Pure Data installed in $(DSTDIR)"; \
 	fi
 
 install_core:
@@ -112,7 +112,7 @@ install_core:
 		then echo "Error: installation path does not exist or is not a directory"; \
 	else mkdir -p "$(DSTDIR)"/SDT && \
 		cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT && \
-		echo "Sound Design Toolkit core library installed in $(DSTDIR)"; \
+		echo "Sound Design Toolkit 'core library' installed in $(DSTDIR)"; \
 	fi
 
 clean:
