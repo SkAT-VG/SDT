@@ -6,8 +6,9 @@ The **Sound Design Toolkit** (**SDT**) is an open-source (GPLv3) framework for
 ecologically-founded sound synthesis and design. Think of it as a virtual
 Foley-box!
 It can simulate various acoustic phenomena arising from solid interactions
-(e.g., impacts, frictions), liquids (e.g., bubbles, splashes), gasses (e.g.,
-explosions, blowing wind), and machines (e.g., combustion engines, DC motors).
+(e.g. collision, rubbing, rolling, scraping), liquids (e.g. dripping, streaming
+water), gasses (e.g. explosions, blowing wind), and machines (e.g. combustion
+engines, electric motors).
 The library consists of sound synthesis models, audio processing algorithms and
 analysis routines.
 
@@ -34,7 +35,7 @@ https://github.com/SkAT-VG/SDT
 
 ## Authors / Acknowledgements
 The Sound Design Toolkit package for Max was developed by:
-Stefano Delle Monache, Stefano Baldan, Stefano Papetti.
+Stefano Delle Monache, Stefano Baldan, Stefano Papetti, and Marco Tiraboschi.
 
 The SDT library was developed through the years with the contribution of the
 following EU-projects:
@@ -45,6 +46,5 @@ following EU-projects:
 
 
 ## Contact:
-- Stefano Delle Monache (s.dellemonache@tudelft.nl)
-- Stefano Baldan (singintime@gmail.com)
-- Stefano Papetti (stefano.papetti@zhdk.ch)
+SoundDesignToolkit@gmail.com
+https://www.facebook.com/SDT.Max.Pd
