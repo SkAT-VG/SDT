@@ -67,16 +67,18 @@ $(JSONDIRP)/%.o: $(JSONDIRP)/%.c
 $(JSONDIRB)/%.o: $(JSONDIRB)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
-
-install:
-	mkdir -p $(PREFIX)/lib/pd/extra/$(SDTPATH)
+install_core:
 	mkdir -p $(PREFIX)/include/$(SDTPATH)
+	mkdir -p $(PREFIX)/lib
 	cp -a $(SDTDIR)/libSDT.so $(PREFIX)/lib
-	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/lib/pd/extra/$(SDTPATH)
-	cp -a ../../Pd/* $(PREFIX)/lib/pd/extra/$(SDTPATH)
 	cp -a $(SDTDIR)/*.h $(PREFIX)/include/$(SDTPATH)
 	cp -a $(JSONDIRP)/*.h $(PREFIX)/include/$(SDTPATH)
 	cp -a $(JSONDIRB)/*.h $(PREFIX)/include/$(SDTPATH)
+
+install_pd: install_core
+	mkdir -p $(PREFIX)/lib/pd/extra/$(SDTPATH)
+	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/lib/pd/extra/$(SDTPATH)
+	cp -a ../../Pd/* $(PREFIX)/lib/pd/extra/$(SDTPATH)
 
 uninstall:
 	rm -f $(PREFIX)/lib/libSDT.so

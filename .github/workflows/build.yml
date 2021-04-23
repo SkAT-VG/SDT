@@ -18,18 +18,10 @@ jobs:
     strategy:
       matrix:
         target: [linux, win32, win64]
-        platform: [install, install_core, install_max, install_pd]
+        platform: [install_core, install_max, install_pd]
         exclude:
         - target: linux
-          platform: install_core
-        - target: linux
           platform: install_max
-        - target: linux
-          platform: install_pd
-        - target: win32
-          platform: install
-        - target: win64
-          platform: install
         - target: win64
           platform: install_pd
         include:
@@ -39,8 +31,6 @@ jobs:
           dir: DSTDIR
         - target: win64
           dir: DSTDIR
-        - platform: install
-          plt_name: _pd
         - platform: install_core
           plt_name: _lib
         - platform: install_pd
@@ -66,16 +56,13 @@ jobs:
 
   # Cannot be run in the previous matrix because there is no way (for now) to specify not to use a container for macos
   # https://github.community/t/run-matrix-job-on-macos-and-on-ubuntu-in-container/16359/3
-  # Job definiton is ready for merge in case the option is impelemented
+  # Job definiton is ready for merge in case the option is implemented
   build-macos:
     runs-on: macos-latest
     strategy:
       matrix:
         target: [macosx]
-        platform: [install, install_core, install_max, install_pd]
-        exclude:
-        - target: macosx
-          platform: install
+        platform: [install_core, install_max, install_pd]
         include:
         - target: macosx
           dir: DSTDIR
@@ -130,8 +117,6 @@ jobs:
         target: [linux, win32, win64, macosx]
         plt_name: ["_lib", _pd, _max]
         exclude:
-        - target: linux
-          plt_name: _lib
         - target: linux
           plt_name: _max
         - target: win64
