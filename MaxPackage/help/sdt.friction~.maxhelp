@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 897.0, 678.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,24 +40,12 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-7",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 522.75, 649.0, 54.0, 23.0 ],
-					"text" : "onecopy"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-8",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 122.09375, 513.240257472914436, 110.0, 22.0 ],
+					"patching_rect" : [ 92.0, 504.5, 110.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "See [sdt.impact~]"
 				}
@@ -70,7 +58,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 122.09375, 496.0, 110.0, 22.0 ],
+					"patching_rect" : [ 92.0, 487.259742527085564, 110.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlets (signal):"
 				}
@@ -84,7 +72,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 367.234375, 259.0, 69.0 ],
+					"patching_rect" : [ 609.75, 365.5, 259.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Unique ID of first object (object0). \n- Unique ID of second object (object1).\n- Number of outlets = total number of pickup locations of the two objects."
 				}
@@ -97,7 +85,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 348.734375, 83.0, 22.0 ],
+					"patching_rect" : [ 609.75, 347.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -1229,7 +1217,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 572.75, 437.0, 88.0, 23.0 ],
+					"patching_rect" : [ 546.75, 437.0, 88.0, 23.0 ],
 					"text" : "loadmess 3000"
 				}
 
@@ -2373,6 +2361,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-69",
 					"maxclass" : "flonum",
@@ -2500,6 +2490,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-26",
 					"maxclass" : "flonum",
@@ -3157,7 +3149,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 437.0, 483.5, 115.0, 64.0 ]
+					"patching_rect" : [ 411.0, 483.5, 115.0, 64.0 ]
 				}
 
 			}
@@ -3178,11 +3170,11 @@
 				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-54",
-					"linecount" : 13,
+					"linecount" : 12,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 463.0, 259.0, 209.0 ],
+					"patching_rect" : [ 609.75, 453.0, 282.0, 194.0 ],
 					"style" : "SDT-comments",
 					"text" : "When two solid objects ([sdt.inertial] or [sdt.modal]) interact via an interactor ([sdt.impact~] or [sdt.friction~]), a bidirectional network is established, wherein the objects' IDs work as addresses for the interactor. \nTherefore, objects' IDs must be unique.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
@@ -3195,9 +3187,10 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 444.5, 66.0, 22.0 ],
+					"patching_rect" : [ 609.75, 434.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "note:"
+					"text" : "warning:",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
 			}
@@ -3251,7 +3244,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.25, 456.5, 65.0, 22.0 ],
+					"patching_rect" : [ 538.75, 462.0, 65.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "extra gain"
 				}
@@ -3419,7 +3412,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 261.0, 516.5, 34.0, 23.0 ],
+					"patching_rect" : [ 235.0, 516.5, 34.0, 23.0 ],
 					"text" : "dac~"
 				}
 
@@ -3431,7 +3424,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 572.75, 585.5, 45.0, 45.0 ]
+					"patching_rect" : [ 546.75, 585.5, 45.0, 45.0 ]
 				}
 
 			}
@@ -3444,7 +3437,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 572.75, 483.5, 26.0, 52.0 ],
+					"patching_rect" : [ 546.75, 483.5, 26.0, 52.0 ],
 					"size" : 5000.0
 				}
 
@@ -3473,7 +3466,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 572.75, 540.5, 50.0, 23.0 ]
+					"patching_rect" : [ 546.75, 540.5, 50.0, 23.0 ]
 				}
 
 			}
@@ -3679,7 +3672,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 304.0, 483.5, 105.0, 23.0 ],
+					"patching_rect" : [ 278.0, 483.5, 105.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -3734,7 +3727,7 @@
 					"orientation" : 1,
 					"outlettype" : [ "signal", "", "float", "list" ],
 					"parameter_enable" : 1,
-					"patching_rect" : [ 304.0, 513.5, 106.0, 41.0 ],
+					"patching_rect" : [ 278.0, 513.5, 106.0, 41.0 ],
 					"saved_attribute_attributes" : 					{
 						"valueof" : 						{
 							"parameter_longname" : "live.gain~",
@@ -3925,7 +3918,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 254.5, 582.0, 297.5, 52.0 ],
+					"patching_rect" : [ 228.5, 582.0, 297.5, 52.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.modal modal-object 2 2 @freqs 380. 540 @decays 0.02 0.015 @pickup0 230. 200. @pickup1 130. 150. @activeModes 2 @fragmentSize 1."
 				}
@@ -4354,7 +4347,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-24", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 313.5, 507.0, 418.6875, 507.0, 418.6875, 474.0, 446.5, 474.0 ],
+					"midpoints" : [ 287.5, 507.0, 392.6875, 507.0, 392.6875, 474.0, 420.5, 474.0 ],
 					"order" : 0,
 					"source" : [ "obj-38", 0 ]
 				}
@@ -4371,7 +4364,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 1 ],
-					"midpoints" : [ 582.25, 568.0, 420.0, 568.0, 420.0, 477.0, 399.5, 477.0 ],
+					"midpoints" : [ 556.25, 568.0, 394.0, 568.0, 394.0, 477.0, 373.5, 477.0 ],
 					"source" : [ "obj-42", 0 ]
 				}
 
@@ -4524,7 +4517,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 545.5, 459.0, 313.5, 459.0 ],
+					"midpoints" : [ 545.5, 459.0, 287.5, 459.0 ],
 					"source" : [ "obj-9", 2 ]
 				}
 
@@ -4532,7 +4525,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 288.5, 463.0, 313.5, 463.0 ],
+					"midpoints" : [ 288.5, 463.0, 287.5, 463.0 ],
 					"source" : [ "obj-9", 1 ]
 				}
 

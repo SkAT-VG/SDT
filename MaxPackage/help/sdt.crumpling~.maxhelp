@@ -40,18 +40,6 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-1",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 788.0, 601.0, 54.0, 23.0 ],
-					"text" : "onecopy"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"fontface" : 3,
 					"id" : "obj-47",
 					"maxclass" : "comment",
@@ -1646,6 +1634,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-66",
 					"maxclass" : "flonum",

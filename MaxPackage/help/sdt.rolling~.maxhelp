@@ -40,25 +40,15 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-21",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 788.0, 601.0, 54.0, 23.0 ],
-					"text" : "onecopy"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"fontface" : 1,
-					"id" : "obj-19",
+					"fontsize" : 14.0,
+					"id" : "obj-21",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 28.625, 352.0, 70.75, 21.0 ],
-					"text" : "press \"s\" "
+					"patching_rect" : [ 29.0, 348.0, 81.0, 23.0 ],
+					"text" : "press \"s\" ",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
 			}
@@ -1625,6 +1615,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-18",
 					"maxclass" : "flonum",

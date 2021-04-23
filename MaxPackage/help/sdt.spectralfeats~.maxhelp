@@ -40,18 +40,6 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-12",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 635.0, 470.0, 54.0, 23.0 ],
-					"text" : "onecopy"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"channels" : 1,
 					"id" : "obj-10",
 					"lastchannelcount" : 0,
@@ -1125,7 +1113,7 @@
 			}
 , 			{
 				"box" : 				{
-					"args" : [ "@module", 2, "@vol", 0 ],
+					"args" : [ "@module", 0, "@vol", 0 ],
 					"bgmode" : 0,
 					"border" : 0,
 					"clickthrough" : 0,

@@ -40,13 +40,15 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-23",
-					"maxclass" : "newobj",
+					"fontface" : 1,
+					"fontsize" : 14.0,
+					"id" : "obj-1",
+					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 830.0, 621.0, 54.0, 23.0 ],
-					"text" : "onecopy"
+					"patching_rect" : [ 578.755431999999928, 234.0, 81.0, 23.0 ],
+					"text" : "press \"s\" ",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
 			}
@@ -62,18 +64,6 @@
 					"text" : "city car",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"varname" : "bubble"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 1,
-					"id" : "obj-51",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 586.625, 234.0, 59.75, 21.0 ],
-					"text" : "press \"s\" "
 				}
 
 			}
@@ -1118,6 +1108,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-93",
 					"maxclass" : "flonum",
@@ -1145,6 +1137,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-90",
 					"maxclass" : "flonum",
@@ -3437,14 +3431,14 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "enginemodel.png",
-				"bootpath" : "~/SDT_git/MaxPackage/media",
+				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "fourstrokegraphs.png",
-				"bootpath" : "~/SDT_git/MaxPackage/media",
+				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1

@@ -40,13 +40,26 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-12",
-					"maxclass" : "newobj",
+					"id" : "obj-14",
+					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 834.5, 619.0, 54.0, 23.0 ],
-					"text" : "onecopy"
+					"patching_rect" : [ 295.5, 221.0, 150.0, 21.0 ],
+					"text" : "design your favourite click!"
+				}
+
+			}
+, 			{
+				"box" : 				{
+					"fontface" : 1,
+					"fontsize" : 14.0,
+					"id" : "obj-19",
+					"maxclass" : "comment",
+					"numinlets" : 1,
+					"numoutlets" : 0,
+					"patching_rect" : [ 516.0, 138.0, 81.0, 23.0 ],
+					"text" : "press \"s\" ",
+					"textcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ]
 				}
 
 			}
@@ -278,19 +291,6 @@
 					"patching_rect" : [ 599.5, 513.0, 289.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "Beyond the conventional simulation of room resonances, [sdt.reverb~] is especially suitable to enhance the texturization of acoustic elements, such as turbulence and scattering. "
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"id" : "obj-63",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 481.5, 171.0, 59.0, 22.0 ],
-					"style" : "SDT-comments",
-					"text" : "press \"s\""
 				}
 
 			}

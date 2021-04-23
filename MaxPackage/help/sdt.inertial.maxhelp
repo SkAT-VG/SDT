@@ -40,18 +40,6 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-7",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 808.75, 583.5, 54.0, 23.0 ],
-					"text" : "onecopy"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"fontface" : 0,
 					"id" : "obj-36",
 					"maxclass" : "comment",
@@ -79,12 +67,14 @@
 , 			{
 				"box" : 				{
 					"fontface" : 1,
+					"fontsize" : 14.0,
 					"id" : "obj-19",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 48.755431999999928, 206.0, 70.75, 21.0 ],
-					"text" : "press \"s\" "
+					"patching_rect" : [ 50.755431999999928, 203.5, 81.0, 23.0 ],
+					"text" : "press \"s\" ",
+					"textcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ]
 				}
 
 			}
@@ -661,7 +651,8 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 608.5, 352.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "note:"
+					"text" : "warning:",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
 			}
@@ -906,7 +897,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 185.5, 478.0, 104.0, 42.0 ],
+					"patching_rect" : [ 185.5, 478.0, 106.0, 42.0 ],
 					"style" : "SDT-comments",
 					"text" : "motion of the inertial mass"
 				}
@@ -1065,7 +1056,7 @@
 									"maxclass" : "inlet",
 									"numinlets" : 0,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 70.0, 15.0, 28.0, 28.0 ]
 								}
 
@@ -1429,6 +1420,7 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
 					"id" : "obj-16",
 					"maxclass" : "button",
 					"numinlets" : 1,
@@ -1480,7 +1472,7 @@
 					"id" : "obj-10",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 563.5, 312.0, 37.0 ],
 					"text" : "sdt.modal modal-object 1 1 @freqs 2200. @decays 0.05 @pickup0 200. @activeModes 1"
@@ -1492,9 +1484,9 @@
 					"id" : "obj-9",
 					"linecount" : 2,
 					"maxclass" : "newobj",
-					"numinlets" : 0,
+					"numinlets" : 6,
 					"numoutlets" : 2,
-					"outlettype" : [ "", "" ],
+					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 41.0, 406.75, 360.0, 37.0 ],
 					"text" : "sdt.impact~ inertial-object modal-object 2 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 0"
 				}
@@ -1758,7 +1750,19 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [  ],
+		"dependency_cache" : [ 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.impact~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+ ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]

@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 100.0, 100.0, 893.0, 676.0 ],
+		"rect" : [ 100.0, 100.0, 900.0, 650.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,25 +40,15 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"hidden" : 1,
-					"id" : "obj-61",
-					"maxclass" : "newobj",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 840.75, 623.0, 54.0, 23.0 ],
-					"text" : "onecopy"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"fontface" : 1,
-					"id" : "obj-51",
+					"fontsize" : 14.0,
+					"id" : "obj-61",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 134.25, 516.5, 70.75, 21.0 ],
-					"text" : "press \"s\" "
+					"patching_rect" : [ 128.0, 520.5, 67.0, 23.0 ],
+					"text" : "press \"s\" ",
+					"textcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ]
 				}
 
 			}
@@ -183,7 +173,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 189.5, 259.0, 84.0 ],
+					"patching_rect" : [ 635.75, 188.5, 259.0, 84.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Respectively apply external forces [1, 4],  impact velocities [2, 5], and fragment sizes [3, 6] to the two objects, in order to model patterns and textures such as rolling and crumpling."
 				}
@@ -196,7 +186,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 173.0, 83.0, 22.0 ],
+					"patching_rect" : [ 635.75, 172.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "inlets (signal):"
 				}
@@ -1244,7 +1234,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 92.625, 533.5, 112.375, 26.0 ],
+					"patching_rect" : [ 92.625, 547.5, 112.375, 26.0 ],
 					"style" : "SDT-comments",
 					"text" : "strike!",
 					"textjustification" : 1
@@ -1259,7 +1249,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 454.0, 259.0, 209.0 ],
+					"patching_rect" : [ 635.75, 437.0, 259.0, 209.0 ],
 					"style" : "SDT-comments",
 					"text" : "When two solid objects ([sdt.inertial] or [sdt.modal]) interact via an interactor ([sdt.impact~] or [sdt.friction~]), a bidirectional network is established, wherein the objects' IDs work as addresses for the interactor. \nTherefore, objects' IDs must be unique.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
 				}
@@ -1272,9 +1262,10 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 435.5, 66.0, 22.0 ],
+					"patching_rect" : [ 635.75, 418.5, 66.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "note:"
+					"text" : "warning:",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
 			}
@@ -2040,7 +2031,7 @@
 			}
 , 			{
 				"box" : 				{
-					"bgcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
 					"id" : "obj-16",
 					"maxclass" : "button",
 					"numinlets" : 1,
@@ -2151,7 +2142,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 302.331223628691987, 259.0, 116.0 ],
+					"patching_rect" : [ 635.75, 295.5, 259.0, 116.0 ],
 					"style" : "SDT-comments",
 					"text" : "Their number depends on the respective creation argument, and they respectively refer the pickup points available at object0 and object1. In this case:\n- [1] displacement @pickup0 of object0.\n- [2] displacement @pickup0 of object1.\n- [3] displacement @pickup1 of object1."
 				}
@@ -2164,7 +2155,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 284.0, 259.0, 22.0 ],
+					"patching_rect" : [ 635.75, 277.168776371308013, 259.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlets (signal):"
 				}
@@ -2487,9 +2478,6 @@
 				"boxes" : [ "obj-39", "obj-35" ]
 			}
 , 			{
-				"boxes" : [ "obj-53", "obj-54" ]
-			}
-, 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
 , 			{
@@ -2497,6 +2485,9 @@
 			}
 , 			{
 				"boxes" : [ "obj-30", "obj-8" ]
+			}
+, 			{
+				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{
