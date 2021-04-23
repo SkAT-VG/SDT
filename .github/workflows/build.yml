@@ -42,7 +42,7 @@ jobs:
         - platform: install
           plt_name: _pd
         - platform: install_core
-          plt_name: ""
+          plt_name: _lib
         - platform: install_pd
           plt_name: _pd
         - platform: install_max
@@ -80,7 +80,7 @@ jobs:
         - target: macosx
           dir: DSTDIR
         - platform: install_core
-          plt_name: ""
+          plt_name: _lib
         - platform: install_pd
           plt_name: _pd
         - platform: install_max
@@ -128,10 +128,10 @@ jobs:
     strategy:
       matrix:
         target: [linux, win32, win64, macosx]
-        plt_name: ["", _pd, _max]
+        plt_name: ["_lib", _pd, _max]
         exclude:
         - target: linux
-          plt_name: ""
+          plt_name: _lib
         - target: linux
           plt_name: _max
         - target: win64
