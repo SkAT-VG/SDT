@@ -25,12 +25,6 @@ jobs:
         - target: win64
           platform: install_pd
         include:
-        - target: linux
-          dir: PREFIX
-        - target: win32
-          dir: DSTDIR
-        - target: win64
-          dir: DSTDIR
         - platform: install_core
           plt_name: _lib
         - platform: install_pd
@@ -47,7 +41,7 @@ jobs:
     - name: Prepare package directory
       run: mkdir SoundDesignToolkit
     - name: Package
-      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} ${{ matrix.dir }}=../../SoundDesignToolkit
+      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} DSTDIR=../../SoundDesignToolkit
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:
@@ -64,8 +58,6 @@ jobs:
         target: [macosx]
         platform: [install_core, install_max, install_pd]
         include:
-        - target: macosx
-          dir: DSTDIR
         - platform: install_core
           plt_name: _lib
         - platform: install_pd
@@ -82,7 +74,7 @@ jobs:
     - name: Prepare package directory
       run: mkdir SoundDesignToolkit
     - name: Package
-      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} ${{ matrix.dir }}=../../SoundDesignToolkit
+      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} DSTDIR=../../SoundDesignToolkit
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:
