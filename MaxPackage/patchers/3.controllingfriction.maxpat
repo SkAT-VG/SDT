@@ -4387,6 +4387,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-4",
 					"maxclass" : "flonum",
@@ -4418,7 +4420,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 206.5, 321.5, 675.75, 131.0 ],
+					"patching_rect" : [ 206.5, 321.5, 679.0, 131.0 ],
 					"style" : "SDT-comments",
 					"text" : "MAKING SENSE OF THE FRICTION PARAMETERS\n* The rubbing force coupled with the pressure variable represents the gesture's trajectory and dynamics, e.g. a bowing gesture.\n* Stiffness, dissipation, viscosity and noisiness are high-level parameters that allow to design a great variety of frictions. The remaining (kStatic, kDynamic, break-away and Stribeck) are lower-level parameters and are used to fine-tune the friction behavior.\n* High-level parameters show a minimum value, but not a maximum one. This implies that meaningful ranges have to be found by exploring the relationships between these parameters. "
 				}
@@ -5368,7 +5370,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 5.0, 70.0, 76.0, 35.0 ],
+					"patching_rect" : [ 5.0, 70.0, 78.0, 35.0 ],
 					"style" : "SDT_package",
 					"text" : "rubbing force (N)",
 					"textjustification" : 1
@@ -5377,6 +5379,8 @@
 			}
 , 			{
 				"box" : 				{
+					"bgcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ],
+					"fontface" : 1,
 					"format" : 6,
 					"id" : "obj-110",
 					"maxclass" : "flonum",
@@ -7483,7 +7487,7 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "Friction6modes.maxpat",
-				"bootpath" : "~/SDT_git/MaxPackage/patchers",
+				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/patchers",
 				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
