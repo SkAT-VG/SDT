@@ -149,6 +149,39 @@
 										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
 												"box" : 												{
+													"coll_data" : 													{
+														"count" : 7,
+														"data" : [ 															{
+																"key" : 1,
+																"value" : [ "De", "Gotzen,", "A.,", "&", "Rocchesso,", "D.", "(2006).", "Peek-a-book:", "playing", "with", "an", "interactive", "book.", "Proc.", "of", "the", "12th", "Int.", "Conf.", "on", "Auditory", "Display,", "(pp.", "265-267." ]
+															}
+, 															{
+																"key" : 2,
+																"value" : [ "Polotti,", "P.,", "Delle", "Monache,", "S.,", "Papetti,", "S.,", "&", "Rocchesso,", "D.", "(2008).", "Gamelunch:", "forging", "a", "dining", "experience", "through", "sound.", "In", "CHI'08", "extended", "abstracts", "on", "Human", "factors", "in", "computing", "systems", "(pp.", "2281-2286)." ]
+															}
+, 															{
+																"key" : 3,
+																"value" : [ "Rocchesso,", "D.,", "Polotti,", "P.,", "&", "Delle", "Monache,", "S.", "(2009).", "Designing", "continuous", "sonic", "interaction.", "International", "Journal", "of", "Design,", "3(3)." ]
+															}
+, 															{
+																"key" : 4,
+																"value" : [ "Delle", "Monache,", "S.,", "Rocchesso,", "D.,", "Qi,", "J.,", "Buechley,", "L.,", "De", "Götzen,", "A.,", "&", "Cestaro,", "D.", "(2012).", "Paper", "mechanisms", "for", "sonic", "interaction.", "In", "Pro.", "of", "the", "Sixth", "Int.", "Conf.", "on", "Tangible,", "Embedded", "and", "Embodied", "Interaction", "(pp.", "61-68)." ]
+															}
+, 															{
+																"key" : 5,
+																"value" : [ "Delle", "Monache,", "S.,", "&", "Rocchesso,", "D.", "(2014).", "Bauhaus", "legacy", "in", "research", "through", "design:", "The", "case", "of", "basic", "sonic", "interaction", "design.", "International", "Journal", "of", "Design,", "8(3)." ]
+															}
+, 															{
+																"key" : 6,
+																"value" : [ "Rocchesso,", "D.,", "Mauro,", "D.", "A.,", "&", "Delle", "Monache,", "S.", "(2016).", "miMic:", "The", "microphone", "as", "a", "pencil.", "In", "Proc.", "of", "the", "TEI'16:", "Tenth", "Int.", "Conf.", "on", "Tangible,", "Embedded,", "and", "Embodied", "Interaction", "(pp.", "357-364)." ]
+															}
+, 															{
+																"key" : 7,
+																"value" : [ "Delle", "Monache,", "S.,", "Rocchesso,", "D.,", "Bevilacqua,", "F.,", "Lemaitre,", "G.,", "Baldan,", "S.,", "&", "Cera,", "A.", "(2018).", "Embodied", "sound", "design.", "Int.", "J.", "of", "Human-Computer", "Studies,", "118,", "47-59." ]
+															}
+ ]
+													}
+,
 													"id" : "obj-5",
 													"maxclass" : "newobj",
 													"numinlets" : 1,
@@ -156,7 +189,7 @@
 													"outlettype" : [ "", "", "", "" ],
 													"patching_rect" : [ 50.0, 100.0, 121.0, 22.0 ],
 													"saved_object_attributes" : 													{
-														"embed" : 0,
+														"embed" : 1,
 														"precision" : 6
 													}
 ,
@@ -475,14 +508,14 @@
 , 															{
 																"box" : 																{
 																	"id" : "obj-35",
-																	"linecount" : 4,
+																	"linecount" : 5,
 																	"maxclass" : "message",
 																	"numinlets" : 2,
 																	"numoutlets" : 1,
 																	"outlettype" : [ "" ],
 																	"patching_rect" : [ 51.0, 297.0, 217.0, 80.0 ],
 																	"style" : "SDTpackage",
-																	"text" : ";\rmax launchbrowser http://www.ijdesign.org/index.php/IJDesign/article/view/1543/657"
+																	"text" : ";\rmax launchbrowser https://smartech.gatech.edu/bitstream/handle/1853/50604/deGotzenRocchesso2006.pdf"
 																}
 
 															}
@@ -863,13 +896,13 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-8",
-									"linecount" : 4,
+									"linecount" : 3,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 554.0, 246.5, 311.0, 69.0 ],
+									"patching_rect" : [ 554.0, 246.5, 311.0, 53.0 ],
 									"style" : "SDT-comments",
-									"text" : "Rocchesso, D., Mauro, D. A., & Delle Monache, S. (2016). miMic: The microphone as a pencil. In Proc. of the TEI'16: Tenth Int. Conf. on Tangible, Embedded, and Embodied Interaction (pp. 357-364)."
+									"text" : "De Gotzen, A., & Rocchesso, D. (2006). Peek-a-book: playing with an interactive book. Proc. of the 12th Int. Conf. on Auditory Display, (pp. 265-267."
 								}
 
 							}
@@ -6328,7 +6361,6 @@
 										"style" : "",
 										"subpatcher_template" : "",
 										"assistshowspatchername" : 0,
-										"visible" : 1,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-60",
