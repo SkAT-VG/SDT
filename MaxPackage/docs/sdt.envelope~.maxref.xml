@@ -4,7 +4,7 @@
 <c74object name="sdt.envelope~">
 
 	<digest>
-		[analysis] Envelope follower with settable attack and release times.
+		Envelope follower with settable attack and release times.
 	</digest>
 
 	<description>
