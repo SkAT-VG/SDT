@@ -2,17 +2,17 @@
  * The 'Sound Design Toolkit' (SDT) is a framework a for ecologically-founded
  * sound synthesis, especially aimed at research and education in Sonic
  * Interaction Design.
- * It consists in a collection of interactive sound synthesis models, audio
- * processing algorithms and analysis routines.
+ * It consists in a collection of physically informed sound synthesis models,
+ * audio processing algorithms and analysis routines.
  * The SDT can simulate various acoustic phenomena arising from solid
- * interactions (e.g., impacts, frictions), liquids (e.g., bubbles, splashes),
- * gasses (e.g., explosions, blowing wind), and machines (e.g., combustion
- * engines, DC motors).
+ * interactions (e.g. collision, rubbing, rolling, scraping), liquids (e.g.
+ * dripping, streaming water), gasses (e.g. explosions, blowing wind), and
+ * machines (e.g. combustion engines, electric motors).
  *
  * Developed with the contribution of the following EU-projects:
  *    2001-2003 'SOb' http://www.soundobject.org/
  *    2006-2009 'CLOSED' http://closed.ircam.fr/
- *    2008-2011 'NIW' http://www.niwproject.eu/
+ *    2008-2011 'NIW' http://www.soundobject.org/niw/
  *    2014-2016 'SkAT-VG' http://www.skatvg.eu/
  *
  * Authors and contributors (either programmers or designers) in alphabetical
@@ -33,10 +33,7 @@
  *    Stefania Serafin (sts@create.aau.dk)
  *    Marco Tiraboschi (marco.tiraboschi@unimi.it)
  *
- * Contacts:
- *    Stefano Papetti (stefano.papetti@zhdk.ch)
- * 	  Stefano Delle Monache (s.dellemonache@tudelft.nl)
- *    Stefano Baldan (singintime@gmail.com)
+ * Contact: SoundDesignToolkit@gmail.com
  *
  * This file is part of the Sound Design Toolkit (SDT).
  *

@@ -9,8 +9,8 @@ It can simulate various acoustic phenomena arising from solid interactions
 (e.g. collision, rubbing, rolling, scraping), liquids (e.g. dripping, streaming
 water), gasses (e.g. explosions, blowing wind), and machines (e.g. combustion
 engines, electric motors).
-The library consists of sound synthesis models, audio processing algorithms and
-analysis routines.
+The library consists of physically informed sound synthesis models, audio
+processing algorithms and analysis routines.
 
 The SDT is mainly aimed at research and education in *Sonic Interaction Design*
 (SID), but it's been successfully used in musical contexts as well.
@@ -43,22 +43,23 @@ with presets and tutorials.
 
 ## Installation
 
-### Max package
+### Precompiled binaries:
+A ready-made *library* for Pure Data (Mac OS, Windows and Linux) and a *package*
+for Cycling '74 Max (Mac OS and Windows) are provided as release assets of this
+repository at:
+https://github.com/SkAT-VG/SDT/releases
+Unpack the appropriate .zip file for your operating system and
+target platform into the desired destination folder.
+
+#### Max package
 To install the provided Max *package* please refer to the `ReadMe.md` file in
 the `MaxPackage` folder.
 
-### Precompiled binaries
-Precompiled binaries for Pure Data (Pd) on Mac OS, Windows and Linux, and Max on
-Mac OS and Windows are available as release assets of this repository:
-https://github.com/SkAT-VG/SDT/releases
-Unpack the release .zip file, and copy the branch for your operating system and
-target platform into the desired destination folder.
-
 ### Compiling from source code
-Users may build Pd and Max externals (and the SDT Apple framework or the SDT
-shared/dynamic library) on their machines. In that case, make sure to pull the
-SDT git repository including the submodules under the '3rdparty' directory. If
-your git client doesn't do that automatically, enter the following git command:
+Users may build Pd and Max externals (and the SDT Apple framework or shared core
+library) on their machines. In that case, make sure to pull the SDT git
+repository including the submodules under the '3rdparty' directory. If your git
+client doesn't do that automatically, enter the following git command:
 ```
 	git submodule update --init --recursive
 ```
@@ -133,7 +134,7 @@ The SDT was developed through the years with the contribution of the following
 EU-projects:
  - 2001-2003 'SOb' http://www.soundobject.org/
  - 2006-2009 'CLOSED' http://closed.ircam.fr/
- - 2008-2011 'NIW' http://www.niwproject.eu/
+ - 2008-2011 'NIW' http://www.soundobject.org/niw/
  - 2014-2016 'SkAT-VG' http://www.skatvg.eu/
 
 

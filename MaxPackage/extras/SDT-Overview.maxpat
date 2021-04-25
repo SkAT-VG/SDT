@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 300.0, 193.0, 950.0, 740.0 ],
+		"rect" : [ 90.0, 90.0, 950.0, 740.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 14.0,
@@ -3730,7 +3730,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 300.0, 219.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -5655,7 +5655,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -7140,7 +7140,7 @@
 										}
 ,
 										"classnamespace" : "box",
-										"rect" : [ 342.0, 98.0, 392.0, 434.0 ],
+										"rect" : [ 342.0, 98.0, 380.0, 449.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -7185,12 +7185,12 @@
 												"box" : 												{
 													"fontname" : "Lato ",
 													"id" : "obj-2",
-													"linecount" : 30,
+													"linecount" : 32,
 													"maxclass" : "comment",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 45.0, 50.0, 304.0, 366.0 ],
-													"text" : "Copyright (C) 2001-2021 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache\nStefano Baldan\nStefano Papetti\nMarco Tiraboschi\n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/\n\ncontact: sounddesigntoolkit@gmail.com "
+													"patching_rect" : [ 45.0, 50.0, 304.0, 390.0 ],
+													"text" : "Copyright (C) 2001-2021 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache\nStefano Baldan\nStefano Papetti\nMarco Tiraboschi\n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/\n\ncontact: \nSoundDesignToolkit@gmail.com\nhttps://www.facebook.com/SDT.Max.Pd"
 												}
 
 											}
@@ -7206,7 +7206,7 @@
 													"mode" : 0,
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 23.875, 9.0, 347.25, 404.0 ],
+													"patching_rect" : [ 23.875, 9.0, 346.25, 431.0 ],
 													"proportion" : 0.39
 												}
 
