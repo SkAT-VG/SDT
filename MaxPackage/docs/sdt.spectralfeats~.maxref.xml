@@ -4,7 +4,7 @@
 <c74object name="sdt.spectralfeats~">
 
 	<digest>
-		Spectral analyzer extracting several audio descriptors.
+		[analysis] Spectral analyzer extracting several audio descriptors.
 	</digest>
 
 	<description>

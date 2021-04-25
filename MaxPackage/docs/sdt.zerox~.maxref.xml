@@ -4,7 +4,7 @@
 <c74object name="sdt.zerox~">
 
 	<digest>
-		Zero crossings detector and counter.
+		[analysis] Zero crossings detector and counter.
 	</digest>
 
 	<description>

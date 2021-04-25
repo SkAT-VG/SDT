@@ -350,8 +350,8 @@
 														"styles" : [ 															{
 																"name" : "SDTpackage",
 																"default" : 																{
-																	"fontname" : [ "Lato" ],
-																	"fontsize" : [ 12.0 ]
+																	"fontsize" : [ 12.0 ],
+																	"fontname" : [ "Lato" ]
 																}
 ,
 																"parentstyle" : "",
@@ -587,8 +587,8 @@
 														"styles" : [ 															{
 																"name" : "SDTpackage",
 																"default" : 																{
-																	"fontname" : [ "Lato" ],
-																	"fontsize" : [ 12.0 ]
+																	"fontsize" : [ 12.0 ],
+																	"fontname" : [ "Lato" ]
 																}
 ,
 																"parentstyle" : "",
@@ -1152,8 +1152,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -1503,8 +1503,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -1682,8 +1682,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -1701,8 +1701,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -2136,8 +2136,8 @@
 										"styles" : [ 											{
 												"name" : "SDT-comments",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 13.0 ]
+													"fontsize" : [ 13.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -2155,8 +2155,8 @@
 , 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -2726,8 +2726,8 @@
 										"styles" : [ 											{
 												"name" : "SDT-comments",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 13.0 ]
+													"fontsize" : [ 13.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -2745,8 +2745,8 @@
 , 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -3157,8 +3157,8 @@
 										"styles" : [ 											{
 												"name" : "SDT-comments",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 13.0 ]
+													"fontsize" : [ 13.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -3176,8 +3176,8 @@
 , 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -3668,8 +3668,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 13.0 ]
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -3687,8 +3687,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -3730,7 +3730,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -3904,7 +3904,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 361.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.myo~",
+									"text" : "sdt.inertial",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3928,7 +3928,7 @@
 										}
 ,
 										"classnamespace" : "box",
-										"rect" : [ 498.0, 79.0, 1086.0, 741.0 ],
+										"rect" : [ 498.0, -41.0, 1086.0, 741.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -3956,7 +3956,6 @@
 										"style" : "",
 										"subpatcher_template" : "",
 										"assistshowspatchername" : 0,
-										"visible" : 1,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-52",
@@ -4731,7 +4730,7 @@
 														}
 ,
 														"sdt.demix~" : 														{
-															"digest" : "Transient / tonal / residual component separator.",
+															"digest" : "[processing] Transient / tonal / residual component separator.",
 															"description" : "First separates an audio signal in its residual (noisy) and non-residual components. The latter is then further separated into transients (percussive) and tonal (harmonic) components.",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT processing" ],
@@ -4739,7 +4738,7 @@
 														}
 ,
 														"sdt.reverb~" : 														{
-															"digest" : "A computationally efficient yet maximally diffusive reverb.",
+															"digest" : "[processing] A computationally efficient yet maximally diffusive reverb.",
 															"description" : "Implements a Feedback Delay Network (FDN) reverberator. Useful to enhance the texturization of acoustic elements, such as turbulence and scattering.",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT processing" ],
@@ -4747,7 +4746,7 @@
 														}
 ,
 														"sdt.pitchshift~" : 														{
-															"digest" : "Frequency domain pitch shifter.",
+															"digest" : "[processing] Frequency domain pitch shifter.",
 															"description" : "",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT processing" ],
@@ -4755,7 +4754,7 @@
 														}
 ,
 														"sdt.envelope~" : 														{
-															"digest" : "Envelope follower with settable attack and release times.",
+															"digest" : "[analysis] Envelope follower with settable attack and release times.",
 															"description" : "Envelope follower with settable attack and release times, based on a one-pole lowpass filter.",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT analysis" ],
@@ -4763,7 +4762,7 @@
 														}
 ,
 														"sdt.pitch~" : 														{
-															"digest" : "Fundamental frequency (f0) estimator.",
+															"digest" : "[analysis] Fundamental frequency (f0) estimator.",
 															"description" : "Estimates the fundamental frequency (f0) and pitch clarity of the incoming signal.",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT analysis" ],
@@ -4771,7 +4770,7 @@
 														}
 ,
 														"sdt.spectralfeats~" : 														{
-															"digest" : "Spectral analyzer extracting several audio descriptors.",
+															"digest" : "[analysis] Spectral analyzer extracting several audio descriptors.",
 															"description" : "Provides statistical moments (sets of parameters) of the spectrum and other spectral information, including magnitude, centroid, spread, skewness, kurtosis, flatness, and flux.",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT analysis" ],
@@ -4779,7 +4778,7 @@
 														}
 ,
 														"sdt.zerox~" : 														{
-															"digest" : "Zero crossings detector and counter.",
+															"digest" : "[analysis] Zero crossings detector and counter.",
 															"description" : "Returns the normalized zero crossing rate of an input signal. Used e.g. for a rough estimation of noisiness.",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT analysis" ],
@@ -4787,7 +4786,7 @@
 														}
 ,
 														"sdt.myo~" : 														{
-															"digest" : "Myoelastic vocal activity detector.",
+															"digest" : "[analysis] Myoelastic vocal activity detector.",
 															"description" : "Detects myoelastic vocal phenomena, that is non-voiced sounds such as vocal fry, palate grind and bilabial trills.",
 															"module" : "SDT",
 															"category" : [ "SDT", "SDT analysis" ],
@@ -5091,8 +5090,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -5247,7 +5246,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 408.0, 432.0, 30.0 ],
 									"style" : "SDT_package",
-									"text" : "[analysis] Myoelastic vocal activity detector.",
+									"text" : "[solids, object] Inertial point-mass.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5262,7 +5261,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 470.0, 440.0, 45.0 ],
 									"style" : "SDT_package",
-									"text" : "Detects myoelastic vocal phenomena, that is non-voiced sounds such as vocal fry, palate grind and bilabial trills.",
+									"text" : "Simulates a simple inertial point-mass, mostly used as exciter for modal resonators.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5615,8 +5614,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -5655,7 +5654,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -5704,8 +5703,8 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 211.0, 614.9375, 634.0, 40.0 ],
-									"text" : "See the \"externals\" tab for a complete list of the available algorithms, and the \"examples&tutorials\" tab for a taxonomy of sound-producing phenomena referencing the respective externals."
+									"patching_rect" : [ 211.0, 614.9375, 580.0, 40.0 ],
+									"text" : "See the \"externals\" tab for a complete list of the available algorithms, and the \"examples\" tab for a taxonomy of sound-producing phenomena referencing the respective externals."
 								}
 
 							}
@@ -6139,7 +6138,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "" ],
+													"outlettype" : [ "signal" ],
 													"patching_rect" : [ 70.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -6164,7 +6163,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "" ],
+													"outlettype" : [ "signal" ],
 													"patching_rect" : [ 139.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -7029,8 +7028,8 @@
 										"styles" : [ 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontname" : [ "Lato" ],
-													"fontsize" : [ 12.0 ]
+													"fontsize" : [ 12.0 ],
+													"fontname" : [ "Lato" ]
 												}
 ,
 												"parentstyle" : "",
@@ -7060,7 +7059,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 2,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 211.0, 501.0, 356.0, 52.0 ],
 									"style" : "SDTpackage",
 									"text" : "sdt.dcmotor~ @coils 20 @harshness 0.25 @size 0.06 @reson 0.85 @gearRatio 2.35 @airGain 0. @brushGain 0. @rotorGain 0.5 @gearGain 0.05"
@@ -7073,7 +7072,7 @@
 									"id" : "obj-11",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 0,
+									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 267.5, 374.0, 320.0, 55.0 ],
 									"text" : "sdt.modal windshield 4 1 @freqs 90. 400. 1240. 1750. @decays 0.1 0.1 0.1 0.1 @pickup0 1300. 1100. 600. 500. @activeModes 4"
@@ -7085,7 +7084,7 @@
 									"color" : [ 0.996078431372549, 0.823529411764706, 0.0, 1.0 ],
 									"id" : "obj-10",
 									"maxclass" : "newobj",
-									"numinlets" : 0,
+									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 359.5, 215.0, 160.0, 23.0 ],
 									"style" : "SDTpackage",
@@ -7100,9 +7099,9 @@
 									"id" : "obj-4",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 1,
+									"numinlets" : 6,
 									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"outlettype" : [ "signal", "signal" ],
 									"patching_rect" : [ 212.0, 281.0, 423.0, 52.0 ],
 									"text" : "sdt.friction~ wiper windshield 2 @stiffness 350. @dissipation 50. @viscosity 4. @breakAway 0.3 @stribeck 0.1 @kDynamic 0.5 @kStatic 1. @noisiness 3. @force 0.6 @contact0 0 @contact1 0"
 								}
@@ -7185,12 +7184,12 @@
 												"box" : 												{
 													"fontname" : "Lato ",
 													"id" : "obj-2",
-													"linecount" : 30,
+													"linecount" : 29,
 													"maxclass" : "comment",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 45.0, 50.0, 304.0, 366.0 ],
-													"text" : "Copyright (C) 2001-2021 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache\nStefano Baldan\nStefano Papetti\nMarco Tiraboschi\n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/\n\ncontact: sounddesigntoolkit@gmail.com "
+													"patching_rect" : [ 45.0, 50.0, 304.0, 354.0 ],
+													"text" : "Copyright (C) 2001-2021 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache s.dellemonache@tudelft.nl\nStefano Baldan singintime@gmail.com \nStefano Papetti stefano.papetti@zhdk.ch\n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/\n\ncontact at: sounddesigntoolkit@gmail.com "
 												}
 
 											}
@@ -7414,8 +7413,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontname" : [ "Lato" ],
-									"fontsize" : [ 12.0 ]
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
 								}
 ,
 								"parentstyle" : "",
@@ -7469,10 +7468,26 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "sdttaxonomy.png",
-				"bootpath" : "~/SDT_git/MaxPackage/media",
+				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1
+			}
+, 			{
+				"name" : "sdt.friction~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.dcmotor~.mxo",
+				"type" : "iLaX"
 			}
  ],
 		"autosave" : 0,
@@ -7492,8 +7507,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontname" : [ "Lato" ],
-					"fontsize" : [ 12.0 ]
+					"fontsize" : [ 12.0 ],
+					"fontname" : [ "Lato" ]
 				}
 ,
 				"parentstyle" : "",
