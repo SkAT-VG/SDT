@@ -1169,7 +1169,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 54.0, 425.0, 22.0 ],
-					"text" : "[analysis] Myoelastic vocal activity detector"
+					"text" : "Myoelastic vocal activity detector."
 				}
 
 			}
@@ -1181,7 +1181,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 78.0, 544.0, 22.0 ],
-					"text" : "Myoelastic vocal activity include: bilabial trills, vocal fry, palate grind",
+					"text" : "Myoelastic vocal activity include: bilabial trills, vocal fry, palate grind.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1195,7 +1195,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 4,
-					"outlettype" : [ "float", "float", "float", "float" ],
+					"outlettype" : [ "", "", "", "" ],
 					"patching_rect" : [ 22.464601769911326, 307.0, 342.5, 47.0 ],
 					"text" : "sdt.myo~ @lowFrequency 20. @highFrequency 100. @threshold 0.005 @dcFrequency 1."
 				}
@@ -1413,11 +1413,7 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "sdt.myo~.mxo",
-				"type" : "iLaX"
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
@@ -1426,17 +1422,17 @@
 				"boxes" : [ "obj-110", "obj-109" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1454,8 +1450,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

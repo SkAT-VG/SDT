@@ -1299,7 +1299,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 9.0, 57.0, 425.0, 22.0 ],
-					"text" : "[processing] Transient / tonal / residual component separator."
+					"text" : "Transient / tonal / residual component separator."
 				}
 
 			}
@@ -1324,7 +1324,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 3,
-					"outlettype" : [ "signal", "signal", "signal" ],
+					"outlettype" : [ "", "", "" ],
 					"patching_rect" : [ 63.0, 268.0, 371.0, 47.0 ],
 					"text" : "sdt.demix~ 2048 4. @overlap 0.75 @noiseThreshold 0.1 @tonalThreshold 0.75"
 				}
@@ -1636,11 +1636,7 @@
 			"inherited_shortname" : 1
 		}
 ,
-		"dependency_cache" : [ 			{
-				"name" : "sdt.demix~.mxo",
-				"type" : "iLaX"
-			}
- ],
+		"dependency_cache" : [  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
@@ -1661,8 +1657,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1680,8 +1676,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

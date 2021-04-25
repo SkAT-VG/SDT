@@ -222,8 +222,8 @@
 , 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontsize" : [ 13.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 13.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -241,8 +241,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -1671,7 +1671,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 59.0, 457.0, 22.0 ],
-					"text" : "[processing] A computationally efficient yet maximally diffusive reverb."
+					"text" : "A computationally efficient yet maximally diffusive reverb."
 				}
 
 			}
@@ -1697,7 +1697,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
-					"outlettype" : [ "signal" ],
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 171.5, 470.0, 354.0, 47.0 ],
 					"text" : "sdt.reverb~ 48000 @xSize 1. @ySize 1. @zSize 1. @randomness 0.5 @time 0.5 @time1k 0.3"
 				}
@@ -2054,10 +2054,6 @@
 				"type" : "TEXT",
 				"implicit" : 1
 			}
-, 			{
-				"name" : "sdt.reverb~.mxo",
-				"type" : "iLaX"
-			}
  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
@@ -2097,8 +2093,8 @@
 , 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -2116,8 +2112,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

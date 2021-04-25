@@ -1079,7 +1079,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "[analysis] Envelope follower with settable attack and release times."
+					"text" : "Envelope follower with settable attack and release times."
 				}
 
 			}
@@ -1103,7 +1103,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
-					"outlettype" : [ "signal" ],
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 87.0, 293.5, 315.0, 28.0 ],
 					"text" : "sdt.envelope~ @attack 100. @release 1000."
 				}
@@ -1317,10 +1317,6 @@
 				"type" : "TEXT",
 				"implicit" : 1
 			}
-, 			{
-				"name" : "sdt.envelope~.mxo",
-				"type" : "iLaX"
-			}
  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
@@ -1339,8 +1335,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1358,8 +1354,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

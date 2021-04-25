@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 90.0, 90.0, 950.0, 740.0 ],
+		"rect" : [ 300.0, 193.0, 950.0, 740.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 14.0,
@@ -3730,7 +3730,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
+						"rect" : [ 300.0, 219.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -3904,7 +3904,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 361.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.myo~",
+									"text" : "sdt.friction~",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3956,7 +3956,6 @@
 										"style" : "",
 										"subpatcher_template" : "",
 										"assistshowspatchername" : 0,
-										"visible" : 1,
 										"boxes" : [ 											{
 												"box" : 												{
 													"id" : "obj-52",
@@ -5242,12 +5241,13 @@
 								"box" : 								{
 									"fontsize" : 20.0,
 									"id" : "obj-17",
+									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 408.0, 432.0, 30.0 ],
+									"patching_rect" : [ 323.3125, 408.0, 432.0, 54.0 ],
 									"style" : "SDT_package",
-									"text" : "[analysis] Myoelastic vocal activity detector.",
+									"text" : "[solids, interactor] Friction interaction between two solid objects.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5256,13 +5256,13 @@
 								"box" : 								{
 									"fontsize" : 16.0,
 									"id" : "obj-16",
-									"linecount" : 2,
+									"linecount" : 3,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 470.0, 440.0, 45.0 ],
+									"patching_rect" : [ 323.3125, 470.0, 440.0, 64.0 ],
 									"style" : "SDT_package",
-									"text" : "Detects myoelastic vocal phenomena, that is non-voiced sounds such as vocal fry, palate grind and bilabial trills.",
+									"text" : "Simulates the nonlinear friction force arising when a solid object rubs against another (e.g. a singing glass, squeaky hinges).",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5704,7 +5704,7 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 211.0, 614.9375, 634.0, 40.0 ],
+									"patching_rect" : [ 211.0, 614.9375, 637.0, 40.0 ],
 									"text" : "See the \"externals\" tab for a complete list of the available algorithms, and the \"examples&tutorials\" tab for a taxonomy of sound-producing phenomena referencing the respective externals."
 								}
 
