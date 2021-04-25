@@ -8,7 +8,7 @@
 	</digest>
 
 	<description>
-		The <m>sdt.zerox~</m> returns the normalized zero crossing rate of an input signal [0., 1.].
+		<o>sdt.zerox~</o> returns the normalized zero crossing rate of an input signal [0., 1.].
 		This can be used as a rough estimation of noisiness.
 	</description>
 
