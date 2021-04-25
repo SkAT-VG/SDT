@@ -92,8 +92,8 @@ recommended) or Cygwin (http://www.cygwin.com).
 commands to compile the software in all its flavors (Max package, Pd library,
 Shared DLL):
 ```
-        cd build/win32 (or cd build/win64 for the x64 version)
-        make
+	cd build/win32 (or cd build/win64 for the x64 version)
+	make
 ```
 2. Install the desired products. The script will install the desired product in
 the given destination ``<path>``, creating a ``SDT`` subfolder:
@@ -104,7 +104,7 @@ the given destination ``<path>``, creating a ``SDT`` subfolder:
 ```
 3. To clean the source directories after compilation:
 ```
-        make clean
+	make clean
 ```
 
 #### Linux
@@ -113,14 +113,14 @@ the given destination ``<path>``, creating a ``SDT`` subfolder:
 	cd build/linux
 	make
 ```
-2. Install the SDT: By default, the building environment will install a shared
-library in ``/usr/lib`` and a collection of PureData externals and patches in
-``/usr/lib/pd/extras/SDT``.
+2. Install the desired products. By default, the building environment will
+install a shared library in ``/usr/lib`` and a collection of PureData externals
+and patches in ``/usr/lib/pd/extras/SDT``.
 Root privileges may be required to access the default install path. If you want
-to change the install path, provide a ``PREFIX`` argument:
-```       
-	make install
-	make install PREFIX=<path>
+to change the install path, provide a ``DSTDIR`` argument:
+```
+	make install_pd DSTDIR=<path>
+	make install_core DSTDIR=<path>
 ```
 3. To clean the source directories after compilation:
 ```
