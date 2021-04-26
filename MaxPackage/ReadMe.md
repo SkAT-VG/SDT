@@ -3,7 +3,7 @@
 
 ## Overview
 The **Sound Design Toolkit** (**SDT**) is an open-source (GPLv3) framework for
-ecologically-founded sound synthesis and design. Think of it as a virtual
+ecologically founded sound synthesis and design. Think of it as a virtual
 Foley-box!
 It can simulate various acoustic phenomena arising from solid interactions
 (e.g. collision, rubbing, rolling, scraping), liquids (e.g. dripping, streaming
