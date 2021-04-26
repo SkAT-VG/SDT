@@ -36,25 +36,26 @@ suitable for developing interactive media such as games, audio and VR
 applications.
 
 In addition, the SDT algorithms are made available as ready-to-go externals and
-patches for **Pure Data** (Pd) and **Cycling '74 Max**. In particular, a
+patches for **Cycling '74 Max** and **Pure Data** (Pd). In particular, a
 *package* is provided for Max which offers an advanced front-end GUI, as well as
 examples with presets and tutorials.
 
 
 ## Installation
 
-### Precompiled binaries:
-A ready-made Pd *library* (Mac OS, Windows and Linux) and a Max *package*
-(Mac OS and Windows) are provided as release assets of this repository at:
-https://github.com/SkAT-VG/SDT/releases
+### Downloadable ready-made products:
+A Max *package* (Mac OS and Windows) and a Pd *library* (Mac OS, Windows and
+Linux) which include patches and precompiled externals, as well as the SDT
+shared core library / Apple framework are provided as release assets of this
+repository at: https://github.com/SkAT-VG/SDT/releases
 Unpack the appropriate .zip file for your operating system and target platform
 into the desired destination folder.
 
 ### Compiling from source code
 Users may as well build a Max *package*, Pd *library*, shared core library /
 Apple framework on their machines. In that case, make sure to pull the SDT git
-repository including the submodules under the '3rdparty' directory. If your git
-client doesn't do that automatically, enter the following git command:
+repository including the submodules under the `3rdparty` directory. If your
+git client doesn't do that automatically, enter the following git command:
 ```
 	git submodule update --init --recursive
 ```
@@ -68,7 +69,7 @@ flavors (Max *package*, Pd *library*, Apple framework):
 	make
 ```
 2. Install one or more products: The provided scripts will install the selected
-products in the given destination ``<path>``, creating a ``SDT`` subfolder:
+products in the given destination `<path>`, creating a `SDT` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path>
@@ -92,7 +93,7 @@ commands to compile the software in all its flavors (Max *package*, Pd
 	make
 ```
 2. Install one or more products: The provided scripts will install the selected
-products in the given destination ``<path>``, creating a ``SDT`` subfolder:
+products in the given destination `<path>`, creating a `SDT` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path> (only for 32 bit)
@@ -110,10 +111,10 @@ products in the given destination ``<path>``, creating a ``SDT`` subfolder:
 	make
 ```
 2. Install one or more products: By default, the building environment will
-install the SDT shared core library in ``/usr/lib`` and the Pd *library* in
-``/usr/lib/pd/extras/SDT``. Root privileges may be required to access the
+install the SDT shared core library in `/usr/lib` and the Pd *library* in
+`/usr/lib/pd/extras/SDT`. Root privileges may be required to access the
 default install path.
-If you want to change the install path, provide a ``DSTDIR`` argument:
+If you want to change the install path, provide a `DSTDIR` argument:
 ```
 	make install_pd DSTDIR=<path>
 	make install_core DSTDIR=<path>
