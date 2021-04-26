@@ -36,28 +36,23 @@ suitable for developing interactive media such as games, audio and VR
 applications.
 
 In addition, the SDT algorithms are made available as ready-to-go externals and
-patches for **Pure Data** and **Cycling '74 Max**. In particular a *package* is
-provided for Max which offers an advanced front-end GUI, as well as examples
-with presets and tutorials.
+patches for **Pure Data** (Pd) and **Cycling '74 Max**. In particular, a
+*package* is provided for Max which offers an advanced front-end GUI, as well as
+examples with presets and tutorials.
 
 
 ## Installation
 
 ### Precompiled binaries:
-A ready-made *library* for Pure Data (Mac OS, Windows and Linux) and a *package*
-for Cycling '74 Max (Mac OS and Windows) are provided as release assets of this
-repository at:
+A ready-made Pd *library* (Mac OS, Windows and Linux) and a Max *package*
+(Mac OS and Windows) are provided as release assets of this repository at:
 https://github.com/SkAT-VG/SDT/releases
-Unpack the appropriate .zip file for your operating system and
-target platform into the desired destination folder.
-
-#### Max package
-To install the provided Max *package* please refer to the `ReadMe.md` file in
-the `MaxPackage` folder.
+Unpack the appropriate .zip file for your operating system and target platform
+into the desired destination folder.
 
 ### Compiling from source code
-Users may build Pd and Max externals (and the SDT Apple framework or shared core
-library) on their machines. In that case, make sure to pull the SDT git
+Users may as well build a Max *package*, Pd *library*, shared core library /
+Apple framework on their machines. In that case, make sure to pull the SDT git
 repository including the submodules under the '3rdparty' directory. If your git
 client doesn't do that automatically, enter the following git command:
 ```
@@ -67,13 +62,13 @@ or check the equivalent option in the git preferences of your GUI client.
 
 #### Mac OS
 1. In a terminal, type the following commands to compile the software in all its
-flavors (Max package, Pd library, Apple framework):
+flavors (Max *package*, Pd *library*, Apple framework):
 ```
 	cd build/macosx
 	make
 ```
-2. Install one or more products: The provided scripts will install the desired
-product in the given destination ``<path>``, creating a ``SDT`` subfolder:
+2. Install one or more products: The provided scripts will install the selected
+products in the given destination ``<path>``, creating a ``SDT`` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path>
@@ -90,14 +85,14 @@ and a UNIX style shell, as provided in MinGW + MSYS (http://www.mingw.org,
 recommended) or Cygwin (http://www.cygwin.com).
 
 1. Once the compiler is installed, open its shell and issue the following
-commands to compile the software in all its flavors (Max package, Pd library,
-Shared DLL):
+commands to compile the software in all its flavors (Max *package*, Pd
+*library*, shared DLL):
 ```
 	cd build/win32 (or cd build/win64 for the x64 version)
 	make
 ```
-2. Install the desired products. The script will install the desired product in
-the given destination ``<path>``, creating a ``SDT`` subfolder:
+2. Install one or more products: The provided scripts will install the selected
+products in the given destination ``<path>``, creating a ``SDT`` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path> (only for 32 bit)
@@ -114,11 +109,11 @@ the given destination ``<path>``, creating a ``SDT`` subfolder:
 	cd build/linux
 	make
 ```
-2. Install the desired products. By default, the building environment will
-install a shared library in ``/usr/lib`` and a collection of PureData externals
-and patches in ``/usr/lib/pd/extras/SDT``.
-Root privileges may be required to access the default install path. If you want
-to change the install path, provide a ``DSTDIR`` argument:
+2. Install one or more products: By default, the building environment will
+install the SDT shared core library in ``/usr/lib`` and the Pd *library* in
+``/usr/lib/pd/extras/SDT``. Root privileges may be required to access the
+default install path.
+If you want to change the install path, provide a ``DSTDIR`` argument:
 ```
 	make install_pd DSTDIR=<path>
 	make install_core DSTDIR=<path>
