@@ -7,6 +7,7 @@ CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -g -O3
 LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib -headerpad_max_install_names
 SRCDIR=../../src
 THIRDPDIR=../../3rdparty
+# DSTDIR=../../SoundDesignToolkit
 
 SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)

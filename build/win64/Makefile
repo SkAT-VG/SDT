@@ -5,7 +5,7 @@ CFLAGS=-Wall -Wno-unknown-pragmas -Werror -O3
 LDFLAGS=-shared
 SRCDIR=../../src
 THIRDPDIR=../../3rdparty
-DSTDIR=../../SoundDesignToolkit
+# DSTDIR=../../SoundDesignToolkit
 
 SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
