@@ -6,7 +6,7 @@ LDFLAGS=-shared
 ROOT=../..
 SRCDIR=$(ROOT)/src
 THIRDPDIR=$(ROOT)/3rdparty
-PREFIX=/usr
+DSTDIR=/usr
 SDTPATH=SDT
 
 SDTDIR=$(SRCDIR)/SDT
@@ -67,21 +67,23 @@ $(JSONDIRP)/%.o: $(JSONDIRP)/%.c
 $(JSONDIRB)/%.o: $(JSONDIRB)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
+install_core:
+	mkdir -p $(DSTDIR)/include/$(SDTPATH)
+	mkdir -p $(DSTDIR)/lib
+	cp -a $(SDTDIR)/libSDT.so $(DSTDIR)/lib
+	cp -a $(SDTDIR)/*.h $(DSTDIR)/include/$(SDTPATH)
+	cp -a $(JSONDIRP)/*.h $(DSTDIR)/include/$(SDTPATH)
+	cp -a $(JSONDIRB)/*.h $(DSTDIR)/include/$(SDTPATH)
 
-install:
-	mkdir -p $(PREFIX)/lib/pd/extra/$(SDTPATH)
-	mkdir -p $(PREFIX)/include/$(SDTPATH)
-	cp -a $(SDTDIR)/libSDT.so $(PREFIX)/lib
-	cp -a $(PDDIR)/*.pd_linux $(PREFIX)/lib/pd/extra/$(SDTPATH)
-	cp -a ../../Pd/* $(PREFIX)/lib/pd/extra/$(SDTPATH)
-	cp -a $(SDTDIR)/*.h $(PREFIX)/include/$(SDTPATH)
-	cp -a $(JSONDIRP)/*.h $(PREFIX)/include/$(SDTPATH)
-	cp -a $(JSONDIRB)/*.h $(PREFIX)/include/$(SDTPATH)
+install_pd: install_core
+	mkdir -p $(DSTDIR)/lib/pd/extra/$(SDTPATH)
+	cp -a $(PDDIR)/*.pd_linux $(DSTDIR)/lib/pd/extra/$(SDTPATH)
+	cp -a ../../Pd/* $(DSTDIR)/lib/pd/extra/$(SDTPATH)
 
 uninstall:
-	rm -f $(PREFIX)/lib/libSDT.so
-	rm -rf $(PREFIX)/lib/pd/extra/$(SDTPATH)
-	rm -rf $(PREFIX)/include/$(SDTPATH)
+	rm -f $(DSTDIR)/lib/libSDT.so
+	rm -rf $(DSTDIR)/lib/pd/extra/$(SDTPATH)
+	rm -rf $(DSTDIR)/include/$(SDTPATH)
 
 clean:
 	rm -rf $(SDTDIR)/*.so

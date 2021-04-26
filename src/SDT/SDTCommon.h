@@ -1,61 +1,70 @@
 /** @mainpage
- * The 'Sound Design Toolkit' (SDT) is a framework a for ecologically-founded
- * sound synthesis, especially aimed at research and education in Sonic
- * Interaction Design.
- * It consists in a collection of interactive sound synthesis models, audio
- * processing algorithms and analysis routines.
- * The SDT can simulate various acoustic phenomena arising from solid
- * interactions (e.g., impacts, frictions), liquids (e.g., bubbles, splashes),
- * gasses (e.g., explosions, blowing wind), and machines (e.g., combustion
- * engines, DC motors).
- *
- * Developed with the contribution of the following EU-projects:
- *    2001-2003 'SOb' http://www.soundobject.org/
- *    2006-2009 'CLOSED' http://closed.ircam.fr/
- *    2008-2011 'NIW' http://www.niwproject.eu/
- *    2014-2016 'SkAT-VG' http://www.skatvg.eu/
- *
- * Authors and contributors (either programmers or designers) in alphabetical
- * order:
- *    Federico Avanzini (federico.avanzini@di.unimi.it)
- *    Stefano Baldan (singintime@gmail.com)
- *    Nicola Bernardini
- *    Gianpaolo Borin
- *    Carlo Drioli (carlo.drioli@uniud.it)
- *    Stefano Delle Monache (s.dellemonache@tudelft.nl)
- *    Delphine Devallez
- *    Federico Fontana (federico.fontana@uniud.it)
- *    Laura Ottaviani
- *    Stefano Papetti (stefano.papetti@zhdk.ch)
- *    Pietro Polotti (pietro.polotti@conts.it)
- *    Matthias Rath
- *    Davide Rocchesso (davide.rocchesso@unipa.it)
- *    Stefania Serafin (sts@create.aau.dk)
- *    Marco Tiraboschi (marco.tiraboschi@unimi.it)
- *
- * Contacts:
- *    Stefano Papetti (stefano.papetti@zhdk.ch)
- * 	  Stefano Delle Monache (s.dellemonache@tudelft.nl)
- *    Stefano Baldan (singintime@gmail.com)
- *
- * This file is part of the Sound Design Toolkit (SDT).
- *
- * The SDT is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * The SDT is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with the SDT.  If not, see <https://www.gnu.org/licenses/>.
- *
- * The official SDT distribution contains copy of the GNU General Public License
- * in the file COPYING.txt
- *****************************************************************************/
+* The 'Sound Design Toolkit' (SDT) is an open-source (GPLv3) framework for
+* ecologically founded sound synthesis and design. Think of it as a virtual
+* Foley-box!
+* It can simulate various acoustic phenomena arising from solid interactions
+* (e.g. collision, rubbing, rolling, scraping), liquids (e.g. dripping,
+* streaming water), gasses (e.g. explosions, blowing wind), and machines (e.g.
+* combustion engines, electric motors).
+* The library consists of physically informed sound synthesis models, audio
+* processing algorithms and analysis routines.
+*
+* The SDT is mainly aimed at research and education in 'Sonic Interaction Design'
+* (SID), but it's been successfully used in musical contexts as well.
+*
+* The SDT sound synthesis algorithms have been implemented according to three
+* main points:
+* 1. auditory perceptual relevance;
+* 2. cartoonification, i.e. simplification and exaggeration of the underlying
+* physics in order to increase both computational efficiency and perceptual
+* clarity;
+* 3. parametric temporal control, which ensures appropriate, natural and
+* expressive articulations of sonic processes.
+*
+* Developed with the contribution of the following EU-projects:
+*    2001-2003 'SOb' http://www.soundobject.org/
+*    2006-2009 'CLOSED' http://closed.ircam.fr/
+*    2008-2011 'NIW' http://www.soundobject.org/niw/
+*    2014-2016 'SkAT-VG' http://www.skatvg.eu/
+*
+* Authors and contributors (either programmers or designers) in alphabetical
+* order:
+*    Federico Avanzini (federico.avanzini@di.unimi.it)
+*    Stefano Baldan (singintime@gmail.com)
+*    Nicola Bernardini
+*    Gianpaolo Borin
+*    Carlo Drioli (carlo.drioli@uniud.it)
+*    Stefano Delle Monache (s.dellemonache@tudelft.nl)
+*    Delphine Devallez
+*    Federico Fontana (federico.fontana@uniud.it)
+*    Laura Ottaviani
+*    Stefano Papetti (stefano.papetti@zhdk.ch)
+*    Pietro Polotti (pietro.polotti@conts.it)
+*    Matthias Rath
+*    Davide Rocchesso (davide.rocchesso@unipa.it)
+*    Stefania Serafin (sts@create.aau.dk)
+*    Marco Tiraboschi (marco.tiraboschi@unimi.it)
+*
+* Contact: SoundDesignToolkit@gmail.com
+*
+* This file is part of the Sound Design Toolkit (SDT).
+*
+* The SDT is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* The SDT is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with the SDT.  If not, see <https://www.gnu.org/licenses/>.
+*
+* The official SDT distribution contains copy of the GNU General Public License
+* in the file COPYING.txt
+*****************************************************************************/
 
 /** @file SDTCommon.h
 @defgroup common SDTCommon.h: Common variables and functions

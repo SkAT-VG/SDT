@@ -3,14 +3,14 @@
 
 ## Overview
 The **Sound Design Toolkit** (**SDT**) is an open-source (GPLv3) framework for
-ecologically-founded sound synthesis and design. Think of it as a virtual
+ecologically founded sound synthesis and design. Think of it as a virtual
 Foley-box!
 It can simulate various acoustic phenomena arising from solid interactions
 (e.g. collision, rubbing, rolling, scraping), liquids (e.g. dripping, streaming
 water), gasses (e.g. explosions, blowing wind), and machines (e.g. combustion
 engines, electric motors).
-The library consists of sound synthesis models, audio processing algorithms and
-analysis routines.
+The library consists of physically informed sound synthesis models, audio
+processing algorithms and analysis routines.
 
 The SDT is mainly aimed at research and education in *Sonic Interaction Design*
 (SID), but it's been successfully used in musical contexts as well.
@@ -36,29 +36,26 @@ suitable for developing interactive media such as games, audio and VR
 applications.
 
 In addition, the SDT algorithms are made available as ready-to-go externals and
-patches for **Pure Data** and **Cycling '74 Max**. In particular a *package* is
-provided for Max which offers an advanced front-end GUI, as well as examples
-with presets and tutorials.
+patches for **Cycling '74 Max** and **Pure Data** (Pd). In particular, a
+*package* is provided for Max which offers an advanced front-end GUI, as well as
+examples with presets and tutorials.
 
 
 ## Installation
 
-### Max package
-To install the provided Max *package* please refer to the `ReadMe.md` file in
-the `MaxPackage` folder.
-
-### Precompiled binaries
-Precompiled binaries for Pure Data (Pd) on Mac OS, Windows and Linux, and Max on
-Mac OS and Windows are available as release assets of this repository:
-https://github.com/SkAT-VG/SDT/releases
-Unpack the release .zip file, and copy the branch for your operating system and
-target platform into the desired destination folder.
+### Downloadable ready-made products:
+A Max *package* (Mac OS and Windows) and a Pd *library* (Mac OS, Windows and
+Linux) which include patches and precompiled externals, as well as the SDT
+shared core library / Apple framework are provided as release assets of this
+repository at: https://github.com/SkAT-VG/SDT/releases
+Unpack the appropriate .zip file for your operating system and target platform
+into the desired destination folder.
 
 ### Compiling from source code
-Users may build Pd and Max externals (and the SDT Apple framework or the SDT
-shared/dynamic library) on their machines. In that case, make sure to pull the
-SDT git repository including the submodules under the '3rdparty' directory. If
-your git client doesn't do that automatically, enter the following git command:
+Users may as well build a Max *package*, Pd *library*, shared core library /
+Apple framework on their machines. In that case, make sure to pull the SDT git
+repository including the submodules under the `3rdparty` directory. If your
+git client doesn't do that automatically, enter the following git command:
 ```
 	git submodule update --init --recursive
 ```
@@ -66,13 +63,13 @@ or check the equivalent option in the git preferences of your GUI client.
 
 #### Mac OS
 1. In a terminal, type the following commands to compile the software in all its
-flavors (Max package, Pd library, Apple framework):
+flavors (Max *package*, Pd *library*, Apple framework):
 ```
 	cd build/macosx
 	make
 ```
-2. Install one or more products: The provided scripts will install the desired
-product in the given destination ``<path>``, creating a ``SDT`` subfolder:
+2. Install one or more products: The provided scripts will install the selected
+products in the given destination `<path>`, creating a `SDT` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path>
@@ -89,14 +86,14 @@ and a UNIX style shell, as provided in MinGW + MSYS (http://www.mingw.org,
 recommended) or Cygwin (http://www.cygwin.com).
 
 1. Once the compiler is installed, open its shell and issue the following
-commands to compile the software in all its flavors (Max package, Pd library,
-Shared DLL):
+commands to compile the software in all its flavors (Max *package*, Pd
+*library*, shared DLL):
 ```
-        cd build/win32 (or cd build/win64 for the x64 version)
-        make
+	cd build/win32 (or cd build/win64 for the x64 version)
+	make
 ```
-2. Install the desired products. The script will install the desired product in
-the given destination ``<path>``, creating a ``SDT`` subfolder:
+2. Install one or more products: The provided scripts will install the selected
+products in the given destination `<path>`, creating a `SDT` subfolder:
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path> (only for 32 bit)
@@ -104,7 +101,7 @@ the given destination ``<path>``, creating a ``SDT`` subfolder:
 ```
 3. To clean the source directories after compilation:
 ```
-        make clean
+	make clean
 ```
 
 #### Linux
@@ -113,14 +110,14 @@ the given destination ``<path>``, creating a ``SDT`` subfolder:
 	cd build/linux
 	make
 ```
-2. Install the SDT: By default, the building environment will install a shared
-library in ``/usr/lib`` and a collection of PureData externals and patches in
-``/usr/lib/pd/extras/SDT``.
-Root privileges may be required to access the default install path. If you want
-to change the install path, provide a ``PREFIX`` argument:
-```       
-	make install
-	make install PREFIX=<path>
+2. Install one or more products: By default, the building environment will
+install the SDT shared core library in `/usr/lib` and the Pd *library* in
+`/usr/lib/pd/extras/SDT`. Root privileges may be required to access the
+default install path.
+If you want to change the install path, provide a `DSTDIR` argument:
+```
+	make install_pd DSTDIR=<path>
+	make install_core DSTDIR=<path>
 ```
 3. To clean the source directories after compilation:
 ```
@@ -133,7 +130,7 @@ The SDT was developed through the years with the contribution of the following
 EU-projects:
  - 2001-2003 'SOb' http://www.soundobject.org/
  - 2006-2009 'CLOSED' http://closed.ircam.fr/
- - 2008-2011 'NIW' http://www.niwproject.eu/
+ - 2008-2011 'NIW' http://www.soundobject.org/niw/
  - 2014-2016 'SkAT-VG' http://www.skatvg.eu/
 
 

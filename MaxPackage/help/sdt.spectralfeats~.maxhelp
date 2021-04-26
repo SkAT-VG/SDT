@@ -488,8 +488,8 @@
 										"styles" : [ 											{
 												"name" : "SDT-comments",
 												"default" : 												{
-													"fontsize" : [ 13.0 ],
-													"fontname" : [ "Lato" ]
+													"fontname" : [ "Lato" ],
+													"fontsize" : [ 13.0 ]
 												}
 ,
 												"parentstyle" : "",
@@ -507,8 +507,8 @@
 , 											{
 												"name" : "SDTpackage",
 												"default" : 												{
-													"fontsize" : [ 12.0 ],
-													"fontname" : [ "Lato" ]
+													"fontname" : [ "Lato" ],
+													"fontsize" : [ 12.0 ]
 												}
 ,
 												"parentstyle" : "",
@@ -781,8 +781,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontsize" : [ 13.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 13.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -800,8 +800,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -2007,7 +2007,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 38.0 ],
-					"text" : "\t\t[analysis] Spectral analyzer extracting several audio descriptors.\n"
+					"text" : "Spectral analyzer extracting several audio descriptors.\n"
 				}
 
 			}
@@ -2399,10 +2399,6 @@
 				"type" : "TEXT",
 				"implicit" : 1
 			}
-, 			{
-				"name" : "sdt.spectralfeats~.mxo",
-				"type" : "iLaX"
-			}
  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
@@ -2412,17 +2408,17 @@
 				"boxes" : [ "obj-45", "obj-44" ]
 			}
 , 			{
-				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
 			}
  ],
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -2440,8 +2436,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

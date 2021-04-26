@@ -4,11 +4,11 @@
 <c74object name="sdt.zerox~">
 
 	<digest>
-		[analysis] Zero crossings detector and counter.
+		Zero crossings detector and counter.
 	</digest>
 
 	<description>
-		The <m>sdt.zerox~</m> returns the normalized zero crossing rate of an input signal [0., 1.].
+		<o>sdt.zerox~</o> returns the normalized zero crossing rate of an input signal [0., 1.].
 		This can be used as a rough estimation of noisiness.
 	</description>
 
@@ -20,7 +20,7 @@
 		<metadata name="tag">Physics-based sound synthesis</metadata>
 		<metadata name="tag">Sonic interaction design</metadata>
 		<metadata name="copyright">© 2001 - 2021</metadata>
-		<metadata name="version">3.0-0.80 (build 04/2021)</metadata>
+		<metadata name="version">3.0</metadata>
 	</metadatalist>
 
 	<!--INLETS

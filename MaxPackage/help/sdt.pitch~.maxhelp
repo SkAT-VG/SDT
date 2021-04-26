@@ -1477,7 +1477,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "[analysis] Fundamental frequency (f0) estimator."
+					"text" : "Fundamental frequency (f0) estimator."
 				}
 
 			}
@@ -1502,7 +1502,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 2,
-					"outlettype" : [ "float", "float" ],
+					"outlettype" : [ "", "" ],
 					"patching_rect" : [ 176.0, 239.5, 252.0, 47.0 ],
 					"text" : "sdt.pitch~ 4096 @overlap 0.3 @tolerance 0.5"
 				}
@@ -1794,10 +1794,6 @@
 				"type" : "TEXT",
 				"implicit" : 1
 			}
-, 			{
-				"name" : "sdt.pitch~.mxo",
-				"type" : "iLaX"
-			}
  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
@@ -1819,8 +1815,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1838,8 +1834,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

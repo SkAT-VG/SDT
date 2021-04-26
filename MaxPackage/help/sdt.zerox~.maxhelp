@@ -284,7 +284,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 453.0, 245.309734513274179, 147.0, 22.0 ],
 					"style" : "SDT-comments",
-					"text" : "messages and attributes:"
+					"text" : "attributes:"
 				}
 
 			}
@@ -1093,7 +1093,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 62.0, 425.0, 22.0 ],
-					"text" : "[analysis] Zero crossings detector and counter"
+					"text" : "Zero crossings detector and counter."
 				}
 
 			}
@@ -1101,11 +1101,12 @@
 				"box" : 				{
 					"fontsize" : 13.0,
 					"id" : "obj-6",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 86.0, 401.0, 22.0 ],
-					"text" : "The zero crossing rate can be used as a rough estimation of noisiness",
+					"patching_rect" : [ 15.0, 86.0, 401.0, 38.0 ],
+					"text" : "The zero crossing rate can be used as a rough estimation of noisiness.",
 					"textcolor" : [ 0.32549, 0.345098, 0.372549, 1.0 ]
 				}
 
@@ -1118,7 +1119,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
-					"outlettype" : [ "float" ],
+					"outlettype" : [ "" ],
 					"patching_rect" : [ 116.5, 259.309734513274179, 186.0, 28.0 ],
 					"text" : "sdt.zerox~ @overlap 0.75"
 				}
@@ -1364,20 +1365,16 @@
 				"type" : "TEXT",
 				"implicit" : 1
 			}
-, 			{
-				"name" : "sdt.zerox~.mxo",
-				"type" : "iLaX"
-			}
  ],
 		"autosave" : 0,
 		"boxgroups" : [ 			{
 				"boxes" : [ "obj-48", "obj-43", "obj-50" ]
 			}
 , 			{
-				"boxes" : [ "obj-13", "obj-9" ]
+				"boxes" : [ "obj-110", "obj-109" ]
 			}
 , 			{
-				"boxes" : [ "obj-110", "obj-109" ]
+				"boxes" : [ "obj-13", "obj-9" ]
 			}
 , 			{
 				"boxes" : [ "obj-11", "obj-2", "obj-6" ]
@@ -1386,8 +1383,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -1405,8 +1402,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",
