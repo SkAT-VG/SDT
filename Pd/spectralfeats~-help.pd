@@ -10,7 +10,7 @@ flux onset;
 #X floatatom 226 195 6 0 0 0 - - -, f 6;
 #X floatatom 269 195 6 0 0 0 - - -, f 6;
 #X floatatom 312 195 6 0 0 0 - - -, f 6;
-#X msg 335 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+#X msg 335 8 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X msg 56 98 overlap 0.5;

@@ -1,6 +1,6 @@
 #N canvas 28 199 1089 512 10;
 #X obj 243 472 dac~;
-#X msg 860 17 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+#X msg 860 17 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 878 149 r pd;

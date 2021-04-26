@@ -2,7 +2,7 @@
 #X obj 225 432 dac~;
 #X floatatom 48 298 5 0 0 0 - - -, f 5;
 #X obj 225 401 *~ 10000;
-#X msg 1040 17 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+#X msg 1040 17 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 1058 129 r pd;

@@ -12,7 +12,7 @@
 -262144 -1 -1 423 1;
 #X floatatom 179 298 5 0 0 0 - - -, f 5;
 #X obj 179 319 * 0.001;
-#X msg 327 7 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+#X msg 327 7 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X text 46 4 bubble~ - Bubble model;

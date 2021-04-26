@@ -1,7 +1,7 @@
 #N canvas 434 339 532 258 10;
 #X floatatom 13 175 6 0 0 0 - - -, f 6;
 #X floatatom 70 174 6 0 0 0 - - -, f 6;
-#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 433 166 loadbang;

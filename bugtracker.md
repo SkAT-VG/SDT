@@ -1,4 +1,4 @@
-# SDT
+# SDT source code
 ## Myoelastic
 `SDTMyoelastic_new` has an unused `bufSize` argument
 ## Demix
@@ -10,7 +10,7 @@ Something seems wrong in `SDTDelay_setDelay` (see comment below)
 ```
 void SDTDelay_setDelay(SDTDelay *x, double f) {
   double d;
-  
+
   f = SDT_fclip(f, 0.618, x->size);
   x->delay = f - 0.618;
   d = f - x->delay; // = f - (f - 0.618) = 0.618 // <- is this intended?
@@ -19,7 +19,4 @@ void SDTDelay_setDelay(SDTDelay *x, double f) {
 ```
 # MAX
 ## lowpass~
-The filter in the object is defined through `SDTBiquad_butterworthHP`. This makes it an high-pass filter.
-# PD
-## lowpass~
-Missing
+The filter in the object is defined through `SDTBiquad_butterworthHP`. This makes it an high-pass filter. (***removed*** as it seems useless in Max)
