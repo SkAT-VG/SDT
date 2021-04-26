@@ -1096,7 +1096,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 562.0, 145.0, 133.0, 26.0 ],
+					"patching_rect" : [ 562.0, 145.0, 188.0, 26.0 ],
 					"style" : "SDT-comments",
 					"text" : "no energy",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
@@ -2422,23 +2422,6 @@
 					"patching_rect" : [ 628.75, 403.0, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlets:"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"angle" : 270.0,
-					"background" : 1,
-					"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
-					"border" : 1,
-					"bordercolor" : [ 0.65098, 0.666667, 0.662745, 1.0 ],
-					"id" : "obj-60",
-					"maxclass" : "panel",
-					"mode" : 0,
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 15.0, 115.0, 545.0, 103.765625 ],
-					"proportion" : 0.39
 				}
 
 			}

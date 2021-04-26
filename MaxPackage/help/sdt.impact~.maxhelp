@@ -40,13 +40,140 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
+					"bgcolor" : [ 1.0, 1.0, 1.0, 1.0 ],
+					"fontface" : 1,
+					"fontsize" : 14.0,
+					"id" : "obj-51",
+					"maxclass" : "newobj",
+					"numinlets" : 0,
+					"numoutlets" : 0,
+					"patcher" : 					{
+						"fileversion" : 1,
+						"appversion" : 						{
+							"major" : 8,
+							"minor" : 1,
+							"revision" : 11,
+							"architecture" : "x64",
+							"modernui" : 1
+						}
+,
+						"classnamespace" : "box",
+						"rect" : [ 397.0, 301.0, 292.0, 254.0 ],
+						"bglocked" : 0,
+						"openinpresentation" : 0,
+						"default_fontsize" : 12.0,
+						"default_fontface" : 0,
+						"default_fontname" : "Arial",
+						"gridonopen" : 1,
+						"gridsize" : [ 15.0, 15.0 ],
+						"gridsnaponopen" : 1,
+						"objectsnaponopen" : 1,
+						"statusbarvisible" : 2,
+						"toolbarvisible" : 1,
+						"lefttoolbarpinned" : 0,
+						"toptoolbarpinned" : 0,
+						"righttoolbarpinned" : 0,
+						"bottomtoolbarpinned" : 0,
+						"toolbars_unpinned_last_save" : 0,
+						"tallnewobj" : 0,
+						"boxanimatetime" : 200,
+						"enablehscroll" : 1,
+						"enablevscroll" : 1,
+						"devicewidth" : 0.0,
+						"description" : "",
+						"digest" : "",
+						"tags" : "",
+						"style" : "",
+						"subpatcher_template" : "",
+						"assistshowspatchername" : 0,
+						"boxes" : [ 							{
+								"box" : 								{
+									"fontface" : 0,
+									"id" : "obj-54",
+									"linecount" : 13,
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 14.75, 31.0, 259.0, 209.0 ],
+									"style" : "SDT-comments",
+									"text" : "When two solid objects ([sdt.inertial] or [sdt.modal]) interact via an interactor ([sdt.impact~] or [sdt.friction~]), a bidirectional network is established, wherein the objects' IDs work as addresses for the interactor. \nTherefore, objects' IDs must be unique.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
+								}
+
+							}
+, 							{
+								"box" : 								{
+									"fontface" : 3,
+									"id" : "obj-53",
+									"maxclass" : "comment",
+									"numinlets" : 1,
+									"numoutlets" : 0,
+									"patching_rect" : [ 14.75, 12.5, 66.0, 22.0 ],
+									"style" : "SDT-comments",
+									"text" : "warning:",
+									"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
+								}
+
+							}
+ ],
+						"lines" : [  ],
+						"boxgroups" : [ 							{
+								"boxes" : [ "obj-53", "obj-54" ]
+							}
+ ],
+						"styles" : [ 							{
+								"name" : "SDT-comments",
+								"default" : 								{
+									"fontsize" : [ 13.0 ],
+									"fontname" : [ "Lato" ]
+								}
+,
+								"parentstyle" : "",
+								"multi" : 0
+							}
+, 							{
+								"name" : "SDT_package",
+								"default" : 								{
+									"fontname" : [ "Lato" ]
+								}
+,
+								"parentstyle" : "",
+								"multi" : 0
+							}
+, 							{
+								"name" : "SDTpackage",
+								"default" : 								{
+									"fontsize" : [ 12.0 ],
+									"fontname" : [ "Lato" ]
+								}
+,
+								"parentstyle" : "",
+								"multi" : 0
+							}
+ ]
+					}
+,
+					"patching_rect" : [ 719.25, 256.0, 120.0, 25.0 ],
+					"saved_object_attributes" : 					{
+						"description" : "",
+						"digest" : "",
+						"globalpatchername" : "",
+						"tags" : ""
+					}
+,
+					"text" : "p warning.readme",
+					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
+				}
+
+			}
+, 			{
+				"box" : 				{
 					"fontface" : 1,
 					"fontsize" : 14.0,
 					"id" : "obj-61",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 128.0, 520.5, 67.0, 23.0 ],
+					"patching_rect" : [ 104.0, 526.5, 67.0, 23.0 ],
 					"text" : "press \"s\" ",
 					"textcolor" : [ 0.317647, 0.654902, 0.976471, 1.0 ]
 				}
@@ -153,7 +280,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 40.0, 530.0, 50.0, 23.0 ],
+					"patching_rect" : [ 16.0, 536.0, 50.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -173,7 +300,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 188.5, 259.0, 84.0 ],
+					"patching_rect" : [ 648.75, 420.0, 247.0, 84.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Respectively apply external forces [1, 4],  impact velocities [2, 5], and fragment sizes [3, 6] to the two objects, in order to model patterns and textures such as rolling and crumpling."
 				}
@@ -186,7 +313,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 172.0, 83.0, 22.0 ],
+					"patching_rect" : [ 648.75, 403.5, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "inlets (signal):"
 				}
@@ -201,7 +328,7 @@
 					"numoutlets" : 1,
 					"numpoints" : 401,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 40.0, 423.5, 68.0, 57.0 ],
+					"patching_rect" : [ 16.0, 423.5, 68.0, 57.0 ],
 					"subplots" : [ 						{
 							"color" : [ 0.4, 0.4, 0.75, 1.0 ],
 							"thickness" : 1.2,
@@ -236,7 +363,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 340.0, 422.5, 199.0, 57.0 ],
+					"patching_rect" : [ 340.0, 420.5, 139.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "The contact point for object1 is its pickup1"
 				}
@@ -250,7 +377,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 160.0, 275.0, 91.0, 23.0 ]
+					"patching_rect" : [ 181.0, 275.0, 91.0, 23.0 ]
 				}
 
 			}
@@ -261,7 +388,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 253.0, 208.0, 82.0, 22.0 ],
+					"patching_rect" : [ 274.0, 208.0, 82.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "<- look inside",
 					"textjustification" : 1
@@ -278,7 +405,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 62.0, 218.0, 76.0, 88.0 ],
+					"patching_rect" : [ 62.0, 216.0, 76.0, 88.0 ],
 					"style" : "SDT-comments",
 					"text" : "expressed in Newton (bang to wikipedia)",
 					"textjustification" : 1
@@ -294,7 +421,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 232.625, 299.0, 104.25, 57.0 ],
+					"patching_rect" : [ 253.625, 299.0, 104.25, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "affects the evolution of mode locking",
 					"textjustification" : 1
@@ -311,7 +438,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 525.75, 256.0, 75.0, 72.0 ],
+					"patching_rect" : [ 563.75, 256.0, 75.0, 72.0 ],
 					"style" : "SDT-comments",
 					"text" : "affects the sound bandwidth",
 					"textjustification" : 1
@@ -328,7 +455,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 372.0, 225.0, 137.0, 103.0 ],
+					"patching_rect" : [ 400.0, 225.0, 137.0, 103.0 ],
 					"style" : "SDT-comments",
 					"text" : "roundness of the contact. It affects the sound bandwidth and the smoothness of the attack",
 					"textjustification" : 1
@@ -481,7 +608,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 134.25, 132.734375, 114.0, 41.0 ],
+					"patching_rect" : [ 155.25, 132.734375, 114.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "stiffness (N/m)",
 					"textjustification" : 1
@@ -662,7 +789,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 160.0, 208.0, 91.0, 23.0 ],
+					"patching_rect" : [ 181.0, 208.0, 91.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -681,7 +808,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 265.5, 237.5, 57.0, 23.0 ],
+					"patching_rect" : [ 286.5, 237.5, 57.0, 23.0 ],
 					"text" : "1500000"
 				}
 
@@ -693,7 +820,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 180.0, 237.5, 71.0, 23.0 ],
+					"patching_rect" : [ 201.0, 237.5, 71.0, 23.0 ],
 					"text" : "150000000"
 				}
 
@@ -705,7 +832,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 507.0, 334.0, 82.0, 23.0 ],
+					"patching_rect" : [ 545.0, 334.0, 82.0, 23.0 ],
 					"text" : "dissipation $1"
 				}
 
@@ -717,7 +844,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 351.0, 334.0, 56.0, 23.0 ],
+					"patching_rect" : [ 379.0, 334.0, 56.0, 23.0 ],
 					"text" : "shape $1"
 				}
 
@@ -729,7 +856,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 160.0, 334.0, 70.0, 23.0 ],
+					"patching_rect" : [ 181.0, 334.0, 70.0, 23.0 ],
 					"text" : "stiffness $1"
 				}
 
@@ -742,7 +869,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 620.5, 10.0, 67.0, 23.0 ],
+					"patching_rect" : [ 620.5, 4.0, 67.0, 23.0 ],
 					"text" : "loadmess 1"
 				}
 
@@ -750,16 +877,14 @@
 , 			{
 				"box" : 				{
 					"bubble" : 1,
-					"bubblepoint" : 0.2,
-					"bubbleside" : 2,
 					"fontface" : 1,
-					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 474.5, 86.0, 140.0, 41.0 ],
+					"patching_rect" : [ 648.75, 173.5, 140.0, 26.0 ],
 					"style" : "SDT-comments",
+					"text" : "high dissipation",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -1176,7 +1301,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 693.5, 72.0, 53.0, 23.0 ],
+					"patching_rect" : [ 648.166666666666629, 62.0, 53.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -1196,7 +1321,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 96.234375, 259.0, 69.0 ],
+					"patching_rect" : [ 648.75, 327.0, 247.0, 69.0 ],
 					"style" : "SDT-comments",
 					"text" : "- Unique ID of first object (object0). \n- Unique ID of second object (object1).\n- Number of outlets = total number of pickup locations of the two objects."
 				}
@@ -1209,7 +1334,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 77.734375, 83.0, 22.0 ],
+					"patching_rect" : [ 648.75, 308.5, 83.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "arguments:"
 				}
@@ -1223,7 +1348,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 443.75, 508.5, 107.0, 66.0 ]
+					"patching_rect" : [ 453.75, 508.5, 98.0, 52.0 ]
 				}
 
 			}
@@ -1234,38 +1359,10 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 92.625, 547.5, 112.375, 26.0 ],
+					"patching_rect" : [ 68.625, 553.5, 112.375, 26.0 ],
 					"style" : "SDT-comments",
 					"text" : "strike!",
 					"textjustification" : 1
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 0,
-					"id" : "obj-54",
-					"linecount" : 13,
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 437.0, 259.0, 209.0 ],
-					"style" : "SDT-comments",
-					"text" : "When two solid objects ([sdt.inertial] or [sdt.modal]) interact via an interactor ([sdt.impact~] or [sdt.friction~]), a bidirectional network is established, wherein the objects' IDs work as addresses for the interactor. \nTherefore, objects' IDs must be unique.\n\nTo load multiple instances of solids interactions either use the [poly~] method or put the prefix #0 to the objects' names and save the configuration as abstraction\n(see Tutorials)."
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontface" : 3,
-					"id" : "obj-53",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 418.5, 66.0, 22.0 ],
-					"style" : "SDT-comments",
-					"text" : "warning:",
-					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ]
 				}
 
 			}
@@ -1277,7 +1374,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 107.21875, 479.5, 198.0, 35.0 ],
+					"patching_rect" : [ 83.21875, 479.5, 198.0, 35.0 ],
 					"text" : "displacement of object0 @pickup0 (motion for inertial object)"
 				}
 
@@ -1290,7 +1387,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 474.5, 132.734375, 115.0, 41.0 ],
+					"patching_rect" : [ 512.5, 132.734375, 115.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "energy dissipation",
 					"textjustification" : 1
@@ -1308,7 +1405,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 507.0, 175.0, 61.0, 23.0 ]
+					"patching_rect" : [ 545.0, 175.0, 61.0, 23.0 ]
 				}
 
 			}
@@ -1323,7 +1420,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 351.0, 175.0, 46.0, 23.0 ]
+					"patching_rect" : [ 379.0, 175.0, 46.0, 23.0 ]
 				}
 
 			}
@@ -1338,7 +1435,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 160.0, 175.0, 50.0, 23.0 ]
+					"patching_rect" : [ 181.0, 175.0, 50.0, 23.0 ]
 				}
 
 			}
@@ -1352,7 +1449,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 139.0, 422.5, 196.0, 57.0 ],
+					"patching_rect" : [ 156.0, 420.5, 139.0, 57.0 ],
 					"style" : "SDT-comments",
 					"text" : "The contact point for object0 is its pickup0"
 				}
@@ -1366,7 +1463,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 4,
 					"outlettype" : [ "preset", "int", "preset", "int" ],
-					"patching_rect" : [ 620.5, 51.0, 146.0, 19.0 ],
+					"patching_rect" : [ 620.5, 25.0, 102.0, 19.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
 							"data" : [ 5, "obj-28", "live.gain~", "float", 0.0, 5, "obj-42", "number", "int", 304, 6, "obj-1", "number~", "list", 0.0, 0.0, 5, "obj-23", "slider", "float", 303.0, 5, "obj-66", "flonum", "float", 0.5, 5, "obj-68", "flonum", "float", 1.299999952316284, 5, "obj-76", "flonum", "float", 0.5, 5, "obj-26", "flonum", "float", 0.0, 5, "obj-17", "number", "int", 9375468 ]
@@ -1401,7 +1498,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 553.25, 373.5, 65.0, 22.0 ],
+					"patching_rect" : [ 553.5, 379.5, 65.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "extra gain"
 				}
@@ -1581,7 +1678,7 @@
 					"maxclass" : "ezdac~",
 					"numinlets" : 2,
 					"numoutlets" : 0,
-					"patching_rect" : [ 572.75, 520.5, 45.0, 45.0 ]
+					"patching_rect" : [ 794.25, 82.5, 45.0, 45.0 ]
 				}
 
 			}
@@ -1594,7 +1691,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 572.75, 398.5, 26.0, 52.0 ],
+					"patching_rect" : [ 573.0, 403.5, 26.0, 52.0 ],
 					"size" : 1000.0
 				}
 
@@ -1610,7 +1707,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 2,
 					"outlettype" : [ "signal", "float" ],
-					"patching_rect" : [ 40.0, 485.5, 68.0, 23.0 ],
+					"patching_rect" : [ 16.0, 485.5, 68.0, 23.0 ],
 					"sig" : 0.0
 				}
 
@@ -1623,7 +1720,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 572.75, 457.5, 50.0, 23.0 ]
+					"patching_rect" : [ 571.5, 457.5, 50.0, 23.0 ]
 				}
 
 			}
@@ -1864,7 +1961,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 328.5, 132.734375, 91.0, 41.0 ],
+					"patching_rect" : [ 356.5, 132.734375, 91.0, 41.0 ],
 					"style" : "SDT-comments",
 					"text" : "contact shape",
 					"textjustification" : 1
@@ -2002,7 +2099,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 536.25, 10.0, 82.0, 23.0 ],
+					"patching_rect" : [ 536.25, 4.0, 82.0, 23.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -2022,7 +2119,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 2,
 					"outlettype" : [ "", "" ],
-					"patching_rect" : [ 536.25, 39.0, 68.0, 23.0 ],
+					"patching_rect" : [ 536.25, 43.0, 68.0, 23.0 ],
 					"save" : [ "#N", "thispatcher", ";", "#Q", "end", ";" ],
 					"style" : "SDTpackage",
 					"text" : "thispatcher"
@@ -2038,7 +2135,7 @@
 					"numoutlets" : 1,
 					"outlettype" : [ "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 40.0, 520.5, 50.0, 50.0 ]
+					"patching_rect" : [ 16.0, 526.5, 50.0, 50.0 ]
 				}
 
 			}
@@ -2049,7 +2146,7 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 40.0, 574.5, 68.0, 23.0 ],
+					"patching_rect" : [ 16.0, 580.5, 68.0, 23.0 ],
 					"text" : "strike 0. -3."
 				}
 
@@ -2089,7 +2186,7 @@
 					"numinlets" : 6,
 					"numoutlets" : 3,
 					"outlettype" : [ "signal", "signal", "signal" ],
-					"patching_rect" : [ 40.0, 373.5, 475.0, 47.0 ],
+					"patching_rect" : [ 16.0, 373.5, 475.0, 47.0 ],
 					"style" : "SDT_package",
 					"text" : "sdt.impact~ inertial-object modal-object 3 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 1"
 				}
@@ -2116,7 +2213,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 609.0, 165.0, 37.0 ],
+					"patching_rect" : [ 16.0, 609.0, 165.0, 37.0 ],
 					"text" : "sdt.inertial inertial-object @mass 0.1 @fragmentSize 1."
 				}
 
@@ -2142,7 +2239,7 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 295.5, 259.0, 116.0 ],
+					"patching_rect" : [ 648.75, 530.0, 247.0, 116.0 ],
 					"style" : "SDT-comments",
 					"text" : "Their number depends on the respective creation argument, and they respectively refer the pickup points available at object0 and object1. In this case:\n- [1] displacement @pickup0 of object0.\n- [2] displacement @pickup0 of object1.\n- [3] displacement @pickup1 of object1."
 				}
@@ -2155,26 +2252,9 @@
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 635.75, 277.168776371308013, 259.0, 22.0 ],
+					"patching_rect" : [ 648.75, 511.668776371308013, 247.0, 22.0 ],
 					"style" : "SDT-comments",
 					"text" : "outlets (signal):"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"angle" : 270.0,
-					"background" : 1,
-					"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
-					"border" : 1,
-					"bordercolor" : [ 0.65098, 0.666667, 0.662745, 1.0 ],
-					"id" : "obj-60",
-					"maxclass" : "panel",
-					"mode" : 0,
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 7.0, 126.0, 591.75, 78.53125 ],
-					"proportion" : 0.39
 				}
 
 			}
@@ -2182,7 +2262,7 @@
 		"lines" : [ 			{
 				"patchline" : 				{
 					"destination" : [ "obj-9", 0 ],
-					"midpoints" : [ 169.5, 364.25, 49.5, 364.25 ],
+					"midpoints" : [ 190.5, 364.25, 25.5, 364.25 ],
 					"source" : [ "obj-12", 0 ]
 				}
 
@@ -2197,7 +2277,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-9", 0 ],
-					"midpoints" : [ 360.5, 364.25, 49.5, 364.25 ],
+					"midpoints" : [ 388.5, 364.25, 25.5, 364.25 ],
 					"source" : [ "obj-14", 0 ]
 				}
 
@@ -2205,7 +2285,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-9", 0 ],
-					"midpoints" : [ 516.5, 364.25, 49.5, 364.25 ],
+					"midpoints" : [ 554.5, 364.25, 25.5, 364.25 ],
 					"source" : [ "obj-15", 0 ]
 				}
 
@@ -2227,7 +2307,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-17", 0 ],
-					"midpoints" : [ 189.5, 266.75, 169.5, 266.75 ],
+					"midpoints" : [ 210.5, 266.75, 190.5, 266.75 ],
 					"source" : [ "obj-18", 0 ]
 				}
 
@@ -2235,7 +2315,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-17", 0 ],
-					"midpoints" : [ 275.0, 266.75, 169.5, 266.75 ],
+					"midpoints" : [ 296.0, 266.75, 190.5, 266.75 ],
 					"source" : [ "obj-19", 0 ]
 				}
 
@@ -2305,7 +2385,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-24", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 323.25, 532.0, 428.4375, 532.0, 428.4375, 499.0, 453.25, 499.0 ],
+					"midpoints" : [ 323.25, 532.0, 428.4375, 532.0, 428.4375, 499.0, 463.25, 499.0 ],
 					"order" : 0,
 					"source" : [ "obj-38", 0 ]
 				}
@@ -2330,7 +2410,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 1 ],
-					"midpoints" : [ 582.25, 494.25, 409.25, 494.25 ],
+					"midpoints" : [ 581.0, 494.25, 409.25, 494.25 ],
 					"source" : [ "obj-42", 0 ]
 				}
 
@@ -2347,7 +2427,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 714.666666666666629, 116.0, 888.833333333333371, 116.0, 888.833333333333371, 5.0, 777.0, 5.0 ],
+					"midpoints" : [ 685.333333333333371, 54.0, 753.0, 54.0, 753.0, 21.0, 777.0, 21.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -2364,7 +2444,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-55", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 703.0, 132.5, 527.25, 132.5, 527.25, 35.0, 545.75, 35.0 ],
+					"midpoints" : [ 657.666666666666629, 89.5, 614.25, 89.5, 614.25, 36.0, 545.75, 36.0 ],
 					"source" : [ "obj-57", 0 ]
 				}
 
@@ -2373,7 +2453,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-59", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 737.0, 132.5, 484.0, 132.5 ],
+					"midpoints" : [ 691.666666666666629, 132.5, 658.25, 132.5 ],
 					"source" : [ "obj-57", 1 ]
 				}
 
@@ -2403,6 +2483,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-9", 0 ],
+					"midpoints" : [ 49.5, 364.75, 25.5, 364.75 ],
 					"source" : [ "obj-7", 0 ]
 				}
 
@@ -2426,7 +2507,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 505.5, 425.0, 323.25, 425.0 ],
+					"midpoints" : [ 481.5, 425.0, 323.25, 425.0 ],
 					"source" : [ "obj-9", 2 ]
 				}
 
@@ -2434,7 +2515,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 277.5, 424.0, 323.25, 424.0 ],
+					"midpoints" : [ 253.5, 424.0, 323.25, 424.0 ],
 					"source" : [ "obj-9", 1 ]
 				}
 
@@ -2485,9 +2566,6 @@
 			}
 , 			{
 				"boxes" : [ "obj-30", "obj-8" ]
-			}
-, 			{
-				"boxes" : [ "obj-53", "obj-54" ]
 			}
  ],
 		"styles" : [ 			{

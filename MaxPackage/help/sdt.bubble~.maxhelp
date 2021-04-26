@@ -206,13 +206,13 @@
 				"box" : 				{
 					"bubble" : 1,
 					"fontface" : 1,
-					"hidden" : 1,
 					"id" : "obj-59",
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 394.0, 203.0, 150.0, 26.0 ],
 					"style" : "SDT-comments",
+					"text" : "on the water surface",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -1353,23 +1353,6 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 15.0, 10.0, 425.0, 50.0 ],
 					"text" : "sdt.bubble~"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"angle" : 270.0,
-					"background" : 1,
-					"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
-					"border" : 1,
-					"bordercolor" : [ 0.65098, 0.666667, 0.662745, 1.0 ],
-					"id" : "obj-60",
-					"maxclass" : "panel",
-					"mode" : 0,
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 120.505431999999928, 140.46875, 267.994568000000072, 102.53125 ],
-					"proportion" : 0.39
 				}
 
 			}

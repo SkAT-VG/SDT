@@ -58,7 +58,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -153,7 +153,7 @@
 														"count" : 7,
 														"data" : [ 															{
 																"key" : 1,
-																"value" : [ "De", "Gotzen,", "A.,", "&", "Rocchesso,", "D.", "(2006).", "Peek-a-book:", "playing", "with", "an", "interactive", "book.", "Proc.", "of", "the", "12th", "Int.", "Conf.", "on", "Auditory", "Display,", "(pp.", "265-267." ]
+																"value" : [ "De", "Gotzen,", "A.,", "&", "Rocchesso,", "D.", "(2006).", "Peek-a-book:", "playing", "with", "an", "interactive", "book.", "In", "Proc.", "of", "the", "12th", "Int.", "Conf.", "on", "Auditory", "Display,", "(pp.", "265-267." ]
 															}
 , 															{
 																"key" : 2,
@@ -165,7 +165,7 @@
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "Delle", "Monache,", "S.,", "Rocchesso,", "D.,", "Qi,", "J.,", "Buechley,", "L.,", "De", "Götzen,", "A.,", "&", "Cestaro,", "D.", "(2012).", "Paper", "mechanisms", "for", "sonic", "interaction.", "In", "Pro.", "of", "the", "Sixth", "Int.", "Conf.", "on", "Tangible,", "Embedded", "and", "Embodied", "Interaction", "(pp.", "61-68)." ]
+																"value" : [ "Delle", "Monache,", "S.,", "Rocchesso,", "D.,", "Qi,", "J.,", "Buechley,", "L.,", "De", "Götzen,", "A.,", "&", "Cestaro,", "D.", "(2012).", "Paper", "mechanisms", "for", "sonic", "interaction.", "In", "Proc.", "of", "the", "Sixth", "Int.", "Conf.", "on", "Tangible,", "Embedded", "and", "Embodied", "Interaction", "(pp.", "61-68)." ]
 															}
 , 															{
 																"key" : 5,
@@ -896,13 +896,13 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-8",
-									"linecount" : 3,
+									"linecount" : 5,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 554.0, 246.5, 311.0, 53.0 ],
+									"patching_rect" : [ 554.0, 246.5, 311.0, 84.0 ],
 									"style" : "SDT-comments",
-									"text" : "De Gotzen, A., & Rocchesso, D. (2006). Peek-a-book: playing with an interactive book. Proc. of the 12th Int. Conf. on Auditory Display, (pp. 265-267."
+									"text" : "Delle Monache, S., Rocchesso, D., Qi, J., Buechley, L., De Götzen, A., & Cestaro, D. (2012). Paper mechanisms for sonic interaction. In Proc. of the Sixth Int. Conf. on Tangible, Embedded and Embodied Interaction (pp. 61-68)."
 								}
 
 							}
@@ -1961,7 +1961,7 @@
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 101.0, 170.0, 99.0, 22.0 ],
-													"text" : "Transportation"
+													"text" : "Gushing"
 												}
 
 											}
@@ -5654,7 +5654,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
