@@ -12,6 +12,10 @@ on:
       - master
       - develop
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build-docker:
     runs-on: ubuntu-latest
@@ -87,7 +91,6 @@ jobs:
     needs: [build-docker, build-macos]
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
-      version: ${{ steps.get_version.outputs.VERSION }}
     steps:
     - name: Create Release
       id: create_release
@@ -99,23 +102,33 @@ jobs:
         release_name: ${{ github.ref }}
         draft: false
         prerelease: ${{ contains( github.ref , 'dev' ) }}
-    - name: Get the version
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v}
 
   release-upload:
     strategy:
       matrix:
         target: [linux, win32, win64, macosx]
-        plt_name: ["_lib", _pd, _max]
+        plt_name: [_lib, _pd, _max]
         exclude:
         - target: linux
           plt_name: _max
         - target: win64
           plt_name: _pd
+        include:
+        - plt_name: _lib
+          vmacro: SDT_ver
+          vfile: src/SDT/SDTCommon.h
+        - plt_name: _pd
+          vmacro: SDT_ver_Pd
+          vfile: src/Pd/SDTCommonPd.h
+        - plt_name: _max
+          vmacro: SDT_ver_Max
+          vfile: src/Max7/SDTCommonMax.h
     runs-on: ubuntu-latest
     needs: release-create
     steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
     - name: Download artifacts
       uses: actions/download-artifact@v1
       with:
@@ -123,6 +136,8 @@ jobs:
     - name: Zip artifacts
       run: zip -r ../SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip *
       working-directory: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+    - name: Set platform-specific version name
+      run: SDT_VERSION=($(grep "#define ${{ matrix.vmacro }} " ${{ matrix.vfile }})) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -131,7 +146,7 @@ jobs:
       with:
         upload_url: ${{ needs.release-create.outputs.upload_url }}
         asset_path: ./SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
-        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ needs.release-create.outputs.version }}.zip
+        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ env.SDT_VERSION }}.zip
         asset_content_type: application/zip
 
   doxygen:
@@ -141,6 +156,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
+    - name: Set version name
+      run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
     - name: Build HTML
       run: doxygen
     - name: Upload HTML
@@ -164,8 +181,10 @@ jobs:
         with:
           persist-credentials: false
           submodules: true
+      - name: Set version name
+        run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
       - name: Build HTML
-        run: export SDT_VERSION=${GITHUB_REF##*/} && make oscdoc_html
+        run: make oscdoc_html
         working-directory: build/linux
       - name: Upload HTML
         uses: actions/upload-artifact@v1
@@ -173,10 +192,8 @@ jobs:
           name: osc-quickreference-html
           path: oscdoc/build/html
       - name: Build latex
-        run: export SDT_VERSION=${GITHUB_REF##*/} && make oscdoc_latexpdf
+        run: make oscdoc_latexpdf
         working-directory: build/linux
-        env:
-          SDT_VERSION: ${{ steps.get_version_sphinx.outputs.VERSION }}
       - name: Upload pdf
         uses: actions/upload-artifact@v1
         with:
@@ -219,10 +236,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: [release-create, doxygen]
     steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
     - name: Download artifacts
       uses: actions/download-artifact@v1
       with:
         name: refman
+    - name: Set version name
+      run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
     - name: Upload Reference Manual
       id: upload-refman
       uses: actions/upload-release-asset@v1
@@ -231,17 +253,22 @@ jobs:
       with:
         upload_url: ${{ needs.release-create.outputs.upload_url }}
         asset_path: ./refman/refman.pdf
-        asset_name: refman_${{ needs.release-create.outputs.version }}.pdf
+        asset_name: SDT_refman_${{ env.SDT_VERSION }}.pdf
         asset_content_type: application/pdf
 
   release-upload-sphinx:
     runs-on: ubuntu-latest
     needs: [release-create, sphinx]
     steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Download artifacts
         uses: actions/download-artifact@v1
         with:
           name: osc-quickreference
+      - name: Set version name
+        run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
       - name: Upload OSC Quick Reference
         id: upload-osc-qr
         uses: actions/upload-release-asset@v1
@@ -250,5 +277,5 @@ jobs:
         with:
           upload_url: ${{ needs.release-create.outputs.upload_url }}
           asset_path: ./osc-quickreference/SoundDesignToolkitOSCQuickReference.pdf
-          asset_name: osc_quick_reference_${{ needs.release-create.outputs.version }}.pdf
+          asset_name: SDT_refosc_${{ env.SDT_VERSION }}.pdf
           asset_content_type: application/pdf
