@@ -101,7 +101,7 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}
         draft: false
-        prerelease: ${{ contains( github.ref , 'dev' ) }}
+        prerelease: ${{ contains( github.ref , 'dev' ) || contains( github.ref , 'alpha' ) || contains( github.ref , 'beta' ) || contains( github.ref , 'rc' ) }}
 
   release-upload:
     strategy:
