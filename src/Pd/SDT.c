@@ -1,4 +1,5 @@
 #include "m_pd.h"
+#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTCommonMacros.h"
 
@@ -72,7 +73,8 @@ void SDT_setup() {
   zerox_tilde_setup();
   
   post("=== SDT - Sound Design Toolkit ===");
-  post("Version %s, (C) 2001 - 2018", STRINGIFY(SDT_ver));
+  post("Version %s, (C) 2001 - 2021", STRINGIFY(SDT_ver_Pd));
+  post("Core library version %s, (C) 2001 - 2021", STRINGIFY(SDT_ver));
   post("Project SOb - http://soundobject.org");
   post("Project CLOSED - http://closed.ircam.fr");
   post("Project NIW - http://soundobject.org/niw");

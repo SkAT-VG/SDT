@@ -3,6 +3,9 @@
 #ifndef SDT_COMMONPD_H
 #define SDT_COMMONPD_H
 
+/** @brief SDT Pd externals version number */
+#define SDT_ver_Pd 0.95
+
 /** @brief Parse the Pd arguments for SDT Pd objects creation
 @param[in] s Class symbol
 @param[in] argc The number of Pd arguments passed
