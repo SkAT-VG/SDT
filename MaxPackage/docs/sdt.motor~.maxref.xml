@@ -17,13 +17,7 @@
 
 	<!--METADATA-->
 	<metadatalist>
-		<metadata name="author">Stefano Delle Monache, Stefano Baldan, Stefano Papetti</metadata>
 		<metadata name="tag">Sound Design Toolkit</metadata>
-		<metadata name="tag">Procedural audio</metadata>
-		<metadata name="tag">Physics-based sound synthesis</metadata>
-		<metadata name="tag">Sonic interaction design</metadata>
-		<metadata name="copyright">© 2001 - 2021</metadata>
-		<metadata name="version">3.0</metadata>
 	</metadatalist>
 
 	<!--INLETS
