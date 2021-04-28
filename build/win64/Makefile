@@ -74,10 +74,10 @@ install_max:
 	then echo "Usage: make install_max DSTDIR=<installation_path>"; \
 	elif [ ! -d "$(DSTDIR)" ]; \
 	then echo "Error: installation path does not exist or is not a directory"; \
-	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
-	     cp -a $(MAXPACKDIR)/* "$(DSTDIR)"/SDT && \
-	     cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT/support && \
-	     cp -a $(MAXDIR)/*.mxe64 "$(DSTDIR)"/SDT/externals && \
+	else mkdir -p "${DSTDIR}/Sound Design Toolkit/"{externals,support} && \
+	     cp -a $(MAXPACKDIR)/* "${DSTDIR}/Sound Design Toolkit/" && \
+	     cp -a $(SDTDIR)/libSDT.dll "${DSTDIR}/Sound Design Toolkit/support" && \
+	     cp -a $(MAXDIR)/*.mxe64 "${DSTDIR}/Sound Design Toolkit/externals" && \
 	     echo "Sound Design Toolkit 'package for Max' installed in $(DSTDIR)"; \
 	fi
 
