@@ -3,9 +3,6 @@
 #ifndef SDT_COMMONMAX_H
 #define SDT_COMMONMAX_H
 
-/** @brief SDT Max externals version number */
-#define SDT_ver_Max 3.0
-
 /** @brief Unregister the SDT object in the hashmap and free the SDT object memory
 This macro works for destroyer functions whose signature is "classname_free(t_classname *x)".
 @param[in] T The SDT type (without the leading "SDT")

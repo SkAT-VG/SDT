@@ -30,11 +30,11 @@ jobs:
           platform: install_pd
         include:
         - platform: install_core
-          plt_name: _lib
+          plt_name: lib
         - platform: install_pd
-          plt_name: _pd
+          plt_name: pd
         - platform: install_max
-          plt_name: _max
+          plt_name: max
     container: chromaticisobar/sdt:build
     steps:
     - uses: actions/checkout@v2
@@ -49,7 +49,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
         path: SoundDesignToolkit
 
   # Cannot be run in the previous matrix because there is no way (for now) to specify not to use a container for macos
@@ -63,11 +63,11 @@ jobs:
         platform: [install_core, install_max, install_pd]
         include:
         - platform: install_core
-          plt_name: _lib
+          plt_name: lib
         - platform: install_pd
-          plt_name: _pd
+          plt_name: pd
         - platform: install_max
-          plt_name: _max
+          plt_name: max
     # notice that steps are the same as build-docker
     steps:
     - uses: actions/checkout@v2
@@ -82,7 +82,7 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
         path: SoundDesignToolkit
 
   release-create:
@@ -107,22 +107,12 @@ jobs:
     strategy:
       matrix:
         target: [linux, win32, win64, macosx]
-        plt_name: [_lib, _pd, _max]
+        plt_name: [lib, pd, max]
         exclude:
         - target: linux
-          plt_name: _max
+          plt_name: max
         - target: win64
-          plt_name: _pd
-        include:
-        - plt_name: _lib
-          vmacro: SDT_ver
-          vfile: src/SDT/SDTCommon.h
-        - plt_name: _pd
-          vmacro: SDT_ver_Pd
-          vfile: src/Pd/SDTCommonPd.h
-        - plt_name: _max
-          vmacro: SDT_ver_Max
-          vfile: src/Max7/SDTCommonMax.h
+          plt_name: pd
     runs-on: ubuntu-latest
     needs: release-create
     steps:
@@ -132,12 +122,12 @@ jobs:
     - name: Download artifacts
       uses: actions/download-artifact@v1
       with:
-        name: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
     - name: Zip artifacts
-      run: zip -r ../SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip *
-      working-directory: SDT_${{ matrix.target }}${{ matrix.plt_name }}
+      run: zip -r ../SDT_${{ matrix.target }}_${{ matrix.plt_name }}.zip *
+      working-directory: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
     - name: Set platform-specific version name
-      run: SDT_VERSION=($(grep "#define ${{ matrix.vmacro }} " ${{ matrix.vfile }})) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
+      run: echo "SDT_VERSION=$(./build/version_echo ${{ matrix.plt_name }})" >> $GITHUB_ENV
     - name: Upload Release Asset
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
@@ -145,8 +135,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ needs.release-create.outputs.upload_url }}
-        asset_path: ./SDT_${{ matrix.target }}${{ matrix.plt_name }}.zip
-        asset_name: SDT_${{ matrix.target }}${{ matrix.plt_name }}_${{ env.SDT_VERSION }}.zip
+        asset_path: ./SDT_${{ matrix.target }}_${{ matrix.plt_name }}.zip
+        asset_name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}_${{ env.SDT_VERSION }}.zip
         asset_content_type: application/zip
 
   doxygen:
@@ -157,7 +147,7 @@ jobs:
       with:
         persist-credentials: false
     - name: Set version name
-      run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
+      run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
     - name: Build HTML
       run: doxygen
     - name: Upload HTML
@@ -182,7 +172,7 @@ jobs:
           persist-credentials: false
           submodules: true
       - name: Set version name
-        run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
+        run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
       - name: Build HTML
         run: make oscdoc_html
         working-directory: build/linux
@@ -244,7 +234,7 @@ jobs:
       with:
         name: refman
     - name: Set version name
-      run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
+      run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
     - name: Upload Reference Manual
       id: upload-refman
       uses: actions/upload-release-asset@v1
@@ -268,7 +258,7 @@ jobs:
         with:
           name: osc-quickreference
       - name: Set version name
-        run: SDT_VERSION=($(grep "#define SDT_ver " src/SDT/SDTCommon.h)) && echo "SDT_VERSION=${SDT_VERSION[2]}" >> $GITHUB_ENV
+        run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
       - name: Upload OSC Quick Reference
         id: upload-osc-qr
         uses: actions/upload-release-asset@v1
