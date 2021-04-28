@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+if [ "$#" -lt 1 ]; then
+  PLT="LIB";
+else
+  PLT="$1";
+fi
+if [ "$#" -lt 2 ]; then
+  PREFIX="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )/..";
+else
+  PREFIX="$2";
+fi
+PLT="$(echo $PLT | tr a-z A-Z)"
+case $PLT in
+  "LIB" )
+    SDT_VERSION_=($(grep "#define SDT_ver " "${PREFIX}/src/SDT/SDTCommon.h")) && SDT_VERSION="${SDT_VERSION_[2]}";;
+  "PD" )
+    SDT_VERSION="$(cat Pd/VERSION)";;
+  "MAX" )
+    SDT_VERSION="$(cat MaxPackage/VERSION)";;
+   * )
+    >&2 echo "platform should be either 'LIB', 'PD' or 'MAX', not '${PLT}'" && exit 1;;
+esac
+SDT_VERSION=${SDT_VERSION//[[:blank:]]/}
+echo "${SDT_VERSION}"
