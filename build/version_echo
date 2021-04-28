@@ -19,9 +19,9 @@ case $PLT in
   "LIB" )
     SDT_VERSION="${LIB_VERSION}";;
   "PD" )
-    SDT_VERSION="$(cat Pd/VERSION)-${LIB_VERSION}";;
+    SDT_VERSION="$(cat "${PREFIX}/Pd/VERSION")-${LIB_VERSION}";;
   "MAX" )
-    SDT_VERSION="$(cat MaxPackage/VERSION)-${LIB_VERSION}";;
+    SDT_VERSION="$(cat "${PREFIX}/MaxPackage/VERSION")-${LIB_VERSION}";;
    * )
     >&2 echo "platform should be either 'LIB', 'PD' or 'MAX', not '${PLT}'" && exit 1;;
 esac
