@@ -77,8 +77,6 @@ SDTCommon.h should always be included when using other SDT modules.
 
 /** @brief SDT version number */
 #define SDT_ver          080
-/** @brief SDT version string */
-#define SDT_ver_str     "080"
 /** @brief Value of Pi */
 #define SDT_PI           3.141592653589793
 /** @brief Value of 2 * Pi */

@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+PREFIX=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." &> /dev/null && pwd );
+
+# --- Usage -------------------------------------------------------------------
+display_usage() {
+	echo "Echo current SDT version, as read from repository files"
+	echo -e "\nUsage: $0 [PLT [PREFIX]] \n"
+	echo -e "  PLT       Platform name. It can be any of 'LIB', 'PD',"
+	echo -e "              'MAX', or 'TAG' (case insensitive):"
+	echo -e "                LIB: Core library (default)"
+	echo -e "                PD:  Pd package (and core library)"
+	echo -e "                MAX: Max package (and core library)"
+	echo -e "                TAG: Git tag base name, including all versions\n"
+	echo -e "  PREFIX    Root directory of the SDT. Default is '${PREFIX}'"
+}
+while getopts ":h" option; do
+   case $option in
+      h)
+         display_usage ;
+         exit 0;;
+      *) ;;
+   esac
+done
+# -----------------------------------------------------------------------------
+
+# --- Argument Parsing --------------------------------------------------------
+if [ "$#" -lt 1 ]; then
+  PLT="LIB";
+else
+  PLT="$1";
+fi
+if [ "$#" -ge 2 ]; then
+  PREFIX="$2";
+fi
+PLT="$(echo $PLT | tr a-z A-Z)"
+# -----------------------------------------------------------------------------
+
+# --- Read versions -----------------------------------------------------------
+LIB_VERSION="$(grep "#define SDT_ver " "${PREFIX}/src/SDT/SDTCommon.h")"
+LIB_VERSION="$(echo "$LIB_VERSION" | while read -ra w; do echo "${w[2]}"; done )"
+
+PD_VERSION="$(cat "${PREFIX}/Pd/VERSION")";
+
+MAX_VERSION="$(grep "\"version\"" "${PREFIX}/MaxPackage/package-info.json")";
+MAX_VERSION="$(echo "$MAX_VERSION" | while read -ra w; do echo "${w[2]}"; done )"
+MAX_VERSION="$(echo "$MAX_VERSION" | tr -d \" | tr -d ,)";
+# -----------------------------------------------------------------------------
+
+# --- Make version name -------------------------------------------------------
+case $PLT in
+  "LIB" )
+    SDT_VERSION="${LIB_VERSION}";;
+  "PD" )
+    SDT_VERSION="${PD_VERSION}-${LIB_VERSION}";;
+  "MAX" )
+    SDT_VERSION="${MAX_VERSION}-${LIB_VERSION}";;
+  "TAG" )
+    SDT_VERSION="v${LIB_VERSION}-Max${MAX_VERSION}-Pd${PD_VERSION}";;
+   * )
+    >&2 echo "platform should be either 'LIB', 'PD', 'MAX', or 'TAG', not '${PLT}'";
+    exit 1;;
+esac
+SDT_VERSION=${SDT_VERSION//[[:blank:]]/}
+# -----------------------------------------------------------------------------
+
+echo "${SDT_VERSION}"
