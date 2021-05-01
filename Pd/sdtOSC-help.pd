@@ -1,92 +1,90 @@
-#N canvas 0 24 1600 851 24;
-#X obj 67 549 cnv 32 458 466 empty empty initialize\ settings 20 12
-0 14 -228856 -66577 0;
-#X obj 521 643 cnv 32 454 372 empty empty empty 20 12 0 14 -228856
+#N canvas 0 24 1059 1016 12;
+#X declare -lib SDT;
+#X obj 10 540 cnv 32 458 466 empty empty initialize\\\ settings 20
+12 0 14 -228856 -66577 0;
+#X obj 464 634 cnv 32 454 372 empty empty empty 20 12 0 14 -228856
 -66577 0;
-#X obj 67 292 cnv 32 908 251 empty empty impact\ settings 20 12 0 14
--261682 -66577 0;
-#X obj 530 509 cnv 64 445 128 empty empty empty 20 12 0 14 -261682
+#X obj 10 283 cnv 32 908 251 empty empty impact\\\ settings 20 12 0
+14 -261682 -66577 0;
+#X obj 473 500 cnv 64 445 128 empty empty empty 20 12 0 14 -261682
 -66577 0;
-#X obj 746 21 cnv 32 229 267 empty empty receive\ osc\ messages 20
-12 0 14 -204800 -66577 0;
-#X obj 816 211 sdtOSC;
-#X obj 753 153 routeOSC /sdt;
-#X obj 815 597 dac~;
-#X obj 262 556 r pd;
-#X obj 262 593 route dsp;
-#X obj 262 631 select 1;
-#X obj 78 631 loadbang;
-#X msg 439 413 stiffness \$1;
-#X msg 622 413 dissipation \$1;
-#X floatatom 439 377 10 0 0 0 - - -, f 10;
-#X floatatom 622 377 5 0 0 0 - - -, f 5;
-#X floatatom 836 377 5 0 0 0 - - -, f 5;
-#X obj 457 504 impact~ hammerimp objectimp 2;
-#X msg 836 413 shape \$1;
-#X obj 238 373 r hammerimp;
-#X obj 72 466 r objectimp;
-#X obj 71 426 inertial hammerimp;
-#X obj 72 504 modal objectimp 3 1;
-#X obj 346 449 r imp;
-#X msg 71 373 strike 0 -3;
-#X obj 930 464 bng 32 250 50 0 strike empty Strike! 0 -8 0 10 -262144
+#X obj 689 12 cnv 32 229 267 empty empty receive\\\ osc\\\ messages
+20 12 0 14 -204800 -66577 0;
+#X obj 759 202 sdtOSC;
+#X obj 696 144 routeOSC /sdt;
+#X obj 758 588 dac~;
+#X obj 21 622 loadbang;
+#X msg 382 404 stiffness \$1;
+#X msg 565 404 dissipation \$1;
+#X floatatom 382 368 10 0 0 0 - - -;
+#X floatatom 565 368 5 0 0 0 - - -;
+#X floatatom 779 368 5 0 0 0 - - -;
+#X obj 400 495 impact~ hammerimp objectimp 2;
+#X msg 779 404 shape \$1;
+#X obj 181 364 r hammerimp;
+#X obj 15 457 r objectimp;
+#X obj 14 417 inertial hammerimp;
+#X obj 15 495 modal objectimp 3 1;
+#X obj 289 440 r imp;
+#X msg 14 364 strike 0 -3;
+#X obj 873 455 bng 32 250 50 0 strike empty Strike! 0 -8 0 10 -262144
 -260097 -1;
-#X obj 931 501 vsl 30 60 0 1000 0 0 empty volume empty 0 -9 0 10 -262144
--1 -1 2800 1;
-#X obj 439 341 hsl 128 32 1000 1e+08 1 0 empty stiffness stiffness
+#X obj 874 492 vsl 30 60 0 1000 0 0 empty volume empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 382 332 hsl 128 32 1000 1e+08 1 0 empty stiffness stiffness
 -2 -8 0 10 -262144 -1 -1 10160 1;
-#X obj 622 341 hsl 128 32 0 40 0 0 empty dissipation dissipation -2
+#X obj 565 332 hsl 128 32 0 40 0 0 empty dissipation dissipation -2
 -8 0 10 -262144 -1 -1 317 1;
-#X obj 836 341 hsl 128 32 1 4 0 0 empty shape contact\ shape -2 -8
+#X obj 779 332 hsl 128 32 1 4 0 0 empty shape contact\\\ shape -2 -8
 0 10 -262144 -1 -1 2117 1;
-#X obj 67 21 cnv 32 674 267 empty empty simulate\ an\ incoming\ sequence\ of\ osc\ messages
+#X obj 10 12 cnv 32 674 267 empty empty simulate\\\ an\\\ incoming\\\ sequence\\\ of\\\ osc\\\ messages
 20 12 0 14 -204786 -66577 0;
-#X obj 753 77 udpreceive 8080;
-#X obj 753 115 unpackOSC;
-#X obj 894 114 r osc;
-#X obj 843 550 *~ 0;
-#X obj 71 336 r strike;
-#X msg 78 715 \; hammerimp mass 0.01 \; hammerimp fragmentSize 1 \;
+#X obj 696 68 udpreceive 8080;
+#X obj 696 106 unpackOSC;
+#X obj 837 105 r osc;
+#X obj 786 541 *~ 0;
+#X obj 14 327 r strike;
+#X msg 21 706 \; hammerimp mass 0.01 \; hammerimp fragmentSize 1 \;
 objectimp fragmentSize 1 \; imp contact0 0 \; imp contact1 0 \; stiffness
 1e+07 \; dissipation 1 \; shape 1.5 \;;
-#X obj 262 669 del 100;
-#X obj 78 669 del 100;
-#X msg 449 715 \; volume 0 \;;
-#X msg 449 817 \; objectimp freqs 500 1300 1700 \; objectimp decays
+#X obj 205 660 del 100;
+#X obj 21 660 del 100;
+#X msg 392 706 \; volume 0 \;;
+#X msg 392 808 \; objectimp freqs 500 1300 1700 \; objectimp decays
 1 0.5 0.25 \; objectimp pickup 0 100 100 100 \; objectimp activeModes
 3 \;;
-#X msg 75 47 \; osc /sdt/resonator/frequency objectimp 0 550 \; osc
+#X msg 18 38 \; osc /sdt/resonator/frequency objectimp 0 550 \; osc
 /sdt/resonator/frequency objectimp 1 560 \; osc /sdt/resonator/frequency
 objectimp 2 1100 \; osc /sdt/resonator/decay objectimp 0 2 \; osc /sdt/resonator/decay
 objectimp 1 1.5 \; osc /sdt/resonator/decay objectimp 2 1.1 \;;
+#X obj 932 18 declare -lib SDT;
+#X obj 205 623 r pd-dsp-started;
 #X connect 6 0 5 0;
-#X connect 8 0 9 0;
-#X connect 9 0 10 0;
-#X connect 10 0 37 0;
-#X connect 11 0 38 0;
-#X connect 12 0 17 0;
-#X connect 13 0 17 0;
-#X connect 14 0 12 0;
-#X connect 15 0 13 0;
+#X connect 8 0 35 0;
+#X connect 9 0 14 0;
+#X connect 10 0 14 0;
+#X connect 11 0 9 0;
+#X connect 12 0 10 0;
+#X connect 13 0 15 0;
+#X connect 14 1 31 0;
+#X connect 15 0 14 0;
 #X connect 16 0 18 0;
-#X connect 17 1 34 0;
-#X connect 18 0 17 0;
-#X connect 19 0 21 0;
-#X connect 20 0 22 0;
-#X connect 23 0 17 0;
-#X connect 24 0 21 0;
-#X connect 26 0 34 1;
-#X connect 27 0 14 0;
-#X connect 28 0 15 0;
-#X connect 29 0 16 0;
-#X connect 31 0 32 0;
-#X connect 32 0 6 0;
-#X connect 33 0 6 0;
-#X connect 34 0 7 0;
-#X connect 34 0 7 1;
-#X connect 35 0 24 0;
-#X connect 37 0 39 0;
-#X connect 37 0 40 0;
-#X connect 38 0 36 0;
-#X connect 38 0 39 0;
-#X connect 38 0 40 0;
+#X connect 17 0 19 0;
+#X connect 20 0 14 0;
+#X connect 21 0 18 0;
+#X connect 23 0 31 1;
+#X connect 24 0 11 0;
+#X connect 25 0 12 0;
+#X connect 26 0 13 0;
+#X connect 28 0 29 0;
+#X connect 29 0 6 0;
+#X connect 30 0 6 0;
+#X connect 31 0 7 0;
+#X connect 31 0 7 1;
+#X connect 32 0 21 0;
+#X connect 34 0 36 0;
+#X connect 34 0 37 0;
+#X connect 35 0 33 0;
+#X connect 35 0 36 0;
+#X connect 35 0 37 0;
+#X connect 40 0 34 0;

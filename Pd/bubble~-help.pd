@@ -1,16 +1,17 @@
-#N canvas 599 372 551 438 10;
+#N canvas 599 372 554 440 10;
+#X declare -lib SDT;
 #X obj 9 384 bubble~;
 #X msg 179 343 radius \$1;
 #X msg 317 343 riseFactor \$1;
 #X obj 9 411 dac~;
 #X obj 9 155 bng 32 250 50 0 empty empty empty 17 7 0 10 -262144 -1
 -1;
-#X floatatom 317 299 5 0 0 0 - - -, f 5;
+#X floatatom 317 299 5 0 0 0 - - -;
 #X obj 179 157 vsl 15 128 0.15 150 1 0 empty radius empty 0 -9 0 10
 -262144 -1 -1 6447 1;
 #X obj 317 157 vsl 15 128 0 3 0 0 empty riseFactor empty 0 -9 0 10
 -262144 -1 -1 423 1;
-#X floatatom 179 298 5 0 0 0 - - -, f 5;
+#X floatatom 179 298 5 0 0 0 - - -;
 #X obj 179 319 * 0.001;
 #X msg 327 7 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
@@ -19,8 +20,10 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X text 7 135 Press to trigger a bubble;
 #X text 176 136 Bubble radius (mm);
 #X text 313 136 Rise factor;
-#X obj 440 139 loadbang;
-#X msg 440 165 \; radius 5 \; riseFactor 0.1 \;;
+#X obj 484 175 loadbang;
+#X msg 438 201 \; radius 5 \; riseFactor 0.1 \;;
+#X obj 442 95 declare -lib SDT;
+#X obj 438 152 r pd-dsp-started;
 #X connect 0 0 3 0;
 #X connect 0 0 3 1;
 #X connect 1 0 0 0;
@@ -32,3 +35,4 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X connect 8 0 9 0;
 #X connect 9 0 1 0;
 #X connect 15 0 16 0;
+#X connect 18 0 16 0;
