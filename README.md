@@ -93,8 +93,9 @@ commands to compile the software in all its flavors (Max *package*, Pd
 	cd build/win32 (or cd build/win64 for the x64 version)
 	make
 ```
-2. Install one or more products: The provided scripts will install the selected
-products in the given destination `<path>`, creating a `SDT` subfolder:
+2. Install one or more products. The provided scripts will install the selected
+products in the given destination `<path>`, in a subfolder (`SDT` for Pd or DLL
+and `Sound Design Toolkit` for Max):
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path> (only for 32 bit)
@@ -103,6 +104,14 @@ products in the given destination `<path>`, creating a `SDT` subfolder:
 3. To clean the source directories after compilation:
 ```
 	make clean
+```
+4. To uninstall one or more products, run the corresponding command.
+Please provide the same `<path>` specified at installation (the parent
+folder of the SDT folder)
+```
+	make uninstall_max DSTDIR=<path> (only for 32 bit)
+	make uninstall_pd DSTDIR=<path> (only for 32 bit)
+	make uninstall_core DSTDIR=<path> (only for 32 bit)
 ```
 
 #### Linux
