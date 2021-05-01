@@ -72,7 +72,7 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch -c $< -o $@
 
 pd: $(SDTOBJS) $(PDOBJS)
-	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
+	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(JSONOBJS) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) $(INCLUDE_JSON) -F$(SDTDIR) -c $< -o $@
