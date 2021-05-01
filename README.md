@@ -111,9 +111,9 @@ products in the given destination `<path>`, creating a `SDT` subfolder:
 	cd build/linux
 	make
 ```
-2. Install one or more products: By default, the building environment will
-install the SDT shared core library in `/usr/lib` and the Pd *library* in
-`/usr/lib/pd/extras/SDT`. Root privileges may be required to access the
+2. Install one or more products. By default, the building environment will
+install the SDT shared core library in `/usr` and the Pd *library* in
+`/usr/lib/pd/extras`. Root privileges may be required to access the
 default install path.
 If you want to change the install path, provide a `DSTDIR` argument:
 ```
@@ -124,7 +124,13 @@ If you want to change the install path, provide a `DSTDIR` argument:
 ```
 	make clean
 ```
-
+4. To uninstall one or more products, run the corresponding command. Root
+privileges may be required to access the default install path. If you
+installed SDT under a custom path, please provide a `DSTDIR` argument:
+```
+	make uninstall_pd DSTDIR=<path>
+	make uninstall_core DSTDIR=<path>
+```
 
 ## Acknowledgements
 The SDT was developed through the years with the contribution of the following
