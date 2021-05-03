@@ -80,6 +80,14 @@ products in the given destination `<path>`, creating a `SDT` subfolder:
 ```
 	make clean
 ```
+4. To uninstall one or more products, run the corresponding command.
+Please provide the same `<path>` specified at installation (the parent
+folder of the SDT folder)
+```
+	make uninstall_max DSTDIR=<path>
+	make uninstall_pd DSTDIR=<path>
+	make uninstall_core DSTDIR=<path>
+```
 
 #### Windows
 To compile the SDT under Windows, you need a distribution of the GNU C Compiler
