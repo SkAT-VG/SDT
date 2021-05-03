@@ -109,9 +109,9 @@ and `Sound Design Toolkit` for Max):
 Please provide the same `<path>` specified at installation (the parent
 folder of the SDT folder)
 ```
-	make uninstall_max DSTDIR=<path> (only for 32 bit)
+	make uninstall_max DSTDIR=<path>
 	make uninstall_pd DSTDIR=<path> (only for 32 bit)
-	make uninstall_core DSTDIR=<path> (only for 32 bit)
+	make uninstall_core DSTDIR=<path>
 ```
 
 #### Linux
