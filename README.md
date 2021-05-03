@@ -50,7 +50,6 @@ shared core library / Apple framework are provided as release assets of this
 repository at: https://github.com/SkAT-VG/SDT/releases
 Unpack the appropriate .zip file for your operating system and target platform
 into the desired destination folder.
-Linux users will need to copy the shared core library `libSDT.so` to `/usr/lib` (root privileges may be required).
 
 ### Compiling from source code
 Users may as well build a Max *package*, Pd *library*, shared core library /
