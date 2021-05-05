@@ -40,7 +40,7 @@ JSONOBJS=$(JSONOBJP) $(JSONOBJB)
 
 all: core max pd
 
-pd: $(SDTOBJS) $(PDOBJS)
+pd: $(SDTOBJS) $(PDOBJS) $(JSONOBJS)
 	$(CC) $(LDFLAGS) -L$(PDSDKDIR) $(JSONOBJS) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.dll -lpd
 
 $(PDDIR)/%.o: $(PDDIR)/%.c

@@ -71,7 +71,7 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch -c $< -o $@
 
-pd: $(SDTOBJS) $(PDOBJS)
+pd: $(JSONOBJS) $(SDTOBJS) $(PDOBJS)
 	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(JSONOBJS) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
