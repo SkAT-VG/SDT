@@ -128,9 +128,9 @@ folder of the SDT folder)
 	make
 ```
 2. Install one or more products. By default, the building environment will
-install the SDT shared core library in `/usr` and the Pd *library* in
-`/usr/lib/pd/extras`. Root privileges may be required to access the
-default install path.
+install the SDT shared library in `/usr/lib` and the headers in `/usr/include`
+(`DSTDIR=/usr`). The default path for the Pd *library* is `/usr/lib/pd/extras`.
+Root privileges may be required to access the default install path.
 If you want to change the install path, provide a `DSTDIR` argument:
 ```
 	make install_pd DSTDIR=<path>
