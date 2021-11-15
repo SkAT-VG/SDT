@@ -71,7 +71,7 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
 }
 
 void modal_free(t_modal *x) {
-  char attrName[10];
+  char attrName[17];
   int pickup;
   
   dsp_free((t_pxobject *)x);
