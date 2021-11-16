@@ -1,6 +1,7 @@
 #include "SDTOSCResonators.h"
 #include "SDTSolids.h"
 #include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMessage* x) {
