@@ -33,6 +33,7 @@ OSCDOCRST=$(OSCDOCSOURCEDIR)/ordinary_classes.rst
 
 INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
 INCLUDE_SDT=-I$(SDTDIR)
+INCLUDE_PD_SDK=-I$(THIRDPDIR)/Pd
 
 all: core pd
 
@@ -51,7 +52,7 @@ pd: core $(PDOBJS)
 	$(CC) $(LDFLAGS) $(JSONOBJS) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) $(INCLUDE_PD_SDK) -c $< -o $@
 
 core: $(SDTOBJS) json
 	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) $(INCLUDE_JSON) -o $(SDTDIR)/libSDT.so -lc -lm
