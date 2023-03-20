@@ -1,7 +1,7 @@
 {
 	"name" : "Sound Design Toolkit",
-	"author" : "Stefano Delle Monache, Stefano Baldan, Stefano Papetti",
-	"description" : "A framework for ecologically-founded sound synthesis and design. Think of it as a virtual Foley-box!",
+	"author" : "Stefano Delle Monache, Stefano Baldan, Stefano Papetti, Marco Tiraboschi",
+	"description" : "A framework for ecologically founded sound synthesis and design. Think of it as a virtual Foley-box!",
 	"displayname" : "Sound Design Toolkit",
 	"extensible" : 0,
 	"homepatcher" : "SDT-Overview.maxpat",
@@ -21,6 +21,6 @@
 	        "copyright" : "Copyright (c) 2001 - 2021"
 	},
 	"tags" : [ "physics-based sound synthesis", "procedural audio", "sonic interaction design", "sound processing", "sound analysis" ],
-	"version" : "3.0-0.80 (build 04/2021)",
+	"version" : "3.0",
 	"website" : "https://github.com/SkAT-VG/SDT"
 }

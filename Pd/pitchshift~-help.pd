@@ -1,20 +1,23 @@
-#N canvas 434 339 531 199 10;
-#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2016 \; \; Project
+#N canvas 434 339 541 222 10;
+#X declare -lib SDT;
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 11 83 adc~;
 #X obj 11 164 dac~;
 #X msg 168 104 ratio \$1;
-#X floatatom 168 83 5 0.1 10 0 - ratio -, f 5;
+#X floatatom 168 83 5 0.1 10 0 - ratio -;
 #X text 165 64 Pitch shifting ratio;
-#X obj 432 113 loadbang;
+#X obj 342 149 loadbang;
 #X text 8 4 pitchshift~ - Pitch shifter;
 #X obj 11 139 pitchshift~ 4096;
 #X text 146 139 Args: window size;
-#X msg 432 139 \; overlap 0.75 \; ratio 1.5 \;;
-#X floatatom 51 82 5 0.75 1 0 - overlap -, f 5;
+#X msg 306 169 \; overlap 0.75 \; ratio 1.5 \;;
+#X floatatom 51 82 5 0.75 1 0 - overlap -;
 #X text 48 63 Overlap factor;
 #X msg 51 103 overlap \$1;
+#X obj 416 96 declare -lib SDT;
+#X obj 306 128 r pd-dsp-started;
 #X connect 1 0 8 0;
 #X connect 3 0 8 0;
 #X connect 4 0 3 0;
@@ -23,3 +26,4 @@ NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X connect 8 0 2 1;
 #X connect 11 0 13 0;
 #X connect 13 0 8 0;
+#X connect 15 0 10 0;

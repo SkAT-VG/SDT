@@ -6,7 +6,7 @@ LDFLAGS=-shared
 ROOT=../..
 SRCDIR=$(ROOT)/src
 THIRDPDIR=$(ROOT)/3rdparty
-DSTDIR=/usr
+# DSTDIR=/usr
 SDTPATH=SDT
 
 SDTDIR=$(SRCDIR)/SDT
@@ -33,10 +33,11 @@ OSCDOCRST=$(OSCDOCSOURCEDIR)/ordinary_classes.rst
 
 INCLUDE_JSON=-I$(JSONDIRP) -I$(JSONDIRB)
 INCLUDE_SDT=-I$(SDTDIR)
+INCLUDE_PD_SDK=-I$(THIRDPDIR)/Pd
 
-all: sdt pd
+all: core pd
 
-.PHONY: sdt pd oscdoc_%
+.PHONY: core pd oscdoc_%
 
 oscdoc_%: $(OSCDOCRST)
 	cd $(OSCDOCDIR) && make $(@:oscdoc_%=%)
@@ -47,13 +48,13 @@ $(OSCDOCRST): $(OSCDOCGEN)
 $(OSCDOCGEN): $(OSCDOCGEN).c
 	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_SDT) $(INCLUDE_JSON) $< -o $@
 
-pd: sdt $(PDOBJS)
-	$(CC) $(LDFLAGS) -L$(SDTDIR) $(PDOBJS) $(INCLUDE_JSON) -o $(PDDIR)/SDT.pd_linux -lc -lm -lSDT
+pd: core $(PDOBJS)
+	$(CC) $(LDFLAGS) $(JSONOBJS) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_linux
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR) $(INCLUDE_JSON) $(INCLUDE_PD_SDK) -c $< -o $@
 
-sdt: $(SDTOBJS) json
+core: $(SDTOBJS) json
 	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) $(INCLUDE_JSON) -o $(SDTDIR)/libSDT.so -lc -lm
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
@@ -68,27 +69,61 @@ $(JSONDIRB)/%.o: $(JSONDIRB)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
 install_core:
-	mkdir -p $(DSTDIR)/include/$(SDTPATH)
-	mkdir -p $(DSTDIR)/lib
-	cp -a $(SDTDIR)/libSDT.so $(DSTDIR)/lib
-	cp -a $(SDTDIR)/*.h $(DSTDIR)/include/$(SDTPATH)
-	cp -a $(JSONDIRP)/*.h $(DSTDIR)/include/$(SDTPATH)
-	cp -a $(JSONDIRB)/*.h $(DSTDIR)/include/$(SDTPATH)
+	$(eval DSTDIR ?= "/usr")
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make install_core DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		mkdir -p $(DSTDIR)/include/$(SDTPATH) && \
+		mkdir -p $(DSTDIR)/lib && \
+		cp -a $(SDTDIR)/libSDT.so $(DSTDIR)/lib && \
+		cp -a $(SDTDIR)/*.h $(DSTDIR)/include/$(SDTPATH) && \
+		cp -a $(JSONDIRP)/*.h $(DSTDIR)/include/$(SDTPATH) && \
+		cp -a $(JSONDIRB)/*.h $(DSTDIR)/include/$(SDTPATH) && \
+		echo "Sound Design Toolkit 'Core Library' installed in '${DSTDIR}'"; \
+  fi
 
-install_pd: install_core
-	mkdir -p $(DSTDIR)/lib/pd/extra/$(SDTPATH)
-	cp -a $(PDDIR)/*.pd_linux $(DSTDIR)/lib/pd/extra/$(SDTPATH)
-	cp -a ../../Pd/* $(DSTDIR)/lib/pd/extra/$(SDTPATH)
+uninstall_core:
+	$(eval DSTDIR ?= "/usr")
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make uninstall_core DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		rm -rf "$(DSTDIR)/include/$(SDTPATH)" && \
+		rm -f "$(DSTDIR)/lib/libSDT.so" && \
+		echo "Sound Design Toolkit 'Core Library' removed from '${DSTDIR}'"; \
+  fi
 
-uninstall:
-	rm -f $(DSTDIR)/lib/libSDT.so
-	rm -rf $(DSTDIR)/lib/pd/extra/$(SDTPATH)
-	rm -rf $(DSTDIR)/include/$(SDTPATH)
+install_pd:
+	$(eval DSTDIR ?= "/usr/lib/pd/extra")
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make install_pd DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		mkdir -p "${DSTDIR}/${SDTPATH}" && \
+		cp -a ../../Pd/* "${DSTDIR}/${SDTPATH}" && \
+		cp -a $(PDDIR)/*.pd_linux "${DSTDIR}/${SDTPATH}" && \
+		echo "Sound Design Toolkit for PureData installed in '${DSTDIR}/${SDTPATH}'"; \
+	fi
+
+uninstall_pd:
+	$(eval DSTDIR ?= "/usr/lib/pd/extra")
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make uninstall_pd DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		rm -rf "${DSTDIR}/${SDTPATH}" && \
+		echo "Sound Design Toolkit for PureData removed from '${DSTDIR}/${SDTPATH}"; \
+	fi
 
 clean:
-	rm -rf $(SDTDIR)/*.so
-	rm -rf $(SDTDIR)/*.o
-	rm -rf $(PDDIR)/*.pd_linux
-	rm -rf $(PDDIR)/*.o
-	rm -rf $(JSONDIRP)/*.o
-	rm -rf $(JSONDIRB)/*.o
+	rm -rf "$(SDTDIR)/"*.so
+	rm -rf "$(SDTDIR)/"*.o
+	rm -rf "$(PDDIR)/"*.pd_linux
+	rm -rf "$(PDDIR)/"*.o
+	rm -rf "$(JSONDIRP)/"*.o
+	rm -rf "$(JSONDIRB)/"*.o

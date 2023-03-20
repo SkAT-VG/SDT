@@ -40,7 +40,7 @@ $(MAXDIR)/%.mxe64: $(MAXDIR)/%.o
 	cp Info.def $(MAXDIR)/$(EXTNAME).def
 	sed -i $(MAXDIR)/$(EXTNAME).def -e s/\$${PRODUCT_NAME}/$(EXTNAME)/g
 	$(CC) $(LDFLAGS) -L$(MAXSDKDIR)/max-includes/x64 -L$(MAXSDKDIR)/msp-includes/x64 -L$(MAXSDKDIR)/jit-includes/x64 -L$(SDTDIR) \
-	$< $(MAXDIR)/$(EXTNAME).def -o $@ $(MAXDIR)/SDT_fileusage.o -lMaxAPI -lMaxAudio -lSDT
+	$< $(MAXDIR)/$(EXTNAME).def -o $@ $(MAXDIR)/SDT_fileusage.o -lMaxAPI -lMaxAudio -lSDT64
 
 $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	$(CC) $(CFLAGS) -DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
@@ -56,7 +56,7 @@ fileusage:
 	-I$(SRCDIR) -c $(MAXDIR)/SDT_fileusage/SDT_fileusage.c -o $(MAXDIR)/SDT_fileusage.o
 
 core: $(SDTOBJS) json
-	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/libSDT.dll
+	$(CC) $(LDFLAGS) $(SDTOBJS) $(JSONOBJS) -o $(SDTDIR)/libSDT64.dll
 
 $(SDTDIR)/%.o: $(SDTDIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
@@ -70,29 +70,56 @@ $(JSONDIRB)/%.o: $(JSONDIRB)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
 install_max:
-	@if [ -z "$(DSTDIR)" ]; \
-	then echo "Usage: make install_max DSTDIR=<installation_path>"; \
-	elif [ ! -d "$(DSTDIR)" ]; \
-	then echo "Error: installation path does not exist or is not a directory"; \
-	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
-	     cp -a $(MAXPACKDIR)/* "$(DSTDIR)"/SDT && \
-	     cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT/support && \
-	     cp -a $(MAXDIR)/*.mxe64 "$(DSTDIR)"/SDT/externals && \
-	     echo "Sound Design Toolkit 'package for Max' installed in $(DSTDIR)"; \
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make install_max DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		mkdir -p "${DSTDIR}/Sound Design Toolkit/"{externals,support} && \
+		cp -a $(MAXPACKDIR)/* "${DSTDIR}/Sound Design Toolkit/" && \
+		cp -a $(SDTDIR)/libSDT64.dll "${DSTDIR}/Sound Design Toolkit/support" && \
+		cp -a $(MAXDIR)/*.mxe64 "${DSTDIR}/Sound Design Toolkit/externals" && \
+		echo "Sound Design Toolkit package for Max installed in '${DSTDIR}/Sound Design Toolkit'"; \
+	fi
+
+uninstall_max:
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make uninstall_max DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		rm -rf "${DSTDIR}/Sound Design Toolkit/" && \
+		echo "Sound Design Toolkit package for Max removed from '${DSTDIR}/Sound Design Toolkit'"; \
 	fi
 
 install_core:
-	@if [ -z "$(DSTDIR)" ]; \
-		then echo "Usage: make install_core DSTDIR=<installation_path>"; \
-		elif [ ! -d "$(DSTDIR)" ]; \
-		then echo "Error: installation path does not exist or is not a directory"; \
-	else mkdir -p "$(DSTDIR)"/SDT && \
-		cp -a $(SDTDIR)/libSDT.dll "$(DSTDIR)"/SDT && \
-		echo "Sound Design Toolkit 'core library' installed in $(DSTDIR)"; \
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make install_core DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		mkdir -p "$(DSTDIR)"/include/SDT && \
+		mkdir -p "$(DSTDIR)"/lib && \
+		cp -a $(SDTDIR)/libSDT64.dll "$(DSTDIR)"/lib && \
+		cp -a $(SDTDIR)/*.h $(DSTDIR)/include/SDT && \
+		cp -a $(JSONDIRP)/*.h $(DSTDIR)/include/SDT && \
+		cp -a $(JSONDIRB)/*.h $(DSTDIR)/include/SDT && \
+		echo "Sound Design Toolkit 'Core Library' installed in '$(DSTDIR)'"; \
+	fi
+
+uninstall_core:
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make uninstall_core DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		rm -rf "$(DSTDIR)"/include/SDT && \
+		rm -f "$(DSTDIR)"/lib/libSDT64.dll && \
+		echo "Sound Design Toolkit 'Core Library' removed from '$(DSTDIR)/SDT'"; \
 	fi
 
 clean:
-	rm -rf $(SDTDIR)/libSDT.dll
+	rm -rf $(SDTDIR)/libSDT64.dll
 	rm -rf $(SDTDIR)/*.o
 	rm -rf $(MAXDIR)/*.mxe64
 	rm -rf $(MAXDIR)/*.def

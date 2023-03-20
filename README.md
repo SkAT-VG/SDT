@@ -79,6 +79,14 @@ products in the given destination `<path>`, creating a `SDT` subfolder:
 ```
 	make clean
 ```
+4. To uninstall one or more products, run the corresponding command.
+Please provide the same `<path>` specified at installation (the parent
+folder of the SDT folder)
+```
+	make uninstall_max DSTDIR=<path>
+	make uninstall_pd DSTDIR=<path>
+	make uninstall_core DSTDIR=<path>
+```
 
 #### Windows
 To compile the SDT under Windows, you need a distribution of the GNU C Compiler
@@ -92,8 +100,9 @@ commands to compile the software in all its flavors (Max *package*, Pd
 	cd build/win32 (or cd build/win64 for the x64 version)
 	make
 ```
-2. Install one or more products: The provided scripts will install the selected
-products in the given destination `<path>`, creating a `SDT` subfolder:
+2. Install one or more products. The provided scripts will install the selected
+products in the given destination `<path>`, in a subfolder (`SDT` for Pd or DLL
+and `Sound Design Toolkit` for Max):
 ```
 	make install_max DSTDIR=<path>
 	make install_pd DSTDIR=<path> (only for 32 bit)
@@ -103,6 +112,14 @@ products in the given destination `<path>`, creating a `SDT` subfolder:
 ```
 	make clean
 ```
+4. To uninstall one or more products, run the corresponding command.
+Please provide the same `<path>` specified at installation (the parent
+folder of the SDT folder)
+```
+	make uninstall_max DSTDIR=<path>
+	make uninstall_pd DSTDIR=<path> (only for 32 bit)
+	make uninstall_core DSTDIR=<path>
+```
 
 #### Linux
 1. In a terminal, type the following commands:
@@ -110,10 +127,10 @@ products in the given destination `<path>`, creating a `SDT` subfolder:
 	cd build/linux
 	make
 ```
-2. Install one or more products: By default, the building environment will
-install the SDT shared core library in `/usr/lib` and the Pd *library* in
-`/usr/lib/pd/extras/SDT`. Root privileges may be required to access the
-default install path.
+2. Install one or more products. By default, the building environment will
+install the SDT shared library in `/usr/lib` and the headers in `/usr/include`
+(`DSTDIR=/usr`). The default path for the Pd *library* is `/usr/lib/pd/extras`.
+Root privileges may be required to access the default install path.
 If you want to change the install path, provide a `DSTDIR` argument:
 ```
 	make install_pd DSTDIR=<path>
@@ -123,7 +140,13 @@ If you want to change the install path, provide a `DSTDIR` argument:
 ```
 	make clean
 ```
-
+4. To uninstall one or more products, run the corresponding command. Root
+privileges may be required to access the default install path. If you
+installed SDT under a custom path, please provide a `DSTDIR` argument:
+```
+	make uninstall_pd DSTDIR=<path>
+	make uninstall_core DSTDIR=<path>
+```
 
 ## Acknowledgements
 The SDT was developed through the years with the contribution of the following

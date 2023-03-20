@@ -71,8 +71,8 @@ $(MAXDIR)/%.o: $(MAXDIR)/%.c
 	-F$(MAXSDKDIR)/max-includes -F$(MAXSDKDIR)/msp-includes -F$(MAXSDKDIR)/jit-includes \
 	-F$(SDTDIR) -include $(MAXSDKDIR)/max-includes/macho-prefix.pch -c $< -o $@
 
-pd: $(SDTOBJS) $(PDOBJS)
-	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
+pd: $(JSONOBJS) $(SDTOBJS) $(PDOBJS)
+	$(CC) $(LDFLAGS) -undefined dynamic_lookup $(JSONOBJS) $(SDTOBJS) $(PDOBJS) -o $(PDDIR)/SDT.pd_darwin
 
 $(PDDIR)/%.o: $(PDDIR)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR) -I$(PDSDKDIR) $(INCLUDE_JSON) -F$(SDTDIR) -c $< -o $@
@@ -107,36 +107,69 @@ $(JSONDIRB)/%.o: $(JSONDIRB)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE_JSON) -c $< -o $@
 
 install_max:
-	@if [ -z "$(DSTDIR)" ]; \
-	then echo "Usage: make install_max DSTDIR=<installation_path>"; \
-	elif [ ! -d "$(DSTDIR)" ]; \
-	then echo "Error: installation path does not exist or is not a directory"; \
-	else mkdir -p "$(DSTDIR)"/SDT/{externals,support} && \
-	     cp -a $(MAXPACKDIR)/* "$(DSTDIR)"/SDT && \
-	     cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT/support && \
-	     cp -a $(MAXDIR)/*.mxo "$(DSTDIR)"/SDT/externals && \
-	     echo "Sound Design Toolkit 'package for Max' installed in $(DSTDIR)"; \
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make install_max DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		mkdir -p "${DSTDIR}/Sound Design Toolkit/"{externals,support} && \
+		cp -a $(MAXPACKDIR)/* "${DSTDIR}/Sound Design Toolkit/" && \
+		cp -a $(SDTDIR)/SDT.framework "${DSTDIR}/Sound Design Toolkit/support" && \
+		cp -a $(MAXDIR)/*.mxo "${DSTDIR}/Sound Design Toolkit/externals" && \
+		echo "Sound Design Toolkit package for Max installed in '$(DSTDIR)/Sound Design Toolkit'"; \
+	fi
+
+uninstall_max:
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make uninstall_max DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		rm -rf "${DSTDIR}/Sound Design Toolkit/" && \
+		echo "Sound Design Toolkit package for Max removed from '${DSTDIR}/Sound Design Toolkit'"; \
 	fi
 
 install_pd:
-	@if [ -z "$(DSTDIR)" ]; \
-        then echo "Usage: make install_pd DSTDIR=<installation_path>"; \
-        elif [ ! -d "$(DSTDIR)" ]; \
-        then echo "Error: installation path does not exist or is not a directory"; \
-	else mkdir -p "$(DSTDIR)"/SDT && \
-	     cp -a ../../Pd/* "$(DSTDIR)"/SDT && \
-	     cp -a $(PDDIR)/*.pd_darwin "$(DSTDIR)"/SDT && \
-	     echo "Sound Design Toolkit for PureData installed in $(DSTDIR)"; \
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make install_pd DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		mkdir -p "$(DSTDIR)"/SDT && \
+		cp -a ../../Pd/* "$(DSTDIR)"/SDT && \
+		cp -a $(PDDIR)/*.pd_darwin "$(DSTDIR)"/SDT && \
+		echo "Sound Design Toolkit for PureData installed in '$(DSTDIR)/SDT'"; \
+	fi
+
+uninstall_pd:
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make uninstall_pd DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ];  then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		rm -rf "$(DSTDIR)"/SDT && \
+		echo "Sound Design Toolkit for Pure Data removed from '$(DSTDIR)/SDT'"; \
 	fi
 
 install_core:
-	@if [ -z "$(DSTDIR)" ]; \
-		then echo "Usage: make install_core DSTDIR=<installation_path>"; \
-		elif [ ! -d "$(DSTDIR)" ]; \
-		then echo "Error: installation path does not exist or is not a directory"; \
-	else mkdir -p "$(DSTDIR)"/SDT && \
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make install_core DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		mkdir -p "$(DSTDIR)"/SDT && \
 		cp -a $(SDTDIR)/SDT.framework "$(DSTDIR)"/SDT && \
-		echo "Sound Design Toolkit 'core library' installed in $(DSTDIR)"; \
+		echo "Sound Design Toolkit 'Core library' installed in '$(DSTDIR)/SDT'"; \
+	fi
+
+uninstall_core:
+	@if [ -z "$(DSTDIR)" ]; then \
+		echo "Usage: make uninstall_core DSTDIR=<installation_path>"; \
+	elif [ ! -d "$(DSTDIR)" ]; then \
+		echo "Error: installation path does not exist or is not a directory"; \
+	else \
+		rm -rf "$(DSTDIR)"/SDT && \
+		echo "Sound Design Toolkit 'Core Library' removed from '$(DSTDIR)/SDT'"; \
 	fi
 
 clean:
