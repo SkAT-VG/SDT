@@ -900,9 +900,9 @@
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 554.0, 246.5, 307.0, 53.0 ],
+									"patching_rect" : [ 554.0, 246.5, 309.0, 53.0 ],
 									"style" : "SDT-comments",
-									"text" : "Rocchesso, D., Polotti, P., & Delle Monache, S. (2009). Designing continuous sonic interaction. International Journal of Design, 3(3)."
+									"text" : "De Gotzen, A., & Rocchesso, D. (2006). Peek-a-book: playing with an interactive book. In Proc. of the 12th Int. Conf. on Auditory Display, (pp. 265-267."
 								}
 
 							}
@@ -1312,7 +1312,7 @@
 															}
 , 															{
 																"key" : "sounding",
-																"value" : [ "https://edu.nl/b9xfd" ]
+																"value" : [ "https://edu.nl/yhe7q" ]
 															}
 , 															{
 																"key" : "SDT",
@@ -1356,12 +1356,12 @@
 , 											{
 												"box" : 												{
 													"id" : "obj-35",
-													"linecount" : 4,
+													"linecount" : 3,
 													"maxclass" : "message",
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 51.0, 297.0, 113.0, 66.0 ],
+													"patching_rect" : [ 51.0, 297.0, 114.0, 52.0 ],
 													"style" : "SDTpackage",
 													"text" : ";\rmax launchbrowser https://edu.nl/b9xfd"
 												}
