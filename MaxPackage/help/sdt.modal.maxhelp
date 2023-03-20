@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 1,
-			"revision" : 11,
+			"minor" : 5,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -64,8 +64,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -207,8 +207,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1100,8 +1100,8 @@
 					"id" : "obj-56",
 					"maxclass" : "preset",
 					"numinlets" : 1,
-					"numoutlets" : 4,
-					"outlettype" : [ "preset", "int", "preset", "int" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "preset", "int", "preset", "int", "" ],
 					"patching_rect" : [ 693.5, 129.734375, 146.0, 19.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
@@ -1170,8 +1170,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1390,8 +1390,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1571,8 +1571,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -1683,8 +1683,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1843,13 +1843,13 @@
 					"color" : [ 0.960784, 0.827451, 0.156863, 1.0 ],
 					"fontsize" : 16.0,
 					"id" : "obj-10",
-					"linecount" : 3,
+					"linecount" : 2,
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 40.0, 293.0, 445.0, 66.0 ],
+					"patching_rect" : [ 40.0, 293.0, 532.0, 47.0 ],
 					"style" : "SDT_package",
-					"text" : "sdt.modal modal-object 2 2 @freqs 1950 2200. @decays 0.08 0.05 @pickup0 200. 130. @pickup1 100. 70. @activeModes 2 @fragmentSize 1."
+					"text" : "sdt.modal modal-object_b 2 2 @freqs 1950 2200. @decays 0.08 0.05 @pickup0 200. 130. @pickup1 100. 70. @activeModes 2 @fragmentSize 1."
 				}
 
 			}
@@ -1861,9 +1861,9 @@
 					"numinlets" : 6,
 					"numoutlets" : 3,
 					"outlettype" : [ "signal", "signal", "signal" ],
-					"patching_rect" : [ 277.25, 462.5, 234.75, 52.0 ],
+					"patching_rect" : [ 277.25, 462.5, 245.75, 52.0 ],
 					"style" : "SDT_package",
-					"text" : "sdt.impact~ inertial-object modal-object 3 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 0"
+					"text" : "sdt.impact~ inertial-object_b modal-object_b 3 @stiffness 150000000. @dissipation 0.1 @shape 1.7 @contact0 0 @contact1 0"
 				}
 
 			}
@@ -1889,7 +1889,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 0,
 					"patching_rect" : [ 40.0, 567.0, 169.0, 37.0 ],
-					"text" : "sdt.inertial inertial-object @mass 0.15 @fragmentSize 1."
+					"text" : "sdt.inertial inertial-object_b @mass 0.15 @fragmentSize 1."
 				}
 
 			}
@@ -2038,7 +2038,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 787.666666666666629, 165.0, 825.833333333333371, 165.0, 825.833333333333371, 5.0, 703.0, 5.0 ],
+					"midpoints" : [ 766.5, 165.0, 825.833333333333371, 165.0, 825.833333333333371, 5.0, 703.0, 5.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -2154,7 +2154,7 @@
 				"patchline" : 				{
 					"color" : [ 0.792959213256836, 0.070287518203259, 0.124154284596443, 1.0 ],
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 502.5, 521.875, 353.75, 521.875 ],
+					"midpoints" : [ 513.5, 521.875, 353.75, 521.875 ],
 					"source" : [ "obj-9", 2 ]
 				}
 
@@ -2163,7 +2163,7 @@
 				"patchline" : 				{
 					"color" : [ 0.005602236837149, 0.213983476161957, 0.998268365859985, 1.0 ],
 					"destination" : [ "obj-38", 0 ],
-					"midpoints" : [ 394.625, 522.875, 353.75, 522.875 ],
+					"midpoints" : [ 400.125, 522.875, 353.75, 522.875 ],
 					"source" : [ "obj-9", 1 ]
 				}
 
@@ -2179,11 +2179,11 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
+				"name" : "sdt.impact~.mxo",
 				"type" : "iLaX"
 			}
 , 			{
-				"name" : "sdt.impact~.mxo",
+				"name" : "sdt.inertial.mxo",
 				"type" : "iLaX"
 			}
 , 			{
@@ -2208,8 +2208,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -2227,8 +2227,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 1,
-			"revision" : 11,
+			"minor" : 5,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -73,6 +73,7 @@
 					"enablevscroll" : 0,
 					"id" : "obj-30",
 					"lockeddragscroll" : 0,
+					"lockedsize" : 0,
 					"maxclass" : "bpatcher",
 					"name" : "demosound.maxpat",
 					"numinlets" : 0,
@@ -123,8 +124,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -193,9 +194,9 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 29.5, 113.0, 488.0, 37.0 ],
+									"patching_rect" : [ 162.5, 115.0, 221.0, 37.0 ],
 									"style" : "SDTpackage",
-									"text" : ";\rmax launchbrowser https://www.dafx.de/paper-archive/2015/DAFx-15_submission_24.pdf"
+									"text" : ";\rmax launchbrowser https://edu.nl/nby4x"
 								}
 
 							}
@@ -205,13 +206,13 @@
 								"name" : "AudioStatus_Menu",
 								"default" : 								{
 									"bgfillcolor" : 									{
-										"type" : "color",
+										"angle" : 270,
+										"autogradient" : 0,
 										"color" : [ 0.294118, 0.313726, 0.337255, 1 ],
 										"color1" : [ 0.454902, 0.462745, 0.482353, 0 ],
 										"color2" : [ 0.290196, 0.309804, 0.301961, 1 ],
-										"angle" : 270,
 										"proportion" : 0.39,
-										"autogradient" : 0
+										"type" : "color"
 									}
 
 								}
@@ -418,8 +419,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -838,8 +839,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1250,12 +1251,12 @@
 					"id" : "obj-56",
 					"maxclass" : "preset",
 					"numinlets" : 1,
-					"numoutlets" : 4,
-					"outlettype" : [ "preset", "int", "preset", "int" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "preset", "int", "preset", "int", "" ],
 					"patching_rect" : [ 733.5, 121.0, 89.0, 33.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
-							"data" : [ 5, "obj-28", "live.gain~", "float", -11.968503952026367, 5, "obj-7", "flonum", "float", 3.0, 5, "obj-16", "live.gain~", "float", 0.333333343267441, 5, "obj-25", "flonum", "float", 2.0, 5, "obj-27", "flonum", "float", 4.0, 5, "obj-37", "flonum", "float", 0.300000011920929, 5, "obj-35", "flonum", "float", 0.400000005960464, 5, "obj-33", "flonum", "float", 0.400000005960464, 68, "obj-40", "multislider", "list", 0.0, 0.0, 0.0, 0.0, 0.955056190490723, 0.955056190490723, 0.932584285736084, 0.910112380981445, 0.887640476226807, 0.865168511867523, 0.842696607112885, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.235955059528351, 0.24157303571701, 0.24719101190567, 0.24719101190567, 0.24719101190567, 0.25842696428299, 0.269662916660309, 0.269662916660309, 0.275280892848969, 0.280898869037628, 0.280898869037628, 0.292134821414948, 0.292134821414948, 0.292134821414948, 0.292134821414948, 0.303370773792267, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.528089880943298, 0.544943809509277, 0.573033690452576, 0.584269642829895, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5, "obj-49", "umenu", "int", 2 ]
+							"data" : [ 5, "obj-28", "live.gain~", "float", -11.968503952026367, 5, "obj-7", "flonum", "float", 3.0, 5, "obj-16", "live.gain~", "float", 0.333333343267441, 5, "obj-25", "flonum", "float", 2.0, 5, "obj-27", "flonum", "float", 4.0, 5, "obj-37", "flonum", "float", 0.300000011920929, 5, "obj-35", "flonum", "float", 0.400000005960464, 5, "obj-33", "flonum", "float", 0.400000005960464, 68, "obj-40", "multislider", "list", 0.0, 0.0, 0.0, 0.0, 0.955056190490723, 0.955056190490723, 0.932584285736084, 0.910112380981445, 0.887640476226807, 0.865168511867523, 0.842696607112885, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.235955059528351, 0.24157303571701, 0.24719101190567, 0.24719101190567, 0.24719101190567, 0.25842696428299, 0.269662916660309, 0.269662916660309, 0.275280892848969, 0.280898869037628, 0.280898869037628, 0.292134821414948, 0.292134821414948, 0.292134821414948, 0.292134821414948, 0.303370773792267, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.528089880943298, 0.544943809509277, 0.573033690452576, 0.584269642829895, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 5, "obj-49", "umenu", "int", 1 ]
 						}
 , 						{
 							"number" : 2,
@@ -1339,8 +1340,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1545,8 +1546,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1697,7 +1698,7 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 1,
-					"outlettype" : [ "" ],
+					"outlettype" : [ "signal" ],
 					"patching_rect" : [ 171.5, 470.0, 354.0, 47.0 ],
 					"text" : "sdt.reverb~ 48000 @xSize 1. @ySize 1. @zSize 1. @randomness 0.5 @time 0.5 @time1k 0.3"
 				}
@@ -1975,7 +1976,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 789.666666666666629, 165.0, 848.833333333333371, 165.0, 848.833333333333371, 5.0, 731.5, 5.0 ],
+					"midpoints" : [ 778.0, 165.0, 848.833333333333371, 165.0, 848.833333333333371, 5.0, 731.5, 5.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -1984,7 +1985,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-57", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 766.333333333333371, 164.0, 728.416666666666742, 164.0, 728.416666666666742, 119.0, 679.5, 119.0 ],
+					"midpoints" : [ 760.5, 164.0, 728.416666666666742, 164.0, 728.416666666666742, 119.0, 679.5, 119.0 ],
 					"source" : [ "obj-56", 1 ]
 				}
 
@@ -2025,7 +2026,13 @@
 				"implicit" : 1
 			}
 , 			{
-				"name" : "sine.svg",
+				"name" : "interfacecolor.js",
+				"bootpath" : "C74:/interfaces",
+				"type" : "TEXT",
+				"implicit" : 1
+			}
+, 			{
+				"name" : "random.svg",
 				"bootpath" : "C74:/media/max/picts/m4l-picts",
 				"type" : "svg",
 				"implicit" : 1
@@ -2037,21 +2044,19 @@
 				"implicit" : 1
 			}
 , 			{
+				"name" : "sdt.reverb~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sine.svg",
+				"bootpath" : "C74:/media/max/picts/m4l-picts",
+				"type" : "svg",
+				"implicit" : 1
+			}
+, 			{
 				"name" : "square.svg",
 				"bootpath" : "C74:/media/max/picts/m4l-picts",
 				"type" : "svg",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "random.svg",
-				"bootpath" : "C74:/media/max/picts/m4l-picts",
-				"type" : "svg",
-				"implicit" : 1
-			}
-, 			{
-				"name" : "interfacecolor.js",
-				"bootpath" : "C74:/interfaces",
-				"type" : "TEXT",
 				"implicit" : 1
 			}
  ],
@@ -2076,13 +2081,13 @@
 				"name" : "AudioStatus_Menu",
 				"default" : 				{
 					"bgfillcolor" : 					{
-						"type" : "color",
+						"angle" : 270,
+						"autogradient" : 0,
 						"color" : [ 0.294118, 0.313726, 0.337255, 1 ],
 						"color1" : [ 0.454902, 0.462745, 0.482353, 0 ],
 						"color2" : [ 0.290196, 0.309804, 0.301961, 1 ],
-						"angle" : 270,
 						"proportion" : 0.39,
-						"autogradient" : 0
+						"type" : "color"
 					}
 
 				}
