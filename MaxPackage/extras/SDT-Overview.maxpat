@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 236.0, 101.0, 950.0, 740.0 ],
+		"rect" : [ 90.0, 90.0, 950.0, 740.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 14.0,
@@ -58,7 +58,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
+						"rect" : [ 90.0, 116.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -515,7 +515,7 @@
 																	"outlettype" : [ "" ],
 																	"patching_rect" : [ 51.0, 297.0, 217.0, 80.0 ],
 																	"style" : "SDTpackage",
-																	"text" : ";\rmax launchbrowser https://doi.org/10.1016/j.ijhcs.2018.05.007"
+																	"text" : ";\rmax launchbrowser http://www.ijdesign.org/index.php/IJDesign/article/view/620/271"
 																}
 
 															}
@@ -896,13 +896,13 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-8",
-									"linecount" : 4,
+									"linecount" : 3,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 554.0, 246.5, 311.0, 69.0 ],
+									"patching_rect" : [ 554.0, 246.5, 307.0, 53.0 ],
 									"style" : "SDT-comments",
-									"text" : "Delle Monache, S., Rocchesso, D., Bevilacqua, F., Lemaitre, G., Baldan, S., & Cera, A. (2018). Embodied sound design. Int. J. of Human-Computer Studies, 118, 47-59."
+									"text" : "Rocchesso, D., Polotti, P., & Delle Monache, S. (2009). Designing continuous sonic interaction. International Journal of Design, 3(3)."
 								}
 
 							}
@@ -1312,7 +1312,7 @@
 															}
 , 															{
 																"key" : "sounding",
-																"value" : [ "https://edu.nl/v6f8h" ]
+																"value" : [ "https://edu.nl/b9xfd" ]
 															}
 , 															{
 																"key" : "SDT",
@@ -1361,9 +1361,9 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 51.0, 297.0, 217.0, 66.0 ],
+													"patching_rect" : [ 51.0, 297.0, 113.0, 66.0 ],
 													"style" : "SDTpackage",
-													"text" : ";\rmax launchbrowser https://doi.org/10.1016/j.ijhcs.2018.05.007"
+													"text" : ";\rmax launchbrowser https://edu.nl/b9xfd"
 												}
 
 											}
@@ -3885,7 +3885,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 361.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.myo~",
+									"text" : "sdt.inertial",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5227,7 +5227,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 408.0, 432.0, 30.0 ],
 									"style" : "SDT_package",
-									"text" : "Myoelastic vocal activity detector.",
+									"text" : "[solids, object] Inertial point-mass.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5242,7 +5242,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 470.0, 440.0, 45.0 ],
 									"style" : "SDT_package",
-									"text" : "Detects myoelastic vocal phenomena, that is non-voiced sounds such as vocal fry, palate grind and bilabial trills.",
+									"text" : "Simulates a simple inertial point-mass, mostly used as exciter for modal resonators.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5635,7 +5635,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 236.0, 127.0, 950.0, 714.0 ],
+						"rect" : [ 0.0, 26.0, 950.0, 714.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 13.0,
@@ -7186,7 +7186,7 @@
 													"mode" : 0,
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 23.875, 9.0, 346.25, 431.0 ],
+													"patching_rect" : [ 23.875, 9.0, 346.25, 491.0 ],
 													"proportion" : 0.39
 												}
 
@@ -7466,7 +7466,7 @@
 , 			{
 				"name" : "sdttaxonomy.png",
 				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
-				"patcherrelativepath" : "../../../Documents/GitHub/SDT/MaxPackage/media",
+				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1
 			}
