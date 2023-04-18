@@ -1,3 +1,4 @@
+# System files and directories
 .DS_Store
 *.o
 *.pd_linux
@@ -13,6 +14,19 @@ doc
 .vscode
 .vs
 CMakeLists.txt
-*.json
+
+# Outputs
+*.o
+*.pd_linux
+*.so
+*.dll
+*.def
+!Info.def
+*.mxe
+*.mxe64
+doc
 oscdoc
 .build*
+
+# Other files
+*.json

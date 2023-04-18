@@ -14,38 +14,87 @@ on:
       - develop
 
 jobs:
-  build-ubuntu:
-    runs-on: ubuntu-latest
-    container: ubuntu:18.04
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [
+          linux,
+          win32
+        ]
+        include:
+        - container: ""
+        - runs_on: ubuntu-latest
+        - mingw: false
+        - pd: true
+        - max: true
+        - target: linux
+          container: ubuntu:16.04
+          max: false
+        - target: win32
+          mingw: true
+    runs-on: ${{ matrix.runs_on }}
+    container: ${{ matrix.container }}
+    env:
+      RUNS_ON_UBUNTU: ${{ (matrix.container && startsWith('ubuntu', matrix.container)) || startsWith('ubuntu', matrix.runs_on)}}
+      SUDO: ${{ !matrix.container && startsWith(matrix.runs_on, 'ubuntu') && 'sudo' || ' ' }}
     steps:
-    - name: Install git
+    - name: Update packages
+      if: ${{ env.RUNS_ON_UBUNTU }}
       run: |
-        apt-get -y update
-        apt-get -y upgrade 
-        apt-get -y install software-properties-common
-        add-apt-repository -y ppa:git-core/ppa
-        apt-get -y update
-        apt-get -y install git build-essential
+        ${{ env.SUDO }} apt-get -y update
+    - name: Install git and make
+      if: ${{ env.RUNS_ON_UBUNTU && matrix.container }}
+      run: |
+        ${{ env.SUDO }} apt-get -y install software-properties-common
+        ${{ env.SUDO }} add-apt-repository -y ppa:git-core/ppa
+        ${{ env.SUDO }} apt-get -y update
+        ${{ env.SUDO }} apt-get -y install git build-essential
+    - name: Install mingw compiler
+      if: ${{ env.RUNS_ON_UBUNTU && matrix.mingw }}
+      run: ${{ env.SUDO }} apt-get -y install mingw-w64
     - uses: actions/checkout@v3
       with:
         submodules: recursive
-    - name: Make
-      run: make -j8
+    - name: Build everything
+      run: make TARGET=${{ matrix.target }} -j16
     - name: Prepare package directory
       run: mkdir SoundDesignToolkit
     - name: Package library
-      run: make install_core DSTDIR=SoundDesignToolkit
+      run: make TARGET=${{ matrix.target }} install_core DSTDIR=SoundDesignToolkit
     - name: Upload library
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
-        name: SDT_linux_core
+        name: SDT_${{ matrix.target }}_core
         path: SoundDesignToolkit
     - name: Reset package directory
       run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
     - name: Package Pd library
-      run: make install_pd DSTDIR=SoundDesignToolkit
+      if: ${{ matrix.pd }}
+      run: make TARGET=${{ matrix.target }} install_pd DSTDIR=SoundDesignToolkit
     - name: Upload Pd library
-      uses: actions/upload-artifact@v1
+      if: ${{ matrix.pd }}
+      uses: actions/upload-artifact@v3
       with:
-        name: SDT_linux_pd
+        name: SDT_${{ matrix.target }}_pd
         path: SoundDesignToolkit
+    - name: Reset package directory
+      run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
+    - name: Package Max library
+      if: ${{ matrix.max }}
+      run: make TARGET=${{ matrix.target }} install_max DSTDIR=SoundDesignToolkit
+    - name: Upload Max library
+      if: ${{ matrix.max }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: SDT_${{ matrix.target }}_max
+        path: SoundDesignToolkit
+
+  # # build-macos:
+  # #   runs-on: macos-latest
+  # #   steps:
+  # #   - uses: actions/checkout@v3
+  # #     with:
+  # #       submodules: recursive
+  # #   - name: Check OS
+  # #     run: make check_os
