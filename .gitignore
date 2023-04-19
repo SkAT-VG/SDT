@@ -15,4 +15,4 @@ doc
 CMakeLists.txt
 *.json
 oscdoc
-builds
+.build*

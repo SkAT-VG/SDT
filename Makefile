@@ -2,7 +2,7 @@
 ROOT=.
 SRCDIR=$(ROOT)/src
 THIRDPDIR=$(ROOT)/3rdparty
-BUILDDIR=builds
+BUILDDIR=.build
 
 JSONDIRP=$(THIRDPDIR)/json-parser
 JSONDIRB=$(THIRDPDIR)/json-builder
