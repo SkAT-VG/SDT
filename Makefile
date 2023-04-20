@@ -2,7 +2,6 @@
 ROOT?=.
 SRC_DIR=$(ROOT)/src
 THIRDP_DIR=$(ROOT)/3rdparty
-BUILDDIR?=.build
 
 # Generate build destination path
 define get_build_dest
@@ -46,6 +45,7 @@ else
 	endif
 endif
 TARGET?=$(AUTO_TARGET)
+BUILDDIR?=.build.$(TARGET)
 
 ALL=check_os core
 PHONY=all install_core uninstall_core \
