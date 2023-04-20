@@ -59,6 +59,10 @@ ifeq ("$(TARGET)", "win32")
 	ALL+= pd max
 	PHONY+= install_pd uninstall_pd install_max uninstall_max
 endif
+ifeq ("$(TARGET)", "win64")
+	ALL+= max
+	PHONY+= install_max uninstall_max
+endif
 
 .PHONY: $(ALL) $(PHONY)
 
@@ -70,7 +74,7 @@ ifeq ($(TARGET),)
           Please, specify: make TARGET=<target_os>)
 endif
 
-SUPPORTED_OSS=linux win32# win64 macosx
+SUPPORTED_OSS=linux win32 win64# macosx
 check_os_supported:
 ifeq ($(filter $(TARGET),$(SUPPORTED_OSS)),)
 	$(error Target OS is not supported: $(TARGET). \
@@ -91,6 +95,10 @@ ifeq ("$(TARGET)", "linux")
 endif
 ifeq ("$(TARGET)", "win32")
 	CC=i686-w64-mingw32-gcc
+	LDFLAGS+= -static-libgcc
+endif
+ifeq ("$(TARGET)", "win64")
+	CC=x86_64-w64-mingw32-gcc
 	LDFLAGS+= -static-libgcc
 endif
 
@@ -129,18 +137,24 @@ $(JSONP_BUILDDIR)/%.o: $(JSONP_DIR)/%.c | $(JSONP_BUILDDIR)
 	$(build-obj)
 $(JSONB_BUILDDIR)/%.o: $(JSONB_DIR)/%.c | $(JSONB_BUILDDIR)
 	$(call build-obj,$(INCLUDE_JSON))
-# # -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 # --- Core library ------------------------------------------------------------
 CORE_DIR=$(SRC_DIR)/SDT
 INCLUDE_SDT=-I$(SRC_DIR) $(INCLUDE_JSON)
-LINK_SDT=-L$(BUILDDIR) -lSDT
+CORE_FNAME_NO_EXT=SDT
 ifeq ("$(TARGET)", "linux")
-	CORE_FNAME=libSDT.so
+	CORE_EXT=.so
 endif
 ifeq ("$(TARGET)", "win32")
-	CORE_FNAME=libSDT.dll
+	CORE_EXT=.dll
 endif
+ifeq ("$(TARGET)", "win64")
+	CORE_FNAME_NO_EXT=SDT64
+	CORE_EXT=.dll
+endif
+CORE_FNAME=lib$(CORE_FNAME_NO_EXT)$(CORE_EXT)
+LINK_SDT=-L$(BUILDDIR) -l$(CORE_FNAME_NO_EXT)
 CORE_BUILDDIR=$(strip $(call get_build_dest,$(CORE_DIR)))
 CORE_OBJS=$(strip $(call get_objects,$(CORE_DIR)) $(JSON_OBJS))
 CORE_LIB=$(strip $(BUILDDIR)/$(CORE_FNAME))
@@ -180,20 +194,31 @@ MAX_DIR=$(SRC_DIR)/Max7
 MAXSDK_DIR=$(THIRDP_DIR)/Max7SDK
 
 INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
-LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes -L$(MAXSDK_DIR)/msp-includes \
-             -lMaxAPI -lMaxAudio
+
+ifeq ("$(TARGET)", "win32")
+	LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes \
+	             -L$(MAXSDK_DIR)/msp-includes \
+	             -lMaxAPI -lMaxAudio
+	MAX_EXTS_EXT=mxe
+endif
+ifeq ("$(TARGET)", "win64")
+	LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes/x64 \
+	             -L$(MAXSDK_DIR)/msp-includes/x64 \
+	             -lMaxAPI -lMaxAudio
+	MAX_EXTS_EXT=mxe64
+endif
 MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
            -DWIN_VERSION -DWIN_EXT_VERSION -fvisibility=hidden
 
 MAX_BUILDDIR=$(strip $(call get_build_dest,$(MAX_DIR)))
-MAX_EXTS=$(strip $(call get_objects,$(MAX_DIR),mxe))
+MAX_EXTS=$(strip $(call get_objects,$(MAX_DIR),$(MAX_EXTS_EXT)))
 
 max: $(MAX_EXTS); $(info Max library built: $^)
 $(MAX_BUILDDIR): $(MAX_BUILDDIR)/SDT_fileusage
 $(MAX_BUILDDIR)/SDT_fileusage:; $(make-dir)
-$(MAX_BUILDDIR)/%.mxe: $(MAX_BUILDDIR)/%.o $(MAX_BUILDDIR)/%.def \
-                       $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o \
-                       $(CORE_LIB)
+$(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o $(MAX_BUILDDIR)/%.def \
+                                   $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o \
+                                   $(CORE_LIB)
 	$(CC) $(LDFLAGS) $(filter-out $(CORE_LIB),$^) -o $@ $(LINK_MAX_SDK) $(LINK_SDT)
 $(MAX_BUILDDIR)/%.def: $(ROOT)/templates/Info.def | $(MAX_BUILDDIR)
 	cp $< $@

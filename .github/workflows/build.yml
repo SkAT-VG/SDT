@@ -21,7 +21,7 @@ jobs:
         target: [
           linux,
           win32,
-          # win64,
+          win64,
           # macosx
         ]
         include:
@@ -35,9 +35,9 @@ jobs:
           max: false
         - target: win32
           mingw: true
-        # - target: win64
-        #   mingw: true
-        #   pd: false
+        - target: win64
+          mingw: true
+          pd: false
         # - target: macosx
         #   runs_on: macos-latest
     runs-on: ${{ matrix.runs_on }}
