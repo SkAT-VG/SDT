@@ -20,7 +20,9 @@ jobs:
       matrix:
         target: [
           linux,
-          win32
+          win32,
+          # win64,
+          # macosx
         ]
         include:
         - container: ""
@@ -33,10 +35,15 @@ jobs:
           max: false
         - target: win32
           mingw: true
+        # - target: win64
+        #   mingw: true
+        #   pd: false
+        # - target: macosx
+        #   runs_on: macos-latest
     runs-on: ${{ matrix.runs_on }}
     container: ${{ matrix.container }}
     env:
-      RUNS_ON_UBUNTU: ${{ (matrix.container && startsWith('ubuntu', matrix.container)) || startsWith('ubuntu', matrix.runs_on)}}
+      RUNS_ON_UBUNTU: ${{ (matrix.container && startsWith(matrix.container, 'ubuntu')) || startsWith(matrix.runs_on, 'ubuntu')}}
       SUDO: ${{ !matrix.container && startsWith(matrix.runs_on, 'ubuntu') && 'sudo' || ' ' }}
     steps:
     - name: Update packages
@@ -89,12 +96,3 @@ jobs:
       with:
         name: SDT_${{ matrix.target }}_max
         path: SoundDesignToolkit
-
-  # # build-macos:
-  # #   runs-on: macos-latest
-  # #   steps:
-  # #   - uses: actions/checkout@v3
-  # #     with:
-  # #       submodules: recursive
-  # #   - name: Check OS
-  # #     run: make check_os
