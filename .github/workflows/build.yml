@@ -43,8 +43,8 @@ jobs:
     runs-on: ${{ matrix.runs_on }}
     container: ${{ matrix.container }}
     env:
-      RUNS_ON_UBUNTU: ${{ (matrix.container && startsWith(matrix.container, 'ubuntu')) || startsWith(matrix.runs_on, 'ubuntu')}}
-      SUDO: ${{ !matrix.container && startsWith(matrix.runs_on, 'ubuntu') && 'sudo' || ' ' }}
+      RUNS_ON_UBUNTU: ${{ (matrix.container && startsWith(matrix.container, 'ubuntu')) || startsWith(matrix.runs_on, 'ubuntu') || '' }}
+      SUDO: ${{ !matrix.container && startsWith(matrix.runs_on, 'ubuntu') && 'sudo' || '' }}
     steps:
     - name: Update packages
       if: ${{ env.RUNS_ON_UBUNTU }}
