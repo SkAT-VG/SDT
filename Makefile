@@ -2,6 +2,7 @@
 ROOT?=.
 SRC_DIR=$(ROOT)/src
 THIRDP_DIR=$(ROOT)/3rdparty
+TEMPLATE_DIR=$(ROOT)/templates
 
 # Generate build destination path
 define get_build_dest
@@ -220,7 +221,7 @@ $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o $(MAX_BUILDDIR)/%.def \
                                    $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o \
                                    $(CORE_LIB)
 	$(CC) $(LDFLAGS) $(filter-out $(CORE_LIB),$^) -o $@ $(LINK_MAX_SDK) $(LINK_SDT)
-$(MAX_BUILDDIR)/%.def: $(ROOT)/templates/Info.def | $(MAX_BUILDDIR)
+$(MAX_BUILDDIR)/%.def: $(TEMPLATE_DIR)/Info.def | $(MAX_BUILDDIR)
 	cp $< $@
 	sed -i $@ -e s/\$${PRODUCT_NAME}/$(patsubst $(strip $(MAX_BUILDDIR))/%.def,%,$@)/g
 $(MAX_BUILDDIR)/%.o: $(MAX_DIR)/%.c | $(MAX_BUILDDIR)
