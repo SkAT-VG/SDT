@@ -66,8 +66,8 @@ ifeq ("$(TARGET)", "win64")
 	PHONY+= install_max uninstall_max
 endif
 ifeq ("$(TARGET)", "macosx")
-	ALL+=
-	PHONY+=
+	ALL+= pd
+	PHONY+= install_pd uninstall_pd
 endif
 
 .PHONY: $(ALL) $(PHONY)
@@ -234,12 +234,17 @@ ifeq ("$(TARGET)", "win32")
 	PD_FNAME=SDT.dll
 	LINK_PD_SDK=-L$(PDSDK_DIR) -lpd
 endif
+ifeq ("$(TARGET)", "macosx")
+	PD_FNAME=SDT.pd_darwin
+	PD_LDFLAGS=-undefined dynamic_lookup
+endif
 PD_BUILDDIR=$(strip $(call get_build_dest,$(PD_DIR)))
 PD_OBJS=$(strip $(call get_objects,$(PD_DIR)))
 PD_LIB=$(strip $(BUILDDIR)/$(PD_FNAME))
 
 pd: $(PD_LIB); $(info Pd library built: $<)
-$(PD_LIB): $(PD_OBJS) $(CORE_OBJS); $(call build-lib,$(LINK_PD_SDK))
+$(PD_LIB): $(PD_OBJS) $(CORE_OBJS);
+	$(call build-lib,$(LINK_PD_SDK) $(PD_LDFLAGS))
 $(PD_BUILDDIR):; $(make-dir)
 $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
 	$(call build-obj,$(INCLUDE_SDT) $(INCLUDE_PD_SDK))

@@ -40,7 +40,6 @@ jobs:
           pd: false
         - target: macosx
           runs_on: macos-latest
-          pd: false
           max: false
     runs-on: ${{ matrix.runs_on }}
     container: ${{ matrix.container }}
