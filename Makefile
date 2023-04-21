@@ -59,8 +59,8 @@ ifeq ("$(TARGET)", "linux")
 	PHONY+= install_pd uninstall_pd
 endif
 ifeq ("$(TARGET)", "win32")
-	ALL+= pd max
-	PHONY+= install_pd uninstall_pd install_max uninstall_max
+	ALL+= pd
+	PHONY+= install_pd uninstall_pd
 endif
 ifeq ("$(TARGET)", "win64")
 	ALL+= max
@@ -297,7 +297,7 @@ $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
 
 # --- Max ---------------------------------------------------------------------
 MAX_DIR=$(SRC_DIR)/Max7
-MAXSDK_DIR=$(THIRDP_DIR)/Max7SDK
+MAXSDK_DIR=$(THIRDP_DIR)/max-sdk-base/c74support
 
 INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
 MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 \
