@@ -64,6 +64,10 @@ ifeq ("$(TARGET)", "win64")
 	ALL+= max
 	PHONY+= install_max uninstall_max
 endif
+ifeq ("$(TARGET)", "macosx")
+	ALL+=
+	PHONY+=
+endif
 
 .PHONY: $(ALL) $(PHONY)
 
@@ -75,7 +79,7 @@ ifeq ($(TARGET),)
           Please, specify: make TARGET=<target_os>)
 endif
 
-SUPPORTED_OSS=linux win32 win64# macosx
+SUPPORTED_OSS=linux win32 win64 macosx
 check_os_supported:
 ifeq ($(filter $(TARGET),$(SUPPORTED_OSS)),)
 	$(error Target OS is not supported: $(TARGET). \
@@ -101,6 +105,14 @@ endif
 ifeq ("$(TARGET)", "win64")
 	CC=x86_64-w64-mingw32-gcc
 	LDFLAGS+= -static-libgcc
+endif
+ifeq ("$(TARGET)", "macosx")
+	CC=clang
+	MACARCH=-arch i386 -arch x86_64
+	MACVERSION_N=10.7
+	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
+	CFLAGS+= -g $(MACARCH) $(MACVERSION)
+	LDFLAGS=-dynamiclib -headerpad_max_install_names $(MACARCH) $(MACVERSION)
 endif
 
 define build-lib
@@ -144,6 +156,7 @@ $(JSONB_BUILDDIR)/%.o: $(JSONB_DIR)/%.c | $(JSONB_BUILDDIR)
 CORE_DIR=$(SRC_DIR)/SDT
 INCLUDE_SDT=-I$(SRC_DIR) $(INCLUDE_JSON)
 CORE_FNAME_NO_EXT=SDT
+CORE_PREFIX=lib
 ifeq ("$(TARGET)", "linux")
 	CORE_EXT=.so
 endif
@@ -154,14 +167,18 @@ ifeq ("$(TARGET)", "win64")
 	CORE_FNAME_NO_EXT=SDT64
 	CORE_EXT=.dll
 endif
-CORE_FNAME=lib$(CORE_FNAME_NO_EXT)$(CORE_EXT)
+ifeq ("$(TARGET)", "macosx")
+	CORE_PREFIX=
+	CORE_LDFLAGS=-framework System
+endif
+CORE_FNAME=$(CORE_PREFIX)$(CORE_FNAME_NO_EXT)$(CORE_EXT)
 LINK_SDT=-L$(BUILDDIR) -l$(CORE_FNAME_NO_EXT)
 CORE_BUILDDIR=$(strip $(call get_build_dest,$(CORE_DIR)))
 CORE_OBJS=$(strip $(call get_objects,$(CORE_DIR)) $(JSON_OBJS))
 CORE_LIB=$(strip $(BUILDDIR)/$(CORE_FNAME))
 
 core: $(CORE_LIB); $(info Core library built: $<)
-$(CORE_LIB): $(CORE_OBJS); $(build-lib)
+$(CORE_LIB): $(CORE_OBJS); $(call build-lib,$(CORE_LDFLAGS))
 $(CORE_BUILDDIR):; $(make-dir)
 $(CORE_BUILDDIR)/%.o: $(CORE_DIR)/%.c | $(CORE_BUILDDIR)
 	$(call build-obj,$(INCLUDE_JSON))
@@ -235,9 +252,15 @@ MAX_SUBDIR="Sound Design Toolkit"
 DEFAULT_CORE_DSTDIR=
 DEFAULT_PD_DSTDIR=
 DEFAULT_MAX_DSTDIR=
+CORE_HEADER_SUBDIR=include/$(CORE_SUBDIR)
+CORE_LIB_SUBDIR=lib
 ifeq ("$(TARGET)", "linux")
 	DEFAULT_CORE_DSTDIR=/usr
 	DEFAULT_PD_DSTDIR=/usr/lib/pd/extra
+endif
+ifeq ("$(TARGET)", "macosx")
+	CORE_HEADER_SUBDIR=$(CORE_SUBDIR)/SDT.framework/Versions/A/Headers
+	CORE_LIB_SUBDIR=$(CORE_SUBDIR)/SDT.framework/Versions/A
 endif
 
 # Set default DSTDIR if not provided by user
@@ -254,20 +277,29 @@ install_core:
 	$(call get_dstdir, $(DEFAULT_CORE_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@mkdir -p $(DSTDIR)/include/$(CORE_SUBDIR)
-	@mkdir -p $(DSTDIR)/lib
-	@cp -a $(CORE_LIB) $(DSTDIR)/lib
-	@cp -a $(CORE_DIR)/*.h $(DSTDIR)/include/$(CORE_SUBDIR)
-	@cp -a $(JSONP_DIR)/*.h $(DSTDIR)/include/$(CORE_SUBDIR)
-	@cp -a $(JSONB_DIR)/*.h $(DSTDIR)/include/$(CORE_SUBDIR)
+	@mkdir -p $(DSTDIR)/$(CORE_HEADER_SUBDIR)
+	@mkdir -p $(DSTDIR)/$(CORE_LIB_SUBDIR)
+	@cp -a $(CORE_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
+	@cp -a $(JSONP_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
+	@cp -a $(JSONB_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
+	@cp -a $(CORE_LIB) $(DSTDIR)/$(CORE_LIB_SUBDIR)
+ifeq ("$(TARGET)", "macosx")
+	@mkdir -p $(DSTDIR)/$(CORE_SUBDIR)
+	@cp -a $(TEMPLATE_DIR)/SDT.framework $(DSTDIR)/$(CORE_SUBDIR)
+	@install_name_tool -id @rpath/SDT $(DSTDIR)/$(CORE_LIB_SUBDIR)/$(CORE_FNAME)
+endif
 	$(info Sound Design Toolkit 'Core Library' installed in '$(DSTDIR)')
 
 uninstall_core:
 	$(call get_dstdir, $(DEFAULT_CORE_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@rm -rf $(DSTDIR)/include/$(CORE_SUBDIR)
-	@rm -f $(DSTDIR)/lib/$(CORE_FNAME)
+ifeq ("$(TARGET)", "macosx")
+	@rm -rf $(DSTDIR)/$(CORE_SUBDIR)
+else
+	@rm -rf $(DSTDIR)/$(CORE_HEADER_SUBDIR)
+	@rm -f $(DSTDIR)/$(CORE_LIB_SUBDIR)/$(CORE_FNAME)
+endif
 	$(info Sound Design Toolkit 'Core Library' removed from '$(DSTDIR)')
 
 install_pd:
