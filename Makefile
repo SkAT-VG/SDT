@@ -10,8 +10,9 @@ define get_build_dest
 endef
 
 # Find source files in directory
+#   default input extension is .c
 define get_sources
-	$(wildcard $(1)/*.c)
+	$(wildcard $(1)/*.$(if $(2),$(2),c))
 endef
 
 # Generate build destination paths for source files in directory
@@ -177,8 +178,45 @@ CORE_BUILDDIR=$(strip $(call get_build_dest,$(CORE_DIR)))
 CORE_OBJS=$(strip $(call get_objects,$(CORE_DIR)) $(JSON_OBJS))
 CORE_LIB=$(strip $(BUILDDIR)/$(CORE_FNAME))
 
+ifeq ("$(TARGET)", "macosx")
+# --- |||                              ||| ---
+# --- |||     Framework for MacOSX     ||| ---
+# --- vvv                              vvv ---
+CORE_FRAMEWORK_FNAME=$(CORE_FNAME_NO_EXT).framework
+CORE_FRAMEWORK=$(strip $(BUILDDIR)/$(CORE_FRAMEWORK_FNAME))
+CORE_FRAMEWORK_HEADDIR=$(CORE_FRAMEWORK)/Versions/A/Headers
+CORE_FRAMEWORK_TEMPLATE=$(TEMPLATE_DIR)/$(CORE_FRAMEWORK_FNAME)
+CORE_FRAMEWORK_LIBDIR=$(strip $(CORE_FRAMEWORK)/Versions/A)
+CORE_LIB=$(strip $(CORE_FRAMEWORK_LIBDIR)/$(CORE_FNAME))
+
+CORE_FRAMEWORK_HEADS=$(patsubst $(CORE_DIR)/%.h,$(CORE_FRAMEWORK_HEADDIR)/%.h,\
+                                $(call get_sources,$(CORE_DIR),h)) \
+                     $(patsubst $(JSONP_DIR)/%.h,$(CORE_FRAMEWORK_HEADDIR)/%.h,\
+                                $(call get_sources,$(JSONP_DIR),h)) \
+                     $(patsubst $(JSONB_DIR)/%.h,$(CORE_FRAMEWORK_HEADDIR)/%.h,\
+                                $(call get_sources,$(JSONB_DIR),h))
+
+core: $(CORE_FRAMEWORK)
+	$(info Core framework built: $<)
+$(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_FRAMEWORK_HEADS)
+	cp -a $</* $@
+	install_name_tool -id @rpath/$(CORE_FNAME) $(CORE_FRAMEWORK)/$(CORE_FNAME)
+$(CORE_FRAMEWORK_HEADDIR):; $(make-dir)
+$(CORE_FRAMEWORK_LIBDIR):; $(make-dir)
+$(CORE_FRAMEWORK_HEADDIR)/%.h: $(CORE_DIR)/%.h | $(CORE_FRAMEWORK_HEADDIR)
+	cp $< $@
+$(CORE_FRAMEWORK_HEADDIR)/%.h: $(JSONP_DIR)/%.h | $(CORE_FRAMEWORK_HEADDIR)
+	cp $< $@
+$(CORE_FRAMEWORK_HEADDIR)/%.h: $(JSONB_DIR)/%.h | $(CORE_FRAMEWORK_HEADDIR)
+	cp $< $@
+# --- ^^^                              ^^^ ---
+# --- |||     Framework for MacOSX     ||| ---
+# --- |||                              ||| ---
+else
 core: $(CORE_LIB); $(info Core library built: $<)
-$(CORE_LIB): $(CORE_OBJS); $(call build-lib,$(CORE_LDFLAGS))
+endif
+$(CORE_LIB): $(CORE_OBJS) | $(CORE_FRAMEWORK_LIBDIR)
+	$(call build-lib,$(CORE_LDFLAGS))
 $(CORE_BUILDDIR):; $(make-dir)
 $(CORE_BUILDDIR)/%.o: $(CORE_DIR)/%.c | $(CORE_BUILDDIR)
 	$(call build-obj,$(INCLUDE_JSON))
@@ -277,16 +315,16 @@ install_core:
 	$(call get_dstdir, $(DEFAULT_CORE_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
+ifeq ("$(TARGET)", "macosx")
+	@mkdir -p $(DSTDIR)/$(CORE_SUBDIR)
+	@cp -a $(CORE_FRAMEWORK) $(DSTDIR)/$(CORE_SUBDIR)
+else
 	@mkdir -p $(DSTDIR)/$(CORE_HEADER_SUBDIR)
 	@mkdir -p $(DSTDIR)/$(CORE_LIB_SUBDIR)
 	@cp -a $(CORE_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
 	@cp -a $(JSONP_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
 	@cp -a $(JSONB_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
 	@cp -a $(CORE_LIB) $(DSTDIR)/$(CORE_LIB_SUBDIR)
-ifeq ("$(TARGET)", "macosx")
-	@mkdir -p $(DSTDIR)/$(CORE_SUBDIR)
-	@cp -a $(TEMPLATE_DIR)/SDT.framework $(DSTDIR)/$(CORE_SUBDIR)
-	@install_name_tool -id @rpath/SDT $(DSTDIR)/$(CORE_LIB_SUBDIR)/$(CORE_FNAME)
 endif
 	$(info Sound Design Toolkit 'Core Library' installed in '$(DSTDIR)')
 
