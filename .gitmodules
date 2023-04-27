@@ -13,3 +13,6 @@
 [submodule "3rdparty/max-sdk-base"]
 	path = 3rdparty/max-sdk-base
 	url = https://github.com/ChromaticIsobar/max-sdk-base.git
+[submodule "3rdparty/MacOSX-SDKs"]
+	path = 3rdparty/MacOSX-SDKs
+	url = https://github.com/phracker/MacOSX-SDKs.git
