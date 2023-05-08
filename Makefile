@@ -66,8 +66,8 @@ ifeq ("$(TARGET)", "win64")
 	PHONY+= install_max uninstall_max
 endif
 ifeq ("$(TARGET)", "macosx")
-	ALL+= pd
-	PHONY+= install_pd uninstall_pd
+	ALL+= pd max
+	PHONY+= install_pd uninstall_pd install_max uninstall_max
 endif
 
 .PHONY: $(ALL) $(PHONY)
@@ -187,35 +187,29 @@ CORE_FRAMEWORK=$(strip $(BUILDDIR)/$(CORE_FRAMEWORK_FNAME))
 CORE_FRAMEWORK_HEADDIR=$(CORE_FRAMEWORK)/Versions/A/Headers
 CORE_FRAMEWORK_TEMPLATE=$(TEMPLATE_DIR)/$(CORE_FRAMEWORK_FNAME)
 CORE_FRAMEWORK_LIBDIR=$(strip $(CORE_FRAMEWORK)/Versions/A)
-CORE_LIB=$(strip $(CORE_FRAMEWORK_LIBDIR)/$(CORE_FNAME))
+LINK_SDT=-L$(BUILDDIR) -F$(BUILDDIR) -framework $(CORE_FNAME_NO_EXT)
 
-CORE_FRAMEWORK_HEADS=$(patsubst $(CORE_DIR)/%.h,$(CORE_FRAMEWORK_HEADDIR)/%.h,\
-                                $(call get_sources,$(CORE_DIR),h)) \
-                     $(patsubst $(JSONP_DIR)/%.h,$(CORE_FRAMEWORK_HEADDIR)/%.h,\
-                                $(call get_sources,$(JSONP_DIR),h)) \
-                     $(patsubst $(JSONB_DIR)/%.h,$(CORE_FRAMEWORK_HEADDIR)/%.h,\
-                                $(call get_sources,$(JSONB_DIR),h))
+CORE_SRC_HEADS=$(call get_sources,$(CORE_DIR),h) \
+               $(call get_sources,$(JSONP_DIR),h) \
+               $(call get_sources,$(JSONB_DIR),h)
 
 core: $(CORE_FRAMEWORK)
 	$(info Core framework built: $<)
-$(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_FRAMEWORK_HEADS)
-	cp -a $</* $@
+$(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
+	rm -rf $@
+	mkdir -p $(CORE_FRAMEWORK_HEADDIR)
+	mkdir -p $(CORE_FRAMEWORK_LIBDIR)
+	cp $(CORE_SRC_HEADS) $(CORE_FRAMEWORK_HEADDIR)
+	cp $(CORE_LIB) $(CORE_FRAMEWORK_LIBDIR)
+	cp -a $(CORE_FRAMEWORK_TEMPLATE)/* $@
 	install_name_tool -id @rpath/$(CORE_FNAME) $(CORE_FRAMEWORK)/$(CORE_FNAME)
-$(CORE_FRAMEWORK_HEADDIR):; $(make-dir)
-$(CORE_FRAMEWORK_LIBDIR):; $(make-dir)
-$(CORE_FRAMEWORK_HEADDIR)/%.h: $(CORE_DIR)/%.h | $(CORE_FRAMEWORK_HEADDIR)
-	cp $< $@
-$(CORE_FRAMEWORK_HEADDIR)/%.h: $(JSONP_DIR)/%.h | $(CORE_FRAMEWORK_HEADDIR)
-	cp $< $@
-$(CORE_FRAMEWORK_HEADDIR)/%.h: $(JSONB_DIR)/%.h | $(CORE_FRAMEWORK_HEADDIR)
-	cp $< $@
 # --- ^^^                              ^^^ ---
 # --- |||     Framework for MacOSX     ||| ---
 # --- |||                              ||| ---
 else
 core: $(CORE_LIB); $(info Core library built: $<)
 endif
-$(CORE_LIB): $(CORE_OBJS) | $(CORE_FRAMEWORK_LIBDIR)
+$(CORE_LIB): $(CORE_OBJS)
 	$(call build-lib,$(CORE_LDFLAGS))
 $(CORE_BUILDDIR):; $(make-dir)
 $(CORE_BUILDDIR)/%.o: $(CORE_DIR)/%.c | $(CORE_BUILDDIR)
@@ -253,30 +247,77 @@ $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
 # --- Max ---------------------------------------------------------------------
 MAX_DIR=$(SRC_DIR)/Max7
 MAXSDK_DIR=$(THIRDP_DIR)/Max7SDK
+SDT_VERSION_MAX=$(shell node -p "require('$(ROOT)/MaxPackage/package-info.json').version")
 
 INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
+MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 \
+           -DC74_NO_DEPRECATION -fvisibility=hidden
+
+SDT_MAX_VERSION:=$(shell grep "\"version\"" "$(ROOT)/MaxPackage/package-info.json")
+SDT_MAX_VERSION:=$(filter-out :,$(SDT_MAX_VERSION))
+SDT_MAX_VERSION:=$(word 2,$(SDT_MAX_VERSION))
+comma:=,
+SDT_MAX_VERSION:=$(subst $(comma),,$(SDT_MAX_VERSION))
+SDT_MAX_VERSION:=$(subst ",,$(SDT_MAX_VERSION))
 
 ifeq ("$(TARGET)", "win32")
 	LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes \
 	             -L$(MAXSDK_DIR)/msp-includes \
 	             -lMaxAPI -lMaxAudio
+	MAX_CFLAGS+= -DWIN_VERSION -DWIN_EXT_VERSION
 	MAX_EXTS_EXT=mxe
 endif
 ifeq ("$(TARGET)", "win64")
 	LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes/x64 \
 	             -L$(MAXSDK_DIR)/msp-includes/x64 \
 	             -lMaxAPI -lMaxAudio
+	MAX_CFLAGS+= -DWIN_VERSION -DWIN_EXT_VERSION
 	MAX_EXTS_EXT=mxe64
 endif
-MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 -DC74_NO_DEPRECATION \
-           -DWIN_VERSION -DWIN_EXT_VERSION -fvisibility=hidden
+ifeq ("$(TARGET)", "macosx")
+	LINK_MAX_SDK=@$(MAXSDK_DIR)/max-includes/c74_linker_flags.txt \
+	             -L$(MAXSDK_DIR)/max-includes \
+	             -L$(MAXSDK_DIR)/msp-includes \
+	             -F$(MAXSDK_DIR)/max-includes \
+	             -F$(MAXSDK_DIR)/msp-includes \
+	             -framework MaxAPI -framework MaxAudioAPI
+	MAX_CFLAGS+= -DMAC_VERSION -DMAC_EXT_VERSION -Dpowerc \
+	             -include $(MAXSDK_DIR)/max-includes/macho-prefix.pch
+	MAX_EXTS_EXT=mxo
+endif
 
 MAX_BUILDDIR=$(strip $(call get_build_dest,$(MAX_DIR)))
 MAX_EXTS=$(strip $(call get_objects,$(MAX_DIR),$(MAX_EXTS_EXT)))
 
-max: $(MAX_EXTS); $(info Max library built: $^)
+max: $(MAX_EXTS)
+	$(info Max library built: $^)
+
 $(MAX_BUILDDIR): $(MAX_BUILDDIR)/SDT_fileusage
 $(MAX_BUILDDIR)/SDT_fileusage:; $(make-dir)
+$(MAX_BUILDDIR)/%.o: $(MAX_DIR)/%.c | $(MAX_BUILDDIR)
+	$(call build-obj,$(INCLUDE_SDT) $(INCLUDE_MAX_SDK) $(MAX_CFLAGS))
+ifeq ("$(TARGET)", "macosx")
+MAX_FRAMEWORK_TEMPLATE=$(TEMPLATE_DIR)/Max7External.mxo
+$(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT)/Contents/MacOS:; $(make-dir)
+
+$(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): EXTNAME=$(patsubst $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT),%,$@)
+$(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): RFC1034=$(patsubst %~,%-,$(EXTNAME))
+$(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o \
+                                   $(MAX_FRAMEWORK_TEMPLATE) \
+                                   $(CORE_FRAMEWORK) \
+                                   $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o
+	rm -rf $@
+	mkdir -p $@/Contents/MacOS
+	cp -a $(MAX_FRAMEWORK_TEMPLATE)/* $@
+	sed -i "" s/\$${PRODUCT_NAME}/$(EXTNAME)/g $@/Contents/Info.plist
+	sed -i "" s/\$${PRODUCT_NAME:rfc1034identifier}/$(RFC1034)/g $@/Contents/Info.plist
+	sed -i "" s/\$${PRODUCT_VERSION}/$(SDT_MAX_VERSION)/g $@/Contents/Info.plist
+	$(CC) $(LDFLAGS) $(LINK_MAX_SDK) $(LINK_SDT) -o $@/Contents/MacOS/$(EXTNAME) \
+		$< $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o
+	install_name_tool -id @rpath/$(EXTNAME) $@/Contents/MacOS/$(EXTNAME)
+	install_name_tool -add_rpath @loader_path/../../../../support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
+	install_name_tool -add_rpath @executable_path/../Resources/C74/packages/SDT/support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
+else
 $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o $(MAX_BUILDDIR)/%.def \
                                    $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o \
                                    $(CORE_LIB)
@@ -284,8 +325,7 @@ $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o $(MAX_BUILDDIR)/%.def \
 $(MAX_BUILDDIR)/%.def: $(TEMPLATE_DIR)/Info.def | $(MAX_BUILDDIR)
 	cp $< $@
 	sed -i $@ -e s/\$${PRODUCT_NAME}/$(patsubst $(strip $(MAX_BUILDDIR))/%.def,%,$@)/g
-$(MAX_BUILDDIR)/%.o: $(MAX_DIR)/%.c | $(MAX_BUILDDIR)
-	$(call build-obj,$(INCLUDE_SDT) $(INCLUDE_MAX_SDK) $(MAX_CFLAGS))
+endif
 # -----------------------------------------------------------------------------
 
 # --- Un/Installers -----------------------------------------------------------
@@ -297,13 +337,13 @@ DEFAULT_PD_DSTDIR=
 DEFAULT_MAX_DSTDIR=
 CORE_HEADER_SUBDIR=include/$(CORE_SUBDIR)
 CORE_LIB_SUBDIR=lib
+CORE_ARTIFACT=$(CORE_LIB)
 ifeq ("$(TARGET)", "linux")
 	DEFAULT_CORE_DSTDIR=/usr
 	DEFAULT_PD_DSTDIR=/usr/lib/pd/extra
 endif
 ifeq ("$(TARGET)", "macosx")
-	CORE_HEADER_SUBDIR=$(CORE_SUBDIR)/SDT.framework/Versions/A/Headers
-	CORE_LIB_SUBDIR=$(CORE_SUBDIR)/SDT.framework/Versions/A
+	CORE_ARTIFACT=$(CORE_FRAMEWORK)
 endif
 
 # Set default DSTDIR if not provided by user
@@ -370,10 +410,11 @@ install_max:
 	@mkdir -p $(DSTDIR)/$(MAX_SUBDIR)/externals
 	@mkdir -p $(DSTDIR)/$(MAX_SUBDIR)/support
 	@cp -a $(ROOT)/MaxPackage/* $(DSTDIR)/$(MAX_SUBDIR)
-	@cp -a $(CORE_LIB) $(DSTDIR)/$(MAX_SUBDIR)/support
+	@cp -a $(CORE_ARTIFACT) $(DSTDIR)/$(MAX_SUBDIR)/support
 	@cp -a $(MAX_EXTS) $(DSTDIR)/$(MAX_SUBDIR)/externals
 	$(info Sound Design Toolkit for Max \
 			installed in '$(DSTDIR)/$(MAX_SUBDIR)')
+
 
 uninstall_max:
 	$(call get_dstdir, $(DEFAULT_MAX_DSTDIR))
