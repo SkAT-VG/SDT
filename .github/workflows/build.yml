@@ -96,3 +96,41 @@ jobs:
       with:
         name: SDT_${{ matrix.target }}_max
         path: SoundDesignToolkit
+
+  doxygen:
+    runs-on: ubuntu-latest
+    outputs:
+      SDT_CORE_VERSION: ${{ steps.version-log.outputs.SDT_CORE_VERSION }}
+      SDT_PD_VERSION: ${{ steps.version-log.outputs.SDT_PD_VERSION }}
+      SDT_MAX_VERSION: ${{ steps.version-log.outputs.SDT_MAX_VERSION }}
+      SDT_FULL_VERSION: ${{ steps.version-log.outputs.SDT_FULL_VERSION }}
+    steps:
+    - name: Install doxygen
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install doxygen-latex
+        sudo apt-get -y install latexmk
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Log version names
+      id: version-log
+      run: |
+        echo "SDT_CORE_VERSION=$(make core_version)" >> "$GITHUB_OUTPUT"
+        echo "SDT_PD_VERSION=$(make pd_version)" >> "$GITHUB_OUTPUT"
+        echo "SDT_MAX_VERSION=$(make max_version)" >> "$GITHUB_OUTPUT"
+        echo "SDT_FULL_VERSION=$(make full_version)" >> "$GITHUB_OUTPUT"
+        echo "SDT_CORE_VERSION=$(make core_version)" >> "$GITHUB_ENV"
+    - name: Build HTML
+      run: doxygen
+    - uses: actions/upload-artifact@v3
+      with:
+        name: doxygen-html
+        path: doc/html
+    - name: Build latex
+      run: make
+      working-directory: doc/latex
+    - uses: actions/upload-artifact@v3
+      with:
+        name: refman
+        path: doc/latex/refman.pdf
