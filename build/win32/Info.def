@@ -1,4 +1,0 @@
-LIBRARY ${PRODUCT_NAME}
-
-EXPORTS
-	ext_main
