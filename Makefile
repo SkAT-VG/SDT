@@ -51,7 +51,8 @@ BUILDDIR?=.build.$(TARGET)
 
 ALL=check_os core
 PHONY=all install_core uninstall_core \
-      check_os_detected check_os_supported
+			check_os_detected check_os_supported \
+			core_version pd_version max_version full_version
 
 ifeq ("$(TARGET)", "linux")
 	ALL+= pd
@@ -178,6 +179,9 @@ CORE_BUILDDIR=$(strip $(call get_build_dest,$(CORE_DIR)))
 CORE_OBJS=$(strip $(call get_objects,$(CORE_DIR)) $(JSON_OBJS))
 CORE_LIB=$(strip $(BUILDDIR)/$(CORE_FNAME))
 
+core_version:; @echo $(SDT_CORE_VERSION)
+SDT_CORE_VERSION=$(word 3,$(shell grep "\#define SDT_ver " $(CORE_DIR)/SDTCommon.h))
+
 ifeq ("$(TARGET)", "macosx")
 # --- |||                              ||| ---
 # --- |||     Framework for MacOSX     ||| ---
@@ -193,8 +197,7 @@ CORE_SRC_HEADS=$(call get_sources,$(CORE_DIR),h) \
                $(call get_sources,$(JSONP_DIR),h) \
                $(call get_sources,$(JSONB_DIR),h)
 
-core: $(CORE_FRAMEWORK)
-	$(info Core framework built: $<)
+core: $(CORE_FRAMEWORK); $(info Core framework built: $<)
 $(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
 	rm -rf $@
 	mkdir -p $(CORE_FRAMEWORK_HEADDIR)
@@ -207,10 +210,9 @@ $(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
 # --- |||     Framework for MacOSX     ||| ---
 # --- |||                              ||| ---
 else
-core: $(CORE_LIB); $(info Core library built: $<)
+core: $(CORE_LIB); $(info Core library built (v$(SDT_CORE_VERSION)): $<)
 endif
-$(CORE_LIB): $(CORE_OBJS)
-	$(call build-lib,$(CORE_LDFLAGS))
+$(CORE_LIB): $(CORE_OBJS); $(call build-lib,$(CORE_LDFLAGS))
 $(CORE_BUILDDIR):; $(make-dir)
 $(CORE_BUILDDIR)/%.o: $(CORE_DIR)/%.c | $(CORE_BUILDDIR)
 	$(call build-obj,$(INCLUDE_JSON))
@@ -236,7 +238,14 @@ PD_BUILDDIR=$(strip $(call get_build_dest,$(PD_DIR)))
 PD_OBJS=$(strip $(call get_objects,$(PD_DIR)))
 PD_LIB=$(strip $(BUILDDIR)/$(PD_FNAME))
 
-pd: $(PD_LIB); $(info Pd library built: $<)
+pd_version:; @echo $(SDT_PD_VERSION)
+# Pure make syntax doesn't work for make < 4.2
+# (reading from file was unsupported)
+# SDT_PD_VERSION=$(file < $(ROOT)/Pd/VERSION)
+# Using shell for backwards compatibility
+SDT_PD_VERSION=$(shell cat $(ROOT)/Pd/VERSION)
+
+pd: $(PD_LIB); $(info Pd library built (v$(SDT_PD_VERSION)): $<)
 $(PD_LIB): $(PD_OBJS) $(CORE_OBJS);
 	$(call build-lib,$(LINK_PD_SDK) $(PD_LDFLAGS))
 $(PD_BUILDDIR):; $(make-dir)
@@ -247,18 +256,20 @@ $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
 # --- Max ---------------------------------------------------------------------
 MAX_DIR=$(SRC_DIR)/Max7
 MAXSDK_DIR=$(THIRDP_DIR)/Max7SDK
-SDT_VERSION_MAX=$(shell node -p "require('$(ROOT)/MaxPackage/package-info.json').version")
 
 INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
 MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 \
            -DC74_NO_DEPRECATION -fvisibility=hidden
 
+#  --- Version ---
+max_version:; @echo $(SDT_MAX_VERSION)
 SDT_MAX_VERSION:=$(shell grep "\"version\"" "$(ROOT)/MaxPackage/package-info.json")
 SDT_MAX_VERSION:=$(filter-out :,$(SDT_MAX_VERSION))
 SDT_MAX_VERSION:=$(word 2,$(SDT_MAX_VERSION))
 comma:=,
 SDT_MAX_VERSION:=$(subst $(comma),,$(SDT_MAX_VERSION))
 SDT_MAX_VERSION:=$(subst ",,$(SDT_MAX_VERSION))
+#  --- Version ---
 
 ifeq ("$(TARGET)", "win32")
 	LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes \
@@ -289,8 +300,7 @@ endif
 MAX_BUILDDIR=$(strip $(call get_build_dest,$(MAX_DIR)))
 MAX_EXTS=$(strip $(call get_objects,$(MAX_DIR),$(MAX_EXTS_EXT)))
 
-max: $(MAX_EXTS)
-	$(info Max library built: $^)
+max: $(MAX_EXTS); $(info Max library built (v$(SDT_MAX_VERSION)): $^)
 
 $(MAX_BUILDDIR): $(MAX_BUILDDIR)/SDT_fileusage
 $(MAX_BUILDDIR)/SDT_fileusage:; $(make-dir)
@@ -327,6 +337,9 @@ $(MAX_BUILDDIR)/%.def: $(TEMPLATE_DIR)/Info.def | $(MAX_BUILDDIR)
 	sed -i $@ -e s/\$${PRODUCT_NAME}/$(patsubst $(strip $(MAX_BUILDDIR))/%.def,%,$@)/g
 endif
 # -----------------------------------------------------------------------------
+
+SDT_FULL_VERSION=v$(SDT_CORE_VERSION)-Max$(SDT_MAX_VERSION)-Pd$(SDT_PD_VERSION)
+full_version:; @echo $(SDT_FULL_VERSION)
 
 # --- Un/Installers -----------------------------------------------------------
 CORE_SUBDIR=SDT
@@ -414,7 +427,6 @@ install_max:
 	@cp -a $(MAX_EXTS) $(DSTDIR)/$(MAX_SUBDIR)/externals
 	$(info Sound Design Toolkit for Max \
 			installed in '$(DSTDIR)/$(MAX_SUBDIR)')
-
 
 uninstall_max:
 	$(call get_dstdir, $(DEFAULT_MAX_DSTDIR))
