@@ -169,3 +169,12 @@ jobs:
       run: |
         echo RELEASE_URL=${{ steps.create_release.outputs.RELEASE_URL }}
         exit ${{ (steps.create_release.outputs.RELEASE_URL && '0') || '1' }}
+    - name: No Jekyll in pages
+      run: touch artifacts/doxygen-html/.nojekyll
+    - name: Deploy pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        token: ${{ secrets.REPOSITORY_TOKEN }}
+        branch: gh-pages
+        folder: artifacts/doxygen-html
+        single-commit: true
