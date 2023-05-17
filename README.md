@@ -1,5 +1,17 @@
-# SOUND DESIGN TOOLKIT (SDT)
-
+# SOUND DESIGN TOOLKIT (SDT) <!-- omit in toc -->
+## Table of Contents <!-- omit in toc -->
+- [Overview](#overview)
+- [Documentation](#documentation)
+- [Implementation](#implementation)
+- [Installation](#installation)
+	- [Downloadable ready-made products](#downloadable-ready-made-products)
+	- [Compiling from Source](#compiling-from-source)
+		- [Dependencies (Windows)](#dependencies-windows)
+		- [Dependencies (MacOS)](#dependencies-macos)
+		- [Dependencies (Linux)](#dependencies-linux)
+		- [Instructions](#instructions)
+- [Acknowledgements](#acknowledgements)
+- [Contacts](#contacts)
 
 ## Overview
 The **Sound Design Toolkit** (**SDT**) is an open-source (GPLv3) framework for
@@ -18,17 +30,15 @@ The SDT is mainly aimed at research and education in *Sonic Interaction Design*
 The SDT sound synthesis algorithms have been implemented according to three main
 points:
 1. auditory perceptual relevance;
-2. cartoonification, i.e. simplification and exaggeration of the underlying
+1. cartoonification, i.e. simplification and exaggeration of the underlying
 physics in order to increase both computational efficiency and perceptual
 clarity;
-3. parametric temporal control, which ensures appropriate, natural and
+1. parametric temporal control, which ensures appropriate, natural and
 expressive articulations of sonic processes.
-
 
 ## Documentation
 API documentation can be found online here:
 https://skat-vg.github.io/SDT/
-
 
 ## Implementation
 The core library (framework and API) is implemented in the C language, making it
@@ -40,10 +50,8 @@ patches for **Cycling '74 Max** and **Pure Data** (Pd). In particular, a
 *package* is provided for Max which offers an advanced front-end GUI, as well as
 examples with presets and tutorials.
 
-
 ## Installation
-
-### Downloadable ready-made products:
+### Downloadable ready-made products
 A Max *package* (Mac OS and Windows) and a Pd *library* (Mac OS, Windows and
 Linux) which include patches and precompiled externals, as well as the SDT
 shared core library / Apple framework are provided as release assets of this
@@ -51,102 +59,68 @@ repository at: https://github.com/SkAT-VG/SDT/releases
 Unpack the appropriate .zip file for your operating system and target platform
 into the desired destination folder.
 
-### Compiling from source code
-Users may as well build a Max *package*, Pd *library*, shared core library /
-Apple framework on their machines. In that case, make sure to pull the SDT git
-repository including the submodules under the `3rdparty` directory. If your
+### Compiling from Source
+Users may as well build on their machines the Max *package*, Pd *library*, and shared core library or Apple framework.
+
+Before moving on to the instructions, you should [install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and clone this repository.
+Make sure to pull the SDT repository **including the submodules**. If your
 git client doesn't do that automatically, enter the following git command:
-```
-	git submodule update --init --recursive
+```bash
+git submodule update --init --recursive
 ```
 or check the equivalent option in the git preferences of your GUI client.
 
-#### Mac OS
-1. In a terminal, type the following commands to compile the software in all its
-flavors (Max *package*, Pd *library*, Apple framework):
-```
-	cd build/macosx
-	make
-```
-2. Install one or more products: The provided scripts will install the selected
-products in the given destination `<path>`, creating a `SDT` subfolder:
-```
-	make install_max DSTDIR=<path>
-	make install_pd DSTDIR=<path>
-	make install_core DSTDIR=<path>
-```
-3. To clean the source directories after compilation:
-```
-	make clean
-```
-4. To uninstall one or more products, run the corresponding command.
-Please provide the same `<path>` specified at installation (the parent
-folder of the SDT folder)
-```
-	make uninstall_max DSTDIR=<path>
-	make uninstall_pd DSTDIR=<path>
-	make uninstall_core DSTDIR=<path>
-```
+#### Dependencies (Windows)
+To compile the SDT under Windows, you need a distribution of the GNU C Compiler, 
+Make, and a UNIX style shell, as provided in MinGW + MSYS (https://www.msys2.org, recommended) or Cygwin (http://www.cygwin.com).
+We use `i686-w64-mingw32-gcc` for 32-bit systems and `x86_64-w64-mingw32-gcc` for 64-bit systems.
 
-#### Windows
-To compile the SDT under Windows, you need a distribution of the GNU C Compiler
-and a UNIX style shell, as provided in MinGW + MSYS (http://www.mingw.org,
-recommended) or Cygwin (http://www.cygwin.com).
+#### Dependencies (MacOS)
+To compile the SDT under MacOS, you need a distribution of the Clang C Compiler (https://clang.llvm.org) and Make (https://www.gnu.org/software/make).
 
-1. Once the compiler is installed, open its shell and issue the following
-commands to compile the software in all its flavors (Max *package*, Pd
-*library*, shared DLL):
-```
-	cd build/win32 (or cd build/win64 for the x64 version)
-	make
-```
-2. Install one or more products. The provided scripts will install the selected
-products in the given destination `<path>`, in a subfolder (`SDT` for Pd or DLL
-and `Sound Design Toolkit` for Max):
-```
-	make install_max DSTDIR=<path>
-	make install_pd DSTDIR=<path> (only for 32 bit)
-	make install_core DSTDIR=<path>
-```
-3. To clean the source directories after compilation:
-```
-	make clean
-```
-4. To uninstall one or more products, run the corresponding command.
-Please provide the same `<path>` specified at installation (the parent
-folder of the SDT folder)
-```
-	make uninstall_max DSTDIR=<path>
-	make uninstall_pd DSTDIR=<path> (only for 32 bit)
-	make uninstall_core DSTDIR=<path>
-```
+#### Dependencies (Linux)
+To compile the SDT under Linux, you need a distribution of the GNU C Compiler (https://gcc.gnu.org) and Make (https://www.gnu.org/software/make).
 
-#### Linux
-1. In a terminal, type the following commands:
-```
-	cd build/linux
-	make
-```
-2. Install one or more products. By default, the building environment will
-install the SDT shared library in `/usr/lib` and the headers in `/usr/include`
-(`DSTDIR=/usr`). The default path for the Pd *library* is `/usr/lib/pd/extras`.
-Root privileges may be required to access the default install path.
-If you want to change the install path, provide a `DSTDIR` argument:
-```
-	make install_pd DSTDIR=<path>
-	make install_core DSTDIR=<path>
-```
-3. To clean the source directories after compilation:
-```
-	make clean
-```
-4. To uninstall one or more products, run the corresponding command. Root
-privileges may be required to access the default install path. If you
-installed SDT under a custom path, please provide a `DSTDIR` argument:
-```
-	make uninstall_pd DSTDIR=<path>
-	make uninstall_core DSTDIR=<path>
-```
+#### Instructions
+1. In a terminal, type the following command to compile all the software for your operating system: Make should be able to correctly detect your OS.
+
+	```bash
+	make -j8
+	```
+	If Make doesn't correctly detect your OS, or if you are cross-compiling, you can specify the target OS manually
+
+	```bash
+	make -j8 TARGET=<target>
+	```
+	Supported targets are: `linux`, `win32`, `win64`, `macosx`.  
+	We suggest using the `-j<N>` option to run `N` compile jobs in parallel.
+1. Install one or more pieces of software. Make will install the selected products in the given destination `<path>`, creating a `SDT` subfolder:
+
+	```bash
+	make install_max  TARGET=<target> DSTDIR=<path>
+	```
+	```bash
+	make install_pd   TARGET=<target> DSTDIR=<path>
+	```
+	```bash
+	make install_core TARGET=<target> DSTDIR=<path>
+	```
+1. To clean the build directories after installation:
+	```bash
+	make clean TARGET=<target>
+	```
+1. To uninstall one or more products, run the corresponding command:
+
+	```bash
+	make uninstall_max  TARGET=<target> DSTDIR=<path>
+	```
+	```bash
+	make uninstall_pd   TARGET=<target> DSTDIR=<path>
+	```
+	```bash
+	make uninstall_core TARGET=<target> DSTDIR=<path>
+	```
+	Please, provide the same arguments you provided for installation.
 
 ## Acknowledgements
 The SDT was developed through the years with the contribution of the following
@@ -156,7 +130,6 @@ EU-projects:
  - 2008-2011 'NIW' http://www.soundobject.org/niw/
  - 2014-2016 'SkAT-VG' http://www.skatvg.eu/
 
-
-## Contact:
-SoundDesignToolkit@gmail.com
+## Contacts
+SoundDesignToolkit@gmail.com  
 https://www.facebook.com/SDT.Max.Pd
