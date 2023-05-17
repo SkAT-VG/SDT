@@ -27,6 +27,10 @@ jobs:
           win64,
           macosx
         ]
+        debug: [
+          false,
+          true
+        ]
         include:
         - container: ""
         - runs_on: ubuntu-latest
@@ -67,7 +71,9 @@ jobs:
       with:
         submodules: recursive
     - name: Build everything
-      run: make TARGET=${{ matrix.target }} -j16
+      run: make TARGET=${{ matrix.target }} ${{ (matrix.test && '-e SDT_DEBUG=1') || '' }} -j16
+    - name: Display build directory content
+      run: ls -R .build.${{ matrix.target }}
     - name: Prepare package directory
       run: mkdir SoundDesignToolkit
     - name: Package library
@@ -75,7 +81,7 @@ jobs:
     - name: Upload library
       uses: actions/upload-artifact@v3
       with:
-        name: SDT_${{ matrix.target }}_lib
+        name: SDT_${{ matrix.target }}_lib${{ (matrix.test && '_debug') || '' }}
         path: SoundDesignToolkit
     - name: Reset package directory
       run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
@@ -86,7 +92,7 @@ jobs:
       if: ${{ matrix.pd }}
       uses: actions/upload-artifact@v3
       with:
-        name: SDT_${{ matrix.target }}_pd
+        name: SDT_${{ matrix.target }}_pd${{ (matrix.test && '_debug') || '' }}
         path: SoundDesignToolkit
     - name: Reset package directory
       run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
@@ -97,8 +103,13 @@ jobs:
       if: ${{ matrix.max }}
       uses: actions/upload-artifact@v3
       with:
-        name: SDT_${{ matrix.target }}_max
+        name: SDT_${{ matrix.target }}_max${{ (matrix.test && '_debug') || '' }}
         path: SoundDesignToolkit
+    - name: Upload Test runner
+      uses: actions/upload-artifact@v3
+      with:
+        name: SDT_${{ matrix.target }}_test_core${{ (matrix.test && '_debug') || '' }}
+        path: .build.${{ matrix.target }}/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }}
 
   doxygen:
     runs-on: ubuntu-latest

@@ -96,7 +96,7 @@ SH?=bash
 
 # --- Compiler ----------------------------------------------------------------
 CFLAGS=-O3 -Wall -Wno-unknown-pragmas -Werror
-ifneq ("$(SDT_DEBUG)",)
+ifneq ("$(SDT_DEBUG)","")
 	CFLAGS+= -DSDT_DEBUG
 endif
 LDFLAGS=
@@ -119,8 +119,7 @@ ifeq ("$(TARGET)", "macosx")
 	MACVERSION_N=10.7
 	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
 	CFLAGS+= -g $(MACARCH) $(MACVERSION)
-	LDFLAGS+= -headerpad_max_install_names $(MACARCH) $(MACVERSION)
-	SHARED_LDFLAGS=-dynamiclib $(LDFLAGS)
+	SHARED_LDFLAGS=$(LDFLAGS) -dynamiclib -headerpad_max_install_names $(MACARCH) $(MACVERSION)
 else
 	SHARED_LDFLAGS=-shared $(LDFLAGS)
 endif
@@ -199,10 +198,11 @@ ifeq ("$(TARGET)", "macosx")
 # --- vvv                              vvv ---
 CORE_FRAMEWORK_FNAME=$(CORE_FNAME_NO_EXT).framework
 CORE_FRAMEWORK=$(strip $(BUILDDIR)/$(CORE_FRAMEWORK_FNAME))
+CORE_ARTIFACT=$(CORE_FRAMEWORK)
 CORE_FRAMEWORK_HEADDIR=$(CORE_FRAMEWORK)/Versions/A/Headers
 CORE_FRAMEWORK_TEMPLATE=$(TEMPLATE_DIR)/$(CORE_FRAMEWORK_FNAME)
 CORE_FRAMEWORK_LIBDIR=$(strip $(CORE_FRAMEWORK)/Versions/A)
-LINK_SDT=-L$(BUILDDIR) -F$(BUILDDIR) -framework $(CORE_FNAME_NO_EXT)
+LINK_SDT=-F$(BUILDDIR) -framework $(CORE_FNAME_NO_EXT)
 
 CORE_SRC_HEADS=$(call get_sources,$(CORE_DIR),h) \
                $(call get_sources,$(JSONP_DIR),h) \
@@ -219,8 +219,6 @@ $(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
 # --- ^^^                              ^^^ ---
 # --- |||     Framework for MacOSX     ||| ---
 # --- |||                              ||| ---
-else
-CORE_ARTIFACT=$(CORE_LIB)
 endif
 core: $(CORE_ARTIFACT); $(info Core library built (v$(SDT_CORE_VERSION)): $<)
 $(CORE_LIB): $(CORE_OBJS); $(call build-lib,$(CORE_LDFLAGS))
@@ -234,29 +232,34 @@ CUTEST_DIR=$(THIRDP_DIR)/cutest
 TEST_DIR=$(ROOT)/tests
 CUTEST_BUILDDIR=$(strip $(call get_build_dest,$(CUTEST_DIR)))
 TEST_BUILDDIR=$(strip $(call get_build_dest,$(TEST_DIR)))
-TEST_RUNNER_SRC=$(BUILDDIR)/AllTests.c
-TEST_RUNNER_OBJ=$(BUILDDIR)/AllTests.o
+TEST_RUNNER_SRC=$(TEST_BUILDDIR)/AllTests.c
 TEST_SRCS=$(strip $(call get_sources,$(TEST_DIR)))
-TEST_EXE=$(BUILDDIR)/test
+TEST_OBJS=$(strip $(call get_objects,$(TEST_DIR))) $(patsubst %.c,%.o,$(TEST_RUNNER_SRC))
+CUTEST_OBJS=$(CUTEST_BUILDDIR)/CuTest.o
+TEST_EXE:=$(BUILDDIR)/test
+ifeq ("$(TARGET)", "win32")
+	TEST_EXE:=$(TEST_EXE).exe
+endif
+ifeq ("$(TARGET)", "win64")
+	TEST_EXE:=$(TEST_EXE).exe
+endif
 
 test: $(TEST_EXE)
 	$(info Compiled test runner: $<)
 
-$(TEST_EXE): $(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) \
-						 $(CORE_ARTIFACT) | $(BUILDDIR)
-	$(CC) $(CFLAGS) -o $@ \
-		$(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) $(LINK_SDT) $(LDFLAGS)
+$(TEST_EXE): $(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) $(CORE_OBJS) | $(BUILDDIR)
+	$(CC) -o $@ $(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) $(CORE_OBJS) $(LDFLAGS)
 
 $(CUTEST_BUILDDIR)/%.o: $(CUTEST_DIR)/%.c | $(CUTEST_BUILDDIR)
 	$(call build-obj,)
 $(TEST_BUILDDIR)/%.o: $(TEST_DIR)/%.c | $(TEST_BUILDDIR)
 	$(call build-obj,$(INCLUDE_SDT) -I$(CUTEST_DIR))
+$(TEST_BUILDDIR)/%.o: $(TEST_BUILDDIR)/%.c
+	$(call build-obj,$(INCLUDE_SDT) -I$(CUTEST_DIR))
+$(TEST_RUNNER_SRC): $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) | $(TEST_BUILDDIR)
+	$(SH) $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) > $@
 $(CUTEST_BUILDDIR):; $(make-dir)
 $(TEST_BUILDDIR):; $(make-dir)
-$(TEST_RUNNER_OBJ): $(TEST_RUNNER_SRC)
-	$(call build-obj,-I$(CUTEST_DIR))
-$(TEST_RUNNER_SRC): $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) | $(BUILDDIR)
-	$(SH) $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) > $@
 # -----------------------------------------------------------------------------
 
 # --- Pd ----------------------------------------------------------------------
