@@ -38,7 +38,7 @@ expressive articulations of sonic processes.
 
 ## Documentation
 API documentation can be found online here:
-https://skat-vg.github.io/SDT/
+https://skat-vg.github.io/SDT
 
 ## Implementation
 The core library (framework and API) is implemented in the C language, making it
@@ -49,6 +49,8 @@ In addition, the SDT algorithms are made available as ready-to-go externals and
 patches for **Cycling '74 Max** and **Pure Data** (Pd). In particular, a
 *package* is provided for Max which offers an advanced front-end GUI, as well as
 examples with presets and tutorials.
+
+Instructions for developers are collected in [`DEVELOPERS.md`](DEVELOPERS.md).
 
 ## Installation
 ### Downloadable ready-made products
