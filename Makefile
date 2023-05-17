@@ -55,7 +55,7 @@ PHONY=all install_core uninstall_core \
 			core_version pd_version max_version full_version
 
 ifeq ("$(TARGET)", "linux")
-	ALL+= pd
+	ALL+= test pd
 	PHONY+= install_pd uninstall_pd
 endif
 ifeq ("$(TARGET)", "win32")
@@ -90,6 +90,8 @@ endif
 
 check_os: check_os_detected check_os_supported
 	$(info Building Sound Design Toolkit for $(TARGET))
+
+SH?=bash
 # -----------------------------------------------------------------------------
 
 # --- Compiler ----------------------------------------------------------------
@@ -134,6 +136,8 @@ endef
 clean:
 	$(info Deleting build directory)
 	rm -rf $(BUILDDIR)
+
+$(BUILDDIR):; $(make-dir)
 # -----------------------------------------------------------------------------
 
 # --- JSON --------------------------------------------------------------------
@@ -178,6 +182,7 @@ LINK_SDT=-L$(BUILDDIR) -l$(CORE_FNAME_NO_EXT)
 CORE_BUILDDIR=$(strip $(call get_build_dest,$(CORE_DIR)))
 CORE_OBJS=$(strip $(call get_objects,$(CORE_DIR)) $(JSON_OBJS))
 CORE_LIB=$(strip $(BUILDDIR)/$(CORE_FNAME))
+CORE_ARTIFACT=$(CORE_LIB)
 
 core_version:; @echo $(SDT_CORE_VERSION)
 SDT_CORE_VERSION=$(word 3,$(shell grep "\#define SDT_ver " $(CORE_DIR)/SDTCommon.h))
@@ -197,7 +202,6 @@ CORE_SRC_HEADS=$(call get_sources,$(CORE_DIR),h) \
                $(call get_sources,$(JSONP_DIR),h) \
                $(call get_sources,$(JSONB_DIR),h)
 
-core: $(CORE_FRAMEWORK); $(info Core framework built: $<)
 $(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
 	rm -rf $@
 	mkdir -p $(CORE_FRAMEWORK_HEADDIR)
@@ -210,12 +214,31 @@ $(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
 # --- |||     Framework for MacOSX     ||| ---
 # --- |||                              ||| ---
 else
-core: $(CORE_LIB); $(info Core library built (v$(SDT_CORE_VERSION)): $<)
+CORE_ARTIFACT=$(CORE_LIB)
 endif
+core: $(CORE_ARTIFACT); $(info Core library built (v$(SDT_CORE_VERSION)): $<)
 $(CORE_LIB): $(CORE_OBJS); $(call build-lib,$(CORE_LDFLAGS))
 $(CORE_BUILDDIR):; $(make-dir)
 $(CORE_BUILDDIR)/%.o: $(CORE_DIR)/%.c | $(CORE_BUILDDIR)
 	$(call build-obj,$(INCLUDE_JSON))
+# -----------------------------------------------------------------------------
+
+# --- Test --------------------------------------------------------------------
+CUTEST_DIR=$(THIRDP_DIR)/cutest
+TEST_DIR=$(ROOT)/tests
+TEST_RUNNER_SRC=$(BUILDDIR)/AllTests.c
+TEST_SRCS=$(strip $(call get_sources,$(TEST_DIR)))
+TEST_EXE=$(BUILDDIR)/test
+
+test: $(TEST_EXE)
+
+$(TEST_EXE): $(TEST_RUNNER_SRC) $(TEST_SRCS) \
+             $(CUTEST_DIR)/CuTest.c $(CUTEST_DIR)/CuTest.h \
+						 $(CORE_ARTIFACT) | $(BUILDDIR)
+	$(CC) $(CFLAGS) -I$(CUTEST_DIR) $(INCLUDE_SDT) $(LINK_SDT) -o $@ \
+		$(CUTEST_DIR)/CuTest.c $(TEST_SRCS) $(TEST_RUNNER_SRC)
+$(TEST_RUNNER_SRC): $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) | $(BUILDDIR)
+	$(SH) $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) > $@
 # -----------------------------------------------------------------------------
 
 # --- Pd ----------------------------------------------------------------------
@@ -350,13 +373,9 @@ DEFAULT_PD_DSTDIR=
 DEFAULT_MAX_DSTDIR=
 CORE_HEADER_SUBDIR=include/$(CORE_SUBDIR)
 CORE_LIB_SUBDIR=lib
-CORE_ARTIFACT=$(CORE_LIB)
 ifeq ("$(TARGET)", "linux")
 	DEFAULT_CORE_DSTDIR=/usr
 	DEFAULT_PD_DSTDIR=/usr/lib/pd/extra
-endif
-ifeq ("$(TARGET)", "macosx")
-	CORE_ARTIFACT=$(CORE_FRAMEWORK)
 endif
 
 # Set default DSTDIR if not provided by user
