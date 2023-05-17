@@ -13,6 +13,10 @@ on:
       - master
       - develop
 
+env:
+  GH_API_HEADERS: -H "Accept:application/vnd.github+json" -H "Authorization:Bearer ${{ secrets.REPOSITORY_TOKEN }}" -H "X-GitHub-Api-Version:2022-11-28"
+  GH_API_PREFIX: https://api.github.com/repos/${{ github.repository }}
+
 jobs:
   build:
     strategy:
@@ -138,43 +142,130 @@ jobs:
   release:
     if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
     runs-on: ubuntu-latest
-    needs: [doxygen]
+    needs: [build, doxygen]
     outputs:
-      relase_url: ${{ steps.create_release.outputs.RELEASE_URL }}
+      RELEASE_HTTP_CODE: ${{ steps.create_release.outputs.RELEASE_HTTP_CODE }}
+      RELEASE_JSON: ${{ steps.release_json.outputs.RELEASE_JSON }}
+      RELEASE_ID: ${{ steps.release_id.outputs.RELEASE_ID }}
     steps:
-    - name: Install GitHub CLI
+    - name: Make release-create json
       run: |
-        sudo apt-get -y update
-        sudo apt-get -y install hub
+        echo '{'\
+          '"tag_name":"${{ github.ref_name }}",'\
+          '"name":"${{ github.ref_name }}",'\
+          '"prerelease":${{ ((contains( github.ref_name , 'dev' ) || contains( github.ref_name , 'alpha' ) || contains( github.ref_name , 'beta' ) || contains( github.ref_name , 'rc' )) && 'true') || 'false' }},'\
+          '"draft":true,'\
+          '"generate_release_notes":false}' \
+          > .release-create.json
+    - name: Display release-create json
+      run: cat .release-create.json
+    - name: Create release
+    # https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#create-a-release
+      id: create_release
+      run: echo RELEASE_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} ${{ env.GH_API_PREFIX }}/releases -H "Content-Type:application/octet-stream" -d @.release-create.json --write-out "%{http_code}" -o .release.json) >> "$GITHUB_OUTPUT"
+    - name: Release json info to output
+      id: release_json
+      run: echo RELEASE_JSON=$(cat .release.json) >> "$GITHUB_OUTPUT"
+    - name: Display release json info
+      run: |
+        echo '${{ steps.create_release.outputs.RELEASE_HTTP_CODE }}'
+        echo '${{ steps.release_json.outputs.RELEASE_JSON }}'
+    - name: Check request success
+      run: exit ${{ (steps.create_release.outputs.RELEASE_HTTP_CODE >= 200 && steps.create_release.outputs.RELEASE_HTTP_CODE < 300 && '0') || '1' }}
+    - name: Export release id
+      id: release_id
+      run: echo RELEASE_ID=${{ fromJSON(steps.release_json.outputs.RELEASE_JSON)['id'] }} >> "$GITHUB_OUTPUT"
+
+  upload-build:
+    needs: [release, build, doxygen]
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [
+          linux,
+          win32,
+          win64,
+          macosx
+        ]
+        asset: [
+          lib,
+          pd,
+          max
+        ]
+        exclude:
+        - target: linux
+          asset: max
+        - target: win64
+          asset: pd
+        include:
+        - asset: lib
+          version: ${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
+        - asset: pd
+          version: ${{ needs.doxygen.outputs.SDT_PD_VERSION }}-${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
+        - asset: max
+          version: ${{ needs.doxygen.outputs.SDT_MAX_VERSION }}-${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v3
+    - name: Compose file name
+      run: echo "SDT_ASSET_NAME=SDT_${{ matrix.target }}_${{ matrix.asset }}_${{ matrix.version }}" >> "$GITHUB_ENV"
     - uses: actions/download-artifact@v3
       with:
+        name: SDT_${{ matrix.target }}_${{ matrix.asset }}
+        path: ${{ env.SDT_ASSET_NAME }}
+    - name: Display downloaded artifacts
+      run: ls -R ${{ env.SDT_ASSET_NAME }}
+    - name: Compress artifact
+      run: zip -r ${{ env.SDT_ASSET_NAME }}.zip ${{ env.SDT_ASSET_NAME }}
+    - name: Upload artifact to release
+    # https://docs.github.com/en/rest/releases/assets?apiVersion=2022-11-28#upload-a-release-asset
+      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/zip" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }}.zip --data-binary @${{ env.SDT_ASSET_NAME }}.zip --write-out "%{http_code}" -o .upload.json) >> "$GITHUB_ENV"
+    - name: Display request response
+      run: |
+        echo '${{ env.UPLOAD_HTTP_CODE }}'
+        cat .upload.json
+    - name: Check request success
+      run: exit ${{ (env.UPLOAD_HTTP_CODE >= 200 && env.UPLOAD_HTTP_CODE < 300 && '0') || '1' }}
+
+  upload-refman:
+    runs-on: ubuntu-latest
+    needs: [release, doxygen]
+    steps:
+    - name: Export asset name
+      run: echo SDT_ASSET_NAME=SDT_refman_${{ needs.doxygen.outputs.SDT_CORE_VERSION }}.pdf >> "$GITHUB_ENV"
+    - uses: actions/download-artifact@v3
+      with:
+        name: refman
         path: artifacts
     - name: Display downloaded artifacts
       run: ls -R artifacts
-    - name: Rename manual
-      run: mv artifacts/refman/refman.pdf artifacts/SDT_refman_${{ needs.doxygen.outputs.SDT_CORE_VERSION }}_.pdf
-    - name: Create Release
-      id: create_release
+    - name: Upload artifact to release
+    # https://docs.github.com/en/rest/releases/assets?apiVersion=2022-11-28#upload-a-release-asset
+      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/pdf" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }} --data-binary @artifacts/refman.pdf --write-out "%{http_code}" -o .upload.json) >> "$GITHUB_ENV"
+    - name: Display request response
       run: |
-        echo RELEASE_URL=\
-        $(hub release create -d "${{ github.ref_name }}" \
-        -m "${{ github.ref_name }}" \
-        ${{ ((contains( github.ref_name , 'dev' ) || contains( github.ref_name , 'alpha' ) || contains( github.ref_name , 'beta' ) || contains( github.ref_name , 'rc' )) && '-p') || ' ' }} \
-        -a artifacts/SDT_refman_${{ needs.doxygen.outputs.SDT_CORE_VERSION }}_.pdf \
-        ) >> "$GITHUB_OUTPUT"
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPOSITORY_TOKEN }}
-    - name: Check release success
-      run: |
-        echo RELEASE_URL=${{ steps.create_release.outputs.RELEASE_URL }}
-        exit ${{ (steps.create_release.outputs.RELEASE_URL && '0') || '1' }}
+        echo '${{ env.UPLOAD_HTTP_CODE }}'
+        cat .upload.json
+    - name: Check request success
+      run: exit ${{ (env.UPLOAD_HTTP_CODE >= 200 && env.UPLOAD_HTTP_CODE < 300 && '0') || '1' }}
+
+  deploy-pages:
+    runs-on: ubuntu-latest
+    needs: [release, doxygen]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/download-artifact@v3
+      with:
+        name: doxygen-html
+        path: pages
+    - name: Display downloaded artifacts
+      run: ls -R pages
     - name: No Jekyll in pages
-      run: touch artifacts/doxygen-html/.nojekyll
+      run: touch pages/.nojekyll
     - name: Deploy pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         token: ${{ secrets.REPOSITORY_TOKEN }}
         branch: gh-pages
-        folder: artifacts/doxygen-html
+        folder: pages
         single-commit: true
