@@ -49,13 +49,13 @@ endif
 TARGET?=$(AUTO_TARGET)
 BUILDDIR?=.build.$(TARGET)
 
-ALL=check_os core
+ALL=check_os core test
 PHONY=all install_core uninstall_core \
 			check_os_detected check_os_supported \
 			core_version pd_version max_version full_version
 
 ifeq ("$(TARGET)", "linux")
-	ALL+= test pd
+	ALL+= pd
 	PHONY+= install_pd uninstall_pd
 endif
 ifeq ("$(TARGET)", "win32")
@@ -96,7 +96,10 @@ SH?=bash
 
 # --- Compiler ----------------------------------------------------------------
 CFLAGS=-O3 -Wall -Wno-unknown-pragmas -Werror
-LDFLAGS=-shared
+ifneq ("$(SDT_DEBUG)",)
+	CFLAGS+= -DSDT_DEBUG
+endif
+LDFLAGS=
 ifeq ("$(TARGET)", "linux")
 	CC=gcc
 	CFLAGS+= -fPIC
@@ -116,11 +119,14 @@ ifeq ("$(TARGET)", "macosx")
 	MACVERSION_N=10.7
 	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
 	CFLAGS+= -g $(MACARCH) $(MACVERSION)
-	LDFLAGS=-dynamiclib -headerpad_max_install_names $(MACARCH) $(MACVERSION)
+	LDFLAGS+= -headerpad_max_install_names $(MACARCH) $(MACVERSION)
+	SHARED_LDFLAGS=-dynamiclib $(LDFLAGS)
+else
+	SHARED_LDFLAGS=-shared $(LDFLAGS)
 endif
 
 define build-lib
-$(CC) $(LDFLAGS) $1 -o $@ $^
+$(CC) $(SHARED_LDFLAGS) $1 -o $@ $^
 endef
 
 define build-obj
@@ -226,17 +232,29 @@ $(CORE_BUILDDIR)/%.o: $(CORE_DIR)/%.c | $(CORE_BUILDDIR)
 # --- Test --------------------------------------------------------------------
 CUTEST_DIR=$(THIRDP_DIR)/cutest
 TEST_DIR=$(ROOT)/tests
+CUTEST_BUILDDIR=$(strip $(call get_build_dest,$(CUTEST_DIR)))
+TEST_BUILDDIR=$(strip $(call get_build_dest,$(TEST_DIR)))
 TEST_RUNNER_SRC=$(BUILDDIR)/AllTests.c
+TEST_RUNNER_OBJ=$(BUILDDIR)/AllTests.o
 TEST_SRCS=$(strip $(call get_sources,$(TEST_DIR)))
 TEST_EXE=$(BUILDDIR)/test
 
 test: $(TEST_EXE)
+	$(info Compiled test runner: $<)
 
-$(TEST_EXE): $(TEST_RUNNER_SRC) $(TEST_SRCS) \
-             $(CUTEST_DIR)/CuTest.c $(CUTEST_DIR)/CuTest.h \
+$(TEST_EXE): $(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) \
 						 $(CORE_ARTIFACT) | $(BUILDDIR)
-	$(CC) $(CFLAGS) -I$(CUTEST_DIR) $(INCLUDE_SDT) $(LINK_SDT) -o $@ \
-		$(CUTEST_DIR)/CuTest.c $(TEST_SRCS) $(TEST_RUNNER_SRC)
+	$(CC) $(CFLAGS) -o $@ \
+		$(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) $(LINK_SDT) $(LDFLAGS)
+
+$(CUTEST_BUILDDIR)/%.o: $(CUTEST_DIR)/%.c | $(CUTEST_BUILDDIR)
+	$(call build-obj,)
+$(TEST_BUILDDIR)/%.o: $(TEST_DIR)/%.c | $(TEST_BUILDDIR)
+	$(call build-obj,$(INCLUDE_SDT) -I$(CUTEST_DIR))
+$(CUTEST_BUILDDIR):; $(make-dir)
+$(TEST_BUILDDIR):; $(make-dir)
+$(TEST_RUNNER_OBJ): $(TEST_RUNNER_SRC)
+	$(call build-obj,-I$(CUTEST_DIR))
 $(TEST_RUNNER_SRC): $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) | $(BUILDDIR)
 	$(SH) $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) > $@
 # -----------------------------------------------------------------------------
@@ -345,7 +363,7 @@ $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o \
 	sed -i "" s/\$${PRODUCT_NAME}/$(EXTNAME)/g $@/Contents/Info.plist
 	sed -i "" s/\$${PRODUCT_NAME:rfc1034identifier}/$(RFC1034)/g $@/Contents/Info.plist
 	sed -i "" s/\$${PRODUCT_VERSION}/$(SDT_MAX_VERSION)/g $@/Contents/Info.plist
-	$(CC) $(LDFLAGS) $(LINK_MAX_SDK) $(LINK_SDT) -o $@/Contents/MacOS/$(EXTNAME) \
+	$(CC) $(SHARED_LDFLAGS) $(LINK_MAX_SDK) $(LINK_SDT) -o $@/Contents/MacOS/$(EXTNAME) \
 		$< $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o
 	install_name_tool -id @rpath/$(EXTNAME) $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -add_rpath @loader_path/../../../../support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
@@ -354,7 +372,7 @@ else
 $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o $(MAX_BUILDDIR)/%.def \
                                    $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o \
                                    $(CORE_LIB)
-	$(CC) $(LDFLAGS) $(filter-out $(CORE_LIB),$^) -o $@ $(LINK_MAX_SDK) $(LINK_SDT)
+	$(CC) $(SHARED_LDFLAGS) $(filter-out $(CORE_LIB),$^) -o $@ $(LINK_MAX_SDK) $(LINK_SDT)
 $(MAX_BUILDDIR)/%.def: $(TEMPLATE_DIR)/Info.def | $(MAX_BUILDDIR)
 	cp $< $@
 	sed -i $@ -e s/\$${PRODUCT_NAME}/$(patsubst $(strip $(MAX_BUILDDIR))/%.def,%,$@)/g
