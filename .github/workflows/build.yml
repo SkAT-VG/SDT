@@ -71,7 +71,7 @@ jobs:
       with:
         submodules: recursive
     - name: Build everything
-      run: make TARGET=${{ matrix.target }} ${{ (matrix.test && '-e SDT_DEBUG=1') || '' }} -j16
+      run: make TARGET=${{ matrix.target }} ${{ (matrix.debug && '-e SDT_DEBUG=1') || '' }} -j16
     - name: Display build directory content
       run: ls -R .build.${{ matrix.target }}
     - name: Prepare package directory
@@ -81,7 +81,7 @@ jobs:
     - name: Upload library
       uses: actions/upload-artifact@v3
       with:
-        name: SDT_${{ matrix.target }}_lib${{ (matrix.test && '_debug') || '' }}
+        name: SDT_${{ matrix.target }}_lib${{ (matrix.debug && '_debug') || '' }}
         path: SoundDesignToolkit
     - name: Reset package directory
       run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
@@ -92,7 +92,7 @@ jobs:
       if: ${{ matrix.pd }}
       uses: actions/upload-artifact@v3
       with:
-        name: SDT_${{ matrix.target }}_pd${{ (matrix.test && '_debug') || '' }}
+        name: SDT_${{ matrix.target }}_pd${{ (matrix.debug && '_debug') || '' }}
         path: SoundDesignToolkit
     - name: Reset package directory
       run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
@@ -103,13 +103,63 @@ jobs:
       if: ${{ matrix.max }}
       uses: actions/upload-artifact@v3
       with:
-        name: SDT_${{ matrix.target }}_max${{ (matrix.test && '_debug') || '' }}
+        name: SDT_${{ matrix.target }}_max${{ (matrix.debug && '_debug') || '' }}
         path: SoundDesignToolkit
-    - name: Upload Test runner
+    - name: Upload test runner
       uses: actions/upload-artifact@v3
       with:
-        name: SDT_${{ matrix.target }}_test_core${{ (matrix.test && '_debug') || '' }}
+        name: SDT_${{ matrix.target }}_test_core${{ (matrix.debug && '_debug') || '' }}
         path: .build.${{ matrix.target }}/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }}
+
+  test:
+    needs: [build]
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [
+          linux,
+          win32,
+          win64,
+          macosx
+        ]
+        debug: [
+          false,
+          true
+        ]
+        include:
+        - runs_on: windows-latest
+        - target: linux
+          runs_on: ubuntu-latest
+        - target: macosx
+          runs_on: macos-latest
+    runs-on: ${{ matrix.runs_on }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download test runner
+      uses: actions/download-artifact@v3
+      with:
+        name: SDT_${{ matrix.target }}_test_core${{ (matrix.debug && '_debug') || '' }}
+        path: testrunner
+    - name: Display directory content
+      run: ls -R testrunner
+    - name: Make test log file name
+      run: echo LOG_FNAME=test_${{ matrix.target }}_core${{ (matrix.debug && '_debug') || '' }}.log >> $GITHUB_ENV
+      shell: bash
+    - name: Make test runner executable
+      if: ${{ !startsWith(matrix.target, 'win') }}
+      run: chmod +x ./testrunner/test
+    - name: Run tests
+      run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} | tee ${{ env.LOG_FNAME }}
+    - name: Upload test log
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.LOG_FNAME }}
+        path: ${{ env.LOG_FNAME }}
+    - name: Export test log to env
+      run: echo CUTEST_LOG=$(cat ${{ env.LOG_FNAME }}) >> $GITHUB_ENV
+    - name: Check test success
+      if: ${{ contains(env.CUTEST_LOG, '!!!FAILURES!!!') }}
+      run: exit 1
 
   doxygen:
     runs-on: ubuntu-latest
@@ -130,11 +180,11 @@ jobs:
     - name: Log version names
       id: version-log
       run: |
-        echo "SDT_CORE_VERSION=$(make core_version)" >> "$GITHUB_OUTPUT"
-        echo "SDT_PD_VERSION=$(make pd_version)" >> "$GITHUB_OUTPUT"
-        echo "SDT_MAX_VERSION=$(make max_version)" >> "$GITHUB_OUTPUT"
-        echo "SDT_FULL_VERSION=$(make full_version)" >> "$GITHUB_OUTPUT"
-        echo "SDT_CORE_VERSION=$(make core_version)" >> "$GITHUB_ENV"
+        echo "SDT_CORE_VERSION=$(make core_version)" >> $GITHUB_OUTPUT
+        echo "SDT_PD_VERSION=$(make pd_version)" >> $GITHUB_OUTPUT
+        echo "SDT_MAX_VERSION=$(make max_version)" >> $GITHUB_OUTPUT
+        echo "SDT_FULL_VERSION=$(make full_version)" >> $GITHUB_OUTPUT
+        echo "SDT_CORE_VERSION=$(make core_version)" >> $GITHUB_ENV
     - name: Build HTML
       run: doxygen
     - uses: actions/upload-artifact@v3
@@ -152,7 +202,7 @@ jobs:
   release:
     if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
     runs-on: ubuntu-latest
-    needs: [build, doxygen]
+    needs: [build, test, doxygen]
     outputs:
       RELEASE_HTTP_CODE: ${{ steps.create_release.outputs.RELEASE_HTTP_CODE }}
       RELEASE_JSON: ${{ steps.release_json.outputs.RELEASE_JSON }}
@@ -172,10 +222,10 @@ jobs:
     - name: Create release
     # https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#create-a-release
       id: create_release
-      run: echo RELEASE_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} ${{ env.GH_API_PREFIX }}/releases -H "Content-Type:application/octet-stream" -d @.release-create.json --write-out "%{http_code}" -o .release.json) >> "$GITHUB_OUTPUT"
+      run: echo RELEASE_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} ${{ env.GH_API_PREFIX }}/releases -H "Content-Type:application/octet-stream" -d @.release-create.json --write-out "%{http_code}" -o .release.json) >> $GITHUB_OUTPUT
     - name: Release json info to output
       id: release_json
-      run: echo RELEASE_JSON=$(cat .release.json) >> "$GITHUB_OUTPUT"
+      run: echo RELEASE_JSON=$(cat .release.json) >> $GITHUB_OUTPUT
     - name: Display release json info
       run: |
         echo '${{ steps.create_release.outputs.RELEASE_HTTP_CODE }}'
@@ -184,7 +234,7 @@ jobs:
       run: exit ${{ (steps.create_release.outputs.RELEASE_HTTP_CODE >= 200 && steps.create_release.outputs.RELEASE_HTTP_CODE < 300 && '0') || '1' }}
     - name: Export release id
       id: release_id
-      run: echo RELEASE_ID=${{ fromJSON(steps.release_json.outputs.RELEASE_JSON)['id'] }} >> "$GITHUB_OUTPUT"
+      run: echo RELEASE_ID=${{ fromJSON(steps.release_json.outputs.RELEASE_JSON)['id'] }} >> $GITHUB_OUTPUT
 
   upload-build:
     needs: [release, build, doxygen]
@@ -218,7 +268,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Compose file name
-      run: echo "SDT_ASSET_NAME=SDT_${{ matrix.target }}_${{ matrix.asset }}_${{ matrix.version }}" >> "$GITHUB_ENV"
+      run: echo "SDT_ASSET_NAME=SDT_${{ matrix.target }}_${{ matrix.asset }}_${{ matrix.version }}" >> $GITHUB_ENV
     - uses: actions/download-artifact@v3
       with:
         name: SDT_${{ matrix.target }}_${{ matrix.asset }}
@@ -229,7 +279,7 @@ jobs:
       run: zip -r ${{ env.SDT_ASSET_NAME }}.zip ${{ env.SDT_ASSET_NAME }}
     - name: Upload artifact to release
     # https://docs.github.com/en/rest/releases/assets?apiVersion=2022-11-28#upload-a-release-asset
-      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/zip" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }}.zip --data-binary @${{ env.SDT_ASSET_NAME }}.zip --write-out "%{http_code}" -o .upload.json) >> "$GITHUB_ENV"
+      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/zip" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }}.zip --data-binary @${{ env.SDT_ASSET_NAME }}.zip --write-out "%{http_code}" -o .upload.json) >> $GITHUB_ENV
     - name: Display request response
       run: |
         echo '${{ env.UPLOAD_HTTP_CODE }}'
@@ -242,7 +292,7 @@ jobs:
     needs: [release, doxygen]
     steps:
     - name: Export asset name
-      run: echo SDT_ASSET_NAME=SDT_refman_${{ needs.doxygen.outputs.SDT_CORE_VERSION }}.pdf >> "$GITHUB_ENV"
+      run: echo SDT_ASSET_NAME=SDT_refman_${{ needs.doxygen.outputs.SDT_CORE_VERSION }}.pdf >> $GITHUB_ENV
     - uses: actions/download-artifact@v3
       with:
         name: refman
@@ -251,7 +301,7 @@ jobs:
       run: ls -R artifacts
     - name: Upload artifact to release
     # https://docs.github.com/en/rest/releases/assets?apiVersion=2022-11-28#upload-a-release-asset
-      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/pdf" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }} --data-binary @artifacts/refman.pdf --write-out "%{http_code}" -o .upload.json) >> "$GITHUB_ENV"
+      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/pdf" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }} --data-binary @artifacts/refman.pdf --write-out "%{http_code}" -o .upload.json) >> $GITHUB_ENV
     - name: Display request response
       run: |
         echo '${{ env.UPLOAD_HTTP_CODE }}'
