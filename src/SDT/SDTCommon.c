@@ -3,6 +3,9 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <time.h>
 #include "SDTCommon.h"
 
 double SDT_sampleRate = 0.0;
@@ -399,4 +402,25 @@ void SDT_zeros(double *sig, int n) {
   for (i = 0; i < n; i++) {
     sig[i] = 0.0;
   }
+}
+
+int _SDT_printTime(int (* print_func)(const char *, ...))
+{
+  time_t t = time(NULL);
+  struct tm *tm = localtime(&t);
+  char *s = asctime(tm);
+  s[strlen(s) - 1] = 0;
+  return print_func("%s", s);
+}
+
+int _SDT_eprintf(const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    int r = vfprintf(stderr, fmt, args);
+    va_end(args);
+    return r;
+}
+
+int SDT_isDebug() {
+  return SDT_DEBUG_IF_ELSE(1, 0);
 }

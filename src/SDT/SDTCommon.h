@@ -94,6 +94,37 @@ SDTCommon.h should always be included when using other SDT modules.
 /** @brief Gain factor roughly corresponding to a -90dB attenuation */
 #define SDT_QUIET         0.00003
 
+/** @brief Print current time
+@param[in] print_func Print function */
+extern int _SDT_printTime(int (* print_func)(const char *, ...));
+
+/** @brief Print to standard error */
+extern int _SDT_eprintf(const char *fmt, ...);
+
+#ifdef SDT_DEBUG
+/** @brief Conditionally include code in debug or non-debug build
+@param[in] X Code to include in debug builds
+@param[in] Y Code to include in non-debug builds */
+#define SDT_DEBUG_IF_ELSE(X, Y) X
+#else
+/** @brief Conditionally include code in debug or non-debug build
+@param[in] X Code to include in debug builds
+@param[in] Y Code to include in non-debug builds */
+#define SDT_DEBUG_IF_ELSE(X, Y) Y
+#endif
+
+/** @brief Exclude wrapped code from any non-debug build
+@param[in] X Code to include in debug builds only */
+#define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X,)
+
+/** @brief Log in debug mode only
+@param[in] PRINT_FUNC Print function
+@param[in] MSG Message: free text, not string */
+#define SDT_DEBUG_LOG(PRINT_FUNC, MSG, ...) SDT_DEBUG_ONLY(\
+_SDT_printTime(PRINT_FUNC);\
+PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
+PRINT_FUNC(MSG))
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -346,6 +377,10 @@ Fills a buffer with zeros.
 @param[in,out] sig pointer to the buffer
 @param[in] n buffer size */
 extern void SDT_zeros(double *sig, int n);
+
+/** @brief Returns a true value if SDT has been compiled in debug mode
+*/
+extern int SDT_isDebug();
 
 #ifdef __cplusplus
 };
