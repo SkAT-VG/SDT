@@ -120,10 +120,18 @@ extern int _SDT_eprintf(const char *fmt, ...);
 /** @brief Log in debug mode only
 @param[in] PRINT_FUNC Print function
 @param[in] MSG Message: free text, not string */
-#define SDT_DEBUG_LOG(PRINT_FUNC, MSG, ...) SDT_DEBUG_ONLY(\
+#define SDT_DEBUG_LOG(PRINT_FUNC, MSG) SDT_DEBUG_ONLY(\
 _SDT_printTime(PRINT_FUNC);\
 PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
-PRINT_FUNC(MSG))
+PRINT_FUNC(MSG)
+
+/** @brief Log in debug mode only, with format arguments
+@param[in] PRINT_FUNC Print function
+@param[in] MSG Message: free text, not string */
+#define SDT_DEBUG_LOGA(PRINT_FUNC, MSG, ...) SDT_DEBUG_ONLY(\
+_SDT_printTime(PRINT_FUNC);\
+PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
+PRINT_FUNC(MSG, __VA_ARGS__))
 
 #ifdef __cplusplus
 extern "C" {
