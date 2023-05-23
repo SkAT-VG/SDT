@@ -16,6 +16,7 @@ struct SDTRandomSequence {
     int i;
   } max;
   unsigned char integer;
+  unsigned int base;
 };
 
 SDTRandomSequence *SDTRandomIntSequence_new(unsigned int n, int min, int max) {
@@ -27,6 +28,7 @@ SDTRandomSequence *SDTRandomIntSequence_new(unsigned int n, int min, int max) {
   x->min.i = min;
   x->max.i = max;
   x->integer = 1;
+  x->base = 1;
   return x;
 }
 
@@ -40,6 +42,7 @@ SDTRandomSequence *SDTRandomFloatSequence_new(unsigned int n, float min, float m
   x->min.f = min;
   x->max.f = max;
   x->integer = 0;
+  x->base = 1;
   return x;
 }
 
@@ -48,9 +51,14 @@ void SDTRandomSequence_free(SDTRandomSequence *x)
   free(x);
 }
 
+void SDTRandom_setBase(SDTRandomSequence *x, unsigned int b)
+{
+  x->base = b;
+}
+
 static int SDTRandom_get(SDTRandomSequence *x)
 {
-  srand(x->i);
+  srand(x->i + x->base);
   return rand();
 }
 
@@ -61,7 +69,7 @@ unsigned int SDTRandomSequence_index(SDTRandomSequence *x)
 
 unsigned char SDTRandomSequence_done(SDTRandomSequence *x)
 {
-  return x->i > x->n;
+  return x->i >= x->n;
 }
 
 static int SDTRandomInt_get(SDTRandomSequence *x)
@@ -74,7 +82,7 @@ static int SDTRandomInt_get(SDTRandomSequence *x)
 }
 
 int SDTRandomIntSequence_start(SDTRandomSequence *x) {
-  x->i = 1;
+  x->i = 0;
   return SDTRandomInt_get(x);
 }
 
@@ -93,7 +101,7 @@ static float SDTRandomFloat_get(SDTRandomSequence *x)
 
 float SDTRandomFloatSequence_start(SDTRandomSequence *x)
 {
-  x->i = 1;
+  x->i = 0;
   return SDTRandomFloat_get(x);
 }
 
@@ -115,7 +123,7 @@ static float SDTRandomFloat_getLog(SDTRandomSequence *x)
 
 float SDTRandomFloatSequence_startLog(SDTRandomSequence *x)
 {
-  x->i = 1;
+  x->i = 0;
   return SDTRandomFloat_getLog(x);
 }
 

@@ -40,6 +40,11 @@ extern unsigned char SDTRandomSequence_done(SDTRandomSequence *x);
 @return The sequence index */
 extern unsigned int SDTRandomSequence_index(SDTRandomSequence *x);
 
+/** @brief Set seed for the first element.
+@param[in] x Pointer to the SDTRandomSequence instance
+@param[in] b Base seed */
+extern void SDTRandom_setBase(SDTRandomSequence *x, unsigned int b);
+
 /** @brief Start random sequence of integers.
 @param[in] x Pointer to the SDTRandomSequence instance
 @return First random integer */
