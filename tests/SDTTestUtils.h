@@ -75,6 +75,12 @@ extern float SDTRandomFloatSequence_startLog(SDTRandomSequence *x);
 @return Next random float */
 extern float SDTRandomFloatSequence_nextLog(SDTRandomSequence *x);
 
+#define _FOR_RANDOM_ITER_PROTO(IT, VAR, T, PREFIX, SUFFIX) for(T VAR = SDTRandom ## PREFIX ## Sequence_start ## SUFFIX (IT); !SDTRandomSequence_done(IT); VAR = SDTRandom ## PREFIX ## Sequence_next ## SUFFIX (IT))
+
+#define FOR_RANDOM_ITER_INT(IT, VAR) _FOR_RANDOM_ITER_PROTO(IT, VAR, int, Int,)
+#define FOR_RANDOM_ITER_FLOAT(IT, VAR) _FOR_RANDOM_ITER_PROTO(IT, VAR, float, Float,)
+#define FOR_RANDOM_ITER_LOG(IT, VAR) _FOR_RANDOM_ITER_PROTO(IT, VAR, float, Float, Log)
+
 #ifdef __cplusplus
 };
 #endif

@@ -13,10 +13,10 @@
 void TestSDT_setSampleRate(CuTest* tc)
 {
   SDTRandomSequence *x = SDTRandomFloatSequence_new(1024, 1, 192000);
-  for (float i = SDTRandomFloatSequence_startLog(x); !SDTRandomSequence_done(x); i = SDTRandomFloatSequence_nextLog(x))
+  FOR_RANDOM_ITER_LOG(x, f)
   {
-    SDT_setSampleRate(i);
-    CuAssertDblEquals(tc, i, SDT_sampleRate, 0.0);
+    SDT_setSampleRate(f);
+    CuAssertDblEquals(tc, f, SDT_sampleRate, 0.0);
   }
   SDTRandomSequence_free(x);
 }
@@ -24,10 +24,10 @@ void TestSDT_setSampleRate(CuTest* tc)
 void TestSDT_setTimeStep(CuTest* tc)
 {
   SDTRandomSequence *x = SDTRandomFloatSequence_new(1024, 1, 192000);
-  for (float i = SDTRandomFloatSequence_startLog(x); !SDTRandomSequence_done(x); i = SDTRandomFloatSequence_nextLog(x))
+  FOR_RANDOM_ITER_LOG(x, f)
   {
-    SDT_setSampleRate(i);
-    CuAssertDblEquals(tc, 1.0 / i, SDT_timeStep, 0.0);
+    SDT_setSampleRate(f);
+    CuAssertDblEquals(tc, 1.0 / f, SDT_timeStep, 0.0);
   }
   SDTRandomSequence_free(x);
 }
