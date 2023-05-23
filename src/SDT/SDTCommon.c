@@ -404,13 +404,17 @@ void SDT_zeros(double *sig, int n) {
   }
 }
 
+#define _SDT_printTime_buf_LEN 23
+char _SDT_printTime_buf[_SDT_printTime_buf_LEN];
+static const char _SDT_printTime_fmt[] = "[%Y-%m-%d %H:%M:%S]";
+
 int _SDT_printTime(int (* print_func)(const char *, ...))
 {
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
-  char *s = asctime(tm);
-  s[strlen(s) - 1] = 0;
-  return print_func("%s", s);
+  strftime(_SDT_printTime_buf, sizeof(char) * _SDT_printTime_buf_LEN, _SDT_printTime_fmt, tm);
+  return print_func(_SDT_printTime_buf);
+  return 0;
 }
 
 int _SDT_eprintf(const char *fmt, ...) {

@@ -123,7 +123,7 @@ extern int _SDT_eprintf(const char *fmt, ...);
 #define SDT_DEBUG_LOG(PRINT_FUNC, MSG) SDT_DEBUG_ONLY(\
 _SDT_printTime(PRINT_FUNC);\
 PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
-PRINT_FUNC(MSG)
+PRINT_FUNC(MSG))
 
 /** @brief Log in debug mode only, with format arguments
 @param[in] PRINT_FUNC Print function
