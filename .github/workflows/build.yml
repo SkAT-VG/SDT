@@ -150,6 +150,7 @@ jobs:
       run: chmod +x ./testrunner/test
     - name: Run tests
       run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} | tee ${{ env.LOG_FNAME }}
+      shell: bash
     - name: Upload test log
       if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v3
@@ -158,6 +159,7 @@ jobs:
         path: ${{ env.LOG_FNAME }}
     - name: Export test log to env
       run: echo CUTEST_LOG=$(cat ${{ env.LOG_FNAME }}) >> $GITHUB_ENV
+      shell: bash
     - name: Check test success
       if: ${{ contains(env.CUTEST_LOG, '!!!FAILURES!!!') }}
       run: exit 1
