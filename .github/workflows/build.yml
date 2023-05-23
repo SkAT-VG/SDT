@@ -151,6 +151,7 @@ jobs:
     - name: Run tests
       run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} | tee ${{ env.LOG_FNAME }}
     - name: Upload test log
+      if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v3
       with:
         name: ${{ env.LOG_FNAME }}
