@@ -237,6 +237,9 @@ extern void SDT_haar(double *sig, long n);
 @param[in] n window size */
 extern void SDT_ihaar(double *sig, long n);
 
+/** @brief Returns a true value if SDT has been compiled in debug mode */
+extern int SDT_isDebug();
+
 /** @brief Checks if the selected value is the minimum among its neighbors.
 @param[in] x Array of data
 @param[in] i Index of the selected value
@@ -385,10 +388,6 @@ Fills a buffer with zeros.
 @param[in,out] sig pointer to the buffer
 @param[in] n buffer size */
 extern void SDT_zeros(double *sig, int n);
-
-/** @brief Returns a true value if SDT has been compiled in debug mode
-*/
-extern int SDT_isDebug();
 
 #ifdef __cplusplus
 };
