@@ -396,13 +396,7 @@ double SDT_wrap(double x) {
   return x - SDT_PI;
 }
 
-void SDT_zeros(double *sig, int n) {
-  int i;
-  
-  for (i = 0; i < n; i++) {
-    sig[i] = 0.0;
-  }
-}
+void SDT_zeros(double *sig, int n) { memset((void *) sig, 0, sizeof(double) * n); }
 
 #define _SDT_printTime_buf_LEN 23
 char _SDT_printTime_buf[_SDT_printTime_buf_LEN];
