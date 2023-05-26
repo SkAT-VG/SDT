@@ -4,6 +4,7 @@
   - [Commit frequency vs size](#commit-frequency-vs-size)
   - [Feature branches](#feature-branches)
   - [Binary files](#binary-files)
+- [Formatting](#formatting)
 - [Versioning](#versioning)
 - [Releasing](#releasing)
 
@@ -112,6 +113,13 @@ This is ok, because branches have been correctly rebased
 ### Binary files
 As a general rule, avoid versioning binary files directly using git.
 
+## Formatting
+We are using `clang-format` for code style consistency. We are using `Google` style.
+To format a file, run
+```bash
+clang-format -i <filepath>
+```
+It should automatically load the style file [`.clang-format`](.clang-format).
 
 ## Versioning
 The Sound Design Toolkit is a collection of three pieces of software: the core library, the Pure Data library and the Max package. Each of these pieces of software has its own version number. Since the Pd library and the Max package depend on the core library, their version numbers should be complemented by the core library version number, where possible.
