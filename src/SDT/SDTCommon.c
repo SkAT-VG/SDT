@@ -3,6 +3,9 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
+#include <time.h>
 #include "SDTCommon.h"
 
 double SDT_sampleRate = 0.0;
@@ -10,7 +13,8 @@ double SDT_timeStep = 0.0;
 
 void SDT_setSampleRate(double sampleRate) {
   SDT_sampleRate = sampleRate;
-  SDT_timeStep = 1.0 / sampleRate;
+  if (SDT_sampleRate > SDT_MICRO)
+    SDT_timeStep = 1.0 / sampleRate;
 }
 
 unsigned int SDT_argMax(double *x, unsigned int n, double *maxOut) {
@@ -342,17 +346,27 @@ int SDT_signum(double x) {
   return result;
 }
 
-void SDT_sinc(double *sig, double w, int n) {
-  int i, j, k;
-  double x, scale;
-    
-  for (i = 0; i < n / 2; i++) {
-    j = n - i - 1;
-    k = n / 2 - i;
-    x = SDT_TWOPI * w * k;
-    scale = sin(x) / x;
-    sig[i] *= scale;
-    sig[j] *= scale;
+void SDT_sinc(double *sig, double f, int n) {
+  // Avoid division by zero
+  if (fabs(f) < SDT_MICRO)
+    return;
+  /* Multiply by PI, but t increases by 2. So, the effective
+  ** angular velocity id 2 PI f radians per sample */
+  const double w = SDT_PI * f;
+  int t, i, j;
+  double x;
+
+  t = (n + 1) % 2; // Even?
+  j = n / 2; // Right midpoint
+  i = j - t; // Left midpoint
+  // If odd, skip middle point (t = 0), because x = 1
+  t = (t) ? 1 : 2;
+  for (; j < n; t += 2, --i, ++j)
+  {
+    x = t * w;
+    x = sin(x) / x;
+    sig[i] *= x;
+    sig[j] *= x;
   }
 }
 
@@ -384,19 +398,39 @@ double SDT_weightedAverage(double *values, double *weights, unsigned int n) {
     sumValues += values[i] * weights[i];
     sumWeights += weights[i];
   }
-  return sumValues / sumWeights;
+  return (sumWeights > SDT_MICRO)? sumValues / sumWeights : 0.0;
 }
 
 double SDT_wrap(double x) {
+  x += SDT_PI;
   x = fmod(x, SDT_TWOPI);
   if (x < 0.0) x += SDT_TWOPI;
   return x - SDT_PI;
 }
 
-void SDT_zeros(double *sig, int n) {
-  int i;
-  
-  for (i = 0; i < n; i++) {
-    sig[i] = 0.0;
-  }
+void SDT_zeros(double *sig, int n) { memset((void *) sig, 0, sizeof(double) * n); }
+
+#define _SDT_printTime_buf_LEN 23
+char _SDT_printTime_buf[_SDT_printTime_buf_LEN];
+static const char _SDT_printTime_fmt[] = "[%Y-%m-%d %H:%M:%S]";
+
+int _SDT_printTime(int (* print_func)(const char *, ...))
+{
+  time_t t = time(NULL);
+  struct tm *tm = localtime(&t);
+  strftime(_SDT_printTime_buf, sizeof(char) * _SDT_printTime_buf_LEN, _SDT_printTime_fmt, tm);
+  return print_func(_SDT_printTime_buf);
+  return 0;
+}
+
+int _SDT_eprintf(const char *fmt, ...) {
+    va_list args;
+    va_start(args, fmt);
+    int r = vfprintf(stderr, fmt, args);
+    va_end(args);
+    return r;
+}
+
+int SDT_isDebug() {
+  return SDT_DEBUG_IF_ELSE(1, 0);
 }

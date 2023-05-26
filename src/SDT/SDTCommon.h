@@ -94,6 +94,45 @@ SDTCommon.h should always be included when using other SDT modules.
 /** @brief Gain factor roughly corresponding to a -90dB attenuation */
 #define SDT_QUIET         0.00003
 
+/** @brief Print current time
+@param[in] print_func Print function */
+extern int _SDT_printTime(int (* print_func)(const char *, ...));
+
+/** @brief Print to standard error */
+extern int _SDT_eprintf(const char *fmt, ...);
+
+#ifdef SDT_DEBUG
+/** @brief Conditionally include code in debug or non-debug build
+@param[in] X Code to include in debug builds
+@param[in] Y Code to include in non-debug builds */
+#define SDT_DEBUG_IF_ELSE(X, Y) X
+#else
+/** @brief Conditionally include code in debug or non-debug build
+@param[in] X Code to include in debug builds
+@param[in] Y Code to include in non-debug builds */
+#define SDT_DEBUG_IF_ELSE(X, Y) Y
+#endif
+
+/** @brief Exclude wrapped code from any non-debug build
+@param[in] X Code to include in debug builds only */
+#define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X,)
+
+/** @brief Log in debug mode only
+@param[in] PRINT_FUNC Print function
+@param[in] MSG Message: free text, not string */
+#define SDT_DEBUG_LOG(PRINT_FUNC, MSG) SDT_DEBUG_ONLY({\
+_SDT_printTime(PRINT_FUNC);\
+PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
+PRINT_FUNC(MSG);})
+
+/** @brief Log in debug mode only, with format arguments
+@param[in] PRINT_FUNC Print function
+@param[in] MSG Message: free text, not string */
+#define SDT_DEBUG_LOGA(PRINT_FUNC, MSG, ...) SDT_DEBUG_ONLY({\
+_SDT_printTime(PRINT_FUNC);\
+PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
+PRINT_FUNC(MSG, __VA_ARGS__);})
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -197,6 +236,9 @@ extern void SDT_haar(double *sig, long n);
 @param[in,out] sig incoming signals
 @param[in] n window size */
 extern void SDT_ihaar(double *sig, long n);
+
+/** @brief Returns a true value if SDT has been compiled in debug mode */
+extern int SDT_isDebug();
 
 /** @brief Checks if the selected value is the minimum among its neighbors.
 @param[in] x Array of data
@@ -308,12 +350,12 @@ Computes the signum function.
 @return Signum of x */
 extern int SDT_signum(double x);
 
-/** @brief Applies a sinc window (sin(wt)/(wt)) to a chunk of samples.
-Applies a sinc window (sin(wt)/(wt)) to a chunk of samples.
+/** @brief Applies a sinc window (sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
+Applies a sinc window (sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
 @param[in,out] sig samples to window
-@param[in] w sinc parameter
+@param[in] f digital frequency (cycles per sample)
 @param[in] n window size */
-extern void SDT_sinc(double *sig, double w, int n);
+extern void SDT_sinc(double *sig, double f, int n);
 
 /** @brief Performs quadratic interpolation to estimate the true position of a peak.
 Performs quadratic interpolation to estimate the true position of a peak.
@@ -335,6 +377,7 @@ extern double SDT_truePeakValue(double *sig, int peak);
 @param[in] n Length of the arrays
 @return Arithmetic mean of the values array weighted by the weights array */
 extern double SDT_weightedAverage(double *values, double *weights, unsigned int n);
+
 /** @brief Wraps a phase in the range -pi/pi.
 Wraps a phase in the range -pi/pi.
 @param[x] unwrapped phase
