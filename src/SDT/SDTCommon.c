@@ -13,7 +13,8 @@ double SDT_timeStep = 0.0;
 
 void SDT_setSampleRate(double sampleRate) {
   SDT_sampleRate = sampleRate;
-  SDT_timeStep = 1.0 / sampleRate;
+  if (SDT_sampleRate > SDT_MICRO)
+    SDT_timeStep = 1.0 / sampleRate;
 }
 
 unsigned int SDT_argMax(double *x, unsigned int n, double *maxOut) {
