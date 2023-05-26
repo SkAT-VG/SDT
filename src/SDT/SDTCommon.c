@@ -1,20 +1,19 @@
+#include "SDTCommon.h"
 #include <assert.h>
 #include <limits.h>
 #include <math.h>
+#include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
 #include <time.h>
-#include "SDTCommon.h"
 
 double SDT_sampleRate = 0.0;
 double SDT_timeStep = 0.0;
 
 void SDT_setSampleRate(double sampleRate) {
   SDT_sampleRate = sampleRate;
-  if (SDT_sampleRate > SDT_MICRO)
-    SDT_timeStep = 1.0 / sampleRate;
+  if (SDT_sampleRate > SDT_MICRO) SDT_timeStep = 1.0 / sampleRate;
 }
 
 unsigned int SDT_argMax(double *x, unsigned int n, double *maxOut) {
@@ -62,10 +61,10 @@ double SDT_average(double *x, unsigned int n) {
 
 unsigned int SDT_bitReverse(unsigned int u, unsigned int bits) {
   u = ((u >> 0x01) & 0x55555555) | ((u & 0x55555555) << 0x01);
-  u = ((u >> 0x02) & 0x33333333) | ((u & 0x33333333) << 0x02); 
+  u = ((u >> 0x02) & 0x33333333) | ((u & 0x33333333) << 0x02);
   u = ((u >> 0x04) & 0x0F0F0F0F) | ((u & 0x0F0F0F0F) << 0x04);
   u = ((u >> 0x08) & 0x00FF00FF) | ((u & 0x00FF00FF) << 0x08);
-  u = ( u >> 0x10              ) | ( u               << 0x10);
+  u = (u >> 0x10) | (u << 0x10);
   return u >> (sizeof(u) * CHAR_BIT - bits);
 }
 
@@ -83,14 +82,14 @@ void SDT_blackman(double *sig, int n) {
 }
 
 long SDT_clip(long x, long min, long max) {
-  if (x < min) x = min;
-  else if (x > max) x = max;
+  if (x < min)
+    x = min;
+  else if (x > max)
+    x = max;
   return x;
 }
 
-double SDT_expRand(double lambda) {
-  return -log(1.0 - SDT_frand()) / lambda;
-}
+double SDT_expRand(double lambda) { return -log(1.0 - SDT_frand()) / lambda; }
 
 double SDT_fclip(double x, double min, double max) {
   x = fmax(min, x);
@@ -98,14 +97,12 @@ double SDT_fclip(double x, double min, double max) {
   return x;
 }
 
-double SDT_frand() {
-  return rand() / ((double)RAND_MAX + 1);
-}
+double SDT_frand() { return rand() / ((double)RAND_MAX + 1); }
 
 void SDT_gaussian1D(double *x, double sigma, int n) {
   double mid, sum, det, num;
   int i;
-  
+
   mid = 0.5 * n;
   sum = 0.0;
   det = 2.0 * sigma * sigma * n;
@@ -119,9 +116,7 @@ void SDT_gaussian1D(double *x, double sigma, int n) {
   }
 }
 
-double SDT_gravity(double mass) {
-  return SDT_EARTH * mass;
-}
+double SDT_gravity(double mass) { return SDT_EARTH * mass; }
 
 void SDT_hanning(double *sig, int n) {
   int i, j;
@@ -138,8 +133,8 @@ void SDT_hanning(double *sig, int n) {
 void SDT_haar(double *sig, long n) {
   double tmp[n];
   long x, i, j, k, l;
-  
-  memcpy(tmp, sig, n * sizeof(double)); 
+
+  memcpy(tmp, sig, n * sizeof(double));
   n /= 2;
   for (x = 0; x < n; x++) {
     i = x;
@@ -154,8 +149,8 @@ void SDT_haar(double *sig, long n) {
 void SDT_ihaar(double *sig, long n) {
   double tmp[n];
   long x, i, j, k, l;
-  
-  memcpy(tmp, sig, n * sizeof(double)); 
+
+  memcpy(tmp, sig, n * sizeof(double));
   n /= 2;
   for (x = 0; x < n; x++) {
     i = 2 * x;
@@ -227,7 +222,7 @@ double SDT_normalize(double x, double min, double max) {
 void SDT_normalizeWindow(double *sig, int n) {
   double sum;
   int i;
-  
+
   sum = 0.0;
   for (i = 0; i < n; i++) {
     sum += sig[i];
@@ -239,7 +234,7 @@ void SDT_normalizeWindow(double *sig, int n) {
 
 void SDT_ones(double *sig, int n) {
   int i;
-  
+
   for (i = 0; i < n; i++) {
     sig[i] = 1.0;
   }
@@ -252,7 +247,7 @@ double SDT_rank(double *x, int n, int k) {
   for (i = 0; i < n; i++) {
     a[i] = x[i];
   }
-  
+
   l = 0;
   r = n - 1;
   while (l < r) {
@@ -280,7 +275,7 @@ double SDT_rank(double *x, int n, int k) {
 void SDT_removeDC(double *sig, int n) {
   double avg;
   int i;
-  
+
   avg = 0.0;
   for (i = 0; i < n; i++) {
     avg += sig[i];
@@ -294,12 +289,13 @@ void SDT_removeDC(double *sig, int n) {
 int SDT_roi(double *sig, int *peaks, int *bounds, int d, int n) {
   int i, j, isPeak, nPeaks;
   double min;
-  
+
   nPeaks = 0;
   for (i = 0; i < n; i++) {
     isPeak = 1;
     for (j = 1; j <= d; j++) {
-      if ((i - j >= 0 && sig[i-j] >= sig[i]) || (i + j < n && sig[i+j] >= sig[i])) {
+      if ((i - j >= 0 && sig[i - j] >= sig[i]) ||
+          (i + j < n && sig[i + j] >= sig[i])) {
         isPeak = 0;
         break;
       }
@@ -332,37 +328,39 @@ double SDT_samplesInAir_inv(double samples) {
   return samples * SDT_MACH1 / SDT_sampleRate;
 }
 
-double SDT_scale(double x, double srcMin, double srcMax,
-                 double dstMin, double dstMax, double gamma) {
-  return pow((x - srcMin) / (srcMax - srcMin), gamma) * (dstMax - dstMin) + dstMin;
+double SDT_scale(double x, double srcMin, double srcMax, double dstMin,
+                 double dstMax, double gamma) {
+  return pow((x - srcMin) / (srcMax - srcMin), gamma) * (dstMax - dstMin) +
+         dstMin;
 }
 
 int SDT_signum(double x) {
   int result;
-  
-  if (x < 0) result = -1;
-  else if (x == 0) result = 0;
-  else result = 1;
+
+  if (x < 0)
+    result = -1;
+  else if (x == 0)
+    result = 0;
+  else
+    result = 1;
   return result;
 }
 
 void SDT_sinc(double *sig, double f, int n) {
   // Avoid division by zero
-  if (fabs(f) < SDT_MICRO)
-    return;
+  if (fabs(f) < SDT_MICRO) return;
   /* Multiply by PI, but t increases by 2. So, the effective
   ** angular velocity id 2 PI f radians per sample */
   const double w = SDT_PI * f;
   int t, i, j;
   double x;
 
-  t = (n + 1) % 2; // Even?
-  j = n / 2; // Right midpoint
-  i = j - t; // Left midpoint
+  t = (n + 1) % 2;  // Even?
+  j = n / 2;        // Right midpoint
+  i = j - t;        // Left midpoint
   // If odd, skip middle point (t = 0), because x = 1
   t = (t) ? 1 : 2;
-  for (; j < n; t += 2, --i, ++j)
-  {
+  for (; j < n; t += 2, --i, ++j) {
     x = t * w;
     x = sin(x) / x;
     sig[i] *= x;
@@ -372,7 +370,7 @@ void SDT_sinc(double *sig, double f, int n) {
 
 double SDT_truePeakPos(double *sig, int peak) {
   double a, b, c;
-  
+
   a = sig[peak - 1];
   b = sig[peak];
   c = sig[peak + 1];
@@ -381,7 +379,7 @@ double SDT_truePeakPos(double *sig, int peak) {
 
 double SDT_truePeakValue(double *sig, int peak) {
   double a, b, c;
-  
+
   a = sig[peak - 1];
   b = sig[peak];
   c = sig[peak + 1];
@@ -398,7 +396,7 @@ double SDT_weightedAverage(double *values, double *weights, unsigned int n) {
     sumValues += values[i] * weights[i];
     sumWeights += weights[i];
   }
-  return (sumWeights > SDT_MICRO)? sumValues / sumWeights : 0.0;
+  return (sumWeights > SDT_MICRO) ? sumValues / sumWeights : 0.0;
 }
 
 double SDT_wrap(double x) {
@@ -408,29 +406,29 @@ double SDT_wrap(double x) {
   return x - SDT_PI;
 }
 
-void SDT_zeros(double *sig, int n) { memset((void *) sig, 0, sizeof(double) * n); }
+void SDT_zeros(double *sig, int n) {
+  memset((void *)sig, 0, sizeof(double) * n);
+}
 
 #define _SDT_printTime_buf_LEN 23
 char _SDT_printTime_buf[_SDT_printTime_buf_LEN];
 static const char _SDT_printTime_fmt[] = "[%Y-%m-%d %H:%M:%S]";
 
-int _SDT_printTime(int (* print_func)(const char *, ...))
-{
+int _SDT_printTime(int (*print_func)(const char *, ...)) {
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
-  strftime(_SDT_printTime_buf, sizeof(char) * _SDT_printTime_buf_LEN, _SDT_printTime_fmt, tm);
+  strftime(_SDT_printTime_buf, sizeof(char) * _SDT_printTime_buf_LEN,
+           _SDT_printTime_fmt, tm);
   return print_func(_SDT_printTime_buf);
   return 0;
 }
 
 int _SDT_eprintf(const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    int r = vfprintf(stderr, fmt, args);
-    va_end(args);
-    return r;
+  va_list args;
+  va_start(args, fmt);
+  int r = vfprintf(stderr, fmt, args);
+  va_end(args);
+  return r;
 }
 
-int SDT_isDebug() {
-  return SDT_DEBUG_IF_ELSE(1, 0);
-}
+int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }

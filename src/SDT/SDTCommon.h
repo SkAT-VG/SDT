@@ -1,70 +1,70 @@
 /** @mainpage
-* The 'Sound Design Toolkit' (SDT) is an open-source (GPLv3) framework for
-* ecologically founded sound synthesis and design. Think of it as a virtual
-* Foley-box!
-* It can simulate various acoustic phenomena arising from solid interactions
-* (e.g. collision, rubbing, rolling, scraping), liquids (e.g. dripping,
-* streaming water), gasses (e.g. explosions, blowing wind), and machines (e.g.
-* combustion engines, electric motors).
-* The library consists of physically informed sound synthesis models, audio
-* processing algorithms and analysis routines.
-*
-* The SDT is mainly aimed at research and education in 'Sonic Interaction Design'
-* (SID), but it's been successfully used in musical contexts as well.
-*
-* The SDT sound synthesis algorithms have been implemented according to three
-* main points:
-* 1. auditory perceptual relevance;
-* 2. cartoonification, i.e. simplification and exaggeration of the underlying
-* physics in order to increase both computational efficiency and perceptual
-* clarity;
-* 3. parametric temporal control, which ensures appropriate, natural and
-* expressive articulations of sonic processes.
-*
-* Developed with the contribution of the following EU-projects:
-*    2001-2003 'SOb' http://www.soundobject.org/
-*    2006-2009 'CLOSED' http://closed.ircam.fr/
-*    2008-2011 'NIW' http://www.soundobject.org/niw/
-*    2014-2016 'SkAT-VG' http://www.skatvg.eu/
-*
-* Authors and contributors (either programmers or designers) in alphabetical
-* order:
-*    Federico Avanzini (federico.avanzini@di.unimi.it)
-*    Stefano Baldan (singintime@gmail.com)
-*    Nicola Bernardini
-*    Gianpaolo Borin
-*    Carlo Drioli (carlo.drioli@uniud.it)
-*    Stefano Delle Monache (s.dellemonache@tudelft.nl)
-*    Delphine Devallez
-*    Federico Fontana (federico.fontana@uniud.it)
-*    Laura Ottaviani
-*    Stefano Papetti (stefano.papetti@zhdk.ch)
-*    Pietro Polotti (pietro.polotti@conts.it)
-*    Matthias Rath
-*    Davide Rocchesso (davide.rocchesso@unipa.it)
-*    Stefania Serafin (sts@create.aau.dk)
-*    Marco Tiraboschi (marco.tiraboschi@unimi.it)
-*
-* Contact: SoundDesignToolkit@gmail.com
-*
-* This file is part of the Sound Design Toolkit (SDT).
-*
-* The SDT is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
-*
-* The SDT is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with the SDT.  If not, see <https://www.gnu.org/licenses/>.
-*
-* The official SDT distribution contains copy of the GNU General Public License
-* in the file COPYING.txt
-*****************************************************************************/
+ * The 'Sound Design Toolkit' (SDT) is an open-source (GPLv3) framework for
+ * ecologically founded sound synthesis and design. Think of it as a virtual
+ * Foley-box!
+ * It can simulate various acoustic phenomena arising from solid interactions
+ * (e.g. collision, rubbing, rolling, scraping), liquids (e.g. dripping,
+ * streaming water), gasses (e.g. explosions, blowing wind), and machines (e.g.
+ * combustion engines, electric motors).
+ * The library consists of physically informed sound synthesis models, audio
+ * processing algorithms and analysis routines.
+ *
+ * The SDT is mainly aimed at research and education in 'Sonic Interaction
+ *Design' (SID), but it's been successfully used in musical contexts as well.
+ *
+ * The SDT sound synthesis algorithms have been implemented according to three
+ * main points:
+ * 1. auditory perceptual relevance;
+ * 2. cartoonification, i.e. simplification and exaggeration of the underlying
+ * physics in order to increase both computational efficiency and perceptual
+ * clarity;
+ * 3. parametric temporal control, which ensures appropriate, natural and
+ * expressive articulations of sonic processes.
+ *
+ * Developed with the contribution of the following EU-projects:
+ *    2001-2003 'SOb' http://www.soundobject.org/
+ *    2006-2009 'CLOSED' http://closed.ircam.fr/
+ *    2008-2011 'NIW' http://www.soundobject.org/niw/
+ *    2014-2016 'SkAT-VG' http://www.skatvg.eu/
+ *
+ * Authors and contributors (either programmers or designers) in alphabetical
+ * order:
+ *    Federico Avanzini (federico.avanzini@di.unimi.it)
+ *    Stefano Baldan (singintime@gmail.com)
+ *    Nicola Bernardini
+ *    Gianpaolo Borin
+ *    Carlo Drioli (carlo.drioli@uniud.it)
+ *    Stefano Delle Monache (s.dellemonache@tudelft.nl)
+ *    Delphine Devallez
+ *    Federico Fontana (federico.fontana@uniud.it)
+ *    Laura Ottaviani
+ *    Stefano Papetti (stefano.papetti@zhdk.ch)
+ *    Pietro Polotti (pietro.polotti@conts.it)
+ *    Matthias Rath
+ *    Davide Rocchesso (davide.rocchesso@unipa.it)
+ *    Stefania Serafin (sts@create.aau.dk)
+ *    Marco Tiraboschi (marco.tiraboschi@unimi.it)
+ *
+ * Contact: SoundDesignToolkit@gmail.com
+ *
+ * This file is part of the Sound Design Toolkit (SDT).
+ *
+ * The SDT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The SDT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with the SDT.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * The official SDT distribution contains copy of the GNU General Public License
+ * in the file COPYING.txt
+ *****************************************************************************/
 
 /** @file SDTCommon.h
 @defgroup common SDTCommon.h: Common variables and functions
@@ -76,27 +76,29 @@ SDTCommon.h should always be included when using other SDT modules.
 #define SDT_COMMON_H
 
 /** @brief SDT version number */
-#define SDT_ver          082
+#define SDT_ver 082
 /** @brief Value of Pi */
-#define SDT_PI           3.141592653589793
+#define SDT_PI 3.141592653589793
 /** @brief Value of 2 * Pi */
-#define SDT_TWOPI        6.283185307179586
+#define SDT_TWOPI 6.283185307179586
 /** @brief Euler number */
-#define SDT_EULER        2.718281828459045
+#define SDT_EULER 2.718281828459045
 /** @brief Square root of 2 */
-#define SDT_SQRT2        1.4142135623730951
-/** @brief Mach 1, speed of sound in air under normal atmospheric conditions (m/s) */
-#define SDT_MACH1      340.29
+#define SDT_SQRT2 1.4142135623730951
+/** @brief Mach 1, speed of sound in air under normal atmospheric conditions
+ * (m/s) */
+#define SDT_MACH1 340.29
 /** @brief Earth gravity (N/Kg) */
-#define SDT_EARTH        9.81
-/** @brief One millionth, small value often used instead of 0 to avoid division errors */
-#define SDT_MICRO        0.000001
+#define SDT_EARTH 9.81
+/** @brief One millionth, small value often used instead of 0 to avoid division
+ * errors */
+#define SDT_MICRO 0.000001
 /** @brief Gain factor roughly corresponding to a -90dB attenuation */
-#define SDT_QUIET         0.00003
+#define SDT_QUIET 0.00003
 
 /** @brief Print current time
 @param[in] print_func Print function */
-extern int _SDT_printTime(int (* print_func)(const char *, ...));
+extern int _SDT_printTime(int (*print_func)(const char *, ...));
 
 /** @brief Print to standard error */
 extern int _SDT_eprintf(const char *fmt, ...);
@@ -115,23 +117,27 @@ extern int _SDT_eprintf(const char *fmt, ...);
 
 /** @brief Exclude wrapped code from any non-debug build
 @param[in] X Code to include in debug builds only */
-#define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X,)
+#define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X, )
 
 /** @brief Log in debug mode only
 @param[in] PRINT_FUNC Print function
 @param[in] MSG Message: free text, not string */
-#define SDT_DEBUG_LOG(PRINT_FUNC, MSG) SDT_DEBUG_ONLY({\
-_SDT_printTime(PRINT_FUNC);\
-PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
-PRINT_FUNC(MSG);})
+#define SDT_DEBUG_LOG(PRINT_FUNC, MSG)                          \
+  SDT_DEBUG_ONLY({                                              \
+    _SDT_printTime(PRINT_FUNC);                                 \
+    PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__); \
+    PRINT_FUNC(MSG);                                            \
+  })
 
 /** @brief Log in debug mode only, with format arguments
 @param[in] PRINT_FUNC Print function
 @param[in] MSG Message: free text, not string */
-#define SDT_DEBUG_LOGA(PRINT_FUNC, MSG, ...) SDT_DEBUG_ONLY({\
-_SDT_printTime(PRINT_FUNC);\
-PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__);\
-PRINT_FUNC(MSG, __VA_ARGS__);})
+#define SDT_DEBUG_LOGA(PRINT_FUNC, MSG, ...)                    \
+  SDT_DEBUG_ONLY({                                              \
+    _SDT_printTime(PRINT_FUNC);                                 \
+    PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__); \
+    PRINT_FUNC(MSG, __VA_ARGS__);                               \
+  })
 
 #ifdef __cplusplus
 extern "C" {
@@ -180,7 +186,8 @@ Applies a Blackman window to a chunk of samples.
 extern void SDT_blackman(double *sig, int n);
 
 /** @brief Clips an integer value.
-Limits the range of an integer value between a given lower bound and upper bound.
+Limits the range of an integer value between a given lower bound and upper
+bound.
 @param[in] x Integer value to clip
 @param[in] min Lower limit
 @param[in] max Upper limit
@@ -194,7 +201,8 @@ Generates random numbers, following an exponential distribution.
 extern double SDT_expRand(double lambda);
 
 /** @brief Clips a floating point value.
-Limits the range of a floating point value between a given lower bound and upper bound.
+Limits the range of a floating point value between a given lower bound and upper
+bound.
 @param[in] x Floating point value to clip
 @param[in] min Lower limit
 @param[in] max Upper limit
@@ -207,9 +215,9 @@ Generates random numbers, following a uniform distribution.
 extern double SDT_frand();
 
 /** @brief One-dimensional Gaussian kernel.
-One-dimensional Gaussian kernel. The Gaussian function is computed in the [-1,1] interval
-with 0 mean and the given standard deviation. The output is normalized so that the sum of
-all samples is equal to 1.
+One-dimensional Gaussian kernel. The Gaussian function is computed in the [-1,1]
+interval with 0 mean and the given standard deviation. The output is normalized
+so that the sum of all samples is equal to 1.
 @param[out] x pointer to the kernel samples
 @param[in] sigma standard deviation of the Gaussian function
 @param[in] n kernel size */
@@ -227,12 +235,14 @@ Applies a Hanning window to a chunk of samples.
 @param[in] n window size */
 extern void SDT_hanning(double *sig, int n);
 
-/** @brief Computes a direct Haar Wavelet Transform of the incoming signal (in place).
+/** @brief Computes a direct Haar Wavelet Transform of the incoming signal (in
+place).
 @param[in,out] sig incoming signals
 @param[in] n window size */
 extern void SDT_haar(double *sig, long n);
 
-/** @brief Computes an inverse Haar Wavelet Transform of the incoming signal (in place).
+/** @brief Computes an inverse Haar Wavelet Transform of the incoming signal (in
+place).
 @param[in,out] sig incoming signals
 @param[in] n window size */
 extern void SDT_ihaar(double *sig, long n);
@@ -244,14 +254,16 @@ extern int SDT_isDebug();
 @param[in] x Array of data
 @param[in] i Index of the selected value
 @param[in] radius Number of neighbors to check, for each direction
-@return 1 if the selected value is less than its left neighbors, and less than or equal to its right neighbors. 0 otherwise */
+@return 1 if the selected value is less than its left neighbors, and less than
+or equal to its right neighbors. 0 otherwise */
 extern int SDT_isHole(double *x, unsigned int i, unsigned int radius);
 
 /** @brief Checks if the selected value is the maximum among its neighbors.
 @param[in] x Array of data
 @param[in] i Index of the selected value
 @param[in] radius Number of neighbors to check, for each direction
-@return 1 if the selected value is greater than its left neighbors, and greater than or equal to its right neighbors. 0 otherwise */
+@return 1 if the selected value is greater than its left neighbors, and greater
+than or equal to its right neighbors. 0 otherwise */
 extern int SDT_isPeak(double *x, unsigned int i, unsigned int radius);
 
 /** @brief Computes kinetic energy.
@@ -315,14 +327,15 @@ Finds regions of influence (local maxima and minima) in a buffer.
 @param[in] sig pointer to the buffer
 @param[out] peaks indexes of the local maxima in the buffer
 @param[out] bounds indexes of the local minima in the buffer
-@param[i] d samples have to be greater than d neighbors to the left and to the right to be considered local maxima
+@param[i] d samples have to be greater than d neighbors to the left and to the
+right to be considered local maxima
 @param[in] n buffer size */
 extern int SDT_roi(double *sig, int *peaks, int *bounds, int d, int n);
 
 /** @brief Time needed to travel the given distance at Mach 1.
-Computes the amount of time, in samples, needed by a sound wave propagating in air
-to travel a given distance. Particularly useful to set the delay times of comb filters
-and/or digital waveguides representing hollow cavities.
+Computes the amount of time, in samples, needed by a sound wave propagating in
+air to travel a given distance. Particularly useful to set the delay times of
+comb filters and/or digital waveguides representing hollow cavities.
 @param[in] length Distance (m)
 @return Amount of samples to travel the distance at Mach 1 */
 extern double SDT_samplesInAir(double length);
@@ -340,9 +353,10 @@ Rescales a value from a source range to a target range.
 @param[in] dstMin Lower bound of rescaled value
 @param[in] dstMax Upper bound of rescaled value
 @param[in] gamma Gamma factor
-@return Value rescaled from [srcMin, srcMax] to [dstMin, dstMax] with gamma factor \c gamma */
-extern double SDT_scale(double x, double srcMin, double srcMax,
-                        double dstMin, double dstMax, double gamma);
+@return Value rescaled from [srcMin, srcMax] to [dstMin, dstMax] with gamma
+factor \c gamma */
+extern double SDT_scale(double x, double srcMin, double srcMax, double dstMin,
+                        double dstMax, double gamma);
 
 /** @brief Computes the signum function.
 Computes the signum function.
@@ -357,26 +371,29 @@ Applies a sinc window (sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
 @param[in] n window size */
 extern void SDT_sinc(double *sig, double f, int n);
 
-/** @brief Performs quadratic interpolation to estimate the true position of a peak.
-Performs quadratic interpolation to estimate the true position of a peak.
+/** @brief Performs quadratic interpolation to estimate the true position of a
+peak. Performs quadratic interpolation to estimate the true position of a peak.
 @param[in] sig signal buffer
 @param[in] peak index of a local maximum
 @return true peak position */
 extern double SDT_truePeakPos(double *sig, int peak);
 
-/** @brief Performs quadratic interpolation to estimate the true amplitude value of a peak.
-Performs quadratic interpolation to estimate the true amplitude value of a peak.
+/** @brief Performs quadratic interpolation to estimate the true amplitude value
+of a peak. Performs quadratic interpolation to estimate the true amplitude value
+of a peak.
 @param[in] sig signal buffer
 @param[in] peak index of a local maximum
 @return true peak value */
 extern double SDT_truePeakValue(double *sig, int peak);
 
-/** @brief Returns the arithmetic mean of an array of values weighted by the weights array
+/** @brief Returns the arithmetic mean of an array of values weighted by the
+weights array
 @param[in] values Pointer to the data array
 @param[in] weights Pointer to the weights array
 @param[in] n Length of the arrays
 @return Arithmetic mean of the values array weighted by the weights array */
-extern double SDT_weightedAverage(double *values, double *weights, unsigned int n);
+extern double SDT_weightedAverage(double *values, double *weights,
+                                  unsigned int n);
 
 /** @brief Wraps a phase in the range -pi/pi.
 Wraps a phase in the range -pi/pi.

@@ -1,8 +1,8 @@
-#include "SDT/SDTCommon.h"
 #include "SDTTestUtils.h"
+#include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
+#include "SDT/SDTCommon.h"
 
 typedef enum SDTRandomSequenceType {
   SDT_RANDOM_INT,
@@ -26,28 +26,20 @@ struct SDTRandomSequence {
   unsigned int base;
 };
 
-void SDTRandomSequence_free(SDTRandomSequence *x)
-{
-  free(x);
-}
+void SDTRandomSequence_free(SDTRandomSequence *x) { free(x); }
 
-void SDTRandomSequence_setBase(SDTRandomSequence *x, unsigned int b)
-{
+void SDTRandomSequence_setBase(SDTRandomSequence *x, unsigned int b) {
   x->base = b;
 }
 
-unsigned int SDTRandomSequence_index(SDTRandomSequence *x)
-{
-  return x->i;
-}
+unsigned int SDTRandomSequence_index(SDTRandomSequence *x) { return x->i; }
 
-unsigned char SDTRandomSequence_done(SDTRandomSequence *x)
-{
+unsigned char SDTRandomSequence_done(SDTRandomSequence *x) {
   return x->i >= x->n;
 }
 
 SDTRandomSequence *SDTRandomSequence_newInt(unsigned int n, int min, int max) {
-  SDTRandomSequence *x = (SDTRandomSequence *) malloc(sizeof(SDTRandomSequence));
+  SDTRandomSequence *x = (SDTRandomSequence *)malloc(sizeof(SDTRandomSequence));
   x->i = 0;
   x->n = n;
   x->a.i = min;
@@ -57,28 +49,23 @@ SDTRandomSequence *SDTRandomSequence_newInt(unsigned int n, int min, int max) {
   return x;
 }
 
-static int SDTRandomSequence_getInt(SDTRandomSequence *x)
-{
+static int SDTRandomSequence_getInt(SDTRandomSequence *x) {
   int left, right, r;
-  if (x->t != SDT_RANDOM_INT)
-  {
-    SDT_DEBUG_LOG(_SDT_eprintf, "[WARNING] Calling SDTRandomSequence_getInt() on a non-integer sequence\n");
-    left = (int) round(x->a.f);
-    right = (int) round(x->b.f);
-  }
-  else
-  {
+  if (x->t != SDT_RANDOM_INT) {
+    SDT_DEBUG_LOG(_SDT_eprintf,
+                  "[WARNING] Calling SDTRandomSequence_getInt() on a "
+                  "non-integer sequence\n");
+    left = (int)round(x->a.f);
+    right = (int)round(x->b.f);
+  } else {
     left = x->a.i;
     right = x->b.i;
   }
-  if (left == right)
-  {
+  if (left == right) {
     left = 0;
-    if (!right)
-      right = 1;
+    if (!right) right = 1;
   }
-  if (left > right)
-  {
+  if (left > right) {
     r = left;
     left = right;
     right = r;
@@ -96,15 +83,14 @@ int SDTRandomSequence_startInt(SDTRandomSequence *x) {
   return SDTRandomSequence_getInt(x);
 }
 
-int SDTRandomSequence_nextInt(SDTRandomSequence *x)
-{
+int SDTRandomSequence_nextInt(SDTRandomSequence *x) {
   x->i = x->i + 1;
   return SDTRandomSequence_getInt(x);
 }
 
-SDTRandomSequence *SDTRandomSequence_newFloat(unsigned int n, float min, float max)
-{
-  SDTRandomSequence *x = (SDTRandomSequence *) malloc(sizeof(SDTRandomSequence));
+SDTRandomSequence *SDTRandomSequence_newFloat(unsigned int n, float min,
+                                              float max) {
+  SDTRandomSequence *x = (SDTRandomSequence *)malloc(sizeof(SDTRandomSequence));
   x->i = 0;
   x->n = n;
   x->a.f = min;
@@ -114,9 +100,9 @@ SDTRandomSequence *SDTRandomSequence_newFloat(unsigned int n, float min, float m
   return x;
 }
 
-SDTRandomSequence *SDTRandomSequence_newLog(unsigned int n, float min, float max)
-{
-  SDTRandomSequence *x = (SDTRandomSequence *) malloc(sizeof(SDTRandomSequence));
+SDTRandomSequence *SDTRandomSequence_newLog(unsigned int n, float min,
+                                            float max) {
+  SDTRandomSequence *x = (SDTRandomSequence *)malloc(sizeof(SDTRandomSequence));
   x->i = 0;
   x->n = n;
   x->a.f = min;
@@ -126,9 +112,9 @@ SDTRandomSequence *SDTRandomSequence_newLog(unsigned int n, float min, float max
   return x;
 }
 
-SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min, float rate)
-{
-  SDTRandomSequence *x = (SDTRandomSequence *) malloc(sizeof(SDTRandomSequence));
+SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min,
+                                            float rate) {
+  SDTRandomSequence *x = (SDTRandomSequence *)malloc(sizeof(SDTRandomSequence));
   x->i = 0;
   x->n = n;
   x->a.f = min;
@@ -138,14 +124,14 @@ SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min, float rat
   return x;
 }
 
-static float SDTRandomSequence_getFloat(SDTRandomSequence *x)
-{
+static float SDTRandomSequence_getFloat(SDTRandomSequence *x) {
   srand(x->i + x->base);
   float r;
-  switch (x->t)
-  {
+  switch (x->t) {
     case SDT_RANDOM_INT:
-      SDT_DEBUG_LOG(_SDT_eprintf, "[WARNING] Calling SDTRandomSequence_getFloat() on an integer sequence\n");
+      SDT_DEBUG_LOG(_SDT_eprintf,
+                    "[WARNING] Calling SDTRandomSequence_getFloat() on an "
+                    "integer sequence\n");
       r = SDT_frand() * (x->b.i - x->a.i) + x->a.i;
       break;
     case SDT_RANDOM_FLOAT:
@@ -158,20 +144,19 @@ static float SDTRandomSequence_getFloat(SDTRandomSequence *x)
       r = SDT_expRand(x->b.f) + x->a.f;
       break;
     default:
-      SDT_DEBUG_LOG(_SDT_eprintf, "[WARNING] Unrecognized SDTRandomSequence type\n");
+      SDT_DEBUG_LOG(_SDT_eprintf,
+                    "[WARNING] Unrecognized SDTRandomSequence type\n");
       r = 0.0f;
   }
   return r;
 }
 
-float SDTRandomSequence_startFloat(SDTRandomSequence *x)
-{
+float SDTRandomSequence_startFloat(SDTRandomSequence *x) {
   x->i = 0;
   return SDTRandomSequence_getFloat(x);
 }
 
-float SDTRandomSequence_nextFloat(SDTRandomSequence *x)
-{
+float SDTRandomSequence_nextFloat(SDTRandomSequence *x) {
   x->i = x->i + 1;
   return SDTRandomSequence_getFloat(x);
 }
