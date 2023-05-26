@@ -401,6 +401,7 @@ double SDT_weightedAverage(double *values, double *weights, unsigned int n) {
 }
 
 double SDT_wrap(double x) {
+  x += SDT_PI;
   x = fmod(x, SDT_TWOPI);
   if (x < 0.0) x += SDT_TWOPI;
   return x - SDT_PI;

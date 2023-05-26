@@ -377,6 +377,7 @@ extern double SDT_truePeakValue(double *sig, int peak);
 @param[in] n Length of the arrays
 @return Arithmetic mean of the values array weighted by the weights array */
 extern double SDT_weightedAverage(double *values, double *weights, unsigned int n);
+
 /** @brief Wraps a phase in the range -pi/pi.
 Wraps a phase in the range -pi/pi.
 @param[x] unwrapped phase
