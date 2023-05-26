@@ -56,30 +56,36 @@ extern float SDTRandomSequence_nextFloat(SDTRandomSequence *x);
 @param[in] min Minimum random number admissible
 @param[in] max Maximum random number admissible
 @return Pointer to the new instance */
-extern SDTRandomSequence *SDTRandomSequence_newInt(unsigned int n, int min, int max);
+extern SDTRandomSequence *SDTRandomSequence_newInt(unsigned int n, int min,
+                                                   int max);
 
 /** @brief Object constructor for float RNG
 @param[in] n Number of numbers in the sequence
 @param[in] min Minimum random number admissible
 @param[in] max Maximum random number admissible
 @return Pointer to the new instance */
-extern SDTRandomSequence *SDTRandomSequence_newFloat(unsigned int n, float min, float max);
+extern SDTRandomSequence *SDTRandomSequence_newFloat(unsigned int n, float min,
+                                                     float max);
 
 /** @brief Object constructor for float RNG with logarithmic scaling
 @param[in] n Number of numbers in the sequence
 @param[in] min Minimum random number admissible
 @param[in] max Maximum random number admissible
 @return Pointer to the new instance */
-extern SDTRandomSequence *SDTRandomSequence_newLog(unsigned int n, float min, float max);
+extern SDTRandomSequence *SDTRandomSequence_newLog(unsigned int n, float min,
+                                                   float max);
 
 /** @brief Object constructor for float RNG with exponential distribution
 @param[in] n Number of numbers in the sequence
 @param[in] min Offset: minimum random number admissible
 @param[in] rate Lambda: rate (inverse scale)
 @return Pointer to the new instance */
-extern SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min, float rate);
+extern SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min,
+                                                   float rate);
 
-#define _FOR_RANDOM_ITER_PROTO(IT, VAR, T, SUFFIX) for(T VAR = SDTRandomSequence_start ## SUFFIX (IT); !SDTRandomSequence_done(IT); VAR = SDTRandomSequence_next ## SUFFIX (IT))
+#define _FOR_RANDOM_ITER_PROTO(IT, VAR, T, SUFFIX)  \
+  for (T VAR = SDTRandomSequence_start##SUFFIX(IT); \
+       !SDTRandomSequence_done(IT); VAR = SDTRandomSequence_next##SUFFIX(IT))
 
 /** @brief Iterate integer values
 @param[in] IT SDTRandomSequence instance pointer
@@ -89,7 +95,8 @@ extern SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min, fl
 /** @brief Iterate float values
 @param[in] IT SDTRandomSequence instance pointer
 @param[in] VAR Loop variable name */
-#define FOR_RANDOM_ITER_FLOAT(IT, VAR) _FOR_RANDOM_ITER_PROTO(IT, VAR, float, Float)
+#define FOR_RANDOM_ITER_FLOAT(IT, VAR) \
+  _FOR_RANDOM_ITER_PROTO(IT, VAR, float, Float)
 
 /** @brief Log on test enter */
 #define ENTER_LOG() SDT_DEBUG_LOG(_SDT_eprintf, "\n")
@@ -103,7 +110,9 @@ void TestSDT_functionName(CuTest* tc)
 }
 */
 
-#define SDT_TEST_BEGIN() ENTER_LOG();{
+#define SDT_TEST_BEGIN() \
+  ENTER_LOG();           \
+  {
 #define SDT_TEST_END() }
 
 #ifdef __cplusplus
