@@ -397,7 +397,7 @@ double SDT_weightedAverage(double *values, double *weights, unsigned int n) {
     sumValues += values[i] * weights[i];
     sumWeights += weights[i];
   }
-  return sumValues / sumWeights;
+  return (sumWeights > SDT_MICRO)? sumValues / sumWeights : 0.0;
 }
 
 double SDT_wrap(double x) {
