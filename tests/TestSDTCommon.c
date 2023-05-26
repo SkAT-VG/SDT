@@ -764,17 +764,24 @@ void TestSDT_wrap(CuTest* tc)
   SDT_TEST_BEGIN()
   double w;
   SDTRandomSequence *values = SDTRandomSequence_newFloat(2048, -SDT_TWOPI, SDT_TWOPI);
+  // Check random values
   FOR_RANDOM_ITER_FLOAT(values, f)
   {
     w = SDT_wrap(f);
     CuAssert(tc, "Check >= -pi", w >= -SDT_PI);
-    CuAssert(tc, "Check < -pi", w >= -SDT_PI);
+    CuAssert(tc, "Check < -pi", w < SDT_PI);
     CuAssertDblEquals_Msg(tc, "Check difference is a multiple of 2pi", 0.0, fmod(fabs(w - f), SDT_TWOPI), 0.0);
     if (-SDT_PI < f && f < SDT_PI)
     {
       CuAssertDblEquals_Msg(tc, "Check equals if already in bounds", f, w, 0.0);
     }
   }
+  // Check specific values
+  CuAssertDblEquals_Msg(tc, "Check -2pi", SDT_wrap(-SDT_TWOPI), 0.0, 0.0);
+  CuAssertDblEquals_Msg(tc, "Check -pi", SDT_wrap(-SDT_PI), -SDT_PI, 0.0);
+  CuAssertDblEquals_Msg(tc, "Check zero", SDT_wrap(0.0), 0.0, 0.0);
+  CuAssertDblEquals_Msg(tc, "Check pi", SDT_wrap(SDT_PI), -SDT_PI, 0.0);
+  CuAssertDblEquals_Msg(tc, "Check 2pi", SDT_wrap(SDT_TWOPI), 0.0, 0.0);
   SDT_TEST_END()
 }
 
