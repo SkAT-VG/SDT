@@ -345,17 +345,27 @@ int SDT_signum(double x) {
   return result;
 }
 
-void SDT_sinc(double *sig, double w, int n) {
-  int i, j, k;
-  double x, scale;
-    
-  for (i = 0; i < n / 2; i++) {
-    j = n - i - 1;
-    k = n / 2 - i;
-    x = SDT_TWOPI * w * k;
-    scale = sin(x) / x;
-    sig[i] *= scale;
-    sig[j] *= scale;
+void SDT_sinc(double *sig, double f, int n) {
+  // Avoid division by zero
+  if (fabs(f) < SDT_MICRO)
+    return;
+  /* Multiply by PI, but t increases by 2. So, the effective
+  ** angular velocity id 2 PI f radians per sample */
+  const double w = SDT_PI * f;
+  int t, i, j;
+  double x;
+
+  t = (n + 1) % 2; // Even?
+  j = n / 2; // Right midpoint
+  i = j - t; // Left midpoint
+  // If odd, skip middle point (t = 0), because x = 1
+  t = (t) ? 1 : 2;
+  for (; j < n; t += 2, --i, ++j)
+  {
+    x = t * w;
+    x = sin(x) / x;
+    sig[i] *= x;
+    sig[j] *= x;
   }
 }
 

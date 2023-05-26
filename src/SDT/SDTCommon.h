@@ -350,12 +350,12 @@ Computes the signum function.
 @return Signum of x */
 extern int SDT_signum(double x);
 
-/** @brief Applies a sinc window (sin(wt)/(wt)) to a chunk of samples.
-Applies a sinc window (sin(wt)/(wt)) to a chunk of samples.
+/** @brief Applies a sinc window (sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
+Applies a sinc window (sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
 @param[in,out] sig samples to window
-@param[in] w sinc parameter
+@param[in] f digital frequency (cycles per sample)
 @param[in] n window size */
-extern void SDT_sinc(double *sig, double w, int n);
+extern void SDT_sinc(double *sig, double f, int n);
 
 /** @brief Performs quadratic interpolation to estimate the true position of a peak.
 Performs quadratic interpolation to estimate the true position of a peak.
