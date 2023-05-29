@@ -40,14 +40,13 @@ void _TestHelper__SDT_argExtremum(
     CuTest *tc, unsigned int (*find_func)(double *, unsigned int, double *),
     double (*get_func)(double *, unsigned int), int gt) {
   const unsigned int max_size = 16;
-  unsigned int i_m, base = 1;
+  unsigned int i_m;
   double m, a[max_size];
   SDTRandomSequence *sizes = SDTRandomSequence_newInt(512, 1, max_size);
+  SDTRandomSequence *values = SDTRandomSequence_newFloat(0, 0, 1);
   FOR_RANDOM_ITER_INT (sizes, s) {
-    SDTRandomSequence *values = SDTRandomSequence_newFloat(s, 0, 1);
-    SDTRandomSequence_setBase(values, base);
-    FOR_RANDOM_ITER_FLOAT (values, v)
-      a[SDTRandomSequence_index(values)] = (double)v;
+    for (unsigned int i = 0; i < s; ++i)
+      a[i] = SDTRandomSequence_nextFloat(values);
     i_m = find_func(a, s, &m);
     CuAssertDblEquals_Msg(tc, "Check index and value match", a[i_m], m, 0.0);
     CuAssertDblEquals_Msg(tc, "Check find_func and get_func match",
@@ -55,10 +54,9 @@ void _TestHelper__SDT_argExtremum(
     FOR_RANDOM_ITER_FLOAT (values, v)
       CuAssert(tc, "Check comparison with other values",
                (gt) ? m >= v : m <= v);
-    SDTRandomSequence_free(values);
-    base += s;
   }
   SDTRandomSequence_free(sizes);
+  SDTRandomSequence_free(values);
 }
 
 void TestSDT_argMax(CuTest *tc) {
@@ -76,24 +74,22 @@ void TestSDT_argMin(CuTest *tc) {
 void TestSDT_average(CuTest *tc) {
   SDT_TEST_BEGIN()
   const unsigned int max_size = 16;
-  unsigned int base = 1;
   double m, sr, a[max_size];
+  unsigned int base = 1, i;
   SDTRandomSequence *sizes = SDTRandomSequence_newInt(512, 1, max_size);
+  SDTRandomSequence *values = SDTRandomSequence_newFloat(0, 0, 1);
   FOR_RANDOM_ITER_INT (sizes, s) {
-    SDTRandomSequence *values = SDTRandomSequence_newFloat(s, 0, 1);
     SDTRandomSequence_setBase(values, base);
-    FOR_RANDOM_ITER_FLOAT (values, v)
-      a[SDTRandomSequence_index(values)] = (double)v;
+    for (i = 0; i < s; ++i) a[i] = (double)SDTRandomSequence_nextFloat(values);
     m = SDT_average(a, s);
     // Check sum of residuals is zero
     sr = m * s;
-    FOR_RANDOM_ITER_FLOAT (values, v)
-      sr -= v;
-    SDTRandomSequence_free(values);
-    CuAssertDblEquals(tc, sr, 0.0, 0.000000001);
+    for (i = 0; i < s; ++i) sr -= a[i];
+    CuAssertDblEquals(tc, 0.0, sr, 0.000000001);
     base += s;
   }
   SDTRandomSequence_free(sizes);
+  SDTRandomSequence_free(values);
   SDT_TEST_END()
 }
 
@@ -145,6 +141,9 @@ void TestSDT_clip(CuTest *tc) {
         CuAssert(tc, "Check upper limit", y <= b);
       }
     }
+  SDTRandomSequence_free(s_a);
+  SDTRandomSequence_free(s_d);
+  SDTRandomSequence_free(s_x);
   SDT_TEST_END()
 }
 
@@ -183,6 +182,9 @@ void TestSDT_fclip(CuTest *tc) {
         CuAssert(tc, "Check upper limit", y <= b);
       }
     }
+  SDTRandomSequence_free(s_a);
+  SDTRandomSequence_free(s_d);
+  SDTRandomSequence_free(s_x);
   SDT_TEST_END()
 }
 
@@ -290,11 +292,9 @@ void _TestHelper__SDT_isExtremum(CuTest *tc, double baseval, double peakval,
   unsigned int size = 1024, i, j, t, r_i, n, left, right;
   int r[size];
   double a[size];
-  char msg[128],
-      fmt[] =
-          "Check radius=%i (%i/%i) is %srespected %i <- %i -> %i [%f <- %f -> "
-          "%f]",
-      *msg2;
+  char msg[128], *msg2;
+  char fmt[] =
+      "Check radius=%i (%i/%i) is %srespected %i <- %i -> %i [%f <- %f -> %f]";
   unsigned int (*find_func)(double *, unsigned int, double *);
   if (peakval > baseval) {
     find_func = &SDT_argMax;
@@ -522,18 +522,18 @@ void TestSDT_removeDC(CuTest *tc) {
   double a[max_size], avg, tol = 0.000000001;
   SDTRandomSequence *sizes = SDTRandomSequence_newInt(32, 2, max_size);
   SDTRandomSequence *avgs = SDTRandomSequence_newExp(0, 0, 0.5);
-  SDTRandomSequence *values;
+  SDTRandomSequence *values = SDTRandomSequence_newExp(0, 0, 1);
   FOR_RANDOM_ITER_INT (sizes, s) {
     avg = 1 / SDTRandomSequence_nextFloat(avgs);
-    values = SDTRandomSequence_newExp(s, 0, avg);
     for (unsigned int i = 0; i < s; ++i)
-      a[i] = SDTRandomSequence_nextFloat(values);
+      a[i] = SDTRandomSequence_nextFloat(values) * avg;
     CuAssert(tc, "Check non-zero DC", SDT_average(a, s) > tol);
     SDT_removeDC(a, s);
     CuAssertDblEquals_Msg(tc, "Check zero DC", 0.0, SDT_average(a, s), tol);
-    SDTRandomSequence_free(values);
   }
   SDTRandomSequence_free(sizes);
+  SDTRandomSequence_free(avgs);
+  SDTRandomSequence_free(values);
   SDT_TEST_END()
 }
 
@@ -574,19 +574,20 @@ void TestSDT_samplesInAir__SDT_samplesInAir_inv(CuTest *tc) {
                           0.000000001);
   }
   SDTRandomSequence_free(values);
+  SDTRandomSequence_free(multipliers);
   SDT_TEST_END()
 }
 
 void TestSDT_scale(CuTest *tc) {
   SDT_TEST_BEGIN()
-  SDTRandomSequence *evalues = SDTRandomSequence_newFloat(0, 0, 1), *values;
-  double y, srcMin, srcMax, dstMin, dstMax, gamma;
+  SDTRandomSequence *values = SDTRandomSequence_newFloat(0, 0, 1);
+  double x, y, srcMin, srcMax, dstMin, dstMax, gamma;
   for (unsigned int t = 0; t < 32; ++t) {
-    gamma = SDTRandomSequence_nextFloat(evalues);
-    srcMin = SDTRandomSequence_nextFloat(evalues);
-    srcMax = SDTRandomSequence_nextFloat(evalues);
-    dstMin = SDTRandomSequence_nextFloat(evalues);
-    dstMax = SDTRandomSequence_nextFloat(evalues);
+    gamma = SDTRandomSequence_nextFloat(values);
+    srcMin = SDTRandomSequence_nextFloat(values);
+    srcMax = SDTRandomSequence_nextFloat(values);
+    dstMin = SDTRandomSequence_nextFloat(values);
+    dstMax = SDTRandomSequence_nextFloat(values);
     if (srcMax < srcMin) {
       srcMax += srcMin;
       srcMin = srcMax - srcMin;
@@ -599,14 +600,14 @@ void TestSDT_scale(CuTest *tc) {
     }
     CuAssert(tc, "Check srcMin < srcMax", srcMin < srcMax);
     CuAssert(tc, "Check dstMin < dstMax", dstMin < dstMax);
-    values = SDTRandomSequence_newFloat(1024, srcMin, srcMax);
-    FOR_RANDOM_ITER_FLOAT (values, x) {
+    for (unsigned int i = 0; i < 1024; ++i) {
+      x = SDTRandomSequence_nextFloat(values) * (srcMax - srcMin) + srcMin;
       y = SDT_scale(x, srcMin, srcMax, dstMin, dstMax, gamma);
       CuAssert(tc, "Check y <= dstMax", y <= dstMax);
       CuAssert(tc, "Check y >= dstMin", y >= dstMin);
     }
-    SDTRandomSequence_free(values);
   }
+  SDTRandomSequence_free(values);
   SDT_TEST_END()
 }
 
@@ -642,11 +643,12 @@ void TestSDT_sinc__SDT_truePeakPos__SDT_truePeakValue(CuTest *tc) {
     i = SDT_argMax(a, s, 0);
     CuAssertIntEquals_Msg(tc, "Peak in the middle (int)", (s + 1) / 2 - 1, i);
     p = SDT_truePeakPos(a, i);
-    CuAssertDblEquals_Msg(tc, "Peak in the middle", (s - 1.0) / 2.0, p,
+    CuAssertDblEquals_Msg(tc, "Peak in the middle ", (s - 1.0) / 2.0, p,
                           0.000000001);
     p = SDT_truePeakValue(a, i);
     CuAssertDblEquals_Msg(tc, "Peak is 1", 1.0, p, 0.125);
   }
+  SDTRandomSequence_free(freqs);
   SDT_TEST_END()
 }
 
@@ -719,6 +721,8 @@ void TestSDT_wrap(CuTest *tc) {
       CuAssertDblEquals_Msg(tc, "Check equals if already in bounds", f, w, 0.0);
     }
   }
+  SDTRandomSequence_free(values);
+
   // Check specific values
   CuAssertDblEquals_Msg(tc, "Check -2pi", SDT_wrap(-SDT_TWOPI), 0.0, 0.0);
   CuAssertDblEquals_Msg(tc, "Check -pi", SDT_wrap(-SDT_PI), -SDT_PI, 0.0);
