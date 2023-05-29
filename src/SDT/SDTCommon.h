@@ -108,6 +108,10 @@ extern int _SDT_eprintf(const char *fmt, ...);
 @param[in] X Code to include in debug builds
 @param[in] Y Code to include in non-debug builds */
 #define SDT_DEBUG_IF_ELSE(X, Y) X
+
+#ifndef SDT_MEMORYTRACK_INCLUDE
+#include "SDTMemoryTrack.h"
+#endif
 #else
 /** @brief Conditionally include code in debug or non-debug build
 @param[in] X Code to include in debug builds
@@ -119,24 +123,33 @@ extern int _SDT_eprintf(const char *fmt, ...);
 @param[in] X Code to include in debug builds only */
 #define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X, )
 
+/** @brief Print prefix for debug logs
+@param[in] PRINT_FUNC Print function
+@param[in] FILE File name
+@param[in] LINE Line number
+@param[in] FUNC Function name */
+#define SDT_LOG_PREFIX(PRINT_FUNC, FILE, LINE, FUNC) \
+  {                                                  \
+    _SDT_printTime(PRINT_FUNC);                      \
+    PRINT_FUNC(" %s:%d %s() \t", FILE, LINE, FUNC);  \
+  }
+
 /** @brief Log in debug mode only
 @param[in] PRINT_FUNC Print function
 @param[in] MSG Message: free text, not string */
-#define SDT_DEBUG_LOG(PRINT_FUNC, MSG)                          \
-  SDT_DEBUG_ONLY({                                              \
-    _SDT_printTime(PRINT_FUNC);                                 \
-    PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__); \
-    PRINT_FUNC(MSG);                                            \
+#define SDT_DEBUG_LOG(PRINT_FUNC, MSG)                        \
+  SDT_DEBUG_ONLY({                                            \
+    SDT_LOG_PREFIX(PRINT_FUNC, __FILE__, __LINE__, __func__); \
+    PRINT_FUNC(MSG);                                          \
   })
 
 /** @brief Log in debug mode only, with format arguments
 @param[in] PRINT_FUNC Print function
 @param[in] MSG Message: free text, not string */
-#define SDT_DEBUG_LOGA(PRINT_FUNC, MSG, ...)                    \
-  SDT_DEBUG_ONLY({                                              \
-    _SDT_printTime(PRINT_FUNC);                                 \
-    PRINT_FUNC(" %s:%d %s() \t", __FILE__, __LINE__, __func__); \
-    PRINT_FUNC(MSG, __VA_ARGS__);                               \
+#define SDT_DEBUG_LOGA(PRINT_FUNC, MSG, ...)                  \
+  SDT_DEBUG_ONLY({                                            \
+    SDT_LOG_PREFIX(PRINT_FUNC, __FILE__, __LINE__, __func__); \
+    PRINT_FUNC(MSG, __VA_ARGS__);                             \
   })
 
 #ifdef __cplusplus
