@@ -1,3 +1,6 @@
+#include "CuTest.h"
+#include "SDT/SDTCommon.h"
+
 /** @file SDTTestUtils.h
 @defgroup test_utils SDTTestUtils.h: Utilities for tests
 @{ */
@@ -110,10 +113,24 @@ void TestSDT_functionName(CuTest* tc)
 }
 */
 
+#ifdef SDT_DEBUG
+#define SDT_TEST_BEGIN() \
+  _SDT_resetArena();     \
+  ENTER_LOG();           \
+  {
+#define SDT_TEST_END()                                                  \
+  size_t __arena_size = _SDT_currentArena();                            \
+  _SDT_arenaWarnNonEmpty();                                             \
+  _SDT_resetArena();                                                    \
+  CuAssertIntEquals_Msg(tc, "Check everything has been deallocated", 0, \
+                        __arena_size);                                  \
+  }
+#else
 #define SDT_TEST_BEGIN() \
   ENTER_LOG();           \
   {
 #define SDT_TEST_END() }
+#endif
 
 #ifdef __cplusplus
 };
