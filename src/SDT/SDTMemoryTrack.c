@@ -1,7 +1,7 @@
 // Include in debug mode only
 #ifdef SDT_DEBUG
 
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #define SDT_MEMORYTRACK_INCLUDE
 #include "SDTCommon.h"
