@@ -20,7 +20,8 @@ extern json_value *SDTProject_toJSON(int argc, const char **argv);
 @param[in] prj The project JSON object
 @param[in,out] return_code The return code
 @param[out] msg The failure messages, as a JSON object */
-extern void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code, json_value *msg);
+extern void SDTProject_fromJSON(const json_value *prj,
+                                SDTOSCReturnCode *return_code, json_value *msg);
 
 /** @brief Sets the SDT Project Metadata
 @param [in] value The metadata JSON object
