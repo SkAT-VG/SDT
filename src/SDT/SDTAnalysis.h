@@ -1,5 +1,5 @@
-#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
+#include "SDTJSON.h"
 
 /** @file SDTAnalysis.h
 @defgroup analysis SDTAnalysis.h: Sound analysis tools
@@ -33,9 +33,9 @@ extern void SDTZeroCrossing_free(SDTZeroCrossing *x);
 
 #define SDT_ZEROCROSSING ZeroCrossing
 #define SDT_ZEROCROSSING_NEW_ARGS 1024
-#define SDT_ZEROCROSSING_ATTRIBUTES(T, A) \
-A(T, size, unsigned int, Size, size, integer, 1024) \
-A(T, overlap, double, Overlap, overlap, double, 0)
+#define SDT_ZEROCROSSING_ATTRIBUTES(T, A)             \
+  A(T, size, unsigned int, Size, size, integer, 1024) \
+  A(T, overlap, double, Overlap, overlap, double, 0)
 
 SDT_TYPE_COPY_H(SDT_ZEROCROSSING)
 SDT_DEFINE_HASHMAP_H(SDT_ZEROCROSSING)
@@ -80,11 +80,11 @@ extern void SDTMyoelastic_free(SDTMyoelastic *x);
 
 #define SDT_MYOELASTIC Myoelastic
 #define SDT_MYOELASTIC_NEW_ARGS 0
-#define SDT_MYOELASTIC_ATTRIBUTES(T, A) \
-A(T, dcCut, double, DcFrequency, dcFrequency, double, 0) \
-A(T, lowCut, double, LowFrequency, lowFrequency, double, 0) \
-A(T, highCut, double, HighFrequency, highFrequency, double, -1) \
-A(T, threshold, double, Threshold, threshold, double, 0)
+#define SDT_MYOELASTIC_ATTRIBUTES(T, A)                           \
+  A(T, dcCut, double, DcFrequency, dcFrequency, double, 0)        \
+  A(T, lowCut, double, LowFrequency, lowFrequency, double, 0)     \
+  A(T, highCut, double, HighFrequency, highFrequency, double, -1) \
+  A(T, threshold, double, Threshold, threshold, double, 0)
 
 SDT_TYPE_COPY_H(SDT_MYOELASTIC)
 SDT_DEFINE_HASHMAP_H(SDT_MYOELASTIC)
@@ -108,7 +108,8 @@ extern void SDTMyoelastic_setLowFrequency(SDTMyoelastic *x, double f);
 extern void SDTMyoelastic_setHighFrequency(SDTMyoelastic *x, double f);
 
 /** @brief Sets the amplitude threshold of the input gate.
-Myoelastic activity is not computed for signals whose amplitude is below this thresold.
+Myoelastic activity is not computed for signals whose amplitude is below this
+thresold.
 @param[in] x Pointer to the instance
 @param[in] f Amplitude threshold */
 extern void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f);
@@ -116,8 +117,9 @@ extern void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f);
 /** @brief Signal processing routine.
 Call this function at sample rate to perform signal analysis.
 @param[in] x Pointer to the instance
-@param[out] outs Pointer to an array of four doubles containing the algorithm output
-            (slow myoelastic amount and frequency, fast myoelastic amount and frequency)
+@param[out] outs Pointer to an array of four doubles containing the algorithm
+output (slow myoelastic amount and frequency, fast myoelastic amount and
+frequency)
 @param[in] in Input sample
 @return 1 if output available, 0 otherwise */
 extern int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
@@ -125,9 +127,9 @@ extern int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
 /** @} */
 
 /** @defgroup spectralfeats Spectral audio descriptors
-Spectral features extractor: statistical moments (centroid, spread, skewness, kurtosis),
-spectral flatness, spectral flux and an onset detection function based on rectified,
-whitened spectral flux.
+Spectral features extractor: statistical moments (centroid, spread, skewness,
+kurtosis), spectral flatness, spectral flux and an onset detection function
+based on rectified, whitened spectral flux.
 @{ */
 
 /** @brief Opaque data structure for a spectral features extractor. */
@@ -144,11 +146,11 @@ extern void SDTSpectralFeats_free(SDTSpectralFeats *x);
 
 #define SDT_SPECTRALFEATS SpectralFeats
 #define SDT_SPECTRALFEATS_NEW_ARGS 1024
-#define SDT_SPECTRALFEATS_ATTRIBUTES(T, A) \
-A(T, size, unsigned int, Size, size, integer, 1024) \
-A(T, overlap, double, Overlap, overlap, double, 0) \
-A(T, min, double, MinFreq, minFreq, double, 0) \
-A(T, max, double, MaxFreq, maxFreq, double, 0)
+#define SDT_SPECTRALFEATS_ATTRIBUTES(T, A)            \
+  A(T, size, unsigned int, Size, size, integer, 1024) \
+  A(T, overlap, double, Overlap, overlap, double, 0)  \
+  A(T, min, double, MinFreq, minFreq, double, 0)      \
+  A(T, max, double, MaxFreq, maxFreq, double, 0)
 
 SDT_TYPE_COPY_H(SDT_SPECTRALFEATS)
 SDT_DEFINE_HASHMAP_H(SDT_SPECTRALFEATS)
@@ -166,13 +168,15 @@ and 1.0 meaning total overlap.
 extern void SDTSpectralFeats_setOverlap(SDTSpectralFeats *x, double f);
 
 /** @brief Sets the lower frequency bound for spectral analysis.
-Spectral bins below this frequency are ignored in the audio descriptors computation.
+Spectral bins below this frequency are ignored in the audio descriptors
+computation.
 @param[in] x Pointer to the instance
 @param[in] f Minimum analyzed frequency, in Hz */
 extern void SDTSpectralFeats_setMinFreq(SDTSpectralFeats *x, double f);
 
 /** @brief Sets the upper frequency bound for spectral analysis.
-Spectral bins above this frequency are ignored in the audio descriptors computation.
+Spectral bins above this frequency are ignored in the audio descriptors
+computation.
 @param[in] x Pointer to the instance
 @param[in] f Maximum analyzed frequency, in Hz */
 extern void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f);
@@ -180,8 +184,8 @@ extern void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f);
 /** @brief Signal processing routine.
 Call this function for each sample to perform signal analysis.
 @param[in] x Pointer to the instance
-@param[out] outs Pointer to an array of seven doubles, containing the algorithm outputs.
-Array members represent the following information respectively:
+@param[out] outs Pointer to an array of seven doubles, containing the algorithm
+outputs. Array members represent the following information respectively:
 -# Spectral centroid,
 -# Spectral spread,
 -# Spectral skewness,
@@ -217,10 +221,10 @@ extern void SDTPitch_free(SDTPitch *x);
 
 #define SDT_PITCH Pitch
 #define SDT_PITCH_NEW_ARGS 1024
-#define SDT_PITCH_ATTRIBUTES(T, A) \
-A(T, size, unsigned int, Size, size, integer, 1024) \
-A(T, overlap, double, Overlap, overlap, double, 0) \
-A(T, tol, double, Tolerance, tolerance, double, 0.2)
+#define SDT_PITCH_ATTRIBUTES(T, A)                    \
+  A(T, size, unsigned int, Size, size, integer, 1024) \
+  A(T, overlap, double, Overlap, overlap, double, 0)  \
+  A(T, tol, double, Tolerance, tolerance, double, 0.2)
 
 SDT_TYPE_COPY_H(SDT_PITCH)
 SDT_DEFINE_HASHMAP_H(SDT_PITCH)
@@ -253,8 +257,8 @@ extern void SDTPitch_setTolerance(SDTPitch *x, double f);
 /** @brief Signal processing routine.
 Call this function for each sample to perform signal analysis.
 @param[in] x Pointer to the instance
-@param[out] outs Pointer to an array of two doubles, containing the algorithm outputs.
-Array members represent the following information respectively:
+@param[out] outs Pointer to an array of two doubles, containing the algorithm
+outputs. Array members represent the following information respectively:
 -# Estimated pitch (Hz),
 -# Pitch clarity [0.0, 1.0].
 @param[in] in Input sample

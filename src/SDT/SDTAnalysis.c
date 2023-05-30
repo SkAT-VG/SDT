@@ -1,3 +1,4 @@
+#include "SDTAnalysis.h"
 #include <assert.h>
 #include <math.h>
 #include <stdlib.h>
@@ -5,7 +6,6 @@
 #include "SDTComplex.h"
 #include "SDTFFT.h"
 #include "SDTFilters.h"
-#include "SDTAnalysis.h"
 #include "SDTStructs.h"
 
 #define MYO_SR 1000
@@ -25,7 +25,7 @@ SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   x->win = (double *)malloc(size * sizeof(double));
   for (i = 0; i < size; i++) {
     x->in[i] = 0.0;
-    x->in[i+size] = 0.0;
+    x->in[i + size] = 0.0;
     x->win[i] = 0.0;
   }
   x->i = 0;
@@ -58,10 +58,12 @@ SDT_DEFINE_HASHMAP(SDT_ZEROCROSSING, 59)
 SDT_JSON_SERIALIZE(SDT_ZEROCROSSING)
 SDT_JSON_DESERIALIZE(SDT_ZEROCROSSING)
 
-unsigned int SDTZeroCrossing_getSize(const SDTZeroCrossing *x) { return x->size; }
+unsigned int SDTZeroCrossing_getSize(const SDTZeroCrossing *x) {
+  return x->size;
+}
 
 double SDTZeroCrossing_getOverlap(const SDTZeroCrossing *x) {
-  return 1 - ((double) x->skip) / x->size;
+  return 1 - ((double)x->skip) / x->size;
 }
 
 void SDTZeroCrossing_setOverlap(SDTZeroCrossing *x, double f) {
@@ -79,7 +81,8 @@ int SDTZeroCrossing_dsp(SDTZeroCrossing *x, double *out, double in) {
   x->win[0] = x->in[x->i];
   for (i = 1; i < x->size; i++) {
     x->win[i] = x->in[x->i + i];
-    zerox += (x->win[i-1] >= 0.0 && x->win[i] < 0.0) || (x->win[i-1] <= 0.0 && x->win[i] > 0.0);
+    zerox += (x->win[i - 1] >= 0.0 && x->win[i] < 0.0) ||
+             (x->win[i - 1] <= 0.0 && x->win[i] > 0.0);
   }
   out[0] = (double)zerox / (double)x->size;
   return 1;
@@ -90,14 +93,14 @@ int SDTZeroCrossing_dsp(SDTZeroCrossing *x, double *out, double in) {
 struct SDTMyoelastic {
   SDTTwoPoles *inRMS, *impRMS, *myoRMS, *restRMS;
   SDTBiquad *dcHP, *lowLP, *lowHP, *highLP, *highHP;
-  double dcCut, lowCut, highCut, threshold, imp, myo,
-         impAct, myoAct, impFreq, myoFreq;
+  double dcCut, lowCut, highCut, threshold, imp, myo, impAct, myoAct, impFreq,
+      myoFreq;
   int impCount, myoCount;
 };
 
 SDTMyoelastic *SDTMyoelastic_new(int bufSize) {
   SDTMyoelastic *x;
-  //int i;
+  // int i;
 
   x = (SDTMyoelastic *)malloc(sizeof(SDTMyoelastic));
   x->inRMS = SDTTwoPoles_new();
@@ -177,7 +180,7 @@ void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f) {
 int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
   double rms, imp, myo, rest, impRMS, myoRMS, restRMS, totRMS;
 
-  rms = sqrt(SDTTwoPoles_dsp(x->inRMS, in * in)); 
+  rms = sqrt(SDTTwoPoles_dsp(x->inRMS, in * in));
   imp = SDTBiquad_dsp(x->dcHP, rms);
   imp = SDTBiquad_dsp(x->lowLP, imp);
   myo = SDTBiquad_dsp(x->lowHP, rms);
@@ -203,11 +206,10 @@ int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
   x->myo = myo;
   if (totRMS > x->threshold) {
     outs[0] = x->impAct;
-    outs[1] = x->impFreq; 
+    outs[1] = x->impFreq;
     outs[2] = x->myoAct;
-    outs[3] = x->myoFreq; 
-  }
-  else {
+    outs[3] = x->myoFreq;
+  } else {
     outs[0] = 0.0;
     outs[1] = 0.0;
     outs[2] = 0.0;
@@ -219,8 +221,8 @@ int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTSpectralFeats {
-  double *in, *win, *currMag, *prevMag,
-         magnitude, centroid, spread, skewness, kurtosis, flatness, flux, onset;
+  double *in, *win, *currMag, *prevMag, magnitude, centroid, spread, skewness,
+      kurtosis, flatness, flux, onset;
   SDTComplex *fft;
   SDTFFT *fftPlan;
   int i, j, size, fftSize, skip, min, max, span;
@@ -289,8 +291,9 @@ void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
   x->currMag = calloc(fftSize, sizeof(double));
   x->prevMag = calloc(fftSize, sizeof(double));
 
-  x->fft = (SDTComplex *) malloc(fftSize * sizeof(SDTComplex));
-  for (unsigned int i = 0; i < fftSize; i++) x->fft[i] = SDTComplex_car(0.0, 0.0);
+  x->fft = (SDTComplex *)malloc(fftSize * sizeof(SDTComplex));
+  for (unsigned int i = 0; i < fftSize; i++)
+    x->fft[i] = SDTComplex_car(0.0, 0.0);
 
   SDTFFT_free(x->fftPlan);
   x->fftPlan = SDTFFT_new(f / 2);
@@ -309,10 +312,12 @@ SDT_DEFINE_HASHMAP(SDT_SPECTRALFEATS, 59)
 SDT_JSON_SERIALIZE(SDT_SPECTRALFEATS)
 SDT_JSON_DESERIALIZE(SDT_SPECTRALFEATS)
 
-unsigned int SDTSpectralFeats_getSize(const SDTSpectralFeats *x) { return x->size; }
+unsigned int SDTSpectralFeats_getSize(const SDTSpectralFeats *x) {
+  return x->size;
+}
 
 double SDTSpectralFeats_getOverlap(const SDTSpectralFeats *x) {
-  return 1 - ((double) x->skip) / x->size;
+  return 1 - ((double)x->skip) / x->size;
 }
 
 double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x) {
@@ -484,7 +489,7 @@ SDT_JSON_DESERIALIZE(SDT_PITCH)
 unsigned int SDTPitch_getSize(const SDTPitch *x) { return x->size; }
 
 double SDTPitch_getOverlap(const SDTPitch *x) {
-  return 1 - ((double) x->skip) / x->size;
+  return 1 - ((double)x->skip) / x->size;
 }
 
 double SDTPitch_getTolerance(const SDTPitch *x) { return x->tol; }
@@ -528,10 +533,10 @@ int SDTPitch_dsp(SDTPitch *x, double *outs, double in) {
   x->clarity = 0.0;
   maxValue = 0.0;
   for (; i < x->seek - 1; i++) {
-    if (x->nsdf[i-1] < x->nsdf[i] && x->nsdf[i] > x->nsdf[i+1]) {
-      a = x->nsdf[i-1];
+    if (x->nsdf[i - 1] < x->nsdf[i] && x->nsdf[i] > x->nsdf[i + 1]) {
+      a = x->nsdf[i - 1];
       b = x->nsdf[i];
-      c = x->nsdf[i+1];
+      c = x->nsdf[i + 1];
       rebias = 1.0 - (i * x->tol) / x->seek;
       peakValue = b + 0.5 * (0.5 * ((c - a) * (c - a))) / (2 * b - a - c);
       biasValue = rebias * peakValue;
