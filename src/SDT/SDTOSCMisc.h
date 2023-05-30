@@ -147,10 +147,6 @@ Macros for generating OSC methods
 #define SDT_OSC_TYPE_MAKE_SETTERS_H(SDT_TYPE) \
   SDT_TYPE##_ATTRIBUTES(SDT_TYPE, SDT_OSC_TYPE_SETTER_H)
 
-#define SDT_OSC_TYPE_SETTER_SWITCH(SDT_TYPE, F, T, S, K, J, D) \
-  else if (!strcmp(#K, method)) return_code =                  \
-      CONCAT(CONCAT(SDTOSC, SDT_TYPE), CONCAT(_set, S))(obj, sub_args);
-
 /** @} */
 
 extern SDTOSCReturnCode SDTOSCBiquad_log(void (*log)(const char *, ...),
