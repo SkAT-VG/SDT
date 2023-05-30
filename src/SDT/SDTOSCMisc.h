@@ -153,37 +153,6 @@ Macros for generating OSC methods
 
 /** @} */
 
-/** @brief List of SDT classes whose OSC methods are automatically implemented.
-Each class is defined as `C(SDT_MACRO, OSC_NAME)`, where `SDT_MACRO` is the name
-of the macro associated to the class (without the leading `SDT_`) and `OSC_NAME`
-is the name of the OSC container associated to the class
-@param[in] C Macro to apply to each class
-*/
-#define SDT_OSC_CLASSES(C)        \
-  C(BIQUAD, biquad)               \
-  C(BOUNCING, bouncing)           \
-  C(BREAKING, breaking)           \
-  C(BUBBLE, bubble)               \
-  C(CRUMPLING, crumpling)         \
-  C(DCMOTOR, dcmotor)             \
-  C(DEMIX, demix)                 \
-  C(ENVELOPE, envelope)           \
-  C(EXPLOSION, explosion)         \
-  C(FLUIDFLOW, fluidflow)         \
-  C(MODALTRACKER, modaltracker)   \
-  C(MOTOR, motor)                 \
-  C(MYOELASTIC, myo)              \
-  C(PITCH, pitch)                 \
-  C(PITCHSHIFT, pitchshift)       \
-  C(REVERB, reverb)               \
-  C(ROLLING, rolling)             \
-  C(SCRAPING, scraping)           \
-  C(SPECTRALFEATS, spectralfeats) \
-  C(WINDCAVITY, windcavity)       \
-  C(WINDKARMAN, windkarman)       \
-  C(WINDFLOW, windflow)           \
-  C(ZEROCROSSING, zerox)
-
 extern SDTOSCReturnCode SDTOSCBiquad_log(void (*log)(const char *, ...),
                                          const char *key, SDTBiquad *x);
 
