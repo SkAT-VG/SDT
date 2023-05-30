@@ -149,7 +149,7 @@ jobs:
       if: ${{ !startsWith(matrix.target, 'win') }}
       run: chmod +x ./testrunner/test
     - name: Run tests
-      run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} | tee ${{ env.LOG_FNAME }}
+      run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} 2>&1 | tee ${{ env.LOG_FNAME }}
       shell: bash
     - name: Upload test log
       if: ${{ success() || failure() }}
