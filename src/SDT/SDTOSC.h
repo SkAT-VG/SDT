@@ -18,7 +18,7 @@ extern "C" {
 /
 @param [in] log Log function pointer
 @param [in] x OSC message*/
-extern void SDTOSCRoot(void (* log)(const char *, ...), const SDTOSCMessage* x);
+extern void SDTOSCRoot(void (*log)(const char*, ...), const SDTOSCMessage* x);
 
 #ifdef __cplusplus
 };
