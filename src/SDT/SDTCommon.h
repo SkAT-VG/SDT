@@ -96,23 +96,29 @@ SDTCommon.h should always be included when using other SDT modules.
 /** @brief Gain factor roughly corresponding to a -90dB attenuation */
 #define SDT_QUIET 0.00003
 
-/** @brief Log levels */
+/** @brief Log levels for SDT */
 typedef enum SDTLogLevel {
-  SDT_LOG_DEBUG,
-  SDT_LOG_INFO,
-  SDT_LOG_WARN,
+  SDT_LOG_ERROR = 0,
+  SDT_LOG_WARN = 1,
+  SDT_LOG_INFO = 2,
+  SDT_LOG_DEBUG = 3,
 } SDTLogLevel;
 
 /** @brief Maximum string length for logging */
 #define MAXSDTSTRING 1024
 
-/** @brief Print a log message. Output stream can be set with TODO
+/** @brief Print a log message.
 @param[in] level Log level
 @param[in] fmt Writes the pointed string. If it includes format specifiers, the
 following additional arguments are formatted and inserted in the resulting
 string replacing their respective specifiers. */
 extern int SDT_log(int level, const char *file, unsigned int line,
                    const char *func, const char *fmt, ...);
+
+/** @brief Set the message-logger function.
+@param[in] level Log level
+@param[in] print_func Message-logger function */
+extern void SDT_setLogger(int level, int (*print_func)(const char *, ...));
 
 // Default is INFO
 #ifndef SDT_ERROR

@@ -428,6 +428,19 @@ static int _SDT_eprintf(const char *fmt, ...) {
   return r;
 }
 
+#define N_LOGGERS 4
+static int (*_SDT_log_inner[N_LOGGERS])(const char *, ...) = {0, 0, 0, 0};
+
+void SDT_setLogger(int level, int (*print_func)(const char *, ...)) {
+  if (level >= 0 && level < N_LOGGERS - 1) _SDT_log_inner[level] = print_func;
+}
+
+static int (*SDT_getLogger(int level))(const char *, ...) {
+  int (*p)(const char *, ...) = 0;
+  if (level >= 0 && level < N_LOGGERS - 1) p = _SDT_log_inner[level];
+  return (p) ? p : &_SDT_eprintf;
+}
+
 static char _SDT_logBuffer[MAXSDTSTRING];
 
 int SDT_log(int level, const char *file, unsigned int line, const char *func,
@@ -459,9 +472,10 @@ int SDT_log(int level, const char *file, unsigned int line, const char *func,
   }
 
   if (i >= 0 && (n_chars += i) < MAXSDTSTRING)
-    i = snprintf(_SDT_logBuffer + n_chars,
-                 sizeof(char) * (MAXSDTSTRING - n_chars), " %s:%d %s() \t",
-                 file, line, func);
+    i = (file && func) ? snprintf(_SDT_logBuffer + n_chars,
+                                  sizeof(char) * (MAXSDTSTRING - n_chars),
+                                  " %s:%d %s() \t", file, line, func)
+                       : 0;
 
   if (i >= 0 && (n_chars += i) < MAXSDTSTRING) {
     va_list args;
@@ -478,7 +492,7 @@ int SDT_log(int level, const char *file, unsigned int line, const char *func,
     _SDT_logBuffer[MAXSDTSTRING - 2] = '\n';
     _SDT_logBuffer[MAXSDTSTRING - 1] = 0;
   }
-  return _SDT_eprintf("%s", _SDT_logBuffer);
+  return SDT_getLogger(level)("%s", _SDT_logBuffer);
 }
 
 int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }
