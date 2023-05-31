@@ -99,6 +99,15 @@ CFLAGS=-O3 -Wall -Wno-unknown-pragmas -Werror
 ifneq ("$(SDT_DEBUG)","")
 	CFLAGS+= -DSDT_DEBUG
 endif
+ifneq ("$(SDT_INFO)","")
+	CFLAGS+= -DSDT_INFO
+endif
+ifneq ("$(SDT_WARN)","")
+	CFLAGS+= -DSDT_WARN
+endif
+ifneq ("$(SDT_ERROR)","")
+	CFLAGS+= -DSDT_ERROR
+endif
 LDFLAGS=
 ifeq ("$(TARGET)", "linux")
 	CC=gcc
