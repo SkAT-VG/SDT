@@ -53,10 +53,53 @@ void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f) {
   x->size = f;
 }
 
-SDT_TYPE_COPY(SDT_ZEROCROSSING)
-SDT_DEFINE_HASHMAP(SDT_ZEROCROSSING, 59)
-SDT_JSON_SERIALIZE(SDT_ZEROCROSSING)
-SDT_JSON_DESERIALIZE(SDT_ZEROCROSSING)
+SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
+                                      const SDTZeroCrossing *src) {
+  SDTZeroCrossing_setSize(dest, SDTZeroCrossing_getSize(src));
+  SDTZeroCrossing_setOverlap(dest, SDTZeroCrossing_getOverlap(src));
+  return dest;
+}
+
+SDTHashmap *hashmap_SDT_ZEROCROSSING = ((void *)0);
+
+int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, char *key) {
+  if (!hashmap_SDT_ZEROCROSSING) hashmap_SDT_ZEROCROSSING = SDTHashmap_new(59);
+  if (SDTHashmap_put(hashmap_SDT_ZEROCROSSING, key, x)) return 1;
+  return 0;
+}
+
+SDTZeroCrossing *SDT_getZeroCrossing(const char *key) {
+  return (hashmap_SDT_ZEROCROSSING)
+             ? SDTHashmap_get(hashmap_SDT_ZEROCROSSING, key)
+             : 0;
+}
+
+int SDT_unregisterZeroCrossing(char *key) {
+  if (!hashmap_SDT_ZEROCROSSING) return 1;
+  if (SDTHashmap_del(hashmap_SDT_ZEROCROSSING, key)) return 1;
+  return 0;
+}
+
+json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "size", json_integer_new(SDTZeroCrossing_getSize(x)));
+  json_object_push(obj, "overlap",
+                   json_double_new(SDTZeroCrossing_getOverlap(x)));
+  return obj;
+}
+
+SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTZeroCrossing *y = SDTZeroCrossing_new(1024);
+  const json_value *v_size = json_object_get_by_key(x, "size");
+  SDTZeroCrossing_setSize(
+      y, (v_size && (v_size->type == json_integer)) ? v_size->u.integer : 1024);
+  const json_value *v_overlap = json_object_get_by_key(x, "overlap");
+  SDTZeroCrossing_setOverlap(y, (v_overlap && (v_overlap->type == json_double))
+                                    ? v_overlap->u.dbl
+                                    : 0);
+  return y;
+}
 
 unsigned int SDTZeroCrossing_getSize(const SDTZeroCrossing *x) {
   return x->size;
