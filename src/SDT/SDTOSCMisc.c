@@ -2724,11 +2724,7 @@ SDTOSCReturnCode SDTOSCZeroCrossing_load(void (*log)(const char *, ...),
   sprintf(name, "'%s'", key);
   SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
   free(name);
-  if (return_code == SDT_OSC_RETURN_OK) {
-    SDTZeroCrossing *r = SDTZeroCrossing_fromJSON(obj);
-    SDTZeroCrossing_copy(x, r);
-    SDTZeroCrossing_free(r);
-  }
+  if (return_code == SDT_OSC_RETURN_OK) SDTZeroCrossing_setParams(x, obj, 0);
   if (obj) json_builder_free(obj);
   return return_code;
 }

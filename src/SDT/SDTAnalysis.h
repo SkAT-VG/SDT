@@ -33,9 +33,12 @@ extern void SDTZeroCrossing_free(SDTZeroCrossing *x);
 
 /** @brief Deep-copies a zero crossing rate detector.
 @param[in] dest Pointer to the instance to modify
-@param[in] src Pointer to the instance to copy */
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
 extern SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
-                                             const SDTZeroCrossing *src);
+                                             const SDTZeroCrossing *src,
+                                             unsigned char unsafe);
 
 /** @brief Registers a zero crossing rate detector into the zero crossing rate
 detectors list with a unique ID.
@@ -77,6 +80,15 @@ extern json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x);
 @param[in] x JSON object
 @return Pointer to the instance */
 extern SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a zero crossing rate detector from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
+                                                  const json_value *j,
+                                                  unsigned char unsafe);
 
 /** @brief Sets the size of the analysis window, in samples.
 This function allocates memory and should not be called inside a DSP cycle.

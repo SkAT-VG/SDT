@@ -597,9 +597,7 @@ static int SDTProject_loadZeroCrossing(const json_object_entry *value,
                          SDT_OSC_RETURN_OBJECT_NOT_FOUND, value->name,
                          json_string_new("not found")))
     return 0;
-  SDTZeroCrossing *tmp = SDTZeroCrossing_fromJSON(value->value);
-  SDTZeroCrossing_copy(x, tmp);
-  SDTZeroCrossing_free(tmp);
+  SDTZeroCrossing_setParams(x, value->value, 0);
   return 1;
 }
 

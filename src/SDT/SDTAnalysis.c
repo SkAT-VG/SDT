@@ -16,9 +16,12 @@ struct SDTZeroCrossing {
   int i, j, size, skip;
 };
 
+#define SDT_ZEROCROSSING_SIZE_DEFAULT 1024
+
 SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   SDTZeroCrossing *x;
   int i;
+  if (!size) size = SDT_ZEROCROSSING_SIZE_DEFAULT;
 
   x = (SDTZeroCrossing *)malloc(sizeof(SDTZeroCrossing));
   x->in = (double *)malloc(2 * size * sizeof(double));
@@ -54,9 +57,11 @@ void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f) {
 }
 
 SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
-                                      const SDTZeroCrossing *src) {
-  SDTZeroCrossing_setSize(dest, SDTZeroCrossing_getSize(src));
-  SDTZeroCrossing_setOverlap(dest, SDTZeroCrossing_getOverlap(src));
+                                      const SDTZeroCrossing *src,
+                                      unsigned char unsafe) {
+  json_value *j = SDTZeroCrossing_toJSON(src);
+  SDTZeroCrossing_setParams(dest, j, unsafe);
+  json_builder_free(j);
   return dest;
 }
 
@@ -90,15 +95,29 @@ json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x) {
 
 SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
-  SDTZeroCrossing *y = SDTZeroCrossing_new(1024);
   const json_value *v_size = json_object_get_by_key(x, "size");
-  SDTZeroCrossing_setSize(
-      y, (v_size && (v_size->type == json_integer)) ? v_size->u.integer : 1024);
-  const json_value *v_overlap = json_object_get_by_key(x, "overlap");
-  SDTZeroCrossing_setOverlap(y, (v_overlap && (v_overlap->type == json_double))
+  SDTZeroCrossing *y =
+      SDTZeroCrossing_new((v_size && (v_size->type == json_integer))
+                              ? v_size->u.integer
+                              : SDT_ZEROCROSSING_SIZE_DEFAULT);
+  return SDTZeroCrossing_setParams(y, x, 0);
+}
+
+SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
+                                           const json_value *j,
+                                           unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+  if (unsafe) {
+    const json_value *v_size = json_object_get_by_key(j, "size");
+    SDTZeroCrossing_setSize(x, (v_size && (v_size->type == json_integer))
+                                   ? v_size->u.integer
+                                   : SDT_ZEROCROSSING_SIZE_DEFAULT);
+  }
+  const json_value *v_overlap = json_object_get_by_key(j, "overlap");
+  SDTZeroCrossing_setOverlap(x, (v_overlap && (v_overlap->type == json_double))
                                     ? v_overlap->u.dbl
                                     : 0);
-  return y;
+  return x;
 }
 
 unsigned int SDTZeroCrossing_getSize(const SDTZeroCrossing *x) {
