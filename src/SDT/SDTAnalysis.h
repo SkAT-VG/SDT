@@ -31,18 +31,57 @@ extern SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTZeroCrossing_free(SDTZeroCrossing *x);
 
-#define SDT_ZEROCROSSING ZeroCrossing
-#define SDT_ZEROCROSSING_NEW_ARGS 1024
-#define SDT_ZEROCROSSING_ATTRIBUTES(T, A)             \
-  A(T, size, unsigned int, Size, size, integer, 1024) \
-  A(T, overlap, double, Overlap, overlap, double, 0)
+/** @brief Deep-copies a zero crossing rate detector.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy */
+extern SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
+                                             const SDTZeroCrossing *src);
 
-SDT_TYPE_COPY_H(SDT_ZEROCROSSING)
-SDT_DEFINE_HASHMAP_H(SDT_ZEROCROSSING)
-SDT_TYPE_MAKE_GETTERS_H(SDT_ZEROCROSSING)
-SDT_JSON_SERIALIZE_H(SDT_ZEROCROSSING)
-SDT_JSON_DESERIALIZE_H(SDT_ZEROCROSSING)
+/** @brief Registers a zero crossing rate detector into the zero crossing rate
+detectors list with a unique ID.
+@param[in] x Zero crossing rate detector instance to register
+@param[in] key Unique ID assigned to the zero crossing rate detector instance */
+extern int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, char *key);
 
+/** @brief Queries the zero crossing rate detectors list by its unique ID.
+If a zero crossing rate detector with the ID is present, a pointer to the zero
+crossing rate detector is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the zero crossing rate detector instance
+@return Zero crossing rate detector instance pointer */
+extern SDTZeroCrossing *SDT_getZeroCrossing(const char *key);
+
+/** @brief Unregisters a zero crossing rate detector from the zero crossing rate
+detectors list. If a zero crossing rate detector with the given ID is present,
+it is unregistered from the list.
+@param[in] key Unique ID of the zero crossing rate detector instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterZeroCrossing(char *key);
+
+/** @brief Gets the size of the analysis window.
+@param[in] x Pointer to the instance
+@return Size of the analysis window, in samples */
+extern unsigned int SDTZeroCrossing_getSize(const SDTZeroCrossing *x);
+
+/** @brief Gets the analysis window overlapping ratio.
+@param[in] x Pointer to the instance
+@return Overlap ratio [0.0, 1.0] */
+extern double SDTZeroCrossing_getOverlap(const SDTZeroCrossing *x);
+
+/** @brief Represent a zero crossing rate detector as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x);
+
+/** @brief Initialize a zero crossing rate detector from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x);
+
+/** @brief Sets the size of the analysis window, in samples.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] x Pointer to the instance
+@param[in] f Size of the analysis window, in samples */
 extern void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
