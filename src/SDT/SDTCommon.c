@@ -462,6 +462,9 @@ int SDT_log(int level, const char *file, unsigned int line, const char *func,
       case SDT_LOG_WARN:
         log_level_prefix = "::WARN ";
         break;
+      case SDT_LOG_ERROR:
+        log_level_prefix = "::ERROR";
+        break;
       default:
         log_level_prefix = "       ";
         break;
