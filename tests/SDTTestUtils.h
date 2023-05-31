@@ -101,9 +101,6 @@ extern SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min,
 #define FOR_RANDOM_ITER_FLOAT(IT, VAR) \
   _FOR_RANDOM_ITER_PROTO(IT, VAR, float, Float)
 
-/** @brief Log on test enter */
-#define ENTER_LOG() SDT_DEBUG_LOG(_SDT_eprintf, "\n")
-
 /* Test prototype
 void TestSDT_functionName(CuTest* tc)
 {
@@ -116,7 +113,7 @@ void TestSDT_functionName(CuTest* tc)
 #ifdef SDT_DEBUG
 #define SDT_TEST_BEGIN() \
   _SDT_resetArena();     \
-  ENTER_LOG();           \
+  SDT_INFO_LOG("\n");    \
   {
 #define SDT_TEST_END()                                                  \
   size_t __arena_size = _SDT_currentArena();                            \
@@ -127,7 +124,7 @@ void TestSDT_functionName(CuTest* tc)
   }
 #else
 #define SDT_TEST_BEGIN() \
-  ENTER_LOG();           \
+  SDT_INFO_LOG("\n");    \
   {
 #define SDT_TEST_END() }
 #endif
