@@ -1,5 +1,6 @@
 #include "SDTOSC.h"
 #include <string.h>
+#include "SDTOSCAnalysis.h"
 #include "SDTOSCInteractors.h"
 #include "SDTOSCMisc.h"
 #include "SDTOSCProjects.h"
