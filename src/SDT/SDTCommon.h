@@ -96,21 +96,42 @@ SDTCommon.h should always be included when using other SDT modules.
 /** @brief Gain factor roughly corresponding to a -90dB attenuation */
 #define SDT_QUIET 0.00003
 
-/** @brief Print current time
-@param[in] print_func Print function */
-extern int _SDT_printTime(int (*print_func)(const char *, ...));
+/** @brief Log levels */
+typedef enum SDTLogLevel {
+  SDT_LOG_DEBUG,
+  SDT_LOG_INFO,
+  SDT_LOG_WARN,
+} SDTLogLevel;
 
-/** @brief Print to standard error */
-extern int _SDT_eprintf(const char *fmt, ...);
+/** @brief Maximum string length for logging */
+#define MAXSDTSTRING 1024
+
+/** @brief Print a log message. Output stream can be set with TODO
+@param[in] level Log level
+@param[in] fmt Writes the pointed string. If it includes format specifiers, the
+following additional arguments are formatted and inserted in the resulting
+string replacing their respective specifiers. */
+extern int SDT_log(int level, const char *file, unsigned int line,
+                   const char *func, const char *fmt, ...);
+
+// Default is INFO
+#ifndef SDT_ERROR
+#ifndef SDT_WARN
+#ifndef SDT_INFO
+#ifndef SDT_DEBUG
+#define SDT_INFO
+#endif
+#endif
+#endif
+#endif
 
 #ifdef SDT_DEBUG
 /** @brief Conditionally include code in debug or non-debug build
 @param[in] X Code to include in debug builds
 @param[in] Y Code to include in non-debug builds */
 #define SDT_DEBUG_IF_ELSE(X, Y) X
-
-#ifndef SDT_MEMORYTRACK_INCLUDE
-#include "SDTMemoryTrack.h"
+#ifndef SDT_INFO
+#define SDT_INFO
 #endif
 #else
 /** @brief Conditionally include code in debug or non-debug build
@@ -119,9 +140,62 @@ extern int _SDT_eprintf(const char *fmt, ...);
 #define SDT_DEBUG_IF_ELSE(X, Y) Y
 #endif
 
+#ifdef SDT_INFO
+/** @brief Conditionally include code in info or non-info build
+@param[in] X Code to include in info builds
+@param[in] Y Code to include in non-info builds */
+#define SDT_INFO_IF_ELSE(X, Y) X
+#ifndef SDT_WARN
+#define SDT_WARN
+#endif
+#else
+/** @brief Conditionally include code in info or non-info build
+@param[in] X Code to include in info builds
+@param[in] Y Code to include in non-info builds */
+#define SDT_INFO_IF_ELSE(X, Y) Y
+#endif
+
+#ifdef SDT_WARN
+/** @brief Conditionally include code in warn or non-warn build
+@param[in] X Code to include in warn builds
+@param[in] Y Code to include in non-warn builds */
+#define SDT_WARN_IF_ELSE(X, Y) X
+#ifndef SDT_ERROR
+#define SDT_ERROR
+#endif
+#else
+/** @brief Conditionally include code in warn or non-warn build
+@param[in] X Code to include in warn builds
+@param[in] Y Code to include in non-warn builds */
+#define SDT_WARN_IF_ELSE(X, Y) Y
+#endif
+
+/** @brief Conditionally include code in error or non-error build
+@param[in] X Code to include in error builds
+@param[in] Y Code to include in non-error builds */
+#define SDT_ERROR_IF_ELSE(X, Y) Y
+
+#ifdef SDT_DEBUG
+#ifndef SDT_MEMORYTRACK_INCLUDE
+#include "SDTMemoryTrack.h"
+#endif
+#endif
+
 /** @brief Exclude wrapped code from any non-debug build
 @param[in] X Code to include in debug builds only */
 #define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X, )
+
+/** @brief Exclude wrapped code from any non-info build
+@param[in] X Code to include in info builds only */
+#define SDT_INFO_ONLY(X) SDT_INFO_IF_ELSE(X, )
+
+/** @brief Exclude wrapped code from any non-warn build
+@param[in] X Code to include in warn builds only */
+#define SDT_WARN_ONLY(X) SDT_WARN_IF_ELSE(X, )
+
+/** @brief Exclude wrapped code from any non-error build
+@param[in] X Code to include in error builds only */
+#define SDT_ERROR_ONLY(X) SDT_ERROR_IF_ELSE(X, )
 
 /** @brief Print prefix for debug logs
 @param[in] PRINT_FUNC Print function
@@ -135,22 +209,52 @@ extern int _SDT_eprintf(const char *fmt, ...);
   }
 
 /** @brief Log in debug mode only
-@param[in] PRINT_FUNC Print function
-@param[in] MSG Message: free text, not string */
-#define SDT_DEBUG_LOG(PRINT_FUNC, MSG)                        \
-  SDT_DEBUG_ONLY({                                            \
-    SDT_LOG_PREFIX(PRINT_FUNC, __FILE__, __LINE__, __func__); \
-    PRINT_FUNC(MSG);                                          \
-  })
+@param[in] MSG Message */
+#define SDT_DEBUG_LOG(MSG) \
+  SDT_DEBUG_ONLY(SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, MSG));
 
 /** @brief Log in debug mode only, with format arguments
 @param[in] PRINT_FUNC Print function
-@param[in] MSG Message: free text, not string */
-#define SDT_DEBUG_LOGA(PRINT_FUNC, MSG, ...)                  \
-  SDT_DEBUG_ONLY({                                            \
-    SDT_LOG_PREFIX(PRINT_FUNC, __FILE__, __LINE__, __func__); \
-    PRINT_FUNC(MSG, __VA_ARGS__);                             \
-  })
+@param[in] FMT Message to be formatted */
+#define SDT_DEBUG_LOGA(PRINT_FUNC, FMT, ...) \
+  SDT_DEBUG_ONLY(                            \
+      SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
+
+/** @brief Log in info mode only
+@param[in] MSG Message */
+#define SDT_INFO_LOG(MSG) \
+  SDT_INFO_ONLY(SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, MSG));
+
+/** @brief Log in info mode only, with format arguments
+@param[in] PRINT_FUNC Print function
+@param[in] FMT Message to be formatted */
+#define SDT_INFO_LOGA(PRINT_FUNC, FMT, ...) \
+  SDT_INFO_ONLY(                            \
+      SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
+
+/** @brief Log in warn mode only
+@param[in] MSG Message */
+#define SDT_WARN_LOG(MSG) \
+  SDT_WARN_ONLY(SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, MSG));
+
+/** @brief Log in warn mode only, with format arguments
+@param[in] PRINT_FUNC Print function
+@param[in] FMT Message to be formatted */
+#define SDT_WARN_LOGA(PRINT_FUNC, FMT, ...) \
+  SDT_WARN_ONLY(                            \
+      SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
+
+/** @brief Log in error mode only
+@param[in] MSG Message */
+#define SDT_ERROR_LOG(MSG) \
+  SDT_ERROR_ONLY(SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, MSG));
+
+/** @brief Log in error mode only, with format arguments
+@param[in] PRINT_FUNC Print function
+@param[in] FMT Message to be formatted */
+#define SDT_ERROR_LOGA(PRINT_FUNC, FMT, ...) \
+  SDT_ERROR_ONLY(                            \
+      SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
 
 #ifdef __cplusplus
 extern "C" {
@@ -166,27 +270,33 @@ extern double SDT_timeStep;
 @param[in] sampleRate Sample rate (Hz). */
 extern void SDT_setSampleRate(double sampleRate);
 
-/** @brief Returns the index of the maximum value in an array of data
+/** @brief Returns the index of the maximum value in an
+array of data
 @param[in] x Pointer to the data array
 @param[in] n Length of the data array
-@param[out] maxOut If not null, writes the maximum value to the pointed variable
+@param[out] maxOut If not null, writes the maximum value to
+the pointed variable
 @return Index of the maximum value in the array */
 extern unsigned int SDT_argMax(double *x, unsigned int n, double *maxOut);
 
-/** @brief Returns the index of the minimum value in an array of data
+/** @brief Returns the index of the minimum value in an
+array of data
 @param[in] x Pointer to the data array
 @param[in] n Length of the data array
-@param[out] minOut If not null, writes the maximum value to the pointed variable
+@param[out] minOut If not null, writes the maximum value to
+the pointed variable
 @return Index of the minimum value in the array */
 extern unsigned int SDT_argMin(double *x, unsigned int n, double *minOut);
 
-/** @brief Returns the arithmetic mean of an array of values
+/** @brief Returns the arithmetic mean of an array of
+values
 @param[in] x Pointer to the data array
 @param[in] n Length of the data array
 @return Arithmetic mean of the array */
 extern double SDT_average(double *x, unsigned int n);
 
-/** @brief Reverses the bit order of an unsigned integer of given bit length.
+/** @brief Reverses the bit order of an unsigned integer of
+given bit length.
 @param[in] u Input value
 @param[in] bits Number of bits to reverse
 @return Unsigned integer with reversed bits */
@@ -199,8 +309,8 @@ Applies a Blackman window to a chunk of samples.
 extern void SDT_blackman(double *sig, int n);
 
 /** @brief Clips an integer value.
-Limits the range of an integer value between a given lower bound and upper
-bound.
+Limits the range of an integer value between a given lower
+bound and upper bound.
 @param[in] x Integer value to clip
 @param[in] min Lower limit
 @param[in] max Upper limit
@@ -208,14 +318,15 @@ bound.
 extern long SDT_clip(long x, long min, long max);
 
 /** @brief Exponential random number generator.
-Generates random numbers, following an exponential distribution.
+Generates random numbers, following an exponential
+distribution.
 @param[in] lambda Rate of the exponential distribution.
 @return Randomly generated value [0.0, +inf] */
 extern double SDT_expRand(double lambda);
 
 /** @brief Clips a floating point value.
-Limits the range of a floating point value between a given lower bound and upper
-bound.
+Limits the range of a floating point value between a given
+lower bound and upper bound.
 @param[in] x Floating point value to clip
 @param[in] min Lower limit
 @param[in] max Upper limit
@@ -228,16 +339,20 @@ Generates random numbers, following a uniform distribution.
 extern double SDT_frand();
 
 /** @brief One-dimensional Gaussian kernel.
-One-dimensional Gaussian kernel. The Gaussian function is computed in the [-1,1]
-interval with 0 mean and the given standard deviation. The output is normalized
-so that the sum of all samples is equal to 1.
+One-dimensional Gaussian kernel. The Gaussian function is
+computed in the
+[-1,1] interval with 0 mean and the given standard
+deviation. The output is normalized so that the sum of all
+samples is equal to 1.
 @param[out] x pointer to the kernel samples
-@param[in] sigma standard deviation of the Gaussian function
+@param[in] sigma standard deviation of the Gaussian
+function
 @param[in] n kernel size */
 extern void SDT_gaussian1D(double *x, double sigma, int n);
 
 /** @brief Computes earth gravity force.
-Computes the earth gravity force acting on an object of a given mass.
+Computes the earth gravity force acting on an object of a
+given mass.
 @param[in] mass Mass of the object (Kg)
 @return Earth gravity force (N) */
 extern double SDT_gravity(double mass);
@@ -248,39 +363,47 @@ Applies a Hanning window to a chunk of samples.
 @param[in] n window size */
 extern void SDT_hanning(double *sig, int n);
 
-/** @brief Computes a direct Haar Wavelet Transform of the incoming signal (in
-place).
+/** @brief Computes a direct Haar Wavelet Transform of the
+incoming signal (in place).
 @param[in,out] sig incoming signals
 @param[in] n window size */
 extern void SDT_haar(double *sig, long n);
 
-/** @brief Computes an inverse Haar Wavelet Transform of the incoming signal (in
-place).
+/** @brief Computes an inverse Haar Wavelet Transform of
+the incoming signal (in place).
 @param[in,out] sig incoming signals
 @param[in] n window size */
 extern void SDT_ihaar(double *sig, long n);
 
-/** @brief Returns a true value if SDT has been compiled in debug mode */
+/** @brief Returns a true value if SDT has been compiled in
+ * debug mode */
 extern int SDT_isDebug();
 
-/** @brief Checks if the selected value is the minimum among its neighbors.
+/** @brief Checks if the selected value is the minimum
+among its neighbors.
 @param[in] x Array of data
 @param[in] i Index of the selected value
-@param[in] radius Number of neighbors to check, for each direction
-@return 1 if the selected value is less than its left neighbors, and less than
+@param[in] radius Number of neighbors to check, for each
+direction
+@return 1 if the selected value is less than its left
+neighbors, and less than
 or equal to its right neighbors. 0 otherwise */
 extern int SDT_isHole(double *x, unsigned int i, unsigned int radius);
 
-/** @brief Checks if the selected value is the maximum among its neighbors.
+/** @brief Checks if the selected value is the maximum
+among its neighbors.
 @param[in] x Array of data
 @param[in] i Index of the selected value
-@param[in] radius Number of neighbors to check, for each direction
-@return 1 if the selected value is greater than its left neighbors, and greater
-than or equal to its right neighbors. 0 otherwise */
+@param[in] radius Number of neighbors to check, for each
+direction
+@return 1 if the selected value is greater than its left
+neighbors, and greater than or equal to its right
+neighbors. 0 otherwise */
 extern int SDT_isPeak(double *x, unsigned int i, unsigned int radius);
 
 /** @brief Computes kinetic energy.
-Computes the kinetic energy of an object, given its mass and velocity.
+Computes the kinetic energy of an object, given its mass
+and velocity.
 @param[in] mass Mass of the object (Kg)
 @param[in] velocity Velocity of the object (m/s)
 @return Kinetic energy (J) */
@@ -298,20 +421,23 @@ extern double SDT_max(double *x, unsigned int n);
 @return Minimum value in the array */
 extern double SDT_min(double *x, unsigned int n);
 
-/** @brief Returns the smallest power of 2 greater or equal than u.
+/** @brief Returns the smallest power of 2 greater or equal
+than u.
 @param[in] u Input value
 @return Smallest power of 2 greater or equal than u */
 extern unsigned int SDT_nextPow2(unsigned int u);
 
-/** @brief Rescales a value of known range into the [0.0, 1.0] interval.
-Rescales a value of known range into the [0.0, 1.0] interval.
+/** @brief Rescales a value of known range into the
+[0.0, 1.0] interval. Rescales a value of known range into
+the [0.0, 1.0] interval.
 @param[in] x Value to normalize
 @param[in] min Lower bound
 @param[in] max Upper bound
 @return Value rescaled from [min, max] to [0.0, 1.0] */
 extern double SDT_normalize(double x, double min, double max);
 
-/** @brief Normalizes samples in a window so that their sum is equal to 1.
+/** @brief Normalizes samples in a window so that their sum
+is equal to 1.
 @param[in,out] sig window to normalize
 @param[in] n window size */
 extern void SDT_normalizeWindow(double *sig, int n);
@@ -330,44 +456,51 @@ Finds the kth smallest value in the input array.
 @return kth smallest value in the array */
 extern double SDT_rank(double *x, int n, int k);
 
-/** @brief Removes the global average from samples in a window.
+/** @brief Removes the global average from samples in a
+window.
 @param[in,out] sig window to remove the average from
 @param[in] n window size */
 extern void SDT_removeDC(double *sig, int n);
 
-/** @brief Finds regions of influence (local maxima and minima) in a buffer.
-Finds regions of influence (local maxima and minima) in a buffer.
+/** @brief Finds regions of influence (local maxima and
+minima) in a buffer. Finds regions of influence (local
+maxima and minima) in a buffer.
 @param[in] sig pointer to the buffer
 @param[out] peaks indexes of the local maxima in the buffer
-@param[out] bounds indexes of the local minima in the buffer
-@param[i] d samples have to be greater than d neighbors to the left and to the
-right to be considered local maxima
+@param[out] bounds indexes of the local minima in the
+buffer
+@param[i] d samples have to be greater than d neighbors to
+the left and to the right to be considered local maxima
 @param[in] n buffer size */
 extern int SDT_roi(double *sig, int *peaks, int *bounds, int d, int n);
 
-/** @brief Time needed to travel the given distance at Mach 1.
-Computes the amount of time, in samples, needed by a sound wave propagating in
-air to travel a given distance. Particularly useful to set the delay times of
-comb filters and/or digital waveguides representing hollow cavities.
+/** @brief Time needed to travel the given distance at
+Mach 1. Computes the amount of time, in samples, needed by
+a sound wave propagating in air to travel a given distance.
+Particularly useful to set the delay times of comb filters
+and/or digital waveguides representing hollow cavities.
 @param[in] length Distance (m)
-@return Amount of samples to travel the distance at Mach 1 */
+@return Amount of samples to travel the distance at Mach 1
+*/
 extern double SDT_samplesInAir(double length);
 
 /** @brief Inverse function for SDT_samplesInAir
-@param[in] samples Amount of samples to travel the distance at Mach 1
+@param[in] samples Amount of samples to travel the distance
+at Mach 1
 @return Distance (m) */
 extern double SDT_samplesInAir_inv(double samples);
 
-/** @brief Rescales a value from a source range to a target range.
-Rescales a value from a source range to a target range.
+/** @brief Rescales a value from a source range to a target
+range. Rescales a value from a source range to a target
+range.
 @param[in] x Value to rescale
 @param[in] srcMin Lower bound of source value
 @param[in] srcMax Upper bound of source value
 @param[in] dstMin Lower bound of rescaled value
 @param[in] dstMax Upper bound of rescaled value
 @param[in] gamma Gamma factor
-@return Value rescaled from [srcMin, srcMax] to [dstMin, dstMax] with gamma
-factor \c gamma */
+@return Value rescaled from [srcMin, srcMax] to [dstMin,
+dstMax] with gamma factor \c gamma */
 extern double SDT_scale(double x, double srcMin, double srcMax, double dstMin,
                         double dstMax, double gamma);
 
@@ -377,34 +510,38 @@ Computes the signum function.
 @return Signum of x */
 extern int SDT_signum(double x);
 
-/** @brief Applies a sinc window (sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
-Applies a sinc window (sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
+/** @brief Applies a sinc window (sin(2&pi;ft)/(2&pi;ft))
+to a chunk of samples. Applies a sinc window
+(sin(2&pi;ft)/(2&pi;ft)) to a chunk of samples.
 @param[in,out] sig samples to window
 @param[in] f digital frequency (cycles per sample)
 @param[in] n window size */
 extern void SDT_sinc(double *sig, double f, int n);
 
-/** @brief Performs quadratic interpolation to estimate the true position of a
-peak. Performs quadratic interpolation to estimate the true position of a peak.
+/** @brief Performs quadratic interpolation to estimate the
+true position of a peak. Performs quadratic interpolation
+to estimate the true position of a peak.
 @param[in] sig signal buffer
 @param[in] peak index of a local maximum
 @return true peak position */
 extern double SDT_truePeakPos(double *sig, int peak);
 
-/** @brief Performs quadratic interpolation to estimate the true amplitude value
-of a peak. Performs quadratic interpolation to estimate the true amplitude value
-of a peak.
+/** @brief Performs quadratic interpolation to estimate the
+true amplitude value of a peak. Performs quadratic
+interpolation to estimate the true amplitude value of a
+peak.
 @param[in] sig signal buffer
 @param[in] peak index of a local maximum
 @return true peak value */
 extern double SDT_truePeakValue(double *sig, int peak);
 
-/** @brief Returns the arithmetic mean of an array of values weighted by the
-weights array
+/** @brief Returns the arithmetic mean of an array of
+values weighted by the weights array
 @param[in] values Pointer to the data array
 @param[in] weights Pointer to the weights array
 @param[in] n Length of the arrays
-@return Arithmetic mean of the values array weighted by the weights array */
+@return Arithmetic mean of the values array weighted by the
+weights array */
 extern double SDT_weightedAverage(double *values, double *weights,
                                   unsigned int n);
 

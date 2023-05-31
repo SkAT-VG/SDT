@@ -414,21 +414,71 @@ void SDT_zeros(double *sig, int n) {
 char _SDT_printTime_buf[_SDT_printTime_buf_LEN];
 static const char _SDT_printTime_fmt[] = "[%Y-%m-%d %H:%M:%S]";
 
-int _SDT_printTime(int (*print_func)(const char *, ...)) {
+static int _SDT_sprintTime(char *s, size_t n) {
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
-  strftime(_SDT_printTime_buf, sizeof(char) * _SDT_printTime_buf_LEN,
-           _SDT_printTime_fmt, tm);
-  return print_func(_SDT_printTime_buf);
-  return 0;
+  return strftime(s, n, _SDT_printTime_fmt, tm);
 }
 
-int _SDT_eprintf(const char *fmt, ...) {
+static int _SDT_eprintf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   int r = vfprintf(stderr, fmt, args);
   va_end(args);
   return r;
+}
+
+static char _SDT_logBuffer[MAXSDTSTRING];
+
+int SDT_log(int level, const char *file, unsigned int line, const char *func,
+            const char *fmt, ...) {
+  int n_chars = 0, i;
+
+  i = _SDT_sprintTime(_SDT_logBuffer + n_chars,
+                      sizeof(char) * (MAXSDTSTRING - n_chars));
+
+  if (i >= 0 && (n_chars += i) < MAXSDTSTRING) {
+    char *log_level_prefix;
+    switch (level) {
+      case SDT_LOG_DEBUG:
+        log_level_prefix = "::DEBUG";
+        break;
+      case SDT_LOG_INFO:
+        log_level_prefix = "::INFO ";
+        break;
+      case SDT_LOG_WARN:
+        log_level_prefix = "::WARN ";
+        break;
+      default:
+        log_level_prefix = "       ";
+        break;
+    }
+    i = snprintf(_SDT_logBuffer + n_chars,
+                 sizeof(char) * (MAXSDTSTRING - n_chars), "%s",
+                 log_level_prefix);
+  }
+
+  if (i >= 0 && (n_chars += i) < MAXSDTSTRING)
+    i = snprintf(_SDT_logBuffer + n_chars,
+                 sizeof(char) * (MAXSDTSTRING - n_chars), " %s:%d %s() \t",
+                 file, line, func);
+
+  if (i >= 0 && (n_chars += i) < MAXSDTSTRING) {
+    va_list args;
+    va_start(args, fmt);
+    i = vsnprintf(_SDT_logBuffer + n_chars,
+                  sizeof(char) * (MAXSDTSTRING - n_chars), fmt, args);
+    va_end(args);
+  }
+  // Error
+  if (i < 0) return i;
+  // Overflow: make sure terminating character is there (and a newline,
+  // for good measure)
+  if ((n_chars += i) >= MAXSDTSTRING) {
+    _SDT_logBuffer[MAXSDTSTRING - 2] = '\n';
+    _SDT_logBuffer[MAXSDTSTRING - 1] = 0;
+  }
+  return _SDT_eprintf("%s", _SDT_logBuffer);
 }
 
 int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }

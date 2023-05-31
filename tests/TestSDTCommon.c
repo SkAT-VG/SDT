@@ -14,6 +14,12 @@
 #include "SDT/SDTCommon.h"
 #include "SDTTestUtils.h"
 
+void TestSDT_log(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  SDT_DEBUG_LOG("Hello world!\n");
+  SDT_TEST_END()
+}
+
 void TestSDT_setSampleRate(CuTest *tc) {
   SDT_TEST_BEGIN()
   SDTRandomSequence *x = SDTRandomSequence_newLog(1024, 1, 192000);
@@ -311,11 +317,11 @@ void _TestHelper__SDT_isExtremum(CuTest *tc, double baseval, double peakval,
     for (j = 1, t = 1 + (r[n = 0] = SDTRandomSequence_nextInt(radii)); j < size;
          ++j) {
       if (j == t) {
-        // SDT_DEBUG_LOGA(_SDT_eprintf, " |-> Reached target: %i\n", t);
+        // SDT_DEBUG_LOGA(" |-> Reached target: %i\n", t);
         r[++n] = SDTRandomSequence_nextInt(radii);
         a[j] = peakval;
         t += 1 + ((r[n] > r[n - 1]) ? r[n] : r[n - 1]);
-        // SDT_DEBUG_LOGA(_SDT_eprintf, " |      Next target: %i\n", t);
+        // SDT_DEBUG_LOGA(" |      Next target: %i\n", t);
       } else {
         a[j] = baseval;
       }
@@ -327,16 +333,16 @@ void _TestHelper__SDT_isExtremum(CuTest *tc, double baseval, double peakval,
       right = t + r[r_i];
       a[left - 1] += peakval - baseval;
       a[right + 1] += peakval - baseval;
-      // SDT_DEBUG_LOGA(_SDT_eprintf, "%s\n", msg2);
+      // SDT_DEBUG_LOGA("%s\n", msg2);
       CuAssertIntEquals_Msg(tc, msg2, r[r_i],
                             find_func(a + left, 2 * r[r_i] + 1, 0));
       sprintf(msg, fmt, r[r_i], r_i + 1, n, "", left, t, right, a[left], a[t],
               a[right]);
-      // SDT_DEBUG_LOGA(_SDT_eprintf, "%s\n", msg);
+      // SDT_DEBUG_LOGA("%s\n", msg);
       CuAssert(tc, msg, check_func(a, t, r[r_i]));
       sprintf(msg, fmt, r[r_i] + 1, r_i + 1, n, "not ", left - 1, t, right + 1,
               a[left - 1], a[t], a[right + 1]);
-      // SDT_DEBUG_LOGA(_SDT_eprintf, "%s\n", msg);
+      // SDT_DEBUG_LOGA("%s\n", msg);
       CuAssert(tc, msg, !check_func(a, t, r[r_i] + 1));
       a[left - 1] -= peakval - baseval;
       a[right + 1] -= peakval - baseval;
