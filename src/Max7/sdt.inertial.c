@@ -1,9 +1,10 @@
+#include "SDT/SDTCommon.h"
+#include "SDT/SDTSolids.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
-#include "SDT/SDTCommon.h"
-#include "SDT/SDTSolids.h"
-#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _inertial {
   t_pxobject ob;
@@ -15,10 +16,11 @@ typedef struct _inertial {
 static t_class *inertial_class = NULL;
 
 void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_inertial *x;
   SDTResonator *inertial;
   char *key;
-  
+
   if (argc < 1 || atom_gettype(&argv[0]) != A_SYM) {
     error("sdt.inertial: Please provide a unique id as first argument.");
     return NULL;
@@ -26,7 +28,9 @@ void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
   inertial = SDTResonator_new(1, 1);
   key = atom_getsym(&argv[0])->s_name;
   if (SDT_registerResonator(inertial, key)) {
-    error("sdt.inertial: Error registering the resonator. Probably a duplicate id?");
+    error(
+        "sdt.inertial: Error registering the resonator. Probably a duplicate "
+        "id?");
     SDTResonator_free(inertial);
     return NULL;
   }
@@ -51,9 +55,10 @@ void inertial_free(t_inertial *x) {
 }
 
 void inertial_assist(t_inertial *x, void *b, long m, long a, char *s) {
-  if (m == ASSIST_INLET) { //inlet
-    sprintf(s, "mass (float): object mass\n"
-               "Object attributes and messages (see help patch)");
+  if (m == ASSIST_INLET) {  // inlet
+    sprintf(s,
+            "mass (float): object mass\n"
+            "Object attributes and messages (see help patch)");
   }
 }
 
@@ -82,8 +87,8 @@ void inertial_dsp(t_inertial *x, t_signal **sp, short *count) {
   SDTResonator_setActiveModes(x->inertial, 1);
 }
 
-void inertial_dsp64(t_inertial *x, t_object *dsp64, short *count, double samplerate,
-                    long maxvectorsize, long flags) {
+void inertial_dsp64(t_inertial *x, t_object *dsp64, short *count,
+                    double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
   SDTResonator_setFrequency(x->inertial, 0, 0.0);
   SDTResonator_setDecay(x->inertial, 0, 0.0);
@@ -93,24 +98,25 @@ void inertial_dsp64(t_inertial *x, t_object *dsp64, short *count, double sampler
   SDTResonator_setActiveModes(x->inertial, 1);
 }
 
-void C74_EXPORT ext_main(void *r) {	
-  t_class *c = class_new("sdt.inertial", (method)inertial_new, (method)inertial_free,
-                         (long)sizeof(t_inertial), 0L, A_GIMME, 0);
+void C74_EXPORT ext_main(void *r) {
+  t_class *c =
+      class_new("sdt.inertial", (method)inertial_new, (method)inertial_free,
+                (long)sizeof(t_inertial), 0L, A_GIMME, 0);
   class_addmethod(c, (method)inertial_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)inertial_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)inertial_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)inertial_strike, "strike", A_FLOAT, A_FLOAT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
-  
+
   CLASS_ATTR_DOUBLE(c, "mass", 0, t_inertial, mass);
   CLASS_ATTR_DOUBLE(c, "fragmentSize", 0, t_inertial, fragmentSize);
-  
+
   CLASS_ATTR_FILTER_MIN(c, "mass", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "fragmentSize", 0.0, 1.0);
-  
+
   CLASS_ATTR_ACCESSORS(c, "mass", NULL, (method)inertial_mass);
   CLASS_ATTR_ACCESSORS(c, "fragmentSize", NULL, (method)inertial_fragmentSize);
-  
+
   class_dspinit(c);
   class_register(CLASS_BOX, c);
   inertial_class = c;

@@ -1,23 +1,24 @@
+#include "SDT/SDTCommon.h"
+#include "SDT/SDTSolids.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
-#include "SDT/SDTCommon.h"
-#include "SDT/SDTSolids.h"
-#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _friction {
   t_pxobject ob;
   SDTInteractor *friction;
   char *key0, *key1;
-  double force, stribeck, kStatic, kDynamic,
-         stiffness, dissipation, viscosity,
-         noisiness, breakAway;
+  double force, stribeck, kStatic, kDynamic, stiffness, dissipation, viscosity,
+      noisiness, breakAway;
   long contact0, contact1, nOutlets;
 } t_friction;
 
 static t_class *friction_class = NULL;
 
 void *friction_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_friction *x;
   SDTInteractor *friction;
   char *key0, *key1;
@@ -25,15 +26,21 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
 
   err = 0;
   if (argc < 1 || atom_gettype(&argv[0]) != A_SYM) {
-    error("sdt.friction~: Please provide the id of the first resonator as first argument.");
+    error(
+        "sdt.friction~: Please provide the id of the first resonator as first "
+        "argument.");
     err = 1;
   }
   if (argc < 2 || atom_gettype(&argv[1]) != A_SYM) {
-    error("sdt.friction~: Please provide the id of the second resonator as second argument.");
+    error(
+        "sdt.friction~: Please provide the id of the second resonator as "
+        "second argument.");
     err = 1;
   }
   if (argc < 3 || atom_gettype(&argv[2]) != A_LONG) {
-    error("sdt.friction~: Please provide the number of available outlets as third argument.");
+    error(
+        "sdt.friction~: Please provide the number of available outlets as "
+        "third argument.");
     err = 1;
   }
   if (err) return NULL;
@@ -41,7 +48,9 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
   key0 = atom_getsym(&argv[0])->s_name;
   key1 = atom_getsym(&argv[1])->s_name;
   if (SDT_registerInteractor(friction, key0, key1)) {
-    error("sdt.friction~: Error registering the interaction. Probably a duplicate id?");
+    error(
+        "sdt.friction~: Error registering the interaction. Probably a "
+        "duplicate id?");
     SDTFriction_free(friction);
     return NULL;
   }
@@ -69,11 +78,12 @@ void friction_free(t_friction *x) {
 }
 
 void friction_assist(t_friction *x, void *b, long m, long a, char *s) {
-  if (m == ASSIST_INLET) { //inlet
+  if (m == ASSIST_INLET) {  // inlet
     switch (a) {
       case 0:
-        sprintf(s, "(signal): External force applied on object 1 (N)\n"
-                   "Object attributes and messages (see help patch)");
+        sprintf(s,
+                "(signal): External force applied on object 1 (N)\n"
+                "Object attributes and messages (see help patch)");
         break;
       case 1:
         sprintf(s, "(signal): Strike velocity of object 1 (m/s)");
@@ -93,65 +103,65 @@ void friction_assist(t_friction *x, void *b, long m, long a, char *s) {
       default:
         break;
     }
-  }
-  else {
-    sprintf(s, "(signal): Output sound from / displacement (m) at pickup %ld", a);
+  } else {
+    sprintf(s, "(signal): Output sound from / displacement (m) at pickup %ld",
+            a);
   }
 }
 
 void friction_force(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->force = atom_getfloat(av);
-    SDTFriction_setNormalForce(x->friction, x->force);
+  x->force = atom_getfloat(av);
+  SDTFriction_setNormalForce(x->friction, x->force);
 }
 
 void friction_stribeck(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->stribeck = atom_getfloat(av);
-    SDTFriction_setStribeckVelocity(x->friction, x->stribeck);
+  x->stribeck = atom_getfloat(av);
+  SDTFriction_setStribeckVelocity(x->friction, x->stribeck);
 }
 
 void friction_kStatic(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->kStatic = atom_getfloat(av);
-    SDTFriction_setStaticCoefficient(x->friction, x->kStatic);
+  x->kStatic = atom_getfloat(av);
+  SDTFriction_setStaticCoefficient(x->friction, x->kStatic);
 }
 
 void friction_kDynamic(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->kDynamic = atom_getfloat(av);
-    SDTFriction_setDynamicCoefficient(x->friction, x->kDynamic);
+  x->kDynamic = atom_getfloat(av);
+  SDTFriction_setDynamicCoefficient(x->friction, x->kDynamic);
 }
 
 void friction_stiffness(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->stiffness = atom_getfloat(av);
-    SDTFriction_setStiffness(x->friction, x->stiffness);
+  x->stiffness = atom_getfloat(av);
+  SDTFriction_setStiffness(x->friction, x->stiffness);
 }
 
 void friction_dissipation(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->dissipation = atom_getfloat(av);
-    SDTFriction_setDissipation(x->friction, x->dissipation);
+  x->dissipation = atom_getfloat(av);
+  SDTFriction_setDissipation(x->friction, x->dissipation);
 }
 
 void friction_viscosity(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->viscosity = atom_getfloat(av);
-    SDTFriction_setViscosity(x->friction, x->viscosity);
+  x->viscosity = atom_getfloat(av);
+  SDTFriction_setViscosity(x->friction, x->viscosity);
 }
 
 void friction_noisiness(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->noisiness = atom_getfloat(av);
-    SDTFriction_setNoisiness(x->friction, x->noisiness);
+  x->noisiness = atom_getfloat(av);
+  SDTFriction_setNoisiness(x->friction, x->noisiness);
 }
 
 void friction_breakAway(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->breakAway = atom_getfloat(av);
-    SDTFriction_setBreakAway(x->friction, x->breakAway);
+  x->breakAway = atom_getfloat(av);
+  SDTFriction_setBreakAway(x->friction, x->breakAway);
 }
 
 void friction_contact0(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->contact0 = atom_getlong(av);
-    SDTInteractor_setFirstPoint(x->friction, x->contact0);
+  x->contact0 = atom_getlong(av);
+  SDTInteractor_setFirstPoint(x->friction, x->contact0);
 }
 
 void friction_contact1(t_friction *x, void *attr, long ac, t_atom *av) {
-    x->contact1 = atom_getlong(av);
-    SDTInteractor_setSecondPoint(x->friction, x->contact1);
+  x->contact1 = atom_getlong(av);
+  SDTInteractor_setSecondPoint(x->friction, x->contact1);
 }
 
 t_int *friction_perform(t_int *w) {
@@ -169,9 +179,10 @@ t_int *friction_perform(t_int *w) {
   int i, k;
 
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
+    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++,
+                      *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
-      out = (t_float *)(sp[6+i]->s_vec);
+      out = (t_float *)(sp[6 + i]->s_vec);
       out[k] = (float)tmpOuts[i];
     }
   }
@@ -183,9 +194,9 @@ void friction_dsp(t_friction *x, t_signal **sp, short *count) {
   dsp_add(friction_perform, 3, x, sp, sp[0]->s_n);
 }
 
-void friction_perform64(t_friction *x, t_object *dsp64, double **ins, long numins,
-                      double **outs, long numouts, long sampleframes,
-                      long flags, void *userparam) {
+void friction_perform64(t_friction *x, t_object *dsp64, double **ins,
+                        long numins, double **outs, long numouts,
+                        long sampleframes, long flags, void *userparam) {
   t_double *in0 = (t_double *)ins[0];
   t_double *in1 = (t_double *)ins[1];
   t_double *in2 = (t_double *)ins[2];
@@ -197,22 +208,24 @@ void friction_perform64(t_friction *x, t_object *dsp64, double **ins, long numin
   int i, k;
 
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
+    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++,
+                      *in5++, tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
       outs[i][k] = tmpOuts[i];
     }
   }
 }
 
-void friction_dsp64(t_friction *x, t_object *dsp64, short *count, double samplerate,
-                  long maxvectorsize, long flags) {
+void friction_dsp64(t_friction *x, t_object *dsp64, short *count,
+                    double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
   object_method(dsp64, gensym("dsp_add64"), x, friction_perform64, 0, NULL);
 }
 
 void C74_EXPORT ext_main(void *r) {
-  t_class *c = class_new("sdt.friction~", (method)friction_new, (method)friction_free,
-                         (long)sizeof(t_friction), 0L, A_GIMME, 0);
+  t_class *c =
+      class_new("sdt.friction~", (method)friction_new, (method)friction_free,
+                (long)sizeof(t_friction), 0L, A_GIMME, 0);
 
   class_addmethod(c, (method)friction_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)friction_dsp64, "dsp64", A_CANT, 0);

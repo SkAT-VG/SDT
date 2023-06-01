@@ -1,6 +1,9 @@
-#include "m_pd.h"
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTCommonMacros.h"
+#include "m_pd.h"
 
 static t_class* SDT_class;
 
@@ -9,7 +12,7 @@ typedef struct _SDT {
 } t_SDT;
 
 void* SDT_new(t_symbol* s) {
-  t_SDT *x = (t_SDT *)pd_new(SDT_class);
+  t_SDT* x = (t_SDT*)pd_new(SDT_class);
   return x;
 }
 
@@ -41,8 +44,23 @@ void windflow_tilde_setup(void);
 void windkarman_tilde_setup(void);
 void zerox_tilde_setup(void);
 
+static char _SDT_logBufferPd[MAXPDSTRING];
+
+static int SDT_pdPost(const char* fmt, ...) {
+  va_list args;
+  va_start(args, fmt);
+  int n = vsnprintf(_SDT_logBufferPd, sizeof(char) * MAXPDSTRING, fmt, args);
+  va_end(args);
+  int s_len = strlen(_SDT_logBufferPd);
+  if (_SDT_logBufferPd[s_len - 1] == '\n') _SDT_logBufferPd[s_len - 1] = 0;
+  post("%s", _SDT_logBufferPd);
+  SDT_eprintf("%s\n", _SDT_logBufferPd);
+  return n;
+}
+
 void SDT_setup() {
-  SDT_class = class_new(gensym("SDT"), (t_newmethod)SDT_new, 0, sizeof(t_SDT), 0,0);
+  SDT_class =
+      class_new(gensym("SDT"), (t_newmethod)SDT_new, 0, sizeof(t_SDT), 0, 0);
   bouncing_tilde_setup();
   breaking_tilde_setup();
   bubble_tilde_setup();
@@ -70,7 +88,12 @@ void SDT_setup() {
   windflow_tilde_setup();
   windkarman_tilde_setup();
   zerox_tilde_setup();
-  
+
+  // Debug on standard error, everything else on Pd console
+  SDT_setLogger(SDT_LOG_INFO, &SDT_pdPost, 1);
+  SDT_setLogger(SDT_LOG_WARN, &SDT_pdPost, 1);
+  SDT_setLogger(SDT_LOG_ERROR, &SDT_pdPost, 1);
+
   post("=== SDT - Sound Design Toolkit ===");
   post("Version %s, (C) 2001 - 2021", STRINGIFY(SDT_ver));
   post("Project SOb - http://soundobject.org");

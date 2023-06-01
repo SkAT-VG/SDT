@@ -2,13 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "SDTCommon.h"
 
 SDTOSCReturnCode SDTOSCZeroCrossing_log(void (*log)(const char *, ...),
                                         const char *key, SDTZeroCrossing *x) {
   json_value *obj = SDTZeroCrossing_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
