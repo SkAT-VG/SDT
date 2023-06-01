@@ -66,7 +66,7 @@ SDTOSCReturnCode SDTOSCProject_save(void (*log)(const char *, ...),
     free(argv);
 
     if (prj) {
-      r = SDTOSCJSON_save(log, "project", prj, args);
+      r = SDTOSCJSON_save("project", prj, args);
       json_builder_free(prj);
     }
   }
@@ -77,7 +77,7 @@ SDTOSCReturnCode SDTOSCProject_load(void (*log)(const char *, ...),
                                     const SDTOSCArgumentList *args) {
   json_value *prj;
   json_value *msg = json_object_new(0);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "project", &prj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load("project", &prj, args);
   SDTProject_fromJSON(prj, &return_code, msg);
   if (prj) json_builder_free(prj);
   if (msg) {
@@ -126,8 +126,7 @@ SDTOSCReturnCode SDTOSCProjectMetadata_save(void (*log)(const char *, ...),
   if (!args || !SDTOSCArgumentList_getNArgs(args))
     return SDT_OSC_RETURN_ARGUMENT_ERROR;
   json_value *metadata = SDTProjectMetadata_pop();
-  SDTOSCReturnCode return_code =
-      SDTOSCJSON_save(log, "metadata", metadata, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save("metadata", metadata, args);
   json_builder_free(metadata);
   return return_code;
 }
@@ -135,7 +134,7 @@ SDTOSCReturnCode SDTOSCProjectMetadata_save(void (*log)(const char *, ...),
 SDTOSCReturnCode SDTOSCProjectMetadata_load(void (*log)(const char *, ...),
                                             const SDTOSCArgumentList *args) {
   json_value *tmp;
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, "metadata", &tmp, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load("metadata", &tmp, args);
   SDTProjectMetadata_set(tmp);
   return return_code;
 }

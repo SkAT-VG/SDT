@@ -240,7 +240,7 @@ extern SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x);
 
 /** @brief Return codes for OSC methods */
 typedef enum SDTOSCReturnCode {
-  SDT_OSC_RETURN_OK,
+  SDT_OSC_RETURN_OK = 0,
   SDT_OSC_RETURN_MISSING_CONTAINER,
   SDT_OSC_RETURN_MISSING_METHOD,
   SDT_OSC_RETURN_NOT_IMPLEMENTED,
@@ -267,29 +267,27 @@ Utilities for OSC methods using JSON
 @{ */
 
 /** @brief Log JSON information with a custom log function
-@param[in] log Log function pointer
 @param[in] preamble Preamble to the log information
-@param[in] obj JSON object */
-extern SDTOSCReturnCode SDTOSCJSON_log(const char *preamble, json_value *obj);
+@param[in] obj JSON object
+@return Zero on success, non-zero on error */
+extern int SDTOSCJSON_log(const char *preamble, json_value *obj);
 
 /** @brief Save JSON information to file
-@param[in] log Log function pointer
 @param[in] name Name of the object
 @param[in] obj JSON object
-@param[in] args Additional OSC arguments: file path (string) */
-extern SDTOSCReturnCode SDTOSCJSON_save(void (*log)(const char *, ...),
-                                        const char *name, json_value *obj,
-                                        const SDTOSCArgumentList *args);
+@param[in] args Additional OSC arguments: file path (string)
+@return Zero on success, non-zero on error */
+extern int SDTOSCJSON_save(const char *name, json_value *obj,
+                           const SDTOSCArgumentList *args);
 
 /** @brief Load information from JSON files
 @param [in] log Log function pointer
 @param [in] name Name of the object
 @param [out] obj Loaded JSON object
 @param [in] args Additional OSC arguments: file path (string)
-@return Return code */
-extern SDTOSCReturnCode SDTOSCJSON_load(void (*log)(const char *, ...),
-                                        const char *name, json_value **obj,
-                                        const SDTOSCArgumentList *args);
+@return Zero on success, non-zero on error */
+extern int SDTOSCJSON_load(const char *name, json_value **obj,
+                           const SDTOSCArgumentList *args);
 
 /** @} */
 

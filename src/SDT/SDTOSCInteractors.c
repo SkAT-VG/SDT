@@ -155,7 +155,7 @@ SDTOSCReturnCode SDTOSCImpact_save(void (*log)(const char *, ...),
   json_value *obj = SDTImpact_toJSON(x, key0, key1);
   char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
   sprintf(name, "impact between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode r = SDTOSCJSON_save(name, obj, args);
   free(name);
   json_builder_free(obj);
   return r;
@@ -168,7 +168,7 @@ SDTOSCReturnCode SDTOSCImpact_load(void (*log)(const char *, ...),
   json_value *obj = 0;
   char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
   sprintf(name, "impact between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTInteractor *inter = SDTImpact_fromJSON(obj);
@@ -331,7 +331,7 @@ SDTOSCReturnCode SDTOSCFriction_save(void (*log)(const char *, ...),
   json_value *obj = SDTFriction_toJSON(x, key0, key1);
   char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
   sprintf(name, "friction between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode r = SDTOSCJSON_save(name, obj, args);
   free(name);
   json_builder_free(obj);
   return r;
@@ -344,7 +344,7 @@ SDTOSCReturnCode SDTOSCFriction_load(void (*log)(const char *, ...),
   json_value *obj = 0;
   char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
   sprintf(name, "friction between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTInteractor *inter = SDTFriction_fromJSON(obj);

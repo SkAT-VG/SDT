@@ -9,10 +9,10 @@
 //-------------------------------------------------------------------------------------//
 // Private utils
 
-char *_indent = "  ";
-char *_docs_url = "https://skat-vg.github.io/SDT";
+static char *_indent = "  ";
+static char *_docs_url = "https://skat-vg.github.io/SDT";
 
-char *strjoin_free(char *x, int free_x, char *y, int free_y) {
+static char *strjoin_free(char *x, int free_x, char *y, int free_y) {
   char *z = malloc(sizeof(char) * (strlen(x) + strlen(y) + 1));
   sprintf(z, "%s%s", x, y);
   if (free_x) free(x);
@@ -20,16 +20,12 @@ char *strjoin_free(char *x, int free_x, char *y, int free_y) {
   return z;
 }
 
-char *indent_free(char *x, int free_x, int newline) {
+static char *indent_free(char *x, int free_x, int newline) {
   char *ind = strjoin_free((newline) ? "\n" : "", 0, _indent, 0);
   return strjoin_free(ind, 1, x, free_x);
 }
 
-int n_digits(float x) { return (int)fmax(ceil(log10(fabs(x) + 1)), 1); }
-
-char *int_stralloc(float x, int headroom, int times) {
-  return (char *)malloc(sizeof(char) * times * (headroom + n_digits(x)));
-}
+static int n_digits(float x) { return (int)fmax(ceil(log10(fabs(x) + 1)), 1); }
 
 //-------------------------------------------------------------------------------------//
 
@@ -404,14 +400,16 @@ void SDTOSCLog(void (*log)(const char *, ...), SDTOSCReturnCode r,
 
 static char _SDT_JSON_logBuffer[_SDT_JSON_BUFLEN];
 
-SDTOSCReturnCode SDTOSCJSON_log(const char *preamble, json_value *obj) {
-  char *s = json_dumps(obj);
+int SDTOSCJSON_log(const char *preamble, json_value *obj) {
   int newline = 0;
   int (*log)(const char *, ...) = SDT_getLogger(SDT_LOG_INFO, &newline);
-  if (!s) return SDT_OSC_RETURN_ERROR_WRITING_JSON;
+  char *s = json_dumps(obj);
+  if (!s) {
+    SDT_ERROR_LOG("Error while dumping json_value to string\n");
+    return 1;
+  }
 
   unsigned int s_len = strlen(s), n_print = 0;
-  SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
   log("%s\n", preamble);
   for (unsigned int n_printed = 0; n_printed < s_len; n_printed += n_print) {
     // If the first character is a newline, ignore it
@@ -438,37 +436,53 @@ SDTOSCReturnCode SDTOSCJSON_log(const char *preamble, json_value *obj) {
   }
   if (!newline && _SDT_JSON_logBuffer[n_print - 1] != '\n') log("\n");
   free(s);
-  return return_code;
+  return 0;
 }
 
-SDTOSCReturnCode SDTOSCJSON_save(void (*log)(const char *, ...),
-                                 const char *name, json_value *obj,
-                                 const SDTOSCArgumentList *args) {
-  if (!args || args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+#define _SDTOSCJSON_fileArgsValidation()                     \
+  if (!name) {                                               \
+    SDT_ERROR_LOG("name is a null pointer");                 \
+    return 1;                                                \
+  }                                                          \
+  if (!args) {                                               \
+    SDT_ERROR_LOG("args is a null pointer");                 \
+    return 2;                                                \
+  }                                                          \
+  if (args->argc < 1) {                                      \
+    SDT_ERROR_LOG("args is empty");                          \
+    return 3;                                                \
+  }                                                          \
+  if (!SDTOSCArgumentList_isString(args, 0)) {               \
+    SDT_ERROR_LOG("args[0] is not a string");                \
+    return 4;                                                \
+  }                                                          \
+  const char *fpath = SDTOSCArgumentList_getString(args, 0); \
+  if (!fpath) {                                              \
+    SDT_ERROR_LOG("args[0] (as string) is a null pointer");  \
+    return 5;                                                \
+  }
 
-  SDTOSCReturnCode return_code = SDT_OSC_RETURN_OK;
-
+int SDTOSCJSON_save(const char *name, json_value *obj,
+                    const SDTOSCArgumentList *args) {
+  _SDTOSCJSON_fileArgsValidation();
   if (!json_dump(obj, fpath)) {
-    if (log) (*log)("sdtOSC: saved %s to '%s'", name, fpath);
-  } else
-    return_code = SDT_OSC_RETURN_NO_WRITE_PERMISSION;
-
-  return return_code;
+    SDT_INFO_LOGA("Saved %s to '%s'\n", name, fpath);
+  } else {
+    SDT_ERROR_LOGA("Error while saving %s to '%s'\n", name, fpath);
+    return 6;
+  }
+  return 0;
 }
 
-SDTOSCReturnCode SDTOSCJSON_load(void (*log)(const char *, ...),
-                                 const char *name, json_value **obj,
-                                 const SDTOSCArgumentList *args) {
+int SDTOSCJSON_load(const char *name, json_value **obj,
+                    const SDTOSCArgumentList *args) {
   *obj = 0;
-  if (args->argc < 1 || !SDTOSCArgumentList_isString(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  const char *fpath = SDTOSCArgumentList_getString(args, 0);
+  _SDTOSCJSON_fileArgsValidation();
 
-  if (!(*obj = json_read(fpath))) return SDT_OSC_RETURN_ERROR_LOADING_JSON;
-
-  if (log) (*log)("sdtOSC: loaded %s from '%s'", name, fpath);
-
-  return SDT_OSC_RETURN_OK;
+  if (!(*obj = json_read(fpath))) {
+    SDT_ERROR_LOGA("Error while loading %s from '%s'\n", name, fpath);
+    return 6;
+  }
+  SDT_INFO_LOGA("Loaded %s from '%s'\n", name, fpath);
+  return 0;
 }

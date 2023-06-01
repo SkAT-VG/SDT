@@ -21,7 +21,7 @@ SDTOSCReturnCode SDTOSCZeroCrossing_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTZeroCrossing_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -33,7 +33,7 @@ SDTOSCReturnCode SDTOSCZeroCrossing_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) SDTZeroCrossing_setParams(x, obj, 0);
   if (obj) json_builder_free(obj);
