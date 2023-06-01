@@ -402,10 +402,10 @@ static char _SDT_JSON_logBuffer[_SDT_JSON_BUFLEN];
 
 int SDTOSCJSON_log(const char *preamble, json_value *obj) {
   int newline = 0;
-  int (*log)(const char *, ...) = SDT_getLogger(SDT_LOG_INFO, &newline);
+  int (*log)(const char *, ...) = SDT_getLogger(SDT_LOG_LEVEL_INFO, &newline);
   char *s = json_dumps(obj);
   if (!s) {
-    SDT_ERROR_LOG("Error while dumping json_value to string\n");
+    SDT_LOG(ERROR, "Error while dumping json_value to string\n");
     return 1;
   }
 
@@ -441,24 +441,24 @@ int SDTOSCJSON_log(const char *preamble, json_value *obj) {
 
 #define _SDTOSCJSON_fileArgsValidation()                     \
   if (!name) {                                               \
-    SDT_ERROR_LOG("name is a null pointer");                 \
+    SDT_LOG(ERROR, "name is a null pointer");                \
     return 1;                                                \
   }                                                          \
   if (!args) {                                               \
-    SDT_ERROR_LOG("args is a null pointer");                 \
+    SDT_LOG(ERROR, "args is a null pointer");                \
     return 2;                                                \
   }                                                          \
   if (args->argc < 1) {                                      \
-    SDT_ERROR_LOG("args is empty");                          \
+    SDT_LOG(ERROR, "args is empty");                         \
     return 3;                                                \
   }                                                          \
   if (!SDTOSCArgumentList_isString(args, 0)) {               \
-    SDT_ERROR_LOG("args[0] is not a string");                \
+    SDT_LOG(ERROR, "args[0] is not a string");               \
     return 4;                                                \
   }                                                          \
   const char *fpath = SDTOSCArgumentList_getString(args, 0); \
   if (!fpath) {                                              \
-    SDT_ERROR_LOG("args[0] (as string) is a null pointer");  \
+    SDT_LOG(ERROR, "args[0] (as string) is a null pointer"); \
     return 5;                                                \
   }
 
@@ -466,9 +466,9 @@ int SDTOSCJSON_save(const char *name, json_value *obj,
                     const SDTOSCArgumentList *args) {
   _SDTOSCJSON_fileArgsValidation();
   if (!json_dump(obj, fpath)) {
-    SDT_INFO_LOGA("Saved %s to '%s'\n", name, fpath);
+    SDT_LOGA(INFO, "Saved %s to '%s'\n", name, fpath);
   } else {
-    SDT_ERROR_LOGA("Error while saving %s to '%s'\n", name, fpath);
+    SDT_LOGA(ERROR, "Error while saving %s to '%s'\n", name, fpath);
     return 6;
   }
   return 0;
@@ -480,9 +480,9 @@ int SDTOSCJSON_load(const char *name, json_value **obj,
   _SDTOSCJSON_fileArgsValidation();
 
   if (!(*obj = json_read(fpath))) {
-    SDT_ERROR_LOGA("Error while loading %s from '%s'\n", name, fpath);
+    SDT_LOGA(ERROR, "Error while loading %s from '%s'\n", name, fpath);
     return 6;
   }
-  SDT_INFO_LOGA("Loaded %s from '%s'\n", name, fpath);
+  SDT_LOGA(INFO, "Loaded %s from '%s'\n", name, fpath);
   return 0;
 }

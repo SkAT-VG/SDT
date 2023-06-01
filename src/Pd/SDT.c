@@ -90,9 +90,9 @@ void SDT_setup() {
   zerox_tilde_setup();
 
   // Debug on standard error, everything else on Pd console
-  SDT_setLogger(SDT_LOG_INFO, &SDT_pdPost, 1);
-  SDT_setLogger(SDT_LOG_WARN, &SDT_pdPost, 1);
-  SDT_setLogger(SDT_LOG_ERROR, &SDT_pdPost, 1);
+  SDT_setLogger(SDT_LOG_LEVEL_INFO, &SDT_pdPost, 1);
+  SDT_setLogger(SDT_LOG_LEVEL_WARN, &SDT_pdPost, 1);
+  SDT_setLogger(SDT_LOG_LEVEL_ERROR, &SDT_pdPost, 1);
 
   post("=== SDT - Sound Design Toolkit ===");
   post("Version %s, (C) 2001 - 2021", STRINGIFY(SDT_ver));

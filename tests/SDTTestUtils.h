@@ -113,7 +113,7 @@ void TestSDT_functionName(CuTest* tc)
 #ifdef SDT_DEBUG
 #define SDT_TEST_BEGIN() \
   _SDT_resetArena();     \
-  SDT_INFO_LOG("\n");    \
+  SDT_LOG(INFO, "\n");   \
   {
 #define SDT_TEST_END()                                                  \
   size_t __arena_size = _SDT_currentArena();                            \
@@ -124,7 +124,7 @@ void TestSDT_functionName(CuTest* tc)
   }
 #else
 #define SDT_TEST_BEGIN() \
-  SDT_INFO_LOG("\n");    \
+  SDT_LOG(INFO, "\n");   \
   {
 #define SDT_TEST_END() }
 #endif

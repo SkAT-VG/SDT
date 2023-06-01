@@ -98,11 +98,11 @@ SDTCommon.h should always be included when using other SDT modules.
 
 /** @brief Log levels for SDT */
 typedef enum SDTLogLevel {
-  SDT_LOG_ERROR = 0,
-  SDT_LOG_WARN = 1,
-  SDT_LOG_INFO = 2,
-  SDT_LOG_DEBUG = 3,
-  SDT_LOG_VERBOSE = 4,
+  SDT_LOG_LEVEL_ERROR = 0,
+  SDT_LOG_LEVEL_WARN = 1,
+  SDT_LOG_LEVEL_INFO = 2,
+  SDT_LOG_LEVEL_DEBUG = 3,
+  SDT_LOG_LEVEL_VERBOSE = 4,
 } SDTLogLevel;
 
 /** @brief Maximum string length for logging */
@@ -220,85 +220,25 @@ extern int SDT_eprintf(const char *fmt, ...);
 #endif
 #endif
 
-/** @brief Exclude wrapped code from any non-verbose build
-@param[in] X Code to include in verbose builds only */
-#define SDT_VERBOSE_ONLY(X) SDT_VERBOSE_IF_ELSE(X, )
+/** @brief Exclude wrapped code from any build with log level below LEVEL
+@param[in] LEVEL Minimum level for code inclusion
+@param[in] X Conditional code */
+#define SDT_ONLY_IN_LEVEL(LEVEL, X) \
+  { SDT_##LEVEL##_IF_ELSE(X;, ) }
 
-/** @brief Exclude wrapped code from any non-debug build
-@param[in] X Code to include in debug builds only */
-#define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X, )
-
-/** @brief Exclude wrapped code from any non-info build
-@param[in] X Code to include in info builds only */
-#define SDT_INFO_ONLY(X) SDT_INFO_IF_ELSE(X, )
-
-/** @brief Exclude wrapped code from any non-warn build
-@param[in] X Code to include in warn builds only */
-#define SDT_WARN_ONLY(X) SDT_WARN_IF_ELSE(X, )
-
-/** @brief Exclude wrapped code from any non-error build
-@param[in] X Code to include in error builds only */
-#define SDT_ERROR_ONLY(X) SDT_ERROR_IF_ELSE(X, )
-
-/** @brief Log in verbose mode only
+/** @brief Log message in any build with log level below LEVEL
+@param[in] LEVEL Minimum level for logging
 @param[in] MSG C string */
-#define SDT_VERBOSE_LOG(MSG) \
-  SDT_VERBOSE_ONLY(SDT_log(SDT_LOG_VERBOSE, __FILE__, __LINE__, __func__, MSG));
+#define SDT_LOG(LEVEL, MSG)                                                   \
+  SDT_ONLY_IN_LEVEL(LEVEL, SDT_log(SDT_LOG_LEVEL_##LEVEL, __FILE__, __LINE__, \
+                                   __func__, MSG))
 
-/** @brief Log in verbose mode only, with format arguments
-@param[in] FMT C string that contains a format string that follows the same
-specifications as format in printf */
-#define SDT_VERBOSE_LOGA(FMT, ...)                                             \
-  SDT_VERBOSE_ONLY(SDT_log(SDT_LOG_VERBOSE, __FILE__, __LINE__, __func__, FMT, \
-                           __VA_ARGS__));
-
-/** @brief Log in debug mode only
+/** @brief Log message in any build with log level below LEVEL
+@param[in] LEVEL Minimum level for logging
 @param[in] MSG C string */
-#define SDT_DEBUG_LOG(MSG) \
-  SDT_DEBUG_ONLY(SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in debug mode only, with format arguments
-@param[in] FMT C string that contains a format string that follows the same
-specifications as format in printf */
-#define SDT_DEBUG_LOGA(FMT, ...) \
-  SDT_DEBUG_ONLY(                \
-      SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
-
-/** @brief Log in info mode only
-@param[in] MSG C string */
-#define SDT_INFO_LOG(MSG) \
-  SDT_INFO_ONLY(SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in info mode only, with format arguments
-@param[in] FMT C string that contains a format string that follows the same
-specifications as format in printf */
-#define SDT_INFO_LOGA(FMT, ...) \
-  SDT_INFO_ONLY(                \
-      SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
-
-/** @brief Log in warn mode only
-@param[in] MSG C string */
-#define SDT_WARN_LOG(MSG) \
-  SDT_WARN_ONLY(SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in warn mode only, with format arguments
-@param[in] FMT C string that contains a format string that follows the same
-specifications as format in printf */
-#define SDT_WARN_LOGA(FMT, ...) \
-  SDT_WARN_ONLY(                \
-      SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
-
-/** @brief Log in error mode only
-@param[in] MSG C string */
-#define SDT_ERROR_LOG(MSG) \
-  SDT_ERROR_ONLY(SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in error mode only, with format arguments
-@param[in] FMT C string that contains a format string that follows the same
-specifications as format in printf */
-#define SDT_ERROR_LOGA(FMT, ...) \
-  SDT_ERROR_ONLY(                \
-      SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
+#define SDT_LOGA(LEVEL, FMT, ...)                                             \
+  SDT_ONLY_IN_LEVEL(LEVEL, SDT_log(SDT_LOG_LEVEL_##LEVEL, __FILE__, __LINE__, \
+                                   __func__, FMT, __VA_ARGS__))
 
 #ifdef __cplusplus
 extern "C" {

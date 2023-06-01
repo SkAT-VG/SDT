@@ -172,7 +172,7 @@ void _SDT_arenaWarnNonEmpty() {
   for (SDTDLLNode* node = SDTDoublyLinkedList_getTop(heap_dll); node;
        node = SDTDLLNode_getPrev(node)) {
     minfo = (SDTMallocInfo*)node->ptr;
-    SDT_log(SDT_LOG_WARN, minfo->file, minfo->line, minfo->func,
+    SDT_log(SDT_LOG_LEVEL_WARN, minfo->file, minfo->line, minfo->func,
             "Memory not freed! %p\n", minfo->ptr);
   }
 #endif
@@ -184,10 +184,11 @@ void* _SDT_mallocTrack(size_t size, const char* file, unsigned int line,
   if (!heap_dll) heap_dll = SDTDoublyLinkedList_new();
   SDTDoublyLinkedList_push(heap_dll, SDTDLLNode_new(SDTMallocInfo_new(
                                          p, size, 1, file, line, func)));
-  SDT_VERBOSE_ONLY(SDT_log(SDT_LOG_VERBOSE, file, line, func,
-                           "Arena: %li B\t[%li objs]\tAllocated: %p -> %li B\n",
-                           _SDT_currentArena(), _SDT_currentArenaLength(), p,
-                           size);)
+  SDT_ONLY_IN_LEVEL(
+      VERBOSE,
+      SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
+              "Arena: %li B\t[%li objs]\tAllocated: %p -> %li B\n",
+              _SDT_currentArena(), _SDT_currentArenaLength(), p, size);)
   return p;
 }
 
@@ -209,15 +210,16 @@ void _SDT_freeTrack(void* p, const char* file, unsigned int line,
   if (n) SDTDLLNode_free(n, 0);
   if (minfo) {
     if (!_SDT_currentArenaLength()) _SDT_resetArena();
-    SDT_VERBOSE_ONLY(
-        SDT_log(SDT_LOG_VERBOSE, file, line, func,
-                "Arena: %li B\t[%li objs]\tFreed:     %p -> %li B\n",
-                _SDT_currentArena(), _SDT_currentArenaLength(), p,
-                minfo->size);)
+    SDT_ONLY_IN_LEVEL(
+        VERBOSE, SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
+                         "Arena: %li B\t[%li objs]\tFreed:     %p -> %li B\n",
+                         _SDT_currentArena(), _SDT_currentArenaLength(), p,
+                         minfo->size);)
     SDTMallocInfo_free(minfo);
   } else {
-    SDT_VERBOSE_ONLY(
-        SDT_log(SDT_LOG_VERBOSE, file, line, func,
+    SDT_ONLY_IN_LEVEL(
+        VERBOSE,
+        SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
                 "Arena: %li B\t[%li objs]\tFreed:     %p (untracked)\n",
                 _SDT_currentArena(), _SDT_currentArenaLength());)
   }
