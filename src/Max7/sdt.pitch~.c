@@ -1,7 +1,7 @@
 #include "SDT/SDTAnalysis.h"
 #include "SDT/SDTCommon.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -93,6 +93,7 @@ void pitch_dsp64(t_pitch *x, t_object *dsp64, short *count, double samplerate,
 }
 
 void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_pitch *x;
   long tmpSize, windowSize;
 

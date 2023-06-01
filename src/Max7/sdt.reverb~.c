@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -16,6 +16,7 @@ typedef struct _reverb {
 static t_class *reverb_class = NULL;
 
 void *reverb_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_reverb *x = (t_reverb *)object_alloc(reverb_class);
   long maxDelay;
 

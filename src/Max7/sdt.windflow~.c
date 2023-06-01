@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -15,6 +15,7 @@ typedef struct _windflow {
 static t_class *windflow_class = NULL;
 
 void *windflow_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_windflow *x = (t_windflow *)object_alloc(windflow_class);
 
   if (x) {

@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTDemix.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -16,6 +16,7 @@ typedef struct _demix {
 static t_class *demix_class = NULL;
 
 void *demix_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_demix *x = (t_demix *)object_alloc(demix_class);
   long tmpSize, windowSize, kernelRadius;
 

@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -16,6 +16,7 @@ typedef struct _pitchshift {
 static t_class *pitchshift_class = NULL;
 
 void *pitchshift_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_pitchshift *x = (t_pitchshift *)object_alloc(pitchshift_class);
   long size, oversample;
 

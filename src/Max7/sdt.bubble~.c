@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -16,6 +16,8 @@ typedef struct _bubble {
 static t_class *bubble_class = NULL;
 
 void *bubble_new(t_symbol *s, short argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
+  SDT_setupMaxLoggers();
   t_bubble *x = (t_bubble *)object_alloc(bubble_class);
 
   if (x) {

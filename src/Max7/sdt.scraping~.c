@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -16,6 +16,7 @@ typedef struct _scraping {
 static t_class *scraping_class = NULL;
 
 void *scraping_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_scraping *x;
 
   x = (t_scraping *)object_alloc(scraping_class);

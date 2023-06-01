@@ -1,5 +1,18 @@
+#include "ext.h"
+#include "ext_obex_util.h"
+
 #ifndef SDT_COMMONMAX_H
 #define SDT_COMMONMAX_H
+
+#define MAXSDTMAXSTRING 512
+
+/** @brief Logger function for SDT in Max
+@param[in] fmt C string that contains a format string that follows the same
+specifications as format in printf */
+int SDT_maxPost(const char *fmt, ...);
+
+/** @brief Set up logger functions for SDT in Max */
+void SDT_setupMaxLoggers();
 
 /** @brief Unregister the SDT object in the hashmap and free the SDT object
 memory This macro works for destroyer functions whose signature is

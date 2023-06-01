@@ -1,6 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -20,6 +21,7 @@ static t_class *modal_class = NULL;
 void modal_pickups(t_modal *x, void *attr, long ac, t_atom *av);
 
 void *modal_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_modal *x;
   SDTResonator *modal;
   char *key;

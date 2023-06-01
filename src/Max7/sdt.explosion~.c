@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -16,6 +16,7 @@ typedef struct _explosion {
 static t_class *explosion_class = NULL;
 
 void *explosion_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_explosion *x = (t_explosion *)object_alloc(explosion_class);
   long maxScatter, maxDelay;
 

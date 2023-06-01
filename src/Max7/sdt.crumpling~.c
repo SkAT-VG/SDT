@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -49,6 +49,7 @@ void crumpling_fragmentation(t_crumpling *x, void *attr, long ac, t_atom *av) {
 }
 
 void *crumpling_new(t_symbol *s, short argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_crumpling *x = (t_crumpling *)object_alloc(crumpling_class);
   if (x) {
     dsp_setup((t_pxobject *)x, 0);

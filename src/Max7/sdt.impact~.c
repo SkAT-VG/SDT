@@ -1,6 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -16,6 +17,7 @@ typedef struct _impact {
 static t_class *impact_class = NULL;
 
 void *impact_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_impact *x;
   SDTInteractor *impact;
   char *key0, *key1;

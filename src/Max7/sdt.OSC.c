@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "SDT/SDTOSC.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -37,6 +38,7 @@ void sdt_osc_root(t_sdt_osc *x, t_symbol *s, long argc, t_atom *argv) {
 }
 
 void *sdt_osc_new(void) {
+  SDT_setupMaxLoggers();
   t_sdt_osc *x = (t_sdt_osc *)object_alloc(sdt_osc_class);
 
   return (void *)x;

@@ -2,7 +2,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTDCMotor.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -19,6 +19,7 @@ typedef struct _dcmotor {
 static t_class *dcmotor_class = NULL;
 
 void *dcmotor_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_dcmotor *x = (t_dcmotor *)object_alloc(dcmotor_class);
   long maxDelay;
 

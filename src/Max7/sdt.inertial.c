@@ -1,6 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -15,6 +16,7 @@ typedef struct _inertial {
 static t_class *inertial_class = NULL;
 
 void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_inertial *x;
   SDTResonator *inertial;
   char *key;

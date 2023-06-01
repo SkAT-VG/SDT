@@ -1,7 +1,7 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTModalTracker.h"
 #include "SDTCommonMax.h"
-#include "SDT_fileusage/SDT_fileusage.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
@@ -146,6 +146,7 @@ void modaltracker_dsp64(t_modaltracker *x, t_object *dsp64, short *count,
 }
 
 void *modaltracker_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   int nModes, nSamples, tmpSize, windowSize;
   t_modaltracker *x = (t_modaltracker *)object_alloc(modaltracker_class);
   if (x) {
