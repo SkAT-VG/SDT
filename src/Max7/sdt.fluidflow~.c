@@ -1,18 +1,16 @@
+#include "SDT/SDTCommon.h"
+#include "SDT/SDTLiquids.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
-#include "SDTCommonMax.h"
-#include "SDT/SDTCommon.h"
-#include "SDT/SDTLiquids.h"
-#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _fluidflow {
   t_pxobject ob;
   SDTFluidFlow *flow;
-  double avgRate,
-         minRadius, maxRadius, expRadius,
-         minDepth, maxDepth, expDepth,
-         riseFactor, riseCutoff;
+  double avgRate, minRadius, maxRadius, expRadius, minDepth, maxDepth, expDepth,
+      riseFactor, riseCutoff;
   t_symbol *key;
 } t_fluidflow;
 
@@ -21,14 +19,13 @@ static t_class *fluidflow_class = NULL;
 void *fluidflow_new(t_symbol *s, long argc, t_atom *argv) {
   t_fluidflow *x = (t_fluidflow *)object_alloc(fluidflow_class);
   long voices;
-  
+
   if (x) {
     dsp_setup((t_pxobject *)x, 0);
     outlet_new(x, "signal");
     if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
       voices = atom_getlong(&argv[0]);
-    }
-    else {
+    } else {
       voices = 128;
     }
     x->flow = SDTFluidFlow_new(voices);
@@ -45,11 +42,8 @@ void fluidflow_free(t_fluidflow *x) {
 
 void fluidflow_assist(t_fluidflow *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
-    sprintf(s,
-      "Object attributes and messages (see help patch)"
-    );
-  } 
-  else {
+    sprintf(s, "Object attributes and messages (see help patch)");
+  } else {
     sprintf(s, "(signal): Output sound");
   }
 }
@@ -106,24 +100,21 @@ t_int *fluidflow_perform(t_int *w) {
   t_float *outL = (t_float *)(w[2]);
   int n = (int)w[3];
 
-  while (n--)
-    *outL++ = (float)SDTFluidFlow_dsp(x->flow);
+  while (n--) *outL++ = (float)SDTFluidFlow_dsp(x->flow);
 
   return w + 4;
 }
 
-void fluidflow_perform64(t_fluidflow *x, t_object *dsp64, double **ins, long numins,
-                         double **outs, long numouts, long sampleframes,
-                         long flags, void *userparam) {
+void fluidflow_perform64(t_fluidflow *x, t_object *dsp64, double **ins,
+                         long numins, double **outs, long numouts,
+                         long sampleframes, long flags, void *userparam) {
   t_double *outL = outs[0];
   int n = sampleframes;
-	
-  while (n--)
-    *outL++ = SDTFluidFlow_dsp(x->flow);
+
+  while (n--) *outL++ = SDTFluidFlow_dsp(x->flow);
 }
 
-void fluidflow_dsp(t_fluidflow *x, t_signal **sp, short *count)
-{
+void fluidflow_dsp(t_fluidflow *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
   dsp_add(fluidflow_perform, 3, x, sp[1]->s_vec, sp[0]->s_n);
 }
@@ -134,10 +125,11 @@ void fluidflow_dsp64(t_fluidflow *x, t_object *dsp64, short *count,
   object_method(dsp64, gensym("dsp_add64"), x, fluidflow_perform64, 0, NULL);
 }
 
-void C74_EXPORT ext_main(void *r) {	
-  t_class *c = class_new("sdt.fluidflow~", (method)fluidflow_new,
-    (method)fluidflow_free, (long)sizeof(t_fluidflow), 0L, A_GIMME, 0);
-    
+void C74_EXPORT ext_main(void *r) {
+  t_class *c =
+      class_new("sdt.fluidflow~", (method)fluidflow_new, (method)fluidflow_free,
+                (long)sizeof(t_fluidflow), 0L, A_GIMME, 0);
+
   class_addmethod(c, (method)fluidflow_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)fluidflow_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)fluidflow_assist, "assist", A_CANT, 0);

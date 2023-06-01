@@ -1,9 +1,9 @@
-#include "ext.h"
-#include "ext_obex.h"
-#include "z_dsp.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
 #include "SDT_fileusage/SDT_fileusage.h"
+#include "ext.h"
+#include "ext_obex.h"
+#include "z_dsp.h"
 
 typedef struct _impact {
   t_pxobject ob;
@@ -23,15 +23,21 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
 
   err = 0;
   if (argc < 1 || atom_gettype(&argv[0]) != A_SYM) {
-    error("sdt.impact~: Please provide the id of the first resonator as first argument.");
+    error(
+        "sdt.impact~: Please provide the id of the first resonator as first "
+        "argument.");
     err = 1;
   }
   if (argc < 2 || atom_gettype(&argv[1]) != A_SYM) {
-    error("sdt.impact~: Please provide the id of the second resonator as second argument.");
+    error(
+        "sdt.impact~: Please provide the id of the second resonator as second "
+        "argument.");
     err = 1;
   }
   if (argc < 3 || atom_gettype(&argv[2]) != A_LONG) {
-    error("sdt.impact~: Please provide the number of available outlets as third argument.");
+    error(
+        "sdt.impact~: Please provide the number of available outlets as third "
+        "argument.");
     err = 1;
   }
   if (err) return NULL;
@@ -39,7 +45,9 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
   key0 = atom_getsym(&argv[0])->s_name;
   key1 = atom_getsym(&argv[1])->s_name;
   if (SDT_registerInteractor(impact, key0, key1)) {
-    error("sdt.impact~: Error registering the interaction. Probably a duplicate id?");
+    error(
+        "sdt.impact~: Error registering the interaction. Probably a duplicate "
+        "id?");
     SDTImpact_free(impact);
     return NULL;
   }
@@ -67,11 +75,12 @@ void impact_free(t_impact *x) {
 }
 
 void impact_assist(t_impact *x, void *b, long m, long a, char *s) {
-  if (m == ASSIST_INLET) { //inlet
+  if (m == ASSIST_INLET) {  // inlet
     switch (a) {
       case 0:
-        sprintf(s, "(signal): External force applied on object 1 (N)\n"
-                   "Object attributes and messages (see help patch)");
+        sprintf(s,
+                "(signal): External force applied on object 1 (N)\n"
+                "Object attributes and messages (see help patch)");
         break;
       case 1:
         sprintf(s, "(signal): Impact velocity of object 1 (m/s)");
@@ -91,35 +100,35 @@ void impact_assist(t_impact *x, void *b, long m, long a, char *s) {
       default:
         break;
     }
-  }
-  else {
-    sprintf(s, "(signal): Output sound from / displacement (m) at pickup %ld", a);
+  } else {
+    sprintf(s, "(signal): Output sound from / displacement (m) at pickup %ld",
+            a);
   }
 }
 
 void impact_stiffness(t_impact *x, void *attr, long ac, t_atom *av) {
-    x->stiffness = atom_getfloat(av);
-    SDTImpact_setStiffness(x->impact, x->stiffness);
+  x->stiffness = atom_getfloat(av);
+  SDTImpact_setStiffness(x->impact, x->stiffness);
 }
 
 void impact_dissipation(t_impact *x, void *attr, long ac, t_atom *av) {
-    x->dissipation = atom_getfloat(av);
-    SDTImpact_setDissipation(x->impact, x->dissipation);
+  x->dissipation = atom_getfloat(av);
+  SDTImpact_setDissipation(x->impact, x->dissipation);
 }
 
 void impact_shape(t_impact *x, void *attr, long ac, t_atom *av) {
-    x->shape = atom_getfloat(av);
-    SDTImpact_setShape(x->impact, x->shape);
+  x->shape = atom_getfloat(av);
+  SDTImpact_setShape(x->impact, x->shape);
 }
 
 void impact_contact0(t_impact *x, void *attr, long ac, t_atom *av) {
-    x->contact0 = atom_getlong(av);
-    SDTInteractor_setFirstPoint(x->impact, x->contact0);
+  x->contact0 = atom_getlong(av);
+  SDTInteractor_setFirstPoint(x->impact, x->contact0);
 }
 
 void impact_contact1(t_impact *x, void *attr, long ac, t_atom *av) {
-    x->contact1 = atom_getlong(av);
-    SDTInteractor_setSecondPoint(x->impact, x->contact1);
+  x->contact1 = atom_getlong(av);
+  SDTInteractor_setSecondPoint(x->impact, x->contact1);
 }
 
 t_int *impact_perform(t_int *w) {
@@ -137,9 +146,10 @@ t_int *impact_perform(t_int *w) {
   int i, k;
 
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
+    SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++,
+                      tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
-      out = (t_float *)(sp[6+i]->s_vec);
+      out = (t_float *)(sp[6 + i]->s_vec);
       out[k] = (float)tmpOuts[i];
     }
   }
@@ -165,7 +175,8 @@ void impact_perform64(t_impact *x, t_object *dsp64, double **ins, long numins,
   int i, k;
 
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
+    SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++,
+                      tmpOuts);
     for (i = 0; i < x->nOutlets; i++) {
       outs[i][k] = tmpOuts[i];
     }

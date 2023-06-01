@@ -1,10 +1,10 @@
+#include "SDT/SDTAnalysis.h"
+#include "SDT/SDTCommon.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage/SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
-#include "SDTCommonMax.h"
-#include "SDT/SDTCommon.h"
-#include "SDT/SDTAnalysis.h"
-#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _pitch {
   t_pxobject ob;
@@ -18,10 +18,10 @@ static t_class *pitch_class = NULL;
 
 void pitch_assist(t_pitch *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
-    sprintf(s, "(signal): Input\n"
-               "Object attributes and messages (see help patch)");
-  } 
-  else {
+    sprintf(s,
+            "(signal): Input\n"
+            "Object attributes and messages (see help patch)");
+  } else {
     switch (a) {
       case 0:
         sprintf(s, "(float): Estimated pitch (Hz)");
@@ -54,7 +54,7 @@ t_int *pitch_perform(t_int *w) {
   t_pitch *x = (t_pitch *)(w[1]);
   t_float *in = (t_float *)(w[2]);
   int n = (int)w[3];
-  
+
   while (n--) {
     if (SDTPitch_dsp(x->pitch, x->outs, *in++)) {
       qelem_set(x->send);
@@ -71,10 +71,12 @@ void pitch_dsp(t_pitch *x, t_signal **sp, short *count) {
   dsp_add(pitch_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
-void pitch_perform64(t_pitch *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam) {
+void pitch_perform64(t_pitch *x, t_object *dsp64, double **ins, long numins,
+                     double **outs, long numouts, long sampleframes, long flags,
+                     void *userparam) {
   t_double *in = ins[0];
   int n = sampleframes;
-  
+
   while (n--) {
     if (SDTPitch_dsp(x->pitch, x->outs, *in++)) {
       qelem_set(x->send);
@@ -82,7 +84,8 @@ void pitch_perform64(t_pitch *x, t_object *dsp64, double **ins, long numins, dou
   }
 }
 
-void pitch_dsp64(t_pitch *x, t_object *dsp64, short *count, double samplerate, long maxvectorsize, long flags) {
+void pitch_dsp64(t_pitch *x, t_object *dsp64, short *count, double samplerate,
+                 long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
   SDTPitch_setOverlap(x->pitch, x->overlap);
   SDTPitch_setTolerance(x->pitch, x->tolerance);
@@ -92,7 +95,7 @@ void pitch_dsp64(t_pitch *x, t_object *dsp64, short *count, double samplerate, l
 void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
   t_pitch *x;
   long tmpSize, windowSize;
-  
+
   x = (t_pitch *)object_alloc(pitch_class);
   if (x) {
     dsp_setup((t_pxobject *)x, 1);
@@ -100,10 +103,10 @@ void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
       tmpSize = atom_getlong(&argv[0]);
       windowSize = SDT_nextPow2(tmpSize);
       if (tmpSize != windowSize) {
-        post("sdt.pitch~: Window size must be a power of 2, setting it to %d", windowSize);
+        post("sdt.pitch~: Window size must be a power of 2, setting it to %d",
+             windowSize);
       }
-    }
-    else {
+    } else {
       windowSize = 1024;
     }
     x->pitch = SDTPitch_new(windowSize);
@@ -124,28 +127,29 @@ void pitch_free(t_pitch *x) {
   SDT_MAX_FREE(Pitch, pitch)
 }
 
-void C74_EXPORT ext_main(void *r) {	
-  t_class *c = class_new("sdt.pitch~", (method)pitch_new, (method)pitch_free, (long)sizeof(t_pitch), 0L, A_GIMME, 0);
-	
+void C74_EXPORT ext_main(void *r) {
+  t_class *c = class_new("sdt.pitch~", (method)pitch_new, (method)pitch_free,
+                         (long)sizeof(t_pitch), 0L, A_GIMME, 0);
+
   class_addmethod(c, (method)pitch_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)pitch_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)pitch_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   SDT_CLASS_KEY(pitch, "1")
-  
+
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitch, overlap);
   CLASS_ATTR_DOUBLE(c, "tolerance", 0, t_pitch, tolerance);
-  
+
   CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "tolerance", 0.0, 1.0);
-  
+
   CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)pitch_overlap);
   CLASS_ATTR_ACCESSORS(c, "tolerance", NULL, (method)pitch_tolerance);
-  
+
   CLASS_ATTR_ORDER(c, "overlap", 0, "2");
   CLASS_ATTR_ORDER(c, "tolerance", 0, "3");
-  
+
   class_dspinit(c);
   class_register(CLASS_BOX, c);
   pitch_class = c;

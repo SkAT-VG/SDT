@@ -1,3 +1,5 @@
+#include "ext.h"
+
 #ifndef SDT_FILEUSAGE_H
 #define SDT_FILEUSAGE_H
 
