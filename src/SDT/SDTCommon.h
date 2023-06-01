@@ -240,75 +240,64 @@ extern int SDT_eprintf(const char *fmt, ...);
 @param[in] X Code to include in error builds only */
 #define SDT_ERROR_ONLY(X) SDT_ERROR_IF_ELSE(X, )
 
-/** @brief Print prefix for debug logs
-@param[in] PRINT_FUNC Print function
-@param[in] FILE File name
-@param[in] LINE Line number
-@param[in] FUNC Function name */
-#define SDT_LOG_PREFIX(PRINT_FUNC, FILE, LINE, FUNC) \
-  {                                                  \
-    _SDT_printTime(PRINT_FUNC);                      \
-    PRINT_FUNC(" %s:%d %s() \t", FILE, LINE, FUNC);  \
-  }
-
 /** @brief Log in verbose mode only
-@param[in] MSG Message */
+@param[in] MSG C string */
 #define SDT_VERBOSE_LOG(MSG) \
   SDT_VERBOSE_ONLY(SDT_log(SDT_LOG_VERBOSE, __FILE__, __LINE__, __func__, MSG));
 
 /** @brief Log in verbose mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_VERBOSE_LOGA(PRINT_FUNC, FMT, ...)                                 \
+@param[in] FMT C string that contains a format string that follows the same
+specifications as format in printf */
+#define SDT_VERBOSE_LOGA(FMT, ...)                                             \
   SDT_VERBOSE_ONLY(SDT_log(SDT_LOG_VERBOSE, __FILE__, __LINE__, __func__, FMT, \
                            __VA_ARGS__));
 
 /** @brief Log in debug mode only
-@param[in] MSG Message */
+@param[in] MSG C string */
 #define SDT_DEBUG_LOG(MSG) \
   SDT_DEBUG_ONLY(SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, MSG));
 
 /** @brief Log in debug mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_DEBUG_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_DEBUG_ONLY(                            \
+@param[in] FMT C string that contains a format string that follows the same
+specifications as format in printf */
+#define SDT_DEBUG_LOGA(FMT, ...) \
+  SDT_DEBUG_ONLY(                \
       SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
 
 /** @brief Log in info mode only
-@param[in] MSG Message */
+@param[in] MSG C string */
 #define SDT_INFO_LOG(MSG) \
   SDT_INFO_ONLY(SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, MSG));
 
 /** @brief Log in info mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_INFO_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_INFO_ONLY(                            \
+@param[in] FMT C string that contains a format string that follows the same
+specifications as format in printf */
+#define SDT_INFO_LOGA(FMT, ...) \
+  SDT_INFO_ONLY(                \
       SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
 
 /** @brief Log in warn mode only
-@param[in] MSG Message */
+@param[in] MSG C string */
 #define SDT_WARN_LOG(MSG) \
   SDT_WARN_ONLY(SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, MSG));
 
 /** @brief Log in warn mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_WARN_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_WARN_ONLY(                            \
+@param[in] FMT C string that contains a format string that follows the same
+specifications as format in printf */
+#define SDT_WARN_LOGA(FMT, ...) \
+  SDT_WARN_ONLY(                \
       SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
 
 /** @brief Log in error mode only
-@param[in] MSG Message */
+@param[in] MSG C string */
 #define SDT_ERROR_LOG(MSG) \
   SDT_ERROR_ONLY(SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, MSG));
 
 /** @brief Log in error mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_ERROR_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_ERROR_ONLY(                            \
+@param[in] FMT C string that contains a format string that follows the same
+specifications as format in printf */
+#define SDT_ERROR_LOGA(FMT, ...) \
+  SDT_ERROR_ONLY(                \
       SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
 
 #ifdef __cplusplus
