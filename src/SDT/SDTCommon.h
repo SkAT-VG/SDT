@@ -109,16 +109,31 @@ typedef enum SDTLogLevel {
 
 /** @brief Print a log message.
 @param[in] level Log level
-@param[in] fmt Writes the pointed string. If it includes format specifiers, the
-following additional arguments are formatted and inserted in the resulting
-string replacing their respective specifiers. */
+@param[in] file File name
+@param[in] line Code line in file
+#param[in] func Function name
+@param[in] fmt C string that contains a format string that follows the same
+specifications as format in printf */
 extern int SDT_log(int level, const char *file, unsigned int line,
                    const char *func, const char *fmt, ...);
 
-/** @brief Set the message-logger function.
+/** @brief Sets the message-logger function.
 @param[in] level Log level
-@param[in] print_func Message-logger function */
-extern void SDT_setLogger(int level, int (*print_func)(const char *, ...));
+@param[in] print_func Message-logger function
+@param[in] newline Whether the logger automatically inserts newlines */
+extern void SDT_setLogger(int level, int (*print_func)(const char *, ...),
+                          int newline);
+
+/** @brief Gets the message-logger function.
+@param[in] level Log level
+@param[out] newline Whether the logger automatically inserts newlines
+@return Message-logger function */
+extern int (*SDT_getLogger(int level, int *newline))(const char *, ...);
+
+/** @brief Convenience function for printing on the standard error
+@param[in] fmt C string that contains a format string that follows the same
+specifications as format in printf */
+extern int SDT_eprintf(const char *fmt, ...);
 
 // Default is INFO
 #ifndef SDT_ERROR

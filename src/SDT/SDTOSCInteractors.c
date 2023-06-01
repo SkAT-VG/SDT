@@ -143,7 +143,7 @@ SDTOSCReturnCode SDTOSCImpact_log(void (*log)(const char *, ...),
                                   const char *key0, const char *key1,
                                   SDTInteractor *x) {
   json_value *obj = SDTImpact_toJSON(x, key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, "sdtOSC:", obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log("sdtOSC:", obj);
   json_builder_free(obj);
   return r;
 }
@@ -319,7 +319,7 @@ SDTOSCReturnCode SDTOSCFriction_log(void (*log)(const char *, ...),
                                     const char *key0, const char *key1,
                                     SDTInteractor *x) {
   json_value *obj = SDTFriction_toJSON(x, key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, "sdtOSC:", obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log("sdtOSC:", obj);
   json_builder_free(obj);
   return r;
 }

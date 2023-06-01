@@ -420,7 +420,7 @@ static int _SDT_sprintTime(char *s, size_t n) {
   return strftime(s, n, _SDT_printTime_fmt, tm);
 }
 
-static int _SDT_eprintf(const char *fmt, ...) {
+int SDT_eprintf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   int r = vfprintf(stderr, fmt, args);
@@ -430,27 +430,35 @@ static int _SDT_eprintf(const char *fmt, ...) {
 
 #define N_LOGGERS 4
 static int (*_SDT_log_inner[N_LOGGERS])(const char *, ...) = {0, 0, 0, 0};
+static int _SDT_log_newlines[N_LOGGERS] = {0, 0, 0, 0};
 
-void SDT_setLogger(int level, int (*print_func)(const char *, ...)) {
-  if (level >= 0 && level < N_LOGGERS - 1) _SDT_log_inner[level] = print_func;
+void SDT_setLogger(int level, int (*print_func)(const char *, ...),
+                   int newline) {
+  if (level >= 0 && level < N_LOGGERS - 1) {
+    _SDT_log_inner[level] = print_func;
+    _SDT_log_newlines[level] = newline;
+  }
 }
 
-static int (*SDT_getLogger(int level))(const char *, ...) {
+int (*SDT_getLogger(int level, int *newline))(const char *, ...) {
   int (*p)(const char *, ...) = 0;
-  if (level >= 0 && level < N_LOGGERS - 1) p = _SDT_log_inner[level];
-  return (p) ? p : &_SDT_eprintf;
+  if (level >= 0 && level < N_LOGGERS - 1) {
+    p = _SDT_log_inner[level];
+    if (newline) *newline = _SDT_log_newlines[level];
+  } else if (newline)
+    *newline = 0;
+  return (p) ? p : &SDT_eprintf;
 }
 
-static char _SDT_logBuffer[MAXSDTSTRING];
-
-int SDT_log(int level, const char *file, unsigned int line, const char *func,
-            const char *fmt, ...) {
+static int SDT_vsnlog(char *s, size_t n, int newline, int level,
+                      const char *file, unsigned int line, const char *func,
+                      const char *fmt, va_list arg) {
   int n_chars = 0, i;
+  n /= sizeof(char);
 
-  i = _SDT_sprintTime(_SDT_logBuffer + n_chars,
-                      sizeof(char) * (MAXSDTSTRING - n_chars));
+  i = _SDT_sprintTime(s + n_chars, sizeof(char) * (n - n_chars));
 
-  if (i >= 0 && (n_chars += i) < MAXSDTSTRING) {
+  if (i >= 0 && (n_chars += i) < n) {
     char *log_level_prefix;
     switch (level) {
       case SDT_LOG_DEBUG:
@@ -469,33 +477,48 @@ int SDT_log(int level, const char *file, unsigned int line, const char *func,
         log_level_prefix = "       ";
         break;
     }
-    i = snprintf(_SDT_logBuffer + n_chars,
-                 sizeof(char) * (MAXSDTSTRING - n_chars), "%s",
+    i = snprintf(s + n_chars, sizeof(char) * (n - n_chars), "%s",
                  log_level_prefix);
   }
 
-  if (i >= 0 && (n_chars += i) < MAXSDTSTRING)
-    i = (file && func) ? snprintf(_SDT_logBuffer + n_chars,
-                                  sizeof(char) * (MAXSDTSTRING - n_chars),
+  if (i >= 0 && (n_chars += i) < n)
+    i = (file && func) ? snprintf(s + n_chars, sizeof(char) * (n - n_chars),
                                   " %s:%d %s() \t", file, line, func)
                        : 0;
 
-  if (i >= 0 && (n_chars += i) < MAXSDTSTRING) {
-    va_list args;
-    va_start(args, fmt);
-    i = vsnprintf(_SDT_logBuffer + n_chars,
-                  sizeof(char) * (MAXSDTSTRING - n_chars), fmt, args);
-    va_end(args);
-  }
+  if (i >= 0 && (n_chars += i) < n)
+    i = vsnprintf(s + n_chars, sizeof(char) * (n - n_chars), fmt, arg);
+
   // Error
   if (i < 0) return i;
   // Overflow: make sure terminating character is there (and a newline,
   // for good measure)
-  if ((n_chars += i) >= MAXSDTSTRING) {
-    _SDT_logBuffer[MAXSDTSTRING - 2] = '\n';
-    _SDT_logBuffer[MAXSDTSTRING - 1] = 0;
+  if ((n_chars += i) >= n) {
+    s[n - 2] = '\n';
+    s[n - 1] = 0;
+    n_chars = n;
   }
-  return SDT_getLogger(level)("%s", _SDT_logBuffer);
+  if (newline) {
+    // If logger automatically puts a newline at the end,
+    // then remove newline if it is the last character
+    int s_len = strlen(s);
+    if (s[s_len - 1] == '\n') s[s_len - 1] = 0;
+  }
+  return n_chars;
+}
+
+static char _SDT_logBuffer[MAXSDTSTRING];
+
+int SDT_log(int level, const char *file, unsigned int line, const char *func,
+            const char *fmt, ...) {
+  int newline = 0;
+  int (*log)(const char *, ...) = SDT_getLogger(level, &newline);
+  va_list args;
+  va_start(args, fmt);
+  SDT_vsnlog(_SDT_logBuffer, sizeof(char) * MAXSDTSTRING, newline, level, file,
+             line, func, fmt, args);
+  va_end(args);
+  return log("%s", _SDT_logBuffer);
 }
 
 int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }
