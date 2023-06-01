@@ -461,20 +461,23 @@ static int SDT_vsnlog(char *s, size_t n, int newline, int level,
   if (i >= 0 && (n_chars += i) < n) {
     char *log_level_prefix;
     switch (level) {
+      case SDT_LOG_VERBOSE:
+        log_level_prefix = "::VERBOSE";
+        break;
       case SDT_LOG_DEBUG:
-        log_level_prefix = "::DEBUG";
+        log_level_prefix = "::DEBUG  ";
         break;
       case SDT_LOG_INFO:
-        log_level_prefix = "::INFO ";
+        log_level_prefix = "::INFO   ";
         break;
       case SDT_LOG_WARN:
-        log_level_prefix = "::WARN ";
+        log_level_prefix = "::WARN   ";
         break;
       case SDT_LOG_ERROR:
-        log_level_prefix = "::ERROR";
+        log_level_prefix = "::ERROR  ";
         break;
       default:
-        log_level_prefix = "       ";
+        log_level_prefix = "         ";
         break;
     }
     i = snprintf(s + n_chars, sizeof(char) * (n - n_chars), "%s",

@@ -96,6 +96,9 @@ SH?=bash
 
 # --- Compiler ----------------------------------------------------------------
 CFLAGS=-O3 -Wall -Wno-unknown-pragmas -Werror
+ifneq ("$(SDT_VERBOSE)","")
+	CFLAGS+= -DSDT_VERBOSE
+endif
 ifneq ("$(SDT_DEBUG)","")
 	CFLAGS+= -DSDT_DEBUG
 endif

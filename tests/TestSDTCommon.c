@@ -16,7 +16,11 @@
 
 void TestSDT_log(CuTest *tc) {
   SDT_TEST_BEGIN()
-  SDT_DEBUG_LOG("Hello world!\n");
+  SDT_VERBOSE_LOG("Hello verbose!\n");
+  SDT_DEBUG_LOG("Hello debug!\n");
+  SDT_INFO_LOG("Hello info!\n");
+  SDT_WARN_LOG("Hello warn!\n");
+  SDT_ERROR_LOG("Hello error!\n");
   SDT_TEST_END()
 }
 

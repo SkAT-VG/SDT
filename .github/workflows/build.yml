@@ -71,7 +71,7 @@ jobs:
       with:
         submodules: recursive
     - name: Build everything
-      run: make TARGET=${{ matrix.target }} ${{ (matrix.debug && '-e SDT_DEBUG=1') || '' }} -j16
+      run: make TARGET=${{ matrix.target }} ${{ (matrix.debug && '-e SDT_VERBOSE=1') || '' }} -j16
     - name: Display build directory content
       run: ls -R .build.${{ matrix.target }}
     - name: Prepare package directory

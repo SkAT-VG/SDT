@@ -102,6 +102,7 @@ typedef enum SDTLogLevel {
   SDT_LOG_WARN = 1,
   SDT_LOG_INFO = 2,
   SDT_LOG_DEBUG = 3,
+  SDT_LOG_VERBOSE = 4,
 } SDTLogLevel;
 
 /** @brief Maximum string length for logging */
@@ -140,10 +141,27 @@ extern int SDT_eprintf(const char *fmt, ...);
 #ifndef SDT_WARN
 #ifndef SDT_INFO
 #ifndef SDT_DEBUG
+#ifndef SDT_VERBOSE
 #define SDT_INFO
 #endif
 #endif
 #endif
+#endif
+#endif
+
+#ifdef SDT_VERBOSE
+/** @brief Conditionally include code in verbose or non-verbose build
+@param[in] X Code to include in verbose builds
+@param[in] Y Code to include in non-verbose builds */
+#define SDT_VERBOSE_IF_ELSE(X, Y) X
+#ifndef SDT_DEBUG
+#define SDT_DEBUG
+#endif
+#else
+/** @brief Conditionally include code in debug or non-debug build
+@param[in] X Code to include in debug builds
+@param[in] Y Code to include in non-debug builds */
+#define SDT_VERBOSE_IF_ELSE(X, Y) Y
 #endif
 
 #ifdef SDT_DEBUG
@@ -194,13 +212,17 @@ extern int SDT_eprintf(const char *fmt, ...);
 /** @brief Conditionally include code in error or non-error build
 @param[in] X Code to include in error builds
 @param[in] Y Code to include in non-error builds */
-#define SDT_ERROR_IF_ELSE(X, Y) Y
+#define SDT_ERROR_IF_ELSE(X, Y) X
 
 #ifdef SDT_DEBUG
 #ifndef SDT_MEMORYTRACK_INCLUDE
 #include "SDTMemoryTrack.h"
 #endif
 #endif
+
+/** @brief Exclude wrapped code from any non-verbose build
+@param[in] X Code to include in verbose builds only */
+#define SDT_VERBOSE_ONLY(X) SDT_VERBOSE_IF_ELSE(X, )
 
 /** @brief Exclude wrapped code from any non-debug build
 @param[in] X Code to include in debug builds only */
@@ -228,6 +250,18 @@ extern int SDT_eprintf(const char *fmt, ...);
     _SDT_printTime(PRINT_FUNC);                      \
     PRINT_FUNC(" %s:%d %s() \t", FILE, LINE, FUNC);  \
   }
+
+/** @brief Log in verbose mode only
+@param[in] MSG Message */
+#define SDT_VERBOSE_LOG(MSG) \
+  SDT_VERBOSE_ONLY(SDT_log(SDT_LOG_VERBOSE, __FILE__, __LINE__, __func__, MSG));
+
+/** @brief Log in verbose mode only, with format arguments
+@param[in] PRINT_FUNC Print function
+@param[in] FMT Message to be formatted */
+#define SDT_VERBOSE_LOGA(PRINT_FUNC, FMT, ...)                                 \
+  SDT_VERBOSE_ONLY(SDT_log(SDT_LOG_VERBOSE, __FILE__, __LINE__, __func__, FMT, \
+                           __VA_ARGS__));
 
 /** @brief Log in debug mode only
 @param[in] MSG Message */
