@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "SDTSolids.h"
-
+/*
 SDTOSCReturnCode SDTOSCResonator(void (*log)(const char *, ...),
                                  const SDTOSCMessage *x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
@@ -241,3 +241,4 @@ SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x,
   }
   return SDT_OSC_RETURN_OK;
 }
+*/

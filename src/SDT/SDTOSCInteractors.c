@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
 //-------------------------------------------------------------------------------------//
 // Private utils
 
@@ -357,3 +358,4 @@ SDTOSCReturnCode SDTOSCFriction_load(void (*log)(const char *, ...),
   if (obj) json_builder_free(obj);
   return return_code;
 }
+*/

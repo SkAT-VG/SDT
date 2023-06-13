@@ -21,9 +21,11 @@ extern "C" {
 ID [args...]
 \par
 /inertial (alias)
-@param[in] x OSC message: the first argument must be the resonator's ID. All other arguments are passed down to the method
+@param[in] x OSC message: the first argument must be the resonator's ID. All
+other arguments are passed down to the method
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...), const SDTOSCMessage* x);
+// extern SDTOSCReturnCode SDTOSCResonator(void (* log)(const char *, ...),
+// const SDTOSCMessage* x);
 
 /** @brief OSC method for logging information about SDT Resonators
 \par OSC Address
@@ -36,7 +38,8 @@ ID
 @param [in] key Resonator name (ID)
 @param [in] x Pointer to the SDT resonator instance to inspect
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...), const char *key, SDTResonator *x);
+// extern SDTOSCReturnCode SDTOSCResonator_log(void (* log)(const char *, ...),
+// const char *key, SDTResonator *x);
 
 /** @brief OSC method for reinitializing a resonator
 \par OSC Address
@@ -46,9 +49,11 @@ ID NMODES NPICKUPS
 \par Calls
 ::SDTResonator_renew
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: number of modes (int), number of pickup points (int)
+@param [in] args Additional OSC arguments: number of modes (int), number of
+pickup points (int)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_renew(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for saving information about SDT Resonators
 \par OSC Address
@@ -62,7 +67,8 @@ ID FILEPATH
 @param [in] x Pointer to the SDT resonator instance to save
 @param [in] args Additional OSC arguments: file path (string)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_save(void (* log)(const char *, ...),
+// const char *key, SDTResonator *x, const SDTOSCArgumentList *args);
 
 /** @brief OSC method for loading information about SDT Resonators
 \par OSC Address
@@ -78,7 +84,8 @@ ID FILEPATH
 @param [in] x Pointer to the SDT resonator instance to change
 @param [in] args Additional OSC arguments: file path (string)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...), const char *key, SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_load(void (* log)(const char *, ...),
+// const char *key, SDTResonator *x, const SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting modal frequencies of SDT Resonators
 \par OSC Address
@@ -88,9 +95,11 @@ ID MODE F
 \par Calls
 ::SDTResonator_setFrequency
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: mode index (int), modal frequency (float)
+@param [in] args Additional OSC arguments: mode index (int), modal frequency
+(float)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setFrequency(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting modal decays of SDT Resonators
 \par OSC Address
@@ -102,7 +111,8 @@ ID MODE F
 @param [in] x Pointer to the SDT resonator instance to affect
 @param [in] args Additional OSC arguments: mode index (int), modal decay (float)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setDecay(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setDecay(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting modal weights of SDT Resonators
 \par OSC Address
@@ -112,9 +122,11 @@ ID MODE F
 \par Calls
 ::SDTResonator_setWeight
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: mode index (int), modal weight (float)
+@param [in] args Additional OSC arguments: mode index (int), modal weight
+(float)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setWeight(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setWeight(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting pickup gains of SDT Resonators
 \par OSC Address
@@ -124,9 +136,11 @@ ID PICKUP MODE F
 \par Calls
 ::SDTResonator_setGain
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: pickup point index (int), mode index (int), gain (float)
+@param [in] args Additional OSC arguments: pickup point index (int), mode index
+(int), gain (float)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setGain(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setGain(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting the fragment size of SDT Resonators
 \par OSC Address
@@ -138,7 +152,8 @@ ID F
 @param [in] x Pointer to the SDT resonator instance to affect
 @param [in] args Additional OSC arguments: fragment size (float)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setFragmentSize(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setFragmentSize(SDTResonator *x,
+// const SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting the active modes of SDT Resonators
 \par OSC Address
@@ -150,7 +165,8 @@ ID N
 @param [in] x Pointer to the SDT resonator instance to affect
 @param [in] args Additional OSC arguments: active modes (int)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setActiveModes(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for striking SDT Resonators
 \par OSC Address
@@ -162,9 +178,11 @@ ID P V
 \par
 ::SDTResonator_setVelocity
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: modal displacement (float), modal velocity (float)
+@param [in] args Additional OSC arguments: modal displacement (float), modal
+velocity (float)
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_strike(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting multiple modal frequencies of SDT Resonators
 \par OSC Address
@@ -174,9 +192,11 @@ ID [F...]
 \par Calls
 ::SDTResonator_setFrequency
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: a modal frequency (float) per mode, in order of mode index
+@param [in] args Additional OSC arguments: a modal frequency (float) per mode,
+in order of mode index
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setFreqs(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setFreqs(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting multiple modal decays of SDT Resonators
 \par OSC Address
@@ -186,9 +206,11 @@ ID [F...]
 \par Calls
 ::SDTResonator_setDecay
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: a modal decay (float) per mode, in order of mode index
+@param [in] args Additional OSC arguments: a modal decay (float) per mode, in
+order of mode index
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setDecays(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setDecays(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting multiple modal weights of SDT Resonators
 \par OSC Address
@@ -198,9 +220,11 @@ ID [F...]
 \par Calls
 ::SDTResonator_setWeight
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: a modal weight (float) per mode, in order of mode index
+@param [in] args Additional OSC arguments: a modal weight (float) per mode, in
+order of mode index
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setWeights(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setWeights(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 /** @brief OSC method for setting multiple pickup gains of SDT Resonators
 \par OSC Address
@@ -210,9 +234,11 @@ ID PICKUP [F...]
 \par Calls
 ::SDTResonator_setGain
 @param [in] x Pointer to the SDT resonator instance to affect
-@param [in] args Additional OSC arguments: the pickup point index (int), then a pickup gain (float) per mode, in order of mode index
+@param [in] args Additional OSC arguments: the pickup point index (int), then a
+pickup gain (float) per mode, in order of mode index
 @return Return code */
-extern SDTOSCReturnCode SDTOSCResonator_setGains(SDTResonator *x, const SDTOSCArgumentList *args);
+// extern SDTOSCReturnCode SDTOSCResonator_setGains(SDTResonator *x, const
+// SDTOSCArgumentList *args);
 
 #ifdef __cplusplus
 };

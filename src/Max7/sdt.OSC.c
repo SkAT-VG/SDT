@@ -33,7 +33,7 @@ SDTOSCMessage *max_args_to_sdt(t_symbol *s, long argc, t_atom *argv) {
 
 void sdt_osc_root(t_sdt_osc *x, t_symbol *s, long argc, t_atom *argv) {
   SDTOSCMessage *m = max_args_to_sdt(s, argc, argv);
-  SDTOSCRoot(&post, m);
+  SDTOSCRoot(m);
   SDTOSCMessage_free(m);
 }
 

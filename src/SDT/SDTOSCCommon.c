@@ -6,26 +6,13 @@
 #include "SDTCommon.h"
 #include "SDTJSON.h"
 
-//-------------------------------------------------------------------------------------//
-// Private utils
-
-static char *_indent = "  ";
-static char *_docs_url = "https://skat-vg.github.io/SDT";
-
-static char *strjoin_free(char *x, int free_x, char *y, int free_y) {
-  char *z = malloc(sizeof(char) * (strlen(x) + strlen(y) + 1));
-  sprintf(z, "%s%s", x, y);
-  if (free_x) free(x);
-  if (free_y) free(y);
-  return z;
+const char *SDTOSC_rtfm_string() {
+  return "For further details, please, visit the documentation at "
+         "https://skat-vg.github.io/SDT";
 }
 
-static char *indent_free(char *x, int free_x, int newline) {
-  char *ind = strjoin_free((newline) ? "\n" : "", 0, _indent, 0);
-  return strjoin_free(ind, 1, x, free_x);
-}
-
-static int n_digits(float x) { return (int)fmax(ceil(log10(fabs(x) + 1)), 1); }
+#define _SDT_JSON_BUFLEN 512
+static char _SDT_JSON_logBuffer[_SDT_JSON_BUFLEN];
 
 //-------------------------------------------------------------------------------------//
 
@@ -80,37 +67,21 @@ void SDTOSCAddress_free(SDTOSCAddress *x) {
   }
 }
 
-char *SDTOSCAddress_str(const SDTOSCAddress *x) {
-  unsigned int len = 0, j = 0;
-  for (unsigned int i = 0; i < x->depth; ++i) len += 1 + strlen(x->nodes[i]);
-
-  char *s = (char *)malloc(sizeof(char) * (len + 1));
-  for (unsigned int i = 0; i < x->depth; ++i) {
-    sprintf(s + j, "/%s", x->nodes[i]);
-    j += 1 + strlen(x->nodes[i]);
+int SDTOSCAddress_snprintf(char *s, size_t n, const SDTOSCAddress *x) {
+  int tot = 0, c = 0;
+  for (unsigned int i = 0; i < x->depth && tot < n; ++i) {
+    c = snprintf(s + tot, n - tot, "/%s", x->nodes[i]);
+    if (c < 0) return c;
+    tot += c;
   }
-
-  return s;
+  return tot;
 }
 
 unsigned int SDTOSCAddress_getDepth(const SDTOSCAddress *x) { return x->depth; }
 
-char *SDTOSCAddress_getNode(const SDTOSCAddress *x, unsigned int node_idx) {
-  return x->nodes[node_idx];
-}
-
-SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress *x) {
-  if (x->depth < 2) return 0;
-
-  SDTOSCAddress *y = (SDTOSCAddress *)malloc(sizeof(SDTOSCAddress));
-  y->depth = x->depth - 1;
-  y->nodes = (char **)malloc(sizeof(char *) * y->depth);
-  for (unsigned int i = 0; i < y->depth; ++i) {
-    y->nodes[i] = (char *)malloc(sizeof(char) * (strlen(x->nodes[i + 1]) + 1));
-    strcpy(y->nodes[i], x->nodes[i + 1]);
-  }
-
-  return y;
+const char *SDTOSCAddress_getNode(const SDTOSCAddress *x,
+                                  unsigned int node_idx) {
+  return (node_idx < x->depth) ? x->nodes[node_idx] : 0;
 }
 
 //-------------------------------------------------------------------------------------//
@@ -123,7 +94,7 @@ struct SDTOSCArgument {
   } tag;
   union {
     float f;
-    const char *s;
+    char *s;
   } value;
 };
 
@@ -131,6 +102,11 @@ SDTOSCArgument *SDTOSCArgument_new() {
   SDTOSCArgument *x = (SDTOSCArgument *)malloc(sizeof(SDTOSCArgument));
   x->tag = SDT_OSC_ARG_UNSUPPORTED;
   return x;
+}
+
+void SDTOSCArgument_free(SDTOSCArgument *x) {
+  if (SDTOSCArgument_isString(x) && x->value.s) free(x->value.s);
+  free(x);
 }
 
 SDTOSCArgument *SDTOSCArgument_newFloat(float f) {
@@ -143,12 +119,11 @@ SDTOSCArgument *SDTOSCArgument_newFloat(float f) {
 SDTOSCArgument *SDTOSCArgument_newString(const char *s) {
   SDTOSCArgument *x = SDTOSCArgument_new();
   x->tag = SDT_OSC_ARG_STRING;
-  x->value.s = s;
+  size_t len = strlen(s);
+  x->value.s = (char *)malloc(sizeof(char) * (len + 1));
+  strcpy(x->value.s, s);
+  SDT_LOGA(DEBUG, "strcpy: %s -> %s\n", s, x->value.s);
   return x;
-}
-
-int SDTOSCArgument_isUnsupported(const SDTOSCArgument *x) {
-  return x->tag == SDT_OSC_ARG_UNSUPPORTED;
 }
 
 int SDTOSCArgument_isFloat(const SDTOSCArgument *x) {
@@ -177,70 +152,29 @@ SDTOSCArgumentList *SDTOSCArgumentList_new(int argc) {
       (SDTOSCArgumentList *)malloc(sizeof(SDTOSCArgumentList));
   x->argc = argc;
   x->argv = (SDTOSCArgument **)malloc(sizeof(SDTOSCArgument *) * argc);
-  for (unsigned int i = 0; i < argc; ++i) x->argv[i] = 0;
+  memset((void *)x->argv, 0, sizeof(SDTOSCArgument *) * argc);
   return x;
-}
-
-SDTOSCArgumentList *SDTOSCArgumentList_copyFromTo(const SDTOSCArgumentList *x,
-                                                  unsigned int from, int to) {
-  if (to < 0) to = x->argc;
-
-  SDTOSCArgumentList *y =
-      (SDTOSCArgumentList *)malloc(sizeof(SDTOSCArgumentList));
-  y->argc = to - from;
-  y->argv = (SDTOSCArgument **)malloc(sizeof(SDTOSCArgument *) * y->argc);
-  for (unsigned int i = 0; i < y->argc; ++i)
-    y->argv[i] = (x->argv[from + i])
-                     ? (SDTOSCArgument *)memcpy(malloc(sizeof(SDTOSCArgument)),
-                                                (void *)x->argv[from + i],
-                                                sizeof(SDTOSCArgument))
-                     : 0;
-  return y;
-}
-
-SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x) {
-  return SDTOSCArgumentList_copyFromTo(x, 0, -1);
 }
 
 void SDTOSCArgumentList_free(SDTOSCArgumentList *x) {
   for (unsigned int i = 0; i < x->argc; ++i)
-    if (x->argv[i]) free(x->argv[i]);
+    if (x->argv[i]) SDTOSCArgument_free(x->argv[i]);
   free(x->argv);
   free(x);
 }
 
-int SDTOSCArgumentList_getNArgs(const SDTOSCArgumentList *x) {
-  return (x) ? x->argc : 0;
-}
-
-void SDTOSCArgumentList_set(SDTOSCArgumentList *x, int i) {
-  if (x->argv[i]) free(x->argv[i]);
-  x->argv[i] = SDTOSCArgument_new();
-}
-
-void SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x, int i,
-                                    SDTOSCArgument *a) {
-  if (x->argv[i]) free(x->argv[i]);
-  x->argv[i] = a;
-}
-
-void SDTOSCArgumentList_setFloat(SDTOSCArgumentList *x, int i, float f) {
-  if (x->argv[i]) free(x->argv[i]);
-  x->argv[i] = SDTOSCArgument_newFloat(f);
-}
-
-void SDTOSCArgumentList_setString(SDTOSCArgumentList *x, int i, const char *s) {
-  if (x->argv[i]) free(x->argv[i]);
-  x->argv[i] = SDTOSCArgument_newString(s);
+SDTOSCArgument *SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x, int i,
+                                               SDTOSCArgument *a) {
+  SDTOSCArgument *r = 0;
+  if (i >= 0 && i < x->argc) {
+    r = x->argv[i];
+    x->argv[i] = a;
+  }
+  return r;
 }
 
 int SDTOSCArgumentList_isEmpty(const SDTOSCArgumentList *x, int i) {
-  return !x->argv[i];
-}
-
-int SDTOSCArgumentList_isUnsupported(const SDTOSCArgumentList *x, int i) {
-  return !SDTOSCArgumentList_isEmpty(x, i) &&
-         SDTOSCArgument_isUnsupported(x->argv[i]);
+  return i < 0 || i >= x->argc || !x->argv[i];
 }
 
 int SDTOSCArgumentList_isFloat(const SDTOSCArgumentList *x, int i) {
@@ -282,123 +216,142 @@ void SDTOSCMessage_free(SDTOSCMessage *x) {
   free(x);
 }
 
-SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x) {
+const SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x) {
   return x->args;
 }
 
-SDTOSCAddress *SDTOSCMessage_getAddress(const SDTOSCMessage *x) {
+const SDTOSCAddress *SDTOSCMessage_getAddress(const SDTOSCMessage *x) {
   return x->address;
 }
 
-int SDTOSCMessage_hasContainer(const SDTOSCMessage *x) { return !!x->address; }
-
-char *SDTOSCMessage_getContainer(const SDTOSCMessage *x) {
-  return SDTOSCAddress_getNode(x->address, 0);
-}
-
-SDTOSCAddress *SDTOSCMessage_openContainerAddress(const SDTOSCMessage *x) {
-  return SDTOSCAddress_openContainer(x->address);
-}
-
-SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x) {
-  return SDTOSCMessage_new(SDTOSCMessage_openContainerAddress(x),
-                           SDTOSCArgumentList_copy(x->args));
-}
-
-//-------------------------------------------------------------------------------------//
-
-void SDTOSCLog(void (*log)(const char *, ...), SDTOSCReturnCode r,
-               const SDTOSCMessage *m) {
-  if (log && r) {
-    // Error code
-    char *msg = "[ERROR]";
-    if (r == SDT_OSC_RETURN_MISSING_CONTAINER)
-      msg = "[MISSING_CONTAINER]: please, specify an OSC container";
-    else if (r == SDT_OSC_RETURN_MISSING_METHOD)
-      msg =
-          "[MISSING_METHOD]: please, specify an OSC method from the container";
-    else if (r == SDT_OSC_RETURN_NOT_IMPLEMENTED)
-      msg =
-          "[NOT_IMPLEMENTED]: the specified container/method is not "
-          "implemented";
-    else if (r == SDT_OSC_RETURN_ARGUMENT_ERROR)
-      msg =
-          "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for the "
-          "specified method";
-    else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
-      msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
-    else if (r == SDT_OSC_RETURN_NO_WRITE_PERMISSION)
-      msg = "[NO_WRITE_PERMISSION]: the specified filepath is not writable";
-    else if (r == SDT_OSC_RETURN_ERROR_LOADING_JSON)
-      msg =
-          "[ERROR_LOADING_JSON]: the specified filepath either is not readable "
-          "or does not contain a valid JSON value";
-    else if (r == SDT_OSC_RETURN_WARNING_INTERACTOR_KEY)
-      msg =
-          "[WARNING_INTERACTOR_KEY]: at least one resonator key in the loaded "
-          "JSON file does not match the previous resonator. The resonator is "
-          "updated to point to the newly specified instance. However, the "
-          "interactor is still registered under the previous key pair. Please, "
-          "check that this is intended. To avoid this warning, change the "
-          "resonator key either in your JSON file or in your program to match "
-          "each other.";
-    else if (r == SDT_OSC_RETURN_JSON_NOT_COMPLIANT)
-      msg =
-          "[JSON_NOT_COMPLIANT]: your JSON file is not compliant to SDT's "
-          "standard";
-    else if (r == SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE)
-      msg =
-          "[INCORRECT_INTERACTOR_TYPE]: the specified interactor does not "
-          "match the expected type for the method";
-    else if (r == SDT_OSC_RETURN_ERROR_WRITING_JSON)
-      msg = "[ERROR_WRITING_JSON]: an error occurred while converting to JSON";
-
-    msg = strjoin_free("sdtOSC ", 0, msg, 0);
-
-    // Message
-    if (m) {
-      msg = strjoin_free(msg, 1, indent_free("Message:", 0, 1), 1);
-
-      char *adr = (m->address) ? SDTOSCAddress_str(m->address) : 0;
-      if (adr)
-        msg = strjoin_free(
-            msg, 1, strjoin_free(strjoin_free(" @[", 0, adr, 1), 1, "]", 0), 1);
-
-      // Arguments
-      SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
-      for (unsigned int i = 0; i < args->argc; ++i)
-        if (SDTOSCArgumentList_isString(args, i)) {
-          const char *src = SDTOSCArgumentList_getString(args, i);
-          char *arg = (char *)malloc(sizeof(char) * (strlen(src) + 4));
-          sprintf(arg, " '%s'", src);
-          msg = strjoin_free(msg, 1, arg, 1);
-        } else if (SDTOSCArgumentList_isFloat(args, i)) {
-          float arg = SDTOSCArgumentList_getFloat(args, i);
-          char *s = (char *)malloc(sizeof(char) * (16 + n_digits(arg)));
-          sprintf(s, (fmod(arg, 1)) ? " %.2f" : " %.0f", arg);
-          msg = strjoin_free(msg, 1, s, 1);
-        } else
-          msg = strjoin_free(msg, 1, " [UNSUPPORTED]", 0);
+int SDTOSCMessage_snprintf(char *s, size_t n, const SDTOSCMessage *m) {
+  // Address
+  int tot = SDTOSCAddress_snprintf(s, n, SDTOSCMessage_getAddress(m));
+  if (tot < 0) return tot;
+  float arg;
+  int c;
+  // Arguments
+  const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
+  for (unsigned int i = 0; i < args->argc && tot < n; ++i) {
+    if (SDTOSCArgumentList_isString(args, i)) {
+      c = snprintf(s + tot, n - tot, " %s",
+                   SDTOSCArgumentList_getString(args, i));
+    } else if (SDTOSCArgumentList_isFloat(args, i)) {
+      arg = SDTOSCArgumentList_getFloat(args, i);
+      c = snprintf(s + tot, n - tot, (fmod(arg, 1)) ? " %.2f" : " %.0f", arg);
+    } else {
+      c = snprintf(s + tot, n - tot, " ?");
     }
-
-    msg = strjoin_free(
-        msg, 1,
-        indent_free(
-            strjoin_free(
-                "For further details, please, visit the documentation at ", 0,
-                _docs_url, 0),
-            1, 1),
-        1);
-    (*log)(msg);
-    free(msg);
+    if (c < 0) return c;
+    tot += c;
   }
+  return tot;
+}
+
+const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m) {
+  int tot = SDTOSCMessage_snprintf(_SDT_JSON_logBuffer, _SDT_JSON_BUFLEN, m);
+  if (tot < 0) return 0;
+  if (tot >= _SDT_JSON_BUFLEN) {
+    tot = _SDT_JSON_BUFLEN;
+    _SDT_JSON_logBuffer[tot - 1] = 0;
+    for (unsigned int d = 0; d < 3; ++d) _SDT_JSON_logBuffer[tot - 2 - d] = '.';
+  }
+  return _SDT_JSON_logBuffer;
 }
 
 //-------------------------------------------------------------------------------------//
 
-#define _SDT_JSON_BUFLEN 512
+// void SDTOSCLog(void (*log)(const char *, ...), SDTOSCReturnCode r,
+//                const SDTOSCMessage *m) {
+//   if (log && r) {
+//     // Error code
+//     char *msg = "[ERROR]";
+//     if (r == SDT_OSC_RETURN_MISSING_CONTAINER)
+//       msg = "[MISSING_CONTAINER]: please, specify an OSC container";
+//     else if (r == SDT_OSC_RETURN_MISSING_METHOD)
+//       msg =
+//           "[MISSING_METHOD]: please, specify an OSC method from the
+//           container";
+//     else if (r == SDT_OSC_RETURN_NOT_IMPLEMENTED)
+//       msg =
+//           "[NOT_IMPLEMENTED]: the specified container/method is not "
+//           "implemented";
+//     else if (r == SDT_OSC_RETURN_ARGUMENT_ERROR)
+//       msg =
+//           "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for
+//           the " "specified method";
+//     else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
+//       msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
+//     else if (r == SDT_OSC_RETURN_NO_WRITE_PERMISSION)
+//       msg = "[NO_WRITE_PERMISSION]: the specified filepath is not writable";
+//     else if (r == SDT_OSC_RETURN_ERROR_LOADING_JSON)
+//       msg =
+//           "[ERROR_LOADING_JSON]: the specified filepath either is not
+//           readable " "or does not contain a valid JSON value";
+//     else if (r == SDT_OSC_RETURN_WARNING_INTERACTOR_KEY)
+//       msg =
+//           "[WARNING_INTERACTOR_KEY]: at least one resonator key in the loaded
+//           " "JSON file does not match the previous resonator. The resonator
+//           is " "updated to point to the newly specified instance. However,
+//           the " "interactor is still registered under the previous key pair.
+//           Please, " "check that this is intended. To avoid this warning,
+//           change the " "resonator key either in your JSON file or in your
+//           program to match " "each other.";
+//     else if (r == SDT_OSC_RETURN_JSON_NOT_COMPLIANT)
+//       msg =
+//           "[JSON_NOT_COMPLIANT]: your JSON file is not compliant to SDT's "
+//           "standard";
+//     else if (r == SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE)
+//       msg =
+//           "[INCORRECT_INTERACTOR_TYPE]: the specified interactor does not "
+//           "match the expected type for the method";
+//     else if (r == SDT_OSC_RETURN_ERROR_WRITING_JSON)
+//       msg = "[ERROR_WRITING_JSON]: an error occurred while converting to
+//       JSON";
 
-static char _SDT_JSON_logBuffer[_SDT_JSON_BUFLEN];
+//     msg = strjoin_free("sdtOSC ", 0, msg, 0);
+
+//     // Message
+//     if (m) {
+//       msg = strjoin_free(msg, 1, indent_free("Message:", 0, 1), 1);
+
+//       char *adr = (m->address) ? SDTOSCAddress_str(m->address) : 0;
+//       if (adr)
+//         msg = strjoin_free(
+//             msg, 1, strjoin_free(strjoin_free(" @[", 0, adr, 1), 1, "]", 0),
+//             1);
+
+//       // Arguments
+//       SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
+//       for (unsigned int i = 0; i < args->argc; ++i)
+//         if (SDTOSCArgumentList_isString(args, i)) {
+//           const char *src = SDTOSCArgumentList_getString(args, i);
+//           char *arg = (char *)malloc(sizeof(char) * (strlen(src) + 4));
+//           sprintf(arg, " '%s'", src);
+//           msg = strjoin_free(msg, 1, arg, 1);
+//         } else if (SDTOSCArgumentList_isFloat(args, i)) {
+//           float arg = SDTOSCArgumentList_getFloat(args, i);
+//           char *s = (char *)malloc(sizeof(char) * (16 + n_digits(arg)));
+//           sprintf(s, (fmod(arg, 1)) ? " %.2f" : " %.0f", arg);
+//           msg = strjoin_free(msg, 1, s, 1);
+//         } else
+//           msg = strjoin_free(msg, 1, " [UNSUPPORTED]", 0);
+//     }
+
+//     msg = strjoin_free(
+//         msg, 1,
+//         indent_free(
+//             strjoin_free(
+//                 "For further details, please, visit the documentation at ",
+//                 0, _docs_url, 0),
+//             1, 1),
+//         1);
+//     (*log)(msg);
+//     free(msg);
+//   }
+// }
+
+//-------------------------------------------------------------------------------------//
 
 int SDTOSCJSON_log(const char *preamble, json_value *obj) {
   int newline = 0;
@@ -462,7 +415,7 @@ int SDTOSCJSON_log(const char *preamble, json_value *obj) {
     return 5;                                                \
   }
 
-int SDTOSCJSON_save(const char *name, json_value *obj,
+int SDTOSCJSON_save(const char *name, const json_value *obj,
                     const SDTOSCArgumentList *args) {
   _SDTOSCJSON_fileArgsValidation();
   if (!json_dump(obj, fpath)) {

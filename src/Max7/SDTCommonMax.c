@@ -19,7 +19,7 @@ int SDT_maxPost(const char* fmt, ...) {
 
 void SDT_setupMaxLoggers() {
   // Debug on standard error, everything else on Max console
-  SDT_setLogger(SDT_LOG_INFO, &SDT_maxPost, 1);
-  SDT_setLogger(SDT_LOG_WARN, &SDT_maxPost, 1);
-  SDT_setLogger(SDT_LOG_ERROR, &SDT_maxPost, 1);
+  SDT_setLogger(SDT_LOG_LEVEL_INFO, &SDT_maxPost, 1);
+  SDT_setLogger(SDT_LOG_LEVEL_WARN, &SDT_maxPost, 1);
+  SDT_setLogger(SDT_LOG_LEVEL_ERROR, &SDT_maxPost, 1);
 }

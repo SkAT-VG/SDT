@@ -11,6 +11,8 @@
 #include "SDTMotor.h"
 #include "SDTSolids.h"
 
+/*
+
 json_value *push_else_free(json_value *dest, const char *key, json_value *src,
                            int length) {
   if (!src) return src;
@@ -1066,3 +1068,5 @@ const json_value *SDTProjectMetadata_get() {
 json_value *SDTProjectMetadata_pop() {
   return json_deepcopy(SDTProjectMetadata_get());
 }
+
+*/

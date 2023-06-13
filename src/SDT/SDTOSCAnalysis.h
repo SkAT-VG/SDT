@@ -1,9 +1,10 @@
 #include "SDTAnalysis.h"
 #include "SDTOSCCommon.h"
 
-/** @file SDTOSCAnalysis.h
+/**
 \addtogroup OSC
-@{ */
+@{
+@file SDTOSCAnalysis.h @{ */
 
 #ifndef SDT_OSC_ANALYSIS_H
 #define SDT_OSC_ANALYSIS_H
@@ -12,31 +13,78 @@
 extern "C" {
 #endif
 
-/** @defgroup osczerox SDTOSCZeroCrossing
-OSC for SDTZeroCrossing objects @{ */
+/**
 
-extern SDTOSCReturnCode SDTOSCZeroCrossing_log(void (*log)(const char *, ...),
-                                               const char *key,
-                                               SDTZeroCrossing *x);
 
-extern SDTOSCReturnCode SDTOSCZeroCrossing_save(void (*log)(const char *, ...),
-                                                const char *key,
-                                                SDTZeroCrossing *x,
-                                                const SDTOSCArgumentList *args);
+@defgroup OSCZerox SDTOSC.h: Open Sound Control root
+@file SDTOSCAnalysis.h
+@{
+@defgroup osczerox SDTOSCZeroCrossing
+OSC for #SDTZeroCrossing objects @{ */
 
-extern SDTOSCReturnCode SDTOSCZeroCrossing_load(void (*log)(const char *, ...),
-                                                const char *key,
-                                                SDTZeroCrossing *x,
-                                                const SDTOSCArgumentList *args);
+/** @brief `/zerox/log <name>`
 
-extern SDTOSCReturnCode SDTOSCZeroCrossing_setSize(
-    SDTZeroCrossing *x, const SDTOSCArgumentList *args);
+Function that implements OSC JSON log for #SDTZeroCrossing objects
+@param key Instance name
+@param x Instance pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCZeroCrossing_log(const char *key, SDTZeroCrossing *x);
 
-extern SDTOSCReturnCode SDTOSCZeroCrossing_setOverlap(
-    SDTZeroCrossing *x, const SDTOSCArgumentList *args);
+/** @brief `/zerox/save <name> <filepath>`
 
-extern SDTOSCReturnCode SDTOSCZeroCrossing(void (*log)(const char *, ...),
-                                           const SDTOSCMessage *x);
+Function that implements OSC JSON save for #SDTZeroCrossing objects
+@param key Instance name
+@param x Instance pointer
+@param args Argument list: `args[0]` should hold the file path
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCZeroCrossing_save(const char *key, SDTZeroCrossing *x,
+                                   const SDTOSCArgumentList *args);
+
+/** @brief `/zerox/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTZeroCrossing objects
+@param key Instance name
+@param x Instance pointer
+@param args Argument list: `args[0]` should hold the file path
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCZeroCrossing_load(const char *key, SDTZeroCrossing *x,
+                                   const SDTOSCArgumentList *args);
+
+/** @brief `/zerox/loads <name> <filepath>`
+
+Function that implements OSC JSON loading from string for #SDTZeroCrossing
+objects
+@param key Instance name
+@param x Instance pointer
+@param args Argument list: `args[0]` should hold the JSON string
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCZeroCrossing_loads(const char *key, SDTZeroCrossing *x,
+                                    const SDTOSCArgumentList *args);
+
+/** @brief `/zerox/size <name> <value>`
+
+Function that implements OSC parameter setting for #SDTZeroCrossing objects
+@param x Instance pointer
+@param args Argument list: `args[0]` should hold the parameter value
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCZeroCrossing_setSize(SDTZeroCrossing *x,
+                                      const SDTOSCArgumentList *args);
+
+/** @brief `/zerox/overlap <name> <value>`
+
+Function that implements OSC parameter setting for #SDTZeroCrossing objects
+@param x Instance pointer
+@param args Argument list: `args[0]` should hold the parameter value
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCZeroCrossing_setOverlap(SDTZeroCrossing *x,
+                                         const SDTOSCArgumentList *args);
+
+/** @brief `/zerox/...`
+
+Function that routes OSC commands for #SDTZeroCrossing objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCZeroCrossing(const SDTOSCMessage *x);
 
 /** @} */
 
@@ -46,4 +94,4 @@ extern SDTOSCReturnCode SDTOSCZeroCrossing(void (*log)(const char *, ...),
 
 #endif
 
-/** @} */
+/** @}@} */

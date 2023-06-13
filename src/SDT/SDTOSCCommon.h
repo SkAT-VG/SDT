@@ -1,3 +1,4 @@
+#include "SDTCommon.h"
 #include "json-builder.h"
 
 /** @file SDTOSCCommon.h
@@ -20,7 +21,8 @@ This class represents OSC addresses
 /** @brief Data structure representing an OSC address. */
 typedef struct SDTOSCAddress SDTOSCAddress;
 
-/** @brief Object constructor.
+/** @brief Object constructor. Input string will NOT be
+owned by the address object.
 @param[in] s String OSC address to parse. Null pointer is returned if string
 doesn't start with '/'
 @return Pointer to the new instance */
@@ -30,26 +32,29 @@ extern SDTOSCAddress *SDTOSCAddress_new(const char *s);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTOSCAddress_free(SDTOSCAddress *x);
 
-/** @brief Convert to string an OSC address
-@return String OSC address */
-extern char *SDTOSCAddress_str(const SDTOSCAddress *x);
+/** @brief Print OSC address to string.
+@param[in] s Pointer to a buffer where the resulting C-string is stored. The
+buffer should have a size of at least n characters.
+@param[in] n Maximum number of bytes to be used in the buffer.
+@param[in] m OSC address pointer
+@return The number of characters that would have been written if n had been
+sufficiently large, not counting the terminating null character. If an encoding
+error occurs, a negative number is returned. */
+extern int SDTOSCAddress_snprintf(char *s, size_t n, const SDTOSCAddress *x);
 
 /** @brief Gets the number of nodes in the OSC address
+@param[in] x OSC address pointer
 @return Depth of OSC address */
 extern unsigned int SDTOSCAddress_getDepth(const SDTOSCAddress *x);
 
-/** @brief Gets the container or method name at the specified depth in the
-address
+/** @brief Gets the container or method name at the specified
+depth in the address
+@param[in] x OSC address pointer
 @param[in] node_idx Depth of the node (container / method) in the OSC address.
 Index 0 is for the first (non-root) node.
 @return Node name as a C-string */
-extern char *SDTOSCAddress_getNode(const SDTOSCAddress *x,
-                                   unsigned int node_idx);
-
-/** @brief Gets the address obtained by "opening the container", i.e. removing
-the first (non-root) node.
-@return The new address */
-extern SDTOSCAddress *SDTOSCAddress_openContainer(const SDTOSCAddress *x);
+extern const char *SDTOSCAddress_getNode(const SDTOSCAddress *x,
+                                         unsigned int node_idx);
 
 /** @} */
 /** @defgroup osc_arguments OSC Argument
@@ -60,13 +65,13 @@ This class represents OSC arguments
 typedef struct SDTOSCArgument SDTOSCArgument;
 
 /** @brief Object constructor.
-This object represents an usupported argument.
+This object represents an unsupported argument.
 @return Pointer to the new instance */
 extern SDTOSCArgument *SDTOSCArgument_new();
 
-/** @brief Checks if the argument is unsupported
-@return The truth value of the check */
-extern int SDTOSCArgument_isUnsupported(const SDTOSCArgument *x);
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTOSCArgument_free(SDTOSCArgument *x);
 
 /** @brief Object constructor.
 @param[in] f Float value to use as an OSC argument
@@ -74,7 +79,9 @@ extern int SDTOSCArgument_isUnsupported(const SDTOSCArgument *x);
 extern SDTOSCArgument *SDTOSCArgument_newFloat(float f);
 
 /** @brief Object constructor.
-@param[in] s String value (character pointer) to use as an OSC argument
+
+The input string will NOT be handled alongside the object.
+@param[in] s String value (C-string) to use as an OSC argument
 @return Pointer to the new instance */
 extern SDTOSCArgument *SDTOSCArgument_newString(const char *s);
 
@@ -108,82 +115,39 @@ typedef struct SDTOSCArgumentList SDTOSCArgumentList;
 @return Pointer to the new instance */
 extern SDTOSCArgumentList *SDTOSCArgumentList_new(int argc);
 
-/** @brief Object copy constructor.
-@return Pointer to the new instance */
-extern SDTOSCArgumentList *SDTOSCArgumentList_copy(const SDTOSCArgumentList *x);
-
-/** @brief Object copy constructor.
-Only copies arguments in the specified range of indices [from, to).
-@param[in] from The position of the first argument to copy.
-@param[in] to The position of the first argument not to copy. If to < 0, then
-all arguments are copied from from until the end of the list.
-@return Pointer to the new instance */
-extern SDTOSCArgumentList *SDTOSCArgumentList_copyFromTo(
-    const SDTOSCArgumentList *x, unsigned int from, int to);
-
-/** @brief Object destructor.
-@param[in] x Pointer to the instance to destroy */
-extern void SDTOSCArgumentList_free(SDTOSCArgumentList *x);
-
-/** @brief Gets the number of arguments in the argument list
-@return The number of arguments */
-extern int SDTOSCArgumentList_getNArgs(const SDTOSCArgumentList *x);
-
 /** @brief Puts a new argument in the list at the specified position.
-The argument is unsupported.
-@param[in] i The position in the list where to put the new argument. If the
-position is occupied, the old argument is destroyed. */
-extern void SDTOSCArgumentList_set(SDTOSCArgumentList *x, int i);
-
-/** @brief Puts a new argument in the list at the specified position.
-@param[in] i The position in the list where to put the new argument. If the
-position is occupied, the old argument is destroyed. */
-extern void SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x, int i,
-                                           SDTOSCArgument *a);
-
-/** @brief Puts a new float argument in the list at the specified position.
-@param[in] i The position in the list where to put the new argument. If the
-position is occupied, the old argument is destroyed.
-@param[in] f The float value */
-extern void SDTOSCArgumentList_setFloat(SDTOSCArgumentList *x, int i, float f);
-
-/** @brief Puts a new string argument in the list at the specified position.
-@param[in] i The position in the list where to put the new argument. If the
-position is occupied, the old argument is destroyed.
-@param[in] s The string value */
-extern void SDTOSCArgumentList_setString(SDTOSCArgumentList *x, int i,
-                                         const char *s);
-
-/** @brief Checks if no argument is at the specified position
-@param[in] i The position in the list to check
-@return The truth value of the check. Check succeeds if NULL pointer is at
-position i. */
-extern int SDTOSCArgumentList_isEmpty(const SDTOSCArgumentList *x, int i);
-
-/** @brief Checks if the argument at the specified position is unsupported
-@param[in] i The position in the list to check
-@return The truth value of the check. Check fails also if NULL pointer is at
-position i. */
-extern int SDTOSCArgumentList_isUnsupported(const SDTOSCArgumentList *x, int i);
+Memory allocated for any old argument should be freed.
+@param[in] x Instance pointer
+@param[in] i The position in the list where to put the new argument.
+If the position is occupied, the old argument is returned.
+@param[in] a #SDTOSCArgument instance pointer
+@return Old argument, if any, otherwise zero. Returned pointer should be freed
+*/
+extern SDTOSCArgument *SDTOSCArgumentList_setArgument(SDTOSCArgumentList *x,
+                                                      int i, SDTOSCArgument *a);
 
 /** @brief Checks if the argument at the specified position is a float
+@param[in] x Instance pointer
 @param[in] i The position in the list to check
 @return The truth value of the check. Check fails also if NULL pointer is at
 position i. */
 extern int SDTOSCArgumentList_isFloat(const SDTOSCArgumentList *x, int i);
 
 /** @brief Checks if the argument at the specified position is a string
+@param[in] x Instance pointer
 @param[in] i The position in the list to check
 @return The truth value of the check. Check fails also if NULL pointer is at
 position i. */
 extern int SDTOSCArgumentList_isString(const SDTOSCArgumentList *x, int i);
 
 /** @brief Gets the float value of the argument at the specified position
+@param[in] x Instance pointer
 Argument should be previously checked with ::SDTOSCArgumentList_isFloat
 @return The float value */
 extern float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i);
 
 /** @brief Gets the string value of the argument at the specified position
+@param[in] x Instance pointer
 Argument should be previously checked with ::SDTOSCArgumentList_isString
 @return The float value */
 extern const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x,
@@ -198,7 +162,8 @@ This class represents OSC messages
 /** @brief Data structure representing an OSC message. */
 typedef struct SDTOSCMessage SDTOSCMessage;
 
-/** @brief Object constructor.
+/** @brief Object constructor. Memory for address and arguments
+will be handled automatically alongside the message.
 @param[in] address OSC address
 @param[in] args OSC argument list
 @return Pointer to the new instance */
@@ -210,59 +175,52 @@ extern SDTOSCMessage *SDTOSCMessage_new(SDTOSCAddress *address,
 extern void SDTOSCMessage_free(SDTOSCMessage *x);
 
 /** @brief Gets the arguments of the message
-@return The arguments */
-extern SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x);
-
-/** @brief Gets the address of the message
-@return The address */
-extern SDTOSCAddress *SDTOSCMessage_getAddress(const SDTOSCMessage *x);
-
-/** @brief Checks if the message has a top-level container name
-@return The  The truth value of the check */
-extern int SDTOSCMessage_hasContainer(const SDTOSCMessage *x);
-
-/** @brief Gets the top-level container name of the address of the message
-@return The container name */
-extern char *SDTOSCMessage_getContainer(const SDTOSCMessage *x);
-
-/** @brief Gets the address obtained by "opening the container", i.e. removing
-the first (non-root) node of the address.
-@return The new address */
-extern SDTOSCAddress *SDTOSCMessage_openContainerAddress(
+@param[in] x Instance pointer
+@return The argument list */
+extern const SDTOSCArgumentList *SDTOSCMessage_getArguments(
     const SDTOSCMessage *x);
 
-/** @brief Gets the message obtained by "opening the container", i.e. removing
-the first (non-root) node of the address.
-@return The new message */
-extern SDTOSCMessage *SDTOSCMessage_openContainer(const SDTOSCMessage *x);
+/** @brief Gets the address of the message
+@param[in] x Instance pointer
+@return The address */
+extern const SDTOSCAddress *SDTOSCMessage_getAddress(const SDTOSCMessage *x);
 
-/** @} */
+/** @brief Print OSC message to string.
+@param[in] s Pointer to a buffer where the resulting C-string is stored. The
+buffer should have a size of at least n characters.
+@param[in] n Maximum number of bytes to be used in the buffer.
+@param[in] m OSC message pointer
+@return The number of characters that would have been written if n had been
+sufficiently large, not counting the terminating null character. If an encoding
+error occurs, a negative number is returned. */
+extern int SDTOSCMessage_snprintf(char *s, size_t n, const SDTOSCMessage *m);
 
-/** @brief Return codes for OSC methods */
-typedef enum SDTOSCReturnCode {
-  SDT_OSC_RETURN_OK = 0,
-  SDT_OSC_RETURN_MISSING_CONTAINER,
-  SDT_OSC_RETURN_MISSING_METHOD,
-  SDT_OSC_RETURN_NOT_IMPLEMENTED,
-  SDT_OSC_RETURN_ARGUMENT_ERROR,
-  SDT_OSC_RETURN_OBJECT_NOT_FOUND,
-  SDT_OSC_RETURN_NO_WRITE_PERMISSION,
-  SDT_OSC_RETURN_ERROR_LOADING_JSON,
-  SDT_OSC_RETURN_WARNING_INTERACTOR_KEY,
-  SDT_OSC_RETURN_JSON_NOT_COMPLIANT,
-  SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE,
-  SDT_OSC_RETURN_ERROR_WRITING_JSON,
-} SDTOSCReturnCode;
+/** @brief Print OSC message onto a statically-allocated string.
+Please, note that any subsequent calls to SDT log functions
+may write over this string. Use the macro ::SDTOSC_MESSAGE_LOG for ease of use.
+@param[in] m OSC message pointer
+@return String pointer or zero on fail */
+extern const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m);
 
-/** @brief Log OSC return code information with a custom log function
-@param[in] log Log function pointer
-@param[in] r Return code
-@param[in] m OSC message. Use a NULL pointer if it doesn't have to be printed.
-*/
-extern void SDTOSCLog(void (*log)(const char *, ...), SDTOSCReturnCode r,
-                      const SDTOSCMessage *m);
+/** @brief Log OSC message in any build with log level below LEVEL
+@param[in] LEVEL Minimum level for logging
+@param[in] FMT C string that contains a format string that follows the same
+specifications as format in printf
+@param[in] m SDTOSCMessage pointer */
+#define SDTOSC_MESSAGE_LOGA(LEVEL, FMT, m, ...)           \
+  {                                                       \
+    const char *__msg_ptr = SDTOSCMessage_staticPrint(m); \
+    if (__msg_ptr) {                                      \
+      SDT_LOGA(LEVEL, FMT, __msg_ptr, __VA_ARGS__);       \
+    }                                                     \
+  }
 
-/** @defgroup osc_jsn OSC JSON
+/** @brief Gets a string that invites to Read The Fantastic Manual */
+extern const char *SDTOSC_rtfm_string();
+
+/** @}
+
+@defgroup osc_jsn OSC JSON
 Utilities for OSC methods using JSON
 @{ */
 
@@ -277,7 +235,7 @@ extern int SDTOSCJSON_log(const char *preamble, json_value *obj);
 @param[in] obj JSON object
 @param[in] args Additional OSC arguments: file path (string)
 @return Zero on success, non-zero on error */
-extern int SDTOSCJSON_save(const char *name, json_value *obj,
+extern int SDTOSCJSON_save(const char *name, const json_value *obj,
                            const SDTOSCArgumentList *args);
 
 /** @brief Load information from JSON files

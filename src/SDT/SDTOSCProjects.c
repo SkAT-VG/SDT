@@ -8,6 +8,7 @@
 #include "SDTProjects.h"
 #include "SDTSolids.h"
 
+/*
 SDTOSCReturnCode SDTOSCProject(void (*log)(const char *, ...),
                                const SDTOSCMessage *x) {
   SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
@@ -154,3 +155,4 @@ SDTOSCReturnCode SDTOSCProjectMetadata_reset(void (*log)(const char *, ...)) {
   SDTProjectMetadata_reset();
   return SDT_OSC_RETURN_OK;
 }
+*/
