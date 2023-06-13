@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+
 SDTOSCReturnCode SDTOSCBiquad_log(void (*log)(const char *, ...),
                                   const char *key, SDTBiquad *x) {
   json_value *obj = SDTBiquad_toJSON(x);
@@ -2692,3 +2694,5 @@ SDTOSCReturnCode SDTOSCWindFlow(void (*log)(const char *, ...),
     return_code = SDT_OSC_RETURN_ARGUMENT_ERROR;
   return return_code;
 }
+
+*/
