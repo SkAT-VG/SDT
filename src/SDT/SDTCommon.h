@@ -131,6 +131,14 @@ extern void SDT_setLogger(int level, int (*print_func)(const char *, ...),
 @return Message-logger function */
 extern int (*SDT_getLogger(int level, int *newline))(const char *, ...);
 
+/** @brief Gets the log-level from the environment variable `SDT_LOG_LEVEL`.
+
+For efficiency, the environment variable is read only on the first invocation of
+this function. Valid values are: `ERROR`, `WARN` (default), `INFO`, `DEBUG`,
+`VERBOSE`
+@return Log level */
+extern int SDT_getLogLevelFromEnv();
+
 /** @brief Convenience function for printing on the standard error
 @param[in] fmt C string that contains a format string that follows the same
 specifications as format in printf */

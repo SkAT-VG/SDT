@@ -514,6 +514,7 @@ static char _SDT_logBuffer[MAXSDTSTRING];
 
 int SDT_log(int level, const char *file, unsigned int line, const char *func,
             const char *fmt, ...) {
+  if (level > SDT_getLogLevelFromEnv()) return 0;
   int newline = 0;
   int (*log)(const char *, ...) = SDT_getLogger(level, &newline);
   va_list args;
@@ -525,3 +526,32 @@ int SDT_log(int level, const char *file, unsigned int line, const char *func,
 }
 
 int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }
+
+int SDT_getLogLevelFromEnv() {
+  static int level = -1;
+  // Only read the first time
+  if (level >= 0) return level;
+
+  const char *level_name = getenv("SDT_LOG_LEVEL");
+  if (level_name) {
+    if (!strcmp(level_name, "ERROR"))
+      level = SDT_LOG_LEVEL_ERROR;
+    else if (!strcmp(level_name, "WARN"))
+      level = SDT_LOG_LEVEL_WARN;
+    else if (!strcmp(level_name, "INFO"))
+      level = SDT_LOG_LEVEL_INFO;
+    else if (!strcmp(level_name, "DEBUG"))
+      level = SDT_LOG_LEVEL_DEBUG;
+    else if (!strcmp(level_name, "VERBOSE"))
+      level = SDT_LOG_LEVEL_VERBOSE;
+  }
+  if (level >= 0) return level;
+  level = SDT_LOG_LEVEL_WARN;
+  if (level_name) {
+    SDT_LOGA(WARN,
+             "Unsupported log level name from environment variable: "
+             "SDT_LOG_LEVEL=%s\n",
+             level_name);
+  }
+  return level;
+}
