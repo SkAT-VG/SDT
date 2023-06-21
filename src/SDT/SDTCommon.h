@@ -136,7 +136,7 @@ extern int (*SDT_getLogger(int level, int *newline))(const char *, ...);
 
 For efficiency, the environment variable is read only on the first invocation of
 this function. Valid values are:
-`QUIET`, `ERROR`, `WARN` (default), `INFO`, `DEBUG`, `VERBOSE`
+`QUIET`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `VERBOSE`
 @return Log level */
 extern int SDT_getLogLevelFromEnv();
 

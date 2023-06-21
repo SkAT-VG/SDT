@@ -545,7 +545,7 @@ int SDT_getLogLevelFromEnv() {
         else _SDT_LOG_LEVEL_ENV_CASE(VERBOSE)  //
   }
   if (level < SDT_LOG_LEVEL_QUIET) {
-    level = SDT_LOG_LEVEL_WARN;
+    level = SDT_LOG_LEVEL_INFO;
     if (level_name) {
       SDT_LOGA(WARN,
                "Unsupported log level name from environment variable: "
