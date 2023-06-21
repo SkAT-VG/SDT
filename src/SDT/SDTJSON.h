@@ -13,10 +13,6 @@ JSON utility functions
 extern "C" {
 #endif
 
-/** @brief Get the default JSON serialization options for SDT
-@return The default JSON serialization options for SDT */
-extern json_serialize_opts SDTJSON_opts();
-
 /** @brief Dump a JSON value to string
 @param[in] x The JSON value
 @return The string, or 0 on fail. Must be freed */

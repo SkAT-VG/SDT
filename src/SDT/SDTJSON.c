@@ -5,13 +5,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
-json_serialize_opts SDTJSON_opts() {
-  json_serialize_opts opts;
-  opts.mode = json_serialize_mode_multiline;
-  opts.indent_size = 2;
-  return opts;
-}
+#include "SDTCommon.h"
 
 json_value *SDTJSON_reads(const char *s, int n) {
   if (n < 0) n = strlen(s);
@@ -60,8 +54,11 @@ json_value *SDTJSON_read(const char *fpath) {
 }
 
 char *SDTJSON_dumps(const json_value *x) {
-  char *s = malloc(sizeof(char) * json_measure_ex(x, SDTJSON_opts()));
-  if (s) json_serialize_ex(s, x, SDTJSON_opts());
+  static const json_serialize_opts SDTJSON_opts = {
+      json_serialize_mode_multiline, 0, 2};
+  size_t n_chars = json_measure_ex(x, SDTJSON_opts);
+  char *s = malloc(sizeof(char) * n_chars);
+  if (s) json_serialize_ex(s, x, SDTJSON_opts);
   return s;
 }
 
