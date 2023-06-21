@@ -145,13 +145,13 @@ extern int SDT_getLogLevelFromEnv();
 specifications as format in printf */
 extern int SDT_eprintf(const char *fmt, ...);
 
-// Default is INFO
+// Default is DEBUG
 #ifndef SDT_ERROR
 #ifndef SDT_WARN
 #ifndef SDT_INFO
 #ifndef SDT_DEBUG
 #ifndef SDT_VERBOSE
-#define SDT_INFO
+#define SDT_DEBUG
 #endif
 #endif
 #endif
