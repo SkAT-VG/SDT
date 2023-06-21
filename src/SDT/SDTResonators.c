@@ -1,37 +1,40 @@
+#include "SDTResonators.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include "SDTCommon.h"
-#include "SDTResonators.h"
 
 #define MAX_POS 10000.0
 
 struct SDTResonator {
-  double fragmentSize, *freqs, *decays, *weights, **gains,
-         *m, *k, *b1, *a1, *a2, *b0v, *b1v,
-         *p0, *p1, *v, *f;
+  double fragmentSize, *freqs, *decays, *weights, **gains, *m, *k, *b1, *a1,
+      *a2, *b0v, *b1v, *p0, *p1, *v, *f;
   int nModes, nPickups, activeModes;
 };
 
 double modalPosition(const SDTResonator *x, unsigned int mode, double f) {
-  return SDT_fclip(x->b1[mode] * f - x->a1[mode] * x->p0[mode] - x->a2[mode] * x->p1[mode], -MAX_POS, MAX_POS);
+  return SDT_fclip(
+      x->b1[mode] * f - x->a1[mode] * x->p0[mode] - x->a2[mode] * x->p1[mode],
+      -MAX_POS, MAX_POS);
 }
 
 double modalVelocity(const SDTResonator *x, unsigned int mode, double p) {
   return x->b0v[mode] * p + x->b1v[mode] * x->p0[mode];
 }
 
-double modalEnergy(const SDTResonator *x, unsigned int mode, double p, double v) {
+double modalEnergy(const SDTResonator *x, unsigned int mode, double p,
+                   double v) {
   return 0.5 * (x->k[mode] * p * p + x->m[mode] * v * v);
 }
 
-void distributeForce(const SDTResonator *x, unsigned int pickup, double *fs, double f) {
+void distributeForce(const SDTResonator *x, unsigned int pickup, double *fs,
+                     double f) {
   int mode;
-  
+
   for (mode = 0; mode < x->activeModes; mode++) {
-    fs[mode] = x->gains[pickup][x->nModes] > 0.0 ?
-               f * x->gains[pickup][mode] / x->gains[pickup][x->nModes] :
-               f / x->activeModes;
+    fs[mode] = x->gains[pickup][x->nModes] > 0.0
+                   ? f * x->gains[pickup][mode] / x->gains[pickup][x->nModes]
+                   : f / x->activeModes;
   }
 }
 
@@ -41,7 +44,7 @@ void updateState(SDTResonator *x, unsigned int mode) {
 
 void updateMode(SDTResonator *x, unsigned int mode) {
   double u, w, wt, m, k, d, g, r, coswt, sincwt, tsincwt;
-  
+
   u = sqrt(x->fragmentSize);
   w = SDT_TWOPI * x->freqs[mode];
   wt = w * SDT_timeStep / u;
@@ -64,8 +67,7 @@ void updateMode(SDTResonator *x, unsigned int mode) {
     updateState(x, mode);
     x->m[mode] = m;
     x->k[mode] = k;
-  }
-  else {
+  } else {
     x->m[mode] = 0.0;
     x->k[mode] = 0.0;
     x->b1[mode] = 0.0;
@@ -78,7 +80,7 @@ void updateMode(SDTResonator *x, unsigned int mode) {
 
 void updatePickup(SDTResonator *x, unsigned int pickup) {
   int mode;
-  
+
   x->gains[pickup][x->nModes] = 0.0;
   for (mode = 0; mode < x->activeModes; mode++) {
     x->gains[pickup][x->nModes] += x->gains[pickup][mode];
@@ -87,7 +89,7 @@ void updatePickup(SDTResonator *x, unsigned int pickup) {
 
 void updateModes(SDTResonator *x) {
   int mode;
-  
+
   for (mode = 0; mode < x->activeModes; mode++) {
     updateMode(x, mode);
   }
@@ -95,7 +97,7 @@ void updateModes(SDTResonator *x) {
 
 void updatePickups(SDTResonator *x) {
   int pickup;
-  
+
   for (pickup = 0; pickup < x->nPickups; pickup++) {
     updatePickup(x, pickup);
   }
@@ -109,7 +111,7 @@ void updateAll(SDTResonator *x) {
 SDTResonator *SDTResonator_new(unsigned int nModes, unsigned int nPickups) {
   SDTResonator *x;
   int pickup, mode;
-  
+
   x = (SDTResonator *)malloc(sizeof(SDTResonator));
   x->freqs = (double *)malloc(nModes * sizeof(double));
   x->decays = (double *)malloc(nModes * sizeof(double));
@@ -159,7 +161,7 @@ SDTResonator *SDTResonator_new(unsigned int nModes, unsigned int nPickups) {
 
 void SDTResonator_free(SDTResonator *x) {
   int pickup;
-  
+
   free(x->freqs);
   free(x->decays);
   free(x->weights);
@@ -181,25 +183,43 @@ void SDTResonator_free(SDTResonator *x) {
   free(x);
 }
 
-SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned int nPickups) {
-  unsigned int min_nModes = (nModes > x->nModes)? x->nModes : nModes;
-  unsigned int min_nPickups = (nPickups > x->nPickups)? x->nPickups : nPickups;
+SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes,
+                                 unsigned int nPickups) {
+  unsigned int min_nModes = (nModes > x->nModes) ? x->nModes : nModes;
+  unsigned int min_nPickups = (nPickups > x->nPickups) ? x->nPickups : nPickups;
 
-  double *freqs = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->freqs, sizeof(double) * min_nModes);
-  double *decays = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->decays, sizeof(double) * min_nModes);
-  double *weights = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->weights, sizeof(double) * min_nModes);
-  double *m = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->m, sizeof(double) * min_nModes);
-  double *k = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->k, sizeof(double) * min_nModes);
-  double *b1 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->b1, sizeof(double) * min_nModes);
-  double *a1 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->a1, sizeof(double) * min_nModes);
-  double *a2 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->a2, sizeof(double) * min_nModes);
-  double *b0v = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->b0v, sizeof(double) * min_nModes);
-  double *b1v = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->b1v, sizeof(double) * min_nModes);
-  double *p0 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->p0, sizeof(double) * min_nModes);
-  double *p1 = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->p1, sizeof(double) * min_nModes);
-  double *v = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->v, sizeof(double) * min_nModes);
-  double *f = (double *) memcpy(calloc(nModes, sizeof(double)), (void *) x->f, sizeof(double) * min_nModes);
-  
+  double *freqs =
+      (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->freqs,
+                       sizeof(double) * min_nModes);
+  double *decays =
+      (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->decays,
+                       sizeof(double) * min_nModes);
+  double *weights =
+      (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->weights,
+                       sizeof(double) * min_nModes);
+  double *m = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->m,
+                               sizeof(double) * min_nModes);
+  double *k = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->k,
+                               sizeof(double) * min_nModes);
+  double *b1 = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->b1,
+                                sizeof(double) * min_nModes);
+  double *a1 = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->a1,
+                                sizeof(double) * min_nModes);
+  double *a2 = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->a2,
+                                sizeof(double) * min_nModes);
+  double *b0v = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->b0v,
+                                 sizeof(double) * min_nModes);
+  double *b1v = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->b1v,
+                                 sizeof(double) * min_nModes);
+  double *p0 = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->p0,
+                                sizeof(double) * min_nModes);
+  double *p1 = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->p1,
+                                sizeof(double) * min_nModes);
+  double *v = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->v,
+                               sizeof(double) * min_nModes);
+  double *f = (double *)memcpy(calloc(nModes, sizeof(double)), (void *)x->f,
+                               sizeof(double) * min_nModes);
+
   free(x->freqs);
   free(x->decays);
   free(x->weights);
@@ -231,10 +251,11 @@ SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned 
   x->f = f;
 
   double **gains = malloc(nPickups * sizeof(double *));
-  for (unsigned int p = 0 ; p < nPickups ; ++p) {
-    gains[p] = (double *) calloc(nModes + 1, sizeof(double));
+  for (unsigned int p = 0; p < nPickups; ++p) {
+    gains[p] = (double *)calloc(nModes + 1, sizeof(double));
     if (p < min_nPickups) {
-      memcpy((void *) gains[p], (void *) x->gains[p], sizeof(double) * (min_nModes + 1));
+      memcpy((void *)gains[p], (void *)x->gains[p],
+             sizeof(double) * (min_nModes + 1));
       free(x->gains[p]);
     }
   }
@@ -244,7 +265,7 @@ SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes, unsigned 
 
   x->nModes = nModes;
   x->nPickups = nPickups;
-  x->activeModes = (x->activeModes > min_nModes)? min_nModes : x->activeModes;
+  x->activeModes = (x->activeModes > min_nModes) ? min_nModes : x->activeModes;
   updateAll(x);
   return x;
 }
@@ -255,7 +276,7 @@ SDTResonator *SDTResonator_copy(SDTResonator *dest, const SDTResonator *src) {
   memcpy(dest->freqs, src->freqs, sizeof(double) * src->nModes);
   memcpy(dest->decays, src->decays, sizeof(double) * src->nModes);
   memcpy(dest->weights, src->weights, sizeof(double) * src->nModes);
-  for (unsigned int p = 0 ; p < dest->nPickups ; ++p)
+  for (unsigned int p = 0; p < dest->nPickups; ++p)
     memcpy(dest->gains[p], src->gains[p], sizeof(double) * dest->nModes);
 
   updateAll(dest);
@@ -265,9 +286,9 @@ SDTResonator *SDTResonator_copy(SDTResonator *dest, const SDTResonator *src) {
 double SDTResonator_getPosition(const SDTResonator *x, unsigned int pickup) {
   double out;
   int mode;
-  
+
   out = 0.0;
-  if (pickup < x->nPickups) { 
+  if (pickup < x->nPickups) {
     for (mode = 0; mode < x->activeModes; mode++) {
       out += x->p0[mode] * x->gains[pickup][mode];
     }
@@ -278,9 +299,9 @@ double SDTResonator_getPosition(const SDTResonator *x, unsigned int pickup) {
 double SDTResonator_getVelocity(const SDTResonator *x, unsigned int pickup) {
   double out;
   int mode;
-  
+
   out = 0.0;
-  if (pickup < x->nPickups) { 
+  if (pickup < x->nPickups) {
     for (mode = 0; mode < x->activeModes; mode++) {
       out += x->v[mode] * x->gains[pickup][mode];
     }
@@ -300,17 +321,14 @@ double SDTResonator_getWeight(const SDTResonator *x, unsigned int mode) {
   return x->weights[mode];
 }
 
-double SDTResonator_getGain(const SDTResonator *x, unsigned int pickup, unsigned int mode) {
+double SDTResonator_getGain(const SDTResonator *x, unsigned int pickup,
+                            unsigned int mode) {
   return x->gains[pickup][mode];
 }
 
-int SDTResonator_getNPickups(const SDTResonator *x) {
-  return x->nPickups;
-}
+int SDTResonator_getNPickups(const SDTResonator *x) { return x->nPickups; }
 
-int SDTResonator_getNModes(const SDTResonator *x) {
-  return x->nModes;
-}
+int SDTResonator_getNModes(const SDTResonator *x) { return x->nModes; }
 
 int SDTResonator_getActiveModes(const SDTResonator *x) {
   return x->activeModes;
@@ -322,7 +340,7 @@ double SDTResonator_getFragmentSize(const SDTResonator *x) {
 
 void SDTResonator_setPosition(SDTResonator *x, unsigned int pickup, double f) {
   int mode;
-  
+
   if (pickup < x->nPickups && x->gains[pickup][x->nModes] > 0.0) {
     for (mode = 0; mode < x->activeModes; mode++) {
       x->p0[mode] = f / x->gains[pickup][x->nModes];
@@ -333,7 +351,7 @@ void SDTResonator_setPosition(SDTResonator *x, unsigned int pickup, double f) {
 
 void SDTResonator_setVelocity(SDTResonator *x, unsigned int pickup, double f) {
   int mode;
-  
+
   if (pickup < x->nPickups && x->gains[pickup][x->nModes] > 0.0) {
     for (mode = 0; mode < x->activeModes; mode++) {
       x->v[mode] = f / x->gains[pickup][x->nModes];
@@ -363,7 +381,8 @@ void SDTResonator_setWeight(SDTResonator *x, unsigned int mode, double f) {
   updateMode(x, mode);
 }
 
-void SDTResonator_setGain(SDTResonator *x, unsigned int pickup, unsigned int mode, double f) {
+void SDTResonator_setGain(SDTResonator *x, unsigned int pickup,
+                          unsigned int mode, double f) {
   if (mode < x->nModes && pickup < x->nPickups) {
     x->gains[pickup][mode] = fmax(f, 0.0);
   }
@@ -383,7 +402,7 @@ void SDTResonator_setActiveModes(SDTResonator *x, unsigned int i) {
 void SDTResonator_applyForce(SDTResonator *x, unsigned int pickup, double f) {
   double fs[x->activeModes];
   int mode;
-  
+
   if (pickup < x->nPickups) {
     if (!isnormal(f)) f = 0.0;
     distributeForce(x, pickup, fs, f);
@@ -393,10 +412,11 @@ void SDTResonator_applyForce(SDTResonator *x, unsigned int pickup, double f) {
   }
 }
 
-double SDTResonator_computeEnergy(SDTResonator *x, unsigned int pickup, double f) {
+double SDTResonator_computeEnergy(SDTResonator *x, unsigned int pickup,
+                                  double f) {
   double out, fs[x->activeModes], p, v;
   int mode;
-  
+
   out = 0.0;
   if (pickup < x->nPickups) {
     if (!isnormal(f)) f = 0.0;
@@ -413,7 +433,7 @@ double SDTResonator_computeEnergy(SDTResonator *x, unsigned int pickup, double f
 void SDTResonator_dsp(SDTResonator *x) {
   double p;
   int mode;
-  
+
   for (mode = 0; mode < x->activeModes; mode++) {
     p = modalPosition(x, mode, x->f[mode]);
     x->v[mode] = modalVelocity(x, mode, p);
@@ -432,23 +452,26 @@ json_value *SDTResonator_toJSON(const SDTResonator *x) {
   json_value *w = json_array_new(0);
   json_value *g = json_array_new(0);
 
-  for (int n = 0; n < SDTResonator_getNModes(x) ; ++n) {
+  for (int n = 0; n < SDTResonator_getNModes(x); ++n) {
     json_array_push(f, json_double_new(SDTResonator_getFrequency(x, n)));
     json_array_push(d, json_double_new(SDTResonator_getDecay(x, n)));
     json_array_push(w, json_double_new(SDTResonator_getWeight(x, n)));
   }
 
-  for (int p = 0 ; p < SDTResonator_getNPickups(x); ++p) {
+  for (int p = 0; p < SDTResonator_getNPickups(x); ++p) {
     json_value *gp = json_array_new(0);
-    for (int n = 0 ; n < SDTResonator_getNModes(x); ++n)
+    for (int n = 0; n < SDTResonator_getNModes(x); ++n)
       json_array_push(gp, json_double_new(SDTResonator_getGain(x, p, n)));
     json_array_push(g, gp);
   }
 
   json_object_push(obj, "nModes", json_integer_new(SDTResonator_getNModes(x)));
-  json_object_push(obj, "nPickups", json_integer_new(SDTResonator_getNPickups(x)));
-  json_object_push(obj, "activeModes", json_integer_new(SDTResonator_getActiveModes(x)));
-  json_object_push(obj, "fragmentSize", json_double_new(SDTResonator_getFragmentSize(x)));
+  json_object_push(obj, "nPickups",
+                   json_integer_new(SDTResonator_getNPickups(x)));
+  json_object_push(obj, "activeModes",
+                   json_integer_new(SDTResonator_getActiveModes(x)));
+  json_object_push(obj, "fragmentSize",
+                   json_double_new(SDTResonator_getFragmentSize(x)));
   json_object_push(obj, "freqs", f);
   json_object_push(obj, "decays", d);
   json_object_push(obj, "weights", w);
@@ -458,23 +481,23 @@ json_value *SDTResonator_toJSON(const SDTResonator *x) {
 }
 
 SDTResonator *SDTResonator_fromJSON(const json_value *x) {
-  if (!x || x->type != json_object)
-    return 0;
+  if (!x || x->type != json_object) return 0;
 
   const json_value *v;
   unsigned int nModes, nPickups, activeModes;
 
   v = json_object_get_by_key(x, "nModes");
-  nModes = (unsigned int) (v && (v->type == json_integer))? v->u.integer : 0;
+  nModes = (unsigned int)(v && (v->type == json_integer)) ? v->u.integer : 0;
 
   v = json_object_get_by_key(x, "nPickups");
-  nPickups = (unsigned int) (v && (v->type == json_integer))? v->u.integer : 0;
+  nPickups = (unsigned int)(v && (v->type == json_integer)) ? v->u.integer : 0;
 
   v = json_object_get_by_key(x, "activeModes");
-  activeModes = (unsigned int) (v && (v->type == json_integer))? v->u.integer : 0;
+  activeModes =
+      (unsigned int)(v && (v->type == json_integer)) ? v->u.integer : 0;
 
   v = json_object_get_by_key(x, "fragmentSize");
-  double fragmentSize = (v && (v->type == json_double))? v->u.dbl : 1;
+  double fragmentSize = (v && (v->type == json_double)) ? v->u.dbl : 1;
 
   SDTResonator *res = SDTResonator_new(nModes, nPickups);
   SDTResonator_setActiveModes(res, activeModes);
@@ -483,7 +506,7 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
   const json_value *f = json_object_get_by_key(x, "freqs");
   const json_value *d = json_object_get_by_key(x, "decays");
   const json_value *w = json_object_get_by_key(x, "weights");
-  for (unsigned int m = 0 ; m < SDTResonator_getNModes(res) ; ++m) {
+  for (unsigned int m = 0; m < SDTResonator_getNModes(res); ++m) {
     SDTResonator_setFrequency(res, m, json_array_get_number(f, m, 0));
     SDTResonator_setDecay(res, m, json_array_get_number(d, m, 0));
     SDTResonator_setWeight(res, m, json_array_get_number(w, m, 0));
@@ -491,13 +514,13 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
 
   const json_value *g = json_object_get_by_key(x, "gains");
   if (g && g->type == json_array)
-    for (unsigned int p = 0 ; (p < g->u.array.length) && (p < SDTResonator_getNPickups(res)) ; ++p) {
+    for (unsigned int p = 0;
+         (p < g->u.array.length) && (p < SDTResonator_getNPickups(res)); ++p) {
       const json_value *gp = g->u.array.values[p];
       if (gp && gp->type == json_array)
-        for (unsigned int m = 0 ; m < SDTResonator_getNModes(res) ; ++m)
+        for (unsigned int m = 0; m < SDTResonator_getNModes(res); ++m)
           SDTResonator_setGain(res, p, m, json_array_get_number(gp, m, 0));
     }
-
 
   return res;
 }

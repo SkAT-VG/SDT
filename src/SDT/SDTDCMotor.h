@@ -1,5 +1,5 @@
-#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
+#include "SDTJSON.h"
 
 /** @file SDTDCMotor.h
 @defgroup dcmotor SDTDCMotor.h: Electric motors
@@ -14,7 +14,7 @@ Finally, rotation causes air movement and therefore turbulence noise,
 sometimes increased by the presence of a cooling fan attached to the rotor.
 
 The pitched tone of the rotor is obtained through additive synthesis,
-summing a fixed number of harmonic partials. Frequency modulation 
+summing a fixed number of harmonic partials. Frequency modulation
 simulates the unevenness in the rotation caused by attached loads.
 Resonances modes of the chassis are modeled through a comb filter.
 Aerodynamic turbulence caused by the spinning parts is synthesized
@@ -43,17 +43,17 @@ extern void SDTDCMotor_free(SDTDCMotor *x);
 
 #define SDT_DCMOTOR DCMotor
 #define SDT_DCMOTOR_NEW_ARGS 48000
-#define SDT_DCMOTOR_ATTRIBUTES(T, A) \
-A(T, maxSize, long, MaxSize, maxSize, integer, 48000)\
-A(T, coils, long, Coils, coils, integer, 2)\
-A(T, size, double, Size, size, double, 0.2)\
-A(T, reson, double, Reson, reson, double, 0.8)\
-A(T, gearRatio, double, GearRatio, gearRatio, double, 1.0)\
-A(T, harshness, double, Harshness, harshness, double, 0.5)\
-A(T, rotorGain, double, RotorGain, rotorGain, double, 0.5)\
-A(T, gearGain, double, GearGain, gearGain, double, 0.3)\
-A(T, brushGain, double, BrushGain, brushGain, double, 0.2)\
-A(T, airGain, double, AirGain, airGain, double, 0.0)
+#define SDT_DCMOTOR_ATTRIBUTES(T, A)                         \
+  A(T, maxSize, long, MaxSize, maxSize, integer, 48000)      \
+  A(T, coils, long, Coils, coils, integer, 2)                \
+  A(T, size, double, Size, size, double, 0.2)                \
+  A(T, reson, double, Reson, reson, double, 0.8)             \
+  A(T, gearRatio, double, GearRatio, gearRatio, double, 1.0) \
+  A(T, harshness, double, Harshness, harshness, double, 0.5) \
+  A(T, rotorGain, double, RotorGain, rotorGain, double, 0.5) \
+  A(T, gearGain, double, GearGain, gearGain, double, 0.3)    \
+  A(T, brushGain, double, BrushGain, brushGain, double, 0.2) \
+  A(T, airGain, double, AirGain, airGain, double, 0.0)
 
 SDT_TYPE_COPY_H(SDT_DCMOTOR)
 SDT_DEFINE_HASHMAP_H(SDT_DCMOTOR)
@@ -80,8 +80,8 @@ extern void SDTDCMotor_setLoad(SDTDCMotor *x, double f);
 extern void SDTDCMotor_setCoils(SDTDCMotor *x, long l);
 
 /** @brief Sets the size of the chassis.
-The maximum chassis size depends on the buffer length defined at construction time
-and on the current sampling rate.
+The maximum chassis size depends on the buffer length defined at construction
+time and on the current sampling rate.
 @param[in] f Chassis length, in m */
 extern void SDTDCMotor_setSize(SDTDCMotor *x, double f);
 

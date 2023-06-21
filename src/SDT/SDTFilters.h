@@ -1,5 +1,5 @@
-#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
+#include "SDTJSON.h"
 
 /** @file SDTFilters.h
 @defgroup filters SDTFilters.h: Audio filters
@@ -94,9 +94,9 @@ extern void SDTEnvelope_free(SDTEnvelope *x);
 
 #define SDT_ENVELOPE Envelope
 #define SDT_ENVELOPE_NEW_ARGS
-#define SDT_ENVELOPE_ATTRIBUTES(T, A) \
-A(T, attack, double, Attack, attack, double, 0.0) \
-A(T, release, double, Release, release, double, 0.0)
+#define SDT_ENVELOPE_ATTRIBUTES(T, A)               \
+  A(T, attack, double, Attack, attack, double, 0.0) \
+  A(T, release, double, Release, release, double, 0.0)
 
 SDT_TYPE_COPY_H(SDT_ENVELOPE)
 SDT_DEFINE_HASHMAP_H(SDT_ENVELOPE)
@@ -143,7 +143,8 @@ extern void SDTTwoPoles_lowpass(SDTTwoPoles *x, double fc);
 @param[in] fc Cutoff frequency, in Hz */
 extern void SDTTwoPoles_highpass(SDTTwoPoles *x, double fc);
 
-/** @brief Puts the filter in resonant bandpass mode, at the given center frequency and Q.
+/** @brief Puts the filter in resonant bandpass mode, at the given center
+frequency and Q.
 @param[in] fc Center frequency, in Hz
 @param[in] q Q factor, in 1/octave */
 extern void SDTTwoPoles_resonant(SDTTwoPoles *x, double fc, double q);
@@ -157,7 +158,8 @@ extern double SDTTwoPoles_dsp(SDTTwoPoles *x, double in);
 /** @} */
 
 /** @defgroup biquad Cascade of biquadratic sections
-Classic cascade of biquad sections, useful to implement a wide variety of filters.
+Classic cascade of biquad sections, useful to implement a wide variety of
+filters.
 @{ */
 
 /** @brief Opaque data structure for biquad cascade object. */
@@ -165,7 +167,8 @@ typedef struct SDTBiquad SDTBiquad;
 
 /** @brief Object constructor.
 @param[in] nSections Number of sections in the cascade.
-The order of the resulting filter is twice this value (i.e. nSections = 4 -> order = 8).
+The order of the resulting filter is twice this value (i.e. nSections = 4 ->
+order = 8).
 @return Pointer to the new instance */
 extern SDTBiquad *SDTBiquad_new(int nSections);
 
@@ -190,7 +193,6 @@ extern void SDTBiquad_butterworthLP(SDTBiquad *x, double fc);
 @param[in] fc Cutoff frequency, in Hz */
 extern void SDTBiquad_butterworthHP(SDTBiquad *x, double fc);
 
-
 extern void SDTBiquad_butterworthAP(SDTBiquad *x, double fc);
 
 /** @brief Designs the lowpass part of a Linkwitz-Riley crossover filter,
@@ -214,7 +216,8 @@ extern double SDTBiquad_dsp(SDTBiquad *x, double in);
 /** @} */
 
 /** @defgroup average Moving average
-Moving average filter, producing as output the average of the last input samples.
+Moving average filter, producing as output the average of the last input
+samples.
 @{ */
 
 /** @brief Opaque data structure for a moving average filter object. */
@@ -249,7 +252,8 @@ Delay line, supporting fractional and time-varying delay lengths.
 typedef struct SDTDelay SDTDelay;
 
 /** @brief Object constructor.
-@param[in] maxDelay Buffer size, determining the maximum delay length, in samples
+@param[in] maxDelay Buffer size, determining the maximum delay length, in
+samples
 @return Pointer to the new instance */
 extern SDTDelay *SDTDelay_new(long maxDelay);
 
@@ -278,13 +282,13 @@ extern double SDTDelay_dsp(SDTDelay *x, double in);
 /** @} */
 
 /** @defgroup comb Comb filter
-Comb filter, obtained adding to the input signal a rescaled and delayed copy of itself.
-The filter works both in feed forward (delayed copy added to the output) and feedback
-(delayed copy added to the input, causing a loop) configurations, with independent
-gains and delay times.
+Comb filter, obtained adding to the input signal a rescaled and delayed copy of
+itself. The filter works both in feed forward (delayed copy added to the output)
+and feedback (delayed copy added to the input, causing a loop) configurations,
+with independent gains and delay times.
 @{ */
 
-/** @brief Opaque data structure representing a comb filter object. */ 
+/** @brief Opaque data structure representing a comb filter object. */
 typedef struct SDTComb SDTComb;
 
 /** @brief Object constructor.

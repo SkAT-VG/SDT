@@ -1,5 +1,5 @@
-#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
+#include "SDTJSON.h"
 
 /** @file SDTEffects.h
 @defgroup effects SDTEffects.h: Digital audio effects
@@ -16,7 +16,8 @@ extern "C" {
 /** @defgroup reverb Reverb
 Artificial reverberator based on Feedback Delay Networks, as found in
 D. Rocchesso, "Maximally diffusive yet efficient feedback delay networks
-for artificial reverberation", Signal Processing Letters, IEEE 4.9 (1997): 252-255.
+for artificial reverberation", Signal Processing Letters, IEEE 4.9 (1997):
+252-255.
 @{ */
 
 /** @brief Opaque data structure for a reverberator object. */
@@ -33,14 +34,14 @@ extern void SDTReverb_free(SDTReverb *x);
 
 #define SDT_REVERB Reverb
 #define SDT_REVERB_NEW_ARGS 44100
-#define SDT_REVERB_ATTRIBUTES(T, A) \
-A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100) \
-A(T, xSize, double, XSize, xSize, double, 4.0) \
-A(T, ySize, double, YSize, ySize, double, 5.0) \
-A(T, zSize, double, ZSize, zSize, double, 3.0) \
-A(T, randomness, double, Randomness, randomness, double, 0) \
-A(T, time, double, Time, time, double, 4.0) \
-A(T, time1k, double, Time1k, time1k, double, 3.6)
+#define SDT_REVERB_ATTRIBUTES(T, A)                           \
+  A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100)    \
+  A(T, xSize, double, XSize, xSize, double, 4.0)              \
+  A(T, ySize, double, YSize, ySize, double, 5.0)              \
+  A(T, zSize, double, ZSize, zSize, double, 3.0)              \
+  A(T, randomness, double, Randomness, randomness, double, 0) \
+  A(T, time, double, Time, time, double, 4.0)                 \
+  A(T, time1k, double, Time1k, time1k, double, 3.6)
 
 SDT_TYPE_COPY_H(SDT_REVERB)
 SDT_DEFINE_HASHMAP_H(SDT_REVERB)
@@ -63,7 +64,8 @@ extern void SDTReverb_setYSize(SDTReverb *x, double f);
 extern void SDTReverb_setZSize(SDTReverb *x, double f);
 
 /** @brief Sets how randomly distributed are the resonant modes.
-This parameter is directly proportional to the irregularity of the shape of the room.
+This parameter is directly proportional to the irregularity of the shape of the
+room.
 @param[in] f Randomness in the modal distribution [0, 1] */
 extern void SDTReverb_setRandomness(SDTReverb *x, double f);
 
@@ -107,11 +109,11 @@ extern void SDTPitchShift_free(SDTPitchShift *x);
 
 #define SDT_PITCHSHIFT PitchShift
 #define SDT_PITCHSHIFT_NEW_ARGS 2048, 4
-#define SDT_PITCHSHIFT_ATTRIBUTES(T, A) \
-A(T, size, int, Size, size, integer, 2048)  \
-A(T, oversample, int, Oversample, oversample, integer, 4)  \
-A(T, ratio, double, Ratio, ratio, double, 1.0) \
-A(T, overlap, double, Overlap, overlap, double, 0.75)
+#define SDT_PITCHSHIFT_ATTRIBUTES(T, A)                     \
+  A(T, size, int, Size, size, integer, 2048)                \
+  A(T, oversample, int, Oversample, oversample, integer, 4) \
+  A(T, ratio, double, Ratio, ratio, double, 1.0)            \
+  A(T, overlap, double, Overlap, overlap, double, 0.75)
 
 SDT_TYPE_COPY_H(SDT_PITCHSHIFT)
 SDT_DEFINE_HASHMAP_H(SDT_PITCHSHIFT)

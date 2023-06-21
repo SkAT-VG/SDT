@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *crumpling_class;
@@ -33,7 +33,7 @@ t_int *crumpling_perform(t_int *w) {
   t_float *out1 = (t_float *)(w[3]);
   int n = (int)w[4];
   double tmpOuts[2];
-  
+
   while (n--) {
     SDTCrumpling_dsp(x->crumpling, tmpOuts);
     *out0++ = (t_float)tmpOuts[0];
@@ -66,11 +66,16 @@ void crumpling_free(t_crumpling *x) {
   outlet_free(x->out1);
 }
 
-void crumpling_tilde_setup(void) {	
-  crumpling_class = class_new(gensym("crumpling~"), (t_newmethod)crumpling_new, (t_method)crumpling_free,
-                           (long)sizeof(t_crumpling), CLASS_DEFAULT, A_GIMME, 0);
-  class_addmethod(crumpling_class, (t_method)crumpling_crushingEnergy, gensym("crushingEnergy"), A_FLOAT, 0);
-  class_addmethod(crumpling_class, (t_method)crumpling_granularity, gensym("granularity"), A_FLOAT, 0);
-  class_addmethod(crumpling_class, (t_method)crumpling_fragmentation, gensym("fragmentation"), A_FLOAT, 0);
+void crumpling_tilde_setup(void) {
+  crumpling_class =
+      class_new(gensym("crumpling~"), (t_newmethod)crumpling_new,
+                (t_method)crumpling_free, (long)sizeof(t_crumpling),
+                CLASS_DEFAULT, A_GIMME, 0);
+  class_addmethod(crumpling_class, (t_method)crumpling_crushingEnergy,
+                  gensym("crushingEnergy"), A_FLOAT, 0);
+  class_addmethod(crumpling_class, (t_method)crumpling_granularity,
+                  gensym("granularity"), A_FLOAT, 0);
+  class_addmethod(crumpling_class, (t_method)crumpling_fragmentation,
+                  gensym("fragmentation"), A_FLOAT, 0);
   class_addmethod(crumpling_class, (t_method)crumpling_dsp, gensym("dsp"), 0);
 }

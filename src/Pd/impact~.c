@@ -1,9 +1,9 @@
-#include "m_pd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "m_pd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *impact_class;
@@ -24,12 +24,10 @@ void impact_stiffness(t_impact *x, t_float f) {
 }
 
 void impact_dissipation(t_impact *x, t_float f) {
-    SDTImpact_setDissipation(x->impact, f);
+  SDTImpact_setDissipation(x->impact, f);
 }
 
-void impact_shape(t_impact *x, t_float f) {
-    SDTImpact_setShape(x->impact, f);
-}
+void impact_shape(t_impact *x, t_float f) { SDTImpact_setShape(x->impact, f); }
 
 void impact_contact0(t_impact *x, t_float f) {
   SDTInteractor_setFirstPoint(x->impact, f);
@@ -50,9 +48,10 @@ t_int *impact_perform(t_int *w) {
   int n = (int)w[8];
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
-  
+
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
+    SDTInteractor_dsp(x->impact, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++,
+                      tmpOuts);
     for (i = 0; i < x->nOuts; i++) {
       x->outBuffers[i][k] = (t_float)tmpOuts[i];
     }
@@ -62,10 +61,10 @@ t_int *impact_perform(t_int *w) {
 
 void impact_dsp(t_impact *x, t_signal **sp) {
   int i;
-  
+
   SDT_setSampleRate(sp[0]->s_sr);
   for (i = 0; i < x->nOuts; i++) {
-    x->outBuffers[i] = sp[6+i]->s_vec;
+    x->outBuffers[i] = sp[6 + i]->s_vec;
   }
   dsp_add(impact_perform, 8, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
           sp[3]->s_vec, sp[4]->s_vec, sp[5]->s_vec, sp[0]->s_n);
@@ -74,11 +73,14 @@ void impact_dsp(t_impact *x, t_signal **sp) {
 void *impact_new(t_symbol *s, long argc, t_atom *argv) {
   t_impact *x;
   int i;
-  
-  if (argc < 3 || argv[0].a_type != A_SYMBOL || argv[1].a_type != A_SYMBOL || argv[2].a_type != A_FLOAT) {
-    error("sdt.impact~: Please provide the id of the first resonator as first argument, "
-          "the id of the second resonator as second argument "
-          "and the number of available outlets as third argument.");
+
+  if (argc < 3 || argv[0].a_type != A_SYMBOL || argv[1].a_type != A_SYMBOL ||
+      argv[2].a_type != A_FLOAT) {
+    error(
+        "sdt.impact~: Please provide the id of the first resonator as first "
+        "argument, "
+        "the id of the second resonator as second argument "
+        "and the number of available outlets as third argument.");
     return NULL;
   }
   x = (t_impact *)pd_new(impact_class);
@@ -86,7 +88,9 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
   x->key0 = (char *)(atom_getsymbol(argv)->s_name);
   x->key1 = (char *)(atom_getsymbol(argv + 1)->s_name);
   if (SDT_registerInteractor(x->impact, x->key0, x->key1)) {
-    error("sdt.impact~: Error registering the interaction. Probably a duplicate id?");
+    error(
+        "sdt.impact~: Error registering the interaction. Probably a duplicate "
+        "id?");
     SDTImpact_free(x->impact);
     return NULL;
   }
@@ -98,7 +102,7 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
   x->nOuts = atom_getint(argv + 2);
   x->outs = (t_outlet **)getbytes(x->nOuts * sizeof(t_outlet *));
   x->outBuffers = (t_float **)getbytes(x->nOuts * sizeof(t_float *));
-  for (i = 0; i < x->nOuts; i++) { 
+  for (i = 0; i < x->nOuts; i++) {
     x->outs[i] = outlet_new(&x->obj, gensym("signal"));
   }
   return x;
@@ -106,7 +110,7 @@ void *impact_new(t_symbol *s, long argc, t_atom *argv) {
 
 void impact_free(t_impact *x) {
   int i;
-  
+
   SDT_unregisterInteractor(x->key0, x->key1);
   SDTImpact_free(x->impact);
   inlet_free(x->in1);
@@ -121,14 +125,20 @@ void impact_free(t_impact *x) {
   freebytes(x->outBuffers, x->nOuts * sizeof(t_float *));
 }
 
-void impact_tilde_setup(void) {	
-  impact_class = class_new(gensym("impact~"), (t_newmethod)impact_new, (t_method)impact_free,
-                           (long)sizeof(t_impact), CLASS_DEFAULT, A_GIMME, 0);
+void impact_tilde_setup(void) {
+  impact_class = class_new(gensym("impact~"), (t_newmethod)impact_new,
+                           (t_method)impact_free, (long)sizeof(t_impact),
+                           CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(impact_class, t_impact, f);
-  class_addmethod(impact_class, (t_method)impact_stiffness, gensym("stiffness"), A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_dissipation, gensym("dissipation"), A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_shape, gensym("shape"), A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_contact0, gensym("contact0"), A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_contact1, gensym("contact1"), A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_stiffness, gensym("stiffness"),
+                  A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_dissipation,
+                  gensym("dissipation"), A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_shape, gensym("shape"),
+                  A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_contact0, gensym("contact0"),
+                  A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_contact1, gensym("contact1"),
+                  A_FLOAT, 0);
   class_addmethod(impact_class, (t_method)impact_dsp, gensym("dsp"), 0);
 }

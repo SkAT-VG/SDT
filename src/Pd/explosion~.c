@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *explosion_class;
@@ -39,11 +39,9 @@ void explosion_windSpeed(t_explosion *x, t_float f) {
   SDTExplosion_setWindSpeed(x->explosion, f);
 }
 
-void explosion_update(t_explosion *x) {
-  SDTExplosion_update(x->explosion);
-}
+void explosion_update(t_explosion *x) { SDTExplosion_update(x->explosion); }
 
-static t_int *explosion_perform(t_int *w) { 
+static t_int *explosion_perform(t_int *w) {
   t_explosion *x = (t_explosion *)(w[1]);
   t_float *out0 = (t_float *)(w[2]);
   t_float *out1 = (t_float *)(w[3]);
@@ -54,7 +52,7 @@ static t_int *explosion_perform(t_int *w) {
     *out0++ = tmpOuts[0];
     *out1++ = tmpOuts[1];
   }
-  return (w+5);
+  return (w + 5);
 }
 
 static void explosion_dsp(t_explosion *x, t_signal **sp) {
@@ -85,13 +83,22 @@ static void explosion_free(t_explosion *x) {
 }
 
 void explosion_tilde_setup(void) {
-  explosion_class = class_new(gensym("explosion~"), (t_newmethod)explosion_new, (t_method)explosion_free, sizeof(t_explosion), CLASS_DEFAULT, A_GIMME, 0);
-  class_addmethod(explosion_class, (t_method)explosion_update, gensym("bang"), 0);
-  class_addmethod(explosion_class, (t_method)explosion_blastTime, gensym("blastTime"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_scatterTime, gensym("scatterTime"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_dispersion, gensym("dispersion"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_distance, gensym("distance"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_waveSpeed, gensym("waveSpeed"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_windSpeed, gensym("windSpeed"), A_FLOAT, 0);
+  explosion_class = class_new(gensym("explosion~"), (t_newmethod)explosion_new,
+                              (t_method)explosion_free, sizeof(t_explosion),
+                              CLASS_DEFAULT, A_GIMME, 0);
+  class_addmethod(explosion_class, (t_method)explosion_update, gensym("bang"),
+                  0);
+  class_addmethod(explosion_class, (t_method)explosion_blastTime,
+                  gensym("blastTime"), A_FLOAT, 0);
+  class_addmethod(explosion_class, (t_method)explosion_scatterTime,
+                  gensym("scatterTime"), A_FLOAT, 0);
+  class_addmethod(explosion_class, (t_method)explosion_dispersion,
+                  gensym("dispersion"), A_FLOAT, 0);
+  class_addmethod(explosion_class, (t_method)explosion_distance,
+                  gensym("distance"), A_FLOAT, 0);
+  class_addmethod(explosion_class, (t_method)explosion_waveSpeed,
+                  gensym("waveSpeed"), A_FLOAT, 0);
+  class_addmethod(explosion_class, (t_method)explosion_windSpeed,
+                  gensym("windSpeed"), A_FLOAT, 0);
   class_addmethod(explosion_class, (t_method)explosion_dsp, gensym("dsp"), 0);
 }

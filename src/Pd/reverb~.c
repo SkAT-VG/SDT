@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *reverb_class;
@@ -51,7 +51,7 @@ static t_int *reverb_perform(t_int *w) {
   t_float *in = (t_float *)(w[2]);
   t_float *out = (t_float *)(w[3]);
   int n = (int)w[4];
-	
+
   while (n--) {
     *out++ = (float)SDTReverb_dsp(x->reverb, *in++);
   }
@@ -83,14 +83,22 @@ static void reverb_free(t_reverb *x) {
   SDT_PD_FREE(Reverb, reverb)
 }
 
-void reverb_tilde_setup(void) {	
-  reverb_class = class_new(gensym("reverb~"), (t_newmethod)reverb_new, (t_method)reverb_free, sizeof(t_reverb), CLASS_DEFAULT, A_GIMME, 0);
+void reverb_tilde_setup(void) {
+  reverb_class = class_new(gensym("reverb~"), (t_newmethod)reverb_new,
+                           (t_method)reverb_free, sizeof(t_reverb),
+                           CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(reverb_class, t_reverb, f);
-  class_addmethod(reverb_class, (t_method)reverb_xSize, gensym("xSize"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_ySize, gensym("ySize"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_zSize, gensym("zSize"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_randomness, gensym("randomness"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_time, gensym("time"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_time1k, gensym("time1k"), A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_xSize, gensym("xSize"),
+                  A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_ySize, gensym("ySize"),
+                  A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_zSize, gensym("zSize"),
+                  A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_randomness,
+                  gensym("randomness"), A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_time, gensym("time"), A_FLOAT,
+                  0);
+  class_addmethod(reverb_class, (t_method)reverb_time1k, gensym("time1k"),
+                  A_FLOAT, 0);
   class_addmethod(reverb_class, (t_method)reverb_dsp, gensym("dsp"), 0);
 }

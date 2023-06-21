@@ -1,9 +1,9 @@
-#include "m_pd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "m_pd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *friction_class;
@@ -40,19 +40,19 @@ void friction_stiffness(t_friction *x, t_float f) {
 }
 
 void friction_dissipation(t_friction *x, t_float f) {
-    SDTFriction_setDissipation(x->friction, f);
+  SDTFriction_setDissipation(x->friction, f);
 }
 
 void friction_viscosity(t_friction *x, t_float f) {
-    SDTFriction_setViscosity(x->friction, f);
+  SDTFriction_setViscosity(x->friction, f);
 }
 
 void friction_noisiness(t_friction *x, t_float f) {
-    SDTFriction_setNoisiness(x->friction, f);
+  SDTFriction_setNoisiness(x->friction, f);
 }
 
 void friction_breakAway(t_friction *x, t_float f) {
-    SDTFriction_setBreakAway(x->friction, f);
+  SDTFriction_setBreakAway(x->friction, f);
 }
 
 void friction_contact0(t_friction *x, t_float f) {
@@ -74,9 +74,10 @@ t_int *friction_perform(t_int *w) {
   int n = (int)w[8];
   double tmpOuts[2 * SDT_MAX_PICKUPS];
   int i, k;
-  
+
   for (k = 0; k < n; k++) {
-    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++, *in5++, tmpOuts);
+    SDTInteractor_dsp(x->friction, *in0++, *in1++, *in2++, *in3++, *in4++,
+                      *in5++, tmpOuts);
     for (i = 0; i < x->nOuts; i++) {
       x->outBuffers[i][k] = (t_float)tmpOuts[i];
     }
@@ -86,10 +87,10 @@ t_int *friction_perform(t_int *w) {
 
 void friction_dsp(t_friction *x, t_signal **sp) {
   int i;
-  
+
   SDT_setSampleRate(sp[0]->s_sr);
   for (i = 0; i < x->nOuts; i++) {
-    x->outBuffers[i] = sp[6+i]->s_vec;
+    x->outBuffers[i] = sp[6 + i]->s_vec;
   }
   dsp_add(friction_perform, 8, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
           sp[3]->s_vec, sp[4]->s_vec, sp[5]->s_vec, sp[0]->s_n);
@@ -98,11 +99,14 @@ void friction_dsp(t_friction *x, t_signal **sp) {
 void *friction_new(t_symbol *s, long argc, t_atom *argv) {
   t_friction *x;
   int i;
-  
-  if (argc < 3 || argv[0].a_type != A_SYMBOL || argv[1].a_type != A_SYMBOL || argv[2].a_type != A_FLOAT) {
-    error("sdt.friction~: Please provide the id of the first resonator as first argument, "
-          "the id of the second resonator as second argument "
-          "and the number of available outlets as third argument.");
+
+  if (argc < 3 || argv[0].a_type != A_SYMBOL || argv[1].a_type != A_SYMBOL ||
+      argv[2].a_type != A_FLOAT) {
+    error(
+        "sdt.friction~: Please provide the id of the first resonator as first "
+        "argument, "
+        "the id of the second resonator as second argument "
+        "and the number of available outlets as third argument.");
     return NULL;
   }
   x = (t_friction *)pd_new(friction_class);
@@ -110,7 +114,9 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
   x->key0 = (char *)(atom_getsymbol(argv)->s_name);
   x->key1 = (char *)(atom_getsymbol(argv + 1)->s_name);
   if (SDT_registerInteractor(x->friction, x->key0, x->key1)) {
-    error("sdt.friction~: Error registering the interaction. Probably a duplicate id?");
+    error(
+        "sdt.friction~: Error registering the interaction. Probably a "
+        "duplicate id?");
     SDTFriction_free(x->friction);
     return NULL;
   }
@@ -122,7 +128,7 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
   x->nOuts = atom_getint(argv + 2);
   x->outs = (t_outlet **)getbytes(x->nOuts * sizeof(t_outlet *));
   x->outBuffers = (t_float **)getbytes(x->nOuts * sizeof(t_float *));
-  for (i = 0; i < x->nOuts; i++) { 
+  for (i = 0; i < x->nOuts; i++) {
     x->outs[i] = outlet_new(&x->obj, gensym("signal"));
   }
   return x;
@@ -130,7 +136,7 @@ void *friction_new(t_symbol *s, long argc, t_atom *argv) {
 
 void friction_free(t_friction *x) {
   int i;
-  
+
   SDT_unregisterInteractor(x->key0, x->key1);
   SDTFriction_free(x->friction);
   inlet_free(x->in1);
@@ -145,20 +151,32 @@ void friction_free(t_friction *x) {
   freebytes(x->outBuffers, x->nOuts * sizeof(t_float *));
 }
 
-void friction_tilde_setup(void) {	
-  friction_class = class_new(gensym("friction~"), (t_newmethod)friction_new, (t_method)friction_free,
-                           (long)sizeof(t_friction), CLASS_DEFAULT, A_GIMME, 0);
+void friction_tilde_setup(void) {
+  friction_class = class_new(gensym("friction~"), (t_newmethod)friction_new,
+                             (t_method)friction_free, (long)sizeof(t_friction),
+                             CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(friction_class, t_friction, f);
-  class_addmethod(friction_class, (t_method)friction_force, gensym("force"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_stribeck, gensym("stribeck"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_kStatic, gensym("kStatic"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_kDynamic, gensym("kDynamic"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_stiffness, gensym("stiffness"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_dissipation, gensym("dissipation"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_viscosity, gensym("viscosity"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_noisiness, gensym("noisiness"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_breakAway, gensym("breakAway"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_contact0, gensym("contact0"), A_FLOAT, 0);
-  class_addmethod(friction_class, (t_method)friction_contact1, gensym("contact1"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_force, gensym("force"),
+                  A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_stribeck,
+                  gensym("stribeck"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_kStatic, gensym("kStatic"),
+                  A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_kDynamic,
+                  gensym("kDynamic"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_stiffness,
+                  gensym("stiffness"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_dissipation,
+                  gensym("dissipation"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_viscosity,
+                  gensym("viscosity"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_noisiness,
+                  gensym("noisiness"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_breakAway,
+                  gensym("breakAway"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_contact0,
+                  gensym("contact0"), A_FLOAT, 0);
+  class_addmethod(friction_class, (t_method)friction_contact1,
+                  gensym("contact1"), A_FLOAT, 0);
   class_addmethod(friction_class, (t_method)friction_dsp, gensym("dsp"), 0);
 }

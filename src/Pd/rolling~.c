@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *rolling_class;
@@ -37,7 +37,7 @@ t_int *rolling_perform(t_int *w) {
   t_float *in = (t_float *)(w[2]);
   t_float *out = (t_float *)(w[3]);
   int n = (int)w[4];
-  
+
   while (n--) {
     *out++ = (t_float)SDTRolling_dsp(x->rolling, *in++);
   }
@@ -66,13 +66,18 @@ void rolling_free(t_rolling *x) {
   outlet_free(x->out);
 }
 
-void rolling_tilde_setup(void) {	
-  rolling_class = class_new(gensym("rolling~"), (t_newmethod)rolling_new, (t_method)rolling_free,
-                           (long)sizeof(t_rolling), CLASS_DEFAULT, A_GIMME, 0);
+void rolling_tilde_setup(void) {
+  rolling_class = class_new(gensym("rolling~"), (t_newmethod)rolling_new,
+                            (t_method)rolling_free, (long)sizeof(t_rolling),
+                            CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(rolling_class, t_rolling, f);
-  class_addmethod(rolling_class, (t_method)rolling_grain, gensym("grain"), A_FLOAT, 0);
-  class_addmethod(rolling_class, (t_method)rolling_depth, gensym("depth"), A_FLOAT, 0);
-  class_addmethod(rolling_class, (t_method)rolling_mass, gensym("mass"), A_FLOAT, 0);
-  class_addmethod(rolling_class, (t_method)rolling_velocity, gensym("velocity"), A_FLOAT, 0);
+  class_addmethod(rolling_class, (t_method)rolling_grain, gensym("grain"),
+                  A_FLOAT, 0);
+  class_addmethod(rolling_class, (t_method)rolling_depth, gensym("depth"),
+                  A_FLOAT, 0);
+  class_addmethod(rolling_class, (t_method)rolling_mass, gensym("mass"),
+                  A_FLOAT, 0);
+  class_addmethod(rolling_class, (t_method)rolling_velocity, gensym("velocity"),
+                  A_FLOAT, 0);
   class_addmethod(rolling_class, (t_method)rolling_dsp, gensym("dsp"), 0);
 }

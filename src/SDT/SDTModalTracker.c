@@ -1,11 +1,11 @@
+#include "SDTModalTracker.h"
 #include <math.h>
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
-#include "SDTModalTracker.h"
 #include "SDTStructs.h"
 
 typedef struct SDTMode {
@@ -40,7 +40,8 @@ struct SDTModalTracker {
   long nSamples, nModes, bufferSize, winSize, fftSize, skip;
 };
 
-SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize, long winSize) {
+SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize,
+                                     long winSize) {
   SDTModalTracker *x;
   long fftSize;
 
@@ -76,8 +77,7 @@ void SDTModalTracker_free(SDTModalTracker *x) {
 
 void SDTModalTracker_setNModes(SDTModalTracker *x, long f) {
   for (unsigned int i = 0; i < x->nModes; ++i)
-    if (x->modes[i])
-      SDTMode_free(x->modes[i]);
+    if (x->modes[i]) SDTMode_free(x->modes[i]);
   free(x->modes);
   x->nModes = f;
   x->modes = (SDTMode **)calloc(x->nModes, sizeof(SDTMode *));
@@ -111,12 +111,14 @@ SDT_JSON_SERIALIZE(SDT_MODALTRACKER)
 SDT_JSON_DESERIALIZE(SDT_MODALTRACKER)
 
 double SDTModalTracker_getOverlap(const SDTModalTracker *x) {
-  return 1 - ((double) x->skip) / x->winSize;
+  return 1 - ((double)x->skip) / x->winSize;
 }
 
 long SDTModalTracker_getNModes(const SDTModalTracker *x) { return x->nModes; }
 
-long SDTModalTracker_getBufferSize(const SDTModalTracker *x) { return x->bufferSize; }
+long SDTModalTracker_getBufferSize(const SDTModalTracker *x) {
+  return x->bufferSize;
+}
 
 long SDTModalTracker_getWinSize(const SDTModalTracker *x) { return x->winSize; }
 
@@ -126,7 +128,7 @@ void SDTModalTracker_setOverlap(SDTModalTracker *x, double f) {
 
 long SDTModalTracker_readSamples(SDTModalTracker *x, double *in, long n) {
   long start, end, span;
-  
+
   start = x->nSamples;
   end = SDT_clip(start + n, start, x->bufferSize);
   if (start == end) return 0;
@@ -152,15 +154,18 @@ void SDTModalTracker_update(SDTModalTracker *x) {
   SDTMode *mode;
   double *mags, *peaks, *currMags, *currPeaks, *prevPeaks;
   long frameIndex, binIndex, peakIndex, modeIndex, nSamples, nFrames, imgSize;
-  
-  nSamples = x->nSamples < x->bufferSize - x->winSize ? x->nSamples : x->bufferSize - x->winSize;
+
+  nSamples = x->nSamples < x->bufferSize - x->winSize
+                 ? x->nSamples
+                 : x->bufferSize - x->winSize;
   nFrames = ceil(nSamples / x->skip);
   imgSize = nFrames * x->fftSize;
   mags = (double *)calloc(imgSize, sizeof(double));
   peaks = (double *)calloc(imgSize, sizeof(double));
   prevPeaks = peaks;
   for (frameIndex = 0; frameIndex < nFrames; frameIndex++) {
-    memcpy(x->window, &x->buffer[frameIndex * x->skip], x->winSize * sizeof(double));
+    memcpy(x->window, &x->buffer[frameIndex * x->skip],
+           x->winSize * sizeof(double));
     SDT_hanning(x->window, x->winSize);
     SDTFFT_fftr(x->fftPlan, x->window, x->fft);
     currMags = &mags[frameIndex * x->fftSize];
@@ -170,7 +175,8 @@ void SDTModalTracker_update(SDTModalTracker *x) {
     currPeaks = &peaks[frameIndex * x->fftSize];
     for (binIndex = 2; binIndex < x->fftSize - 2; binIndex++) {
       if (SDT_isPeak(currMags, binIndex, 2)) {
-        currPeaks[binIndex] = SDT_max(&prevPeaks[binIndex - 1], 3) + currMags[binIndex];
+        currPeaks[binIndex] =
+            SDT_max(&prevPeaks[binIndex - 1], 3) + currMags[binIndex];
       }
     }
     prevPeaks = currPeaks;
@@ -187,7 +193,8 @@ void SDTModalTracker_update(SDTModalTracker *x) {
       currMags = &mags[frameIndex * x->fftSize];
       currPeaks = &peaks[frameIndex * x->fftSize];
       mode->mags[frameIndex] = SDT_truePeakValue(currMags, binIndex);
-      mode->freqs[frameIndex] = SDT_truePeakPos(currMags, binIndex) / x->winSize * SDT_sampleRate;
+      mode->freqs[frameIndex] =
+          SDT_truePeakPos(currMags, binIndex) / x->winSize * SDT_sampleRate;
       mode->start = frameIndex;
       peaks[peakIndex] = 0;
       peakIndex -= x->fftSize + 1;
@@ -200,7 +207,8 @@ void SDTModalTracker_update(SDTModalTracker *x) {
   free(peaks);
 }
 
-void SDTModalTracker_static(SDTModalTracker *x, double *mags, double *freqs, double *decays) {
+void SDTModalTracker_static(SDTModalTracker *x, double *mags, double *freqs,
+                            double *decays) {
   SDTMode *mode;
   long modeIndex, modeSize;
   double *modeMags, *modeFreqs;
@@ -217,7 +225,8 @@ void SDTModalTracker_static(SDTModalTracker *x, double *mags, double *freqs, dou
   }
 }
 
-void SDTModalTracker_dynamic(SDTModalTracker *x, double time, double *mags, double *freqs) {
+void SDTModalTracker_dynamic(SDTModalTracker *x, double time, double *mags,
+                             double *freqs) {
   SDTMode *mode;
   long modeIndex, frameOffset, prevIndex, nextIndex;
   double frameTime, alpha, beta, prevMag, nextMag, prevFreq, nextFreq;
@@ -236,9 +245,13 @@ void SDTModalTracker_dynamic(SDTModalTracker *x, double time, double *mags, doub
     if (!mode) continue;
     prevIndex = floor(frameTime) + frameOffset;
     nextIndex = prevIndex + 1;
-    prevMag = prevIndex >= mode->start && prevIndex < mode->end ? mode->mags[prevIndex] : 0;
+    prevMag = prevIndex >= mode->start && prevIndex < mode->end
+                  ? mode->mags[prevIndex]
+                  : 0;
     prevFreq = mode->freqs[SDT_clip(prevIndex, mode->start, mode->end - 1)];
-    nextMag = nextIndex >= mode->start && nextIndex < mode->end ? mode->mags[nextIndex] : 0;
+    nextMag = nextIndex >= mode->start && nextIndex < mode->end
+                  ? mode->mags[nextIndex]
+                  : 0;
     nextFreq = mode->freqs[SDT_clip(nextIndex, mode->start, mode->end - 1)];
     mags[modeIndex] = prevMag * alpha + nextMag * beta;
     freqs[modeIndex] = prevFreq * alpha + nextFreq * beta;

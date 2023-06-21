@@ -1,23 +1,22 @@
+#include "SDTDCMotor.h"
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
-#include "SDTDCMotor.h"
 #include "SDTStructs.h"
 
 struct SDTDCMotor {
   SDTComb *chassis;
   SDTTwoPoles *brushFilter, *airFilter;
-  double rpm, load, size, reson, gearRatio, harshness,
-         rotorGain, gearGain, brushGain, airGain,
-         revPhase, rotorPhase, gearPhase;
+  double rpm, load, size, reson, gearRatio, harshness, rotorGain, gearGain,
+      brushGain, airGain, revPhase, rotorPhase, gearPhase;
   long coils;
 };
 
 SDTDCMotor *SDTDCMotor_new(long maxSize) {
   SDTDCMotor *x;
-  
+
   x = (SDTDCMotor *)malloc(sizeof(SDTDCMotor));
   x->chassis = SDTComb_new(maxSize, maxSize);
   x->brushFilter = SDTTwoPoles_new();
@@ -84,17 +83,13 @@ void SDTDCMotor_setFilters(SDTDCMotor *x) {
   SDTTwoPoles_resonant(x->airFilter, 800.0, 1.0);
 }
 
-void SDTDCMotor_setRpm(SDTDCMotor *x, double f) {
-  x->rpm = fmax(0.0, f);
-}
+void SDTDCMotor_setRpm(SDTDCMotor *x, double f) { x->rpm = fmax(0.0, f); }
 
 void SDTDCMotor_setLoad(SDTDCMotor *x, double f) {
   x->load = SDT_fclip(f, 0.0, 1.0);
 }
 
-void SDTDCMotor_setCoils(SDTDCMotor *x, long l) {
-  x->coils = l > 2 ? l : 2;
-}
+void SDTDCMotor_setCoils(SDTDCMotor *x, long l) { x->coils = l > 2 ? l : 2; }
 
 void SDTDCMotor_setSize(SDTDCMotor *x, double f) {
   x->size = fmax(f, 0.0);
@@ -131,15 +126,15 @@ void SDTDCMotor_setAirGain(SDTDCMotor *x, double f) {
 }
 
 double SDTDCMotor_dsp(SDTDCMotor *x) {
-  double revStep, rotorStep, gearStep,
-         rotor, gears, brushes, air,
-         partPhase, partGain, totGain, outGain;
+  double revStep, rotorStep, gearStep, rotor, gears, brushes, air, partPhase,
+      partGain, totGain, outGain;
   int i;
-  
+
   revStep = SDT_timeStep * x->rpm / 60.0;
   x->revPhase += revStep;
   x->revPhase -= (int)x->revPhase;
-  rotorStep = revStep * x->coils * (1.0 + x->load * cos(SDT_TWOPI * x->revPhase));
+  rotorStep =
+      revStep * x->coils * (1.0 + x->load * cos(SDT_TWOPI * x->revPhase));
   x->rotorPhase += rotorStep;
   x->rotorPhase -= (int)x->rotorPhase;
   gearStep = rotorStep * x->gearRatio;
@@ -165,6 +160,7 @@ double SDTDCMotor_dsp(SDTDCMotor *x) {
   gears *= x->gearGain;
   brushes *= x->brushGain;
   air *= x->airGain;
-  outGain = (1.0 - x->reson) * SDT_fclip(0.005 * rotorStep * SDT_sampleRate, 0.0, 1.0);
+  outGain = (1.0 - x->reson) *
+            SDT_fclip(0.005 * rotorStep * SDT_sampleRate, 0.0, 1.0);
   return outGain * (SDTComb_dsp(x->chassis, rotor + gears + brushes) + air);
 }

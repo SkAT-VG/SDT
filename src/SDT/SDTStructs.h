@@ -1,5 +1,5 @@
 /** @file SDTStructs.h
-@defgroup structs SDTStructs.h: Common data structures 
+@defgroup structs SDTStructs.h: Common data structures
 @{ */
 
 #ifndef SDT_STRUCTS_H

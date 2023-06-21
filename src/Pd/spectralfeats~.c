@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
-#include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
+#include "SDT/SDTCommon.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *spectralfeats_class;
@@ -35,7 +35,7 @@ t_int *spectralfeats_perform(t_int *w) {
   double tmpOuts[8];
   t_atom argv;
   int hasOutput = 0;
-  
+
   while (n--) {
     hasOutput += SDTSpectralFeats_dsp(x->feats, tmpOuts, *in++);
   }
@@ -83,11 +83,18 @@ void spectralfeats_free(t_spectralfeats *x) {
   SDT_PD_FREE(SpectralFeats, feats)
 }
 
-void spectralfeats_tilde_setup(void) {	
-  spectralfeats_class = class_new(gensym("spectralfeats~"), (t_newmethod)spectralfeats_new, (t_method)spectralfeats_free, sizeof(t_spectralfeats), CLASS_DEFAULT, A_GIMME, 0);
+void spectralfeats_tilde_setup(void) {
+  spectralfeats_class =
+      class_new(gensym("spectralfeats~"), (t_newmethod)spectralfeats_new,
+                (t_method)spectralfeats_free, sizeof(t_spectralfeats),
+                CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(spectralfeats_class, t_spectralfeats, f);
-  class_addmethod(spectralfeats_class, (t_method)spectralfeats_overlap, gensym("overlap"), A_FLOAT, 0);
-  class_addmethod(spectralfeats_class, (t_method)spectralfeats_minFreq, gensym("minFreq"), A_FLOAT, 0);
-  class_addmethod(spectralfeats_class, (t_method)spectralfeats_maxFreq, gensym("maxFreq"), A_FLOAT, 0);
-  class_addmethod(spectralfeats_class, (t_method)spectralfeats_dsp, gensym("dsp"), 0);
+  class_addmethod(spectralfeats_class, (t_method)spectralfeats_overlap,
+                  gensym("overlap"), A_FLOAT, 0);
+  class_addmethod(spectralfeats_class, (t_method)spectralfeats_minFreq,
+                  gensym("minFreq"), A_FLOAT, 0);
+  class_addmethod(spectralfeats_class, (t_method)spectralfeats_maxFreq,
+                  gensym("maxFreq"), A_FLOAT, 0);
+  class_addmethod(spectralfeats_class, (t_method)spectralfeats_dsp,
+                  gensym("dsp"), 0);
 }
