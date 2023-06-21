@@ -428,9 +428,9 @@ int SDT_eprintf(const char *fmt, ...) {
   return r;
 }
 
-#define N_LOGGERS 4
-static int (*_SDT_log_inner[N_LOGGERS])(const char *, ...) = {0, 0, 0, 0};
-static int _SDT_log_newlines[N_LOGGERS] = {0, 0, 0, 0};
+#define N_LOGGERS 5
+static int (*_SDT_log_inner[N_LOGGERS])(const char *, ...) = {0, 0, 0, 0, 0};
+static int _SDT_log_newlines[N_LOGGERS] = {0, 0, 0, 0, 0};
 
 void SDT_setLogger(int level, int (*print_func)(const char *, ...),
                    int newline) {
@@ -527,31 +527,32 @@ int SDT_log(int level, const char *file, unsigned int line, const char *func,
 
 int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }
 
+#define _SDT_LOG_LEVEL_ENV_CASE(LEVEL) \
+  if (!strcmp(level_name, #LEVEL)) level = SDT_LOG_LEVEL_##LEVEL;
+
 int SDT_getLogLevelFromEnv() {
-  static int level = -1;
+  static int level = SDT_LOG_LEVEL_QUIET - 1;
   // Only read the first time
-  if (level >= 0) return level;
+  if (level >= SDT_LOG_LEVEL_QUIET) return level;
 
   const char *level_name = getenv("SDT_LOG_LEVEL");
   if (level_name) {
-    if (!strcmp(level_name, "ERROR"))
-      level = SDT_LOG_LEVEL_ERROR;
-    else if (!strcmp(level_name, "WARN"))
-      level = SDT_LOG_LEVEL_WARN;
-    else if (!strcmp(level_name, "INFO"))
-      level = SDT_LOG_LEVEL_INFO;
-    else if (!strcmp(level_name, "DEBUG"))
-      level = SDT_LOG_LEVEL_DEBUG;
-    else if (!strcmp(level_name, "VERBOSE"))
-      level = SDT_LOG_LEVEL_VERBOSE;
+    _SDT_LOG_LEVEL_ENV_CASE(QUIET)             //
+    else _SDT_LOG_LEVEL_ENV_CASE(ERROR)        //
+        else _SDT_LOG_LEVEL_ENV_CASE(WARN)     //
+        else _SDT_LOG_LEVEL_ENV_CASE(INFO)     //
+        else _SDT_LOG_LEVEL_ENV_CASE(DEBUG)    //
+        else _SDT_LOG_LEVEL_ENV_CASE(VERBOSE)  //
   }
-  if (level >= 0) return level;
-  level = SDT_LOG_LEVEL_WARN;
-  if (level_name) {
-    SDT_LOGA(WARN,
-             "Unsupported log level name from environment variable: "
-             "SDT_LOG_LEVEL=%s\n",
-             level_name);
+  if (level < SDT_LOG_LEVEL_QUIET) {
+    level = SDT_LOG_LEVEL_WARN;
+    if (level_name) {
+      SDT_LOGA(WARN,
+               "Unsupported log level name from environment variable: "
+               "SDT_LOG_LEVEL=%s\n",
+               level_name);
+    }
   }
+  SDT_LOGA(DEBUG, "SDT_LOG_LEVEL=%d\n", level);
   return level;
 }

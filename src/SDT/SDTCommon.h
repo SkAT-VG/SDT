@@ -98,6 +98,7 @@ SDTCommon.h should always be included when using other SDT modules.
 
 /** @brief Log levels for SDT */
 typedef enum SDTLogLevel {
+  SDT_LOG_LEVEL_QUIET = -1,
   SDT_LOG_LEVEL_ERROR = 0,
   SDT_LOG_LEVEL_WARN = 1,
   SDT_LOG_LEVEL_INFO = 2,
@@ -134,8 +135,8 @@ extern int (*SDT_getLogger(int level, int *newline))(const char *, ...);
 /** @brief Gets the log-level from the environment variable `SDT_LOG_LEVEL`.
 
 For efficiency, the environment variable is read only on the first invocation of
-this function. Valid values are: `ERROR`, `WARN` (default), `INFO`, `DEBUG`,
-`VERBOSE`
+this function. Valid values are:
+`QUIET`, `ERROR`, `WARN` (default), `INFO`, `DEBUG`, `VERBOSE`
 @return Log level */
 extern int SDT_getLogLevelFromEnv();
 
