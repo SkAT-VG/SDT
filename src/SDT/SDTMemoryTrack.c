@@ -194,7 +194,6 @@ void* _SDT_mallocTrack(size_t size, const char* file, unsigned int line,
 
 void _SDT_freeTrack(void* p, const char* file, unsigned int line,
                     const char* func) {
-  free(p);
   SDTDLLNode* n = (SDTDLLNode*)0;
   SDTMallocInfo* minfo = (SDTMallocInfo*)0;
   if (heap_dll)
@@ -208,6 +207,15 @@ void _SDT_freeTrack(void* p, const char* file, unsigned int line,
     }
 
   if (n) SDTDLLNode_free(n, 0);
+  if (minfo) {
+    SDT_ONLY_IN_LEVEL(VERBOSE,
+                      SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
+                              "Freeing memory allocated in %s:%li %s()\n",
+                              minfo->file, minfo->line, minfo->func);)
+  }
+
+  free(p);
+
   if (minfo) {
     if (!_SDT_currentArenaLength()) _SDT_resetArena();
     SDT_ONLY_IN_LEVEL(
