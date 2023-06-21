@@ -410,14 +410,10 @@ void SDT_zeros(double *sig, int n) {
   memset((void *)sig, 0, sizeof(double) * n);
 }
 
-#define _SDT_printTime_buf_LEN 23
-char _SDT_printTime_buf[_SDT_printTime_buf_LEN];
-static const char _SDT_printTime_fmt[] = "[%Y-%m-%d %H:%M:%S]";
-
 static int _SDT_sprintTime(char *s, size_t n) {
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
-  return strftime(s, n, _SDT_printTime_fmt, tm);
+  return strftime(s, n, "[%Y-%m-%d %H:%M:%S]", tm);
 }
 
 int SDT_eprintf(const char *fmt, ...) {
@@ -510,12 +506,11 @@ static int SDT_vsnlog(char *s, size_t n, int newline, int level,
   return n_chars;
 }
 
-static char _SDT_logBuffer[MAXSDTSTRING];
-
 int SDT_log(int level, const char *file, unsigned int line, const char *func,
             const char *fmt, ...) {
   if (level > SDT_getLogLevelFromEnv()) return 0;
   int newline = 0;
+  static char _SDT_logBuffer[MAXSDTSTRING];
   int (*log)(const char *, ...) = SDT_getLogger(level, &newline);
   va_list args;
   va_start(args, fmt);
