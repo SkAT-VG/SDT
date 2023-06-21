@@ -486,40 +486,40 @@ SDTResonator *SDTResonator_fromJSON(const json_value *x) {
   const json_value *v;
   unsigned int nModes, nPickups, activeModes;
 
-  v = json_object_get_by_key(x, "nModes");
+  v = SDTJSON_object_get_by_key(x, "nModes");
   nModes = (unsigned int)(v && (v->type == json_integer)) ? v->u.integer : 0;
 
-  v = json_object_get_by_key(x, "nPickups");
+  v = SDTJSON_object_get_by_key(x, "nPickups");
   nPickups = (unsigned int)(v && (v->type == json_integer)) ? v->u.integer : 0;
 
-  v = json_object_get_by_key(x, "activeModes");
+  v = SDTJSON_object_get_by_key(x, "activeModes");
   activeModes =
       (unsigned int)(v && (v->type == json_integer)) ? v->u.integer : 0;
 
-  v = json_object_get_by_key(x, "fragmentSize");
+  v = SDTJSON_object_get_by_key(x, "fragmentSize");
   double fragmentSize = (v && (v->type == json_double)) ? v->u.dbl : 1;
 
   SDTResonator *res = SDTResonator_new(nModes, nPickups);
   SDTResonator_setActiveModes(res, activeModes);
   SDTResonator_setFragmentSize(res, fragmentSize);
 
-  const json_value *f = json_object_get_by_key(x, "freqs");
-  const json_value *d = json_object_get_by_key(x, "decays");
-  const json_value *w = json_object_get_by_key(x, "weights");
+  const json_value *f = SDTJSON_object_get_by_key(x, "freqs");
+  const json_value *d = SDTJSON_object_get_by_key(x, "decays");
+  const json_value *w = SDTJSON_object_get_by_key(x, "weights");
   for (unsigned int m = 0; m < SDTResonator_getNModes(res); ++m) {
-    SDTResonator_setFrequency(res, m, json_array_get_number(f, m, 0));
-    SDTResonator_setDecay(res, m, json_array_get_number(d, m, 0));
-    SDTResonator_setWeight(res, m, json_array_get_number(w, m, 0));
+    SDTResonator_setFrequency(res, m, SDTJSON_array_get_number(f, m, 0));
+    SDTResonator_setDecay(res, m, SDTJSON_array_get_number(d, m, 0));
+    SDTResonator_setWeight(res, m, SDTJSON_array_get_number(w, m, 0));
   }
 
-  const json_value *g = json_object_get_by_key(x, "gains");
+  const json_value *g = SDTJSON_object_get_by_key(x, "gains");
   if (g && g->type == json_array)
     for (unsigned int p = 0;
          (p < g->u.array.length) && (p < SDTResonator_getNPickups(res)); ++p) {
       const json_value *gp = g->u.array.values[p];
       if (gp && gp->type == json_array)
         for (unsigned int m = 0; m < SDTResonator_getNModes(res); ++m)
-          SDTResonator_setGain(res, p, m, json_array_get_number(gp, m, 0));
+          SDTResonator_setGain(res, p, m, SDTJSON_array_get_number(gp, m, 0));
     }
 
   return res;

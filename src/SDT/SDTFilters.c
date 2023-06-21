@@ -286,7 +286,7 @@ json_value *SDTBiquad_toJSON(const SDTBiquad *x) {
 }
 
 #define SDT_BIQUAD_PULL_ARRAY(F)                                               \
-  v = json_object_get_by_key(x, #F);                                           \
+  v = SDTJSON_object_get_by_key(x, #F);                                        \
   for (unsigned int i = 0;                                                     \
        v && (v->type == json_array) && i < nSections && i < v->u.array.length; \
        ++i) {                                                                  \
@@ -296,7 +296,7 @@ json_value *SDTBiquad_toJSON(const SDTBiquad *x) {
 
 SDTBiquad *SDTBiquad_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
-  const json_value *v = json_object_get_by_key(x, "nSections");
+  const json_value *v = SDTJSON_object_get_by_key(x, "nSections");
   int nSections = (v && (v->type == json_integer)) ? v->u.integer : 1;
   SDTBiquad *y = SDTBiquad_new(nSections);
 

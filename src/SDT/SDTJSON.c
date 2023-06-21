@@ -6,14 +6,14 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-json_serialize_opts sdt_json_opts() {
+json_serialize_opts SDTJSON_opts() {
   json_serialize_opts opts;
   opts.mode = json_serialize_mode_multiline;
   opts.indent_size = 2;
   return opts;
 }
 
-json_value *json_reads(const char *s, int n) {
+json_value *SDTJSON_reads(const char *s, int n) {
   if (n < 0) n = strlen(s);
   json_settings settings = {};
   settings.value_extra =
@@ -23,7 +23,7 @@ json_value *json_reads(const char *s, int n) {
   return v;
 }
 
-json_value *json_read(const char *fpath) {
+json_value *SDTJSON_read(const char *fpath) {
   json_value *v = 0;
   int N = 0;
   FILE *fp;
@@ -53,21 +53,21 @@ json_value *json_read(const char *fpath) {
         break;
       }
 
-    v = json_reads(s + i_start, i_stop - i_start);
+    v = SDTJSON_reads(s + i_start, i_stop - i_start);
     free(s);
   }
   return v;
 }
 
-char *json_dumps(const json_value *x) {
-  char *s = malloc(json_measure_ex(x, sdt_json_opts()));
-  if (s) json_serialize_ex(s, x, sdt_json_opts());
+char *SDTJSON_dumps(const json_value *x) {
+  char *s = malloc(sizeof(char) * json_measure_ex(x, SDTJSON_opts()));
+  if (s) json_serialize_ex(s, x, SDTJSON_opts());
   return s;
 }
 
-int json_dump(const json_value *x, const char *fpath) {
+int SDTJSON_dump(const json_value *x, const char *fpath) {
   int return_code = 0;
-  char *s = json_dumps(x);
+  char *s = SDTJSON_dumps(x);
   if (s) {
     FILE *f = fopen(fpath, "w");
     if (f) {
@@ -82,7 +82,8 @@ int json_dump(const json_value *x, const char *fpath) {
   return return_code;
 }
 
-const json_value *json_object_get_by_key(const json_value *x, const char *key) {
+const json_value *SDTJSON_object_get_by_key(const json_value *x,
+                                            const char *key) {
   if (!x || (x->type != json_object)) return 0;
   for (unsigned int i = 0; i < x->u.object.length; ++i)
     if (!strcmp(key, x->u.object.values[i].name))
@@ -90,8 +91,8 @@ const json_value *json_object_get_by_key(const json_value *x, const char *key) {
   return 0;
 }
 
-double json_array_get_number(const json_value *x, unsigned int idx,
-                             double dflt) {
+double SDTJSON_array_get_number(const json_value *x, unsigned int idx,
+                                double dflt) {
   if (x && (x->type == json_array) && (idx < x->u.array.length)) {
     if (x->u.array.values[idx]->type == json_integer)
       return (double)x->u.array.values[idx]->u.integer;
@@ -101,7 +102,7 @@ double json_array_get_number(const json_value *x, unsigned int idx,
   return dflt;
 }
 
-json_value *json_deepcopy(const json_value *value) {
+json_value *SDTJSON_deepcopy(const json_value *value) {
   if (!value) return 0;
   json_value *sub;
   switch (value->type) {
@@ -118,13 +119,13 @@ json_value *json_deepcopy(const json_value *value) {
     case json_array:
       sub = json_array_new(0);
       for (unsigned int i = 0; i < value->u.array.length; ++i)
-        json_array_push(sub, json_deepcopy(value->u.array.values[i]));
+        json_array_push(sub, SDTJSON_deepcopy(value->u.array.values[i]));
       return sub;
     case json_object:
       sub = json_object_new(0);
       for (unsigned int i = 0; i < value->u.object.length; ++i)
         json_object_push(sub, value->u.object.values[i].name,
-                         json_deepcopy(value->u.object.values[i].value));
+                         SDTJSON_deepcopy(value->u.object.values[i].value));
       return sub;
     default:
       return 0;

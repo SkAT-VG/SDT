@@ -140,6 +140,11 @@ extern int SDTOSCArgumentList_isFloat(const SDTOSCArgumentList *x, int i);
 position i. */
 extern int SDTOSCArgumentList_isString(const SDTOSCArgumentList *x, int i);
 
+/** @brief Gets the number of arguments in the list
+@param[in] x Instance pointer
+@return Number of arguments */
+extern int SDTOSCArgumentList_getNArgs(const SDTOSCArgumentList *x);
+
 /** @brief Gets the float value of the argument at the specified position
 @param[in] x Instance pointer
 Argument should be previously checked with ::SDTOSCArgumentList_isFloat

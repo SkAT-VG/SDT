@@ -4,15 +4,55 @@
 #include <string.h>
 #include "SDTCommon.h"
 
-// int SDTOSCZeroCrossing_log(const char *key, SDTZeroCrossing *x) {
-//   json_value *obj = SDTZeroCrossing_toJSON(x);
-//   char *s = malloc(sizeof(char) * (strlen(key) + 32));
-//   sprintf(s, "sdtOSC: %s", key);
-//   int r = SDTOSCJSON_log(s, obj);
-//   free(s);
-//   json_builder_free(obj);
-//   return r;
-// }
+#define SDTOSCZEROCROSSING_GETINSTANCE(NAME, VAR, x)                           \
+  const SDTZeroCrossing* VAR = 0;                                              \
+  const char* NAME = "";                                                       \
+  {                                                                            \
+    const SDTOSCArgumentList* args = SDTOSCMessage_getArguments(x);            \
+    if (!SDTOSCArgumentList_getNArgs(args)) {                                  \
+      SDT_LOGA(ERROR,                                                          \
+               "\n  %s\n  [ARGUMENT ERROR] Missing argument: instance name\n " \
+               " %s\n",                                                        \
+               x, SDTOSC_rtfm_string());                                       \
+      return 1;                                                                \
+    }                                                                          \
+    if (SDTOSCArgumentList_isString(args, 0)) {                                \
+      NAME = SDTOSCArgumentList_getString(args, 0);                            \
+    } else {                                                                   \
+      SDT_LOGA(                                                                \
+          ERROR,                                                               \
+          "\n  %s\n  [ARGUMENT ERROR] First argument should be a string\n "    \
+          " %s\n",                                                             \
+          x, SDTOSC_rtfm_string());                                            \
+      return 2;                                                                \
+    }                                                                          \
+    VAR = SDT_getZeroCrossing(NAME);                                           \
+    if (!VAR) {                                                                \
+      SDT_LOGA(                                                                \
+          ERROR,                                                               \
+          "\n  %s\n  [OBJECT NOT FOUND] No zerox object registered as: %s\n "  \
+          " %s\n",                                                             \
+          x, NAME, SDTOSC_rtfm_string());                                      \
+      return 3;                                                                \
+    }                                                                          \
+  }
+
+// [OBJECT_NOT_FOUND]: the specified SDT object was not found
+// SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+// const char *key = (SDTOSCArgumentList_getNArgs(args) &&
+//                    SDTOSCArgumentList_isString(args, 0))
+//                       ? SDTOSCArgumentList_getString(args, 0)
+//                       : 0;
+// SDTZeroCrossing *obj = (key) ? SDT_getZeroCrossing(key) : 0;
+
+int SDTOSCZeroCrossing_log(const SDTOSCMessage* x) {
+  SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
+  SDTOSCZEROCROSSING_GETINSTANCE(k, z, x)
+  json_value* obj = SDTZeroCrossing_toJSON(z);
+  int r = SDTOSCJSON_log(k, obj);
+  json_builder_free(obj);
+  return r;
+}
 
 // int SDTOSCZeroCrossing_save(const char *key, SDTZeroCrossing *x,
 //                             const SDTOSCArgumentList *args) {
@@ -69,6 +109,7 @@ int SDTOSCZeroCrossing(const SDTOSCMessage* x) {
     return 1;
   }
   const char* k = SDTOSCAddress_getNode(a, 1);
+  if (!strcmp("log", k)) return SDTOSCZeroCrossing_log(x);
   // SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
   // const char *key = (SDTOSCArgumentList_getNArgs(args) &&
   //                    SDTOSCArgumentList_isString(args, 0))

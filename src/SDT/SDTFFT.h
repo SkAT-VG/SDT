@@ -7,7 +7,7 @@ by means of the Discrete Fourier Transform and its inverse.
 This implementation is based on the iterative version of the Cooley-Tukey
 algorithm, works with double precision floating point arithmetic and provides an
 optimization for the transformation of real-valued signals.
- 
+ 
 @{ */
 
 #ifndef SDT_FFT_H

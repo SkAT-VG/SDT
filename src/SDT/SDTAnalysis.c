@@ -95,7 +95,7 @@ json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x) {
 
 SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
-  const json_value *v_size = json_object_get_by_key(x, "size");
+  const json_value *v_size = SDTJSON_object_get_by_key(x, "size");
   SDTZeroCrossing *y =
       SDTZeroCrossing_new((v_size && (v_size->type == json_integer))
                               ? v_size->u.integer
@@ -108,12 +108,12 @@ SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
                                            unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
   if (unsafe) {
-    const json_value *v_size = json_object_get_by_key(j, "size");
+    const json_value *v_size = SDTJSON_object_get_by_key(j, "size");
     SDTZeroCrossing_setSize(x, (v_size && (v_size->type == json_integer))
                                    ? v_size->u.integer
                                    : SDT_ZEROCROSSING_SIZE_DEFAULT);
   }
-  const json_value *v_overlap = json_object_get_by_key(j, "overlap");
+  const json_value *v_overlap = SDTJSON_object_get_by_key(j, "overlap");
   SDTZeroCrossing_setOverlap(x, (v_overlap && (v_overlap->type == json_double))
                                     ? v_overlap->u.dbl
                                     : 0);

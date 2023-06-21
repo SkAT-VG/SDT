@@ -45,7 +45,7 @@ SDTOSCAddress *SDTOSCAddress_new(const char *s) {
 
       if (len > 0) {
         x->nodes[d] = (char *)malloc(sizeof(char) * (len + 1));
-        for (unsigned int h = 0; h < len; ++h) x->nodes[d][h] = s[j + h];
+        memcpy(x->nodes[d], s + j, sizeof(char) * len);
         x->nodes[d][len] = 0;
         d++;
       }
@@ -122,7 +122,6 @@ SDTOSCArgument *SDTOSCArgument_newString(const char *s) {
   size_t len = strlen(s);
   x->value.s = (char *)malloc(sizeof(char) * (len + 1));
   strcpy(x->value.s, s);
-  SDT_LOGA(DEBUG, "strcpy: %s -> %s\n", s, x->value.s);
   return x;
 }
 
@@ -194,6 +193,8 @@ float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i) {
 const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
   return SDTOSCArgument_getString(x->argv[i]);
 }
+
+int SDTOSCArgumentList_getNArgs(const SDTOSCArgumentList *x) { return x->argc; }
 
 //-------------------------------------------------------------------------------------//
 
@@ -356,7 +357,7 @@ const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m) {
 int SDTOSCJSON_log(const char *preamble, json_value *obj) {
   int newline = 0;
   int (*log)(const char *, ...) = SDT_getLogger(SDT_LOG_LEVEL_INFO, &newline);
-  char *s = json_dumps(obj);
+  char *s = SDTJSON_dumps(obj);
   if (!s) {
     SDT_LOG(ERROR, "Error while dumping json_value to string\n");
     return 1;
@@ -418,7 +419,7 @@ int SDTOSCJSON_log(const char *preamble, json_value *obj) {
 int SDTOSCJSON_save(const char *name, const json_value *obj,
                     const SDTOSCArgumentList *args) {
   _SDTOSCJSON_fileArgsValidation();
-  if (!json_dump(obj, fpath)) {
+  if (!SDTJSON_dump(obj, fpath)) {
     SDT_LOGA(INFO, "Saved %s to '%s'\n", name, fpath);
   } else {
     SDT_LOGA(ERROR, "Error while saving %s to '%s'\n", name, fpath);
@@ -432,7 +433,7 @@ int SDTOSCJSON_load(const char *name, json_value **obj,
   *obj = 0;
   _SDTOSCJSON_fileArgsValidation();
 
-  if (!(*obj = json_read(fpath))) {
+  if (!(*obj = SDTJSON_read(fpath))) {
     SDT_LOGA(ERROR, "Error while loading %s from '%s'\n", name, fpath);
     return 6;
   }

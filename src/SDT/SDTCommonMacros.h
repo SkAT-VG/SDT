@@ -133,9 +133,9 @@ Macros for generating JSON serialization and deserialization functions
   json_object_push(                               \
       obj, #K,                                    \
       json_##J##_new(CONCAT(SDT_TYPE_FULL(SDT_TYPE), CONCAT(_get, G))(x)));
-#define SDT_JSON_PULL(SDT_TYPE, F, T, S, K, J, D)          \
-  const json_value *v_##F = json_object_get_by_key(x, #K); \
-  CONCAT(SDT_TYPE_FULL(SDT_TYPE), CONCAT(_set, S))         \
+#define SDT_JSON_PULL(SDT_TYPE, F, T, S, K, J, D)             \
+  const json_value *v_##F = SDTJSON_object_get_by_key(x, #K); \
+  CONCAT(SDT_TYPE_FULL(SDT_TYPE), CONCAT(_set, S))            \
   (y, (v_##F && (v_##F->type == json_##J)) ? v_##F->u.JSON_TYPE_FIELD(J) : D);
 #define SDT_TYPE_INIT(SDT_TYPE, ...) \
   SDT_TYPE_FULL(SDT_TYPE) *y =       \

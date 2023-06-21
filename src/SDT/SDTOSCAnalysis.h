@@ -28,7 +28,7 @@ Function that implements OSC JSON log for #SDTZeroCrossing objects
 @param key Instance name
 @param x Instance pointer
 @return Zero on success, non-zero otherwise */
-extern int SDTOSCZeroCrossing_log(const char *key, SDTZeroCrossing *x);
+extern int SDTOSCZeroCrossing_log(const SDTOSCMessage *x);
 
 /** @brief `/zerox/save <name> <filepath>`
 
