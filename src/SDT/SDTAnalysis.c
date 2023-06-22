@@ -1,6 +1,7 @@
 #include "SDTAnalysis.h"
 #include <assert.h>
 #include <math.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTComplex.h"
@@ -20,17 +21,13 @@ struct SDTZeroCrossing {
 
 SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   SDTZeroCrossing *x;
-  int i;
   if (!size) size = SDT_ZEROCROSSING_SIZE_DEFAULT;
 
   x = (SDTZeroCrossing *)malloc(sizeof(SDTZeroCrossing));
   x->in = (double *)malloc(2 * size * sizeof(double));
+  SDT_zeros(x->in, 2 * size);
   x->win = (double *)malloc(size * sizeof(double));
-  for (i = 0; i < size; i++) {
-    x->in[i] = 0.0;
-    x->in[i + size] = 0.0;
-    x->win[i] = 0.0;
-  }
+  SDT_zeros(x->win, size);
   x->i = 0;
   x->j = 0;
   x->size = size;
@@ -48,8 +45,10 @@ void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f) {
   free(x->in);
   free(x->win);
 
-  x->in = calloc(2 * f, sizeof(double));
-  x->win = calloc(f, sizeof(double));
+  x->in = (double *)malloc(2 * f * sizeof(double));
+  SDT_zeros(x->in, 2 * f);
+  x->win = (double *)malloc(f * sizeof(double));
+  SDT_zeros(x->win, f);
   x->i = 0;
   x->j = 0;
   x->skip = f * x->skip / x->size;
