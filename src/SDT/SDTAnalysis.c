@@ -1,8 +1,5 @@
 #include "SDTAnalysis.h"
-#include <assert.h>
 #include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
