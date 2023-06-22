@@ -427,10 +427,8 @@ int SDTOSCJSON_save(const char *name, const json_value *obj,
   return 0;
 }
 
-int SDTOSCJSON_load(const char *name, json_value **obj,
-                    const SDTOSCArgumentList *args) {
-  *obj = 0;
-  _SDTOSCJSON_fileArgsValidation();
+int SDTOSCJSON_load(const char *name, json_value **obj, const char *fpath) {
+  *obj = NULL;
 
   if (!(*obj = SDTJSON_read(fpath))) {
     SDT_LOGA(ERROR, "Error while loading %s from '%s'\n", name, fpath);

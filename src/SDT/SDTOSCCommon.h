@@ -244,13 +244,12 @@ extern int SDTOSCJSON_save(const char *name, const json_value *obj,
                            const char *fpath);
 
 /** @brief Load information from JSON files
-@param [in] log Log function pointer
 @param [in] name Name of the object
 @param [out] obj Loaded JSON object
-@param [in] args Additional OSC arguments: file path (string)
+@param[in] fpath File path
 @return Zero on success, non-zero on error */
 extern int SDTOSCJSON_load(const char *name, json_value **obj,
-                           const SDTOSCArgumentList *args);
+                           const char *fpath);
 
 /** @} */
 

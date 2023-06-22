@@ -5,7 +5,7 @@
 #include "SDTCommon.h"
 
 #define SDTOSCZEROCROSSING_GETINSTANCE(NAME, VAR, x)                          \
-  const SDTZeroCrossing* VAR = 0;                                             \
+  SDTZeroCrossing* VAR = 0;                                                   \
   const char* NAME = "";                                                      \
   {                                                                           \
     const SDTOSCArgumentList* args = SDTOSCMessage_getArguments(x);           \
@@ -81,18 +81,16 @@ int SDTOSCZeroCrossing_save(const SDTOSCMessage* x) {
   return r;
 }
 
-// int SDTOSCZeroCrossing_load(const char *key, SDTZeroCrossing *x,
-//                             const SDTOSCArgumentList *args) {
-//   json_value *obj;
-//   char *name = malloc(sizeof(char) * (strlen(key) + 8));
-//   sprintf(name, "'%s'", key);
-//   int r = SDTOSCJSON_load(name, &obj, args);
-//   free(name);
-//   if (r) return r;
-//   SDTZeroCrossing_setParams(x, obj, 0);
-//   if (obj) json_builder_free(obj);
-//   return r;
-// }
+int SDTOSCZeroCrossing_load(const SDTOSCMessage* x) {
+  SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
+  SDTOSCZEROCROSSING_GETINSTANCE(k, z, x)
+  SDTOSCZEROCROSSING_GETFILE(fpath, x)
+  json_value* obj;
+  int r = SDTOSCJSON_load(k, &obj, fpath);
+  SDTZeroCrossing_setParams(z, obj, 0);
+  json_builder_free(obj);
+  return r;
+}
 
 // int SDTOSCZeroCrossing_setSize(SDTZeroCrossing *x,
 //                                const SDTOSCArgumentList *args) {
@@ -127,6 +125,7 @@ int SDTOSCZeroCrossing(const SDTOSCMessage* x) {
   const char* k = SDTOSCAddress_getNode(a, 1);
   if (!strcmp("log", k)) return SDTOSCZeroCrossing_log(x);
   if (!strcmp("save", k)) return SDTOSCZeroCrossing_save(x);
+  if (!strcmp("load", k)) return SDTOSCZeroCrossing_load(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified method is not "
                       "implemented: %s\n  %s\n",
