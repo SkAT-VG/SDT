@@ -95,26 +95,11 @@ SH?=bash
 # -----------------------------------------------------------------------------
 
 # --- Compiler ----------------------------------------------------------------
-CFLAGS=-O3 -Wall -Wno-unknown-pragmas -Werror
-ifneq ("$(SDT_VERBOSE)","")
-	CFLAGS+= -DSDT_VERBOSE
-endif
-ifneq ("$(SDT_DEBUG)","")
-	CFLAGS+= -DSDT_DEBUG
-endif
-ifneq ("$(SDT_INFO)","")
-	CFLAGS+= -DSDT_INFO
-endif
-ifneq ("$(SDT_WARN)","")
-	CFLAGS+= -DSDT_WARN
-endif
-ifneq ("$(SDT_ERROR)","")
-	CFLAGS+= -DSDT_ERROR
-endif
+CFLAGS_=$(CFLAGS) -O3 -Wall -Wno-unknown-pragmas -Werror
 LDFLAGS=
 ifeq ("$(TARGET)", "linux")
 	CC=gcc
-	CFLAGS+= -fPIC
+	CFLAGS_+= -fPIC
 	LDFLAGS+= -lc -lm
 endif
 ifeq ("$(TARGET)", "win32")
@@ -130,7 +115,7 @@ ifeq ("$(TARGET)", "macosx")
 	MACARCH=-arch i386 -arch x86_64
 	MACVERSION_N=10.7
 	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
-	CFLAGS+= -g $(MACARCH) $(MACVERSION)
+	CFLAGS_+= -g $(MACARCH) $(MACVERSION)
 	SHARED_LDFLAGS=$(LDFLAGS) -dynamiclib -headerpad_max_install_names $(MACARCH) $(MACVERSION)
 else
 	SHARED_LDFLAGS=-shared $(LDFLAGS)
@@ -141,7 +126,7 @@ $(CC) $(SHARED_LDFLAGS) $1 -o $@ $^
 endef
 
 define build-obj
-$(CC) $(CFLAGS) $1 -c $< -o $@
+$(CC) $(CFLAGS_) $1 -c $< -o $@
 endef
 
 define make-dir
