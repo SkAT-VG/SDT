@@ -40,6 +40,9 @@ extern int SDTHashmap_del(SDTHashmap *x, char *key);
 /** @brief Deletes all the entries in the hashmap. */
 extern void SDTHashmap_clear(SDTHashmap *x);
 
+/** @brief Returns 1 if the hashmap is empty, otherwise 0. */
+extern int SDTHashmap_empty(const SDTHashmap *x);
+
 #ifdef __cplusplus
 };
 #endif

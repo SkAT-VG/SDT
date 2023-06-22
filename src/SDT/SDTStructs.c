@@ -94,9 +94,8 @@ int SDTHashmap_del(SDTHashmap *x, char *key) {
 
 void SDTHashmap_clear(SDTHashmap *x) {
   SDTHashItem *item, *next;
-  int i;
 
-  for (i = 0; i < x->size; i++) {
+  for (int i = 0; i < x->size; i++) {
     item = x->bins[i];
     while (item) {
       next = item->next;
@@ -106,4 +105,10 @@ void SDTHashmap_clear(SDTHashmap *x) {
     }
     x->bins[i] = NULL;
   }
+}
+
+int SDTHashmap_empty(const SDTHashmap *x) {
+  for (int i = 0; i < x->size; i++)
+    if (x->bins[i]) return 0;
+  return 1;
 }
