@@ -107,11 +107,18 @@ SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
                                            const json_value *j,
                                            unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
-  if (unsafe) {
-    const json_value *v_size = SDTJSON_object_get_by_key(j, "size");
-    SDTZeroCrossing_setSize(x, (v_size && (v_size->type == json_integer))
-                                   ? v_size->u.integer
-                                   : SDT_ZEROCROSSING_SIZE_DEFAULT);
+
+  const json_value *v_size = SDTJSON_object_get_by_key(j, "size");
+  if (v_size && (v_size->type == json_integer) &&
+      (x->size != v_size->u.integer)) {
+    if (unsafe) {
+      SDTZeroCrossing_setSize(x, v_size->u.integer);
+    } else {
+      SDT_LOGA(WARN,
+               "\n  Not setting parameter \"size\" because it is unsafe.\n  "
+               "Current: %d\n  JSON:    %d\n",
+               x->size, v_size->u.integer);
+    }
   }
   const json_value *v_overlap = SDTJSON_object_get_by_key(j, "overlap");
   SDTZeroCrossing_setOverlap(x, (v_overlap && (v_overlap->type == json_double))
