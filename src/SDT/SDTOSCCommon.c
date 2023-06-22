@@ -417,8 +417,7 @@ int SDTOSCJSON_log(const char *preamble, json_value *obj) {
   }
 
 int SDTOSCJSON_save(const char *name, const json_value *obj,
-                    const SDTOSCArgumentList *args) {
-  _SDTOSCJSON_fileArgsValidation();
+                    const char *fpath) {
   if (!SDTJSON_dump(obj, fpath)) {
     SDT_LOGA(INFO, "Saved %s to '%s'\n", name, fpath);
   } else {

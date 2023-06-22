@@ -25,20 +25,16 @@ OSC for #SDTZeroCrossing objects @{ */
 /** @brief `/zerox/log <name>`
 
 Function that implements OSC JSON log for #SDTZeroCrossing objects
-@param key Instance name
-@param x Instance pointer
+@param x OSC message
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCZeroCrossing_log(const SDTOSCMessage *x);
 
 /** @brief `/zerox/save <name> <filepath>`
 
 Function that implements OSC JSON save for #SDTZeroCrossing objects
-@param key Instance name
-@param x Instance pointer
-@param args Argument list: `args[0]` should hold the file path
+@param x OSC message
 @return Zero on success, non-zero otherwise */
-extern int SDTOSCZeroCrossing_save(const char *key, SDTZeroCrossing *x,
-                                   const SDTOSCArgumentList *args);
+extern int SDTOSCZeroCrossing_save(const SDTOSCMessage *x);
 
 /** @brief `/zerox/load <name> <filepath>`
 
