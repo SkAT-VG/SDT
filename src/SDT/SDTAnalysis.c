@@ -65,7 +65,7 @@ SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
   return dest;
 }
 
-SDTHashmap *hashmap_SDT_ZEROCROSSING = ((void *)0);
+static SDTHashmap *hashmap_SDT_ZEROCROSSING = NULL;
 
 int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, char *key) {
   if (!hashmap_SDT_ZEROCROSSING) hashmap_SDT_ZEROCROSSING = SDTHashmap_new(59);
@@ -82,6 +82,10 @@ SDTZeroCrossing *SDT_getZeroCrossing(const char *key) {
 int SDT_unregisterZeroCrossing(char *key) {
   if (!hashmap_SDT_ZEROCROSSING) return 1;
   if (SDTHashmap_del(hashmap_SDT_ZEROCROSSING, key)) return 1;
+  if (SDTHashmap_empty(hashmap_SDT_ZEROCROSSING)) {
+    SDTHashmap_free(hashmap_SDT_ZEROCROSSING);
+    hashmap_SDT_ZEROCROSSING = NULL;
+  }
   return 0;
 }
 
