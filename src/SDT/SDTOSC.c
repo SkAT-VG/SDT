@@ -12,7 +12,8 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
-  if (!strcmp("zerox", k)) return SDTOSCZeroCrossing(x);
+  if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
+    return SDTOSCZeroCrossing(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified container is "
                       "not implemented: % s\n %s\n ",
