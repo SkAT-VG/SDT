@@ -1,5 +1,5 @@
-#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
+#include "SDTJSON.h"
 
 /** @file SDTModalTracker.h
 @defgroup modaltracker Modal analyzer
@@ -21,7 +21,8 @@ typedef struct SDTModalTracker SDTModalTracker;
 @param[in] bufferSize Size of the audio buffer, in samples
 @param[in] winSize Size of the analysis window, in samples
 @return Pointer to the new instance */
-extern SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize, long winSize);
+extern SDTModalTracker *SDTModalTracker_new(long nModes, long bufferSize,
+                                            long winSize);
 
 /** @brief Destroys a modal analyzer instance.
 @param[in] x Pointer to the instance to destroy */
@@ -29,11 +30,11 @@ extern void SDTModalTracker_free(SDTModalTracker *x);
 
 #define SDT_MODALTRACKER ModalTracker
 #define SDT_MODALTRACKER_NEW_ARGS 8, 441000, 1024
-#define SDT_MODALTRACKER_ATTRIBUTES(T, A) \
-A(T, nModes, long, NModes, nModes, integer, 8) \
-A(T, bufferSize, long, BufferSize, bufferSize, integer, 441000) \
-A(T, winSize, long, WinSize, winSize, integer, 1024) \
-A(T, overlap, double, Overlap, overlap, double, 0.5)
+#define SDT_MODALTRACKER_ATTRIBUTES(T, A)                         \
+  A(T, nModes, long, NModes, nModes, integer, 8)                  \
+  A(T, bufferSize, long, BufferSize, bufferSize, integer, 441000) \
+  A(T, winSize, long, WinSize, winSize, integer, 1024)            \
+  A(T, overlap, double, Overlap, overlap, double, 0.5)
 
 SDT_TYPE_COPY_H(SDT_MODALTRACKER)
 SDT_DEFINE_HASHMAP_H(SDT_MODALTRACKER)
@@ -54,7 +55,8 @@ and 1.0 meaning total overlap.
 @param[in] f Overlap ratio [0.0, 1.0] */
 extern void SDTModalTracker_setOverlap(SDTModalTracker *x, double f);
 
-/** @brief Reads incoming sound samples and stores them into the object's audio buffer.
+/** @brief Reads incoming sound samples and stores them into the object's audio
+buffer.
 @param[in] x Pointer to the instance
 @param[in] in Samples to read
 @param[in] n Number of samples to read
@@ -71,19 +73,22 @@ extern long SDTModalTracker_clearSamples(SDTModalTracker *x, long n);
 @param[in] x Pointer to the instance */
 extern void SDTModalTracker_update(SDTModalTracker *x);
 
-/** @brief Gives a representation of the detected modes in terms of magnitude, frequency, and decay time.
+/** @brief Gives a representation of the detected modes in terms of magnitude,
+frequency, and decay time.
 @param[in] x Pointer to the instance
 @param[out] mags Magnitudes array
 @param[out] freqs Frequencies array
 @param[out] decays Decay times array */
-extern void SDTModalTracker_static(SDTModalTracker *x, double *mags, double *freqs, double *decays);
+extern void SDTModalTracker_static(SDTModalTracker *x, double *mags,
+                                   double *freqs, double *decays);
 
 /** @brief Returns modal weights and frequencies at a given time.
 @param[in] x Pointer to the instance
 @param[in] time Time after the impact, in seconds
 @param[out] mags Magnitudes array
 @param[out] freqs Frequencies array */
-extern void SDTModalTracker_dynamic(SDTModalTracker *x, double time, double *mags, double *freqs);
+extern void SDTModalTracker_dynamic(SDTModalTracker *x, double time,
+                                    double *mags, double *freqs);
 
 #ifdef __cplusplus
 };

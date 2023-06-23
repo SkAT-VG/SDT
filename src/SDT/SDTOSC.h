@@ -1,8 +1,12 @@
 #include "SDTOSCCommon.h"
 
-/** @file SDTOSC.h
-@defgroup OSC SDTOSC.h: Open Sound Control
+/**
+@defgroup OSC SDTOSC: Open Sound Control
 Interface to use OSC with SDT.
+@{
+
+@file SDTOSC.h
+@defgroup OSCROOT SDTOSC.h: Open Sound Control root
 @{
 */
 
@@ -13,12 +17,12 @@ Interface to use OSC with SDT.
 extern "C" {
 #endif
 
-/** @brief OSC root for SDT methods
-\par OSC Address
-/
-@param [in] log Log function pointer
-@param [in] x OSC message*/
-extern void SDTOSCRoot(void (*log)(const char*, ...), const SDTOSCMessage* x);
+/** @brief `/`
+
+OSC root for SDT methods
+@param [in] x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRoot(const SDTOSCMessage* x);
 
 #ifdef __cplusplus
 };
@@ -26,4 +30,4 @@ extern void SDTOSCRoot(void (*log)(const char*, ...), const SDTOSCMessage* x);
 
 #endif
 
-/** @} */
+/** @}@} */

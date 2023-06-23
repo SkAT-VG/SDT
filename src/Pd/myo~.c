@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
-#include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
+#include "SDT/SDTCommon.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *myo_class;
@@ -38,7 +38,7 @@ t_int *myo_perform(t_int *w) {
   t_float *in = (t_float *)(w[2]);
   int n = (int)w[3];
   double tmpOuts[4];
-  
+
   while (n--) {
     SDTMyoelastic_dsp(x->myo, tmpOuts, *in++);
     if (x->time != sys_getrealtime()) {
@@ -59,7 +59,7 @@ void myo_dsp(t_myo *x, t_signal **sp, short *count) {
 
 void *myo_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
-  
+
   t_myo *x = (t_myo *)pd_new(myo_class);
   x->myo = SDTMyoelastic_new(GET_ARG(1, atom_getfloat, 4096));
   x->time = 0.0;
@@ -81,12 +81,18 @@ void myo_free(t_myo *x) {
   SDT_PD_FREE(Myoelastic, myo)
 }
 
-void myo_tilde_setup(void) {	
-  myo_class = class_new(gensym("myo~"), (t_newmethod)myo_new, (t_method)myo_free, sizeof(t_myo), CLASS_DEFAULT, A_GIMME, 0);
+void myo_tilde_setup(void) {
+  myo_class =
+      class_new(gensym("myo~"), (t_newmethod)myo_new, (t_method)myo_free,
+                sizeof(t_myo), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(myo_class, t_myo, f);
-  class_addmethod(myo_class, (t_method)myo_dcFrequency, gensym("dcFrequency"), A_FLOAT, 0);
-  class_addmethod(myo_class, (t_method)myo_lowFrequency, gensym("lowFrequency"), A_FLOAT, 0);
-  class_addmethod(myo_class, (t_method)myo_highFrequency, gensym("highFrequency"), A_FLOAT, 0);
-  class_addmethod(myo_class, (t_method)myo_threshold, gensym("threshold"), A_FLOAT, 0);
+  class_addmethod(myo_class, (t_method)myo_dcFrequency, gensym("dcFrequency"),
+                  A_FLOAT, 0);
+  class_addmethod(myo_class, (t_method)myo_lowFrequency, gensym("lowFrequency"),
+                  A_FLOAT, 0);
+  class_addmethod(myo_class, (t_method)myo_highFrequency,
+                  gensym("highFrequency"), A_FLOAT, 0);
+  class_addmethod(myo_class, (t_method)myo_threshold, gensym("threshold"),
+                  A_FLOAT, 0);
   class_addmethod(myo_class, (t_method)myo_dsp, gensym("dsp"), 0);
 }

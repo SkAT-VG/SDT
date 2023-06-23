@@ -1,11 +1,12 @@
-// Include in debug mode only
-#ifdef SDT_DEBUG
-
-#include <stdlib.h>
-#include <string.h>
 #define SDT_MEMORYTRACK_INCLUDE
 #include "SDTCommon.h"
 #undef SDT_MEMORYTRACK_INCLUDE
+
+#include <stdlib.h>
+#include <string.h>
+
+// Compile in debug mode only
+#ifdef SDT_DEBUG
 
 // --- Doubly-linked list -----------------------------------------------------
 typedef struct SDTDLLNode {
@@ -171,7 +172,7 @@ void _SDT_arenaWarnNonEmpty() {
   for (SDTDLLNode* node = SDTDoublyLinkedList_getTop(heap_dll); node;
        node = SDTDLLNode_getPrev(node)) {
     minfo = (SDTMallocInfo*)node->ptr;
-    SDT_log(SDT_LOG_WARN, minfo->file, minfo->line, minfo->func,
+    SDT_log(SDT_LOG_LEVEL_WARN, minfo->file, minfo->line, minfo->func,
             "Memory not freed! %p\n", minfo->ptr);
   }
 #endif
@@ -183,16 +184,16 @@ void* _SDT_mallocTrack(size_t size, const char* file, unsigned int line,
   if (!heap_dll) heap_dll = SDTDoublyLinkedList_new();
   SDTDoublyLinkedList_push(heap_dll, SDTDLLNode_new(SDTMallocInfo_new(
                                          p, size, 1, file, line, func)));
-  SDT_DEBUG_ONLY(SDT_log(SDT_LOG_DEBUG, file, line, func,
-                         "Arena: %li B\t[%li objs]\tAllocated: %p -> %li B\n",
-                         _SDT_currentArena(), _SDT_currentArenaLength(), p,
-                         size);)
+  SDT_ONLY_IN_LEVEL(
+      VERBOSE,
+      SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
+              "Arena: %li B\t[%li objs]\tAllocated: %p -> %li B\n",
+              _SDT_currentArena(), _SDT_currentArenaLength(), p, size);)
   return p;
 }
 
 void _SDT_freeTrack(void* p, const char* file, unsigned int line,
                     const char* func) {
-  free(p);
   SDTDLLNode* n = (SDTDLLNode*)0;
   SDTMallocInfo* minfo = (SDTMallocInfo*)0;
   if (heap_dll)
@@ -207,15 +208,26 @@ void _SDT_freeTrack(void* p, const char* file, unsigned int line,
 
   if (n) SDTDLLNode_free(n, 0);
   if (minfo) {
+    SDT_ONLY_IN_LEVEL(VERBOSE,
+                      SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
+                              "Freeing memory allocated in %s:%li %s()\n",
+                              minfo->file, minfo->line, minfo->func);)
+  }
+
+  free(p);
+
+  if (minfo) {
     if (!_SDT_currentArenaLength()) _SDT_resetArena();
-    SDT_DEBUG_ONLY(SDT_log(SDT_LOG_DEBUG, file, line, func,
-                           "Arena: %li B\t[%li objs]\tFreed:     %p -> %li B\n",
-                           _SDT_currentArena(), _SDT_currentArenaLength(), p,
-                           minfo->size);)
+    SDT_ONLY_IN_LEVEL(
+        VERBOSE, SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
+                         "Arena: %li B\t[%li objs]\tFreed:     %p -> %li B\n",
+                         _SDT_currentArena(), _SDT_currentArenaLength(), p,
+                         minfo->size);)
     SDTMallocInfo_free(minfo);
   } else {
-    SDT_DEBUG_ONLY(
-        SDT_log(SDT_LOG_DEBUG, file, line, func,
+    SDT_ONLY_IN_LEVEL(
+        VERBOSE,
+        SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
                 "Arena: %li B\t[%li objs]\tFreed:     %p (untracked)\n",
                 _SDT_currentArena(), _SDT_currentArenaLength());)
   }

@@ -1,10 +1,10 @@
+#include "SDTGases.h"
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
+#include "SDTEffects.h"
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
-#include "SDTEffects.h"
-#include "SDTGases.h"
 #include "SDTStructs.h"
 
 struct SDTWindFlow {
@@ -14,7 +14,7 @@ struct SDTWindFlow {
 
 SDTWindFlow *SDTWindFlow_new() {
   SDTWindFlow *x;
-  
+
   x = (SDTWindFlow *)malloc(sizeof(SDTWindFlow));
   x->reso = SDTTwoPoles_new();
   x->windSpeed = 0.0;
@@ -41,7 +41,7 @@ void SDTWindFlow_setWindSpeed(SDTWindFlow *x, double f) {
 
 double SDTWindFlow_dsp(SDTWindFlow *x) {
   double out;
-  
+
   out = x->windSpeed * SDT_whiteNoise();
   out = SDTTwoPoles_dsp(x->reso, out);
   return out;
@@ -57,7 +57,7 @@ struct SDTWindCavity {
 
 void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
   double gain;
-  
+
   x->harmonics = x->length / x->diameter;
   x->freq = SDT_MACH1 / (2.0 * x->length + 1.6 * x->diameter);
   x->delay = SDT_sampleRate / x->freq;
@@ -70,7 +70,7 @@ void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
 
 void SDTWindCavity_updateResonance(SDTWindCavity *x) {
   double q, fc;
-  
+
   fc = x->freq * x->windSpeed * x->harmonics;
   q = 10.0 * x->windSpeed * x->harmonics;
   SDTTwoPoles_resonant(x->reso, fc, q);
@@ -78,7 +78,7 @@ void SDTWindCavity_updateResonance(SDTWindCavity *x) {
 
 SDTWindCavity *SDTWindCavity_new(int maxDelay) {
   SDTWindCavity *x;
-  
+
   x = (SDTWindCavity *)calloc(1, sizeof(SDTWindCavity));
   x->comb = SDTComb_new(maxDelay, maxDelay);
   x->reso = SDTTwoPoles_new();
@@ -132,7 +132,7 @@ void SDTWindCavity_setWindSpeed(SDTWindCavity *x, double f) {
 
 double SDTWindCavity_dsp(SDTWindCavity *x) {
   double out;
-  
+
   out = x->windSpeed * SDT_whiteNoise();
   out = SDTComb_dsp(x->comb, out);
   out = SDTTwoPoles_dsp(x->reso, out);
@@ -148,14 +148,14 @@ struct SDTWindKarman {
 
 void SDTWindKarman_updateResonance(SDTWindKarman *x) {
   double fc;
-  
+
   fc = 8.0 * x->windSpeed / x->diameter;
   SDTTwoPoles_resonant(x->reso, fc, 30.0);
 }
 
 SDTWindKarman *SDTWindKarman_new() {
   SDTWindKarman *x;
-  
+
   x = (SDTWindKarman *)calloc(1, sizeof(SDTWindKarman));
   x->reso = SDTTwoPoles_new();
   x->diameter = 0.001;
@@ -186,7 +186,7 @@ void SDTWindKarman_setWindSpeed(SDTWindKarman *x, double f) {
 
 double SDTWindKarman_dsp(SDTWindKarman *x) {
   double out;
-  
+
   out = x->windSpeed * SDT_whiteNoise();
   out = SDTTwoPoles_dsp(x->reso, out);
   return out;
@@ -197,16 +197,15 @@ double SDTWindKarman_dsp(SDTWindKarman *x) {
 struct SDTExplosion {
   SDTReverb *scatter;
   SDTTwoPoles *wave, *wind;
-  double *waveBuf, *windBuf,
-         blastTime, scatterTime, dispersion,
-         distance, waveSpeed, windSpeed, time;
+  double *waveBuf, *windBuf, blastTime, scatterTime, dispersion, distance,
+      waveSpeed, windSpeed, time;
   long i, waveDelay, windDelay, size;
 };
 
 SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay) {
   SDTExplosion *x;
   long i;
-  
+
   x = (SDTExplosion *)malloc(sizeof(SDTExplosion));
   x->scatter = SDTReverb_new(maxScatter);
   x->wave = SDTTwoPoles_new();
@@ -258,15 +257,21 @@ SDT_DEFINE_HASHMAP(SDT_EXPLOSION, 59)
 SDT_JSON_SERIALIZE(SDT_EXPLOSION)
 SDT_JSON_DESERIALIZE(SDT_EXPLOSION)
 
-long SDTExplosion_getMaxScatter(const SDTExplosion *x) { return SDTReverb_getMaxDelay(x->scatter); }
+long SDTExplosion_getMaxScatter(const SDTExplosion *x) {
+  return SDTReverb_getMaxDelay(x->scatter);
+}
 
 long SDTExplosion_getMaxDelay(const SDTExplosion *x) { return x->size; }
 
 double SDTExplosion_getBlastTime(const SDTExplosion *x) { return x->blastTime; }
 
-double SDTExplosion_getScatterTime(const SDTExplosion *x) { return x->scatterTime; }
+double SDTExplosion_getScatterTime(const SDTExplosion *x) {
+  return x->scatterTime;
+}
 
-double SDTExplosion_getDispersion(const SDTExplosion *x) { return x->dispersion; }
+double SDTExplosion_getDispersion(const SDTExplosion *x) {
+  return x->dispersion;
+}
 
 double SDTExplosion_getDistance(const SDTExplosion *x) { return x->distance; }
 
@@ -316,13 +321,14 @@ void SDTExplosion_update(SDTExplosion *x) {
 void SDTExplosion_dsp(SDTExplosion *x, double *outs) {
   double zeroCross, blast, scatter, wave, wind;
   long waveI, windI;
-  
+
   zeroCross = x->blastTime == 0.0 ? 1.0 : x->time / x->blastTime;
   blast = exp(-zeroCross) * (1.0 - zeroCross);
   scatter = SDTReverb_dsp(x->scatter, blast);
-  wave = SDTTwoPoles_dsp(x->wave, (1.0 - x->dispersion) * blast + x->dispersion * scatter);
+  wave = SDTTwoPoles_dsp(
+      x->wave, (1.0 - x->dispersion) * blast + x->dispersion * scatter);
   wind = SDTTwoPoles_dsp(x->wind, SDT_whiteNoise() * wave);
-  
+
   if (x->waveDelay < x->size) {
     waveI = (x->i + x->waveDelay) % x->size;
     x->waveBuf[waveI] += wave;

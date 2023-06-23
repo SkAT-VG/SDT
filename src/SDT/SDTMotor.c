@@ -1,9 +1,9 @@
+#include "SDTMotor.h"
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
-#include "SDTMotor.h"
 #include "SDTStructs.h"
 
 #define MAX_CYLINDERS 12
@@ -14,29 +14,32 @@
 #define AIR_FEED -0.5
 
 struct SDTMotor {
-  void (*cycle)(double phase, double *pressure, double *inValve, double *outValve);
+  void (*cycle)(double phase, double *pressure, double *inValve,
+                double *outValve);
   SDTWaveguide *intakes[MAX_CYLINDERS], *cylinders[MAX_CYLINDERS],
-             *extractors[MAX_CYLINDERS], *exhaust, *mufflers[N_MUFFLERS], *outlet;
+      *extractors[MAX_CYLINDERS], *exhaust, *mufflers[N_MUFFLERS], *outlet;
   SDTOnePole *air, *walls, *intakeDC, *vibrationsDC, *outletDC;
-  double rpm, throttle, phase, step,
-         cylinderSize, compressionRatio, sparkTime, asymmetry, backfire, backfireRate,
-         revIntakes, vibrations, fwdExtractors, revMufflers, fwdMufflers, fwdOutlet;
+  double rpm, throttle, phase, step, cylinderSize, compressionRatio, sparkTime,
+      asymmetry, backfire, backfireRate, revIntakes, vibrations, fwdExtractors,
+      revMufflers, fwdMufflers, fwdOutlet;
   unsigned char isRevvingDown, isBackfiring;
   int nCylinders;
 };
 
-void fourStroke(double phase, double *pressure, double *inValve, double *outValve) {
+void fourStroke(double phase, double *pressure, double *inValve,
+                double *outValve) {
   double w;
-  
+
   w = 2.0 * SDT_TWOPI * phase;
   *pressure = cos(w);
   *inValve = sin(w) * (phase > 0.5 && phase < 0.75);
   *outValve = -sin(w) * (phase > 0.25 && phase < 0.5);
 }
 
-void twoStroke(double phase, double *pressure, double *inValve, double *outValve) {
+void twoStroke(double phase, double *pressure, double *inValve,
+               double *outValve) {
   double w;
-  
+
   w = SDT_TWOPI * phase;
   *pressure = cos(w);
   *inValve = SDT_fclip(SDT_scale(*pressure, -0.33, -1, 0, 1, 1), 0, 1);
@@ -137,7 +140,7 @@ void SDTMotor_setMaxDelay(SDTMotor *x, long f) {
 
 void SDTMotor_free(SDTMotor *x) {
   int i;
-  
+
   for (i = 0; i < MAX_CYLINDERS; i++) {
     SDTWaveguide_free(x->intakes[i]);
     SDTWaveguide_free(x->cylinders[i]);
@@ -172,15 +175,15 @@ long SDTMotor_getMaxDelay(const SDTMotor *x) {
   return SDTWaveguide_getMaxDelay(x->outlet);
 }
 
-double SDTMotor_getCycle(const SDTMotor *x) {
-  return x->step == 60.0;
-}
+double SDTMotor_getCycle(const SDTMotor *x) { return x->step == 60.0; }
 
 int SDTMotor_getNCylinders(const SDTMotor *x) { return x->nCylinders; }
 
 double SDTMotor_getCylinderSize(const SDTMotor *x) { return x->cylinderSize; }
 
-double SDTMotor_getCompressionRatio(const SDTMotor *x) { return x->compressionRatio; }
+double SDTMotor_getCompressionRatio(const SDTMotor *x) {
+  return x->compressionRatio;
+}
 
 double SDTMotor_getSparkTime(const SDTMotor *x) { return x->sparkTime; }
 
@@ -192,14 +195,16 @@ double SDTMotor_getIntakeSize(const SDTMotor *x) {
   int i = 0, sign;
   sign = (i % 2) * 2 - 1;
   double coeff = sign * floor(i / 2 + 1) / MAX_CYLINDERS;
-  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->intakes[i]) / (1 + coeff));
+  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->intakes[i]) /
+                              (1 + coeff));
 }
 
 double SDTMotor_getExtractorSize(const SDTMotor *x) {
   int i = 0, sign;
   sign = (i % 2) * 2 - 1;
   double coeff = sign * floor(i / 2 + 1) / MAX_CYLINDERS;
-  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->extractors[i]) / (1 + coeff));
+  return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->extractors[i]) /
+                              (1 + coeff));
 }
 
 double SDTMotor_getExhaustSize(const SDTMotor *x) {
@@ -236,12 +241,10 @@ void SDTMotor_setRpm(SDTMotor *x, double f) {
   f = fmax(0.0, f);
   if ((int)f < (int)x->rpm) {
     x->isRevvingDown = 1;
-  }
-  else if ((int)f > (int)x->rpm) {
+  } else if ((int)f > (int)x->rpm) {
     x->backfireRate = x->backfire;
     x->isRevvingDown = 0;
-  }
-  else {
+  } else {
     x->isRevvingDown = 0;
   }
   x->rpm = f;
@@ -282,13 +285,13 @@ void SDTMotor_setAsymmetry(SDTMotor *x, double f) {
 }
 
 void SDTMotor_setBackfire(SDTMotor *x, double f) {
-  x->backfire = f;//SDT_fclip(f, 0.0, 1.0);
+  x->backfire = f;  // SDT_fclip(f, 0.0, 1.0);
 }
 
 void SDTMotor_setIntakeSize(SDTMotor *x, double f) {
   double coeff;
   int i, sign;
-  
+
   f = SDT_samplesInAir(f);
   for (i = 0; i < MAX_CYLINDERS; i++) {
     sign = (i % 2) * 2 - 1;
@@ -300,7 +303,7 @@ void SDTMotor_setIntakeSize(SDTMotor *x, double f) {
 void SDTMotor_setExtractorSize(SDTMotor *x, double f) {
   double coeff;
   int i, sign;
-  
+
   f = SDT_samplesInAir(f);
   for (i = 0; i < MAX_CYLINDERS; i++) {
     sign = (i % 2) * 2 - 1;
@@ -315,7 +318,7 @@ void SDTMotor_setExhaustSize(SDTMotor *x, double f) {
 
 void SDTMotor_setExpansion(SDTMotor *x, double f) {
   int i;
-  
+
   f = SDT_fclip(f, 0.0, 1.0);
   for (i = 0; i < MAX_CYLINDERS; i++) {
     SDTWaveguide_setFwdFeedback(x->extractors[i], -f);
@@ -325,16 +328,17 @@ void SDTMotor_setExpansion(SDTMotor *x, double f) {
 
 void SDTMotor_setMufflerSize(SDTMotor *x, double f) {
   int i;
-  
+
   f = SDT_samplesInAir(f);
   for (i = 0; i < N_MUFFLERS; i++) {
-    SDTWaveguide_setDelay(x->mufflers[i], f * (0.7 + 0.6 * i / (N_MUFFLERS - 1)));
+    SDTWaveguide_setDelay(x->mufflers[i],
+                          f * (0.7 + 0.6 * i / (N_MUFFLERS - 1)));
   }
 }
 
 void SDTMotor_setMufflerFeedback(SDTMotor *x, double f) {
   int i;
-  
+
   f = SDT_fclip(f, 0.0, 1.0);
   SDTWaveguide_setFwdFeedback(x->exhaust, f);
   for (i = 0; i < N_MUFFLERS; i++) {
@@ -349,20 +353,20 @@ void SDTMotor_setOutletSize(SDTMotor *x, double f) {
 }
 
 void SDTMotor_dsp(SDTMotor *x, double *outs) {
-  double position, asymmetry, phase,
-         backfire, spark, pressure, chamber, inValve, outValve,
-         inValveFeed, outValveFeed,
-         fwdIn, revIn;
+  double position, asymmetry, phase, backfire, spark, pressure, chamber,
+      inValve, outValve, inValveFeed, outValveFeed, fwdIn, revIn;
   int i;
-  
+
   x->revIntakes = 0.0;
   x->vibrations = 0.0;
   x->fwdExtractors = 0.0;
   for (i = 0; i < x->nCylinders; i++) {
     position = (i + 0.5) / (double)x->nCylinders;
-    asymmetry = 0.5 * x->asymmetry * sin(SDT_TWOPI * position) / (double)x->nCylinders;
+    asymmetry =
+        0.5 * x->asymmetry * sin(SDT_TWOPI * position) / (double)x->nCylinders;
     phase = fmod(x->phase + position + asymmetry, 1.0);
-    spark = sin(SDT_TWOPI * phase / x->sparkTime) * (phase < x->sparkTime) * x->throttle;
+    spark = sin(SDT_TWOPI * phase / x->sparkTime) * (phase < x->sparkTime) *
+            x->throttle;
     x->cycle(phase, &pressure, &inValve, &outValve);
     chamber = 1.0 - (pressure * 0.5 + 0.5) * (1.0 - 1.0 / x->compressionRatio);
     inValveFeed = inValve * JOINT_FEED + (1.0 - inValve) * METAL_FEED;
@@ -394,7 +398,8 @@ void SDTMotor_dsp(SDTMotor *x, double *outs) {
   revIn = x->revMufflers;
   SDTWaveguide_dsp(x->exhaust, fwdIn, revIn);
   // backfiring
-  backfire = sin(SDT_TWOPI * x->phase / x->sparkTime) * (x->phase < x->sparkTime);
+  backfire =
+      sin(SDT_TWOPI * x->phase / x->sparkTime) * (x->phase < x->sparkTime);
   x->phase = x->phase + x->rpm / x->step * SDT_timeStep;
   if (x->phase > 1.0) {
     x->isBackfiring = SDT_frand() < x->backfireRate * x->isRevvingDown;
@@ -407,7 +412,8 @@ void SDTMotor_dsp(SDTMotor *x, double *outs) {
   x->revMufflers = 0.0;
   x->fwdMufflers = 0.0;
   for (i = 0; i < N_MUFFLERS; i++) {
-    fwdIn = SDTWaveguide_getFwdOut(x->exhaust) / N_MUFFLERS + backfire * x->isBackfiring;
+    fwdIn = SDTWaveguide_getFwdOut(x->exhaust) / N_MUFFLERS +
+            backfire * x->isBackfiring;
     revIn = SDTWaveguide_getRevOut(x->outlet) / N_MUFFLERS;
     SDTWaveguide_dsp(x->mufflers[i], fwdIn, revIn);
     x->revMufflers += SDTWaveguide_getRevOut(x->mufflers[i]);

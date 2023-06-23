@@ -95,23 +95,11 @@ SH?=bash
 # -----------------------------------------------------------------------------
 
 # --- Compiler ----------------------------------------------------------------
-CFLAGS=-O3 -Wall -Wno-unknown-pragmas -Werror
-ifneq ("$(SDT_DEBUG)","")
-	CFLAGS+= -DSDT_DEBUG
-endif
-ifneq ("$(SDT_INFO)","")
-	CFLAGS+= -DSDT_INFO
-endif
-ifneq ("$(SDT_WARN)","")
-	CFLAGS+= -DSDT_WARN
-endif
-ifneq ("$(SDT_ERROR)","")
-	CFLAGS+= -DSDT_ERROR
-endif
+CFLAGS_=$(CFLAGS) -O3 -Wall -Wno-unknown-pragmas -Werror
 LDFLAGS=
 ifeq ("$(TARGET)", "linux")
 	CC=gcc
-	CFLAGS+= -fPIC
+	CFLAGS_+= -fPIC
 	LDFLAGS+= -lc -lm
 endif
 ifeq ("$(TARGET)", "win32")
@@ -127,7 +115,7 @@ ifeq ("$(TARGET)", "macosx")
 	MACARCH=-arch i386 -arch x86_64
 	MACVERSION_N=10.7
 	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
-	CFLAGS+= -g $(MACARCH) $(MACVERSION)
+	CFLAGS_+= -g $(MACARCH) $(MACVERSION)
 	SHARED_LDFLAGS=$(LDFLAGS) -dynamiclib -headerpad_max_install_names $(MACARCH) $(MACVERSION)
 else
 	SHARED_LDFLAGS=-shared $(LDFLAGS)
@@ -138,7 +126,7 @@ $(CC) $(SHARED_LDFLAGS) $1 -o $@ $^
 endef
 
 define build-obj
-$(CC) $(CFLAGS) $1 -c $< -o $@
+$(CC) $(CFLAGS_) $1 -c $< -o $@
 endef
 
 define make-dir
@@ -351,12 +339,15 @@ ifeq ("$(TARGET)", "macosx")
 endif
 
 MAX_BUILDDIR=$(strip $(call get_build_dest,$(MAX_DIR)))
-MAX_EXTS=$(strip $(call get_objects,$(MAX_DIR),$(MAX_EXTS_EXT)))
+MAX_EXTS_SRCS=$(strip $(wildcard $(MAX_DIR)/sdt.*.c))
+MAX_HELPER_SRCS=$(strip $(wildcard $(MAX_DIR)/SDT*.c))
+
+MAX_HELPER_OBJS=$(call get_build_dest, $(patsubst %.c,%.o,$(MAX_HELPER_SRCS)))
+MAX_EXTS=$(call get_build_dest, $(patsubst %.c,%.$(MAX_EXTS_EXT), $(MAX_EXTS_SRCS)))
 
 max: $(MAX_EXTS); $(info Max library built (v$(SDT_MAX_VERSION)): $^)
 
-$(MAX_BUILDDIR): $(MAX_BUILDDIR)/SDT_fileusage
-$(MAX_BUILDDIR)/SDT_fileusage:; $(make-dir)
+$(MAX_BUILDDIR):; $(make-dir)
 $(MAX_BUILDDIR)/%.o: $(MAX_DIR)/%.c | $(MAX_BUILDDIR)
 	$(call build-obj,$(INCLUDE_SDT) $(INCLUDE_MAX_SDK) $(MAX_CFLAGS))
 ifeq ("$(TARGET)", "macosx")
@@ -366,9 +357,9 @@ $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT)/Contents/MacOS:; $(make-dir)
 $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): EXTNAME=$(patsubst $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT),%,$@)
 $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): RFC1034=$(patsubst %~,%-,$(EXTNAME))
 $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o \
+                                   $(MAX_HELPER_OBJS) \
                                    $(MAX_FRAMEWORK_TEMPLATE) \
-                                   $(CORE_FRAMEWORK) \
-                                   $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o
+                                   $(CORE_FRAMEWORK)
 	rm -rf $@
 	mkdir -p $@/Contents/MacOS
 	cp -a $(MAX_FRAMEWORK_TEMPLATE)/* $@
@@ -376,14 +367,13 @@ $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o \
 	sed -i "" s/\$${PRODUCT_NAME:rfc1034identifier}/$(RFC1034)/g $@/Contents/Info.plist
 	sed -i "" s/\$${PRODUCT_VERSION}/$(SDT_MAX_VERSION)/g $@/Contents/Info.plist
 	$(CC) $(SHARED_LDFLAGS) $(LINK_MAX_SDK) $(LINK_SDT) -o $@/Contents/MacOS/$(EXTNAME) \
-		$< $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o
+		$< $(MAX_HELPER_OBJS)
 	install_name_tool -id @rpath/$(EXTNAME) $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -add_rpath @loader_path/../../../../support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
 	install_name_tool -add_rpath @executable_path/../Resources/C74/packages/SDT/support/SDT.framework $@/Contents/MacOS/$(EXTNAME)
 else
 $(MAX_BUILDDIR)/%.$(MAX_EXTS_EXT): $(MAX_BUILDDIR)/%.o $(MAX_BUILDDIR)/%.def \
-                                   $(MAX_BUILDDIR)/SDT_fileusage/SDT_fileusage.o \
-                                   $(CORE_LIB)
+                                   $(MAX_HELPER_OBJS) $(CORE_LIB)
 	$(CC) $(SHARED_LDFLAGS) $(filter-out $(CORE_LIB),$^) -o $@ $(LINK_MAX_SDK) $(LINK_SDT)
 $(MAX_BUILDDIR)/%.def: $(TEMPLATE_DIR)/Info.def | $(MAX_BUILDDIR)
 	cp $< $@

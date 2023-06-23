@@ -3,20 +3,20 @@
 
 /** @file SDTMotor.h
 @defgroup motor SDTMotor.h: Combustion engines
-From a mechanical point of view, an internal combustion engine converts chemical energy
-into kinetic energy by means of a series of controlled explosions.
-From an acoustical point of view, the previously described setup is basically a set
-of resonating pipes, excited by the explosions happening in the combustion chambers.
-Resonances happening inside intake pipes, cylinders, exhaust collectors, exhaust pipe,
-exhaust muffler and final outlet are simulated by means of digital waveguides,
-whose inputs, lengths and feedback gains are controlled by a physical model
-of the engine operation cycle representing the behavior of the engine block.
-Four mechanical components are simulated: Piston motion, fuel ignition,
-intake valves operation and exhaust valves operation.
-The model provides also a simulation of exhaust backfiring, a phenomenon which occurs
-especially in sports or muscle cars, where the very rich fuel mixture sometimes
-doesn't burn completely in the cylinders and self ignites later
-in the hotter parts of the exhaust system.
+From a mechanical point of view, an internal combustion engine converts chemical
+energy into kinetic energy by means of a series of controlled explosions. From
+an acoustical point of view, the previously described setup is basically a set
+of resonating pipes, excited by the explosions happening in the combustion
+chambers. Resonances happening inside intake pipes, cylinders, exhaust
+collectors, exhaust pipe, exhaust muffler and final outlet are simulated by
+means of digital waveguides, whose inputs, lengths and feedback gains are
+controlled by a physical model of the engine operation cycle representing the
+behavior of the engine block. Four mechanical components are simulated: Piston
+motion, fuel ignition, intake valves operation and exhaust valves operation. The
+model provides also a simulation of exhaust backfiring, a phenomenon which
+occurs especially in sports or muscle cars, where the very rich fuel mixture
+sometimes doesn't burn completely in the cylinders and self ignites later in the
+hotter parts of the exhaust system.
 @{ */
 
 #ifndef SDT_MOTOR_H
@@ -39,22 +39,24 @@ extern void SDTMotor_free(SDTMotor *x);
 
 #define SDT_MOTOR Motor
 #define SDT_MOTOR_NEW_ARGS 44100
-#define SDT_MOTOR_ATTRIBUTES(T, A) \
-A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100) \
-A(T, cycle, double, Cycle, cycle, double, 0.0) \
-A(T, nCylinders, int, NCylinders, nCylinders, integer, 4) \
-A(T, cylinderSize, double, CylinderSize, cylinderSize, double, 500.0) \
-A(T, compressionRatio, double, CompressionRatio, compressionRatio, double, 10.0) \
-A(T, sparkTime, double, SparkTime, sparkTime, double, 0.1) \
-A(T, asymmetry, double, Asymmetry, asymmetry, double, 0.1) \
-A(T, backfire, double, Backfire, backfire, double, 0.0) \
-A(T, intakeSize, double, IntakeSize, intakeSize, double, 0) \
-A(T, extractorSize, double, ExtractorSize, extractorSize, double, 0) \
-A(T, exhaustSize, double, ExhaustSize, exhaustSize, double, 0) \
-A(T, expansion, double, Expansion, expansion, double, JOINT_FEED) \
-A(T, mufflerSize, double, MufflerSize, mufflerSize, double, 0) \
-A(T, mufflerFeedback, double, MufflerFeedback, mufflerFeedback, double, MUFFLER_FEED) \
-A(T, outletSize, double, OutletSize, outletSize, double, 0)
+#define SDT_MOTOR_ATTRIBUTES(T, A)                                           \
+  A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100)                   \
+  A(T, cycle, double, Cycle, cycle, double, 0.0)                             \
+  A(T, nCylinders, int, NCylinders, nCylinders, integer, 4)                  \
+  A(T, cylinderSize, double, CylinderSize, cylinderSize, double, 500.0)      \
+  A(T, compressionRatio, double, CompressionRatio, compressionRatio, double, \
+    10.0)                                                                    \
+  A(T, sparkTime, double, SparkTime, sparkTime, double, 0.1)                 \
+  A(T, asymmetry, double, Asymmetry, asymmetry, double, 0.1)                 \
+  A(T, backfire, double, Backfire, backfire, double, 0.0)                    \
+  A(T, intakeSize, double, IntakeSize, intakeSize, double, 0)                \
+  A(T, extractorSize, double, ExtractorSize, extractorSize, double, 0)       \
+  A(T, exhaustSize, double, ExhaustSize, exhaustSize, double, 0)             \
+  A(T, expansion, double, Expansion, expansion, double, JOINT_FEED)          \
+  A(T, mufflerSize, double, MufflerSize, mufflerSize, double, 0)             \
+  A(T, mufflerFeedback, double, MufflerFeedback, mufflerFeedback, double,    \
+    MUFFLER_FEED)                                                            \
+  A(T, outletSize, double, OutletSize, outletSize, double, 0)
 
 SDT_TYPE_COPY_H(SDT_MOTOR)
 SDT_DEFINE_HASHMAP_H(SDT_MOTOR)
@@ -67,7 +69,8 @@ extern void SDTMotor_setMaxDelay(SDTMotor *x, long f);
 extern void SDTMotor_setCycle(SDTMotor *x, double f);
 
 /** @brief Update filter coefficients.
-Should be always called after setting the sampling rate with SDT_setSampleRate().
+Should be always called after setting the sampling rate with
+SDT_setSampleRate().
 @param[in] x Pointer to a SDTMotor instance */
 extern void SDTMotor_setFilters(SDTMotor *x, double damp, double dc);
 
@@ -90,17 +93,19 @@ extern void SDTMotor_setTwoStroke(SDTMotor *x);
 extern void SDTMotor_setNCylinders(SDTMotor *x, int i);
 
 /** @brief Sets the size of each single cylinder.
-The total volume of the engine is this value multiplied by the number of cylinders.
+The total volume of the engine is this value multiplied by the number of
+cylinders.
 @param[in] f Cylinder volume, in cc */
 extern void SDTMotor_setCylinderSize(SDTMotor *x, double f);
 
 /** @brief Sets the compression ratio of the engine.
-The compression ratio is computed dividing the cylinder volume at maximum expansion
-(piston down) by its volume at maximum compression (piston up).
+The compression ratio is computed dividing the cylinder volume at maximum
+expansion (piston down) by its volume at maximum compression (piston up).
 @param[in] f Compression ratio */
 extern void SDTMotor_setCompressionRatio(SDTMotor *x, double f);
 
-/** @brief Sets the width of the ignition pulse, compared to a full operation cycle.
+/** @brief Sets the width of the ignition pulse, compared to a full operation
+cycle.
 @param[in] f Ignition time [0,1] */
 extern void SDTMotor_setSparkTime(SDTMotor *x, double f);
 
@@ -146,9 +151,11 @@ extern void SDTMotor_setOutletSize(SDTMotor *x, double f);
 Call this function at sample rate to synthesize the engine sound.
 The output is written in an array of three doubles. The first value represents
 the sound picked up at the intakes, from the front of the vehicle; the second
-represents the engine vibrations, mostly heard inside the cabin; the third and last
-output represents the sound coming from the exhaust outlet, towards the rear of the vehicle.
-@param[out] outs Pointer to an array of three doubles, destination of the output */
+represents the engine vibrations, mostly heard inside the cabin; the third and
+last output represents the sound coming from the exhaust outlet, towards the
+rear of the vehicle.
+@param[out] outs Pointer to an array of three doubles, destination of the output
+*/
 extern void SDTMotor_dsp(SDTMotor *x, double *outs);
 
 /** @} */

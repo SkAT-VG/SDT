@@ -1,5 +1,5 @@
-#include "SDTJSON.h"
 #include "SDTCommonMacros.h"
+#include "SDTJSON.h"
 
 /** @file SDTAnalysis.h
 @defgroup analysis SDTAnalysis.h: Sound analysis tools
@@ -31,18 +31,69 @@ extern SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTZeroCrossing_free(SDTZeroCrossing *x);
 
-#define SDT_ZEROCROSSING ZeroCrossing
-#define SDT_ZEROCROSSING_NEW_ARGS 1024
-#define SDT_ZEROCROSSING_ATTRIBUTES(T, A) \
-A(T, size, unsigned int, Size, size, integer, 1024) \
-A(T, overlap, double, Overlap, overlap, double, 0)
+/** @brief Deep-copies a zero crossing rate detector.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
+                                             const SDTZeroCrossing *src,
+                                             unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_ZEROCROSSING)
-SDT_DEFINE_HASHMAP_H(SDT_ZEROCROSSING)
-SDT_TYPE_MAKE_GETTERS_H(SDT_ZEROCROSSING)
-SDT_JSON_SERIALIZE_H(SDT_ZEROCROSSING)
-SDT_JSON_DESERIALIZE_H(SDT_ZEROCROSSING)
+/** @brief Registers a zero crossing rate detector into the zero crossing rate
+detectors list with a unique ID.
+@param[in] x Zero crossing rate detector instance to register
+@param[in] key Unique ID assigned to the zero crossing rate detector instance */
+extern int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, char *key);
 
+/** @brief Queries the zero crossing rate detectors list by its unique ID.
+If a zero crossing rate detector with the ID is present, a pointer to the zero
+crossing rate detector is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the zero crossing rate detector instance
+@return Zero crossing rate detector instance pointer */
+extern SDTZeroCrossing *SDT_getZeroCrossing(const char *key);
+
+/** @brief Unregisters a zero crossing rate detector from the zero crossing rate
+detectors list. If a zero crossing rate detector with the given ID is present,
+it is unregistered from the list.
+@param[in] key Unique ID of the zero crossing rate detector instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterZeroCrossing(char *key);
+
+/** @brief Gets the size of the analysis window.
+@param[in] x Pointer to the instance
+@return Size of the analysis window, in samples */
+extern unsigned int SDTZeroCrossing_getSize(const SDTZeroCrossing *x);
+
+/** @brief Gets the analysis window overlapping ratio.
+@param[in] x Pointer to the instance
+@return Overlap ratio [0.0, 1.0] */
+extern double SDTZeroCrossing_getOverlap(const SDTZeroCrossing *x);
+
+/** @brief Represent a zero crossing rate detector as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x);
+
+/** @brief Initialize a zero crossing rate detector from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a zero crossing rate detector from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
+                                                  const json_value *j,
+                                                  unsigned char unsafe);
+
+/** @brief Sets the size of the analysis window, in samples.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] x Pointer to the instance
+@param[in] f Size of the analysis window, in samples */
 extern void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
@@ -80,11 +131,11 @@ extern void SDTMyoelastic_free(SDTMyoelastic *x);
 
 #define SDT_MYOELASTIC Myoelastic
 #define SDT_MYOELASTIC_NEW_ARGS 0
-#define SDT_MYOELASTIC_ATTRIBUTES(T, A) \
-A(T, dcCut, double, DcFrequency, dcFrequency, double, 0) \
-A(T, lowCut, double, LowFrequency, lowFrequency, double, 0) \
-A(T, highCut, double, HighFrequency, highFrequency, double, -1) \
-A(T, threshold, double, Threshold, threshold, double, 0)
+#define SDT_MYOELASTIC_ATTRIBUTES(T, A)                           \
+  A(T, dcCut, double, DcFrequency, dcFrequency, double, 0)        \
+  A(T, lowCut, double, LowFrequency, lowFrequency, double, 0)     \
+  A(T, highCut, double, HighFrequency, highFrequency, double, -1) \
+  A(T, threshold, double, Threshold, threshold, double, 0)
 
 SDT_TYPE_COPY_H(SDT_MYOELASTIC)
 SDT_DEFINE_HASHMAP_H(SDT_MYOELASTIC)
@@ -108,7 +159,8 @@ extern void SDTMyoelastic_setLowFrequency(SDTMyoelastic *x, double f);
 extern void SDTMyoelastic_setHighFrequency(SDTMyoelastic *x, double f);
 
 /** @brief Sets the amplitude threshold of the input gate.
-Myoelastic activity is not computed for signals whose amplitude is below this thresold.
+Myoelastic activity is not computed for signals whose amplitude is below this
+thresold.
 @param[in] x Pointer to the instance
 @param[in] f Amplitude threshold */
 extern void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f);
@@ -116,8 +168,9 @@ extern void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f);
 /** @brief Signal processing routine.
 Call this function at sample rate to perform signal analysis.
 @param[in] x Pointer to the instance
-@param[out] outs Pointer to an array of four doubles containing the algorithm output
-            (slow myoelastic amount and frequency, fast myoelastic amount and frequency)
+@param[out] outs Pointer to an array of four doubles containing the algorithm
+output (slow myoelastic amount and frequency, fast myoelastic amount and
+frequency)
 @param[in] in Input sample
 @return 1 if output available, 0 otherwise */
 extern int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
@@ -125,9 +178,9 @@ extern int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in);
 /** @} */
 
 /** @defgroup spectralfeats Spectral audio descriptors
-Spectral features extractor: statistical moments (centroid, spread, skewness, kurtosis),
-spectral flatness, spectral flux and an onset detection function based on rectified,
-whitened spectral flux.
+Spectral features extractor: statistical moments (centroid, spread, skewness,
+kurtosis), spectral flatness, spectral flux and an onset detection function
+based on rectified, whitened spectral flux.
 @{ */
 
 /** @brief Opaque data structure for a spectral features extractor. */
@@ -144,11 +197,11 @@ extern void SDTSpectralFeats_free(SDTSpectralFeats *x);
 
 #define SDT_SPECTRALFEATS SpectralFeats
 #define SDT_SPECTRALFEATS_NEW_ARGS 1024
-#define SDT_SPECTRALFEATS_ATTRIBUTES(T, A) \
-A(T, size, unsigned int, Size, size, integer, 1024) \
-A(T, overlap, double, Overlap, overlap, double, 0) \
-A(T, min, double, MinFreq, minFreq, double, 0) \
-A(T, max, double, MaxFreq, maxFreq, double, 0)
+#define SDT_SPECTRALFEATS_ATTRIBUTES(T, A)            \
+  A(T, size, unsigned int, Size, size, integer, 1024) \
+  A(T, overlap, double, Overlap, overlap, double, 0)  \
+  A(T, min, double, MinFreq, minFreq, double, 0)      \
+  A(T, max, double, MaxFreq, maxFreq, double, 0)
 
 SDT_TYPE_COPY_H(SDT_SPECTRALFEATS)
 SDT_DEFINE_HASHMAP_H(SDT_SPECTRALFEATS)
@@ -166,13 +219,15 @@ and 1.0 meaning total overlap.
 extern void SDTSpectralFeats_setOverlap(SDTSpectralFeats *x, double f);
 
 /** @brief Sets the lower frequency bound for spectral analysis.
-Spectral bins below this frequency are ignored in the audio descriptors computation.
+Spectral bins below this frequency are ignored in the audio descriptors
+computation.
 @param[in] x Pointer to the instance
 @param[in] f Minimum analyzed frequency, in Hz */
 extern void SDTSpectralFeats_setMinFreq(SDTSpectralFeats *x, double f);
 
 /** @brief Sets the upper frequency bound for spectral analysis.
-Spectral bins above this frequency are ignored in the audio descriptors computation.
+Spectral bins above this frequency are ignored in the audio descriptors
+computation.
 @param[in] x Pointer to the instance
 @param[in] f Maximum analyzed frequency, in Hz */
 extern void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f);
@@ -180,8 +235,8 @@ extern void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f);
 /** @brief Signal processing routine.
 Call this function for each sample to perform signal analysis.
 @param[in] x Pointer to the instance
-@param[out] outs Pointer to an array of seven doubles, containing the algorithm outputs.
-Array members represent the following information respectively:
+@param[out] outs Pointer to an array of seven doubles, containing the algorithm
+outputs. Array members represent the following information respectively:
 -# Spectral centroid,
 -# Spectral spread,
 -# Spectral skewness,
@@ -217,10 +272,10 @@ extern void SDTPitch_free(SDTPitch *x);
 
 #define SDT_PITCH Pitch
 #define SDT_PITCH_NEW_ARGS 1024
-#define SDT_PITCH_ATTRIBUTES(T, A) \
-A(T, size, unsigned int, Size, size, integer, 1024) \
-A(T, overlap, double, Overlap, overlap, double, 0) \
-A(T, tol, double, Tolerance, tolerance, double, 0.2)
+#define SDT_PITCH_ATTRIBUTES(T, A)                    \
+  A(T, size, unsigned int, Size, size, integer, 1024) \
+  A(T, overlap, double, Overlap, overlap, double, 0)  \
+  A(T, tol, double, Tolerance, tolerance, double, 0.2)
 
 SDT_TYPE_COPY_H(SDT_PITCH)
 SDT_DEFINE_HASHMAP_H(SDT_PITCH)
@@ -253,8 +308,8 @@ extern void SDTPitch_setTolerance(SDTPitch *x, double f);
 /** @brief Signal processing routine.
 Call this function for each sample to perform signal analysis.
 @param[in] x Pointer to the instance
-@param[out] outs Pointer to an array of two doubles, containing the algorithm outputs.
-Array members represent the following information respectively:
+@param[out] outs Pointer to an array of two doubles, containing the algorithm
+outputs. Array members represent the following information respectively:
 -# Estimated pitch (Hz),
 -# Pitch clarity [0.0, 1.0].
 @param[in] in Input sample

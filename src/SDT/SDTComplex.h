@@ -11,7 +11,8 @@ basic operations with complex numbers.
 extern "C" {
 #endif
 
-/** @brief Data structure containing the real and imaginary part of a complex number. */
+/** @brief Data structure containing the real and imaginary part of a complex
+ * number. */
 typedef struct SDTComplex {
   double r, i;
 } SDTComplex;
@@ -84,7 +85,8 @@ extern SDTComplex SDTComplex_subReal(SDTComplex a, double b);
 @return a minus b */
 extern SDTComplex SDTComplex_realSub(double a, SDTComplex b);
 
-/** @brief Returns the multiplication between a complex number and a real number.
+/** @brief Returns the multiplication between a complex number and a real
+number.
 @param[in] a Complex operand
 @param[in] b Real operand
 @return a times b */

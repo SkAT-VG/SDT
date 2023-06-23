@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTModalTracker.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *modaltracker_class;
@@ -125,15 +125,26 @@ void modaltracker_free(t_modaltracker *x) {
   SDT_PD_FREE(ModalTracker, modaltracker)
 }
 
-void modaltracker_tilde_setup(void) {	
-  modaltracker_class = class_new(gensym("modaltracker~"), (t_newmethod)modaltracker_new, (t_method)modaltracker_free, sizeof(t_modaltracker), CLASS_DEFAULT, A_GIMME, 0);
+void modaltracker_tilde_setup(void) {
+  modaltracker_class =
+      class_new(gensym("modaltracker~"), (t_newmethod)modaltracker_new,
+                (t_method)modaltracker_free, sizeof(t_modaltracker),
+                CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(modaltracker_class, t_modaltracker, f);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_overlap, gensym("overlap"), A_FLOAT, 0);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_pickup, gensym("pickup"), A_FLOAT, 0);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_clear, gensym("clear"), 0);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_start, gensym("start"), 0);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_stop, gensym("stop"), 0);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_bang, gensym("bang"), 0);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_float, gensym("float"), A_FLOAT, 0);
-  class_addmethod(modaltracker_class, (t_method)modaltracker_dsp, gensym("dsp"), 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_overlap,
+                  gensym("overlap"), A_FLOAT, 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_pickup,
+                  gensym("pickup"), A_FLOAT, 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_clear,
+                  gensym("clear"), 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_start,
+                  gensym("start"), 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_stop,
+                  gensym("stop"), 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_bang,
+                  gensym("bang"), 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_float,
+                  gensym("float"), A_FLOAT, 0);
+  class_addmethod(modaltracker_class, (t_method)modaltracker_dsp, gensym("dsp"),
+                  0);
 }

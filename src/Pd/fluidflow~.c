@@ -5,12 +5,12 @@
  *
  *****************************************************************************/
 
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTLiquids.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *fluidflow_class;
@@ -65,7 +65,7 @@ static t_int *fluidflow_perform(t_int *w) {
   while (n--) {
     *out++ = (float)SDTFluidFlow_dsp(x->flow);
   }
-  return (w+4);
+  return (w + 4);
 }
 
 static void fluidflow_dsp(t_fluidflow *x, t_signal **sp) {
@@ -91,15 +91,26 @@ static void fluidflow_free(t_fluidflow *x) {
 }
 
 void fluidflow_tilde_setup(void) {
-  fluidflow_class = class_new(gensym("fluidflow~"), (t_newmethod)fluidflow_new, (t_method)fluidflow_free, sizeof(t_fluidflow), CLASS_DEFAULT, A_GIMME, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_avgRate, gensym("avgRate"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_minRadius, gensym("minRadius"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_maxRadius, gensym("maxRadius"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_expRadius, gensym("expRadius"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_minDepth, gensym("minDepth"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_maxDepth, gensym("maxDepth"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_expDepth, gensym("expDepth"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_riseFactor, gensym("riseFactor"), A_FLOAT, 0);
-  class_addmethod(fluidflow_class, (t_method)fluidflow_riseCutoff, gensym("riseCutoff"), A_FLOAT, 0);
+  fluidflow_class = class_new(gensym("fluidflow~"), (t_newmethod)fluidflow_new,
+                              (t_method)fluidflow_free, sizeof(t_fluidflow),
+                              CLASS_DEFAULT, A_GIMME, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_avgRate,
+                  gensym("avgRate"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_minRadius,
+                  gensym("minRadius"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_maxRadius,
+                  gensym("maxRadius"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_expRadius,
+                  gensym("expRadius"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_minDepth,
+                  gensym("minDepth"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_maxDepth,
+                  gensym("maxDepth"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_expDepth,
+                  gensym("expDepth"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_riseFactor,
+                  gensym("riseFactor"), A_FLOAT, 0);
+  class_addmethod(fluidflow_class, (t_method)fluidflow_riseCutoff,
+                  gensym("riseCutoff"), A_FLOAT, 0);
   class_addmethod(fluidflow_class, (t_method)fluidflow_dsp, gensym("dsp"), 0);
 }

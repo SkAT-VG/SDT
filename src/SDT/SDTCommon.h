@@ -98,10 +98,12 @@ SDTCommon.h should always be included when using other SDT modules.
 
 /** @brief Log levels for SDT */
 typedef enum SDTLogLevel {
-  SDT_LOG_ERROR = 0,
-  SDT_LOG_WARN = 1,
-  SDT_LOG_INFO = 2,
-  SDT_LOG_DEBUG = 3,
+  SDT_LOG_LEVEL_QUIET = -1,
+  SDT_LOG_LEVEL_ERROR = 0,
+  SDT_LOG_LEVEL_WARN = 1,
+  SDT_LOG_LEVEL_INFO = 2,
+  SDT_LOG_LEVEL_DEBUG = 3,
+  SDT_LOG_LEVEL_VERBOSE = 4,
 } SDTLogLevel;
 
 /** @brief Maximum string length for logging */
@@ -109,26 +111,66 @@ typedef enum SDTLogLevel {
 
 /** @brief Print a log message.
 @param[in] level Log level
-@param[in] fmt Writes the pointed string. If it includes format specifiers, the
-following additional arguments are formatted and inserted in the resulting
-string replacing their respective specifiers. */
+@param[in] file File name
+@param[in] line Code line in file
+#param[in] func Function name
+@param[in] fmt C string that contains a format string that follows the same
+specifications as format in printf */
 extern int SDT_log(int level, const char *file, unsigned int line,
                    const char *func, const char *fmt, ...);
 
-/** @brief Set the message-logger function.
+/** @brief Sets the message-logger function.
 @param[in] level Log level
-@param[in] print_func Message-logger function */
-extern void SDT_setLogger(int level, int (*print_func)(const char *, ...));
+@param[in] print_func Message-logger function
+@param[in] newline Whether the logger automatically inserts newlines */
+extern void SDT_setLogger(int level, int (*print_func)(const char *, ...),
+                          int newline);
 
-// Default is INFO
+/** @brief Gets the message-logger function.
+@param[in] level Log level
+@param[out] newline Whether the logger automatically inserts newlines
+@return Message-logger function */
+extern int (*SDT_getLogger(int level, int *newline))(const char *, ...);
+
+/** @brief Gets the log-level from the environment variable `SDT_LOG_LEVEL`.
+
+For efficiency, the environment variable is read only on the first invocation of
+this function. Valid values are:
+`QUIET`, `ERROR`, `WARN`, `INFO` (default), `DEBUG`, `VERBOSE`
+@return Log level */
+extern int SDT_getLogLevelFromEnv();
+
+/** @brief Convenience function for printing on the standard error
+@param[in] fmt C string that contains a format string that follows the same
+specifications as format in printf */
+extern int SDT_eprintf(const char *fmt, ...);
+
+// Default is DEBUG
 #ifndef SDT_ERROR
 #ifndef SDT_WARN
 #ifndef SDT_INFO
 #ifndef SDT_DEBUG
-#define SDT_INFO
+#ifndef SDT_VERBOSE
+#define SDT_DEBUG
 #endif
 #endif
 #endif
+#endif
+#endif
+
+#ifdef SDT_VERBOSE
+/** @brief Conditionally include code in verbose or non-verbose build
+@param[in] X Code to include in verbose builds
+@param[in] Y Code to include in non-verbose builds */
+#define SDT_VERBOSE_IF_ELSE(X, Y) X
+#ifndef SDT_DEBUG
+#define SDT_DEBUG
+#endif
+#else
+/** @brief Conditionally include code in debug or non-debug build
+@param[in] X Code to include in debug builds
+@param[in] Y Code to include in non-debug builds */
+#define SDT_VERBOSE_IF_ELSE(X, Y) Y
 #endif
 
 #ifdef SDT_DEBUG
@@ -179,7 +221,7 @@ extern void SDT_setLogger(int level, int (*print_func)(const char *, ...));
 /** @brief Conditionally include code in error or non-error build
 @param[in] X Code to include in error builds
 @param[in] Y Code to include in non-error builds */
-#define SDT_ERROR_IF_ELSE(X, Y) Y
+#define SDT_ERROR_IF_ELSE(X, Y) X
 
 #ifdef SDT_DEBUG
 #ifndef SDT_MEMORYTRACK_INCLUDE
@@ -187,80 +229,25 @@ extern void SDT_setLogger(int level, int (*print_func)(const char *, ...));
 #endif
 #endif
 
-/** @brief Exclude wrapped code from any non-debug build
-@param[in] X Code to include in debug builds only */
-#define SDT_DEBUG_ONLY(X) SDT_DEBUG_IF_ELSE(X, )
+/** @brief Exclude wrapped code from any build with log level below LEVEL
+@param[in] LEVEL Minimum level for code inclusion
+@param[in] X Conditional code */
+#define SDT_ONLY_IN_LEVEL(LEVEL, X) \
+  { SDT_##LEVEL##_IF_ELSE(X;, ) }
 
-/** @brief Exclude wrapped code from any non-info build
-@param[in] X Code to include in info builds only */
-#define SDT_INFO_ONLY(X) SDT_INFO_IF_ELSE(X, )
+/** @brief Log message in any build with log level below LEVEL
+@param[in] LEVEL Minimum level for logging
+@param[in] MSG C string */
+#define SDT_LOG(LEVEL, MSG)                                                   \
+  SDT_ONLY_IN_LEVEL(LEVEL, SDT_log(SDT_LOG_LEVEL_##LEVEL, __FILE__, __LINE__, \
+                                   __func__, MSG))
 
-/** @brief Exclude wrapped code from any non-warn build
-@param[in] X Code to include in warn builds only */
-#define SDT_WARN_ONLY(X) SDT_WARN_IF_ELSE(X, )
-
-/** @brief Exclude wrapped code from any non-error build
-@param[in] X Code to include in error builds only */
-#define SDT_ERROR_ONLY(X) SDT_ERROR_IF_ELSE(X, )
-
-/** @brief Print prefix for debug logs
-@param[in] PRINT_FUNC Print function
-@param[in] FILE File name
-@param[in] LINE Line number
-@param[in] FUNC Function name */
-#define SDT_LOG_PREFIX(PRINT_FUNC, FILE, LINE, FUNC) \
-  {                                                  \
-    _SDT_printTime(PRINT_FUNC);                      \
-    PRINT_FUNC(" %s:%d %s() \t", FILE, LINE, FUNC);  \
-  }
-
-/** @brief Log in debug mode only
-@param[in] MSG Message */
-#define SDT_DEBUG_LOG(MSG) \
-  SDT_DEBUG_ONLY(SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in debug mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_DEBUG_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_DEBUG_ONLY(                            \
-      SDT_log(SDT_LOG_DEBUG, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
-
-/** @brief Log in info mode only
-@param[in] MSG Message */
-#define SDT_INFO_LOG(MSG) \
-  SDT_INFO_ONLY(SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in info mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_INFO_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_INFO_ONLY(                            \
-      SDT_log(SDT_LOG_INFO, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
-
-/** @brief Log in warn mode only
-@param[in] MSG Message */
-#define SDT_WARN_LOG(MSG) \
-  SDT_WARN_ONLY(SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in warn mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_WARN_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_WARN_ONLY(                            \
-      SDT_log(SDT_LOG_WARN, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
-
-/** @brief Log in error mode only
-@param[in] MSG Message */
-#define SDT_ERROR_LOG(MSG) \
-  SDT_ERROR_ONLY(SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, MSG));
-
-/** @brief Log in error mode only, with format arguments
-@param[in] PRINT_FUNC Print function
-@param[in] FMT Message to be formatted */
-#define SDT_ERROR_LOGA(PRINT_FUNC, FMT, ...) \
-  SDT_ERROR_ONLY(                            \
-      SDT_log(SDT_LOG_ERROR, __FILE__, __LINE__, __func__, FMT, __VA_ARGS__));
+/** @brief Log message in any build with log level below LEVEL
+@param[in] LEVEL Minimum level for logging
+@param[in] MSG C string */
+#define SDT_LOGA(LEVEL, FMT, ...)                                             \
+  SDT_ONLY_IN_LEVEL(LEVEL, SDT_log(SDT_LOG_LEVEL_##LEVEL, __FILE__, __LINE__, \
+                                   __func__, FMT, __VA_ARGS__))
 
 #ifdef __cplusplus
 extern "C" {

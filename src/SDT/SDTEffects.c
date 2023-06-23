@@ -1,37 +1,34 @@
+#include "SDTEffects.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include "SDTCommon.h"
 #include "SDTComplex.h"
-#include "SDTFilters.h"
 #include "SDTFFT.h"
-#include "SDTEffects.h"
+#include "SDTFilters.h"
 #include "SDTStructs.h"
 
-double modes[15][3] = {{1,0,0},{0,2,1},{1,0,1},
-                       {2,1,0},{0,1,1},{1,1,1},
-                       {1,1,0},{0,1,2},{1,2,1},
-                       {1,2,0},{0,0,1},{2,1,1},
-                       {0,1,0},{1,0,2},{2,0,1}};
-                     
+double modes[15][3] = {{1, 0, 0}, {0, 2, 1}, {1, 0, 1}, {2, 1, 0}, {0, 1, 1},
+                       {1, 1, 1}, {1, 1, 0}, {0, 1, 2}, {1, 2, 1}, {1, 2, 0},
+                       {0, 0, 1}, {2, 1, 1}, {0, 1, 0}, {1, 0, 2}, {2, 0, 1}};
+
 struct SDTReverb {
   SDTDelay *delays[15];
   SDTOnePole *filters[15];
-  double g[15], v[30], r[15],
-         xSize, ySize, zSize, randomness, time, time1k;
+  double g[15], v[30], r[15], xSize, ySize, zSize, randomness, time, time1k;
 };
 
 SDTReverb *SDTReverb_new(long maxDelay) {
   SDTReverb *x;
   int i;
-  
+
   x = (SDTReverb *)malloc(sizeof(SDTReverb));
   for (i = 0; i < 15; i++) {
     x->delays[i] = SDTDelay_new(maxDelay);
     x->filters[i] = SDTOnePole_new();
     x->g[i] = 0.0;
     x->v[i] = 0.0;
-    x->v[i+15] = 0.0;
+    x->v[i + 15] = 0.0;
     x->r[i] = 2.0 * SDT_frand() - 1.0;
   }
   x->xSize = 4.0;
@@ -45,7 +42,7 @@ SDTReverb *SDTReverb_new(long maxDelay) {
 
 void SDTReverb_free(SDTReverb *x) {
   int i;
-  
+
   for (i = 0; i < 15; i++) {
     SDTDelay_free(x->delays[i]);
     SDTOnePole_free(x->filters[i]);
@@ -85,17 +82,20 @@ double SDTReverb_getTime1k(const SDTReverb *x) { return x->time1k; }
 void SDTReverb_update(SDTReverb *x) {
   double xMode, yMode, zMode, freq, delay, gi, gw, a, b, c, d;
   int i;
-  
+
   for (i = 0; i < 15; i++) {
     xMode = modes[i][0] / x->xSize;
     yMode = modes[i][1] / x->ySize;
     zMode = modes[i][2] / x->zSize;
-    freq = 0.5 * SDT_MACH1 * sqrt(xMode * xMode + yMode * yMode + zMode * zMode);
+    freq =
+        0.5 * SDT_MACH1 * sqrt(xMode * xMode + yMode * yMode + zMode * zMode);
     delay = SDT_sampleRate * (1.0 + x->randomness * x->r[i]) / freq;
     SDTDelay_setDelay(x->delays[i], delay);
     gi = fmax(0.0, pow(10.0, -3.0 * delay * SDT_timeStep / x->time));
     x->g[i] = gi;
-    gw = fmax(0.0, pow(10.0, -3.0 * delay * SDT_timeStep / fmin(x->time1k, x->time)) / gi);
+    gw = fmax(
+        0.0,
+        pow(10.0, -3.0 * delay * SDT_timeStep / fmin(x->time1k, x->time)) / gi);
     a = gw * gw - 1.0;
     b = (gw * gw * cos(SDT_TWOPI * 1000 * SDT_timeStep) - 1.0);
     c = a;
@@ -104,34 +104,24 @@ void SDTReverb_update(SDTReverb *x) {
   }
 }
 
-void SDTReverb_setXSize(SDTReverb *x, double f) {
-  x->xSize = fmax(0.0, f);
-}
+void SDTReverb_setXSize(SDTReverb *x, double f) { x->xSize = fmax(0.0, f); }
 
-void SDTReverb_setYSize(SDTReverb *x, double f) {
-  x->ySize = fmax(0.0, f);
-}
+void SDTReverb_setYSize(SDTReverb *x, double f) { x->ySize = fmax(0.0, f); }
 
-void SDTReverb_setZSize(SDTReverb *x, double f) {
-  x->zSize = fmax(0.0, f);
-}
+void SDTReverb_setZSize(SDTReverb *x, double f) { x->zSize = fmax(0.0, f); }
 
 void SDTReverb_setRandomness(SDTReverb *x, double f) {
   x->randomness = SDT_fclip(f, 0.0, 1.0);
 }
 
-void SDTReverb_setTime(SDTReverb *x, double f) {
-  x->time = fmax(0.0, f);
-}
+void SDTReverb_setTime(SDTReverb *x, double f) { x->time = fmax(0.0, f); }
 
-void SDTReverb_setTime1k(SDTReverb *x, double f) {
-  x->time1k = fmax(0.0, f);
-}
+void SDTReverb_setTime1k(SDTReverb *x, double f) { x->time1k = fmax(0.0, f); }
 
 double SDTReverb_dsp(SDTReverb *x, double in) {
   double a, b, c, d, *s, out;
   int i;
-  
+
   out = 0.0;
 
   for (i = 0; i < 15; i++) {
@@ -150,9 +140,8 @@ double SDTReverb_dsp(SDTReverb *x, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTPitchShift {
-  double *buf, *win, *dWin, *pow, *fqs,
-         *aFrame, *dFrame, *sFrame, *phs, *out,
-	     ratio, gain;
+  double *buf, *win, *dWin, *pow, *fqs, *aFrame, *dFrame, *sFrame, *phs, *out,
+      ratio, gain;
   SDTComplex *aFFT, *dFFT, *sFFT;
   SDTFFT *fftPlan;
   int i, j, size, winSize, fftSize, hopSize;
@@ -319,20 +308,16 @@ SDT_DEFINE_HASHMAP(SDT_PITCHSHIFT, 59)
 SDT_JSON_SERIALIZE(SDT_PITCHSHIFT)
 SDT_JSON_DESERIALIZE(SDT_PITCHSHIFT)
 
-int SDTPitchShift_getSize(const SDTPitchShift *x) {
-  return x->size;
-}
+int SDTPitchShift_getSize(const SDTPitchShift *x) { return x->size; }
 
 int SDTPitchShift_getOversample(const SDTPitchShift *x) {
   return x->winSize / x->size;
 }
 
-double SDTPitchShift_getRatio(const SDTPitchShift *x) {
-  return x->ratio;
-}
+double SDTPitchShift_getRatio(const SDTPitchShift *x) { return x->ratio; }
 
 double SDTPitchShift_getOverlap(const SDTPitchShift *x) {
-  return 1 - ((double) x->hopSize) / x->size;
+  return 1 - ((double)x->hopSize) / x->size;
 }
 
 void SDTPitchShift_setRatio(SDTPitchShift *x, double f) {
@@ -348,7 +333,7 @@ double SDTPitchShift_dsp(SDTPitchShift *x, double in) {
   double power, diff, freq, dFreq, shift;
   SDTComplex w;
   int i, j, k;
-  
+
   x->buf[x->i] = in;
   x->i = (x->i + 1) % x->size;
   x->j = (x->j + 1) % x->hopSize;
@@ -369,7 +354,10 @@ double SDTPitchShift_dsp(SDTPitchShift *x, double in) {
       power = x->aFFT[i].r * x->aFFT[i].r + x->aFFT[i].i * x->aFFT[i].i;
       if (power > 4.0 * x->pow[i]) x->phs[i] = 0.0;
       x->pow[i] = power;
-      diff = power > 0.0 ? (x->dFFT[i].i * x->aFFT[i].r - x->dFFT[i].r * x->aFFT[i].i) / power : 0.0;
+      diff = power > 0.0
+                 ? (x->dFFT[i].i * x->aFFT[i].r - x->dFFT[i].r * x->aFFT[i].i) /
+                       power
+                 : 0.0;
       freq = x->fqs[i] - diff;
       dFreq = freq * (x->ratio - 1.0);
       shift = dFreq * x->winSize / SDT_TWOPI;

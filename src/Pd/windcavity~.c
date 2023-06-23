@@ -1,16 +1,17 @@
 /** \file windcavity~.c
- * Puredata external for the simulation of gas flowing through resonating cavities.
+ * Puredata external for the simulation of gas flowing through resonating
+ *cavities.
  *
  * \author Stefano Baldan (stefanobaldan@iuav.it)
  *
  *****************************************************************************/
 
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *windcavity_class;
@@ -40,7 +41,7 @@ static t_int *windcavity_perform(t_int *w) {
     SDTWindCavity_setWindSpeed(x->cavity, *in++);
     *out++ = (float)SDTWindCavity_dsp(x->cavity);
   }
-  return (w+5);
+  return (w + 5);
 }
 
 static void windcavity_dsp(t_windcavity *x, t_signal **sp) {
@@ -66,9 +67,14 @@ static void windcavity_free(t_windcavity *x) {
 }
 
 void windcavity_tilde_setup(void) {
-  windcavity_class = class_new(gensym("windcavity~"), (t_newmethod)windcavity_new, (t_method)windcavity_free, sizeof(t_windcavity), CLASS_DEFAULT, A_GIMME, 0);
+  windcavity_class =
+      class_new(gensym("windcavity~"), (t_newmethod)windcavity_new,
+                (t_method)windcavity_free, sizeof(t_windcavity), CLASS_DEFAULT,
+                A_GIMME, 0);
   CLASS_MAINSIGNALIN(windcavity_class, t_windcavity, f);
-  class_addmethod(windcavity_class, (t_method)windcavity_length, gensym("length"), A_FLOAT, 0);
-  class_addmethod(windcavity_class, (t_method)windcavity_diameter, gensym("diameter"), A_FLOAT, 0);
+  class_addmethod(windcavity_class, (t_method)windcavity_length,
+                  gensym("length"), A_FLOAT, 0);
+  class_addmethod(windcavity_class, (t_method)windcavity_diameter,
+                  gensym("diameter"), A_FLOAT, 0);
   class_addmethod(windcavity_class, (t_method)windcavity_dsp, gensym("dsp"), 0);
 }

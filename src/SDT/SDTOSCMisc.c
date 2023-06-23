@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+
 SDTOSCReturnCode SDTOSCBiquad_log(void (*log)(const char *, ...),
                                   const char *key, SDTBiquad *x) {
   json_value *obj = SDTBiquad_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -20,7 +22,7 @@ SDTOSCReturnCode SDTOSCBiquad_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTBiquad_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -32,7 +34,7 @@ SDTOSCReturnCode SDTOSCBiquad_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTBiquad *r = SDTBiquad_fromJSON(obj);
@@ -80,7 +82,7 @@ SDTOSCReturnCode SDTOSCBouncing_log(void (*log)(const char *, ...),
   json_value *obj = SDTBouncing_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -92,7 +94,7 @@ SDTOSCReturnCode SDTOSCBouncing_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTBouncing_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -104,7 +106,7 @@ SDTOSCReturnCode SDTOSCBouncing_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTBouncing *r = SDTBouncing_fromJSON(obj);
@@ -185,7 +187,7 @@ SDTOSCReturnCode SDTOSCBreaking_log(void (*log)(const char *, ...),
   json_value *obj = SDTBreaking_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -197,7 +199,7 @@ SDTOSCReturnCode SDTOSCBreaking_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTBreaking_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -209,7 +211,7 @@ SDTOSCReturnCode SDTOSCBreaking_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTBreaking *r = SDTBreaking_fromJSON(obj);
@@ -302,7 +304,7 @@ SDTOSCReturnCode SDTOSCBubble_log(void (*log)(const char *, ...),
   json_value *obj = SDTBubble_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -314,7 +316,7 @@ SDTOSCReturnCode SDTOSCBubble_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTBubble_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -326,7 +328,7 @@ SDTOSCReturnCode SDTOSCBubble_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTBubble *r = SDTBubble_fromJSON(obj);
@@ -407,7 +409,7 @@ SDTOSCReturnCode SDTOSCCrumpling_log(void (*log)(const char *, ...),
   json_value *obj = SDTCrumpling_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -419,7 +421,7 @@ SDTOSCReturnCode SDTOSCCrumpling_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTCrumpling_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -431,7 +433,7 @@ SDTOSCReturnCode SDTOSCCrumpling_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTCrumpling *r = SDTCrumpling_fromJSON(obj);
@@ -514,7 +516,7 @@ SDTOSCReturnCode SDTOSCDCMotor_log(void (*log)(const char *, ...),
   json_value *obj = SDTDCMotor_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -526,7 +528,7 @@ SDTOSCReturnCode SDTOSCDCMotor_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTDCMotor_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -538,7 +540,7 @@ SDTOSCReturnCode SDTOSCDCMotor_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTDCMotor *r = SDTDCMotor_fromJSON(obj);
@@ -696,7 +698,7 @@ SDTOSCReturnCode SDTOSCDemix_log(void (*log)(const char *, ...),
   json_value *obj = SDTDemix_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -708,7 +710,7 @@ SDTOSCReturnCode SDTOSCDemix_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTDemix_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -720,7 +722,7 @@ SDTOSCReturnCode SDTOSCDemix_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTDemix *r = SDTDemix_fromJSON(obj);
@@ -823,7 +825,7 @@ SDTOSCReturnCode SDTOSCEnvelope_log(void (*log)(const char *, ...),
   json_value *obj = SDTEnvelope_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -835,7 +837,7 @@ SDTOSCReturnCode SDTOSCEnvelope_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTEnvelope_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -847,7 +849,7 @@ SDTOSCReturnCode SDTOSCEnvelope_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTEnvelope *r = SDTEnvelope_fromJSON(obj);
@@ -917,7 +919,7 @@ SDTOSCReturnCode SDTOSCExplosion_log(void (*log)(const char *, ...),
   json_value *obj = SDTExplosion_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -929,7 +931,7 @@ SDTOSCReturnCode SDTOSCExplosion_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTExplosion_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -941,7 +943,7 @@ SDTOSCReturnCode SDTOSCExplosion_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTExplosion *r = SDTExplosion_fromJSON(obj);
@@ -1077,7 +1079,7 @@ SDTOSCReturnCode SDTOSCFluidFlow_log(void (*log)(const char *, ...),
   json_value *obj = SDTFluidFlow_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -1089,7 +1091,7 @@ SDTOSCReturnCode SDTOSCFluidFlow_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTFluidFlow_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -1101,7 +1103,7 @@ SDTOSCReturnCode SDTOSCFluidFlow_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTFluidFlow *r = SDTFluidFlow_fromJSON(obj);
@@ -1259,7 +1261,7 @@ SDTOSCReturnCode SDTOSCModalTracker_log(void (*log)(const char *, ...),
   json_value *obj = SDTModalTracker_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -1271,7 +1273,7 @@ SDTOSCReturnCode SDTOSCModalTracker_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTModalTracker_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -1283,7 +1285,7 @@ SDTOSCReturnCode SDTOSCModalTracker_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTModalTracker *r = SDTModalTracker_fromJSON(obj);
@@ -1375,7 +1377,7 @@ SDTOSCReturnCode SDTOSCMotor_log(void (*log)(const char *, ...),
   json_value *obj = SDTMotor_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -1387,7 +1389,7 @@ SDTOSCReturnCode SDTOSCMotor_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTMotor_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -1399,7 +1401,7 @@ SDTOSCReturnCode SDTOSCMotor_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTMotor *r = SDTMotor_fromJSON(obj);
@@ -1612,7 +1614,7 @@ SDTOSCReturnCode SDTOSCMyoelastic_log(void (*log)(const char *, ...),
   json_value *obj = SDTMyoelastic_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -1624,7 +1626,7 @@ SDTOSCReturnCode SDTOSCMyoelastic_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTMyoelastic_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -1636,7 +1638,7 @@ SDTOSCReturnCode SDTOSCMyoelastic_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTMyoelastic *r = SDTMyoelastic_fromJSON(obj);
@@ -1730,7 +1732,7 @@ SDTOSCReturnCode SDTOSCPitch_log(void (*log)(const char *, ...),
   json_value *obj = SDTPitch_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -1742,7 +1744,7 @@ SDTOSCReturnCode SDTOSCPitch_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTPitch_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -1754,7 +1756,7 @@ SDTOSCReturnCode SDTOSCPitch_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTPitch *r = SDTPitch_fromJSON(obj);
@@ -1835,7 +1837,7 @@ SDTOSCReturnCode SDTOSCPitchShift_log(void (*log)(const char *, ...),
   json_value *obj = SDTPitchShift_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -1847,7 +1849,7 @@ SDTOSCReturnCode SDTOSCPitchShift_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTPitchShift_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -1859,7 +1861,7 @@ SDTOSCReturnCode SDTOSCPitchShift_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTPitchShift *r = SDTPitchShift_fromJSON(obj);
@@ -1951,7 +1953,7 @@ SDTOSCReturnCode SDTOSCReverb_log(void (*log)(const char *, ...),
   json_value *obj = SDTReverb_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -1963,7 +1965,7 @@ SDTOSCReturnCode SDTOSCReverb_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTReverb_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -1975,7 +1977,7 @@ SDTOSCReturnCode SDTOSCReverb_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTReverb *r = SDTReverb_fromJSON(obj);
@@ -2100,7 +2102,7 @@ SDTOSCReturnCode SDTOSCRolling_log(void (*log)(const char *, ...),
   json_value *obj = SDTRolling_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -2112,7 +2114,7 @@ SDTOSCReturnCode SDTOSCRolling_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTRolling_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -2124,7 +2126,7 @@ SDTOSCReturnCode SDTOSCRolling_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTRolling *r = SDTRolling_fromJSON(obj);
@@ -2216,7 +2218,7 @@ SDTOSCReturnCode SDTOSCScraping_log(void (*log)(const char *, ...),
   json_value *obj = SDTScraping_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -2228,7 +2230,7 @@ SDTOSCReturnCode SDTOSCScraping_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTScraping_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -2240,7 +2242,7 @@ SDTOSCReturnCode SDTOSCScraping_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTScraping *r = SDTScraping_fromJSON(obj);
@@ -2321,7 +2323,7 @@ SDTOSCReturnCode SDTOSCSpectralFeats_log(void (*log)(const char *, ...),
   json_value *obj = SDTSpectralFeats_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -2333,7 +2335,7 @@ SDTOSCReturnCode SDTOSCSpectralFeats_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTSpectralFeats_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -2345,7 +2347,7 @@ SDTOSCReturnCode SDTOSCSpectralFeats_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTSpectralFeats *r = SDTSpectralFeats_fromJSON(obj);
@@ -2438,7 +2440,7 @@ SDTOSCReturnCode SDTOSCWindCavity_log(void (*log)(const char *, ...),
   json_value *obj = SDTWindCavity_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -2450,7 +2452,7 @@ SDTOSCReturnCode SDTOSCWindCavity_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTWindCavity_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -2462,7 +2464,7 @@ SDTOSCReturnCode SDTOSCWindCavity_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTWindCavity *r = SDTWindCavity_fromJSON(obj);
@@ -2543,7 +2545,7 @@ SDTOSCReturnCode SDTOSCWindKarman_log(void (*log)(const char *, ...),
   json_value *obj = SDTWindKarman_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -2555,7 +2557,7 @@ SDTOSCReturnCode SDTOSCWindKarman_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTWindKarman_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -2567,7 +2569,7 @@ SDTOSCReturnCode SDTOSCWindKarman_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTWindKarman *r = SDTWindKarman_fromJSON(obj);
@@ -2626,7 +2628,7 @@ SDTOSCReturnCode SDTOSCWindFlow_log(void (*log)(const char *, ...),
   json_value *obj = SDTWindFlow_toJSON(x);
   char *s = malloc(sizeof(char) * (strlen(key) + 32));
   sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
+  SDTOSCReturnCode r = SDTOSCJSON_log(s, obj);
   free(s);
   json_builder_free(obj);
   return r;
@@ -2638,7 +2640,7 @@ SDTOSCReturnCode SDTOSCWindFlow_save(void (*log)(const char *, ...),
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
   json_value *obj = SDTWindFlow_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_save(name, obj, args);
   json_builder_free(obj);
   free(name);
   return return_code;
@@ -2650,7 +2652,7 @@ SDTOSCReturnCode SDTOSCWindFlow_load(void (*log)(const char *, ...),
   json_value *obj;
   char *name = malloc(sizeof(char) * (strlen(key) + 8));
   sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
+  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
   free(name);
   if (return_code == SDT_OSC_RETURN_OK) {
     SDTWindFlow *r = SDTWindFlow_fromJSON(obj);
@@ -2693,97 +2695,4 @@ SDTOSCReturnCode SDTOSCWindFlow(void (*log)(const char *, ...),
   return return_code;
 }
 
-SDTOSCReturnCode SDTOSCZeroCrossing_log(void (*log)(const char *, ...),
-                                        const char *key, SDTZeroCrossing *x) {
-  json_value *obj = SDTZeroCrossing_toJSON(x);
-  char *s = malloc(sizeof(char) * (strlen(key) + 32));
-  sprintf(s, "sdtOSC: %s", key);
-  SDTOSCReturnCode r = SDTOSCJSON_log(log, s, obj);
-  free(s);
-  json_builder_free(obj);
-  return r;
-}
-
-SDTOSCReturnCode SDTOSCZeroCrossing_save(void (*log)(const char *, ...),
-                                         const char *key, SDTZeroCrossing *x,
-                                         const SDTOSCArgumentList *args) {
-  char *name = malloc(sizeof(char) * (strlen(key) + 8));
-  sprintf(name, "'%s'", key);
-  json_value *obj = SDTZeroCrossing_toJSON(x);
-  SDTOSCReturnCode return_code = SDTOSCJSON_save(log, name, obj, args);
-  json_builder_free(obj);
-  free(name);
-  return return_code;
-}
-
-SDTOSCReturnCode SDTOSCZeroCrossing_load(void (*log)(const char *, ...),
-                                         const char *key, SDTZeroCrossing *x,
-                                         const SDTOSCArgumentList *args) {
-  json_value *obj;
-  char *name = malloc(sizeof(char) * (strlen(key) + 8));
-  sprintf(name, "'%s'", key);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(log, name, &obj, args);
-  free(name);
-  if (return_code == SDT_OSC_RETURN_OK) {
-    SDTZeroCrossing *r = SDTZeroCrossing_fromJSON(obj);
-    SDTZeroCrossing_copy(x, r);
-    SDTZeroCrossing_free(r);
-  }
-  if (obj) json_builder_free(obj);
-  return return_code;
-}
-
-SDTOSCReturnCode SDTOSCZeroCrossing_setSize(SDTZeroCrossing *x,
-                                            const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTZeroCrossing_setSize(x,
-                          (unsigned int)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCZeroCrossing_setOverlap(SDTZeroCrossing *x,
-                                               const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTZeroCrossing_setOverlap(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCZeroCrossing(void (*log)(const char *, ...),
-                                    const SDTOSCMessage *x) {
-  SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
-  const char *key = (SDTOSCArgumentList_getNArgs(args) &&
-                     SDTOSCArgumentList_isString(args, 0))
-                        ? SDTOSCArgumentList_getString(args, 0)
-                        : 0;
-  SDTZeroCrossing *obj = (key) ? SDT_getZeroCrossing(key) : 0;
-  SDTOSCReturnCode return_code;
-  if (obj)
-    if (SDTOSCMessage_hasContainer(x)) {
-      SDTOSCArgumentList *sub_args =
-          SDTOSCArgumentList_copyFromTo(SDTOSCMessage_getArguments(x), 1, -1);
-      char *method = SDTOSCMessage_getContainer(x);
-      if (!strcmp("log", method))
-        return_code = SDTOSCZeroCrossing_log(log, key, obj);
-      else if (!strcmp("save", method))
-        return_code = SDTOSCZeroCrossing_save(log, key, obj, sub_args);
-      else if (!strcmp("load", method))
-        return_code = SDTOSCZeroCrossing_load(log, key, obj, sub_args);
-      else if (!strcmp("size", method))
-        return_code = SDTOSCZeroCrossing_setSize(obj, sub_args);
-      else if (!strcmp("overlap", method))
-        return_code = SDTOSCZeroCrossing_setOverlap(obj, sub_args);
-      else
-        return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-      SDTOSCArgumentList_free(sub_args);
-    } else
-      return_code = SDT_OSC_RETURN_MISSING_METHOD;
-  else if (key)
-    return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
-  else
-    return_code = SDT_OSC_RETURN_ARGUMENT_ERROR;
-  return return_code;
-}
+*/

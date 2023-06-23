@@ -1,28 +1,28 @@
+#include "SDT/SDTCommon.h"
+#include "SDT/SDTMotor.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
-#include "SDTCommonMax.h"
-#include "SDT/SDTCommon.h"
-#include "SDT/SDTMotor.h"
-#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _motor {
   t_pxobject ob;
   SDTMotor *motor;
   double cylinderSize, compressionRatio, sparkTime, asymmetry, backfire,
-         intakeSize, extractorSize, exhaustSize, mufflerSize, outletSize,
-         expansion, mufflerFeedback;
+      intakeSize, extractorSize, exhaustSize, mufflerSize, outletSize,
+      expansion, mufflerFeedback;
   long nCylinders, cycle;
   t_symbol *key;
 } t_motor;
 
 static t_class *motor_class = NULL;
 
-void *motor_new(t_symbol *s, long argc, t_atom *argv)
-{
+void *motor_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   t_motor *x = (t_motor *)object_alloc(motor_class);
   long maxDelay;
-  
+
   if (x) {
     dsp_setup((t_pxobject *)x, 2);
     outlet_new(x, "signal");
@@ -30,8 +30,7 @@ void *motor_new(t_symbol *s, long argc, t_atom *argv)
     outlet_new(x, "signal");
     if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
       maxDelay = atom_getlong(&argv[0]);
-    }
-    else {
+    } else {
       maxDelay = 44100;
     }
     x->motor = SDTMotor_new(maxDelay);
@@ -41,8 +40,7 @@ void *motor_new(t_symbol *s, long argc, t_atom *argv)
   return (x);
 }
 
-void motor_free(t_motor *x) 
-{
+void motor_free(t_motor *x) {
   dsp_free((t_pxobject *)x);
   SDT_MAX_FREE(Motor, motor)
 }
@@ -52,15 +50,14 @@ void motor_assist(t_motor *x, void *b, long m, long a, char *s) {
     switch (a) {
       case 0:
         sprintf(s,
-        "(signal): Revolutions per minute (RPM)\n"
-        "Object attributes and messages (see help patch)");
+                "(signal): Revolutions per minute (RPM)\n"
+                "Object attributes and messages (see help patch)");
         break;
       case 1:
         sprintf(s, "(signal): Throttle load [0.0 ~ 1.0]");
         break;
     }
-  } 
-  else {
+  } else {
     switch (a) {
       case 0:
         sprintf(s, "(signal): Intake noise");
@@ -81,8 +78,10 @@ SDT_MAX_KEY(motor, Motor, motor, "motor~", "motor")
 
 void motor_cycle(t_motor *x, void *attr, long ac, t_atom *av) {
   x->cycle = atom_getlong(av);
-  if (x->cycle == 0) SDTMotor_setFourStroke(x->motor);
-  else SDTMotor_setTwoStroke(x->motor);
+  if (x->cycle == 0)
+    SDTMotor_setFourStroke(x->motor);
+  else
+    SDTMotor_setTwoStroke(x->motor);
 }
 
 void motor_nCylinders(t_motor *x, void *attr, long ac, t_atom *av) {
@@ -159,7 +158,7 @@ t_int *motor_perform(t_int *w) {
   t_float *out2 = (t_float *)(w[6]);
   int n = (int)w[7];
   double tmpOuts[3];
-  
+
   while (n--) {
     SDTMotor_setRpm(x->motor, *in0++);
     SDTMotor_setThrottle(x->motor, *in1++);
@@ -175,12 +174,13 @@ t_int *motor_perform(t_int *w) {
 void motor_dsp(t_motor *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
   SDTMotor_setFilters(x->motor, 20.0, 20.0);
-  dsp_add(motor_perform, 7, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec, sp[3]->s_vec, sp[4]->s_vec, sp[0]->s_n);
+  dsp_add(motor_perform, 7, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
+          sp[3]->s_vec, sp[4]->s_vec, sp[0]->s_n);
 }
 
 void motor_perform64(t_motor *x, t_object *dsp64, double **ins, long numins,
-                     double **outs, long numouts, long sampleframes,
-                     long flags, void *userparam) {
+                     double **outs, long numouts, long sampleframes, long flags,
+                     void *userparam) {
   t_double *in0 = ins[0];
   t_double *in1 = ins[1];
   t_double *out0 = outs[0];
@@ -188,7 +188,7 @@ void motor_perform64(t_motor *x, t_object *dsp64, double **ins, long numins,
   t_double *out2 = outs[2];
   int n = sampleframes;
   double tmpOuts[3];
-  
+
   while (n--) {
     SDTMotor_setRpm(x->motor, *in0++);
     SDTMotor_setThrottle(x->motor, *in1++);
@@ -199,13 +199,14 @@ void motor_perform64(t_motor *x, t_object *dsp64, double **ins, long numins,
   }
 }
 
-void motor_dsp64(t_motor *x, t_object *dsp64, short *count, double samplerate, long maxvectorsize, long flags) {
+void motor_dsp64(t_motor *x, t_object *dsp64, short *count, double samplerate,
+                 long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
   SDTMotor_setFilters(x->motor, 20.0, 20.0);
   object_method(dsp64, gensym("dsp_add64"), x, motor_perform64, 0, NULL);
 }
 
-void C74_EXPORT ext_main(void *r) {	
+void C74_EXPORT ext_main(void *r) {
   t_class *c = class_new("sdt.motor~", (method)motor_new, (method)motor_free,
                          (long)sizeof(t_motor), 0L, A_GIMME, 0);
 
@@ -215,7 +216,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   SDT_CLASS_KEY(motor, "1")
-  
+
   CLASS_ATTR_LONG(c, "cycle", 0, t_motor, cycle);
   CLASS_ATTR_LONG(c, "nCylinders", 0, t_motor, nCylinders);
   CLASS_ATTR_DOUBLE(c, "cylinderSize", 0, t_motor, cylinderSize);
@@ -230,7 +231,7 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_DOUBLE(c, "outletSize", 0, t_motor, outletSize);
   CLASS_ATTR_DOUBLE(c, "expansion", 0, t_motor, expansion);
   CLASS_ATTR_DOUBLE(c, "mufflerFeedback", 0, t_motor, mufflerFeedback);
-  
+
   CLASS_ATTR_FILTER_CLIP(c, "cycle", 0, 1);
   CLASS_ATTR_FILTER_CLIP(c, "nCylinders", 1, 12);
   CLASS_ATTR_FILTER_MIN(c, "cylinderSize", 0.0);
@@ -245,11 +246,12 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_MIN(c, "outletSize", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "expansion", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "mufflerFeedback", 0.0, 1.0);
-  
+
   CLASS_ATTR_ACCESSORS(c, "cycle", NULL, (method)motor_cycle);
   CLASS_ATTR_ACCESSORS(c, "nCylinders", NULL, (method)motor_nCylinders);
   CLASS_ATTR_ACCESSORS(c, "cylinderSize", NULL, (method)motor_cylinderSize);
-  CLASS_ATTR_ACCESSORS(c, "compressionRatio", NULL, (method)motor_compressionRatio);
+  CLASS_ATTR_ACCESSORS(c, "compressionRatio", NULL,
+                       (method)motor_compressionRatio);
   CLASS_ATTR_ACCESSORS(c, "sparkTime", NULL, (method)motor_sparkTime);
   CLASS_ATTR_ACCESSORS(c, "asymmetry", NULL, (method)motor_asymmetry);
   CLASS_ATTR_ACCESSORS(c, "backfire", NULL, (method)motor_backfire);
@@ -259,8 +261,9 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ACCESSORS(c, "mufflerSize", NULL, (method)motor_mufflerSize);
   CLASS_ATTR_ACCESSORS(c, "outletSize", NULL, (method)motor_outletSize);
   CLASS_ATTR_ACCESSORS(c, "expansion", NULL, (method)motor_expansion);
-  CLASS_ATTR_ACCESSORS(c, "mufflerFeedback", NULL, (method)motor_mufflerFeedback);
-  
+  CLASS_ATTR_ACCESSORS(c, "mufflerFeedback", NULL,
+                       (method)motor_mufflerFeedback);
+
   CLASS_ATTR_ORDER(c, "cycle", 0, "2");
   CLASS_ATTR_ORDER(c, "nCylinders", 0, "3");
   CLASS_ATTR_ORDER(c, "cylinderSize", 0, "4");

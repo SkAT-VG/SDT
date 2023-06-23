@@ -1,10 +1,10 @@
+#include "SDT/SDTCommon.h"
+#include "SDT/SDTModalTracker.h"
+#include "SDTCommonMax.h"
+#include "SDT_fileusage.h"
 #include "ext.h"
 #include "ext_obex.h"
 #include "z_dsp.h"
-#include "SDTCommonMax.h"
-#include "SDT/SDTCommon.h"
-#include "SDT/SDTModalTracker.h"
-#include "SDT_fileusage/SDT_fileusage.h"
 
 typedef struct _modaltracker {
   t_pxobject ob;
@@ -19,11 +19,11 @@ static t_class *modaltracker_class = NULL;
 
 void modaltracker_assist(t_modaltracker *x, void *b, long m, long a, char *s) {
   if (m == ASSIST_INLET) {
-    sprintf(s, "(signal): Input\n"
-               "(bang): Send synthesis parameters through main outlet"
-               "Object attributes and messages (see help patch)");
-  } 
-  else {
+    sprintf(s,
+            "(signal): Input\n"
+            "(bang): Send synthesis parameters through main outlet"
+            "Object attributes and messages (see help patch)");
+  } else {
     switch (a) {
       case 0:
         sprintf(s, "(list): Parameters for a sdt.modal~ object");
@@ -35,7 +35,8 @@ void modaltracker_assist(t_modaltracker *x, void *b, long m, long a, char *s) {
   }
 }
 
-SDT_MAX_KEY(modaltracker, ModalTracker, modaltracker, "modaltracker~", "modal tracker")
+SDT_MAX_KEY(modaltracker, ModalTracker, modaltracker, "modaltracker~",
+            "modal tracker")
 
 void modaltracker_overlap(t_modaltracker *x, void *attr, long ac, t_atom *av) {
   x->overlap = atom_getfloat(av);
@@ -122,11 +123,13 @@ void modaltracker_dsp(t_modaltracker *x, t_signal **sp) {
   dsp_add(modaltracker_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
-void modaltracker_perform64(t_modaltracker *x, t_object *dsp64, double **ins, long numins, double **outs, long numouts, long sampleframes, long flags, void *userparam) {
+void modaltracker_perform64(t_modaltracker *x, t_object *dsp64, double **ins,
+                            long numins, double **outs, long numouts,
+                            long sampleframes, long flags, void *userparam) {
   t_double *in = ins[0];
   int n = sampleframes;
   int samplesRead;
-  
+
   if (x->isRecording) {
     samplesRead = SDTModalTracker_readSamples(x->modaltracker, in, n);
     if (!samplesRead) {
@@ -135,27 +138,33 @@ void modaltracker_perform64(t_modaltracker *x, t_object *dsp64, double **ins, lo
   }
 }
 
-void modaltracker_dsp64(t_modaltracker *x, t_object *dsp64, short *count, double samplerate, long maxvectorsize, long flags) {
+void modaltracker_dsp64(t_modaltracker *x, t_object *dsp64, short *count,
+                        double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
   SDTModalTracker_setOverlap(x->modaltracker, x->overlap);
   object_method(dsp64, gensym("dsp_add64"), x, modaltracker_perform64, 0, NULL);
 }
 
 void *modaltracker_new(t_symbol *s, long argc, t_atom *argv) {
+  SDT_setupMaxLoggers();
   int nModes, nSamples, tmpSize, windowSize;
   t_modaltracker *x = (t_modaltracker *)object_alloc(modaltracker_class);
   if (x) {
     dsp_setup((t_pxobject *)x, 1);
-    nModes = argc > 0 && argv[0].a_type == A_FLOAT ? atom_getfloat(&argv[0]) : 8;
-    nSamples = argc > 1 && argv[1].a_type == A_FLOAT ? atom_getfloat(&argv[1]) : 441000;
+    nModes =
+        argc > 0 && argv[0].a_type == A_FLOAT ? atom_getfloat(&argv[0]) : 8;
+    nSamples = argc > 1 && argv[1].a_type == A_FLOAT ? atom_getfloat(&argv[1])
+                                                     : 441000;
     if (argc > 2 && argv[2].a_type == A_FLOAT) {
       tmpSize = atom_getfloat(&argv[2]);
       windowSize = SDT_nextPow2(tmpSize);
       if (tmpSize != windowSize) {
-        post("sdt.modaltracker~: Window size must be a power of 2, setting it to %d", windowSize);
+        post(
+            "sdt.modaltracker~: Window size must be a power of 2, setting it "
+            "to %d",
+            windowSize);
       }
-    }
-    else {
+    } else {
       windowSize = 1024;
     }
     x->modaltracker = SDTModalTracker_new(nModes, nSamples, windowSize);
@@ -177,9 +186,11 @@ void modaltracker_free(t_modaltracker *x) {
   SDT_MAX_FREE(ModalTracker, modaltracker)
 }
 
-void C74_EXPORT ext_main(void *r) {	
-  t_class *c = class_new("sdt.modaltracker~", (method)modaltracker_new, (method)modaltracker_free, (long)sizeof(t_modaltracker), 0L, A_GIMME, 0);
-	
+void C74_EXPORT ext_main(void *r) {
+  t_class *c = class_new("sdt.modaltracker~", (method)modaltracker_new,
+                         (method)modaltracker_free,
+                         (long)sizeof(t_modaltracker), 0L, A_GIMME, 0);
+
   class_addmethod(c, (method)modaltracker_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)modaltracker_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)modaltracker_assist, "assist", A_CANT, 0);
@@ -191,18 +202,18 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   SDT_CLASS_KEY(modaltracker, "1")
-  
+
   CLASS_ATTR_DOUBLE(c, "overlap", 0, t_modaltracker, overlap);
   CLASS_ATTR_LONG(c, "pickup", 0, t_modaltracker, pickup);
-  
+
   CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);
-  
+
   CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)modaltracker_overlap);
   CLASS_ATTR_ACCESSORS(c, "pickup", NULL, (method)modaltracker_pickup);
-  
+
   CLASS_ATTR_ORDER(c, "overlap", 0, "2");
   CLASS_ATTR_ORDER(c, "pickup", 0, "3");
-  
+
   class_dspinit(c);
   class_register(CLASS_BOX, c);
   modaltracker_class = c;

@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTFilters.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *envelope_class;
@@ -29,7 +29,7 @@ t_int *envelope_perform(t_int *w) {
   t_float *in = (t_float *)(w[2]);
   t_float *out = (t_float *)(w[3]);
   int n = (int)w[4];
-  
+
   while (n--) {
     *out++ = (float)SDTEnvelope_dsp(x->envelope, *in++);
   }
@@ -58,10 +58,14 @@ void envelope_free(t_envelope *x) {
   SDT_PD_FREE(Envelope, envelope)
 }
 
-void envelope_tilde_setup(void) {	
-  envelope_class = class_new(gensym("envelope~"), (t_newmethod)envelope_new, (t_method)envelope_free, sizeof(t_envelope), CLASS_DEFAULT, A_GIMME, 0);
+void envelope_tilde_setup(void) {
+  envelope_class = class_new(gensym("envelope~"), (t_newmethod)envelope_new,
+                             (t_method)envelope_free, sizeof(t_envelope),
+                             CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(envelope_class, t_envelope, f);
-  class_addmethod(envelope_class, (t_method)envelope_attack, gensym("attack"), A_FLOAT, 0);
-  class_addmethod(envelope_class, (t_method)envelope_release, gensym("release"), A_FLOAT, 0);
+  class_addmethod(envelope_class, (t_method)envelope_attack, gensym("attack"),
+                  A_FLOAT, 0);
+  class_addmethod(envelope_class, (t_method)envelope_release, gensym("release"),
+                  A_FLOAT, 0);
   class_addmethod(envelope_class, (t_method)envelope_dsp, gensym("dsp"), 0);
 }

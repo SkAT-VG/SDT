@@ -52,9 +52,8 @@ SDTRandomSequence *SDTRandomSequence_newInt(unsigned int n, int min, int max) {
 static int SDTRandomSequence_getInt(SDTRandomSequence *x) {
   int left, right, r;
   if (x->t != SDT_RANDOM_INT) {
-    SDT_DEBUG_LOG(
-        "[WARNING] Calling SDTRandomSequence_getInt() on a "
-        "non-integer sequence\n");
+    SDT_LOG(WARN,
+            "Calling SDTRandomSequence_getInt() on a non-integer sequence\n");
     left = (int)round(x->a.f);
     right = (int)round(x->b.f);
   } else {
@@ -129,9 +128,8 @@ static float SDTRandomSequence_getFloat(SDTRandomSequence *x) {
   float r;
   switch (x->t) {
     case SDT_RANDOM_INT:
-      SDT_DEBUG_LOG(
-          "[WARNING] Calling SDTRandomSequence_getFloat() on an "
-          "integer sequence\n");
+      SDT_LOG(WARN,
+              "Calling SDTRandomSequence_getFloat() on an integer sequence\n");
       r = SDT_frand() * (x->b.i - x->a.i) + x->a.i;
       break;
     case SDT_RANDOM_FLOAT:
@@ -144,7 +142,7 @@ static float SDTRandomSequence_getFloat(SDTRandomSequence *x) {
       r = SDT_expRand(x->b.f) + x->a.f;
       break;
     default:
-      SDT_DEBUG_LOG("[WARNING] Unrecognized SDTRandomSequence type\n");
+      SDT_LOG(WARN, "Unrecognized SDTRandomSequence type\n");
       r = 0.0f;
   }
   return r;

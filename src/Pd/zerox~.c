@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
-#include "SDT/SDTCommon.h"
 #include "SDT/SDTAnalysis.h"
+#include "SDT/SDTCommon.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *zerox_class;
@@ -26,14 +26,14 @@ t_int *zerox_perform(t_int *w) {
   int n = (int)w[3];
   double tmpOut;
   int hasOutput = 0;
-  
+
   while (n--) {
     hasOutput += SDTZeroCrossing_dsp(x->zerox, &tmpOut, *in++);
   }
   if (hasOutput) {
     outlet_float(x->out0, tmpOut);
   }
-  
+
   return w + 4;
 }
 
@@ -60,9 +60,12 @@ void zerox_free(t_zerox *x) {
   SDT_PD_FREE(ZeroCrossing, zerox)
 }
 
-void zerox_tilde_setup(void) {	
-  zerox_class = class_new(gensym("zerox~"), (t_newmethod)zerox_new, (t_method)zerox_free, sizeof(t_zerox), CLASS_DEFAULT, A_GIMME, 0);
+void zerox_tilde_setup(void) {
+  zerox_class =
+      class_new(gensym("zerox~"), (t_newmethod)zerox_new, (t_method)zerox_free,
+                sizeof(t_zerox), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(zerox_class, t_zerox, f);
-  class_addmethod(zerox_class, (t_method)zerox_overlap, gensym("overlap"), A_FLOAT, 0);
+  class_addmethod(zerox_class, (t_method)zerox_overlap, gensym("overlap"),
+                  A_FLOAT, 0);
   class_addmethod(zerox_class, (t_method)zerox_dsp, gensym("dsp"), 0);
 }

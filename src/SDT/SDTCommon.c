@@ -410,17 +410,13 @@ void SDT_zeros(double *sig, int n) {
   memset((void *)sig, 0, sizeof(double) * n);
 }
 
-#define _SDT_printTime_buf_LEN 23
-char _SDT_printTime_buf[_SDT_printTime_buf_LEN];
-static const char _SDT_printTime_fmt[] = "[%Y-%m-%d %H:%M:%S]";
-
 static int _SDT_sprintTime(char *s, size_t n) {
   time_t t = time(NULL);
   struct tm *tm = localtime(&t);
-  return strftime(s, n, _SDT_printTime_fmt, tm);
+  return strftime(s, n, "[%Y-%m-%d %H:%M:%S]", tm);
 }
 
-static int _SDT_eprintf(const char *fmt, ...) {
+int SDT_eprintf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   int r = vfprintf(stderr, fmt, args);
@@ -428,71 +424,130 @@ static int _SDT_eprintf(const char *fmt, ...) {
   return r;
 }
 
-#define N_LOGGERS 4
-static int (*_SDT_log_inner[N_LOGGERS])(const char *, ...) = {0, 0, 0, 0};
+#define N_LOGGERS 5
+static int (*_SDT_log_inner[N_LOGGERS])(const char *, ...) = {0, 0, 0, 0, 0};
+static int _SDT_log_newlines[N_LOGGERS] = {0, 0, 0, 0, 0};
 
-void SDT_setLogger(int level, int (*print_func)(const char *, ...)) {
-  if (level >= 0 && level < N_LOGGERS - 1) _SDT_log_inner[level] = print_func;
+void SDT_setLogger(int level, int (*print_func)(const char *, ...),
+                   int newline) {
+  if (level >= 0 && level < N_LOGGERS - 1) {
+    _SDT_log_inner[level] = print_func;
+    _SDT_log_newlines[level] = newline;
+  }
 }
 
-static int (*SDT_getLogger(int level))(const char *, ...) {
+int (*SDT_getLogger(int level, int *newline))(const char *, ...) {
   int (*p)(const char *, ...) = 0;
-  if (level >= 0 && level < N_LOGGERS - 1) p = _SDT_log_inner[level];
-  return (p) ? p : &_SDT_eprintf;
+  if (level >= 0 && level < N_LOGGERS - 1) {
+    p = _SDT_log_inner[level];
+    if (newline) *newline = _SDT_log_newlines[level];
+  } else if (newline)
+    *newline = 0;
+  return (p) ? p : &SDT_eprintf;
 }
 
-static char _SDT_logBuffer[MAXSDTSTRING];
-
-int SDT_log(int level, const char *file, unsigned int line, const char *func,
-            const char *fmt, ...) {
+static int SDT_vsnlog(char *s, size_t n, int newline, int level,
+                      const char *file, unsigned int line, const char *func,
+                      const char *fmt, va_list arg) {
   int n_chars = 0, i;
+  n /= sizeof(char);
 
-  i = _SDT_sprintTime(_SDT_logBuffer + n_chars,
-                      sizeof(char) * (MAXSDTSTRING - n_chars));
+  i = _SDT_sprintTime(s + n_chars, sizeof(char) * (n - n_chars));
 
-  if (i >= 0 && (n_chars += i) < MAXSDTSTRING) {
+  if (i >= 0 && (n_chars += i) < n) {
     char *log_level_prefix;
     switch (level) {
-      case SDT_LOG_DEBUG:
-        log_level_prefix = "::DEBUG";
+      case SDT_LOG_LEVEL_VERBOSE:
+        log_level_prefix = "::VERBOSE";
         break;
-      case SDT_LOG_INFO:
-        log_level_prefix = "::INFO ";
+      case SDT_LOG_LEVEL_DEBUG:
+        log_level_prefix = "::DEBUG  ";
         break;
-      case SDT_LOG_WARN:
-        log_level_prefix = "::WARN ";
+      case SDT_LOG_LEVEL_INFO:
+        log_level_prefix = "::INFO   ";
+        break;
+      case SDT_LOG_LEVEL_WARN:
+        log_level_prefix = "::WARN   ";
+        break;
+      case SDT_LOG_LEVEL_ERROR:
+        log_level_prefix = "::ERROR  ";
         break;
       default:
-        log_level_prefix = "       ";
+        log_level_prefix = "         ";
         break;
     }
-    i = snprintf(_SDT_logBuffer + n_chars,
-                 sizeof(char) * (MAXSDTSTRING - n_chars), "%s",
+    i = snprintf(s + n_chars, sizeof(char) * (n - n_chars), "%s",
                  log_level_prefix);
   }
 
-  if (i >= 0 && (n_chars += i) < MAXSDTSTRING)
-    i = (file && func) ? snprintf(_SDT_logBuffer + n_chars,
-                                  sizeof(char) * (MAXSDTSTRING - n_chars),
+  if (i >= 0 && (n_chars += i) < n)
+    i = (file && func) ? snprintf(s + n_chars, sizeof(char) * (n - n_chars),
                                   " %s:%d %s() \t", file, line, func)
                        : 0;
 
-  if (i >= 0 && (n_chars += i) < MAXSDTSTRING) {
-    va_list args;
-    va_start(args, fmt);
-    i = vsnprintf(_SDT_logBuffer + n_chars,
-                  sizeof(char) * (MAXSDTSTRING - n_chars), fmt, args);
-    va_end(args);
-  }
+  if (i >= 0 && (n_chars += i) < n)
+    i = vsnprintf(s + n_chars, sizeof(char) * (n - n_chars), fmt, arg);
+
   // Error
   if (i < 0) return i;
   // Overflow: make sure terminating character is there (and a newline,
   // for good measure)
-  if ((n_chars += i) >= MAXSDTSTRING) {
-    _SDT_logBuffer[MAXSDTSTRING - 2] = '\n';
-    _SDT_logBuffer[MAXSDTSTRING - 1] = 0;
+  if ((n_chars += i) >= n) {
+    s[n - 2] = '\n';
+    s[n - 1] = 0;
+    n_chars = n;
   }
-  return SDT_getLogger(level)("%s", _SDT_logBuffer);
+  if (newline) {
+    // If logger automatically puts a newline at the end,
+    // then remove newline if it is the last character
+    int s_len = strlen(s);
+    if (s[s_len - 1] == '\n') s[s_len - 1] = 0;
+  }
+  return n_chars;
+}
+
+int SDT_log(int level, const char *file, unsigned int line, const char *func,
+            const char *fmt, ...) {
+  if (level > SDT_getLogLevelFromEnv()) return 0;
+  int newline = 0;
+  static char _SDT_logBuffer[MAXSDTSTRING];
+  int (*log)(const char *, ...) = SDT_getLogger(level, &newline);
+  va_list args;
+  va_start(args, fmt);
+  SDT_vsnlog(_SDT_logBuffer, sizeof(char) * MAXSDTSTRING, newline, level, file,
+             line, func, fmt, args);
+  va_end(args);
+  return log("%s", _SDT_logBuffer);
 }
 
 int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }
+
+#define _SDT_LOG_LEVEL_ENV_CASE(LEVEL) \
+  if (!strcmp(level_name, #LEVEL)) level = SDT_LOG_LEVEL_##LEVEL;
+
+int SDT_getLogLevelFromEnv() {
+  static int level = SDT_LOG_LEVEL_QUIET - 1;
+  // Only read the first time
+  if (level >= SDT_LOG_LEVEL_QUIET) return level;
+
+  const char *level_name = getenv("SDT_LOG_LEVEL");
+  if (level_name) {
+    _SDT_LOG_LEVEL_ENV_CASE(QUIET)             //
+    else _SDT_LOG_LEVEL_ENV_CASE(ERROR)        //
+        else _SDT_LOG_LEVEL_ENV_CASE(WARN)     //
+        else _SDT_LOG_LEVEL_ENV_CASE(INFO)     //
+        else _SDT_LOG_LEVEL_ENV_CASE(DEBUG)    //
+        else _SDT_LOG_LEVEL_ENV_CASE(VERBOSE)  //
+  }
+  if (level < SDT_LOG_LEVEL_QUIET) {
+    level = SDT_LOG_LEVEL_INFO;
+    if (level_name) {
+      SDT_LOGA(WARN,
+               "Unsupported log level name from environment variable: "
+               "SDT_LOG_LEVEL=%s\n",
+               level_name);
+    }
+  }
+  SDT_LOGA(DEBUG, "SDT_LOG_LEVEL=%d\n", level);
+  return level;
+}
