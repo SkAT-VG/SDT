@@ -8,25 +8,8 @@ _SDTOSC_LOG_FUNCTION(ZeroCrossing)
 _SDTOSC_SAVE_FUNCTION(ZeroCrossing)
 _SDTOSC_LOAD_FUNCTION(ZeroCrossing)
 
-// int SDTOSCZeroCrossing_setSize(SDTZeroCrossing *x,
-//                                const SDTOSCArgumentList *args) {
-//   if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-//       !SDTOSCArgumentList_isFloat(args, 0))
-//     return SDT_OSC_RETURN_ARGUMENT_ERROR;
-//   SDTZeroCrossing_setSize(x,
-//                           (unsigned int)SDTOSCArgumentList_getFloat(args,
-//                           0));
-//   return SDT_OSC_RETURN_OK;
-// }
-
-// int SDTOSCZeroCrossing_setOverlap(SDTZeroCrossing *x,
-//                                   const SDTOSCArgumentList *args) {
-//   if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-//       !SDTOSCArgumentList_isFloat(args, 0))
-//     return SDT_OSC_RETURN_ARGUMENT_ERROR;
-//   SDTZeroCrossing_setOverlap(x, (double)SDTOSCArgumentList_getFloat(args,
-//   0)); return SDT_OSC_RETURN_OK;
-// }
+_SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, size, Size, unsigned int)
+_SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, overlap, Overlap, double)
 
 int SDTOSCZeroCrossing(const SDTOSCMessage* x) {
   SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
@@ -42,6 +25,8 @@ int SDTOSCZeroCrossing(const SDTOSCMessage* x) {
   if (!strcmp("log", k)) return SDTOSCZeroCrossing_log(x);
   if (!strcmp("save", k)) return SDTOSCZeroCrossing_save(x);
   if (!strcmp("load", k)) return SDTOSCZeroCrossing_load(x);
+  if (!strcmp("size", k)) return SDTOSCZeroCrossing_setSize(x);
+  if (!strcmp("overlap", k)) return SDTOSCZeroCrossing_setOverlap(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified method is not "
                       "implemented: %s\n  %s\n",

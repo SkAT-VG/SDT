@@ -57,20 +57,16 @@ extern int SDTOSCZeroCrossing_loads(const char *key, SDTZeroCrossing *x,
 /** @brief `/zerox/size <name> <value>`
 
 Function that implements OSC parameter setting for #SDTZeroCrossing objects
-@param x Instance pointer
-@param args Argument list: `args[0]` should hold the parameter value
+@param x OSC message
 @return Zero on success, non-zero otherwise */
-extern int SDTOSCZeroCrossing_setSize(SDTZeroCrossing *x,
-                                      const SDTOSCArgumentList *args);
+extern int SDTOSCZeroCrossing_setSize(const SDTOSCMessage *x);
 
 /** @brief `/zerox/overlap <name> <value>`
 
 Function that implements OSC parameter setting for #SDTZeroCrossing objects
-@param x Instance pointer
-@param args Argument list: `args[0]` should hold the parameter value
+@param x OSC message
 @return Zero on success, non-zero otherwise */
-extern int SDTOSCZeroCrossing_setOverlap(SDTZeroCrossing *x,
-                                         const SDTOSCArgumentList *args);
+extern int SDTOSCZeroCrossing_setOverlap(const SDTOSCMessage *x);
 
 /** @brief `/zerox/...`
 

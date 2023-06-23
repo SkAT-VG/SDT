@@ -327,6 +327,27 @@ Macros for implementing OSC methods
     return 7;                                                              \
   }
 
+#define _SDTOSC_GETARG(VAR, UCASE, CTYPE, OSCTYPE, OSCTYPELCASE, MSGVAR)     \
+  CTYPE VAR;                                                                 \
+  if (SDTOSCArgumentList_getNArgs(args) < 2) {                               \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                               \
+                        "\n  %s\n  [ARGUMENT ERROR] Missing argument: " #VAR \
+                        "\n  %s\n",                                          \
+                        x, SDTOSC_rtfm_string());                            \
+    return 5;                                                                \
+  }                                                                          \
+  if (SDTOSCArgumentList_is##OSCTYPE(args, 1)) {                             \
+    VAR = (CTYPE)SDTOSCArgumentList_get##OSCTYPE(args, 1);                   \
+  } else {                                                                   \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                               \
+                        "\n  %s\n  [ARGUMENT ERROR] Second argument should " \
+                        "be a " #OSCTYPELCASE                                \
+                        "\n "                                                \
+                        " %s\n",                                             \
+                        x, SDTOSC_rtfm_string());                            \
+    return 6;                                                                \
+  }
+
 #define _SDTOSC_LOG_FUNCTION(TYPENAME)                 \
   int SDTOSC##TYPENAME##_log(const SDTOSCMessage *x) { \
     SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")      \
@@ -359,6 +380,19 @@ Macros for implementing OSC methods
     json_builder_free(jobj);                            \
     return r;                                           \
   }
+
+#define _SDTOSC_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE, OSCTYPE, \
+                                OSCTYPELCASE)                           \
+  int SDTOSC##TYPENAME##_set##UCASE(const SDTOSCMessage *x) {           \
+    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")                       \
+    _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                     \
+    _SDTOSC_GETARG(LCASE, UCASE, CTYPE, OSCTYPE, OSCTYPELCASE, x)       \
+    SDT##TYPENAME##_set##UCASE(obj, LCASE);                             \
+    return 0;                                                           \
+  }
+
+#define _SDTOSC_FLOAT_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE) \
+  _SDTOSC_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE, Float, float)
 
 /** @} */
 
