@@ -16,14 +16,9 @@ struct SDTHashmap {
 };
 
 int SDTHashmap_hash(SDTHashmap *x, const char *key) {
-  unsigned long h;
-  int i;
-
-  h = 0;
-  for (i = 0; i < strlen(key); i++) {
-    h = h * 31 + key[i];
-  }
-  return h % x->size;
+  int h = 0;
+  for (const char *c = key; *c; c++) h = (h * 31 + *c) % x->size;
+  return h;
 }
 
 int SDTHashmap_lookup(SDTHashmap *x, const char *key) {
@@ -33,7 +28,7 @@ int SDTHashmap_lookup(SDTHashmap *x, const char *key) {
   x->prev = NULL;
   x->item = x->bins[hash];
   while (x->item) {
-    if (strcmp(x->item->key, key) == 0) break;
+    if (!strcmp(x->item->key, key)) break;
     x->prev = x->item;
     x->item = x->item->next;
   }
