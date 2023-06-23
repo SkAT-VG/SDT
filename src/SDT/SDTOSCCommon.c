@@ -14,6 +14,10 @@ const char *SDTOSC_rtfm_string() {
 #define _SDT_JSON_BUFLEN 512
 static char _SDT_JSON_logBuffer[_SDT_JSON_BUFLEN];
 
+static size_t _SDT_updateRemainingCharsNPrintf(size_t n, int c) {
+  return (n > c) ? n - c * sizeof(char) : (size_t)0;
+}
+
 //-------------------------------------------------------------------------------------//
 
 struct SDTOSCAddress {
@@ -71,8 +75,8 @@ int SDTOSCAddress_snprintf(char *s, size_t n, const SDTOSCAddress *x) {
   int tot = 0, c = 0;
   if (x)
     for (unsigned int i = 0; i < x->depth && tot < n; ++i) {
-      c = snprintf(s + tot, n - tot, "/%s", x->nodes[i]);
-      if (c < 0) return c;
+      c = snprintf(s + tot, n, "/%s", x->nodes[i]);
+      n = _SDT_updateRemainingCharsNPrintf(n, c);
       tot += c;
     }
   return tot;
@@ -140,6 +144,18 @@ const char *SDTOSCArgument_getString(const SDTOSCArgument *x) {
   return x->value.s;
 }
 
+int SDTOSCArgument_snprintf(char *s, size_t n, const char *float_fmt,
+                            const SDTOSCArgument *a) {
+  if (SDTOSCArgument_isString(a))
+    return snprintf(s, n, "%s", SDTOSCArgument_getString(a));
+  double arg;
+  if (SDTOSCArgument_isFloat(a)) {
+    arg = (double)SDTOSCArgument_getFloat(a);
+    return snprintf(s, n, (fmod(arg, 1)) ? float_fmt : " %.0f", arg);
+  }
+  return snprintf(s, n, "?");
+}
+
 //-------------------------------------------------------------------------------------//
 
 struct SDTOSCArgumentList {
@@ -197,6 +213,25 @@ const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
 
 int SDTOSCArgumentList_getNArgs(const SDTOSCArgumentList *x) { return x->argc; }
 
+int SDTOSCArgumentList_snprintf(char *s, size_t n, const char *float_fmt,
+                                const SDTOSCArgumentList *x, int start,
+                                int end) {
+  if (end < 0) end = x->argc;
+  if (end <= start) return snprintf(s, n, "%s", "");
+  int tot = 0, c;
+  for (int i = start; i < end; ++i) {
+    if (i != start) {
+      c = snprintf(s + tot, n, " ");
+      n = _SDT_updateRemainingCharsNPrintf(n, c);
+      tot += c;
+    }
+    c = SDTOSCArgument_snprintf(s + tot, n, float_fmt, x->argv[i]);
+    n = _SDT_updateRemainingCharsNPrintf(n, c);
+    tot += c;
+  }
+  return tot;
+}
+
 //-------------------------------------------------------------------------------------//
 
 struct SDTOSCMessage {
@@ -230,32 +265,22 @@ const SDTOSCAddress *SDTOSCMessage_getAddress(const SDTOSCMessage *x) {
   return x->address;
 }
 
-int SDTOSCMessage_snprintf(char *s, size_t n, const SDTOSCMessage *m) {
-  // Address
-  int tot = SDTOSCAddress_snprintf(s, n, SDTOSCMessage_getAddress(m));
-  if (tot < 0) return tot;
-  float arg;
-  int c;
-  // Arguments
-  const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
-  for (unsigned int i = 0; i < args->argc && tot < n; ++i) {
-    if (SDTOSCArgumentList_isString(args, i)) {
-      c = snprintf(s + tot, n - tot, " %s",
-                   SDTOSCArgumentList_getString(args, i));
-    } else if (SDTOSCArgumentList_isFloat(args, i)) {
-      arg = SDTOSCArgumentList_getFloat(args, i);
-      c = snprintf(s + tot, n - tot, (fmod(arg, 1)) ? " %.2f" : " %.0f", arg);
-    } else {
-      c = snprintf(s + tot, n - tot, " ?");
-    }
-    if (c < 0) return c;
-    tot += c;
-  }
+int SDTOSCMessage_snprintf(char *s, size_t n, const char *float_fmt,
+                           const SDTOSCMessage *m) {
+  int tot, c;
+  tot = SDTOSCAddress_snprintf(s, n, SDTOSCMessage_getAddress(m));
+  n = _SDT_updateRemainingCharsNPrintf(n, tot);
+  c = snprintf(s + tot, n, " ");
+  tot += c;
+  n = _SDT_updateRemainingCharsNPrintf(n, c);
+  tot += SDTOSCArgumentList_snprintf(s + tot, n, float_fmt,
+                                     SDTOSCMessage_getArguments(m), 0, -1);
   return tot;
 }
 
 const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m) {
-  int tot = SDTOSCMessage_snprintf(_SDT_JSON_logBuffer, _SDT_JSON_BUFLEN, m);
+  int tot =
+      SDTOSCMessage_snprintf(_SDT_JSON_logBuffer, _SDT_JSON_BUFLEN, "%f", m);
   if (tot < 0) return 0;
   if (tot >= _SDT_JSON_BUFLEN) {
     tot = _SDT_JSON_BUFLEN;

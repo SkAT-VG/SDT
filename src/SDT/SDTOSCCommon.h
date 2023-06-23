@@ -36,11 +36,11 @@ extern void SDTOSCAddress_free(SDTOSCAddress *x);
 @param[in] s Pointer to a buffer where the resulting C-string is stored. The
 buffer should have a size of at least n characters.
 @param[in] n Maximum number of bytes to be used in the buffer.
-@param[in] m OSC address pointer
+@param[in] a OSC address pointer
 @return The number of characters that would have been written if n had been
 sufficiently large, not counting the terminating null character. If an encoding
 error occurs, a negative number is returned. */
-extern int SDTOSCAddress_snprintf(char *s, size_t n, const SDTOSCAddress *x);
+extern int SDTOSCAddress_snprintf(char *s, size_t n, const SDTOSCAddress *a);
 
 /** @brief Gets the number of nodes in the OSC address
 @param[in] x OSC address pointer
@@ -103,6 +103,18 @@ Argument should be previously checked with ::SDTOSCArgument_isString
 @return The string as a character pointer */
 extern const char *SDTOSCArgument_getString(const SDTOSCArgument *x);
 
+/** @brief Print OSC argument to string.
+@param[in] s Pointer to a buffer where the resulting C-string is stored. The
+buffer should have a size of at least n characters.
+@param[in] n Maximum number of bytes to be used in the buffer.
+@param[in] float_fmt Format string for floating point numbers, e.g. `"%f"`
+@param[in] a OSC argument pointer
+@return The number of characters that would have been written if n had been
+sufficiently large, not counting the terminating null character. If an encoding
+error occurs, a negative number is returned. */
+extern int SDTOSCArgument_snprintf(char *s, size_t n, const char *float_fmt,
+                                   const SDTOSCArgument *a);
+
 /** @} */
 /** @defgroup osc_argument_lists OSC Argument List
 This class represents OSC argument lists
@@ -158,6 +170,21 @@ Argument should be previously checked with ::SDTOSCArgumentList_isString
 extern const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x,
                                                 int i);
 
+/** @brief Print OSC argument list to string.
+@param[in] s Pointer to a buffer where the resulting C-string is stored. The
+buffer should have a size of at least n characters.
+@param[in] n Maximum number of bytes to be used in the buffer.
+@param[in] float_fmt Format string for floating point numbers, e.g. `"%f"`
+@param[in] x OSC argument list pointer
+@param[in] start Index of first argument to print (included)
+@param[in] end Index of last argument to print (excluded)
+@return The number of characters that would have been written if n had been
+sufficiently large, not counting the terminating null character. If an encoding
+error occurs, a negative number is returned. */
+extern int SDTOSCArgumentList_snprintf(char *s, size_t n, const char *float_fmt,
+                                       const SDTOSCArgumentList *x, int start,
+                                       int end);
+
 /** @} */
 
 /** @defgroup osc_message OSC Message
@@ -199,11 +226,13 @@ extern const SDTOSCAddress *SDTOSCMessage_getAddress(const SDTOSCMessage *x);
 @param[in] s Pointer to a buffer where the resulting C-string is stored. The
 buffer should have a size of at least n characters.
 @param[in] n Maximum number of bytes to be used in the buffer.
+@param[in] float_fmt Format string for floating point numbers, e.g. `"%f"`
 @param[in] m OSC message pointer
 @return The number of characters that would have been written if n had been
 sufficiently large, not counting the terminating null character. If an encoding
 error occurs, a negative number is returned. */
-extern int SDTOSCMessage_snprintf(char *s, size_t n, const SDTOSCMessage *m);
+extern int SDTOSCMessage_snprintf(char *s, size_t n, const char *float_fmt,
+                                  const SDTOSCMessage *m);
 
 /** @brief Print OSC message onto a statically-allocated string.
 Please, note that any subsequent calls to SDT log functions
@@ -379,6 +408,25 @@ Macros for implementing OSC methods
     SDTZeroCrossing_setParams(obj, jobj, 0);            \
     json_builder_free(jobj);                            \
     return r;                                           \
+  }
+
+#define _SDTOSC_LOADS_FUNCTION(TYPENAME)                                  \
+  int SDTOSC##TYPENAME##_loads(const SDTOSCMessage *x) {                  \
+    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")                         \
+    _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                       \
+    int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, 1, -1); \
+    char *js = (char *)malloc(sizeof(char) * (nchars + 2));               \
+    SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, 1, -1);       \
+    /* SDT_LOGA(DEBUG, "JSON string: %s\n", js); */                       \
+    json_value *jobj = SDTJSON_reads(js, -1);                             \
+    free(js);                                                             \
+    if (!jobj) {                                                          \
+      SDT_LOG(ERROR, "Error while parsing JSON string\n");                \
+      return 7;                                                           \
+    }                                                                     \
+    SDT##TYPENAME##_setParams(obj, jobj, 0);                              \
+    json_builder_free(jobj);                                              \
+    return 0;                                                             \
   }
 
 #define _SDTOSC_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE, OSCTYPE, \

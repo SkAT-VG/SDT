@@ -43,16 +43,13 @@ Function that implements OSC JSON file loading for #SDTZeroCrossing objects
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCZeroCrossing_load(const SDTOSCMessage *x);
 
-/** @brief `/zerox/loads <name> <filepath>`
+/** @brief `/zerox/loads <name> <json_string>`
 
 Function that implements OSC JSON loading from string for #SDTZeroCrossing
 objects
-@param key Instance name
-@param x Instance pointer
-@param args Argument list: `args[0]` should hold the JSON string
+@param x OSC message
 @return Zero on success, non-zero otherwise */
-extern int SDTOSCZeroCrossing_loads(const char *key, SDTZeroCrossing *x,
-                                    const SDTOSCArgumentList *args);
+extern int SDTOSCZeroCrossing_loads(const SDTOSCMessage *x);
 
 /** @brief `/zerox/size <name> <value>`
 

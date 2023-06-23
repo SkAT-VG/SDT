@@ -7,6 +7,7 @@
 _SDTOSC_LOG_FUNCTION(ZeroCrossing)
 _SDTOSC_SAVE_FUNCTION(ZeroCrossing)
 _SDTOSC_LOAD_FUNCTION(ZeroCrossing)
+_SDTOSC_LOADS_FUNCTION(ZeroCrossing)
 
 _SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, size, Size, unsigned int)
 _SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, overlap, Overlap, double)
@@ -25,6 +26,7 @@ int SDTOSCZeroCrossing(const SDTOSCMessage* x) {
   if (!strcmp("log", k)) return SDTOSCZeroCrossing_log(x);
   if (!strcmp("save", k)) return SDTOSCZeroCrossing_save(x);
   if (!strcmp("load", k)) return SDTOSCZeroCrossing_load(x);
+  if (!strcmp("loads", k)) return SDTOSCZeroCrossing_loads(x);
   if (!strcmp("size", k)) return SDTOSCZeroCrossing_setSize(x);
   if (!strcmp("overlap", k)) return SDTOSCZeroCrossing_setOverlap(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
