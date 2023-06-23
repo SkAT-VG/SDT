@@ -69,11 +69,12 @@ void SDTOSCAddress_free(SDTOSCAddress *x) {
 
 int SDTOSCAddress_snprintf(char *s, size_t n, const SDTOSCAddress *x) {
   int tot = 0, c = 0;
-  for (unsigned int i = 0; i < x->depth && tot < n; ++i) {
-    c = snprintf(s + tot, n - tot, "/%s", x->nodes[i]);
-    if (c < 0) return c;
-    tot += c;
-  }
+  if (x)
+    for (unsigned int i = 0; i < x->depth && tot < n; ++i) {
+      c = snprintf(s + tot, n - tot, "/%s", x->nodes[i]);
+      if (c < 0) return c;
+      tot += c;
+    }
   return tot;
 }
 
@@ -212,9 +213,13 @@ SDTOSCMessage *SDTOSCMessage_new(SDTOSCAddress *address,
 }
 
 void SDTOSCMessage_free(SDTOSCMessage *x) {
-  SDTOSCAddress_free(x->address);
-  SDTOSCArgumentList_free(x->args);
+  if (x->address) SDTOSCAddress_free(x->address);
+  if (x->args) SDTOSCArgumentList_free(x->args);
   free(x);
+}
+
+int SDTOSCMessage_valid(const SDTOSCMessage *x) {
+  return x && x->address && x->args;
 }
 
 const SDTOSCArgumentList *SDTOSCMessage_getArguments(const SDTOSCMessage *x) {

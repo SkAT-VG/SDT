@@ -7,14 +7,15 @@
 #include "SDTOSCResonators.h"
 
 int SDTOSCRoot(const SDTOSCMessage* x) {
+  if (!SDTOSCMessage_valid(x)) return -1;
   SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
-  if (!SDTOSCAddress_getDepth(a)) return 1;
+  if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
   if (!strcmp("zerox", k)) return SDTOSCZeroCrossing(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified container is "
-                      "not implemented: %s\n  %s\n",
+                      "not implemented: % s\n %s\n ",
                       x, k, SDTOSC_rtfm_string());
   return 2;
   // else if (!strcmp("resonator", method) || !strcmp("inertial", method))

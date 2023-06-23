@@ -179,6 +179,11 @@ extern SDTOSCMessage *SDTOSCMessage_new(SDTOSCAddress *address,
 @param[in] x Pointer to the instance to destroy */
 extern void SDTOSCMessage_free(SDTOSCMessage *x);
 
+/** @brief Checks validity of OSC message.
+@param[in] x Pointer to the instance to check
+@returns A true value if the message is valid, otherwise 0 */
+extern int SDTOSCMessage_valid(const SDTOSCMessage *x);
+
 /** @brief Gets the arguments of the message
 @param[in] x Instance pointer
 @return The argument list */
