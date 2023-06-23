@@ -267,98 +267,6 @@ const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m) {
 
 //-------------------------------------------------------------------------------------//
 
-// void SDTOSCLog(void (*log)(const char *, ...), SDTOSCReturnCode r,
-//                const SDTOSCMessage *m) {
-//   if (log && r) {
-//     // Error code
-//     char *msg = "[ERROR]";
-//     if (r == SDT_OSC_RETURN_MISSING_CONTAINER)
-//       msg = "[MISSING_CONTAINER]: please, specify an OSC container";
-//     else if (r == SDT_OSC_RETURN_MISSING_METHOD)
-//       msg =
-//           "[MISSING_METHOD]: please, specify an OSC method from the
-//           container";
-//     else if (r == SDT_OSC_RETURN_NOT_IMPLEMENTED)
-//       msg =
-//           "[NOT_IMPLEMENTED]: the specified container/method is not "
-//           "implemented";
-//     else if (r == SDT_OSC_RETURN_ARGUMENT_ERROR)
-//       msg =
-//           "[ARGUMENT_ERROR]: incorrect type and/or number of arguments for
-//           the " "specified method";
-//     else if (r == SDT_OSC_RETURN_OBJECT_NOT_FOUND)
-//       msg = "[OBJECT_NOT_FOUND]: the specified SDT object was not found";
-//     else if (r == SDT_OSC_RETURN_NO_WRITE_PERMISSION)
-//       msg = "[NO_WRITE_PERMISSION]: the specified filepath is not writable";
-//     else if (r == SDT_OSC_RETURN_ERROR_LOADING_JSON)
-//       msg =
-//           "[ERROR_LOADING_JSON]: the specified filepath either is not
-//           readable " "or does not contain a valid JSON value";
-//     else if (r == SDT_OSC_RETURN_WARNING_INTERACTOR_KEY)
-//       msg =
-//           "[WARNING_INTERACTOR_KEY]: at least one resonator key in the loaded
-//           " "JSON file does not match the previous resonator. The resonator
-//           is " "updated to point to the newly specified instance. However,
-//           the " "interactor is still registered under the previous key pair.
-//           Please, " "check that this is intended. To avoid this warning,
-//           change the " "resonator key either in your JSON file or in your
-//           program to match " "each other.";
-//     else if (r == SDT_OSC_RETURN_JSON_NOT_COMPLIANT)
-//       msg =
-//           "[JSON_NOT_COMPLIANT]: your JSON file is not compliant to SDT's "
-//           "standard";
-//     else if (r == SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE)
-//       msg =
-//           "[INCORRECT_INTERACTOR_TYPE]: the specified interactor does not "
-//           "match the expected type for the method";
-//     else if (r == SDT_OSC_RETURN_ERROR_WRITING_JSON)
-//       msg = "[ERROR_WRITING_JSON]: an error occurred while converting to
-//       JSON";
-
-//     msg = strjoin_free("sdtOSC ", 0, msg, 0);
-
-//     // Message
-//     if (m) {
-//       msg = strjoin_free(msg, 1, indent_free("Message:", 0, 1), 1);
-
-//       char *adr = (m->address) ? SDTOSCAddress_str(m->address) : 0;
-//       if (adr)
-//         msg = strjoin_free(
-//             msg, 1, strjoin_free(strjoin_free(" @[", 0, adr, 1), 1, "]", 0),
-//             1);
-
-//       // Arguments
-//       SDTOSCArgumentList *args = SDTOSCMessage_getArguments(m);
-//       for (unsigned int i = 0; i < args->argc; ++i)
-//         if (SDTOSCArgumentList_isString(args, i)) {
-//           const char *src = SDTOSCArgumentList_getString(args, i);
-//           char *arg = (char *)malloc(sizeof(char) * (strlen(src) + 4));
-//           sprintf(arg, " '%s'", src);
-//           msg = strjoin_free(msg, 1, arg, 1);
-//         } else if (SDTOSCArgumentList_isFloat(args, i)) {
-//           float arg = SDTOSCArgumentList_getFloat(args, i);
-//           char *s = (char *)malloc(sizeof(char) * (16 + n_digits(arg)));
-//           sprintf(s, (fmod(arg, 1)) ? " %.2f" : " %.0f", arg);
-//           msg = strjoin_free(msg, 1, s, 1);
-//         } else
-//           msg = strjoin_free(msg, 1, " [UNSUPPORTED]", 0);
-//     }
-
-//     msg = strjoin_free(
-//         msg, 1,
-//         indent_free(
-//             strjoin_free(
-//                 "For further details, please, visit the documentation at ",
-//                 0, _docs_url, 0),
-//             1, 1),
-//         1);
-//     (*log)(msg);
-//     free(msg);
-//   }
-// }
-
-//-------------------------------------------------------------------------------------//
-
 int SDTOSCJSON_log(const char *preamble, json_value *obj) {
   int newline = 0;
   int (*log)(const char *, ...) = SDT_getLogger(SDT_LOG_LEVEL_INFO, &newline);
@@ -397,29 +305,6 @@ int SDTOSCJSON_log(const char *preamble, json_value *obj) {
   free(s);
   return 0;
 }
-
-#define _SDTOSCJSON_fileArgsValidation()                     \
-  if (!name) {                                               \
-    SDT_LOG(ERROR, "name is a null pointer");                \
-    return 1;                                                \
-  }                                                          \
-  if (!args) {                                               \
-    SDT_LOG(ERROR, "args is a null pointer");                \
-    return 2;                                                \
-  }                                                          \
-  if (args->argc < 1) {                                      \
-    SDT_LOG(ERROR, "args is empty");                         \
-    return 3;                                                \
-  }                                                          \
-  if (!SDTOSCArgumentList_isString(args, 0)) {               \
-    SDT_LOG(ERROR, "args[0] is not a string");               \
-    return 4;                                                \
-  }                                                          \
-  const char *fpath = SDTOSCArgumentList_getString(args, 0); \
-  if (!fpath) {                                              \
-    SDT_LOG(ERROR, "args[0] (as string) is a null pointer"); \
-    return 5;                                                \
-  }
 
 int SDTOSCJSON_save(const char *name, const json_value *obj,
                     const char *fpath) {

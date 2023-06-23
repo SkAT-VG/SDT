@@ -4,93 +4,9 @@
 #include <string.h>
 #include "SDTCommon.h"
 
-#define SDTOSCZEROCROSSING_GETINSTANCE(NAME, VAR, x)                          \
-  SDTZeroCrossing* VAR = 0;                                                   \
-  const char* NAME = "";                                                      \
-  {                                                                           \
-    const SDTOSCArgumentList* args = SDTOSCMessage_getArguments(x);           \
-    if (!SDTOSCArgumentList_getNArgs(args)) {                                 \
-      SDTOSC_MESSAGE_LOGA(                                                    \
-          ERROR,                                                              \
-          "\n  %s\n  [ARGUMENT ERROR] Missing argument: instance name\n "     \
-          " %s\n",                                                            \
-          x, SDTOSC_rtfm_string());                                           \
-      return 1;                                                               \
-    }                                                                         \
-    if (SDTOSCArgumentList_isString(args, 0)) {                               \
-      NAME = SDTOSCArgumentList_getString(args, 0);                           \
-    } else {                                                                  \
-      SDTOSC_MESSAGE_LOGA(                                                    \
-          ERROR,                                                              \
-          "\n  %s\n  [ARGUMENT ERROR] First argument should be a string\n "   \
-          " %s\n",                                                            \
-          x, SDTOSC_rtfm_string());                                           \
-      return 2;                                                               \
-    }                                                                         \
-    VAR = SDT_getZeroCrossing(NAME);                                          \
-    if (!VAR) {                                                               \
-      SDTOSC_MESSAGE_LOGA(                                                    \
-          ERROR,                                                              \
-          "\n  %s\n  [OBJECT NOT FOUND] No zerox object registered as: %s\n " \
-          " %s\n",                                                            \
-          x, NAME, SDTOSC_rtfm_string());                                     \
-      return 3;                                                               \
-    }                                                                         \
-  }
-
-#define SDTOSCZEROCROSSING_GETFILE(VAR, x)                                   \
-  const char* VAR = NULL;                                                    \
-  {                                                                          \
-    const SDTOSCArgumentList* args = SDTOSCMessage_getArguments(x);          \
-    if (SDTOSCArgumentList_getNArgs(args) < 2) {                             \
-      SDTOSC_MESSAGE_LOGA(                                                   \
-          ERROR,                                                             \
-          "\n  %s\n  [ARGUMENT ERROR] Missing argument: file path\n "        \
-          " %s\n",                                                           \
-          x, SDTOSC_rtfm_string());                                          \
-      return 1;                                                              \
-    }                                                                        \
-    if (SDTOSCArgumentList_isString(args, 1)) {                              \
-      VAR = SDTOSCArgumentList_getString(args, 1);                           \
-    } else {                                                                 \
-      SDTOSC_MESSAGE_LOGA(                                                   \
-          ERROR,                                                             \
-          "\n  %s\n  [ARGUMENT ERROR] Second argument should be a string\n " \
-          " %s\n",                                                           \
-          x, SDTOSC_rtfm_string());                                          \
-      return 2;                                                              \
-    }                                                                        \
-  }
-
-int SDTOSCZeroCrossing_log(const SDTOSCMessage* x) {
-  SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
-  SDTOSCZEROCROSSING_GETINSTANCE(k, z, x)
-  json_value* obj = SDTZeroCrossing_toJSON(z);
-  int r = SDTOSCJSON_log(k, obj);
-  json_builder_free(obj);
-  return r;
-}
-
-int SDTOSCZeroCrossing_save(const SDTOSCMessage* x) {
-  SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
-  SDTOSCZEROCROSSING_GETINSTANCE(k, z, x)
-  SDTOSCZEROCROSSING_GETFILE(fpath, x)
-  json_value* obj = SDTZeroCrossing_toJSON(z);
-  int r = SDTOSCJSON_save(k, obj, fpath);
-  json_builder_free(obj);
-  return r;
-}
-
-int SDTOSCZeroCrossing_load(const SDTOSCMessage* x) {
-  SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
-  SDTOSCZEROCROSSING_GETINSTANCE(k, z, x)
-  SDTOSCZEROCROSSING_GETFILE(fpath, x)
-  json_value* obj;
-  int r = SDTOSCJSON_load(k, &obj, fpath);
-  SDTZeroCrossing_setParams(z, obj, 0);
-  json_builder_free(obj);
-  return r;
-}
+_SDTOSC_LOG_FUNCTION(ZeroCrossing)
+_SDTOSC_SAVE_FUNCTION(ZeroCrossing)
+_SDTOSC_LOAD_FUNCTION(ZeroCrossing)
 
 // int SDTOSCZeroCrossing_setSize(SDTZeroCrossing *x,
 //                                const SDTOSCArgumentList *args) {

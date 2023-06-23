@@ -256,6 +256,110 @@ extern int SDTOSCJSON_save(const char *name, const json_value *obj,
 extern int SDTOSCJSON_load(const char *name, json_value **obj,
                            const char *fpath);
 
+/** @} @defgroup _osc_macros OSC Macros
+Macros for implementing OSC methods
+@{ */
+
+#define _SDTOSC_FIND_IN_HASHMAP(TYPENAME, OBJVAR, NAMEVAR, MSGVAR)          \
+  SDT##TYPENAME *OBJVAR = NULL;                                             \
+  const char *NAMEVAR = NULL;                                               \
+  const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(MSGVAR);      \
+  if (!SDTOSCArgumentList_getNArgs(args)) {                                 \
+    SDTOSC_MESSAGE_LOGA(                                                    \
+        ERROR,                                                              \
+        "\n  %s\n  [ARGUMENT ERROR] Missing argument: instance name\n "     \
+        " %s\n",                                                            \
+        x, SDTOSC_rtfm_string());                                           \
+    return 1;                                                               \
+  }                                                                         \
+  if (SDTOSCArgumentList_isString(args, 0)) {                               \
+    NAMEVAR = SDTOSCArgumentList_getString(args, 0);                        \
+  } else {                                                                  \
+    SDTOSC_MESSAGE_LOGA(                                                    \
+        ERROR,                                                              \
+        "\n  %s\n  [ARGUMENT ERROR] First argument should be a string\n "   \
+        " %s\n",                                                            \
+        x, SDTOSC_rtfm_string());                                           \
+    return 2;                                                               \
+  }                                                                         \
+  if (!NAMEVAR) {                                                           \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                              \
+                        "\n  %s\n  [NULL POINTER] Instance name is a null " \
+                        "pointer string %s\n",                              \
+                        x, SDTOSC_rtfm_string());                           \
+    return 3;                                                               \
+  }                                                                         \
+  OBJVAR = SDT_get##TYPENAME(NAMEVAR);                                      \
+  if (!OBJVAR) {                                                            \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                              \
+                        "\n  %s\n  [OBJECT NOT FOUND] No " #TYPENAME        \
+                        " object registered as: %s\n "                      \
+                        " %s\n",                                            \
+                        x, NAMEVAR, SDTOSC_rtfm_string());                  \
+    return 4;                                                               \
+  }
+
+#define _SDTOSC_GETFPATH(FPATHVAR, MSGVAR)                                 \
+  const char *FPATHVAR = NULL;                                             \
+  if (SDTOSCArgumentList_getNArgs(args) < 2) {                             \
+    SDTOSC_MESSAGE_LOGA(                                                   \
+        ERROR,                                                             \
+        "\n  %s\n  [ARGUMENT ERROR] Missing argument: file path\n "        \
+        " %s\n",                                                           \
+        x, SDTOSC_rtfm_string());                                          \
+    return 5;                                                              \
+  }                                                                        \
+  if (SDTOSCArgumentList_isString(args, 1)) {                              \
+    FPATHVAR = SDTOSCArgumentList_getString(args, 1);                      \
+  } else {                                                                 \
+    SDTOSC_MESSAGE_LOGA(                                                   \
+        ERROR,                                                             \
+        "\n  %s\n  [ARGUMENT ERROR] Second argument should be a string\n " \
+        " %s\n",                                                           \
+        x, SDTOSC_rtfm_string());                                          \
+    return 6;                                                              \
+  }                                                                        \
+  if (!FPATHVAR) {                                                         \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                             \
+                        "\n  %s\n  [NULL POINTER] File path is a null "    \
+                        "pointer string %s\n",                             \
+                        x, SDTOSC_rtfm_string());                          \
+    return 7;                                                              \
+  }
+
+#define _SDTOSC_LOG_FUNCTION(TYPENAME)                 \
+  int SDTOSC##TYPENAME##_log(const SDTOSCMessage *x) { \
+    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")      \
+    _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)    \
+    json_value *jobj = SDT##TYPENAME##_toJSON(obj);    \
+    int r = SDTOSCJSON_log(name, jobj);                \
+    json_builder_free(jobj);                           \
+    return r;                                          \
+  }
+
+#define _SDTOSC_SAVE_FUNCTION(TYPENAME)                 \
+  int SDTOSC##TYPENAME##_save(const SDTOSCMessage *x) { \
+    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")       \
+    _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)     \
+    _SDTOSC_GETFPATH(fpath, x)                          \
+    json_value *jobj = SDT##TYPENAME##_toJSON(obj);     \
+    int r = SDTOSCJSON_save(name, jobj, fpath);         \
+    json_builder_free(jobj);                            \
+    return r;                                           \
+  }
+
+#define _SDTOSC_LOAD_FUNCTION(TYPENAME)                 \
+  int SDTOSC##TYPENAME##_load(const SDTOSCMessage *x) { \
+    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")       \
+    _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)     \
+    _SDTOSC_GETFPATH(fpath, x)                          \
+    json_value *jobj;                                   \
+    int r = SDTOSCJSON_load(name, &jobj, fpath);        \
+    SDTZeroCrossing_setParams(obj, jobj, 0);            \
+    json_builder_free(jobj);                            \
+    return r;                                           \
+  }
+
 /** @} */
 
 #ifdef __cplusplus
