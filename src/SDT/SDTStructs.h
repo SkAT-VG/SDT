@@ -43,10 +43,7 @@ extern void SDTHashmap_clear(SDTHashmap *x);
 /** @brief Returns 1 if the hashmap is empty, otherwise 0. */
 extern int SDTHashmap_empty(const SDTHashmap *x);
 
-/**
-@defgroup _struct_macros Macros for common data structures
-@{ */
-
+/** --- Macros ------------------------------------------------------------- */
 #define _SDT_HASHMAP_FUNCTIONS(TYPENAME)                                       \
   static SDTHashmap *hashmap_##TYPENAME = NULL;                                \
   int SDT_register##TYPENAME(struct SDT##TYPENAME *x, const char *key) {       \
@@ -69,6 +66,7 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
     }                                                                          \
     return 0;                                                                  \
   }
+/** ------------------------------------------------------------------------ */
 
 #ifdef __cplusplus
 };
@@ -76,4 +74,4 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
 
 #endif
 
-/** @} @} */
+/** @} */
