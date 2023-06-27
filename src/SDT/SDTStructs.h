@@ -30,12 +30,12 @@ extern void *SDTHashmap_get(SDTHashmap *x, const char *key);
 @param[in] key Key to associate to the value
 @param[in] value Value to insert in the hashmap
 @return 0 if insertion is succesful, 1 otherwise (e.g. key already present) */
-extern int SDTHashmap_put(SDTHashmap *x, char *key, void *value);
+extern int SDTHashmap_put(SDTHashmap *x, const char *key, void *value);
 
 /** @brief Deletes a key/value pair from the hashmap.
 @param[in] key Key to look for in the hashmap
 @return 0 if deletion is succesful, 1 otherwise (e.g. key not found) */
-extern int SDTHashmap_del(SDTHashmap *x, char *key);
+extern int SDTHashmap_del(SDTHashmap *x, const char *key);
 
 /** @brief Deletes all the entries in the hashmap. */
 extern void SDTHashmap_clear(SDTHashmap *x);
