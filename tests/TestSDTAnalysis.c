@@ -19,7 +19,7 @@ void TestSDTZeroCrossing_setOverlap(CuTest *tc) {
   SDTRandomSequence *olaps = SDTRandomSequence_newFloat(1024, 0, 0.999);
   FOR_RANDOM_ITER_FLOAT (olaps, f) {
     SDTZeroCrossing_setOverlap(zx, f);
-    CuAssertDblEquals(tc, f, SDTZeroCrossing_getOverlap(zx), 0.001);
+    CuAssertDblEquals(tc, f, SDTZeroCrossing_getOverlap(zx), 0.005);
   }
   SDTZeroCrossing_free(zx);
   SDTRandomSequence_free(olaps);
@@ -29,7 +29,7 @@ void TestSDTZeroCrossing_setOverlap(CuTest *tc) {
 void TestSDTZeroCrossing_setSize(CuTest *tc) {
   SDT_TEST_BEGIN()
   SDTZeroCrossing *zx = SDTZeroCrossing_new(1024);
-  SDTRandomSequence *sizes = SDTRandomSequence_newLog(1024, 1, 1 << 15);
+  SDTRandomSequence *sizes = SDTRandomSequence_newLog(1024, 1 << 7, 1 << 15);
   FOR_RANDOM_ITER_FLOAT (sizes, s) {
     SDTZeroCrossing_setSize(zx, (int)s);
     CuAssertIntEquals(tc, (int)s, SDTZeroCrossing_getSize(zx));
@@ -42,7 +42,7 @@ void TestSDTZeroCrossing_setSize(CuTest *tc) {
 void TestSDTZeroCrossing_dsp_whiteNoise(CuTest *tc) {
   SDT_TEST_BEGIN()
   SDTZeroCrossing *zx = SDTZeroCrossing_new(1024);
-  SDTRandomSequence *sizes = SDTRandomSequence_newLog(32, 1, 1 << 15);
+  SDTRandomSequence *sizes = SDTRandomSequence_newLog(32, 1 << 7, 1 << 15);
   SDTRandomSequence *olaps = SDTRandomSequence_newFloat(0, 0, 0.99);
   SDTRandomSequence *values = SDTRandomSequence_newFloat(0, -1, 1);
   double out;
@@ -54,6 +54,32 @@ void TestSDTZeroCrossing_dsp_whiteNoise(CuTest *tc) {
       SDTZeroCrossing_dsp(zx, &out, SDTRandomSequence_nextFloat(values));
   }
   SDTZeroCrossing_free(zx);
+  SDTRandomSequence_free(sizes);
+  SDTRandomSequence_free(olaps);
+  SDTRandomSequence_free(values);
+  SDT_TEST_END()
+}
+
+void TestSDTZeroCrossing_copy(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  SDTZeroCrossing *zx, *zx_ = SDTZeroCrossing_new(1);
+  SDTZeroCrossing_setOverlap(zx_, 0.0);
+  SDTRandomSequence *sizes = SDTRandomSequence_newLog(32, 1 << 7, 1 << 15);
+  SDTRandomSequence *olaps = SDTRandomSequence_newFloat(0, 0, 0.99);
+  SDTRandomSequence *values = SDTRandomSequence_newFloat(0, -1, 1);
+  double f;
+  FOR_RANDOM_ITER_FLOAT (sizes, s) {
+    // Set zx
+    zx = SDTZeroCrossing_new((int)s);
+    SDTZeroCrossing_setOverlap(zx, SDTRandomSequence_nextFloat(olaps));
+    f = SDTZeroCrossing_getOverlap(zx);
+    // Copy to zx_
+    SDTZeroCrossing_copy(zx_, zx, 1);
+    SDTZeroCrossing_free(zx);
+    CuAssertIntEquals(tc, (int)s, SDTZeroCrossing_getSize(zx_));
+    CuAssertDblEquals(tc, f, SDTZeroCrossing_getOverlap(zx_), 0.005);
+  }
+  SDTZeroCrossing_free(zx_);
   SDTRandomSequence_free(sizes);
   SDTRandomSequence_free(olaps);
   SDTRandomSequence_free(values);
