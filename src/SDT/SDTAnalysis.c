@@ -61,29 +61,7 @@ SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
   return dest;
 }
 
-static SDTHashmap *hashmap_SDT_ZEROCROSSING = NULL;
-
-int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, char *key) {
-  if (!hashmap_SDT_ZEROCROSSING) hashmap_SDT_ZEROCROSSING = SDTHashmap_new(59);
-  if (SDTHashmap_put(hashmap_SDT_ZEROCROSSING, key, x)) return 1;
-  return 0;
-}
-
-SDTZeroCrossing *SDT_getZeroCrossing(const char *key) {
-  return (hashmap_SDT_ZEROCROSSING)
-             ? SDTHashmap_get(hashmap_SDT_ZEROCROSSING, key)
-             : 0;
-}
-
-int SDT_unregisterZeroCrossing(char *key) {
-  if (!hashmap_SDT_ZEROCROSSING) return 1;
-  if (SDTHashmap_del(hashmap_SDT_ZEROCROSSING, key)) return 1;
-  if (SDTHashmap_empty(hashmap_SDT_ZEROCROSSING)) {
-    SDTHashmap_free(hashmap_SDT_ZEROCROSSING);
-    hashmap_SDT_ZEROCROSSING = NULL;
-  }
-  return 0;
-}
+_SDT_HASHMAP_FUNCTIONS(ZeroCrossing)
 
 json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x) {
   json_value *obj = json_object_new(0);

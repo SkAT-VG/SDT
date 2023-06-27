@@ -44,7 +44,7 @@ extern SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
 detectors list with a unique ID.
 @param[in] x Zero crossing rate detector instance to register
 @param[in] key Unique ID assigned to the zero crossing rate detector instance */
-extern int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, char *key);
+extern int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, const char *key);
 
 /** @brief Queries the zero crossing rate detectors list by its unique ID.
 If a zero crossing rate detector with the ID is present, a pointer to the zero
@@ -59,7 +59,7 @@ it is unregistered from the list.
 @param[in] key Unique ID of the zero crossing rate detector instance to
 unregister
 @return Zero on success, otherwise one */
-extern int SDT_unregisterZeroCrossing(char *key);
+extern int SDT_unregisterZeroCrossing(const char *key);
 
 /** @brief Gets the size of the analysis window.
 @param[in] x Pointer to the instance
