@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "CuTest.h"
 #include "SDT/SDTCommon.h"
 
@@ -100,6 +101,11 @@ extern SDTRandomSequence *SDTRandomSequence_newExp(unsigned int n, float min,
 @param[in] VAR Loop variable name */
 #define FOR_RANDOM_ITER_FLOAT(IT, VAR) \
   _FOR_RANDOM_ITER_PROTO(IT, VAR, float, Float)
+
+#define CuAssertPointerEquals(tc, ex, ac) \
+  CuAssertIntEquals(tc, (uintptr_t)ex, (uintptr_t)ac)
+#define CuAssertPointerEquals_Msg(tc, ms, ex, ac) \
+  CuAssertIntEquals_Msg(tc, ms, (uintptr_t)ex, (uintptr_t)ac)
 
 /* Test prototype
 void TestSDT_functionName(CuTest* tc)
