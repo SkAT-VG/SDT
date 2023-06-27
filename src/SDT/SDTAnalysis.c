@@ -1,5 +1,6 @@
 #include "SDTAnalysis.h"
 #include <math.h>
+#include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
