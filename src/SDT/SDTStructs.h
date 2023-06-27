@@ -51,7 +51,10 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
   static SDTHashmap *hashmap_##TYPENAME = NULL;                                \
   int SDT_register##TYPENAME(struct SDT##TYPENAME *x, const char *key) {       \
     if (!hashmap_##TYPENAME) hashmap_##TYPENAME = SDTHashmap_new(59);          \
-    if (SDTHashmap_put(hashmap_##TYPENAME, key, x)) return 1;                  \
+    if (SDTHashmap_put(hashmap_##TYPENAME, key, x)) {                          \
+      SDT_LOGA(WARN, "Not registering. Key already present: %s\n", key);       \
+      return 1;                                                                \
+    }                                                                          \
     return 0;                                                                  \
   }                                                                            \
   SDT##TYPENAME *SDT_get##TYPENAME(const char *key) {                          \
