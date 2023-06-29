@@ -13,7 +13,7 @@ _SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, size, Size, unsigned int)
 _SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, overlap, Overlap, double)
 
 int SDTOSCZeroCrossing(const SDTOSCMessage* x) {
-  SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
+  SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
   if (SDTOSCAddress_getDepth(a) < 2) {
     SDTOSC_MESSAGE_LOGA(ERROR,
