@@ -368,9 +368,8 @@ the incoming signal (in place).
 @param[in] n window size */
 extern void SDT_ihaar(double *sig, long n);
 
-/** @brief Returns a true value if SDT has been compiled in
- * debug mode */
-extern int SDT_isDebug();
+/** @brief Returns a true value if SDT has been compiled in verbose mode */
+extern int SDT_isVerbose();
 
 /** @brief Checks if the selected value is the minimum
 among its neighbors.

@@ -149,8 +149,10 @@ jobs:
       if: ${{ !startsWith(matrix.target, 'win') }}
       run: chmod +x ./testrunner/test
     - name: Run tests
-      run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} 2>&1 | tee ${{ env.LOG_FNAME }}
+      run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} >${{ env.LOG_FNAME }} 2>&1
       shell: bash
+      env:
+        SDT_LOG_LEVEL: DEBUG
     - name: Upload test log
       if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v3

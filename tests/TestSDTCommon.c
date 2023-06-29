@@ -355,10 +355,10 @@ void _TestHelper__SDT_isExtremum(CuTest *tc, double baseval, double peakval,
   SDTRandomSequence_free(radii);
 }
 
-void TestSDT_isDebug(CuTest *tc) {
+void TestSDT_isVerbose(CuTest *tc) {
   SDT_TEST_BEGIN()
-  CuAssertIntEquals_Msg(tc, "Check same debug flag between test and library",
-                        SDT_DEBUG_IF_ELSE(1, 0), SDT_isDebug());
+  CuAssertIntEquals_Msg(tc, "Check same verbose flag between test and library",
+                        SDT_VERBOSE_IF_ELSE(1, 0), SDT_isVerbose());
   SDT_TEST_END()
 }
 

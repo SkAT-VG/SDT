@@ -520,7 +520,7 @@ int SDT_log(int level, const char *file, unsigned int line, const char *func,
   return log("%s", _SDT_logBuffer);
 }
 
-int SDT_isDebug() { return SDT_DEBUG_IF_ELSE(1, 0); }
+int SDT_isVerbose() { return SDT_VERBOSE_IF_ELSE(1, 0); }
 
 #define _SDT_LOG_LEVEL_ENV_CASE(LEVEL) \
   if (!strcmp(level_name, #LEVEL)) level = SDT_LOG_LEVEL_##LEVEL;
