@@ -7,7 +7,10 @@
 #include "SDTOSCResonators.h"
 
 int SDTOSCRoot(const SDTOSCMessage* x) {
-  if (!SDTOSCMessage_valid(x)) return -1;
+  if (!SDTOSCMessage_valid(x)) {
+    SDT_LOG(ERROR, "Invalid OSC message\n");
+    return -1;
+  }
   SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "");
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
