@@ -379,7 +379,7 @@ Macros for implementing OSC methods
 
 #define _SDTOSC_LOG_FUNCTION(TYPENAME)                 \
   int SDTOSC##TYPENAME##_log(const SDTOSCMessage *x) { \
-    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")      \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")    \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)    \
     json_value *jobj = SDT##TYPENAME##_toJSON(obj);    \
     int r = SDTOSCJSON_log(name, jobj);                \
@@ -389,7 +389,7 @@ Macros for implementing OSC methods
 
 #define _SDTOSC_SAVE_FUNCTION(TYPENAME)                 \
   int SDTOSC##TYPENAME##_save(const SDTOSCMessage *x) { \
-    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")       \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")     \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)     \
     _SDTOSC_GETFPATH(fpath, x)                          \
     json_value *jobj = SDT##TYPENAME##_toJSON(obj);     \
@@ -400,7 +400,7 @@ Macros for implementing OSC methods
 
 #define _SDTOSC_LOAD_FUNCTION(TYPENAME)                 \
   int SDTOSC##TYPENAME##_load(const SDTOSCMessage *x) { \
-    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")       \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")     \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)     \
     _SDTOSC_GETFPATH(fpath, x)                          \
     json_value *jobj;                                   \
@@ -410,29 +410,32 @@ Macros for implementing OSC methods
     return r;                                           \
   }
 
-#define _SDTOSC_LOADS_FUNCTION(TYPENAME)                                  \
-  int SDTOSC##TYPENAME##_loads(const SDTOSCMessage *x) {                  \
-    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")                         \
-    _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                       \
-    int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, 1, -1); \
-    char *js = (char *)malloc(sizeof(char) * (nchars + 2));               \
-    SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, 1, -1);       \
-    /* SDT_LOGA(DEBUG, "JSON string: %s\n", js); */                       \
-    json_value *jobj = SDTJSON_reads(js, -1);                             \
-    free(js);                                                             \
-    if (!jobj) {                                                          \
-      SDT_LOG(ERROR, "Error while parsing JSON string\n");                \
-      return 7;                                                           \
-    }                                                                     \
-    SDT##TYPENAME##_setParams(obj, jobj, 0);                              \
-    json_builder_free(jobj);                                              \
-    return 0;                                                             \
+#define _SDTOSC_LOADS_FUNCTION(TYPENAME)                                     \
+  int SDTOSC##TYPENAME##_loads(const SDTOSCMessage *x) {                     \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                          \
+    _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                          \
+    int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, 1, -1);    \
+    char *js = (char *)malloc(sizeof(char) * (nchars + 2));                  \
+    SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, 1, -1);          \
+    /* SDT_LOGA(VERBOSE, "JSON string: %s\n", js); */                        \
+    json_value *jobj = SDTJSON_reads(js, -1);                                \
+    free(js);                                                                \
+    if (!jobj) {                                                             \
+      SDTOSC_MESSAGE_LOGA(                                                   \
+          ERROR,                                                             \
+          "\n  %s\n  [PARSER ERROR] Error while parsing JSON string\n%s", x, \
+          "");                                                               \
+      return 7;                                                              \
+    }                                                                        \
+    SDT##TYPENAME##_setParams(obj, jobj, 0);                                 \
+    json_builder_free(jobj);                                                 \
+    return 0;                                                                \
   }
 
 #define _SDTOSC_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE, OSCTYPE, \
                                 OSCTYPELCASE)                           \
   int SDTOSC##TYPENAME##_set##UCASE(const SDTOSCMessage *x) {           \
-    SDTOSC_MESSAGE_LOGA(DEBUG, "\n  %s\n", x, "")                       \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                     \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                     \
     _SDTOSC_GETARG(LCASE, UCASE, CTYPE, OSCTYPE, OSCTYPELCASE, x)       \
     SDT##TYPENAME##_set##UCASE(obj, LCASE);                             \

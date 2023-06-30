@@ -59,7 +59,7 @@ void *SDTHashmap_get(SDTHashmap *x, const char *key) {
   return x->item ? x->item->value : NULL;
 }
 
-int SDTHashmap_put(SDTHashmap *x, char *key, void *value) {
+int SDTHashmap_put(SDTHashmap *x, const char *key, void *value) {
   int hash;
 
   hash = SDTHashmap_lookup(x, key);
@@ -73,7 +73,7 @@ int SDTHashmap_put(SDTHashmap *x, char *key, void *value) {
   return 0;
 }
 
-int SDTHashmap_del(SDTHashmap *x, char *key) {
+int SDTHashmap_del(SDTHashmap *x, const char *key) {
   int hash;
 
   hash = SDTHashmap_lookup(x, key);

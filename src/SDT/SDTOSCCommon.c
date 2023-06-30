@@ -131,11 +131,11 @@ SDTOSCArgument *SDTOSCArgument_newString(const char *s) {
 }
 
 int SDTOSCArgument_isFloat(const SDTOSCArgument *x) {
-  return x->tag == SDT_OSC_ARG_FLOAT;
+  return x && x->tag == SDT_OSC_ARG_FLOAT;
 }
 
 int SDTOSCArgument_isString(const SDTOSCArgument *x) {
-  return x->tag == SDT_OSC_ARG_STRING;
+  return x && x->tag == SDT_OSC_ARG_STRING;
 }
 
 float SDTOSCArgument_getFloat(const SDTOSCArgument *x) { return x->value.f; }
