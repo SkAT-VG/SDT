@@ -114,22 +114,10 @@ void myoelastic_dsp64(t_myoelastic *x, t_object *dsp64, short *count,
 void *myoelastic_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_setupMaxLoggers();
   t_myoelastic *x;
-  long tmpSize, windowSize;
 
   x = (t_myoelastic *)object_alloc(myoelastic_class);
   if (x) {
-    dsp_setup((t_pxobject *)x, 1);
-    if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
-      tmpSize = atom_getlong(&argv[0]);
-      windowSize = SDT_nextPow2(tmpSize);
-      if (tmpSize != windowSize) {
-        post("sdt.myo~: Window size must be a power of 2, setting it to %d",
-             windowSize);
-      }
-    } else {
-      windowSize = 4096;
-    }
-    x->myo = SDTMyoelastic_new(windowSize);
+    x->myo = SDTMyoelastic_new();
     x->key = 0;
     x->outlets[3] = floatout(x);
     x->outlets[2] = floatout(x);

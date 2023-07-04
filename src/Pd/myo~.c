@@ -58,10 +58,10 @@ void myo_dsp(t_myo *x, t_signal **sp, short *count) {
 }
 
 void *myo_new(t_symbol *s, long argc, t_atom *argv) {
-  SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
+  SDT_PD_ARG_PARSE(1, A_SYMBOL)
 
   t_myo *x = (t_myo *)pd_new(myo_class);
-  x->myo = SDTMyoelastic_new(GET_ARG(1, atom_getfloat, 4096));
+  x->myo = SDTMyoelastic_new();
   x->time = 0.0;
 
   SDT_PD_REGISTER(Myoelastic, myo, "myoelastic feature extractor", 0)
