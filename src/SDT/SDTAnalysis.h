@@ -43,8 +43,9 @@ extern SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
 /** @brief Registers a zero crossing rate detector into the zero crossing rate
 detectors list with a unique ID.
 @param[in] x Zero crossing rate detector instance to register
-@param[in] key Unique ID assigned to the zero crossing rate detector instance */
-extern int SDT_registerZeroCrossing(struct SDTZeroCrossing *x, const char *key);
+@param[in] key Unique ID assigned to the zero crossing rate detector instance
+@return Zero on success, otherwise one */
+extern int SDT_registerZeroCrossing(SDTZeroCrossing *x, const char *key);
 
 /** @brief Queries the zero crossing rate detectors list by its unique ID.
 If a zero crossing rate detector with the ID is present, a pointer to the zero
@@ -137,11 +138,74 @@ extern void SDTMyoelastic_free(SDTMyoelastic *x);
   A(T, highCut, double, HighFrequency, highFrequency, double, -1) \
   A(T, threshold, double, Threshold, threshold, double, 0)
 
-SDT_TYPE_COPY_H(SDT_MYOELASTIC)
-SDT_DEFINE_HASHMAP_H(SDT_MYOELASTIC)
-SDT_TYPE_MAKE_GETTERS_H(SDT_MYOELASTIC)
-SDT_JSON_SERIALIZE_H(SDT_MYOELASTIC)
-SDT_JSON_DESERIALIZE_H(SDT_MYOELASTIC)
+/** @brief Deep-copies a myoelastic feature extractor.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTMyoelastic *SDTMyoelastic_copy(SDTMyoelastic *dest,
+                                         const SDTMyoelastic *src);
+
+/** @brief Registers a myoelastic feature extractor into the myoelastic feature
+extractors list with a unique ID.
+@param[in] x Myoelastic feature extractor instance to register
+@param[in] key Unique ID assigned to the myoelastic feature extractor instance
+@return Zero on success, otherwise one */
+extern int SDT_registerMyoelastic(SDTMyoelastic *x, const char *key);
+
+/** @brief Queries the myoelastic feature extractors list by its unique ID.
+If a myoelastic feature extractor with the ID is present, a pointer to the
+myoelastic feature extractor is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the myoelastic feature extractor instance
+@return Myoelastic feature extractor instance pointer */
+extern SDTMyoelastic *SDT_getMyoelastic(const char *key);
+
+/** @brief Unregisters a myoelastic feature extractor from the myoelastic
+feature extractors list. If a myoelastic feature extractor with the given ID is
+present, it is unregistered from the list.
+@param[in] key Unique ID of the myoelastic feature extractor instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterMyoelastic(const char *key);
+
+/** @brief Gets the DC offset cutoff.
+@param[in] x Pointer to the instance
+@return DC offset cutoff, in Hz */
+extern double SDTMyoelastic_getDcFrequency(const SDTMyoelastic *x);
+
+/** @brief Gets the low frequency cutoff.
+@param[in] x Pointer to the instance
+@return Low frequency cutoff, in Hz */
+extern double SDTMyoelastic_getLowFrequency(const SDTMyoelastic *x);
+
+/** @brief Gets the high frequency cutoff.
+@param[in] x Pointer to the instance
+@return High frequency cutoff, in Hz */
+extern double SDTMyoelastic_getHighFrequency(const SDTMyoelastic *x);
+
+/** @brief Gets the amplitude threshold of the input gate.
+@param[in] x Pointer to the instance
+@return Amplitude threshold */
+extern double SDTMyoelastic_getThreshold(const SDTMyoelastic *x);
+
+/** @brief Represent a myoelastic feature extractor as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTMyoelastic_toJSON(const SDTMyoelastic *x);
+
+/** @brief Initialize a myoelastic feature extractor from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTMyoelastic *SDTMyoelastic_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a myoelastic feature extractor from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x,
+                                              const json_value *j,
+                                              unsigned char unsafe);
 
 /** @brief Sets the DC offset cutoff.
 @param[in] x Pointer to the instance
