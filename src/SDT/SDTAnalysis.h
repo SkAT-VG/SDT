@@ -124,7 +124,7 @@ typedef struct SDTMyoelastic SDTMyoelastic;
 
 /** @brief Instantiates a myoelastic feature extractor.
 @return Pointer to the new instance */
-extern SDTMyoelastic *SDTMyoelastic_new(int size);
+extern SDTMyoelastic *SDTMyoelastic_new();
 
 /** @brief Destroys a myoelastic feature extractor.
 @param[in] x Pointer to the instance to destroy */
@@ -144,7 +144,8 @@ extern void SDTMyoelastic_free(SDTMyoelastic *x);
 @param[in] unsafe If false, do not perform any memory-related changes
 @return Pointer to destination instance */
 extern SDTMyoelastic *SDTMyoelastic_copy(SDTMyoelastic *dest,
-                                         const SDTMyoelastic *src);
+                                         const SDTMyoelastic *src,
+                                         unsigned char unsafe);
 
 /** @brief Registers a myoelastic feature extractor into the myoelastic feature
 extractors list with a unique ID.

@@ -53,14 +53,7 @@ void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f) {
   x->size = f;
 }
 
-SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
-                                      const SDTZeroCrossing *src,
-                                      unsigned char unsafe) {
-  json_value *j = SDTZeroCrossing_toJSON(src);
-  SDTZeroCrossing_setParams(dest, j, unsafe);
-  json_builder_free(j);
-  return dest;
-}
+_SDT_COPY_FUNCTION(ZeroCrossing)
 
 _SDT_HASHMAP_FUNCTIONS(ZeroCrossing)
 
@@ -146,7 +139,7 @@ struct SDTMyoelastic {
   int impCount, myoCount;
 };
 
-SDTMyoelastic *SDTMyoelastic_new(int bufSize) {
+SDTMyoelastic *SDTMyoelastic_new() {
   SDTMyoelastic *x;
   // int i;
 
@@ -188,14 +181,7 @@ void SDTMyoelastic_free(SDTMyoelastic *x) {
   free(x);
 }
 
-SDTMyoelastic *SDTMyoelastic_copy(SDTMyoelastic *dest,
-                                  const SDTMyoelastic *src) {
-  SDTMyoelastic_setDcFrequency(dest, SDTMyoelastic_getDcFrequency(src));
-  SDTMyoelastic_setLowFrequency(dest, SDTMyoelastic_getLowFrequency(src));
-  SDTMyoelastic_setHighFrequency(dest, SDTMyoelastic_getHighFrequency(src));
-  SDTMyoelastic_setThreshold(dest, SDTMyoelastic_getThreshold(src));
-  return dest;
-}
+_SDT_COPY_FUNCTION(Myoelastic)
 
 _SDT_HASHMAP_FUNCTIONS(Myoelastic)
 
@@ -228,23 +214,31 @@ json_value *SDTMyoelastic_toJSON(const SDTMyoelastic *x) {
 
 SDTMyoelastic *SDTMyoelastic_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
-  SDTMyoelastic *y = SDTMyoelastic_new(0);
-  const json_value *v_dcCut = SDTJSON_object_get_by_key(x, "dcFrequency");
+  SDTMyoelastic *y = SDTMyoelastic_new();
+  return SDTMyoelastic_setParams(y, x, 0);
+}
+
+SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  const json_value *v_dcCut = SDTJSON_object_get_by_key(j, "dcFrequency");
   SDTMyoelastic_setDcFrequency(
-      y, (v_dcCut && (v_dcCut->type == json_double)) ? v_dcCut->u.dbl : 0);
-  const json_value *v_lowCut = SDTJSON_object_get_by_key(x, "lowFrequency");
+      x, (v_dcCut && (v_dcCut->type == json_double)) ? v_dcCut->u.dbl : 0);
+  const json_value *v_lowCut = SDTJSON_object_get_by_key(j, "lowFrequency");
   SDTMyoelastic_setLowFrequency(
-      y, (v_lowCut && (v_lowCut->type == json_double)) ? v_lowCut->u.dbl : 0);
-  const json_value *v_highCut = SDTJSON_object_get_by_key(x, "highFrequency");
+      x, (v_lowCut && (v_lowCut->type == json_double)) ? v_lowCut->u.dbl : 0);
+  const json_value *v_highCut = SDTJSON_object_get_by_key(j, "highFrequency");
   SDTMyoelastic_setHighFrequency(
-      y,
+      x,
       (v_highCut && (v_highCut->type == json_double)) ? v_highCut->u.dbl : -1);
-  const json_value *v_threshold = SDTJSON_object_get_by_key(x, "threshold");
-  SDTMyoelastic_setThreshold(y,
+  const json_value *v_threshold = SDTJSON_object_get_by_key(j, "threshold");
+  SDTMyoelastic_setThreshold(x,
                              (v_threshold && (v_threshold->type == json_double))
                                  ? v_threshold->u.dbl
                                  : 0);
-  return y;
+
+  return x;
 }
 
 void SDTMyoelastic_update(SDTMyoelastic *x) {

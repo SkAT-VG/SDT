@@ -66,6 +66,15 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
     }                                                                          \
     return 0;                                                                  \
   }
+
+#define _SDT_COPY_FUNCTION(TYPENAME)                                         \
+  SDT##TYPENAME *SDT##TYPENAME##_copy(                                       \
+      SDT##TYPENAME *dest, const SDT##TYPENAME *src, unsigned char unsafe) { \
+    json_value *j = SDT##TYPENAME##_toJSON(src);                             \
+    SDT##TYPENAME##_setParams(dest, j, unsafe);                              \
+    json_builder_free(j);                                                    \
+    return dest;                                                             \
+  }
 /** ------------------------------------------------------------------------ */
 
 #ifdef __cplusplus
