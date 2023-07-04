@@ -67,11 +67,11 @@ json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x) {
 
 SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
-  const json_value *v_size = SDTJSON_object_get_by_key(x, "size");
-  SDTZeroCrossing *y =
-      SDTZeroCrossing_new((v_size && (v_size->type == json_integer))
-                              ? v_size->u.integer
-                              : SDT_ZEROCROSSING_SIZE_DEFAULT);
+
+  unsigned int size = SDT_ZEROCROSSING_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(ZeroCrossing, size, x, size, integer);
+
+  SDTZeroCrossing *y = SDTZeroCrossing_new(size);
   return SDTZeroCrossing_setParams(y, x, 0);
 }
 
@@ -80,22 +80,10 @@ SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
                                            unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  const json_value *v_size = SDTJSON_object_get_by_key(j, "size");
-  if (v_size && (v_size->type == json_integer) &&
-      (x->size != v_size->u.integer)) {
-    if (unsafe) {
-      SDTZeroCrossing_setSize(x, v_size->u.integer);
-    } else {
-      SDT_LOGA(WARN,
-               "\n  Not setting parameter \"size\" because it is unsafe.\n  "
-               "Current: %d\n  JSON:    %d\n",
-               x->size, v_size->u.integer);
-    }
-  }
-  const json_value *v_overlap = SDTJSON_object_get_by_key(j, "overlap");
-  SDTZeroCrossing_setOverlap(x, (v_overlap && (v_overlap->type == json_double))
-                                    ? v_overlap->u.dbl
-                                    : 0);
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(ZeroCrossing, x, j, Size, size, integer,
+                                  unsafe);
+  _SDT_SET_PARAM_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap, double);
+
   return x;
 }
 
@@ -222,21 +210,12 @@ SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
                                        unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  const json_value *v_dcCut = SDTJSON_object_get_by_key(j, "dcFrequency");
-  SDTMyoelastic_setDcFrequency(
-      x, (v_dcCut && (v_dcCut->type == json_double)) ? v_dcCut->u.dbl : 0);
-  const json_value *v_lowCut = SDTJSON_object_get_by_key(j, "lowFrequency");
-  SDTMyoelastic_setLowFrequency(
-      x, (v_lowCut && (v_lowCut->type == json_double)) ? v_lowCut->u.dbl : 0);
-  const json_value *v_highCut = SDTJSON_object_get_by_key(j, "highFrequency");
-  SDTMyoelastic_setHighFrequency(
-      x,
-      (v_highCut && (v_highCut->type == json_double)) ? v_highCut->u.dbl : -1);
-  const json_value *v_threshold = SDTJSON_object_get_by_key(j, "threshold");
-  SDTMyoelastic_setThreshold(x,
-                             (v_threshold && (v_threshold->type == json_double))
-                                 ? v_threshold->u.dbl
-                                 : 0);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency, double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, Threshold, threshold, double);
 
   return x;
 }
