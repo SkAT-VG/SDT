@@ -137,3 +137,58 @@ void TestSDTZeroCrossing_hashmap(CuTest *tc) {
 }
 
 // ----------------------------------------------------------------------------
+
+// --- Myoelastic -------------------------------------------------------------
+
+static void _TestSDTMyoelastic_setFrequency(
+    CuTest *tc, void (*set_fn)(SDTMyoelastic *, double),
+    double (*get_fn)(const SDTMyoelastic *)) {
+  SDTMyoelastic *myo = SDTMyoelastic_new();
+  SDTRandomSequence *freqs = SDTRandomSequence_newLog(1024, 1.01, 20000);
+  FOR_RANDOM_ITER_FLOAT (freqs, f) {
+    set_fn(myo, 1 / f);
+    CuAssertDblEquals_Msg(tc, "Lower limit: 1.0", 1.0, get_fn(myo), 0);
+    SDTMyoelastic_update(myo);
+    set_fn(myo, f);
+    CuAssertDblEquals(tc, f, get_fn(myo), 0);
+    SDTMyoelastic_update(myo);
+  }
+  SDTMyoelastic_free(myo);
+  SDTRandomSequence_free(freqs);
+}
+
+void TestSDTMyoelastic_setDcFrequency(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  _TestSDTMyoelastic_setFrequency(tc, &SDTMyoelastic_setDcFrequency,
+                                  &SDTMyoelastic_getDcFrequency);
+  SDT_TEST_END()
+}
+
+void TestSDTMyoelastic_setLowFrequency(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  _TestSDTMyoelastic_setFrequency(tc, &SDTMyoelastic_setLowFrequency,
+                                  &SDTMyoelastic_getLowFrequency);
+  SDT_TEST_END()
+}
+
+void TestSDTMyoelastic_setHighFrequency(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  _TestSDTMyoelastic_setFrequency(tc, &SDTMyoelastic_setHighFrequency,
+                                  &SDTMyoelastic_getHighFrequency);
+  SDT_TEST_END()
+}
+
+void TestSDTMyoelastic_setThreshold(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  SDTMyoelastic *myo = SDTMyoelastic_new();
+  SDTRandomSequence *ths = SDTRandomSequence_newFloat(1024, 0, 1);
+  FOR_RANDOM_ITER_FLOAT (ths, f) {
+    SDTMyoelastic_setThreshold(myo, f);
+    CuAssertDblEquals(tc, f, SDTMyoelastic_getThreshold(myo), 0);
+  }
+  SDTMyoelastic_free(myo);
+  SDTRandomSequence_free(ths);
+  SDT_TEST_END()
+}
+
+// ----------------------------------------------------------------------------
