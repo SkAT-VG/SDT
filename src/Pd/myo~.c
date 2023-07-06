@@ -54,6 +54,7 @@ t_int *myo_perform(t_int *w) {
 
 void myo_dsp(t_myo *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
+  SDTMyoelastic_update(x->myo);
   dsp_add(myo_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 

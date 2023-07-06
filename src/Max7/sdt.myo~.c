@@ -10,7 +10,7 @@ typedef struct _myoelastic {
   t_pxobject ob;
   SDTMyoelastic *myo;
   void *outlets[4], *send;
-  double dcFrequency, lowFrequency, highFrequency, threshold, out[4];
+  double out[4];
   t_symbol *key;
 } t_myoelastic;
 
@@ -44,17 +44,20 @@ SDT_MAX_KEY(myoelastic, Myoelastic, myo, "myo~", "myoelastic feature extractor")
 void myoelastic_dcFrequency(t_myoelastic *x, void *attr, long ac, t_atom *av) {
   x->dcFrequency = atom_getfloat(av);
   SDTMyoelastic_setDcFrequency(x->myo, x->dcFrequency);
+  SDTMyoelastic_update(x->myo);
 }
 
 void myoelastic_lowFrequency(t_myoelastic *x, void *attr, long ac, t_atom *av) {
   x->lowFrequency = atom_getfloat(av);
   SDTMyoelastic_setLowFrequency(x->myo, x->lowFrequency);
+  SDTMyoelastic_update(x->myo);
 }
 
 void myoelastic_highFrequency(t_myoelastic *x, void *attr, long ac,
                               t_atom *av) {
   x->highFrequency = atom_getfloat(av);
   SDTMyoelastic_setHighFrequency(x->myo, x->highFrequency);
+  SDTMyoelastic_update(x->myo);
 }
 
 void myoelastic_threshold(t_myoelastic *x, void *attr, long ac, t_atom *av) {
@@ -84,10 +87,7 @@ t_int *myoelastic_perform(t_int *w) {
 
 void myoelastic_dsp(t_myoelastic *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTMyoelastic_setDcFrequency(x->myo, x->dcFrequency);
-  SDTMyoelastic_setLowFrequency(x->myo, x->lowFrequency);
-  SDTMyoelastic_setHighFrequency(x->myo, x->highFrequency);
-  SDTMyoelastic_setThreshold(x->myo, x->threshold);
+  SDTMyoelastic_update(x->myo);
   dsp_add(myoelastic_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
@@ -105,9 +105,7 @@ void myoelastic_perform64(t_myoelastic *x, t_object *dsp64, double **ins,
 void myoelastic_dsp64(t_myoelastic *x, t_object *dsp64, short *count,
                       double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTMyoelastic_setDcFrequency(x->myo, x->dcFrequency);
-  SDTMyoelastic_setLowFrequency(x->myo, x->lowFrequency);
-  SDTMyoelastic_setHighFrequency(x->myo, x->highFrequency);
+  SDTMyoelastic_update(x->myo);
   object_method(dsp64, gensym("dsp_add64"), x, myoelastic_perform64, 0, NULL);
 }
 

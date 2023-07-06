@@ -222,29 +222,26 @@ SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
 
 void SDTMyoelastic_update(SDTMyoelastic *x) {
   SDTTwoPoles_lowpass(x->inRMS, 1000.0);
-}
-
-void SDTMyoelastic_setDcFrequency(SDTMyoelastic *x, double f) {
-  x->dcCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
   SDTTwoPoles_lowpass(x->impRMS, x->dcCut);
   SDTTwoPoles_lowpass(x->myoRMS, x->dcCut);
   SDTTwoPoles_lowpass(x->restRMS, x->dcCut);
   SDTBiquad_linkwitzRileyHP(x->dcHP, x->dcCut);
-  SDTMyoelastic_update(x);
+  SDTBiquad_linkwitzRileyLP(x->lowLP, x->lowCut);
+  SDTBiquad_linkwitzRileyHP(x->lowHP, x->lowCut);
+  SDTBiquad_linkwitzRileyLP(x->highLP, x->highCut);
+  SDTBiquad_linkwitzRileyHP(x->highHP, x->highCut);
+}
+
+void SDTMyoelastic_setDcFrequency(SDTMyoelastic *x, double f) {
+  x->dcCut = fmax(f, 1.0);
 }
 
 void SDTMyoelastic_setLowFrequency(SDTMyoelastic *x, double f) {
-  x->lowCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
-  SDTBiquad_linkwitzRileyLP(x->lowLP, x->lowCut);
-  SDTBiquad_linkwitzRileyHP(x->lowHP, x->lowCut);
-  SDTMyoelastic_update(x);
+  x->lowCut = fmax(f, 1.0);
 }
 
 void SDTMyoelastic_setHighFrequency(SDTMyoelastic *x, double f) {
-  x->highCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
-  SDTBiquad_linkwitzRileyLP(x->highLP, x->highCut);
-  SDTBiquad_linkwitzRileyHP(x->highHP, x->highCut);
-  SDTMyoelastic_update(x);
+  x->highCut = fmax(f, 1.0);
 }
 
 void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f) {

@@ -147,6 +147,11 @@ extern SDTMyoelastic *SDTMyoelastic_copy(SDTMyoelastic *dest,
                                          const SDTMyoelastic *src,
                                          unsigned char unsafe);
 
+/** @brief Update inner filters. Call this function whenever you change the SDT
+sample rate or one or more frequency parameters of this structure
+@param[in] x Pointer to the instance to update */
+extern void SDTMyoelastic_update(SDTMyoelastic *x);
+
 /** @brief Registers a myoelastic feature extractor into the myoelastic feature
 extractors list with a unique ID.
 @param[in] x Myoelastic feature extractor instance to register
