@@ -41,29 +41,15 @@ void myoelastic_assist(t_myoelastic *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(myoelastic, Myoelastic, myo, "myo~", "myoelastic feature extractor")
 
-void myoelastic_dcFrequency(t_myoelastic *x, void *attr, long ac, t_atom *av) {
-  x->dcFrequency = atom_getfloat(av);
-  SDTMyoelastic_setDcFrequency(x->myo, x->dcFrequency);
-  SDTMyoelastic_update(x->myo);
-}
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, DcFrequency)
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, LowFrequency)
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, HighFrequency)
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, Threshold)
 
-void myoelastic_lowFrequency(t_myoelastic *x, void *attr, long ac, t_atom *av) {
-  x->lowFrequency = atom_getfloat(av);
-  SDTMyoelastic_setLowFrequency(x->myo, x->lowFrequency);
-  SDTMyoelastic_update(x->myo);
-}
-
-void myoelastic_highFrequency(t_myoelastic *x, void *attr, long ac,
-                              t_atom *av) {
-  x->highFrequency = atom_getfloat(av);
-  SDTMyoelastic_setHighFrequency(x->myo, x->highFrequency);
-  SDTMyoelastic_update(x->myo);
-}
-
-void myoelastic_threshold(t_myoelastic *x, void *attr, long ac, t_atom *av) {
-  x->threshold = atom_getfloat(av);
-  SDTMyoelastic_setThreshold(x->myo, x->threshold);
-}
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, DcFrequency, update)
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, LowFrequency, update)
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, HighFrequency, update)
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, Threshold, update)
 
 void myoelastic_send(t_myoelastic *x) {
   outlet_float(x->outlets[0], x->out[0]);
@@ -153,22 +139,19 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(myoelastic, "1")
 
-  CLASS_ATTR_DOUBLE(c, "dcFrequency", 0, t_myoelastic, dcFrequency);
-  CLASS_ATTR_DOUBLE(c, "lowFrequency", 0, t_myoelastic, lowFrequency);
-  CLASS_ATTR_DOUBLE(c, "highFrequency", 0, t_myoelastic, highFrequency);
-  CLASS_ATTR_DOUBLE(c, "threshold", 0, t_myoelastic, threshold);
-
   CLASS_ATTR_FILTER_MIN(c, "dcFrequency", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "lowFrequency", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "highFrequency", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "threshold", 0.0);
 
-  CLASS_ATTR_ACCESSORS(c, "dcFrequency", NULL, (method)myoelastic_dcFrequency);
-  CLASS_ATTR_ACCESSORS(c, "lowFrequency", NULL,
-                       (method)myoelastic_lowFrequency);
-  CLASS_ATTR_ACCESSORS(c, "highFrequency", NULL,
-                       (method)myoelastic_highFrequency);
-  CLASS_ATTR_ACCESSORS(c, "threshold", NULL, (method)myoelastic_threshold);
+  CLASS_ATTR_ACCESSORS(c, "dcFrequency", (method)myoelastic_getDcFrequency,
+                       (method)myoelastic_setDcFrequency);
+  CLASS_ATTR_ACCESSORS(c, "lowFrequency", (method)myoelastic_getLowFrequency,
+                       (method)myoelastic_setLowFrequency);
+  CLASS_ATTR_ACCESSORS(c, "highFrequency", (method)myoelastic_getHighFrequency,
+                       (method)myoelastic_setHighFrequency);
+  CLASS_ATTR_ACCESSORS(c, "threshold", (method)myoelastic_getThreshold,
+                       (method)myoelastic_setThreshold);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
