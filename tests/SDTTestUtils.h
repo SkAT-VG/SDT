@@ -135,6 +135,53 @@ void TestSDT_functionName(CuTest* tc)
 #define SDT_TEST_END() }
 #endif
 
+#define _TEST_SDT_HASHMAP(TYPENAME, ...)                         \
+  SDT##TYPENAME *x0 = SDT##TYPENAME##_new(__VA_ARGS__);          \
+  SDT##TYPENAME *x1 = SDT##TYPENAME##_new(__VA_ARGS__);          \
+  const char *key0 = #TYPENAME "_0";                             \
+  const char *key1 = #TYPENAME "_1";                             \
+                                                                 \
+  /* No registered */                                            \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Register 0 */                                               \
+  CuAssertIntEquals(tc, 0, SDT_register##TYPENAME(x0, key0));    \
+  CuAssertPointerEquals(tc, x0, SDT_get##TYPENAME(key0));        \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Re-register 0 (will print a warning) */                     \
+  CuAssertIntEquals(tc, 1, SDT_register##TYPENAME(x0, key0));    \
+                                                                 \
+  /* Register 1 */                                               \
+  CuAssertIntEquals(tc, 0, SDT_register##TYPENAME(x1, key1));    \
+  CuAssertPointerEquals(tc, x0, SDT_get##TYPENAME(key0));        \
+  CuAssertPointerEquals(tc, x1, SDT_get##TYPENAME(key1));        \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister missing */                                       \
+  CuAssertIntEquals(tc, 1, SDT_unregister##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister 0 */                                             \
+  CuAssertIntEquals(tc, 0, SDT_unregister##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, x1, SDT_get##TYPENAME(key1));        \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister 1 */                                             \
+  CuAssertIntEquals(tc, 0, SDT_unregister##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister missing on empty hashmap */                      \
+  CuAssertIntEquals(tc, 1, SDT_unregister##TYPENAME("missing")); \
+                                                                 \
+  SDT##TYPENAME##_free(x0);                                      \
+  SDT##TYPENAME##_free(x1);
+
 #ifdef __cplusplus
 };
 #endif

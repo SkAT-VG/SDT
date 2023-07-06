@@ -88,51 +88,7 @@ void TestSDTZeroCrossing_copy(CuTest *tc) {
 
 void TestSDTZeroCrossing_hashmap(CuTest *tc) {
   SDT_TEST_BEGIN()
-  SDTZeroCrossing *zx0 = SDTZeroCrossing_new(1);
-  SDTZeroCrossing *zx1 = SDTZeroCrossing_new(1);
-  const char *key0 = "zx0";
-  const char *key1 = "zx1";
-
-  // No registered
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing(key0));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing(key1));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing("missing"));
-
-  // Register 0
-  CuAssertIntEquals(tc, 0, SDT_registerZeroCrossing(zx0, key0));
-  CuAssertPointerEquals(tc, zx0, SDT_getZeroCrossing(key0));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing(key1));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing("missing"));
-
-  // Re-register 0 (will print a warning)
-  CuAssertIntEquals(tc, 1, SDT_registerZeroCrossing(zx0, key0));
-
-  // Register 1
-  CuAssertIntEquals(tc, 0, SDT_registerZeroCrossing(zx1, key1));
-  CuAssertPointerEquals(tc, zx0, SDT_getZeroCrossing(key0));
-  CuAssertPointerEquals(tc, zx1, SDT_getZeroCrossing(key1));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing("missing"));
-
-  // Unregister missing
-  CuAssertIntEquals(tc, 1, SDT_unregisterZeroCrossing("missing"));
-
-  // Unregister 0
-  CuAssertIntEquals(tc, 0, SDT_unregisterZeroCrossing(key0));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing(key0));
-  CuAssertPointerEquals(tc, zx1, SDT_getZeroCrossing(key1));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing("missing"));
-
-  // Unregister 1
-  CuAssertIntEquals(tc, 0, SDT_unregisterZeroCrossing(key1));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing(key0));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing(key1));
-  CuAssertPointerEquals(tc, NULL, SDT_getZeroCrossing("missing"));
-
-  // Unregister missing on empty hashmap
-  CuAssertIntEquals(tc, 1, SDT_unregisterZeroCrossing("missing"));
-
-  SDTZeroCrossing_free(zx0);
-  SDTZeroCrossing_free(zx1);
+  _TEST_SDT_HASHMAP(ZeroCrossing, 1)
   SDT_TEST_END()
 }
 
@@ -272,6 +228,12 @@ void TestSDTMyoelastic_copy(CuTest *tc) {
   SDTRandomSequence_free(hifreqs);
   SDTRandomSequence_free(ths);
   SDTRandomSequence_free(srs);
+  SDT_TEST_END()
+}
+
+void TestSDTMyoelastic_hashmap(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  _TEST_SDT_HASHMAP(Myoelastic, )
   SDT_TEST_END()
 }
 
