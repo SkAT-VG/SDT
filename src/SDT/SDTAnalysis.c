@@ -83,6 +83,7 @@ SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(ZeroCrossing, x, j, Size, size, integer,
                                   unsafe);
   _SDT_SET_PARAM_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap, double);
+  _SDT_SET_PARAM_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap, integer);
 
   return x;
 }
@@ -211,11 +212,17 @@ SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
   if (!x || !j || j->type != json_object) return 0;
 
   _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency, double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency, integer);
   _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency,
                            double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency,
+                           integer);
   _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency,
                            double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency,
+                           integer);
   _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, Threshold, threshold, double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, Threshold, threshold, integer);
 
   return x;
 }
