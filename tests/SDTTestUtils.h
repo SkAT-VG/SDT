@@ -198,6 +198,59 @@ void TestSDT_functionName(CuTest* tc)
   SDT##TYPENAME##_free(x0);                                      \
   SDT##TYPENAME##_free(x1);
 
+#define _TEST_SDTOSC_log(TYPENAME, VAR, ...)                              \
+  SDTOSC_TEST_BEGIN("/" #VAR "/log", 1, TYPENAME, VAR, __VA_ARGS__)       \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);       \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);       \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key)); \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);         \
+  SDT_register##TYPENAME(VAR, key);                                       \
+  CuAssert(tc, "Succeed on object found", SDTOSCRoot(msg) == 0);          \
+  SDT_unregister##TYPENAME(key);                                          \
+  SDTOSC_TEST_END(TYPENAME, VAR)
+
+#define _TEST_SDTOSC_save_or_load(TYPENAME, VAR)                            \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);         \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);         \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));   \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);           \
+  SDT_register##TYPENAME(VAR, key);                                         \
+  CuAssert(tc, "Fail on uninitialized filepath", SDTOSCRoot(msg) != 0);     \
+  SDTOSCArgumentList_setArgument(args, 1, SDTOSCArgument_newString(fpath)); \
+  CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);                            \
+  SDT_unregister##TYPENAME(key);
+
+#define _TEST_SDTOSC_save_and_load(TYPENAME, VAR, ...)                 \
+  const char *fpath = #VAR "_test.json";                               \
+  {                                                                    \
+    SDTOSC_TEST_BEGIN("/" #VAR "/save", 2, TYPENAME, VAR, __VA_ARGS__) \
+    _TEST_SDTOSC_save_or_load(TYPENAME, VAR);                          \
+    SDTOSC_TEST_END(TYPENAME, VAR)                                     \
+  }                                                                    \
+  {                                                                    \
+    SDTOSC_TEST_BEGIN("/" #VAR "/load", 2, TYPENAME, VAR, __VA_ARGS__) \
+    _TEST_SDTOSC_save_or_load(TYPENAME, VAR);                          \
+    SDTOSC_TEST_END(TYPENAME, VAR)                                     \
+  }                                                                    \
+  CuAssert(tc, "File deleted", remove(fpath) == 0);
+
+#define _TEST_SDTOSC_loads(TYPENAME, VAR, JSONS, ...)                     \
+  SDTOSC_TEST_BEGIN("/" #VAR "/loads", 2, TYPENAME, VAR, __VA_ARGS__)     \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);       \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);       \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key)); \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);         \
+  SDT_register##TYPENAME(VAR, key);                                       \
+  CuAssert(tc, "Fail on uninitialized filepath", SDTOSCRoot(msg) != 0);   \
+  SDTOSCArgumentList_setArgument(                                         \
+      args, 1, SDTOSCArgument_newString("not a json string"));            \
+  CuAssert(tc, "Fail on invalid JSON string", SDTOSCRoot(msg) != 0);      \
+  SDTOSCArgument_free(SDTOSCArgumentList_setArgument(                     \
+      args, 1, SDTOSCArgument_newString(JSONS)));                         \
+  CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);                          \
+  SDT_unregister##TYPENAME(key);                                          \
+  SDTOSC_TEST_END(TYPENAME, VAR)
+
 #ifdef __cplusplus
 };
 #endif
