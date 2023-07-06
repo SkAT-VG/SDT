@@ -405,7 +405,7 @@ Macros for implementing OSC methods
     _SDTOSC_GETFPATH(fpath, x)                          \
     json_value *jobj;                                   \
     int r = SDTOSCJSON_load(name, &jobj, fpath);        \
-    SDTZeroCrossing_setParams(obj, jobj, 0);            \
+    SDT##TYPENAME##_setParams(obj, jobj, 0);            \
     json_builder_free(jobj);                            \
     return r;                                           \
   }
