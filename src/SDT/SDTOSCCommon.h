@@ -4,6 +4,7 @@
 /** @file SDTOSCCommon.h
 @defgroup OSCCommon SDTOSCCommon.h: OSC Commons
 Functions and structures to handle OSC messages for SDT.
+@ingroup osc
 @{
 */
 

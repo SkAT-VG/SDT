@@ -1,14 +1,8 @@
 #include "SDTOSCCommon.h"
 
-/**
-@defgroup OSC SDTOSC: Open Sound Control
-Interface to use OSC with SDT.
-@{
-
-@file SDTOSC.h
-@defgroup OSCROOT SDTOSC.h: Open Sound Control root
-@{
-*/
+/** @file SDTOSC.h
+@defgroup osc SDTOSC.h: Open Sound Control
+@{ */
 
 #ifndef SDT_OSC_H
 #define SDT_OSC_H
@@ -30,4 +24,4 @@ extern int SDTOSCRoot(const SDTOSCMessage* x);
 
 #endif
 
-/** @}@} */
+/** @} */

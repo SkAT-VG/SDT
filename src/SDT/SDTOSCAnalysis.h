@@ -1,10 +1,9 @@
 #include "SDTAnalysis.h"
 #include "SDTOSCCommon.h"
 
-/**
-\addtogroup OSC
-@{
-@file SDTOSCAnalysis.h @{ */
+/** @file SDTOSCAnalysis.h
+@defgroup oscanalysis SDTOSCAnalysis.h: OSC for sound analysis tools
+@{ */
 
 #ifndef SDT_OSC_ANALYSIS_H
 #define SDT_OSC_ANALYSIS_H
@@ -13,11 +12,10 @@
 extern "C" {
 #endif
 
-/**
-
-@{
-@defgroup osczerox SDTOSCZeroCrossing
-OSC for #SDTZeroCrossing objects @{ */
+/** @defgroup osczerox SDTOSCZeroCrossing
+OSC for #SDTZeroCrossing objects
+@ingroup osc
+@{ */
 
 /** @brief `/zerox/log <name>`
 
@@ -69,11 +67,12 @@ Function that routes OSC commands for #SDTZeroCrossing objects
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCZeroCrossing(const SDTOSCMessage *x);
 
-/** @}
+/** @} */
 
-@{
-@defgroup osczerox SDTOSCMyoelastic
-OSC for #SDTMyoelastic objects @{ */
+/** @defgroup oscmyo SDTOSCMyoelastic
+OSC for #SDTMyoelastic objects
+@ingroup osc
+@{ */
 
 /** @brief `/myo/log <name>`
 
@@ -134,7 +133,7 @@ extern int SDTOSCMyoelastic_setThreshold(const SDTOSCMessage *x);
 
 /** @brief `/myo/...`
 
-Function that routes OSC commands for #SDTOSCMyoelastic objects
+Function that routes OSC commands for #SDTMyoelastic objects
 @param x OSC message pointer
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCMyoelastic(const SDTOSCMessage *x);
@@ -147,4 +146,4 @@ extern int SDTOSCMyoelastic(const SDTOSCMessage *x);
 
 #endif
 
-/** @}@} */
+/** @} */
