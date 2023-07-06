@@ -246,12 +246,11 @@ extern const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m);
 @param[in] FMT C string that contains a format string that follows the same
 specifications as format in printf
 @param[in] m SDTOSCMessage pointer */
-#define SDTOSC_MESSAGE_LOGA(LEVEL, FMT, m, ...)           \
-  {                                                       \
-    const char *__msg_ptr = SDTOSCMessage_staticPrint(m); \
-    if (__msg_ptr) {                                      \
-      SDT_LOGA(LEVEL, FMT, __msg_ptr, __VA_ARGS__);       \
-    }                                                     \
+#define SDTOSC_MESSAGE_LOGA(LEVEL, FMT, m, ...)                           \
+  {                                                                       \
+    SDT_ONLY_IN_LEVEL(                                                    \
+        LEVEL, const char *__msg_ptr = SDTOSCMessage_staticPrint(m);      \
+        if (__msg_ptr) { SDT_LOGA(LEVEL, FMT, __msg_ptr, __VA_ARGS__); }) \
   }
 
 /** @brief Gets a string that invites to Read The Fantastic Manual */
