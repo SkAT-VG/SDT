@@ -15,9 +15,6 @@ extern "C" {
 
 /**
 
-
-@defgroup OSCZerox SDTOSC.h: Open Sound Control root
-@file SDTOSCAnalysis.h
 @{
 @defgroup osczerox SDTOSCZeroCrossing
 OSC for #SDTZeroCrossing objects @{ */
@@ -71,6 +68,76 @@ Function that routes OSC commands for #SDTZeroCrossing objects
 @param x OSC message pointer
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCZeroCrossing(const SDTOSCMessage *x);
+
+/** @}
+
+@{
+@defgroup osczerox SDTOSCMyoelastic
+OSC for #SDTMyoelastic objects @{ */
+
+/** @brief `/myo/log <name>`
+
+Function that implements OSC JSON log for #SDTMyoelastic objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_log(const SDTOSCMessage *x);
+
+/** @brief `/myo/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTMyoelastic objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_save(const SDTOSCMessage *x);
+
+/** @brief `/myo/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTMyoelastic objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_load(const SDTOSCMessage *x);
+
+/** @brief `/myo/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTMyoelastic
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_loads(const SDTOSCMessage *x);
+
+/** @brief `/myo/dc <name> <value>`
+
+Function that implements OSC parameter setting for #SDTMyoelastic  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_setDcFrequency(const SDTOSCMessage *x);
+
+/** @brief `/myo/low <name> <value>`
+
+Function that implements OSC parameter setting for #SDTMyoelastic  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_setLowFrequency(const SDTOSCMessage *x);
+
+/** @brief `/myo/high <name> <value>`
+
+Function that implements OSC parameter setting for #SDTMyoelastic  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_setHighFrequency(const SDTOSCMessage *x);
+
+/** @brief `/myo/threshold <name> <value>`
+
+Function that implements OSC parameter setting for #SDTMyoelastic  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic_setThreshold(const SDTOSCMessage *x);
+
+/** @brief `/myo/...`
+
+Function that routes OSC commands for #SDTOSCMyoelastic objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCMyoelastic(const SDTOSCMessage *x);
 
 /** @} */
 
