@@ -69,6 +69,13 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
 #define _JSON_double_CFMT "%f"
 #define _JSON_TYPE_CFMT(T) _JSON_##T##_CFMT
 
+/** @brief Implement parameter setting from JSON
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] CATTR C attribute name
+@param[in] KEY JSON attribute key
+@param[in] JTYPE JSON type */
 #define _SDT_SET_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, CATTR, KEY, JTYPE)   \
   {                                                                        \
     const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY);     \
@@ -77,6 +84,12 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
     }                                                                      \
   }
 
+/** @brief Implement parameter getting from JSON
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] KEY JSON attribute key
+@param[in] JTYPE JSON type */
 #define _SDT_GET_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, KEY, JTYPE)      \
   {                                                                    \
     const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY); \
@@ -85,6 +98,14 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
     }                                                                  \
   }
 
+/** @brief Implement parameter setting from JSON for unsafe attributes
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] CATTR C attribute name
+@param[in] KEY JSON attribute key
+@param[in] JTYPE JSON type
+@param[in] UNSAFE Unsafe flag variable identifier */
 #define _SDT_SET_UNSAFE_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, CATTR, KEY,     \
                                         JTYPE, UNSAFE)                       \
   {                                                                          \
