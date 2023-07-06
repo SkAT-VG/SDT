@@ -130,14 +130,6 @@ extern SDTMyoelastic *SDTMyoelastic_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTMyoelastic_free(SDTMyoelastic *x);
 
-#define SDT_MYOELASTIC Myoelastic
-#define SDT_MYOELASTIC_NEW_ARGS 0
-#define SDT_MYOELASTIC_ATTRIBUTES(T, A)                           \
-  A(T, dcCut, double, DcFrequency, dcFrequency, double, 0)        \
-  A(T, lowCut, double, LowFrequency, lowFrequency, double, 0)     \
-  A(T, highCut, double, HighFrequency, highFrequency, double, -1) \
-  A(T, threshold, double, Threshold, threshold, double, 0)
-
 /** @brief Deep-copies a myoelastic feature extractor.
 @param[in] dest Pointer to the instance to modify
 @param[in] src Pointer to the instance to copy
