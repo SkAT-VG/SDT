@@ -14,24 +14,8 @@
 
 // --- Zero Crossing ----------------------------------------------------------
 
-#define SDTOSC_ZEROX_TEST_BEGIN(ADDR, NARGS)                             \
-  SDT_TEST_BEGIN()                                                       \
-  SDTOSCArgumentList *args = SDTOSCArgumentList_new(NARGS);              \
-  SDTOSCMessage *short_msg = SDTOSCMessage_new(                          \
-      SDTOSCAddress_new(ADDR),                                           \
-      SDTOSCArgumentList_new(((NARGS) > 1) ? (NARGS)-1 : 0));            \
-  SDTOSCMessage *msg = SDTOSCMessage_new(SDTOSCAddress_new(ADDR), args); \
-  SDTZeroCrossing *zx = SDTZeroCrossing_new(1024);                       \
-  const char *key = "zx";
-
-#define SDTOSC_ZEROX_TEST_END()  \
-  SDTZeroCrossing_free(zx);      \
-  SDTOSCMessage_free(msg);       \
-  SDTOSCMessage_free(short_msg); \
-  SDT_TEST_END()
-
 void TestSDTOSCZeroCrossing_log(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/log", 1)
+  SDTOSC_TEST_BEGIN("/zerox/log", 1, ZeroCrossing, zx, 1024)
 
   CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
 
@@ -44,7 +28,7 @@ void TestSDTOSCZeroCrossing_log(CuTest *tc) {
   CuAssert(tc, "Succeed on object found", SDTOSCRoot(msg) == 0);
 
   SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
 void _TestSDTOSCZeroCrossing_save_load_inner(CuTest *tc, SDTZeroCrossing *zx,
@@ -67,17 +51,17 @@ void _TestSDTOSCZeroCrossing_save_load_inner(CuTest *tc, SDTZeroCrossing *zx,
 }
 
 void _TestSDTOSCZeroCrossing_save(CuTest *tc, const char *fpath) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/save", 2)
+  SDTOSC_TEST_BEGIN("/zerox/save", 2, ZeroCrossing, zx, 1024)
   _TestSDTOSCZeroCrossing_save_load_inner(tc, zx, fpath, key, short_msg, msg,
                                           args);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
 void _TestSDTOSCZeroCrossing_load(CuTest *tc, const char *fpath) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/load", 2)
+  SDTOSC_TEST_BEGIN("/zerox/load", 2, ZeroCrossing, zx, 1024)
   _TestSDTOSCZeroCrossing_save_load_inner(tc, zx, fpath, key, short_msg, msg,
                                           args);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
 void TestSDTOSCZeroCrossing_save_load(CuTest *tc) {
@@ -88,7 +72,7 @@ void TestSDTOSCZeroCrossing_save_load(CuTest *tc) {
 }
 
 void TestSDTOSCZeroCrossing_loads(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/loads", 2)
+  SDTOSC_TEST_BEGIN("/zerox/loads", 2, ZeroCrossing, zx, 1024)
   CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
   CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
 
@@ -107,11 +91,11 @@ void TestSDTOSCZeroCrossing_loads(CuTest *tc) {
   CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);
 
   SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
 void TestSDTOSCZeroCrossing_setOverlap(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/overlap", 2)
+  SDTOSC_TEST_BEGIN("/zerox/overlap", 2, ZeroCrossing, zx, 1024)
   CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
   CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
 
@@ -131,11 +115,11 @@ void TestSDTOSCZeroCrossing_setOverlap(CuTest *tc) {
   }
   SDTRandomSequence_free(olaps);
   SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
 void TestSDTOSCZeroCrossing_setSize(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/size", 2)
+  SDTOSC_TEST_BEGIN("/zerox/size", 2, ZeroCrossing, zx, 1024)
   CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
   CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
 
@@ -156,7 +140,7 @@ void TestSDTOSCZeroCrossing_setSize(CuTest *tc) {
   }
   SDTRandomSequence_free(sizes);
   SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
 // ----------------------------------------------------------------------------

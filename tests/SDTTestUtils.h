@@ -135,6 +135,22 @@ void TestSDT_functionName(CuTest* tc)
 #define SDT_TEST_END() }
 #endif
 
+#define SDTOSC_TEST_BEGIN(ADDR, NARGS, TYPENAME, VAR, ...)               \
+  SDT_TEST_BEGIN()                                                       \
+  SDTOSCArgumentList *args = SDTOSCArgumentList_new(NARGS);              \
+  SDTOSCMessage *short_msg = SDTOSCMessage_new(                          \
+      SDTOSCAddress_new(ADDR),                                           \
+      SDTOSCArgumentList_new(((NARGS) > 1) ? (NARGS)-1 : 0));            \
+  SDTOSCMessage *msg = SDTOSCMessage_new(SDTOSCAddress_new(ADDR), args); \
+  SDT##TYPENAME *VAR = SDT##TYPENAME##_new(__VA_ARGS__);                 \
+  const char *key = #VAR;
+
+#define SDTOSC_TEST_END(TYPENAME, VAR) \
+  SDT##TYPENAME##_free(VAR);           \
+  SDTOSCMessage_free(msg);             \
+  SDTOSCMessage_free(short_msg);       \
+  SDT_TEST_END()
+
 #define _TEST_SDT_HASHMAP(TYPENAME, ...)                         \
   SDT##TYPENAME *x0 = SDT##TYPENAME##_new(__VA_ARGS__);          \
   SDT##TYPENAME *x1 = SDT##TYPENAME##_new(__VA_ARGS__);          \
