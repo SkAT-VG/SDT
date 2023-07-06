@@ -191,4 +191,45 @@ void TestSDTMyoelastic_setThreshold(CuTest *tc) {
   SDT_TEST_END()
 }
 
+void TestSDTMyoelastic_dsp_whiteNoise(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  SDTMyoelastic *myo = SDTMyoelastic_new();
+  SDTRandomSequence *srs = SDTRandomSequence_newLog(32, 10, 20000);
+  SDTRandomSequence *dcfreqs = SDTRandomSequence_newLog(0, 1, 20000);
+  SDTRandomSequence *lofreqs = SDTRandomSequence_newLog(0, 1, 20000);
+  SDTRandomSequence *hifreqs = SDTRandomSequence_newLog(0, 1, 20000);
+  SDTRandomSequence *ths = SDTRandomSequence_newFloat(0, 0, 1);
+  SDTRandomSequence *values = SDTRandomSequence_newFloat(0, -1, 1);
+  double out[4] = {0.0, 0.0, 0.0};
+  int i;
+  FOR_RANDOM_ITER_FLOAT (srs, sr) {
+    SDTMyoelastic_setDcFrequency(myo, SDTRandomSequence_nextFloat(dcfreqs));
+    SDTMyoelastic_setLowFrequency(myo, SDTRandomSequence_nextFloat(lofreqs));
+    SDTMyoelastic_setHighFrequency(myo, SDTRandomSequence_nextFloat(hifreqs));
+    SDTMyoelastic_setThreshold(myo, SDTRandomSequence_nextFloat(ths));
+    SDT_setSampleRate((int)sr);
+    SDTMyoelastic_update(myo);
+    for (i = 0; i < 1 << 14; ++i) {
+      SDTMyoelastic_dsp(myo, out, SDTRandomSequence_nextFloat(values));
+      // If x is nan, then x != x
+      CuAssert(tc, "Slow amount >= 0.0", out[0] != out[0] || out[0] >= 0.0);
+      CuAssert(tc, "Slow amount <= 1.0", out[0] != out[0] || out[0] <= 1.0);
+      CuAssert(tc, "Slow freq >= 0.0", out[1] != out[1] || out[1] >= 0.0);
+      CuAssert(tc, "Slow freq <= sr/2", out[1] != out[1] || out[1] * 2 <= sr);
+      CuAssert(tc, "Fast amount >= 0.0", out[2] != out[2] || out[2] >= 0.0);
+      CuAssert(tc, "Fast amount <= 1.0", out[2] != out[2] || out[2] <= 1.0);
+      CuAssert(tc, "Fast freq >= 0.0", out[3] != out[3] || out[3] >= 0.0);
+      CuAssert(tc, "Fast freq <= sr/2", out[3] != out[3] || out[3] * 2 <= sr);
+    }
+  }
+  SDTMyoelastic_free(myo);
+  SDTRandomSequence_free(dcfreqs);
+  SDTRandomSequence_free(lofreqs);
+  SDTRandomSequence_free(hifreqs);
+  SDTRandomSequence_free(ths);
+  SDTRandomSequence_free(values);
+  SDTRandomSequence_free(srs);
+  SDT_TEST_END()
+}
+
 // ----------------------------------------------------------------------------
