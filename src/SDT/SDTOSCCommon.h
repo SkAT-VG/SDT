@@ -417,7 +417,6 @@ Macros for implementing OSC methods
     int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, 1, -1);    \
     char *js = (char *)malloc(sizeof(char) * (nchars + 2));                  \
     SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, 1, -1);          \
-    /* SDT_LOGA(VERBOSE, "JSON string: %s\n", js); */                        \
     json_value *jobj = SDTJSON_reads(js, -1);                                \
     free(js);                                                                \
     if (!jobj) {                                                             \
