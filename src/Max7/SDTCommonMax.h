@@ -71,12 +71,12 @@ The t_class pointer should be a variable "c"
     return MAX_ERR_NONE;                                              \
   }
 
-#define _SDT_TYPE_UPDATE_(T, O)
-#define _SDT_TYPE_UPDATE_update(T, O) SDT##T##_update(O)
+#define _SDT_MAX_TYPE_UPDATE_(T, O)
+#define _SDT_MAX_TYPE_UPDATE_update(T, O) SDT##T##_update(O)
 
 /** @brief Define the setter function for an attribute
-@param[in] M The Max type (without the leading "t_")
-@param[in] T The SDT type (without the leading "SDT")
+@param[in] M The Max type (without the leading `t_`)
+@param[in] T The SDT type (without the leading `SDT`)
 @param[in] F The name of the Max object field where the SDT object is stored
 @param[in] A The name of the attribute
 @param[in] U Type `update` to trigger the structure update function */
@@ -85,7 +85,7 @@ The t_class pointer should be a variable "c"
     if (ac && av) {                                                 \
       SDT##T##_set##A(x->F, atom_getfloat(av));                     \
     }                                                               \
-    _SDT_TYPE_UPDATE_##U(T, x->F);                                  \
+    _SDT_MAX_TYPE_UPDATE_##U(T, x->F);                              \
     return MAX_ERR_NONE;                                            \
   }
 
