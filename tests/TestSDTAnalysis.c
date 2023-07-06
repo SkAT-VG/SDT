@@ -232,4 +232,47 @@ void TestSDTMyoelastic_dsp_whiteNoise(CuTest *tc) {
   SDT_TEST_END()
 }
 
+void TestSDTMyoelastic_copy(CuTest *tc) {
+  SDT_TEST_BEGIN()
+  SDTMyoelastic *myo, *myo_ = SDTMyoelastic_new();
+  SDTRandomSequence *srs = SDTRandomSequence_newLog(32, 10, 20000);
+  SDTRandomSequence *dcfreqs = SDTRandomSequence_newLog(0, 1, 20000);
+  SDTRandomSequence *lofreqs = SDTRandomSequence_newLog(0, 1, 20000);
+  SDTRandomSequence *hifreqs = SDTRandomSequence_newLog(0, 1, 20000);
+  SDTRandomSequence *ths = SDTRandomSequence_newFloat(0, 0, 1);
+  double dcf, lof, hif, th;
+  FOR_RANDOM_ITER_FLOAT (srs, sr) {
+    // Set myo
+    myo = SDTMyoelastic_new();
+    SDTMyoelastic_setDcFrequency(myo,
+                                 dcf = SDTRandomSequence_nextFloat(dcfreqs));
+    SDTMyoelastic_setLowFrequency(myo,
+                                  lof = SDTRandomSequence_nextFloat(lofreqs));
+    SDTMyoelastic_setHighFrequency(myo,
+                                   hif = SDTRandomSequence_nextFloat(hifreqs));
+    SDTMyoelastic_setThreshold(myo, th = SDTRandomSequence_nextFloat(ths));
+    // Copy to myo_
+    SDTMyoelastic_update(myo);
+    SDT_setSampleRate((int)sr);
+    SDTMyoelastic_copy(myo_, myo, 0);
+    SDTMyoelastic_free(myo);
+    SDTMyoelastic_update(myo_);
+    CuAssertDblEquals_Msg(tc, "Check Dc Frequency", dcf,
+                          SDTMyoelastic_getDcFrequency(myo_), 0);
+    CuAssertDblEquals_Msg(tc, "Check Low Frequency", lof,
+                          SDTMyoelastic_getLowFrequency(myo_), 0);
+    CuAssertDblEquals_Msg(tc, "Check High Frequency", hif,
+                          SDTMyoelastic_getHighFrequency(myo_), 0);
+    CuAssertDblEquals_Msg(tc, "Check Threshold", th,
+                          SDTMyoelastic_getThreshold(myo_), 0);
+  }
+  SDTMyoelastic_free(myo_);
+  SDTRandomSequence_free(dcfreqs);
+  SDTRandomSequence_free(lofreqs);
+  SDTRandomSequence_free(hifreqs);
+  SDTRandomSequence_free(ths);
+  SDTRandomSequence_free(srs);
+  SDT_TEST_END()
+}
+
 // ----------------------------------------------------------------------------
