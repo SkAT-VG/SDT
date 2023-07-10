@@ -72,7 +72,7 @@ SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   _SDT_GET_PARAM_FROM_JSON(ZeroCrossing, size, x, size, integer);
 
   SDTZeroCrossing *y = SDTZeroCrossing_new(size);
-  return SDTZeroCrossing_setParams(y, x, 0);
+  return SDTZeroCrossing_setParams(y, x, 1);
 }
 
 SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
@@ -204,7 +204,7 @@ json_value *SDTMyoelastic_toJSON(const SDTMyoelastic *x) {
 SDTMyoelastic *SDTMyoelastic_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
   SDTMyoelastic *y = SDTMyoelastic_new();
-  return SDTMyoelastic_setParams(y, x, 0);
+  return SDTMyoelastic_setParams(y, x, 1);
 }
 
 SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
