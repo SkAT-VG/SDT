@@ -15,8 +15,6 @@ struct SDTZeroCrossing {
   int i, j, size, skip;
 };
 
-#define SDT_ZEROCROSSING_SIZE_DEFAULT 1024
-
 SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   SDTZeroCrossing *x;
   if (!size) size = SDT_ZEROCROSSING_SIZE_DEFAULT;
@@ -298,8 +296,6 @@ int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
 
 //-------------------------------------------------------------------------------------//
 
-#define SDT_SPECTRALFEATS_SIZE_DEFAULT 1024
-
 struct SDTSpectralFeats {
   double *in, *win, *currMag, *prevMag, magnitude, centroid, spread, skewness,
       kurtosis, flatness, flux, onset;
@@ -309,6 +305,7 @@ struct SDTSpectralFeats {
 };
 
 SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
+  if (!size) size = SDT_SPECTRALFEATS_SIZE_DEFAULT;
   SDTSpectralFeats *x;
   int i, fftSize;
 

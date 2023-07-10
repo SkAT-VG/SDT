@@ -22,6 +22,8 @@ Zero crossing rate signal analyzer.
 /** @brief Opaque data structure for a zero crossing rate detector object. */
 typedef struct SDTZeroCrossing SDTZeroCrossing;
 
+#define SDT_ZEROCROSSING_SIZE_DEFAULT 1024
+
 /** @brief Instantiates a zero crossing rate detector.
 @param[in] size Size of the analysis window, in samples
 @return Pointer to the new instance */
@@ -247,6 +249,8 @@ based on rectified, whitened spectral flux.
 
 /** @brief Opaque data structure for a spectral features extractor. */
 typedef struct SDTSpectralFeats SDTSpectralFeats;
+
+#define SDT_SPECTRALFEATS_SIZE_DEFAULT 1024
 
 /** @brief Instantiates a spectral features extractor.
 @param[in] size Size of the analysis window, in samples
