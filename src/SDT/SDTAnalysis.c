@@ -298,6 +298,8 @@ int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
 
 //-------------------------------------------------------------------------------------//
 
+#define SDT_SPECTRALFEATS_SIZE_DEFAULT 1024
+
 struct SDTSpectralFeats {
   double *in, *win, *currMag, *prevMag, magnitude, centroid, spread, skewness,
       kurtosis, flatness, flux, onset;
@@ -356,6 +358,48 @@ void SDTSpectralFeats_free(SDTSpectralFeats *x) {
   free(x);
 }
 
+_SDT_COPY_FUNCTION(SpectralFeats)
+
+_SDT_HASHMAP_FUNCTIONS(SpectralFeats)
+
+SDTSpectralFeats *SDTSpectralFeats_setParams(SDTSpectralFeats *x,
+                                             const json_value *j,
+                                             unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(SpectralFeats, x, j, Size, size, integer,
+                                  unsafe);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, Overlap, overlap, double);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, Overlap, overlap, integer);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MinFreq, minFreq, double);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MinFreq, minFreq, integer);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MaxFreq, maxFreq, double);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MaxFreq, maxFreq, integer);
+  return x;
+}
+
+json_value *SDTSpectralFeats_toJSON(const SDTSpectralFeats *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "size", json_integer_new(SDTSpectralFeats_getSize(x)));
+  json_object_push(obj, "overlap",
+                   json_double_new(SDTSpectralFeats_getOverlap(x)));
+  json_object_push(obj, "minFreq",
+                   json_double_new(SDTSpectralFeats_getMinFreq(x)));
+  json_object_push(obj, "maxFreq",
+                   json_double_new(SDTSpectralFeats_getMaxFreq(x)));
+  return obj;
+}
+
+SDTSpectralFeats *SDTSpectralFeats_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int size = SDT_SPECTRALFEATS_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(SpectralFeats, size, x, size, integer);
+
+  SDTSpectralFeats *y = SDTSpectralFeats_new(size);
+  return SDTSpectralFeats_setParams(y, x, 1);
+}
+
 void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
   free(x->in);
   free(x->win);
@@ -384,11 +428,6 @@ void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
   x->span = x->max - x->min;
   x->size = f;
 }
-
-SDT_TYPE_COPY(SDT_SPECTRALFEATS)
-SDT_DEFINE_HASHMAP(SDT_SPECTRALFEATS, 59)
-SDT_JSON_SERIALIZE(SDT_SPECTRALFEATS)
-SDT_JSON_DESERIALIZE(SDT_SPECTRALFEATS)
 
 unsigned int SDTSpectralFeats_getSize(const SDTSpectralFeats *x) {
   return x->size;
