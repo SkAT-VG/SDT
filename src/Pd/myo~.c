@@ -17,21 +17,10 @@ typedef struct _myo {
   char *key;
 } t_myo;
 
-void myo_dcFrequency(t_myo *x, t_float f) {
-  SDTMyoelastic_setDcFrequency(x->myo, f);
-}
-
-void myo_lowFrequency(t_myo *x, t_float f) {
-  SDTMyoelastic_setLowFrequency(x->myo, f);
-}
-
-void myo_highFrequency(t_myo *x, t_float f) {
-  SDTMyoelastic_setHighFrequency(x->myo, f);
-}
-
-void myo_threshold(t_myo *x, t_float f) {
-  SDTMyoelastic_setThreshold(x->myo, f);
-}
+SDT_PD_SETTER(myo, Myoelastic, myo, DcFrequency, update)
+SDT_PD_SETTER(myo, Myoelastic, myo, LowFrequency, update)
+SDT_PD_SETTER(myo, Myoelastic, myo, HighFrequency, update)
+SDT_PD_SETTER(myo, Myoelastic, myo, Threshold, )
 
 t_int *myo_perform(t_int *w) {
   t_myo *x = (t_myo *)(w[1]);
@@ -87,13 +76,13 @@ void myo_tilde_setup(void) {
       class_new(gensym("myo~"), (t_newmethod)myo_new, (t_method)myo_free,
                 sizeof(t_myo), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(myo_class, t_myo, f);
-  class_addmethod(myo_class, (t_method)myo_dcFrequency, gensym("dcFrequency"),
+  class_addmethod(myo_class, (t_method)myo_setDcFrequency, gensym("dcFrequency"),
                   A_FLOAT, 0);
-  class_addmethod(myo_class, (t_method)myo_lowFrequency, gensym("lowFrequency"),
+  class_addmethod(myo_class, (t_method)myo_setLowFrequency, gensym("lowFrequency"),
                   A_FLOAT, 0);
-  class_addmethod(myo_class, (t_method)myo_highFrequency,
+  class_addmethod(myo_class, (t_method)myo_setHighFrequency,
                   gensym("highFrequency"), A_FLOAT, 0);
-  class_addmethod(myo_class, (t_method)myo_threshold, gensym("threshold"),
+  class_addmethod(myo_class, (t_method)myo_setThreshold, gensym("threshold"),
                   A_FLOAT, 0);
   class_addmethod(myo_class, (t_method)myo_dsp, gensym("dsp"), 0);
 }
