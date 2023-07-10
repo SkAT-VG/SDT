@@ -17,7 +17,15 @@ env:
   GH_API_PREFIX: https://api.github.com/repos/${{ github.repository }}
 
 jobs:
+  start:
+    if: ${{ !contains(github.event.head_commit.message, '[CI SKIP]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "Starting CI graph"
+
   build:
+    needs: [start]
     strategy:
       fail-fast: false
       matrix:
@@ -167,6 +175,7 @@ jobs:
       run: exit 1
 
   doxygen:
+    needs: [start]
     runs-on: ubuntu-latest
     outputs:
       SDT_CORE_VERSION: ${{ steps.version-log.outputs.SDT_CORE_VERSION }}
