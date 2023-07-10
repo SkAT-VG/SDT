@@ -44,7 +44,7 @@ void *zerox_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
 
   t_zerox *x = (t_zerox *)pd_new(zerox_class);
-  int windowSize = GET_ARG(1, atom_getfloat, 1024);
+  int windowSize = GET_ARG(1, atom_getfloat, SDT_ZEROCROSSING_SIZE_DEFAULT);
   x->zerox = SDTZeroCrossing_new(windowSize);
 
   SDT_PD_REGISTER(ZeroCrossing, zerox, "zero crossing rate detector", 0)

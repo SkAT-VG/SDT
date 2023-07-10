@@ -132,7 +132,7 @@ void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
             windowSize);
       }
     } else {
-      windowSize = 1024;
+      windowSize = SDT_SPECTRALFEATS_SIZE_DEFAULT;
     }
     x->feats = SDTSpectralFeats_new(windowSize);
     x->key = 0;

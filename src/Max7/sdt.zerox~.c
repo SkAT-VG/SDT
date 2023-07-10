@@ -84,7 +84,7 @@ void *zerocrossing_new(t_symbol *s, long argc, t_atom *argv) {
     if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
       windowSize = atom_getlong(&argv[0]);
     } else {
-      windowSize = 1024;
+      windowSize = SDT_ZEROCROSSING_SIZE_DEFAULT;
     }
     x->zerox = SDTZeroCrossing_new(windowSize);
     x->key = 0;

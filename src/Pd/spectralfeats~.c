@@ -69,7 +69,7 @@ void *spectralfeats_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
 
   t_spectralfeats *x = (t_spectralfeats *)pd_new(spectralfeats_class);
-  GET_ARG_WINSIZE(long, windowSize, 1, 1024)
+  GET_ARG_WINSIZE(long, windowSize, 1, SDT_SPECTRALFEATS_SIZE_DEFAULT)
   x->feats = SDTSpectralFeats_new(windowSize);
 
   SDT_PD_REGISTER(SpectralFeats, feats, "spectral features extractor", 0)
