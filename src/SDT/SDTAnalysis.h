@@ -265,12 +265,62 @@ extern void SDTSpectralFeats_free(SDTSpectralFeats *x);
   A(T, min, double, MinFreq, minFreq, double, 0)      \
   A(T, max, double, MaxFreq, maxFreq, double, 0)
 
-SDT_TYPE_COPY_H(SDT_SPECTRALFEATS)
-SDT_DEFINE_HASHMAP_H(SDT_SPECTRALFEATS)
-SDT_TYPE_MAKE_GETTERS_H(SDT_SPECTRALFEATS)
-SDT_JSON_SERIALIZE_H(SDT_SPECTRALFEATS)
-SDT_JSON_DESERIALIZE_H(SDT_SPECTRALFEATS)
+/** @brief Deep-copies a spectral feature extractor.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTSpectralFeats *SDTSpectralFeats_copy(SDTSpectralFeats *dest,
+                                               const SDTSpectralFeats *src,
+                                               unsigned char unsafe);
 
+/** @brief Registers a spectral feature extractor into the spectral feature
+extractors list with a unique ID.
+@param[in] x Spectral feature extractor instance to register
+@param[in] key Unique ID assigned to the spectral feature extractor instance
+@return Zero on success, otherwise one */
+extern int SDT_registerSpectralFeats(struct SDTSpectralFeats *x,
+                                     const char *key);
+
+/** @brief Queries the spectral feature extractors list by its unique ID.
+If a spectral feature extractor with the ID is present, a pointer to the
+spectral feature extractor is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the spectral feature extractor instance
+@return Spectral feature extractor instance pointer */
+extern SDTSpectralFeats *SDT_getSpectralFeats(const char *key);
+
+/** @brief Unregisters a spectral feature extractor from the spectral
+feature extractors list. If a spectral feature extractor with the given ID is
+present, it is unregistered from the list.
+@param[in] key Unique ID of the spectral feature extractor instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterSpectralFeats(const char *key);
+
+/** @brief Gets the size of the analysis window, in samples.
+@param[in] x Pointer to the instance
+@return Size of the analysis window, in samples */
+extern unsigned int SDTSpectralFeats_getSize(const SDTSpectralFeats *x);
+
+/** @brief Gets the analysis window overlapping ratio.
+@param[in] x Pointer to the instance
+@return Analysis window overlapping ratio */
+extern double SDTSpectralFeats_getOverlap(const SDTSpectralFeats *x);
+
+/** @brief Gets the lower frequency bound for spectral analysis.
+@param[in] x Pointer to the instance
+@return Lower frequency bound for spectral analysis */
+extern double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x);
+
+/** @brief Gets the upper frequency bound for spectral analysis.
+@param[in] x Pointer to the instance
+@return Upper frequency bound for spectral analysis */
+extern double SDTSpectralFeats_getMaxFreq(const SDTSpectralFeats *x);
+
+/** @brief Sets the size of the analysis window, in samples.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] x Pointer to the instance
+@param[in] f Size of the analysis window, in samples */
 extern void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
@@ -309,6 +359,25 @@ outputs. Array members represent the following information respectively:
 @param[in] in Input sample
 @return 1 if output available (analysis window full), 0 otherwise */
 extern int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in);
+
+/** @brief Represent a spectral feature extractor as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTSpectralFeats_toJSON(const SDTSpectralFeats *x);
+
+/** @brief Initialize a spectral feature extractor from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTSpectralFeats *SDTSpectralFeats_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a spectral feature extractor from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTSpectralFeats *SDTSpectralFeats_setParams(SDTSpectralFeats *x,
+                                                    const json_value *j,
+                                                    unsigned char unsafe);
 
 /** @} */
 
