@@ -4,6 +4,7 @@
 /** @file SDTOSCCommon.h
 @defgroup OSCCommon SDTOSCCommon.h: OSC Commons
 Functions and structures to handle OSC messages for SDT.
+@ingroup osc
 @{
 */
 
@@ -246,12 +247,11 @@ extern const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m);
 @param[in] FMT C string that contains a format string that follows the same
 specifications as format in printf
 @param[in] m SDTOSCMessage pointer */
-#define SDTOSC_MESSAGE_LOGA(LEVEL, FMT, m, ...)           \
-  {                                                       \
-    const char *__msg_ptr = SDTOSCMessage_staticPrint(m); \
-    if (__msg_ptr) {                                      \
-      SDT_LOGA(LEVEL, FMT, __msg_ptr, __VA_ARGS__);       \
-    }                                                     \
+#define SDTOSC_MESSAGE_LOGA(LEVEL, FMT, m, ...)                           \
+  {                                                                       \
+    SDT_ONLY_IN_LEVEL(                                                    \
+        LEVEL, const char *__msg_ptr = SDTOSCMessage_staticPrint(m);      \
+        if (__msg_ptr) { SDT_LOGA(LEVEL, FMT, __msg_ptr, __VA_ARGS__); }) \
   }
 
 /** @brief Gets a string that invites to Read The Fantastic Manual */
@@ -289,6 +289,11 @@ extern int SDTOSCJSON_load(const char *name, json_value **obj,
 Macros for implementing OSC methods
 @{ */
 
+/** @brief Implement OSC hashmap lookup
+@param [in] TYPENAME SDT type name, without the leading `SDT`
+@param [in] OBJVAR Object variable identifier
+@param [in] NAMEVAR Name variable identifier
+@param [in] MSGVAR Message variable identifier */
 #define _SDTOSC_FIND_IN_HASHMAP(TYPENAME, OBJVAR, NAMEVAR, MSGVAR)          \
   SDT##TYPENAME *OBJVAR = NULL;                                             \
   const char *NAMEVAR = NULL;                                               \
@@ -328,6 +333,9 @@ Macros for implementing OSC methods
     return 4;                                                               \
   }
 
+/** @brief Implement OSC file path read
+@param [in] FPATHVAR Filepath variable identifier
+@param [in] MSGVAR Message variable identifier */
 #define _SDTOSC_GETFPATH(FPATHVAR, MSGVAR)                                 \
   const char *FPATHVAR = NULL;                                             \
   if (SDTOSCArgumentList_getNArgs(args) < 2) {                             \
@@ -356,7 +364,13 @@ Macros for implementing OSC methods
     return 7;                                                              \
   }
 
-#define _SDTOSC_GETARG(VAR, UCASE, CTYPE, OSCTYPE, OSCTYPELCASE, MSGVAR)     \
+/** @brief Implement OSC argument read
+@param [in] VAR Argument destination variable
+@param [in] CTYPE C type for destination variable
+@param [in] OSCTYPE OSC type of argument
+@param [in] OSCTYPELCASE OSC type of argument (lowercase)
+@param [in] MSGVAR Message variable identifier */
+#define _SDTOSC_GETARG(VAR, CTYPE, OSCTYPE, OSCTYPELCASE, MSGVAR)            \
   CTYPE VAR;                                                                 \
   if (SDTOSCArgumentList_getNArgs(args) < 2) {                               \
     SDTOSC_MESSAGE_LOGA(ERROR,                                               \
@@ -377,6 +391,8 @@ Macros for implementing OSC methods
     return 6;                                                                \
   }
 
+/** @brief Implement OSC JSON log method
+@param [in] TYPENAME SDT type name, without the leading `SDT` */
 #define _SDTOSC_LOG_FUNCTION(TYPENAME)                 \
   int SDTOSC##TYPENAME##_log(const SDTOSCMessage *x) { \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")    \
@@ -387,6 +403,8 @@ Macros for implementing OSC methods
     return r;                                          \
   }
 
+/** @brief Implement OSC JSON save method
+@param [in] TYPENAME SDT type name, without the leading `SDT` */
 #define _SDTOSC_SAVE_FUNCTION(TYPENAME)                 \
   int SDTOSC##TYPENAME##_save(const SDTOSCMessage *x) { \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")     \
@@ -398,6 +416,8 @@ Macros for implementing OSC methods
     return r;                                           \
   }
 
+/** @brief Implement OSC JSON file load method
+@param [in] TYPENAME SDT type name, without the leading `SDT` */
 #define _SDTOSC_LOAD_FUNCTION(TYPENAME)                 \
   int SDTOSC##TYPENAME##_load(const SDTOSCMessage *x) { \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")     \
@@ -405,11 +425,13 @@ Macros for implementing OSC methods
     _SDTOSC_GETFPATH(fpath, x)                          \
     json_value *jobj;                                   \
     int r = SDTOSCJSON_load(name, &jobj, fpath);        \
-    SDTZeroCrossing_setParams(obj, jobj, 0);            \
+    SDT##TYPENAME##_setParams(obj, jobj, 0);            \
     json_builder_free(jobj);                            \
     return r;                                           \
   }
 
+/** @brief Implement OSC JSON string load method
+@param [in] TYPENAME SDT type name, without the leading `SDT` */
 #define _SDTOSC_LOADS_FUNCTION(TYPENAME)                                     \
   int SDTOSC##TYPENAME##_loads(const SDTOSCMessage *x) {                     \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                          \
@@ -417,7 +439,6 @@ Macros for implementing OSC methods
     int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, 1, -1);    \
     char *js = (char *)malloc(sizeof(char) * (nchars + 2));                  \
     SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, 1, -1);          \
-    /* SDT_LOGA(VERBOSE, "JSON string: %s\n", js); */                        \
     json_value *jobj = SDTJSON_reads(js, -1);                                \
     free(js);                                                                \
     if (!jobj) {                                                             \
@@ -432,16 +453,28 @@ Macros for implementing OSC methods
     return 0;                                                                \
   }
 
+/** @brief Implement OSC argument setters
+@param [in] TYPENAME SDT type name, without the leading `SDT`
+@param [in] LCASE Attribute name (lowercase)
+@param [in] UCASE Attribute name (Capitalized)
+@param [in] CTYPE C type for argument
+@param [in] OSCTYPE OSC type of argument
+@param [in] OSCTYPELCASE OSC type of argument (lowercase) */
 #define _SDTOSC_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE, OSCTYPE, \
                                 OSCTYPELCASE)                           \
   int SDTOSC##TYPENAME##_set##UCASE(const SDTOSCMessage *x) {           \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                     \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                     \
-    _SDTOSC_GETARG(LCASE, UCASE, CTYPE, OSCTYPE, OSCTYPELCASE, x)       \
+    _SDTOSC_GETARG(LCASE, CTYPE, OSCTYPE, OSCTYPELCASE, x)              \
     SDT##TYPENAME##_set##UCASE(obj, LCASE);                             \
     return 0;                                                           \
   }
 
+/** @brief Implement OSC float argument setters
+@param [in] TYPENAME SDT type name, without the leading `SDT`
+@param [in] LCASE Attribute name (lowercase)
+@param [in] UCASE Attribute name (Capitalized)
+@param [in] CTYPE C type for argument */
 #define _SDTOSC_FLOAT_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE) \
   _SDTOSC_SETTER_FUNCTION(TYPENAME, LCASE, UCASE, CTYPE, Float, float)
 

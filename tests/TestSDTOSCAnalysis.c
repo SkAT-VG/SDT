@@ -14,104 +14,20 @@
 
 // --- Zero Crossing ----------------------------------------------------------
 
-#define SDTOSC_ZEROX_TEST_BEGIN(ADDR, NARGS)                             \
-  SDT_TEST_BEGIN()                                                       \
-  SDTOSCArgumentList *args = SDTOSCArgumentList_new(NARGS);              \
-  SDTOSCMessage *short_msg = SDTOSCMessage_new(                          \
-      SDTOSCAddress_new(ADDR),                                           \
-      SDTOSCArgumentList_new(((NARGS) > 1) ? (NARGS)-1 : 0));            \
-  SDTOSCMessage *msg = SDTOSCMessage_new(SDTOSCAddress_new(ADDR), args); \
-  SDTZeroCrossing *zx = SDTZeroCrossing_new(1024);                       \
-  const char *key = "zx";
-
-#define SDTOSC_ZEROX_TEST_END()  \
-  SDTZeroCrossing_free(zx);      \
-  SDTOSCMessage_free(msg);       \
-  SDTOSCMessage_free(short_msg); \
-  SDT_TEST_END()
-
 void TestSDTOSCZeroCrossing_log(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/log", 1)
-
-  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
-
-  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
-
-  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));
-  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);
-
-  SDT_registerZeroCrossing(zx, key);
-  CuAssert(tc, "Succeed on object found", SDTOSCRoot(msg) == 0);
-
-  SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
-}
-
-void _TestSDTOSCZeroCrossing_save_load_inner(CuTest *tc, SDTZeroCrossing *zx,
-                                             const char *fpath, const char *key,
-                                             const SDTOSCMessage *short_msg,
-                                             SDTOSCMessage *msg,
-                                             SDTOSCArgumentList *args) {
-  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
-  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
-
-  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));
-  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);
-
-  SDT_registerZeroCrossing(zx, key);
-  CuAssert(tc, "Fail on uninitialized filepath", SDTOSCRoot(msg) != 0);
-
-  SDTOSCArgumentList_setArgument(args, 1, SDTOSCArgument_newString(fpath));
-  CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);
-  SDT_unregisterZeroCrossing(key);
-}
-
-void _TestSDTOSCZeroCrossing_save(CuTest *tc, const char *fpath) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/save", 2)
-  _TestSDTOSCZeroCrossing_save_load_inner(tc, zx, fpath, key, short_msg, msg,
-                                          args);
-  SDTOSC_ZEROX_TEST_END()
-}
-
-void _TestSDTOSCZeroCrossing_load(CuTest *tc, const char *fpath) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/load", 2)
-  _TestSDTOSCZeroCrossing_save_load_inner(tc, zx, fpath, key, short_msg, msg,
-                                          args);
-  SDTOSC_ZEROX_TEST_END()
+  _TEST_SDTOSC_log(ZeroCrossing, zerox, 1024)
 }
 
 void TestSDTOSCZeroCrossing_save_load(CuTest *tc) {
-  const char *fpath = "zerox_test.json";
-  _TestSDTOSCZeroCrossing_save(tc, fpath);
-  _TestSDTOSCZeroCrossing_load(tc, fpath);
-  CuAssert(tc, "File deleted", remove(fpath) == 0);
+  _TEST_SDTOSC_save_and_load(ZeroCrossing, zerox, 1024)
 }
 
 void TestSDTOSCZeroCrossing_loads(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/loads", 2)
-  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
-  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
-
-  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));
-  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);
-
-  SDT_registerZeroCrossing(zx, key);
-  CuAssert(tc, "Fail on uninitialized filepath", SDTOSCRoot(msg) != 0);
-
-  SDTOSCArgumentList_setArgument(args, 1,
-                                 SDTOSCArgument_newString("not a json string"));
-  CuAssert(tc, "Fail on invalid JSON string", SDTOSCRoot(msg) != 0);
-
-  SDTOSCArgument_free(SDTOSCArgumentList_setArgument(
-      args, 1, SDTOSCArgument_newString("{\"overlap\": 0.5}")));
-  CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);
-
-  SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
+  _TEST_SDTOSC_loads(ZeroCrossing, zerox, "{\"overlap\": 0.5}", 1024)
 }
 
 void TestSDTOSCZeroCrossing_setOverlap(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/overlap", 2)
+  SDTOSC_TEST_BEGIN("/zerox/overlap", 2, ZeroCrossing, zx, 1024)
   CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
   CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
 
@@ -131,11 +47,11 @@ void TestSDTOSCZeroCrossing_setOverlap(CuTest *tc) {
   }
   SDTRandomSequence_free(olaps);
   SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
 void TestSDTOSCZeroCrossing_setSize(CuTest *tc) {
-  SDTOSC_ZEROX_TEST_BEGIN("/zerox/size", 2)
+  SDTOSC_TEST_BEGIN("/zerox/size", 2, ZeroCrossing, zx, 1024)
   CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
   CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
 
@@ -156,7 +72,77 @@ void TestSDTOSCZeroCrossing_setSize(CuTest *tc) {
   }
   SDTRandomSequence_free(sizes);
   SDT_unregisterZeroCrossing(key);
-  SDTOSC_ZEROX_TEST_END()
+  SDTOSC_TEST_END(ZeroCrossing, zx)
 }
 
+// ----------------------------------------------------------------------------
+
+// --- Myoelastic -------------------------------------------------------------
+
+void TestSDTOSCMyoelastic_log(CuTest *tc) {
+  _TEST_SDTOSC_log(Myoelastic, myo, )
+}
+
+void TestSDTOSCMyoelastic_save_load(CuTest *tc) {
+  _TEST_SDTOSC_save_and_load(Myoelastic, myo, )
+}
+
+void TestSDTOSCMyoelastic_loads(CuTest *tc) {
+  _TEST_SDTOSC_loads(Myoelastic, myo,
+                     "{\"dcFrequency\": 2, \"lowFrequency\": 5,"
+                     " \"highFrequency\": 100, \"threshold\": 0.005}", )
+}
+
+#define _TEST_SDTOSCMYO_FREQUENCY(UCASE, LCASE)                              \
+  SDTOSC_TEST_BEGIN("/myo/" #LCASE, 2, Myoelastic, myo, )                    \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);          \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);          \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));    \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);            \
+  SDT_registerMyoelastic(myo, key);                                          \
+  CuAssert(tc, "Fail on uninitialized " #LCASE, SDTOSCRoot(msg) != 0);       \
+  SDTRandomSequence *freqs = SDTRandomSequence_newLog(8, 1.01, 20000);       \
+  SDTOSCArgument *a;                                                         \
+  FOR_RANDOM_ITER_FLOAT (freqs, f) {                                         \
+    a = SDTOSCArgumentList_setArgument(args, 1, SDTOSCArgument_newFloat(f)); \
+    if (a) SDTOSCArgument_free(a);                                           \
+    SDTOSCRoot(msg);                                                         \
+    CuAssertDblEquals(tc, f, SDTMyoelastic_get##UCASE(myo), 0.0);            \
+  }                                                                          \
+  SDTRandomSequence_free(freqs);                                             \
+  SDT_unregisterMyoelastic(key);                                             \
+  SDTOSC_TEST_END(Myoelastic, myo)
+
+void TestSDTOSCMyoelastic_setDcFrequency(CuTest *tc) {
+  _TEST_SDTOSCMYO_FREQUENCY(DcFrequency, dcFrequency)
+}
+
+void TestSDTOSCMyoelastic_setLowFrequency(CuTest *tc) {
+  _TEST_SDTOSCMYO_FREQUENCY(LowFrequency, lowFrequency)
+}
+
+void TestSDTOSCMyoelastic_setHighFrequency(CuTest *tc) {
+  _TEST_SDTOSCMYO_FREQUENCY(HighFrequency, highFrequency)
+}
+
+void TestSDTOSCMyoelastic_setThreshold(CuTest *tc) {
+  SDTOSC_TEST_BEGIN("/myo/threshold", 2, Myoelastic, myo, )
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);
+  SDT_registerMyoelastic(myo, key);
+  CuAssert(tc, "Fail on uninitialized threshold", SDTOSCRoot(msg) != 0);
+  SDTRandomSequence *ths = SDTRandomSequence_newFloat(8, 0, 1);
+  SDTOSCArgument *a;
+  FOR_RANDOM_ITER_FLOAT (ths, th) {
+    a = SDTOSCArgumentList_setArgument(args, 1, SDTOSCArgument_newFloat(th));
+    if (a) SDTOSCArgument_free(a);
+    SDTOSCRoot(msg);
+    CuAssertDblEquals(tc, th, SDTMyoelastic_getThreshold(myo), 0.0);
+  }
+  SDTRandomSequence_free(ths);
+  SDT_unregisterMyoelastic(key);
+  SDTOSC_TEST_END(Myoelastic, myo)
+}
 // ----------------------------------------------------------------------------

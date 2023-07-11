@@ -135,6 +135,122 @@ void TestSDT_functionName(CuTest* tc)
 #define SDT_TEST_END() }
 #endif
 
+#define SDTOSC_TEST_BEGIN(ADDR, NARGS, TYPENAME, VAR, ...)               \
+  SDT_TEST_BEGIN()                                                       \
+  SDTOSCArgumentList *args = SDTOSCArgumentList_new(NARGS);              \
+  SDTOSCMessage *short_msg = SDTOSCMessage_new(                          \
+      SDTOSCAddress_new(ADDR),                                           \
+      SDTOSCArgumentList_new(((NARGS) > 1) ? (NARGS)-1 : 0));            \
+  SDTOSCMessage *msg = SDTOSCMessage_new(SDTOSCAddress_new(ADDR), args); \
+  SDT##TYPENAME *VAR = SDT##TYPENAME##_new(__VA_ARGS__);                 \
+  const char *key = #VAR;
+
+#define SDTOSC_TEST_END(TYPENAME, VAR) \
+  SDT##TYPENAME##_free(VAR);           \
+  SDTOSCMessage_free(msg);             \
+  SDTOSCMessage_free(short_msg);       \
+  SDT_TEST_END()
+
+#define _TEST_SDT_HASHMAP(TYPENAME, ...)                         \
+  SDT##TYPENAME *x0 = SDT##TYPENAME##_new(__VA_ARGS__);          \
+  SDT##TYPENAME *x1 = SDT##TYPENAME##_new(__VA_ARGS__);          \
+  const char *key0 = #TYPENAME "_0";                             \
+  const char *key1 = #TYPENAME "_1";                             \
+                                                                 \
+  /* No registered */                                            \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Register 0 */                                               \
+  CuAssertIntEquals(tc, 0, SDT_register##TYPENAME(x0, key0));    \
+  CuAssertPointerEquals(tc, x0, SDT_get##TYPENAME(key0));        \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Re-register 0 (will print a warning) */                     \
+  CuAssertIntEquals(tc, 1, SDT_register##TYPENAME(x0, key0));    \
+                                                                 \
+  /* Register 1 */                                               \
+  CuAssertIntEquals(tc, 0, SDT_register##TYPENAME(x1, key1));    \
+  CuAssertPointerEquals(tc, x0, SDT_get##TYPENAME(key0));        \
+  CuAssertPointerEquals(tc, x1, SDT_get##TYPENAME(key1));        \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister missing */                                       \
+  CuAssertIntEquals(tc, 1, SDT_unregister##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister 0 */                                             \
+  CuAssertIntEquals(tc, 0, SDT_unregister##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, x1, SDT_get##TYPENAME(key1));        \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister 1 */                                             \
+  CuAssertIntEquals(tc, 0, SDT_unregister##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key0));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME(key1));      \
+  CuAssertPointerEquals(tc, NULL, SDT_get##TYPENAME("missing")); \
+                                                                 \
+  /* Unregister missing on empty hashmap */                      \
+  CuAssertIntEquals(tc, 1, SDT_unregister##TYPENAME("missing")); \
+                                                                 \
+  SDT##TYPENAME##_free(x0);                                      \
+  SDT##TYPENAME##_free(x1);
+
+#define _TEST_SDTOSC_log(TYPENAME, VAR, ...)                              \
+  SDTOSC_TEST_BEGIN("/" #VAR "/log", 1, TYPENAME, VAR, __VA_ARGS__)       \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);       \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);       \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key)); \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);         \
+  SDT_register##TYPENAME(VAR, key);                                       \
+  CuAssert(tc, "Succeed on object found", SDTOSCRoot(msg) == 0);          \
+  SDT_unregister##TYPENAME(key);                                          \
+  SDTOSC_TEST_END(TYPENAME, VAR)
+
+#define _TEST_SDTOSC_save_or_load(TYPENAME, VAR)                            \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);         \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);         \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));   \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);           \
+  SDT_register##TYPENAME(VAR, key);                                         \
+  CuAssert(tc, "Fail on uninitialized filepath", SDTOSCRoot(msg) != 0);     \
+  SDTOSCArgumentList_setArgument(args, 1, SDTOSCArgument_newString(fpath)); \
+  CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);                            \
+  SDT_unregister##TYPENAME(key);
+
+#define _TEST_SDTOSC_save_and_load(TYPENAME, VAR, ...)                 \
+  const char *fpath = #VAR "_test.json";                               \
+  {                                                                    \
+    SDTOSC_TEST_BEGIN("/" #VAR "/save", 2, TYPENAME, VAR, __VA_ARGS__) \
+    _TEST_SDTOSC_save_or_load(TYPENAME, VAR);                          \
+    SDTOSC_TEST_END(TYPENAME, VAR)                                     \
+  }                                                                    \
+  {                                                                    \
+    SDTOSC_TEST_BEGIN("/" #VAR "/load", 2, TYPENAME, VAR, __VA_ARGS__) \
+    _TEST_SDTOSC_save_or_load(TYPENAME, VAR);                          \
+    SDTOSC_TEST_END(TYPENAME, VAR)                                     \
+  }                                                                    \
+  CuAssert(tc, "File deleted", remove(fpath) == 0);
+
+#define _TEST_SDTOSC_loads(TYPENAME, VAR, JSONS, ...)                     \
+  SDTOSC_TEST_BEGIN("/" #VAR "/loads", 2, TYPENAME, VAR, __VA_ARGS__)     \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);       \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);       \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key)); \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);         \
+  SDT_register##TYPENAME(VAR, key);                                       \
+  CuAssert(tc, "Fail on uninitialized filepath", SDTOSCRoot(msg) != 0);   \
+  SDTOSCArgumentList_setArgument(                                         \
+      args, 1, SDTOSCArgument_newString("not a json string"));            \
+  CuAssert(tc, "Fail on invalid JSON string", SDTOSCRoot(msg) != 0);      \
+  SDTOSCArgument_free(SDTOSCArgumentList_setArgument(                     \
+      args, 1, SDTOSCArgument_newString(JSONS)));                         \
+  CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);                          \
+  SDT_unregister##TYPENAME(key);                                          \
+  SDTOSC_TEST_END(TYPENAME, VAR)
+
 #ifdef __cplusplus
 };
 #endif

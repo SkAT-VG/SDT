@@ -15,6 +15,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
+  if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
   if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
     return SDTOSCZeroCrossing(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
@@ -52,8 +53,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCModalTracker(log, sub);
   // else if (!strcmp("motor", method))
   //   return_code = SDTOSCMotor(log, sub);
-  // else if (!strcmp("myo", method))
-  //   return_code = SDTOSCMyoelastic(log, sub);
   // else if (!strcmp("pitch", method))
   //   return_code = SDTOSCPitch(log, sub);
   // else if (!strcmp("pitchshift", method))

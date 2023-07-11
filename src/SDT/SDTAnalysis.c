@@ -53,14 +53,7 @@ void SDTZeroCrossing_setSize(SDTZeroCrossing *x, unsigned int f) {
   x->size = f;
 }
 
-SDTZeroCrossing *SDTZeroCrossing_copy(SDTZeroCrossing *dest,
-                                      const SDTZeroCrossing *src,
-                                      unsigned char unsafe) {
-  json_value *j = SDTZeroCrossing_toJSON(src);
-  SDTZeroCrossing_setParams(dest, j, unsafe);
-  json_builder_free(j);
-  return dest;
-}
+_SDT_COPY_FUNCTION(ZeroCrossing)
 
 _SDT_HASHMAP_FUNCTIONS(ZeroCrossing)
 
@@ -74,11 +67,11 @@ json_value *SDTZeroCrossing_toJSON(const SDTZeroCrossing *x) {
 
 SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
-  const json_value *v_size = SDTJSON_object_get_by_key(x, "size");
-  SDTZeroCrossing *y =
-      SDTZeroCrossing_new((v_size && (v_size->type == json_integer))
-                              ? v_size->u.integer
-                              : SDT_ZEROCROSSING_SIZE_DEFAULT);
+
+  unsigned int size = SDT_ZEROCROSSING_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(ZeroCrossing, size, x, size, integer);
+
+  SDTZeroCrossing *y = SDTZeroCrossing_new(size);
   return SDTZeroCrossing_setParams(y, x, 0);
 }
 
@@ -87,22 +80,11 @@ SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
                                            unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  const json_value *v_size = SDTJSON_object_get_by_key(j, "size");
-  if (v_size && (v_size->type == json_integer) &&
-      (x->size != v_size->u.integer)) {
-    if (unsafe) {
-      SDTZeroCrossing_setSize(x, v_size->u.integer);
-    } else {
-      SDT_LOGA(WARN,
-               "\n  Not setting parameter \"size\" because it is unsafe.\n  "
-               "Current: %d\n  JSON:    %d\n",
-               x->size, v_size->u.integer);
-    }
-  }
-  const json_value *v_overlap = SDTJSON_object_get_by_key(j, "overlap");
-  SDTZeroCrossing_setOverlap(x, (v_overlap && (v_overlap->type == json_double))
-                                    ? v_overlap->u.dbl
-                                    : 0);
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(ZeroCrossing, x, j, Size, size, integer,
+                                  unsafe);
+  _SDT_SET_PARAM_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap, double);
+  _SDT_SET_PARAM_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap, integer);
+
   return x;
 }
 
@@ -146,7 +128,7 @@ struct SDTMyoelastic {
   int impCount, myoCount;
 };
 
-SDTMyoelastic *SDTMyoelastic_new(int bufSize) {
+SDTMyoelastic *SDTMyoelastic_new() {
   SDTMyoelastic *x;
   // int i;
 
@@ -188,37 +170,85 @@ void SDTMyoelastic_free(SDTMyoelastic *x) {
   free(x);
 }
 
-SDT_TYPE_COPY(SDT_MYOELASTIC)
-SDT_DEFINE_HASHMAP(SDT_MYOELASTIC, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_MYOELASTIC)
-SDT_JSON_SERIALIZE(SDT_MYOELASTIC)
-SDT_JSON_DESERIALIZE(SDT_MYOELASTIC)
+_SDT_COPY_FUNCTION(Myoelastic)
+
+_SDT_HASHMAP_FUNCTIONS(Myoelastic)
+
+double SDTMyoelastic_getDcFrequency(const SDTMyoelastic *x) { return x->dcCut; }
+
+double SDTMyoelastic_getLowFrequency(const SDTMyoelastic *x) {
+  return x->lowCut;
+}
+
+double SDTMyoelastic_getHighFrequency(const SDTMyoelastic *x) {
+  return x->highCut;
+}
+
+double SDTMyoelastic_getThreshold(const SDTMyoelastic *x) {
+  return x->threshold;
+}
+
+json_value *SDTMyoelastic_toJSON(const SDTMyoelastic *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "dcFrequency",
+                   json_double_new(SDTMyoelastic_getDcFrequency(x)));
+  json_object_push(obj, "lowFrequency",
+                   json_double_new(SDTMyoelastic_getLowFrequency(x)));
+  json_object_push(obj, "highFrequency",
+                   json_double_new(SDTMyoelastic_getHighFrequency(x)));
+  json_object_push(obj, "threshold",
+                   json_double_new(SDTMyoelastic_getThreshold(x)));
+  return obj;
+}
+
+SDTMyoelastic *SDTMyoelastic_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTMyoelastic *y = SDTMyoelastic_new();
+  return SDTMyoelastic_setParams(y, x, 0);
+}
+
+SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency, double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency, integer);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency,
+                           integer);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency,
+                           integer);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, Threshold, threshold, double);
+  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, Threshold, threshold, integer);
+
+  return x;
+}
 
 void SDTMyoelastic_update(SDTMyoelastic *x) {
   SDTTwoPoles_lowpass(x->inRMS, 1000.0);
-}
-
-void SDTMyoelastic_setDcFrequency(SDTMyoelastic *x, double f) {
-  x->dcCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
   SDTTwoPoles_lowpass(x->impRMS, x->dcCut);
   SDTTwoPoles_lowpass(x->myoRMS, x->dcCut);
   SDTTwoPoles_lowpass(x->restRMS, x->dcCut);
   SDTBiquad_linkwitzRileyHP(x->dcHP, x->dcCut);
-  SDTMyoelastic_update(x);
+  SDTBiquad_linkwitzRileyLP(x->lowLP, x->lowCut);
+  SDTBiquad_linkwitzRileyHP(x->lowHP, x->lowCut);
+  SDTBiquad_linkwitzRileyLP(x->highLP, x->highCut);
+  SDTBiquad_linkwitzRileyHP(x->highHP, x->highCut);
+}
+
+void SDTMyoelastic_setDcFrequency(SDTMyoelastic *x, double f) {
+  x->dcCut = fmax(f, 1.0);
 }
 
 void SDTMyoelastic_setLowFrequency(SDTMyoelastic *x, double f) {
-  x->lowCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
-  SDTBiquad_linkwitzRileyLP(x->lowLP, x->lowCut);
-  SDTBiquad_linkwitzRileyHP(x->lowHP, x->lowCut);
-  SDTMyoelastic_update(x);
+  x->lowCut = fmax(f, 1.0);
 }
 
 void SDTMyoelastic_setHighFrequency(SDTMyoelastic *x, double f) {
-  x->highCut = SDT_fclip(f, 1.0, 0.5 * SDT_sampleRate);
-  SDTBiquad_linkwitzRileyLP(x->highLP, x->highCut);
-  SDTBiquad_linkwitzRileyHP(x->highHP, x->highCut);
-  SDTMyoelastic_update(x);
+  x->highCut = fmax(f, 1.0);
 }
 
 void SDTMyoelastic_setThreshold(SDTMyoelastic *x, double f) {

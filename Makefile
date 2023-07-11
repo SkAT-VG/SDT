@@ -230,7 +230,8 @@ TEST_DIR=$(ROOT)/tests
 CUTEST_BUILDDIR=$(strip $(call get_build_dest,$(CUTEST_DIR)))
 TEST_BUILDDIR=$(strip $(call get_build_dest,$(TEST_DIR)))
 TEST_RUNNER_SRC=$(TEST_BUILDDIR)/AllTests.c
-TEST_SRCS=$(strip $(call get_sources,$(TEST_DIR)))
+TEST_SRCS?=$(strip $(call get_sources,$(TEST_DIR)))
+_TEST_SRCS=$(TEST_DIR)/SDTTestUtils.c $(TEST_SRCS)
 TEST_OBJS=$(strip $(call get_objects,$(TEST_DIR))) $(patsubst %.c,%.o,$(TEST_RUNNER_SRC))
 CUTEST_OBJS=$(CUTEST_BUILDDIR)/CuTest.o
 TEST_EXE:=$(BUILDDIR)/test
@@ -253,8 +254,8 @@ $(TEST_BUILDDIR)/%.o: $(TEST_DIR)/%.c | $(TEST_BUILDDIR)
 	$(call build-obj,$(INCLUDE_SDT) -I$(CUTEST_DIR))
 $(TEST_BUILDDIR)/%.o: $(TEST_BUILDDIR)/%.c
 	$(call build-obj,$(INCLUDE_SDT) -I$(CUTEST_DIR))
-$(TEST_RUNNER_SRC): $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) | $(TEST_BUILDDIR)
-	$(SH) $(CUTEST_DIR)/make-tests.sh $(TEST_SRCS) > $@
+$(TEST_RUNNER_SRC): $(CUTEST_DIR)/make-tests.sh $(_TEST_SRCS) | $(TEST_BUILDDIR)
+	$(SH) $(CUTEST_DIR)/make-tests.sh $(_TEST_SRCS) > $@
 $(CUTEST_BUILDDIR):; $(make-dir)
 $(TEST_BUILDDIR):; $(make-dir)
 # -----------------------------------------------------------------------------

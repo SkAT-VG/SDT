@@ -60,6 +60,71 @@ extern double SDTJSON_array_get_number(const json_value *x, unsigned int idx,
 @return A deep copy of the JSON value */
 extern json_value *SDTJSON_deepcopy(const json_value *value);
 
+/* --- Macros -------------------------------------------------------------- */
+#define _JSON_integer_FIELD integer
+#define _JSON_double_FIELD dbl
+#define _JSON_TYPE_FIELD(T) _JSON_##T##_FIELD
+
+#define _JSON_integer_CFMT "%d"
+#define _JSON_double_CFMT "%f"
+#define _JSON_TYPE_CFMT(T) _JSON_##T##_CFMT
+
+/** @brief Implement parameter setting from JSON
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] CATTR C attribute name
+@param[in] KEY JSON attribute key
+@param[in] JTYPE JSON type */
+#define _SDT_SET_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, CATTR, KEY, JTYPE)   \
+  {                                                                        \
+    const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY);     \
+    if (v_##KEY && (v_##KEY->type == json_##JTYPE)) {                      \
+      SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u._JSON_TYPE_FIELD(JTYPE)); \
+    }                                                                      \
+  }
+
+/** @brief Implement parameter getting from JSON
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] KEY JSON attribute key
+@param[in] JTYPE JSON type */
+#define _SDT_GET_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, KEY, JTYPE)      \
+  {                                                                    \
+    const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY); \
+    if (v_##KEY && (v_##KEY->type == json_##JTYPE)) {                  \
+      VAR = v_##KEY->u._JSON_TYPE_FIELD(JTYPE);                        \
+    }                                                                  \
+  }
+
+/** @brief Implement parameter setting from JSON for unsafe attributes
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] CATTR C attribute name
+@param[in] KEY JSON attribute key
+@param[in] JTYPE JSON type
+@param[in] UNSAFE Unsafe flag variable identifier */
+#define _SDT_SET_UNSAFE_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, CATTR, KEY,     \
+                                        JTYPE, UNSAFE)                       \
+  {                                                                          \
+    const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY);       \
+    if (v_##KEY && (v_##KEY->type == json_##JTYPE)) {                        \
+      if (UNSAFE) {                                                          \
+        SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u._JSON_TYPE_FIELD(JTYPE)); \
+      } else {                                                               \
+        SDT_LOGA(WARN,                                                       \
+                 "\n  Not setting parameter \"" #KEY                         \
+                 "\" because it is unsafe.\n  Current: " _JSON_TYPE_CFMT(    \
+                     JTYPE) "\n  JSON:    " _JSON_TYPE_CFMT(JTYPE) "\n",     \
+                 SDT##TYPENAME##_get##CATTR(VAR),                            \
+                 v_##KEY->u._JSON_TYPE_FIELD(JTYPE));                        \
+      }                                                                      \
+    }                                                                        \
+  }
+/* ------------------------------------------------------------------------- */
+
 #ifdef __cplusplus
 };
 #endif

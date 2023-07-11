@@ -10,7 +10,7 @@ typedef struct _zerocrossing {
   t_pxobject ob;
   SDTZeroCrossing *zerox;
   void *outlet, *send;
-  double overlap, out;
+  double out;
   t_symbol *key;
 } t_zerocrossing;
 
@@ -29,10 +29,9 @@ void zerocrossing_assist(t_zerocrossing *x, void *b, long m, long a, char *s) {
 SDT_MAX_KEY(zerocrossing, ZeroCrossing, zerox, "zerox~",
             "zero crossing rate detector")
 
-void zerocrossing_overlap(t_zerocrossing *x, void *attr, long ac, t_atom *av) {
-  x->overlap = atom_getfloat(av);
-  SDTZeroCrossing_setOverlap(x->zerox, x->overlap);
-}
+SDT_MAX_GETTER(zerocrossing, ZeroCrossing, zerox, Overlap)
+
+SDT_MAX_SETTER(zerocrossing, ZeroCrossing, zerox, Overlap, )
 
 void zerocrossing_send(t_zerocrossing *x) { outlet_float(x->outlet, x->out); }
 
@@ -52,7 +51,6 @@ t_int *zerocrossing_perform(t_int *w) {
 
 void zerocrossing_dsp(t_zerocrossing *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTZeroCrossing_setOverlap(x->zerox, x->overlap);
   dsp_add(zerocrossing_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
@@ -72,7 +70,6 @@ void zerocrossing_perform64(t_zerocrossing *x, t_object *dsp64, double **ins,
 void zerocrossing_dsp64(t_zerocrossing *x, t_object *dsp64, short *count,
                         double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTZeroCrossing_setOverlap(x->zerox, x->overlap);
   object_method(dsp64, gensym("dsp_add64"), x, zerocrossing_perform64, 0, NULL);
 }
 
@@ -118,9 +115,9 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(zerocrossing, "1")
 
-  CLASS_ATTR_DOUBLE(c, "overlap", 0, t_zerocrossing, overlap);
   CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);
-  CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)zerocrossing_overlap);
+  CLASS_ATTR_ACCESSORS(c, "overlap", (method)zerocrossing_getOverlap,
+                       (method)zerocrossing_setOverlap);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

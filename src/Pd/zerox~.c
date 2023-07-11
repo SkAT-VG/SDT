@@ -16,9 +16,7 @@ typedef struct _zerox {
   char *key;
 } t_zerox;
 
-void zerox_overlap(t_zerox *x, t_float f) {
-  SDTZeroCrossing_setOverlap(x->zerox, f);
-}
+SDT_PD_SETTER(zerox, ZeroCrossing, zerox, Overlap, )
 
 t_int *zerox_perform(t_int *w) {
   t_zerox *x = (t_zerox *)(w[1]);
@@ -65,7 +63,7 @@ void zerox_tilde_setup(void) {
       class_new(gensym("zerox~"), (t_newmethod)zerox_new, (t_method)zerox_free,
                 sizeof(t_zerox), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(zerox_class, t_zerox, f);
-  class_addmethod(zerox_class, (t_method)zerox_overlap, gensym("overlap"),
+  class_addmethod(zerox_class, (t_method)zerox_setOverlap, gensym("overlap"),
                   A_FLOAT, 0);
   class_addmethod(zerox_class, (t_method)zerox_dsp, gensym("dsp"), 0);
 }

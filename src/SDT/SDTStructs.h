@@ -29,12 +29,12 @@ extern void *SDTHashmap_get(SDTHashmap *x, const char *key);
 /** @brief Inserts a key/value pair in the hashmap.
 @param[in] key Key to associate to the value
 @param[in] value Value to insert in the hashmap
-@return 0 if insertion is succesful, 1 otherwise (e.g. key already present) */
+@return 0 if insertion is successful, 1 otherwise (e.g. key already present) */
 extern int SDTHashmap_put(SDTHashmap *x, const char *key, void *value);
 
 /** @brief Deletes a key/value pair from the hashmap.
 @param[in] key Key to look for in the hashmap
-@return 0 if deletion is succesful, 1 otherwise (e.g. key not found) */
+@return 0 if deletion is successful, 1 otherwise (e.g. key not found) */
 extern int SDTHashmap_del(SDTHashmap *x, const char *key);
 
 /** @brief Deletes all the entries in the hashmap. */
@@ -46,7 +46,7 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
 /** --- Macros ------------------------------------------------------------- */
 #define _SDT_HASHMAP_FUNCTIONS(TYPENAME)                                       \
   static SDTHashmap *hashmap_##TYPENAME = NULL;                                \
-  int SDT_register##TYPENAME(struct SDT##TYPENAME *x, const char *key) {       \
+  int SDT_register##TYPENAME(SDT##TYPENAME *x, const char *key) {              \
     if (!hashmap_##TYPENAME) hashmap_##TYPENAME = SDTHashmap_new(59);          \
     if (SDTHashmap_put(hashmap_##TYPENAME, key, x)) {                          \
       SDT_LOGA(WARN, "Not registering. Key already present: %s\n", key);       \
@@ -65,6 +65,15 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
       hashmap_##TYPENAME = NULL;                                               \
     }                                                                          \
     return 0;                                                                  \
+  }
+
+#define _SDT_COPY_FUNCTION(TYPENAME)                                         \
+  SDT##TYPENAME *SDT##TYPENAME##_copy(                                       \
+      SDT##TYPENAME *dest, const SDT##TYPENAME *src, unsigned char unsafe) { \
+    json_value *j = SDT##TYPENAME##_toJSON(src);                             \
+    SDT##TYPENAME##_setParams(dest, j, unsafe);                              \
+    json_builder_free(j);                                                    \
+    return dest;                                                             \
   }
 /** ------------------------------------------------------------------------ */
 
