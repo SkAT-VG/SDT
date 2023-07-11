@@ -93,4 +93,56 @@ void TestSDTOSCMyoelastic_loads(CuTest *tc) {
                      " \"highFrequency\": 100, \"threshold\": 0.005}", )
 }
 
+#define _TEST_SDTOSCMYO_FREQUENCY(UCASE, LCASE)                              \
+  SDTOSC_TEST_BEGIN("/myo/" #LCASE, 2, Myoelastic, myo, )                    \
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);          \
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);          \
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));    \
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);            \
+  SDT_registerMyoelastic(myo, key);                                          \
+  CuAssert(tc, "Fail on uninitialized " #LCASE, SDTOSCRoot(msg) != 0);       \
+  SDTRandomSequence *freqs = SDTRandomSequence_newLog(8, 1.01, 20000);       \
+  SDTOSCArgument *a;                                                         \
+  FOR_RANDOM_ITER_FLOAT (freqs, f) {                                         \
+    a = SDTOSCArgumentList_setArgument(args, 1, SDTOSCArgument_newFloat(f)); \
+    if (a) SDTOSCArgument_free(a);                                           \
+    SDTOSCRoot(msg);                                                         \
+    CuAssertDblEquals(tc, f, SDTMyoelastic_get##UCASE(myo), 0.0);            \
+  }                                                                          \
+  SDTRandomSequence_free(freqs);                                             \
+  SDT_unregisterMyoelastic(key);                                             \
+  SDTOSC_TEST_END(Myoelastic, myo)
+
+void TestSDTOSCMyoelastic_setDcFrequency(CuTest *tc) {
+  _TEST_SDTOSCMYO_FREQUENCY(DcFrequency, dcFrequency)
+}
+
+void TestSDTOSCMyoelastic_setLowFrequency(CuTest *tc) {
+  _TEST_SDTOSCMYO_FREQUENCY(LowFrequency, lowFrequency)
+}
+
+void TestSDTOSCMyoelastic_setHighFrequency(CuTest *tc) {
+  _TEST_SDTOSCMYO_FREQUENCY(HighFrequency, highFrequency)
+}
+
+void TestSDTOSCMyoelastic_setThreshold(CuTest *tc) {
+  SDTOSC_TEST_BEGIN("/myo/threshold", 2, Myoelastic, myo, )
+  CuAssert(tc, "Fail on too few args", SDTOSCRoot(short_msg) != 0);
+  CuAssert(tc, "Fail on uninitialized args", SDTOSCRoot(msg) != 0);
+  SDTOSCArgumentList_setArgument(args, 0, SDTOSCArgument_newString(key));
+  CuAssert(tc, "Fail on object not found", SDTOSCRoot(msg) != 0);
+  SDT_registerMyoelastic(myo, key);
+  CuAssert(tc, "Fail on uninitialized threshold", SDTOSCRoot(msg) != 0);
+  SDTRandomSequence *ths = SDTRandomSequence_newFloat(8, 0, 1);
+  SDTOSCArgument *a;
+  FOR_RANDOM_ITER_FLOAT (ths, th) {
+    a = SDTOSCArgumentList_setArgument(args, 1, SDTOSCArgument_newFloat(th));
+    if (a) SDTOSCArgument_free(a);
+    SDTOSCRoot(msg);
+    CuAssertDblEquals(tc, th, SDTMyoelastic_getThreshold(myo), 0.0);
+  }
+  SDTRandomSequence_free(ths);
+  SDT_unregisterMyoelastic(key);
+  SDTOSC_TEST_END(Myoelastic, myo)
+}
 // ----------------------------------------------------------------------------
