@@ -139,19 +139,10 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(myoelastic, "1")
 
-  CLASS_ATTR_FILTER_MIN(c, "dcFrequency", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "lowFrequency", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "highFrequency", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "threshold", 0.0);
-
-  CLASS_ATTR_ACCESSORS(c, "dcFrequency", (method)myoelastic_getDcFrequency,
-                       (method)myoelastic_setDcFrequency);
-  CLASS_ATTR_ACCESSORS(c, "lowFrequency", (method)myoelastic_getLowFrequency,
-                       (method)myoelastic_setLowFrequency);
-  CLASS_ATTR_ACCESSORS(c, "highFrequency", (method)myoelastic_getHighFrequency,
-                       (method)myoelastic_setHighFrequency);
-  CLASS_ATTR_ACCESSORS(c, "threshold", (method)myoelastic_getThreshold,
-                       (method)myoelastic_setThreshold);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, DcFrequency, dcFrequency, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, LowFrequency, lowFrequency, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, HighFrequency, highFrequency, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, Threshold, threshold, float64, 0);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
