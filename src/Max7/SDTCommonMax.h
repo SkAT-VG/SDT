@@ -6,11 +6,6 @@
 
 #define MAXSDTMAXSTRING 512
 
-/** @brief Logger function for SDT in Max
-@param[in] fmt C string that contains a format string that follows the same
-specifications as format in printf */
-int SDT_maxPost(const char *fmt, ...);
-
 /** @brief Set up logger functions for SDT in Max */
 void SDT_setupMaxLoggers();
 
