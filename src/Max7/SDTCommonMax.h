@@ -89,4 +89,16 @@ The t_class pointer should be a variable "c"
     return MAX_ERR_NONE;                                            \
   }
 
+/** @brief Define an attribute with getter and setter
+@param[in] C The class pointer
+@param[in] M The Max type (without the leading `t_`)
+@param[in] UCASE The name of the attribute (uppercase)
+@param[in] ATTRNAME The name of the Max attribute
+@param[in] TYPE The type of the Max attribute
+@param[in] FLAGS Any attribute flags, expressed as a bitfield */
+#define SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS)               \
+  class_addattr(                                                            \
+      c, attribute_new(#ATTRNAME, gensym(#TYPE), 0, (method)M##_get##UCASE, \
+                       (method)M##_set##UCASE));
+
 #endif
