@@ -10,7 +10,7 @@ typedef struct _spectralfeats {
   t_pxobject ob;
   SDTSpectralFeats *feats;
   void *outlet, *send;
-  double overlap, minFreq, maxFreq, outs[8];
+  double outs[8];
   t_symbol *key;
 } t_spectralfeats;
 
@@ -30,23 +30,13 @@ void spectralfeats_assist(t_spectralfeats *x, void *b, long m, long a,
 SDT_MAX_KEY(spectralfeats, SpectralFeats, feats, "spectralfeats",
             "spectral features extractor")
 
-void spectralfeats_overlap(t_spectralfeats *x, void *attr, long ac,
-                           t_atom *av) {
-  x->overlap = atom_getfloat(av);
-  SDTSpectralFeats_setOverlap(x->feats, x->overlap);
-}
+SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, Overlap)
+SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MinFreq)
+SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MaxFreq)
 
-void spectralfeats_minFreq(t_spectralfeats *x, void *attr, long ac,
-                           t_atom *av) {
-  x->minFreq = atom_getfloat(av);
-  SDTSpectralFeats_setMinFreq(x->feats, x->minFreq);
-}
-
-void spectralfeats_maxFreq(t_spectralfeats *x, void *attr, long ac,
-                           t_atom *av) {
-  x->maxFreq = atom_getfloat(av);
-  SDTSpectralFeats_setMaxFreq(x->feats, x->maxFreq);
-}
+SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, Overlap, )
+SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MinFreq, )
+SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MaxFreq, )
 
 void spectralfeats_send(t_spectralfeats *x) {
   t_atom argv[1];
@@ -85,9 +75,6 @@ t_int *spectralfeats_perform(t_int *w) {
 
 void spectralfeats_dsp(t_spectralfeats *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTSpectralFeats_setOverlap(x->feats, x->overlap);
-  SDTSpectralFeats_setMinFreq(x->feats, x->minFreq);
-  SDTSpectralFeats_setMaxFreq(x->feats, x->maxFreq);
   dsp_add(spectralfeats_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
@@ -107,9 +94,6 @@ void spectralfeats_perform64(t_spectralfeats *x, t_object *dsp64, double **ins,
 void spectralfeats_dsp64(t_spectralfeats *x, t_object *dsp64, short *count,
                          double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTSpectralFeats_setOverlap(x->feats, x->overlap);
-  SDTSpectralFeats_setMinFreq(x->feats, x->minFreq);
-  SDTSpectralFeats_setMaxFreq(x->feats, x->maxFreq);
   object_method(dsp64, gensym("dsp_add64"), x, spectralfeats_perform64, 0,
                 NULL);
 }
@@ -162,21 +146,9 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(spectralfeats, "1")
 
-  CLASS_ATTR_DOUBLE(c, "overlap", 0, t_spectralfeats, overlap);
-  CLASS_ATTR_DOUBLE(c, "minFreq", 0, t_spectralfeats, minFreq);
-  CLASS_ATTR_DOUBLE(c, "maxFreq", 0, t_spectralfeats, maxFreq);
-
-  CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);
-  CLASS_ATTR_FILTER_MIN(c, "minFreq", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "maxFreq", 0.0);
-
-  CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)spectralfeats_overlap);
-  CLASS_ATTR_ACCESSORS(c, "minFreq", NULL, (method)spectralfeats_minFreq);
-  CLASS_ATTR_ACCESSORS(c, "maxFreq", NULL, (method)spectralfeats_maxFreq);
-
-  CLASS_ATTR_ORDER(c, "overlap", 0, "2");
-  CLASS_ATTR_ORDER(c, "minFreq", 0, "3");
-  CLASS_ATTR_ORDER(c, "maxFreq", 0, "4");
+  SDT_MAX_ATTRIBUTE(c, spectralfeats, Overlap, overlap, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, spectralfeats, MinFreq, minFreq, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, spectralfeats, MaxFreq, maxFreq, float64, 0);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
