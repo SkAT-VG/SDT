@@ -115,9 +115,7 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(zerocrossing, "1")
 
-  CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);
-  CLASS_ATTR_ACCESSORS(c, "overlap", (method)zerocrossing_getOverlap,
-                       (method)zerocrossing_setOverlap);
+  SDT_MAX_ATTRIBUTE(c, zerocrossing, Overlap, overlap, float64, 0);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

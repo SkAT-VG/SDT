@@ -64,9 +64,10 @@ t_int *myoelastic_perform(t_int *w) {
   int n = (int)w[3];
 
   while (n--) {
-    SDTMyoelastic_dsp(x->myo, x->out, *in++);
+    if (SDTMyoelastic_dsp(x->myo, x->out, *in++)) {
+      qelem_set(x->send);
+    }
   }
-  qelem_set(x->send);
 
   return w + 4;
 }
@@ -84,7 +85,9 @@ void myoelastic_perform64(t_myoelastic *x, t_object *dsp64, double **ins,
   int n = sampleframes;
 
   while (n--) {
-    if (SDTMyoelastic_dsp(x->myo, x->out, *in++)) qelem_set(x->send);
+    if (SDTMyoelastic_dsp(x->myo, x->out, *in++)) {
+      qelem_set(x->send);
+    }
   }
 }
 
@@ -101,6 +104,7 @@ void *myoelastic_new(t_symbol *s, long argc, t_atom *argv) {
 
   x = (t_myoelastic *)object_alloc(myoelastic_class);
   if (x) {
+    dsp_setup((t_pxobject *)x, 1);
     x->myo = SDTMyoelastic_new();
     x->key = 0;
     x->outlets[3] = floatout(x);
@@ -139,19 +143,10 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(myoelastic, "1")
 
-  CLASS_ATTR_FILTER_MIN(c, "dcFrequency", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "lowFrequency", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "highFrequency", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "threshold", 0.0);
-
-  CLASS_ATTR_ACCESSORS(c, "dcFrequency", (method)myoelastic_getDcFrequency,
-                       (method)myoelastic_setDcFrequency);
-  CLASS_ATTR_ACCESSORS(c, "lowFrequency", (method)myoelastic_getLowFrequency,
-                       (method)myoelastic_setLowFrequency);
-  CLASS_ATTR_ACCESSORS(c, "highFrequency", (method)myoelastic_getHighFrequency,
-                       (method)myoelastic_setHighFrequency);
-  CLASS_ATTR_ACCESSORS(c, "threshold", (method)myoelastic_getThreshold,
-                       (method)myoelastic_setThreshold);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, DcFrequency, dcFrequency, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, LowFrequency, lowFrequency, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, HighFrequency, highFrequency, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, myoelastic, Threshold, threshold, float64, 0);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
