@@ -482,7 +482,7 @@ static int SDT_vsnlog(char *s, size_t n, int newline, int level,
 
   if (i >= 0 && (n_chars += i) < n)
     i = (file && func) ? snprintf(s + n_chars, sizeof(char) * (n - n_chars),
-                                  " %s:%d %s() \t", file, line, func)
+                                  " %s:%d %s() ", file, line, func)
                        : 0;
 
   if (i >= 0 && (n_chars += i) < n)
