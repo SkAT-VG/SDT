@@ -261,14 +261,6 @@ extern SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTSpectralFeats_free(SDTSpectralFeats *x);
 
-#define SDT_SPECTRALFEATS SpectralFeats
-#define SDT_SPECTRALFEATS_NEW_ARGS 1024
-#define SDT_SPECTRALFEATS_ATTRIBUTES(T, A)            \
-  A(T, size, unsigned int, Size, size, integer, 1024) \
-  A(T, overlap, double, Overlap, overlap, double, 0)  \
-  A(T, min, double, MinFreq, minFreq, double, 0)      \
-  A(T, max, double, MaxFreq, maxFreq, double, 0)
-
 /** @brief Deep-copies a spectral feature extractor.
 @param[in] dest Pointer to the instance to modify
 @param[in] src Pointer to the instance to copy
