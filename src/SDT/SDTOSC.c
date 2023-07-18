@@ -1,5 +1,7 @@
 #include "SDTOSC.h"
+
 #include <string.h>
+
 #include "SDTOSCAnalysis.h"
 #include "SDTOSCInteractors.h"
 #include "SDTOSCMisc.h"
@@ -16,6 +18,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
   if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
+  if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
   if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
     return SDTOSCZeroCrossing(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
@@ -63,8 +66,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCRolling(log, sub);
   // else if (!strcmp("scraping", method))
   //   return_code = SDTOSCScraping(log, sub);
-  // else if (!strcmp("spectralfeats", method))
-  //   return_code = SDTOSCSpectralFeats(log, sub);
   // else if (!strcmp("windcavity", method))
   //   return_code = SDTOSCWindCavity(log, sub);
   // else if (!strcmp("windkarman", method))
