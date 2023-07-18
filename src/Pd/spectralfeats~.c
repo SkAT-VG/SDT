@@ -16,17 +16,9 @@ typedef struct _spectralfeats {
   char *key;
 } t_spectralfeats;
 
-void spectralfeats_overlap(t_spectralfeats *x, t_float f) {
-  SDTSpectralFeats_setOverlap(x->feats, f);
-}
-
-void spectralfeats_minFreq(t_spectralfeats *x, t_float f) {
-  SDTSpectralFeats_setMinFreq(x->feats, f);
-}
-
-void spectralfeats_maxFreq(t_spectralfeats *x, t_float f) {
-  SDTSpectralFeats_setMaxFreq(x->feats, f);
-}
+SDT_PD_SETTER(spectralfeats, SpectralFeats, feats, Overlap, )
+SDT_PD_SETTER(spectralfeats, SpectralFeats, feats, MinFreq, )
+SDT_PD_SETTER(spectralfeats, SpectralFeats, feats, MaxFreq, )
 
 t_int *spectralfeats_perform(t_int *w) {
   t_spectralfeats *x = (t_spectralfeats *)(w[1]);
@@ -89,11 +81,11 @@ void spectralfeats_tilde_setup(void) {
                 (t_method)spectralfeats_free, sizeof(t_spectralfeats),
                 CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(spectralfeats_class, t_spectralfeats, f);
-  class_addmethod(spectralfeats_class, (t_method)spectralfeats_overlap,
+  class_addmethod(spectralfeats_class, (t_method)spectralfeats_setOverlap,
                   gensym("overlap"), A_FLOAT, 0);
-  class_addmethod(spectralfeats_class, (t_method)spectralfeats_minFreq,
+  class_addmethod(spectralfeats_class, (t_method)spectralfeats_setMinFreq,
                   gensym("minFreq"), A_FLOAT, 0);
-  class_addmethod(spectralfeats_class, (t_method)spectralfeats_maxFreq,
+  class_addmethod(spectralfeats_class, (t_method)spectralfeats_setMaxFreq,
                   gensym("maxFreq"), A_FLOAT, 0);
   class_addmethod(spectralfeats_class, (t_method)spectralfeats_dsp,
                   gensym("dsp"), 0);
