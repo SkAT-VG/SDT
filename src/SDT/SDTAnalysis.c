@@ -1,6 +1,8 @@
 #include "SDTAnalysis.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
@@ -298,10 +300,10 @@ int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
 
 struct SDTSpectralFeats {
   double *in, *win, *currMag, *prevMag, magnitude, centroid, spread, skewness,
-      kurtosis, flatness, flux, onset;
+      kurtosis, flatness, flux, onset, min, max;
   SDTComplex *fft;
   SDTFFT *fftPlan;
-  int i, j, size, fftSize, skip, min, max, span;
+  int i, j, size, fftSize, skip;
 };
 
 SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
@@ -339,9 +341,8 @@ SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
   x->size = size;
   x->fftSize = fftSize;
   x->skip = size;
-  x->min = 0;
-  x->max = size / 2 + 1;
-  x->span = x->max;
+  x->min = 0.0;
+  x->max = -1.0;
   return x;
 }
 
@@ -420,9 +421,6 @@ void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
   x->j = 0;
   x->fftSize = fftSize;
   x->skip = f * x->skip / x->size;
-  x->min = f * x->min / x->size;
-  x->max = f * x->max / x->size;
-  x->span = x->max - x->min;
   x->size = f;
 }
 
@@ -434,32 +432,33 @@ double SDTSpectralFeats_getOverlap(const SDTSpectralFeats *x) {
   return 1 - ((double)x->skip) / x->size;
 }
 
-double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x) {
-  return x->min / (SDT_timeStep * x->size);
-}
+double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x) { return x->min; }
 
-double SDTSpectralFeats_getMaxFreq(const SDTSpectralFeats *x) {
-  return x->max / (SDT_timeStep * x->size);
-}
+double SDTSpectralFeats_getMaxFreq(const SDTSpectralFeats *x) { return x->max; }
 
 void SDTSpectralFeats_setOverlap(SDTSpectralFeats *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
 }
 
 void SDTSpectralFeats_setMinFreq(SDTSpectralFeats *x, double f) {
-  x->min = SDT_clip(f * SDT_timeStep * x->size, 0, x->size / 2);
-  x->span = x->max - x->min;
+  x->min = (f > 0) ? f : 0.0;
 }
 
-void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f) {
-  if (f <= 0) f = SDT_sampleRate / 2.0;
-  x->max = SDT_clip(f * SDT_timeStep * x->size + 1, 1, x->size / 2 + 1);
-  x->span = x->max - x->min;
-}
+void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f) { x->max = f; }
 
 int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   double *swap, sum, logSum, binSum, dev, deltaMag;
-  int i;
+  int i, i_min, i_max, i_delta;
+
+  i_min = (int)floor(x->min * x->size * SDT_timeStep);
+  if (x->max < 0) {
+    i_max = x->size;
+  } else {
+    i_max = (int)ceil(x->max * x->size * SDT_timeStep);
+    if (i_max > x->size) i_max = x->size;
+  }
+  i_delta = i_max - i_min;
+  if (!i_delta) i_delta = 1;
 
   x->in[x->i] = in;
   x->in[x->size + x->i] = in;
@@ -485,17 +484,17 @@ int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   sum = 0.0;
   logSum = 0.0;
   binSum = 0.0;
-  for (i = x->min; i < x->max; i++) {
+  for (i = i_min; i < i_max; i++) {
     x->currMag[i] = SDTComplex_abs(x->fft[i]);
     sum += x->currMag[i];
     logSum += log(x->currMag[i]);
-    binSum += x->currMag[i] * (i - x->min + 0.5);
+    binSum += x->currMag[i] * (i - i_min + 0.5);
   }
-  x->magnitude = sum / x->span;
-  x->flatness = exp(logSum / x->span) / x->magnitude;
-  x->centroid = binSum / (sum * x->span);
-  for (i = x->min; i < x->max; i++) {
-    dev = (i - x->min + 0.5) / x->span - x->centroid;
+  x->magnitude = sum / i_delta;
+  x->flatness = exp(logSum / i_delta) / x->magnitude;
+  x->centroid = binSum / (sum * i_delta);
+  for (i = i_min; i < i_max; i++) {
+    dev = (i - i_min + 0.5) / i_delta - x->centroid;
     x->spread += pow(dev, 2) * x->currMag[i];
     x->skewness += pow(dev, 3) * x->currMag[i];
     x->kurtosis += pow(dev, 4) * x->currMag[i];
@@ -506,8 +505,8 @@ int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   x->spread = sqrt(x->spread / sum);
   x->skewness = x->skewness / (pow(x->spread, 3.0) * sum);
   x->kurtosis = x->kurtosis / (pow(x->spread, 4.0) * sum) - 3.0;
-  x->flux = sqrt(x->flux / x->span);
-  x->onset /= x->span;
+  x->flux = sqrt(x->flux / i_delta);
+  x->onset /= i_delta;
   outs[0] = isnormal(x->magnitude) ? x->magnitude : 0;
   outs[1] = isnormal(x->centroid) ? x->centroid : 0;
   outs[2] = isnormal(x->spread) ? x->spread : 0;

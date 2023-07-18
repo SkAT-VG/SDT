@@ -343,7 +343,8 @@ extern void SDTSpectralFeats_setMinFreq(SDTSpectralFeats *x, double f);
 
 /** @brief Sets the upper frequency bound for spectral analysis.
 Spectral bins above this frequency are ignored in the audio descriptors
-computation.
+computation. Specify a negative frequency to include all frequency bins above
+the minimum.
 @param[in] x Pointer to the instance
 @param[in] f Maximum analyzed frequency, in Hz */
 extern void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f);
