@@ -64,9 +64,10 @@ t_int *myoelastic_perform(t_int *w) {
   int n = (int)w[3];
 
   while (n--) {
-    SDTMyoelastic_dsp(x->myo, x->out, *in++);
+    if (SDTMyoelastic_dsp(x->myo, x->out, *in++)) {
+      qelem_set(x->send);
+    }
   }
-  qelem_set(x->send);
 
   return w + 4;
 }
@@ -84,7 +85,9 @@ void myoelastic_perform64(t_myoelastic *x, t_object *dsp64, double **ins,
   int n = sampleframes;
 
   while (n--) {
-    if (SDTMyoelastic_dsp(x->myo, x->out, *in++)) qelem_set(x->send);
+    if (SDTMyoelastic_dsp(x->myo, x->out, *in++)) {
+      qelem_set(x->send);
+    }
   }
 }
 
@@ -101,6 +104,7 @@ void *myoelastic_new(t_symbol *s, long argc, t_atom *argv) {
 
   x = (t_myoelastic *)object_alloc(myoelastic_class);
   if (x) {
+    dsp_setup((t_pxobject *)x, 1);
     x->myo = SDTMyoelastic_new();
     x->key = 0;
     x->outlets[3] = floatout(x);
