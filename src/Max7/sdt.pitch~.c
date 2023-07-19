@@ -10,7 +10,7 @@ typedef struct _pitch {
   t_pxobject ob;
   SDTPitch *pitch;
   void *outlets[2], *send;
-  double overlap, tolerance, outs[2];
+  double outs[2];
   t_symbol *key;
 } t_pitch;
 
@@ -35,15 +35,11 @@ void pitch_assist(t_pitch *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(pitch, Pitch, pitch, "pitch~", "fundamental frequency estimator")
 
-void pitch_overlap(t_pitch *x, void *attr, long ac, t_atom *av) {
-  x->overlap = atom_getfloat(av);
-  SDTPitch_setOverlap(x->pitch, x->overlap);
-}
+SDT_MAX_GETTER(pitch, Pitch, pitch, Overlap)
+SDT_MAX_GETTER(pitch, Pitch, pitch, Tolerance)
 
-void pitch_tolerance(t_pitch *x, void *attr, long ac, t_atom *av) {
-  x->tolerance = atom_getfloat(av);
-  SDTPitch_setTolerance(x->pitch, x->tolerance);
-}
+SDT_MAX_SETTER(pitch, Pitch, pitch, Overlap, )
+SDT_MAX_SETTER(pitch, Pitch, pitch, Tolerance, )
 
 void pitch_send(t_pitch *x) {
   outlet_float(x->outlets[0], x->outs[0]);
@@ -66,8 +62,6 @@ t_int *pitch_perform(t_int *w) {
 
 void pitch_dsp(t_pitch *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTPitch_setOverlap(x->pitch, x->overlap);
-  SDTPitch_setTolerance(x->pitch, x->tolerance);
   dsp_add(pitch_perform, 3, x, sp[0]->s_vec, sp[0]->s_n);
 }
 
@@ -87,8 +81,6 @@ void pitch_perform64(t_pitch *x, t_object *dsp64, double **ins, long numins,
 void pitch_dsp64(t_pitch *x, t_object *dsp64, short *count, double samplerate,
                  long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTPitch_setOverlap(x->pitch, x->overlap);
-  SDTPitch_setTolerance(x->pitch, x->tolerance);
   object_method(dsp64, gensym("dsp_add64"), x, pitch_perform64, 0, NULL);
 }
 
@@ -139,17 +131,8 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(pitch, "1")
 
-  CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitch, overlap);
-  CLASS_ATTR_DOUBLE(c, "tolerance", 0, t_pitch, tolerance);
-
-  CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.0, 1.0);
-  CLASS_ATTR_FILTER_CLIP(c, "tolerance", 0.0, 1.0);
-
-  CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)pitch_overlap);
-  CLASS_ATTR_ACCESSORS(c, "tolerance", NULL, (method)pitch_tolerance);
-
-  CLASS_ATTR_ORDER(c, "overlap", 0, "2");
-  CLASS_ATTR_ORDER(c, "tolerance", 0, "3");
+  SDT_MAX_ATTRIBUTE(c, pitch, Overlap, overlap, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, pitch, Tolerance, tolerance, float64, 0);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
