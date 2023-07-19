@@ -69,7 +69,7 @@ SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
 
   unsigned int size = SDT_ZEROCROSSING_SIZE_DEFAULT;
-  _SDT_GET_PARAM_FROM_JSON(ZeroCrossing, size, x, size, integer);
+  _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
 
   SDTZeroCrossing *y = SDTZeroCrossing_new(size);
   return SDTZeroCrossing_setParams(y, x, 1);
@@ -392,7 +392,7 @@ SDTSpectralFeats *SDTSpectralFeats_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
 
   unsigned int size = SDT_SPECTRALFEATS_SIZE_DEFAULT;
-  _SDT_GET_PARAM_FROM_JSON(SpectralFeats, size, x, size, integer);
+  _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
 
   SDTSpectralFeats *y = SDTSpectralFeats_new(size);
   return SDTSpectralFeats_setParams(y, x, 1);

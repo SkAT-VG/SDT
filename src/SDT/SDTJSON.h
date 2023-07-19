@@ -85,12 +85,11 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
   }
 
 /** @brief Implement parameter getting from JSON
-@param[in] TYPENAME SDT type name, without the leading `SDT`
 @param[in] VAR Structure variable identifier
 @param[in] JVAR JSON variable identifier
 @param[in] KEY JSON attribute key
 @param[in] JTYPE JSON type */
-#define _SDT_GET_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, KEY, JTYPE)      \
+#define _SDT_GET_PARAM_FROM_JSON(VAR, JVAR, KEY, JTYPE)                \
   {                                                                    \
     const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY); \
     if (v_##KEY && (v_##KEY->type == json_##JTYPE)) {                  \
