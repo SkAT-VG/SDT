@@ -10,7 +10,6 @@ typedef struct _inertial {
   t_pxobject ob;
   SDTResonator *inertial;
   char *key;
-  double mass, fragmentSize;
 } t_inertial;
 
 static t_class *inertial_class = NULL;
@@ -42,8 +41,14 @@ void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
   dsp_setup((t_pxobject *)x, 0);
   x->inertial = inertial;
   x->key = key;
-  x->mass = 1.0;
-  x->fragmentSize = 1.0;
+
+  SDTResonator_setFrequency(x->inertial, 0, 0.0);
+  SDTResonator_setDecay(x->inertial, 0, 0.0);
+  SDTResonator_setWeight(x->inertial, 0, 1.0);
+  SDTResonator_setGain(x->inertial, 0, 0, 1.0);
+  SDTResonator_setFragmentSize(x->inertial, 1.0);
+  SDTResonator_setActiveModes(x->inertial, 1);
+
   attr_args_process(x, argc, argv);
   return x;
 }
@@ -62,15 +67,29 @@ void inertial_assist(t_inertial *x, void *b, long m, long a, char *s) {
   }
 }
 
-void inertial_mass(t_inertial *x, void *attr, long ac, t_atom *av) {
-  x->mass = atom_getfloat(av);
-  SDTResonator_setWeight(x->inertial, 0, x->mass);
+t_max_err inertial_getMass(t_inertial *x, void *attr, long *ac, t_atom **av) {
+  if (!(*ac && *av)) {
+    *ac = 1;
+    *av =
+        (t_atom *)((char *)sysmem_newptr((t_ptr_size)(sizeof(t_atom) * (*ac))));
+    if (!*av) {
+      *ac = 0;
+      return MAX_ERR_OUT_OF_MEM;
+    }
+  }
+  atom_setfloat(*av, SDTResonator_getWeight(x->inertial, 0));
+  return MAX_ERR_NONE;
 }
 
-void inertial_fragmentSize(t_inertial *x, void *attr, long ac, t_atom *av) {
-  x->fragmentSize = atom_getfloat(av);
-  SDTResonator_setFragmentSize(x->inertial, x->fragmentSize);
+t_max_err inertial_setMass(t_inertial *x, void *attr, long ac, t_atom *av) {
+  if (ac && av) {
+    SDTResonator_setWeight(x->inertial, 0, atom_getfloat(av));
+  }
+  return MAX_ERR_NONE;
 }
+
+SDT_MAX_GETTER(inertial, Resonator, inertial, FragmentSize)
+SDT_MAX_SETTER(inertial, Resonator, inertial, FragmentSize, )
 
 void inertial_strike(t_inertial *x, double p, double v) {
   SDTResonator_setPosition(x->inertial, 0, p);
@@ -79,23 +98,13 @@ void inertial_strike(t_inertial *x, double p, double v) {
 
 void inertial_dsp(t_inertial *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTResonator_setFrequency(x->inertial, 0, 0.0);
-  SDTResonator_setDecay(x->inertial, 0, 0.0);
-  SDTResonator_setWeight(x->inertial, 0, x->mass);
-  SDTResonator_setGain(x->inertial, 0, 0, 1.0);
-  SDTResonator_setFragmentSize(x->inertial, x->fragmentSize);
-  SDTResonator_setActiveModes(x->inertial, 1);
+  SDTResonator_update(x->inertial);
 }
 
 void inertial_dsp64(t_inertial *x, t_object *dsp64, short *count,
                     double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTResonator_setFrequency(x->inertial, 0, 0.0);
-  SDTResonator_setDecay(x->inertial, 0, 0.0);
-  SDTResonator_setWeight(x->inertial, 0, x->mass);
-  SDTResonator_setGain(x->inertial, 0, 0, 1.0);
-  SDTResonator_setFragmentSize(x->inertial, x->fragmentSize);
-  SDTResonator_setActiveModes(x->inertial, 1);
+  SDTResonator_update(x->inertial);
 }
 
 void C74_EXPORT ext_main(void *r) {
@@ -108,14 +117,11 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)inertial_strike, "strike", A_FLOAT, A_FLOAT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
-  CLASS_ATTR_DOUBLE(c, "mass", 0, t_inertial, mass);
-  CLASS_ATTR_DOUBLE(c, "fragmentSize", 0, t_inertial, fragmentSize);
+  SDT_MAX_ATTRIBUTE(c, inertial, Mass, mass, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, inertial, FragmentSize, fragmentSize, float64, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "mass", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "fragmentSize", 0.0, 1.0);
-
-  CLASS_ATTR_ACCESSORS(c, "mass", NULL, (method)inertial_mass);
-  CLASS_ATTR_ACCESSORS(c, "fragmentSize", NULL, (method)inertial_fragmentSize);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
