@@ -16,11 +16,8 @@ typedef struct _pitch {
   char *key;
 } t_pitch;
 
-void pitch_overlap(t_pitch *x, t_float f) { SDTPitch_setOverlap(x->pitch, f); }
-
-void pitch_tolerance(t_pitch *x, t_float f) {
-  SDTPitch_setTolerance(x->pitch, f);
-}
+SDT_PD_SETTER(pitch, Pitch, pitch, Overlap, )
+SDT_PD_SETTER(pitch, Pitch, pitch, Tolerance, )
 
 t_int *pitch_perform(t_int *w) {
   t_pitch *x = (t_pitch *)(w[1]);
@@ -48,7 +45,7 @@ void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(3, A_SYMBOL, A_FLOAT)
 
   t_pitch *x = (t_pitch *)pd_new(pitch_class);
-  GET_ARG_WINSIZE(int, windowSize, 1, 1024)
+  GET_ARG_WINSIZE(int, windowSize, 1, SDT_PITCH_SIZE_DEFAULT)
   x->pitch = SDTPitch_new(windowSize);
 
   SDT_PD_REGISTER(Pitch, pitch, "fundamental frequency estimator", 0)
@@ -69,9 +66,9 @@ void pitch_tilde_setup(void) {
       class_new(gensym("pitch~"), (t_newmethod)pitch_new, (t_method)pitch_free,
                 sizeof(t_pitch), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(pitch_class, t_pitch, f);
-  class_addmethod(pitch_class, (t_method)pitch_overlap, gensym("overlap"),
+  class_addmethod(pitch_class, (t_method)pitch_setOverlap, gensym("overlap"),
                   A_FLOAT, 0);
-  class_addmethod(pitch_class, (t_method)pitch_tolerance, gensym("tolerance"),
-                  A_FLOAT, 0);
+  class_addmethod(pitch_class, (t_method)pitch_setTolerance,
+                  gensym("tolerance"), A_FLOAT, 0);
   class_addmethod(pitch_class, (t_method)pitch_dsp, gensym("dsp"), 0);
 }

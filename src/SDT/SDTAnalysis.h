@@ -389,6 +389,8 @@ a close relative of the autocorrelation function.
 /** @brief Opaque data structure for a fundamental frequency estimator. */
 typedef struct SDTPitch SDTPitch;
 
+#define SDT_PITCH_SIZE_DEFAULT 1024
+
 /** @brief Instantiates a fundamental frequency estimator object.
 @param[in] size Size of the analysis window, in samples
 @return Pointer to the new instance */
@@ -398,19 +400,57 @@ extern SDTPitch *SDTPitch_new(unsigned int size);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTPitch_free(SDTPitch *x);
 
-#define SDT_PITCH Pitch
-#define SDT_PITCH_NEW_ARGS 1024
-#define SDT_PITCH_ATTRIBUTES(T, A)                    \
-  A(T, size, unsigned int, Size, size, integer, 1024) \
-  A(T, overlap, double, Overlap, overlap, double, 0)  \
-  A(T, tol, double, Tolerance, tolerance, double, 0.2)
+/** @brief Gets the size of the analysis window.
+@param[in] x Pointer to the instance
+@return Size of the analysis window, in samples */
+extern unsigned int SDTPitch_getSize(const SDTPitch *x);
 
-SDT_TYPE_COPY_H(SDT_PITCH)
-SDT_DEFINE_HASHMAP_H(SDT_PITCH)
-SDT_TYPE_MAKE_GETTERS_H(SDT_PITCH)
-SDT_JSON_SERIALIZE_H(SDT_PITCH)
-SDT_JSON_DESERIALIZE_H(SDT_PITCH)
+/** @brief Gets the analysis window overlapping ratio.
+@param[in] x Pointer to the instance
+@return Overlap ratio [0.0, 1.0] */
+extern double SDTPitch_getOverlap(const SDTPitch *x);
 
+/** @brief Gets the peak detection tolerance.
+@param[in] x Pointer to the instance
+@param[in] f Pitch estimation tolerance [0.0, 1.0] */
+extern double SDTPitch_getTolerance(const SDTPitch *x);
+
+/** @brief Deep-copies a fundamental frequency estimator.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTPitch *SDTPitch_copy(SDTPitch *dest, const SDTPitch *src,
+                               unsigned char unsafe);
+
+/** @brief Registers a fundamental frequency estimator into the fundamental
+frequency estimators list with a unique ID.
+@param[in] x Fundamental frequency estimator instance to register
+@param[in] key Unique ID assigned to the fundamental frequency estimator
+@return Zero on success, otherwise one */
+extern int SDT_registerPitch(struct SDTPitch *x, const char *key);
+
+/** @brief Queries the fundamental frequency estimators list by its unique ID.
+If a fundamental frequency estimator with the ID is present, a pointer to the
+fundamental frequency estimator is returned. Otherwise, a NULL pointer is
+returned.
+@param[in] key Unique ID assigned to the fundamental frequency estimator
+instance
+@return Fundamental frequency estimator instance pointer */
+extern SDTPitch *SDT_getPitch(const char *key);
+
+/** @brief Unregisters a fundamental frequency estimators from the spectral
+feature extractors list. If a fundamental frequency estimators with the given ID
+is present, it is unregistered from the list.
+@param[in] key Unique ID of the fundamental frequency estimators instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterPitch(const char *key);
+
+/** @brief Sets the size of the analysis window, in samples.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] x Pointer to the instance
+@param[in] f Size of the analysis window, in samples */
 extern void SDTPitch_setSize(SDTPitch *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
@@ -443,6 +483,25 @@ outputs. Array members represent the following information respectively:
 @param[in] in Input sample
 @return 1 if output available (analysis window full), 0 otherwise */
 extern int SDTPitch_dsp(SDTPitch *x, double *outs, double in);
+
+/** @brief Represent a fundamental frequency estimator as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTPitch_toJSON(const SDTPitch *x);
+
+/** @brief Initialize a fundamental frequency estimator from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTPitch *SDTPitch_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a fundamental frequency estimator from a JSON
+object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTPitch *SDTPitch_setParams(SDTPitch *x, const json_value *j,
+                                    unsigned char unsafe);
 
 /** @} */
 
