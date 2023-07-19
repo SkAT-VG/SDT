@@ -211,6 +211,70 @@ extern int SDTOSCSpectralFeats(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscpitch SDTOSCPitch
+OSC for #SDTPitch objects
+@ingroup osc
+@{ */
+
+/** @brief `/pitch/log <name>`
+
+Function that implements OSC JSON log for #SDTPitch objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch_log(const SDTOSCMessage *x);
+
+/** @brief `/pitch/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTPitch objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch_save(const SDTOSCMessage *x);
+
+/** @brief `/pitch/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTPitch objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch_load(const SDTOSCMessage *x);
+
+/** @brief `/pitch/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTPitch
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch_loads(const SDTOSCMessage *x);
+
+/** @brief `/pitch/size <name> <value>`
+
+Function that implements OSC parameter setting for #SDTPitch objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch_setSize(const SDTOSCMessage *x);
+
+/** @brief `/pitch/overlap <name> <value>`
+
+Function that implements OSC parameter setting for #SDTPitch  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch_setOverlap(const SDTOSCMessage *x);
+
+/** @brief `/pitch/minFreq <name> <value>`
+
+Function that implements OSC parameter setting for #SDTPitch  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch_setTolerance(const SDTOSCMessage *x);
+
+/** @brief `/pitch/...`
+
+Function that routes OSC commands for #SDTPitch objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCPitch(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif
