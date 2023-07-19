@@ -48,7 +48,7 @@ void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(3, A_SYMBOL, A_FLOAT)
 
   t_pitch *x = (t_pitch *)pd_new(pitch_class);
-  GET_ARG_WINSIZE(int, windowSize, 1, 1024)
+  GET_ARG_WINSIZE(int, windowSize, 1, SDT_PITCH_SIZE_DEFAULT)
   x->pitch = SDTPitch_new(windowSize);
 
   SDT_PD_REGISTER(Pitch, pitch, "fundamental frequency estimator", 0)

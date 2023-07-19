@@ -108,7 +108,7 @@ void *pitch_new(t_symbol *s, long argc, t_atom *argv) {
              windowSize);
       }
     } else {
-      windowSize = 1024;
+      windowSize = SDT_PITCH_SIZE_DEFAULT;
     }
     x->pitch = SDTPitch_new(windowSize);
     x->key = 0;
