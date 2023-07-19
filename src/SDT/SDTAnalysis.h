@@ -22,6 +22,8 @@ Zero crossing rate signal analyzer.
 /** @brief Opaque data structure for a zero crossing rate detector object. */
 typedef struct SDTZeroCrossing SDTZeroCrossing;
 
+#define SDT_ZEROCROSSING_SIZE_DEFAULT 1024
+
 /** @brief Instantiates a zero crossing rate detector.
 @param[in] size Size of the analysis window, in samples
 @return Pointer to the new instance */
@@ -248,6 +250,8 @@ based on rectified, whitened spectral flux.
 /** @brief Opaque data structure for a spectral features extractor. */
 typedef struct SDTSpectralFeats SDTSpectralFeats;
 
+#define SDT_SPECTRALFEATS_SIZE_DEFAULT 1024
+
 /** @brief Instantiates a spectral features extractor.
 @param[in] size Size of the analysis window, in samples
 @return Pointer to the new instance */
@@ -257,20 +261,62 @@ extern SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTSpectralFeats_free(SDTSpectralFeats *x);
 
-#define SDT_SPECTRALFEATS SpectralFeats
-#define SDT_SPECTRALFEATS_NEW_ARGS 1024
-#define SDT_SPECTRALFEATS_ATTRIBUTES(T, A)            \
-  A(T, size, unsigned int, Size, size, integer, 1024) \
-  A(T, overlap, double, Overlap, overlap, double, 0)  \
-  A(T, min, double, MinFreq, minFreq, double, 0)      \
-  A(T, max, double, MaxFreq, maxFreq, double, 0)
+/** @brief Deep-copies a spectral feature extractor.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTSpectralFeats *SDTSpectralFeats_copy(SDTSpectralFeats *dest,
+                                               const SDTSpectralFeats *src,
+                                               unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_SPECTRALFEATS)
-SDT_DEFINE_HASHMAP_H(SDT_SPECTRALFEATS)
-SDT_TYPE_MAKE_GETTERS_H(SDT_SPECTRALFEATS)
-SDT_JSON_SERIALIZE_H(SDT_SPECTRALFEATS)
-SDT_JSON_DESERIALIZE_H(SDT_SPECTRALFEATS)
+/** @brief Registers a spectral feature extractor into the spectral feature
+extractors list with a unique ID.
+@param[in] x Spectral feature extractor instance to register
+@param[in] key Unique ID assigned to the spectral feature extractor instance
+@return Zero on success, otherwise one */
+extern int SDT_registerSpectralFeats(struct SDTSpectralFeats *x,
+                                     const char *key);
 
+/** @brief Queries the spectral feature extractors list by its unique ID.
+If a spectral feature extractor with the ID is present, a pointer to the
+spectral feature extractor is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the spectral feature extractor instance
+@return Spectral feature extractor instance pointer */
+extern SDTSpectralFeats *SDT_getSpectralFeats(const char *key);
+
+/** @brief Unregisters a spectral feature extractor from the spectral
+feature extractors list. If a spectral feature extractor with the given ID is
+present, it is unregistered from the list.
+@param[in] key Unique ID of the spectral feature extractor instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterSpectralFeats(const char *key);
+
+/** @brief Gets the size of the analysis window, in samples.
+@param[in] x Pointer to the instance
+@return Size of the analysis window, in samples */
+extern unsigned int SDTSpectralFeats_getSize(const SDTSpectralFeats *x);
+
+/** @brief Gets the analysis window overlapping ratio.
+@param[in] x Pointer to the instance
+@return Analysis window overlapping ratio */
+extern double SDTSpectralFeats_getOverlap(const SDTSpectralFeats *x);
+
+/** @brief Gets the lower frequency bound for spectral analysis.
+@param[in] x Pointer to the instance
+@return Lower frequency bound for spectral analysis */
+extern double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x);
+
+/** @brief Gets the upper frequency bound for spectral analysis.
+@param[in] x Pointer to the instance
+@return Upper frequency bound for spectral analysis */
+extern double SDTSpectralFeats_getMaxFreq(const SDTSpectralFeats *x);
+
+/** @brief Sets the size of the analysis window, in samples.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] x Pointer to the instance
+@param[in] f Size of the analysis window, in samples */
 extern void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f);
 
 /** @brief Sets the analysis window overlapping ratio.
@@ -289,7 +335,8 @@ extern void SDTSpectralFeats_setMinFreq(SDTSpectralFeats *x, double f);
 
 /** @brief Sets the upper frequency bound for spectral analysis.
 Spectral bins above this frequency are ignored in the audio descriptors
-computation.
+computation. Specify a negative frequency to include all frequency bins above
+the minimum.
 @param[in] x Pointer to the instance
 @param[in] f Maximum analyzed frequency, in Hz */
 extern void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f);
@@ -309,6 +356,25 @@ outputs. Array members represent the following information respectively:
 @param[in] in Input sample
 @return 1 if output available (analysis window full), 0 otherwise */
 extern int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in);
+
+/** @brief Represent a spectral feature extractor as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTSpectralFeats_toJSON(const SDTSpectralFeats *x);
+
+/** @brief Initialize a spectral feature extractor from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTSpectralFeats *SDTSpectralFeats_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a spectral feature extractor from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTSpectralFeats *SDTSpectralFeats_setParams(SDTSpectralFeats *x,
+                                                    const json_value *j,
+                                                    unsigned char unsafe);
 
 /** @} */
 

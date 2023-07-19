@@ -140,6 +140,77 @@ extern int SDTOSCMyoelastic(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscspectralfeats SDTOSCSpectralFeats
+OSC for #SDTSpectralFeats objects
+@ingroup osc
+@{ */
+
+/** @brief `/spectralfeats/log <name>`
+
+Function that implements OSC JSON log for #SDTSpectralFeats objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_log(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTSpectralFeats objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_save(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTSpectralFeats objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_load(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTSpectralFeats
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_loads(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/size <name> <value>`
+
+Function that implements OSC parameter setting for #SDTSpectralFeats objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_setSize(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/overlap <name> <value>`
+
+Function that implements OSC parameter setting for #SDTSpectralFeats  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_setOverlap(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/minFreq <name> <value>`
+
+Function that implements OSC parameter setting for #SDTSpectralFeats  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_setMinFreq(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/maxFreq <name> <value>`
+
+Function that implements OSC parameter setting for #SDTSpectralFeats  objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats_setMaxFreq(const SDTOSCMessage *x);
+
+/** @brief `/spectralfeats/...`
+
+Function that routes OSC commands for #SDTSpectralFeats objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCSpectralFeats(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif

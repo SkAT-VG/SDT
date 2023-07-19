@@ -1,6 +1,8 @@
 #include "SDTAnalysis.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
@@ -14,8 +16,6 @@ struct SDTZeroCrossing {
   double *in, *win;
   int i, j, size, skip;
 };
-
-#define SDT_ZEROCROSSING_SIZE_DEFAULT 1024
 
 SDTZeroCrossing *SDTZeroCrossing_new(unsigned int size) {
   SDTZeroCrossing *x;
@@ -72,7 +72,7 @@ SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   _SDT_GET_PARAM_FROM_JSON(ZeroCrossing, size, x, size, integer);
 
   SDTZeroCrossing *y = SDTZeroCrossing_new(size);
-  return SDTZeroCrossing_setParams(y, x, 0);
+  return SDTZeroCrossing_setParams(y, x, 1);
 }
 
 SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
@@ -204,7 +204,7 @@ json_value *SDTMyoelastic_toJSON(const SDTMyoelastic *x) {
 SDTMyoelastic *SDTMyoelastic_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
   SDTMyoelastic *y = SDTMyoelastic_new();
-  return SDTMyoelastic_setParams(y, x, 0);
+  return SDTMyoelastic_setParams(y, x, 1);
 }
 
 SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
@@ -300,13 +300,14 @@ int SDTMyoelastic_dsp(SDTMyoelastic *x, double *outs, double in) {
 
 struct SDTSpectralFeats {
   double *in, *win, *currMag, *prevMag, magnitude, centroid, spread, skewness,
-      kurtosis, flatness, flux, onset;
+      kurtosis, flatness, flux, onset, min, max;
   SDTComplex *fft;
   SDTFFT *fftPlan;
-  int i, j, size, fftSize, skip, min, max, span;
+  int i, j, size, fftSize, skip;
 };
 
 SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
+  if (!size) size = SDT_SPECTRALFEATS_SIZE_DEFAULT;
   SDTSpectralFeats *x;
   int i, fftSize;
 
@@ -340,9 +341,8 @@ SDTSpectralFeats *SDTSpectralFeats_new(unsigned int size) {
   x->size = size;
   x->fftSize = fftSize;
   x->skip = size;
-  x->min = 0;
-  x->max = size / 2 + 1;
-  x->span = x->max;
+  x->min = 0.0;
+  x->max = -1.0;
   return x;
 }
 
@@ -354,6 +354,48 @@ void SDTSpectralFeats_free(SDTSpectralFeats *x) {
   free(x->prevMag);
   SDTFFT_free(x->fftPlan);
   free(x);
+}
+
+_SDT_COPY_FUNCTION(SpectralFeats)
+
+_SDT_HASHMAP_FUNCTIONS(SpectralFeats)
+
+SDTSpectralFeats *SDTSpectralFeats_setParams(SDTSpectralFeats *x,
+                                             const json_value *j,
+                                             unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(SpectralFeats, x, j, Size, size, integer,
+                                  unsafe);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, Overlap, overlap, double);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, Overlap, overlap, integer);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MinFreq, minFreq, double);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MinFreq, minFreq, integer);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MaxFreq, maxFreq, double);
+  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MaxFreq, maxFreq, integer);
+  return x;
+}
+
+json_value *SDTSpectralFeats_toJSON(const SDTSpectralFeats *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "size", json_integer_new(SDTSpectralFeats_getSize(x)));
+  json_object_push(obj, "overlap",
+                   json_double_new(SDTSpectralFeats_getOverlap(x)));
+  json_object_push(obj, "minFreq",
+                   json_double_new(SDTSpectralFeats_getMinFreq(x)));
+  json_object_push(obj, "maxFreq",
+                   json_double_new(SDTSpectralFeats_getMaxFreq(x)));
+  return obj;
+}
+
+SDTSpectralFeats *SDTSpectralFeats_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int size = SDT_SPECTRALFEATS_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(SpectralFeats, size, x, size, integer);
+
+  SDTSpectralFeats *y = SDTSpectralFeats_new(size);
+  return SDTSpectralFeats_setParams(y, x, 1);
 }
 
 void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
@@ -379,16 +421,8 @@ void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
   x->j = 0;
   x->fftSize = fftSize;
   x->skip = f * x->skip / x->size;
-  x->min = f * x->min / x->size;
-  x->max = f * x->max / x->size;
-  x->span = x->max - x->min;
   x->size = f;
 }
-
-SDT_TYPE_COPY(SDT_SPECTRALFEATS)
-SDT_DEFINE_HASHMAP(SDT_SPECTRALFEATS, 59)
-SDT_JSON_SERIALIZE(SDT_SPECTRALFEATS)
-SDT_JSON_DESERIALIZE(SDT_SPECTRALFEATS)
 
 unsigned int SDTSpectralFeats_getSize(const SDTSpectralFeats *x) {
   return x->size;
@@ -398,32 +432,33 @@ double SDTSpectralFeats_getOverlap(const SDTSpectralFeats *x) {
   return 1 - ((double)x->skip) / x->size;
 }
 
-double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x) {
-  return x->min / (SDT_timeStep * x->size);
-}
+double SDTSpectralFeats_getMinFreq(const SDTSpectralFeats *x) { return x->min; }
 
-double SDTSpectralFeats_getMaxFreq(const SDTSpectralFeats *x) {
-  return x->max / (SDT_timeStep * x->size);
-}
+double SDTSpectralFeats_getMaxFreq(const SDTSpectralFeats *x) { return x->max; }
 
 void SDTSpectralFeats_setOverlap(SDTSpectralFeats *x, double f) {
   x->skip = SDT_clip((1.0 - f) * x->size, 1, x->size);
 }
 
 void SDTSpectralFeats_setMinFreq(SDTSpectralFeats *x, double f) {
-  x->min = SDT_clip(f * SDT_timeStep * x->size, 0, x->size / 2);
-  x->span = x->max - x->min;
+  x->min = (f > 0) ? f : 0.0;
 }
 
-void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f) {
-  if (f <= 0) f = SDT_sampleRate / 2.0;
-  x->max = SDT_clip(f * SDT_timeStep * x->size + 1, 1, x->size / 2 + 1);
-  x->span = x->max - x->min;
-}
+void SDTSpectralFeats_setMaxFreq(SDTSpectralFeats *x, double f) { x->max = f; }
 
 int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   double *swap, sum, logSum, binSum, dev, deltaMag;
-  int i;
+  int i, i_min, i_max, i_delta;
+
+  i_min = (int)floor(x->min * x->size * SDT_timeStep);
+  if (x->max < 0) {
+    i_max = x->size;
+  } else {
+    i_max = (int)ceil(x->max * x->size * SDT_timeStep);
+    if (i_max > x->size) i_max = x->size;
+  }
+  i_delta = i_max - i_min;
+  if (!i_delta) i_delta = 1;
 
   x->in[x->i] = in;
   x->in[x->size + x->i] = in;
@@ -449,17 +484,17 @@ int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   sum = 0.0;
   logSum = 0.0;
   binSum = 0.0;
-  for (i = x->min; i < x->max; i++) {
+  for (i = i_min; i < i_max; i++) {
     x->currMag[i] = SDTComplex_abs(x->fft[i]);
     sum += x->currMag[i];
     logSum += log(x->currMag[i]);
-    binSum += x->currMag[i] * (i - x->min + 0.5);
+    binSum += x->currMag[i] * (i - i_min + 0.5);
   }
-  x->magnitude = sum / x->span;
-  x->flatness = exp(logSum / x->span) / x->magnitude;
-  x->centroid = binSum / (sum * x->span);
-  for (i = x->min; i < x->max; i++) {
-    dev = (i - x->min + 0.5) / x->span - x->centroid;
+  x->magnitude = sum / i_delta;
+  x->flatness = exp(logSum / i_delta) / x->magnitude;
+  x->centroid = binSum / (sum * i_delta);
+  for (i = i_min; i < i_max; i++) {
+    dev = (i - i_min + 0.5) / i_delta - x->centroid;
     x->spread += pow(dev, 2) * x->currMag[i];
     x->skewness += pow(dev, 3) * x->currMag[i];
     x->kurtosis += pow(dev, 4) * x->currMag[i];
@@ -470,8 +505,8 @@ int SDTSpectralFeats_dsp(SDTSpectralFeats *x, double *outs, double in) {
   x->spread = sqrt(x->spread / sum);
   x->skewness = x->skewness / (pow(x->spread, 3.0) * sum);
   x->kurtosis = x->kurtosis / (pow(x->spread, 4.0) * sum) - 3.0;
-  x->flux = sqrt(x->flux / x->span);
-  x->onset /= x->span;
+  x->flux = sqrt(x->flux / i_delta);
+  x->onset /= i_delta;
   outs[0] = isnormal(x->magnitude) ? x->magnitude : 0;
   outs[1] = isnormal(x->centroid) ? x->centroid : 0;
   outs[2] = isnormal(x->spread) ? x->spread : 0;

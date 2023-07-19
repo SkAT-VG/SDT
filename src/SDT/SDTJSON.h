@@ -106,22 +106,25 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
 @param[in] KEY JSON attribute key
 @param[in] JTYPE JSON type
 @param[in] UNSAFE Unsafe flag variable identifier */
-#define _SDT_SET_UNSAFE_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, CATTR, KEY,     \
-                                        JTYPE, UNSAFE)                       \
-  {                                                                          \
-    const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY);       \
-    if (v_##KEY && (v_##KEY->type == json_##JTYPE)) {                        \
-      if (UNSAFE) {                                                          \
-        SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u._JSON_TYPE_FIELD(JTYPE)); \
-      } else {                                                               \
-        SDT_LOGA(WARN,                                                       \
-                 "\n  Not setting parameter \"" #KEY                         \
-                 "\" because it is unsafe.\n  Current: " _JSON_TYPE_CFMT(    \
-                     JTYPE) "\n  JSON:    " _JSON_TYPE_CFMT(JTYPE) "\n",     \
-                 SDT##TYPENAME##_get##CATTR(VAR),                            \
-                 v_##KEY->u._JSON_TYPE_FIELD(JTYPE));                        \
-      }                                                                      \
-    }                                                                        \
+#define _SDT_SET_UNSAFE_PARAM_FROM_JSON(TYPENAME, VAR, JVAR, CATTR, KEY,       \
+                                        JTYPE, UNSAFE)                         \
+  {                                                                            \
+    const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY);         \
+    if (v_##KEY && (v_##KEY->type == json_##JTYPE)) {                          \
+      if (UNSAFE) {                                                            \
+        if (SDT##TYPENAME##_get##CATTR(VAR) !=                                 \
+            v_##KEY->u._JSON_TYPE_FIELD(JTYPE)) {                              \
+          SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u._JSON_TYPE_FIELD(JTYPE)); \
+        }                                                                      \
+      } else {                                                                 \
+        SDT_LOGA(WARN,                                                         \
+                 "\n  Not setting parameter \"" #KEY                           \
+                 "\" because it is unsafe.\n  Current: " _JSON_TYPE_CFMT(      \
+                     JTYPE) "\n  JSON:    " _JSON_TYPE_CFMT(JTYPE) "\n",       \
+                 SDT##TYPENAME##_get##CATTR(VAR),                              \
+                 v_##KEY->u._JSON_TYPE_FIELD(JTYPE));                          \
+      }                                                                        \
+    }                                                                          \
   }
 /* ------------------------------------------------------------------------- */
 
