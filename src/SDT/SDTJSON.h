@@ -110,18 +110,18 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
   {                                                                            \
     const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY);         \
     if (v_##KEY && (v_##KEY->type == json_##JTYPE)) {                          \
-      if (UNSAFE) {                                                            \
-        if (SDT##TYPENAME##_get##CATTR(VAR) !=                                 \
-            v_##KEY->u._JSON_TYPE_FIELD(JTYPE)) {                              \
+      if (SDT##TYPENAME##_get##CATTR(VAR) !=                                   \
+          v_##KEY->u._JSON_TYPE_FIELD(JTYPE)) {                                \
+        if (UNSAFE) {                                                          \
           SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u._JSON_TYPE_FIELD(JTYPE)); \
+        } else {                                                               \
+          SDT_LOGA(WARN,                                                       \
+                   "\n  Not setting parameter \"" #KEY                         \
+                   "\" because it is unsafe.\n  Current: " _JSON_TYPE_CFMT(    \
+                       JTYPE) "\n  JSON:    " _JSON_TYPE_CFMT(JTYPE) "\n",     \
+                   SDT##TYPENAME##_get##CATTR(VAR),                            \
+                   v_##KEY->u._JSON_TYPE_FIELD(JTYPE));                        \
         }                                                                      \
-      } else {                                                                 \
-        SDT_LOGA(WARN,                                                         \
-                 "\n  Not setting parameter \"" #KEY                           \
-                 "\" because it is unsafe.\n  Current: " _JSON_TYPE_CFMT(      \
-                     JTYPE) "\n  JSON:    " _JSON_TYPE_CFMT(JTYPE) "\n",       \
-                 SDT##TYPENAME##_get##CATTR(VAR),                              \
-                 v_##KEY->u._JSON_TYPE_FIELD(JTYPE));                          \
       }                                                                        \
     }                                                                          \
   }
