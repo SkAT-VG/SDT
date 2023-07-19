@@ -594,10 +594,40 @@ void SDTPitch_setSize(SDTPitch *x, unsigned int f) {
   x->size = f;
 }
 
-SDT_TYPE_COPY(SDT_PITCH)
-SDT_DEFINE_HASHMAP(SDT_PITCH, 59)
-SDT_JSON_SERIALIZE(SDT_PITCH)
-SDT_JSON_DESERIALIZE(SDT_PITCH)
+_SDT_COPY_FUNCTION(Pitch)
+
+_SDT_HASHMAP_FUNCTIONS(Pitch)
+
+json_value *SDTPitch_toJSON(const SDTPitch *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "size", json_integer_new(SDTPitch_getSize(x)));
+  json_object_push(obj, "overlap", json_double_new(SDTPitch_getOverlap(x)));
+  json_object_push(obj, "tolerance", json_double_new(SDTPitch_getTolerance(x)));
+  return obj;
+}
+
+SDTPitch *SDTPitch_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int size = SDT_PITCH_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
+
+  SDTPitch *y = SDTPitch_new(size);
+  return SDTPitch_setParams(y, x, 1);
+}
+
+SDTPitch *SDTPitch_setParams(SDTPitch *x, const json_value *j,
+                             unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Pitch, x, j, Size, size, integer, unsafe);
+  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Overlap, overlap, double);
+  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Overlap, overlap, integer);
+  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Tolerance, tolerance, double);
+  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Tolerance, tolerance, integer);
+
+  return x;
+}
 
 unsigned int SDTPitch_getSize(const SDTPitch *x) { return x->size; }
 
