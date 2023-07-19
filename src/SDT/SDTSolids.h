@@ -18,26 +18,10 @@ instantiation is generally asynchronous.
 extern "C" {
 #endif
 
-/** @brief Registers a resonator into the resonators list with a unique ID.
-If an interactor with the same ID is present, the resonator is bound to the
-interactor.
-@param[in] x Resonator instance to register
-@param[in] key Unique ID assigned to the resonator instance */
-extern int SDT_registerResonator(SDTResonator *x, char *key);
-
-/** @brief Queries the resonators list by its unique ID.
-If a resonator with the ID is present, a pointer to the resonator is returned.
-Otherwise, a NULL pointer is returned.
-@param[in] key Unique ID assigned to the resonator instance
-@return Resonator instance pointer */
-extern SDTResonator *SDT_getResonator(const char *key);
-
-/** @brief Unregisters a resonator from the resonator list.
-If a resonator with the given ID is present, it is unregistered from the list.
-If also an interactor with the same ID is present, the object is released by the
-interactor as well.
-@param[in] key Unique ID of the resonator instance to unregister */
-extern int SDT_unregisterResonator(char *key);
+/** @brief Update interactors in the interactors list that involve
+the specified resonator.
+@param[in] key Unique ID of a resonator */
+extern void SDT_updateInteractors(const char *key);
 
 /** @brief Registers an interactor into the interactors list with two unique
 IDs, one for each resonator. If resonators with the same IDs are present, they
