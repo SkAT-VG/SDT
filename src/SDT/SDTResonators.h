@@ -40,6 +40,11 @@ extern SDTResonator *SDTResonator_new(unsigned int nModes,
 @param[in] x Pointer to the instance to destroy */
 extern void SDTResonator_free(SDTResonator *x);
 
+/** @brief Update inner coefficients.
+Call this function whenever you change the SDT sample rate.
+@param[in] x Pointer to the instance to update */
+extern void SDTResonator_update(SDTResonator *x);
+
 /** @brief Deep-copies a resonator.
 @param[in] dest Pointer to the instance to modify
 @param[in] src Pointer to the instance to copy

@@ -109,7 +109,7 @@ static void updatePickups(SDTResonator *x) {
   }
 }
 
-static void updateAll(SDTResonator *x) {
+void SDTResonator_update(SDTResonator *x) {
   updateModes(x);
   updatePickups(x);
 }
@@ -216,7 +216,7 @@ void SDTResonator_setNPickups(SDTResonator *x, int f) {
   }
 
   x->nPickups = f;
-  updateAll(x);
+  SDTResonator_update(x);
 }
 
 #define _SDTResonator_setNModes_loopHelp(X)         \
@@ -256,7 +256,7 @@ void SDTResonator_setNModes(SDTResonator *x, int f) {
   }  // Else, just update nModes, no deallocation needed
 
   x->nModes = f;
-  updateAll(x);
+  SDTResonator_update(x);
 }
 
 _SDT_COPY_FUNCTION(Resonator)
@@ -368,31 +368,31 @@ void SDTResonator_setVelocity(SDTResonator *x, unsigned int pickup, double f) {
 
 void SDTResonator_setFrequency(SDTResonator *x, unsigned int mode, double f) {
   if (mode < x->nModes) {
-    x->freqs[mode] = SDT_fclip(f, 0.0, 0.5 * SDT_sampleRate);
+    x->freqs[mode] = f;
+    updateMode(x, mode);
   }
-  updateMode(x, mode);
 }
 
 void SDTResonator_setDecay(SDTResonator *x, unsigned int mode, double f) {
   if (mode < x->nModes) {
     x->decays[mode] = fmax(0.0, f);
+    updateMode(x, mode);
   }
-  updateMode(x, mode);
 }
 
 void SDTResonator_setWeight(SDTResonator *x, unsigned int mode, double f) {
   if (mode < x->nModes) {
     x->weights[mode] = fmax(0.0, f);
+    updateMode(x, mode);
   }
-  updateMode(x, mode);
 }
 
 void SDTResonator_setGain(SDTResonator *x, unsigned int pickup,
                           unsigned int mode, double f) {
   if (mode < x->nModes && pickup < x->nPickups) {
     x->gains[pickup][mode] = fmax(f, 0.0);
+    updatePickup(x, pickup);
   }
-  updatePickup(x, pickup);
 }
 
 void SDTResonator_setFragmentSize(SDTResonator *x, double f) {
@@ -402,7 +402,7 @@ void SDTResonator_setFragmentSize(SDTResonator *x, double f) {
 
 void SDTResonator_setActiveModes(SDTResonator *x, unsigned int i) {
   x->activeModes = SDT_clip(i, 0, x->nModes);
-  updateAll(x);
+  SDTResonator_update(x);
 }
 
 void SDTResonator_applyForce(SDTResonator *x, unsigned int pickup, double f) {
@@ -544,6 +544,6 @@ SDTResonator *SDTResonator_setParams(SDTResonator *x, const json_value *j,
     }
   }
 
-  updateAll(x);
+  SDTResonator_update(x);
   return x;
 }
