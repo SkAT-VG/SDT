@@ -451,31 +451,45 @@ void SDTResonator_dsp(SDTResonator *x) {
 
 //-------------------------------------------------------------------------------------//
 
+#define _SDTResonator_toArrayJSON(ATTR)                                  \
+  json_value *_SDTResonator_to##ATTR##JSON(const SDTResonator *x) {      \
+    json_value *a = json_array_new(0);                                   \
+    const int n_modes = SDTResonator_getNModes(x);                       \
+    for (int n = 0; n < n_modes; ++n) {                                  \
+      json_array_push(a, json_double_new(SDTResonator_get##ATTR(x, n))); \
+    }                                                                    \
+    return a;                                                            \
+  }
+
+_SDTResonator_toArrayJSON(Frequency);
+_SDTResonator_toArrayJSON(Decay);
+_SDTResonator_toArrayJSON(Weight);
+
+json_value *_SDTResonator_toGainJSON(const SDTResonator *x) {
+  json_value *a = json_array_new(0), *ap;
+  const int n_modes = SDTResonator_getNModes(x);
+  const int n_pups = SDTResonator_getNPickups(x);
+  int n, p;
+  for (p = 0; p < n_pups; ++p) {
+    ap = json_array_new(0);
+    for (n = 0; n < n_modes; ++n) {
+      json_array_push(ap, json_double_new(SDTResonator_getGain(x, p, n)));
+    }
+    json_array_push(a, ap);
+  }
+  return a;
+}
+
 json_value *SDTResonator_toJSON(const SDTResonator *x) {
   json_value *obj = json_object_new(0);
 
   // Array members
-  json_value *f = json_array_new(0);
-  json_value *d = json_array_new(0);
-  json_value *w = json_array_new(0);
-  for (int n = 0; n < SDTResonator_getNModes(x); ++n) {
-    json_array_push(f, json_double_new(SDTResonator_getFrequency(x, n)));
-    json_array_push(d, json_double_new(SDTResonator_getDecay(x, n)));
-    json_array_push(w, json_double_new(SDTResonator_getWeight(x, n)));
-  }
-  json_object_push(obj, "freqs", f);
-  json_object_push(obj, "decays", d);
-  json_object_push(obj, "weights", w);
+  json_object_push(obj, "freqs", _SDTResonator_toFrequencyJSON(x));
+  json_object_push(obj, "decays", _SDTResonator_toDecayJSON(x));
+  json_object_push(obj, "weights", _SDTResonator_toWeightJSON(x));
 
   // Array of arrays
-  json_value *g = json_array_new(0), *gp;
-  for (int p = 0; p < SDTResonator_getNPickups(x); ++p) {
-    gp = json_array_new(0);
-    for (int n = 0; n < SDTResonator_getNModes(x); ++n)
-      json_array_push(gp, json_double_new(SDTResonator_getGain(x, p, n)));
-    json_array_push(g, gp);
-  }
-  json_object_push(obj, "gains", g);
+  json_object_push(obj, "gains", _SDTResonator_toGainJSON(x));
 
   // Scalar members
   json_object_push(obj, "nModes", json_integer_new(SDTResonator_getNModes(x)));

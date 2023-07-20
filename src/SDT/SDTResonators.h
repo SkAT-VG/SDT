@@ -76,6 +76,11 @@ unregister
 @return Zero on success, otherwise one */
 extern int SDT_unregisterResonator(const char *key);
 
+extern json_value *_SDTResonator_toFrequencyJSON(const SDTResonator *x);
+extern json_value *_SDTResonator_toDecayJSON(const SDTResonator *x);
+extern json_value *_SDTResonator_toWeightJSON(const SDTResonator *x);
+extern json_value *_SDTResonator_toGainJSON(const SDTResonator *x);
+
 /** @brief Represent a resonator as a JSON object.
 @param[in] x Pointer to the instance
 @return JSON object */
