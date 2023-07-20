@@ -29,9 +29,9 @@ void zerocrossing_assist(t_zerocrossing *x, void *b, long m, long a, char *s) {
 SDT_MAX_KEY(zerocrossing, ZeroCrossing, zerox, "zerox~",
             "zero crossing rate detector")
 
-SDT_MAX_GETTER(zerocrossing, ZeroCrossing, zerox, Overlap)
+SDT_MAX_GETTER(zerocrossing, ZeroCrossing, zerox, Overlap, float)
 
-SDT_MAX_SETTER(zerocrossing, ZeroCrossing, zerox, Overlap, )
+SDT_MAX_SETTER(zerocrossing, ZeroCrossing, zerox, Overlap, float, )
 
 void zerocrossing_send(t_zerocrossing *x) { outlet_float(x->outlet, x->out); }
 

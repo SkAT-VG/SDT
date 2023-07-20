@@ -51,8 +51,9 @@ The t_class pointer should be a variable "c"
 @param[in] M The Max type (without the leading "t_")
 @param[in] T The SDT type (without the leading "SDT")
 @param[in] F The name of the Max object field where the SDT object is stored
-@param[in] A The name of the attribute */
-#define SDT_MAX_GETTER(M, T, F, A)                                    \
+@param[in] A The name of the attribute
+@param[in] AT The type of the attribute */
+#define SDT_MAX_GETTER(M, T, F, A, AT)                                \
   t_max_err M##_get##A(t_##M *x, void *attr, long *ac, t_atom **av) { \
     if (!(*ac && *av)) {                                              \
       *ac = 1;                                                        \
@@ -62,7 +63,7 @@ The t_class pointer should be a variable "c"
         return MAX_ERR_OUT_OF_MEM;                                    \
       }                                                               \
     }                                                                 \
-    atom_setfloat(*av, SDT##T##_get##A(x->F));                        \
+    atom_set##AT(*av, SDT##T##_get##A(x->F));                         \
     return MAX_ERR_NONE;                                              \
   }
 
@@ -74,11 +75,12 @@ The t_class pointer should be a variable "c"
 @param[in] T The SDT type (without the leading `SDT`)
 @param[in] F The name of the Max object field where the SDT object is stored
 @param[in] A The name of the attribute
+@param[in] AT The type of the attribute
 @param[in] U Type `update` to trigger the structure update function */
-#define SDT_MAX_SETTER(M, T, F, A, U)                               \
+#define SDT_MAX_SETTER(M, T, F, A, AT, U)                           \
   t_max_err M##_set##A(t_##M *x, void *attr, long ac, t_atom *av) { \
     if (ac && av) {                                                 \
-      SDT##T##_set##A(x->F, atom_getfloat(av));                     \
+      SDT##T##_set##A(x->F, atom_get##AT(av));                      \
     }                                                               \
     _SDT_MAX_TYPE_UPDATE_##U(T, x->F);                              \
     return MAX_ERR_NONE;                                            \

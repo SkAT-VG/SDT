@@ -88,8 +88,8 @@ t_max_err inertial_setMass(t_inertial *x, void *attr, long ac, t_atom *av) {
   return MAX_ERR_NONE;
 }
 
-SDT_MAX_GETTER(inertial, Resonator, inertial, FragmentSize)
-SDT_MAX_SETTER(inertial, Resonator, inertial, FragmentSize, )
+SDT_MAX_GETTER(inertial, Resonator, inertial, FragmentSize, float)
+SDT_MAX_SETTER(inertial, Resonator, inertial, FragmentSize, float, )
 
 void inertial_strike(t_inertial *x, double p, double v) {
   SDTResonator_setPosition(x->inertial, 0, p);
