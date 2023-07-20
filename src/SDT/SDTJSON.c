@@ -1,10 +1,12 @@
 #include "SDTJSON.h"
+
 #include <libgen.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
+
 #include "SDTCommon.h"
 
 json_value *SDTJSON_reads(const char *s, int n) {
@@ -53,13 +55,24 @@ json_value *SDTJSON_read(const char *fpath) {
   return v;
 }
 
+static char *_SDTJSON_dumps_inner(const json_value *x,
+                                  const json_serialize_opts *SDTJSON_opts) {
+  size_t n_chars = json_measure_ex(x, *SDTJSON_opts);
+  char *s = malloc(sizeof(char) * n_chars);
+  if (s) json_serialize_ex(s, x, *SDTJSON_opts);
+  return s;
+}
+
 char *SDTJSON_dumps(const json_value *x) {
   static const json_serialize_opts SDTJSON_opts = {
       json_serialize_mode_multiline, 0, 2};
-  size_t n_chars = json_measure_ex(x, SDTJSON_opts);
-  char *s = malloc(sizeof(char) * n_chars);
-  if (s) json_serialize_ex(s, x, SDTJSON_opts);
-  return s;
+  return _SDTJSON_dumps_inner(x, &SDTJSON_opts);
+}
+
+char *SDTJSON_dumps_packed(const json_value *x) {
+  static const json_serialize_opts SDTJSON_opts = {json_serialize_mode_packed,
+                                                   0, 0};
+  return _SDTJSON_dumps_inner(x, &SDTJSON_opts);
 }
 
 int SDTJSON_dump(const json_value *x, const char *fpath) {
