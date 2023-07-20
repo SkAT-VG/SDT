@@ -63,8 +63,7 @@ The t_class pointer should be a variable "c"
         return MAX_ERR_OUT_OF_MEM;                                    \
       }                                                               \
     }                                                                 \
-    atom_set##AT(*av, SDT##T##_get##A(x->F));                         \
-    return MAX_ERR_NONE;                                              \
+    return atom_set##AT(*av, SDT##T##_get##A(x->F));                  \
   }
 
 #define _SDT_MAX_TYPE_UPDATE_(T, O)
