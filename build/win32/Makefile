@@ -11,12 +11,12 @@ SDTDIR=$(SRCDIR)/SDT
 SDTSRCS=$(wildcard $(SDTDIR)/*.c)
 SDTOBJS=$(patsubst %.c,%.o,$(SDTSRCS))
 
-MAXDIR=$(SRCDIR)/Max7
+MAXDIR=$(SRCDIR)/Max
 MAXSRCS=$(wildcard $(MAXDIR)/*.c)
 MAXOBJS=$(patsubst %.c,%.mxe,$(MAXSRCS))
 
-MAXSDKDIR=$(THIRDPDIR)/Max7SDK
-MAXSDKVERSION=7.3.3
+MAXSDKDIR=$(THIRDPDIR)/Max8SDK
+# from https://github.com/Cycling74/max-sdk-base 2023/07/25
 
 MAXPACKDIR=../../MaxPackage
 

@@ -2,6 +2,7 @@
 #define JIT_GL_DRAW_H 1
 
 #include "jit.common.h"
+#include "jit.gl.common.h"
 #include "jit.vecmath.h"
 
 #ifdef __cplusplus
@@ -105,7 +106,10 @@ typedef enum {
 	VIEW_TAG_DOUBLE,
 	VIEW_TAG_VEC2,
 	VIEW_TAG_VEC3,
-	VIEW_TAG_VEC4
+	VIEW_TAG_VEC4,
+	VIEW_TAG_DVEC2,	// type double
+	VIEW_TAG_DVEC3,
+	VIEW_TAG_DVEC4	
 } e_view_tag;
 
 void jit_gl_buffer_data_create_tagged(t_jit_gl_buffer_data *x, e_view_tag *tags, long size, char *ptr);
@@ -116,7 +120,8 @@ void jit_gl_buffer_data_destroy_tagged(t_jit_gl_buffer_data * x);
 
 t_symbol * jit_gl_buffer_name_from_tag(e_view_tag view_tag);
 e_view_tag jit_gl_view_tag_for_minfo(t_jit_matrix_info *minfo);
-	
+t_symbol *jit_gl_view_type_as_symbol(t_jit_gl_buffer_view *x);
+
 /** Immediate mode simulating functions
 	
 	Example usage:
@@ -216,7 +221,8 @@ typedef enum {
 	JIT_STATE_EXP,
 	JIT_STATE_EXP2,
 	
-	JIT_STATE_INSTANCING
+	JIT_STATE_INSTANCING,
+	JIT_STATE_COLOR_VAO		// if enabled pass color as vertex attribute else as uniform
 } e_jit_state;
 
 
@@ -248,10 +254,15 @@ void jit_gl_push_matrix();
 void jit_gl_pop_matrix();
 void jit_gl_load_identity();
 void jit_gl_load_matrix(t_jit_mat4 *m);
+void jit_gl_scale_texture_matrix(long unit, double x, double y, double z);
 void jit_gl_translate(double x, double y, double z);
 void jit_gl_rotate(double angle, double x, double y, double z);
 void jit_gl_scale(double x, double y, double z);
 void jit_gl_ortho(double left, double right, double bottom, double top, double zNear, double zFar);
+void jit_gl_perspective(double lens_angle, double aspect, double near, double far);
+void jit_gl_look_at(double eye_x, double eye_y, double eye_z, double cen_x, double cen_y, double cen_z, double up_x, double up_y, double up_z);
+// void jit_gl_get_viewport(int out_viewport[4]);
+void jit_gl_line_width(double _w);
 void jit_gl_set_shader(void *shader);
 void jit_gl_bind_texture(long unit, void *texture);
 void jit_gl_unbind_texture(long unit, void *texture);
@@ -265,11 +276,26 @@ void jit_gl_immediate_normal3f(double x, double y, double z);
 void jit_gl_immediate_color3f(double r, double g, double b);
 void jit_gl_immediate_color4f(double r, double g, double b, double a);
 void *jit_gl_immediate_getgeometry();
+long jit_gl_immediate_get_begin();
+
+void jit_gl_indexed_tristrip_begin();
+void jit_gl_indexed_tristrip_end();
+void *jit_gl_indexed_tristrip_getgeometry();
+void jit_gl_indexed_tristrip_vertex3(double x, double y, double z);
+void jit_gl_indexed_tristrip_vertex3_transform(double x, double y, double z);
+void jit_gl_indexed_tristrip_texcoord2f(double s, double t);
+void jit_gl_indexed_tristrip_normal3(double x, double y, double z);
+void jit_gl_indexed_tristrip_normal3_transform(double x, double y, double z);
+void jit_gl_indexed_tristrip_color3f(double r, double g, double b);
+void jit_gl_indexed_tristrip_color4f(double r, double g, double b, double a);
+void jit_gl_indexed_tristrip_add_tess(long vcount, long tricount, const float *verts, const int *indices, t_bool transform);
 
 void *jit_ob3d_state_get(t_jit_object *x);
 void jit_ob3d_state_set(t_jit_object *x, void *state);
 void jit_ob3d_state_begin(t_jit_object *x);
 void jit_ob3d_state_end(t_jit_object *x);
+t_jit_err jit_ob3d_project(t_point_3d p_world, t_point_3d p_screen, t_jit_mat4 *mv, t_jit_mat4 *pj, int *viewport);
+t_jit_err jit_ob3d_unproject(t_point_3d p_screen, t_point_3d p_world, t_jit_mat4 *mv, t_jit_mat4 *pj, int *viewport);
 	
 // fullscreen quad
 void * jit_gl_fs_quad_getgeometry(long flipped);

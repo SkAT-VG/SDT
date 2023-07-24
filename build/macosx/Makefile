@@ -1,8 +1,8 @@
 SHELL=/bin/bash
 
 CC=clang
-MACARCH=-arch i386 -arch x86_64
-MACVERSION=-isysroot ../../3rdparty/MacOSX10.7.sdk -mmacosx-version-min=10.7
+MACARCH=-arch x86_64 -arch arm64
+MACVERSION=-isysroot ../../3rdparty/MacOSX12.3.sdk -mmacosx-version-min=10.15
 CFLAGS=$(MACARCH) $(MACVERSION) -Wall -Wno-unknown-pragmas -Werror -g -O3
 LDFLAGS=$(MACARCH) $(MACVERSION) -dynamiclib -headerpad_max_install_names
 SRCDIR=../../src
@@ -15,12 +15,12 @@ SDTOBJS=$(patsubst %.c,%.o,$(SDTSRCS))
 
 SDTVERSION=
 
-MAXDIR=$(SRCDIR)/Max7
+MAXDIR=$(SRCDIR)/Max
 MAXSRCS = $(wildcard $(MAXDIR)/*.c)
 MAXOBJS = $(patsubst %.c,%.mxo,$(MAXSRCS))
 
-MAXSDKDIR=$(THIRDPDIR)/Max7SDK
-# MAXSDKVERSION=7.3.3
+MAXSDKDIR=$(THIRDPDIR)/Max8SDK
+# from https://github.com/Cycling74/max-sdk-base 2023/07/25
 
 MAXPACKDIR=../../MaxPackage
 

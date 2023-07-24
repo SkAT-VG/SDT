@@ -26,6 +26,8 @@ namespace max {
 #undef min
 #undef max
 
+static const int ASSIST_STRING_MAXSIZE = 256;
+
 }
 }
 
