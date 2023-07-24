@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 1,
-			"revision" : 11,
+			"minor" : 5,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -51,8 +51,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -112,8 +112,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -208,8 +208,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 1,
-															"revision" : 11,
+															"minor" : 5,
+															"revision" : 3,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -276,9 +276,9 @@
 																	"numinlets" : 2,
 																	"numoutlets" : 1,
 																	"outlettype" : [ "" ],
-																	"patching_rect" : [ 51.0, 297.0, 217.0, 80.0 ],
+																	"patching_rect" : [ 51.0, 297.0, 217.0, 52.0 ],
 																	"style" : "SDTpackage",
-																	"text" : ";\rmax launchbrowser https://vimeo.com/8735192"
+																	"text" : ";\rmax launchbrowser https://skatvg.unipa.it/SIFosse/"
 																}
 
 															}
@@ -414,7 +414,7 @@
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "http://www.skatvg.eu/SIFosse/" ]
+																"value" : [ "https://skatvg.unipa.it/SIFosse/" ]
 															}
  ]
 													}
@@ -445,8 +445,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 1,
-															"revision" : 11,
+															"minor" : 5,
+															"revision" : 3,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -508,14 +508,14 @@
 , 															{
 																"box" : 																{
 																	"id" : "obj-35",
-																	"linecount" : 5,
+																	"linecount" : 4,
 																	"maxclass" : "message",
 																	"numinlets" : 2,
 																	"numoutlets" : 1,
 																	"outlettype" : [ "" ],
 																	"patching_rect" : [ 51.0, 297.0, 217.0, 80.0 ],
 																	"style" : "SDTpackage",
-																	"text" : ";\rmax launchbrowser https://smartech.gatech.edu/bitstream/handle/1853/50604/deGotzenRocchesso2006.pdf"
+																	"text" : ";\rmax launchbrowser http://www.ijdesign.org/index.php/IJDesign/article/view/620/271"
 																}
 
 															}
@@ -627,11 +627,11 @@
 														"count" : 7,
 														"data" : [ 															{
 																"key" : 1,
-																"value" : [ "https://smartech.gatech.edu/bitstream/handle/1853/50604/deGotzenRocchesso2006.pdf" ]
+																"value" : [ "https://edu.nl/c9gfw" ]
 															}
 , 															{
 																"key" : 2,
-																"value" : [ "https://www.researchgate.net/publication/43901649_Gamelunch_Forging_a_Dining_Experience_through_Sound" ]
+																"value" : [ "https://doi.org/10.1145/1358628.1358670" ]
 															}
 , 															{
 																"key" : 3,
@@ -639,7 +639,7 @@
 															}
 , 															{
 																"key" : 4,
-																"value" : [ "https://www.researchgate.net/publication/221308477_Paper_mechanisms_for_sonic_interaction#fullTextFileContent" ]
+																"value" : [ "https://doi.org/10.1145/2148131.2148146" ]
 															}
 , 															{
 																"key" : 5,
@@ -647,11 +647,11 @@
 															}
 , 															{
 																"key" : 6,
-																"value" : [ "https://www.researchgate.net/publication/311490531_miMic_The_Microphone_as_a_Pencil" ]
+																"value" : [ "https://doi.org/10.1145/2839462.2839467" ]
 															}
 , 															{
 																"key" : 7,
-																"value" : [ "https://www.researchgate.net/publication/325363986_Embodied_Sound_Design" ]
+																"value" : [ "https://doi.org/10.1016/j.ijhcs.2018.05.007" ]
 															}
  ]
 													}
@@ -896,13 +896,13 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-8",
-									"linecount" : 5,
+									"linecount" : 3,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 554.0, 246.5, 311.0, 84.0 ],
+									"patching_rect" : [ 554.0, 246.5, 309.0, 53.0 ],
 									"style" : "SDT-comments",
-									"text" : "Delle Monache, S., Rocchesso, D., Qi, J., Buechley, L., De Götzen, A., & Cestaro, D. (2012). Paper mechanisms for sonic interaction. In Proc. of the Sixth Int. Conf. on Tangible, Embedded and Embodied Interaction (pp. 61-68)."
+									"text" : "De Gotzen, A., & Rocchesso, D. (2006). Peek-a-book: playing with an interactive book. In Proc. of the 12th Int. Conf. on Auditory Display, (pp. 265-267."
 								}
 
 							}
@@ -985,8 +985,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1227,8 +1227,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -1263,18 +1263,6 @@
 										"subpatcher_template" : "",
 										"assistshowspatchername" : 0,
 										"boxes" : [ 											{
-												"box" : 												{
-													"id" : "obj-7",
-													"maxclass" : "message",
-													"numinlets" : 2,
-													"numoutlets" : 1,
-													"outlettype" : [ "" ],
-													"patching_rect" : [ 182.0, 39.0, 40.0, 22.0 ],
-													"text" : "toolkit"
-												}
-
-											}
-, 											{
 												"box" : 												{
 													"id" : "obj-9",
 													"maxclass" : "message",
@@ -1316,15 +1304,15 @@
 														"count" : 5,
 														"data" : [ 															{
 																"key" : "toolkit.",
-																"value" : [ "https://www.sciencedirect.com/science/article/pii/S2352711017300195" ]
+																"value" : [ "https://doi.org/10.1016/j.softx.2017.06.003" ]
 															}
 , 															{
 																"key" : "Embodied",
-																"value" : [ "https://www.researchgate.net/publication/325363986_Embodied_Sound_Design" ]
+																"value" : [ "https://doi.org/10.1016/j.ijhcs.2018.05.007" ]
 															}
 , 															{
 																"key" : "sounding",
-																"value" : [ "http://www.academia.edu/download/27648519/vmain.pdf" ]
+																"value" : [ "https://edu.nl/yhe7q" ]
 															}
 , 															{
 																"key" : "SDT",
@@ -1332,7 +1320,7 @@
 															}
 , 															{
 																"key" : "Europe.",
-																"value" : [ "https://www.academia.edu/8096514/Sounding_objects_in_Europe" ]
+																"value" : [ "https://doi.org/10.3366/sound.2014.0060" ]
 															}
  ]
 													}
@@ -1373,9 +1361,9 @@
 													"numinlets" : 2,
 													"numoutlets" : 1,
 													"outlettype" : [ "" ],
-													"patching_rect" : [ 51.0, 297.0, 217.0, 52.0 ],
+													"patching_rect" : [ 51.0, 297.0, 114.0, 52.0 ],
 													"style" : "SDTpackage",
-													"text" : ";\rmax launchbrowser https://github.com/SkAT-VG/SDT"
+													"text" : ";\rmax launchbrowser https://edu.nl/b9xfd"
 												}
 
 											}
@@ -1482,13 +1470,6 @@
 												"patchline" : 												{
 													"destination" : [ "obj-4", 0 ],
 													"source" : [ "obj-5", 0 ]
-												}
-
-											}
-, 											{
-												"patchline" : 												{
-													"destination" : [ "obj-9", 0 ],
-													"source" : [ "obj-7", 0 ]
 												}
 
 											}
@@ -1802,8 +1783,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1905,8 +1886,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2497,8 +2478,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -2817,8 +2798,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3723,8 +3704,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3770,8 +3751,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3904,7 +3885,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 323.3125, 361.0, 428.0, 42.0 ],
 									"style" : "SDTpackage",
-									"text" : "sdt.friction~",
+									"text" : "sdt.inertial",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -3921,8 +3902,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -3967,8 +3948,8 @@
 														"fileversion" : 1,
 														"appversion" : 														{
 															"major" : 8,
-															"minor" : 1,
-															"revision" : 11,
+															"minor" : 5,
+															"revision" : 3,
 															"architecture" : "x64",
 															"modernui" : 1
 														}
@@ -5241,13 +5222,12 @@
 								"box" : 								{
 									"fontsize" : 20.0,
 									"id" : "obj-17",
-									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 408.0, 432.0, 54.0 ],
+									"patching_rect" : [ 323.3125, 408.0, 432.0, 30.0 ],
 									"style" : "SDT_package",
-									"text" : "[solids, interactor] Friction interaction between two solid objects.",
+									"text" : "[solids, object] Inertial point-mass.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5256,13 +5236,13 @@
 								"box" : 								{
 									"fontsize" : 16.0,
 									"id" : "obj-16",
-									"linecount" : 3,
+									"linecount" : 2,
 									"maxclass" : "comment",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 323.3125, 470.0, 440.0, 64.0 ],
+									"patching_rect" : [ 323.3125, 470.0, 440.0, 45.0 ],
 									"style" : "SDT_package",
-									"text" : "Simulates the nonlinear friction force arising when a solid object rubs against another (e.g. a singing glass, squeaky hinges).",
+									"text" : "Simulates a simple inertial point-mass, mostly used as exciter for modal resonators.",
 									"textcolor" : [ 0.0, 0.0, 0.0, 0.0 ]
 								}
 
@@ -5648,8 +5628,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -5746,8 +5726,8 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 85.505431999999928, 281.0, 112.0, 52.0 ],
 									"subplots" : [ 										{
-											"color" : [ 0.4, 0.4, 0.75, 1.0 ],
-											"thickness" : 1.2,
+											"color" : [ 0.400000005960464, 0.400000005960464, 0.75, 1.0 ],
+											"thickness" : 1.200000047683716,
 											"point_style" : "none",
 											"line_style" : "lines",
 											"number_style" : "none",
@@ -5792,8 +5772,8 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 85.505431999999928, 501.0, 111.0, 52.0 ],
 									"subplots" : [ 										{
-											"color" : [ 0.4, 0.4, 0.75, 1.0 ],
-											"thickness" : 1.2,
+											"color" : [ 0.400000005960464, 0.400000005960464, 0.75, 1.0 ],
+											"thickness" : 1.200000047683716,
 											"point_style" : "none",
 											"line_style" : "lines",
 											"number_style" : "none",
@@ -6084,8 +6064,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -6139,7 +6119,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "" ],
+													"outlettype" : [ "signal" ],
 													"patching_rect" : [ 70.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -6164,7 +6144,7 @@
 													"maxclass" : "inlet",
 													"numinlets" : 0,
 													"numoutlets" : 1,
-													"outlettype" : [ "" ],
+													"outlettype" : [ "signal" ],
 													"patching_rect" : [ 139.0, 22.0, 28.0, 28.0 ]
 												}
 
@@ -6327,8 +6307,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -6399,8 +6379,8 @@
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 361.5, 514.5, 112.0, 50.0 ],
 													"subplots" : [ 														{
-															"color" : [ 0.4, 0.4, 0.75, 1.0 ],
-															"thickness" : 1.2,
+															"color" : [ 0.400000005960464, 0.400000005960464, 0.75, 1.0 ],
+															"thickness" : 1.200000047683716,
 															"point_style" : "none",
 															"line_style" : "lines",
 															"number_style" : "none",
@@ -6458,8 +6438,8 @@
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 86.5, 509.5, 112.0, 50.0 ],
 													"subplots" : [ 														{
-															"color" : [ 0.4, 0.4, 0.75, 1.0 ],
-															"thickness" : 1.2,
+															"color" : [ 0.400000005960464, 0.400000005960464, 0.75, 1.0 ],
+															"thickness" : 1.200000047683716,
 															"point_style" : "none",
 															"line_style" : "lines",
 															"number_style" : "none",
@@ -6522,8 +6502,8 @@
 													"id" : "obj-41",
 													"maxclass" : "preset",
 													"numinlets" : 1,
-													"numoutlets" : 4,
-													"outlettype" : [ "preset", "int", "preset", "int" ],
+													"numoutlets" : 5,
+													"outlettype" : [ "preset", "int", "preset", "int", "" ],
 													"patching_rect" : [ 214.0, 103.0, 85.0, 18.0 ],
 													"preset_data" : [ 														{
 															"number" : 1,
@@ -7060,7 +7040,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 2,
 									"numoutlets" : 1,
-									"outlettype" : [ "" ],
+									"outlettype" : [ "signal" ],
 									"patching_rect" : [ 211.0, 501.0, 356.0, 52.0 ],
 									"style" : "SDTpackage",
 									"text" : "sdt.dcmotor~ @coils 20 @harshness 0.25 @size 0.06 @reson 0.85 @gearRatio 2.35 @airGain 0. @brushGain 0. @rotorGain 0.5 @gearGain 0.05"
@@ -7073,7 +7053,7 @@
 									"id" : "obj-11",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 0,
+									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 267.5, 374.0, 320.0, 55.0 ],
 									"text" : "sdt.modal windshield 4 1 @freqs 90. 400. 1240. 1750. @decays 0.1 0.1 0.1 0.1 @pickup0 1300. 1100. 600. 500. @activeModes 4"
@@ -7085,7 +7065,7 @@
 									"color" : [ 0.996078431372549, 0.823529411764706, 0.0, 1.0 ],
 									"id" : "obj-10",
 									"maxclass" : "newobj",
-									"numinlets" : 0,
+									"numinlets" : 1,
 									"numoutlets" : 0,
 									"patching_rect" : [ 359.5, 215.0, 160.0, 23.0 ],
 									"style" : "SDTpackage",
@@ -7100,9 +7080,9 @@
 									"id" : "obj-4",
 									"linecount" : 3,
 									"maxclass" : "newobj",
-									"numinlets" : 1,
+									"numinlets" : 6,
 									"numoutlets" : 2,
-									"outlettype" : [ "", "" ],
+									"outlettype" : [ "signal", "signal" ],
 									"patching_rect" : [ 212.0, 281.0, 423.0, 52.0 ],
 									"text" : "sdt.friction~ wiper windshield 2 @stiffness 350. @dissipation 50. @viscosity 4. @breakAway 0.3 @stribeck 0.1 @kDynamic 0.5 @kStatic 1. @noisiness 3. @force 0.6 @contact0 0 @contact1 0"
 								}
@@ -7133,14 +7113,14 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
 ,
 										"classnamespace" : "box",
-										"rect" : [ 342.0, 98.0, 380.0, 449.0 ],
+										"rect" : [ 342.0, 98.0, 382.0, 507.0 ],
 										"bglocked" : 0,
 										"openinpresentation" : 0,
 										"default_fontsize" : 12.0,
@@ -7185,12 +7165,12 @@
 												"box" : 												{
 													"fontname" : "Lato ",
 													"id" : "obj-2",
-													"linecount" : 32,
+													"linecount" : 37,
 													"maxclass" : "comment",
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 45.0, 50.0, 304.0, 390.0 ],
-													"text" : "Copyright (C) 2001-2021 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache\nStefano Baldan\nStefano Papetti\nMarco Tiraboschi\n\n------------------------------------------------------------------------\nThe SDT has been developed with the contribution of the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/\n\ncontact: \nSoundDesignToolkit@gmail.com\nhttps://www.facebook.com/SDT.Max.Pd"
+													"patching_rect" : [ 45.0, 50.0, 304.0, 450.0 ],
+													"text" : "Copyright (C) 2001-2023 with the authors.\n\nThe Sound Design Toolkit (SDT) package for Max was developed by:\nStefano Delle Monache\nStefano Baldan\nStefano Papetti\nMarco Tiraboschi\nDavide Rocchesso\n\n------------------------------------------------------------------------\nThe SDT has been developed with contributions from the following EU-projects:\n* 2001 - 2003 'SOb' http://www.soundobject.org/\n* 2006 - 2009 'CLOSED' http://closed.ircam.fr\n* 2008 - 2011 'NIW' http://www.soundobject.org/niw/\n* 2014 - 2016 'SkAT-VG' http://www.skatvg.eu\nand from the 'Institute for Computer Music and Sound Technology' (ICST) of the Zurich University of the Arts (ZHdK) https://www.zhdk.ch/en/research/icst\n\n\nComplete list of authors and contributors (either programmers or designers) in alphabetical order:\nFederico Avanzini,\t Stefano Baldan,\t Nicola Bernardini,\tGianpaolo Borin,\t Carlo Drioli,\t Stefano Delle Monache, \tDelphine Devallez,\t Federico Fontana,\t Laura Ottaviani,\tStefano Papetti, \tPietro Polotti,\t Matthias Rath,\t Davide Rocchesso, \tStefania Serafin, Marco Tiraboschi. \n\n------------------------------------------------------------------------\nThe SDT source code is available at https://github.com/SkAT-VG/SDT/\n\ncontact: \nSoundDesignToolkit@gmail.com\nhttps://www.facebook.com/SDT.Max.Pd"
 												}
 
 											}
@@ -7206,7 +7186,7 @@
 													"mode" : 0,
 													"numinlets" : 1,
 													"numoutlets" : 0,
-													"patching_rect" : [ 23.875, 9.0, 346.25, 431.0 ],
+													"patching_rect" : [ 23.875, 9.0, 346.25, 491.0 ],
 													"proportion" : 0.39
 												}
 
@@ -7468,8 +7448,24 @@
 		}
 ,
 		"dependency_cache" : [ 			{
+				"name" : "sdt.dcmotor~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.friction~.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.inertial.mxo",
+				"type" : "iLaX"
+			}
+, 			{
+				"name" : "sdt.modal.mxo",
+				"type" : "iLaX"
+			}
+, 			{
 				"name" : "sdttaxonomy.png",
-				"bootpath" : "~/SDT_git/MaxPackage/media",
+				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
 				"patcherrelativepath" : "../media",
 				"type" : "PNG",
 				"implicit" : 1

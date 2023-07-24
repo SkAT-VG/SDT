@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 1,
-			"revision" : 11,
+			"minor" : 5,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -62,8 +62,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -136,8 +136,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontsize" : [ 13.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 13.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -155,8 +155,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -229,8 +229,8 @@
 					"outlettype" : [ "" ],
 					"patching_rect" : [ 103.5, 316.5, 114.0, 50.0 ],
 					"subplots" : [ 						{
-							"color" : [ 0.4, 0.4, 0.75, 1.0 ],
-							"thickness" : 1.2,
+							"color" : [ 0.400000005960464, 0.400000005960464, 0.75, 1.0 ],
+							"thickness" : 1.200000047683716,
 							"point_style" : "none",
 							"line_style" : "lines",
 							"number_style" : "none",
@@ -279,8 +279,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -510,7 +510,7 @@
 					"numoutlets" : 0,
 					"patching_rect" : [ 562.0, 153.8828125, 168.75, 26.0 ],
 					"style" : "SDT-comments",
-					"text" : "forever",
+					"text" : "sharp and pointy",
 					"textcolor" : [ 0.784314, 0.145098, 0.023529, 1.0 ],
 					"textjustification" : 1,
 					"varname" : "bubble"
@@ -529,8 +529,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1063,8 +1063,8 @@
 					"id" : "obj-56",
 					"maxclass" : "preset",
 					"numinlets" : 1,
-					"numoutlets" : 4,
-					"outlettype" : [ "preset", "int", "preset", "int" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "preset", "int", "preset", "int", "" ],
 					"patching_rect" : [ 693.5, 82.0, 146.0, 19.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
@@ -1117,8 +1117,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1321,8 +1321,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1502,8 +1502,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -1580,8 +1580,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1717,9 +1717,9 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 403.25, 501.5, 159.0, 80.0 ],
+					"patching_rect" : [ 403.25, 501.5, 167.0, 80.0 ],
 					"style" : "SDT_package",
-					"text" : "sdt.modal modal-object 3 1 @freqs 1150. 4550. 6000. @decays 0.002 0.003 0.004 @pickup0 330. 1000. 1200. @activeModes 3"
+					"text" : "sdt.modal modal-object_g 3 1 @freqs 1150. 4550. 6000. @decays 0.002 0.003 0.004 @pickup0 330. 1000. 1200. @activeModes 3"
 				}
 
 			}
@@ -1733,7 +1733,7 @@
 					"outlettype" : [ "signal", "signal" ],
 					"patching_rect" : [ 44.0, 442.5, 235.0, 52.0 ],
 					"style" : "SDT_package",
-					"text" : "sdt.impact~ inertial-object modal-object 2 @stiffness 150000000. @dissipation 0.7 @shape 1.7 @contact0 0"
+					"text" : "sdt.impact~ inertial-object_g modal-object_g 2 @stiffness 150000000. @dissipation 0.7 @shape 1.7 @contact0 0"
 				}
 
 			}
@@ -1757,8 +1757,8 @@
 					"maxclass" : "newobj",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 403.25, 457.5, 157.25, 37.0 ],
-					"text" : "sdt.inertial inertial-object @mass 0.003"
+					"patching_rect" : [ 403.25, 457.5, 167.0, 37.0 ],
+					"text" : "sdt.inertial inertial-object_g @mass 0.003"
 				}
 
 			}
@@ -1900,7 +1900,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 787.666666666666629, 116.0, 888.833333333333371, 116.0, 888.833333333333371, 5.0, 703.0, 5.0 ],
+					"midpoints" : [ 766.5, 116.0, 888.833333333333371, 116.0, 888.833333333333371, 5.0, 703.0, 5.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -2014,7 +2014,7 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "sdt.inertial.mxo",
+				"name" : "sdt.bouncing~.mxo",
 				"type" : "iLaX"
 			}
 , 			{
@@ -2022,11 +2022,11 @@
 				"type" : "iLaX"
 			}
 , 			{
-				"name" : "sdt.modal.mxo",
+				"name" : "sdt.inertial.mxo",
 				"type" : "iLaX"
 			}
 , 			{
-				"name" : "sdt.bouncing~.mxo",
+				"name" : "sdt.modal.mxo",
 				"type" : "iLaX"
 			}
  ],
@@ -2050,8 +2050,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -2069,8 +2069,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

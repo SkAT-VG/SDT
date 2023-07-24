@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 1,
-			"revision" : 11,
+			"minor" : 5,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -210,8 +210,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -274,8 +274,8 @@
 									"id" : "obj-14",
 									"maxclass" : "preset",
 									"numinlets" : 1,
-									"numoutlets" : 4,
-									"outlettype" : [ "preset", "int", "preset", "int" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "preset", "int", "preset", "int", "" ],
 									"patching_rect" : [ 382.0, 43.0, 17.0, 93.0 ],
 									"preset_data" : [ 										{
 											"number" : 1,
@@ -497,8 +497,8 @@
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 171.5, 394.0, 78.0, 50.0 ],
 									"subplots" : [ 										{
-											"color" : [ 0.4, 0.4, 0.75, 1.0 ],
-											"thickness" : 1.2,
+											"color" : [ 0.400000005960464, 0.400000005960464, 0.75, 1.0 ],
+											"thickness" : 1.200000047683716,
 											"point_style" : "none",
 											"line_style" : "lines",
 											"number_style" : "none",
@@ -709,8 +709,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontsize" : [ 13.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 13.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -728,8 +728,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -800,8 +800,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1212,8 +1212,8 @@
 					"id" : "obj-56",
 					"maxclass" : "preset",
 					"numinlets" : 1,
-					"numoutlets" : 4,
-					"outlettype" : [ "preset", "int", "preset", "int" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "preset", "int", "preset", "int", "" ],
 					"patching_rect" : [ 575.5, 121.0, 89.0, 33.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
@@ -1233,7 +1233,7 @@
 						}
 , 						{
 							"number" : 5,
-							"data" : [ 5, "obj-18", "flonum", "float", 0.770114958286285, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 1, 5, "obj-7", "flonum", "float", 0.5, 5, "obj-14", "flonum", "float", 1.0 ]
+							"data" : [ 5, "obj-18", "flonum", "float", 0.77958619594574, 5, "obj-28", "live.gain~", "float", -0.703412055969238, 5, "obj-16", "toggle", "int", 0, 5, "obj-7", "flonum", "float", 0.5, 5, "obj-14", "flonum", "float", 1.0 ]
 						}
 , 						{
 							"number" : 6,
@@ -1284,8 +1284,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1461,8 +1461,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1602,8 +1602,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -1678,8 +1678,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1994,7 +1994,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 631.666666666666629, 165.0, 690.833333333333371, 165.0, 690.833333333333371, 5.0, 573.5, 5.0 ],
+					"midpoints" : [ 620.0, 165.0, 690.833333333333371, 165.0, 690.833333333333371, 5.0, 573.5, 5.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -2003,7 +2003,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-57", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 608.333333333333371, 164.0, 570.416666666666742, 164.0, 570.416666666666742, 119.0, 521.5, 119.0 ],
+					"midpoints" : [ 602.5, 164.0, 570.416666666666742, 164.0, 570.416666666666742, 119.0, 521.5, 119.0 ],
 					"source" : [ "obj-56", 1 ]
 				}
 
@@ -2063,8 +2063,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -2082,8 +2082,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",

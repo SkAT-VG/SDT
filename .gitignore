@@ -7,6 +7,8 @@ doc
 *.def
 *.mxe
 *.mxe64
+*.mxo
+*.framework
 .idea
 CMakeLists.txt
 *.json

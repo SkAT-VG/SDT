@@ -3,8 +3,8 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 8,
-			"minor" : 1,
-			"revision" : 11,
+			"minor" : 5,
+			"revision" : 3,
 			"architecture" : "x64",
 			"modernui" : 1
 		}
@@ -91,8 +91,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -221,8 +221,8 @@
 										"fileversion" : 1,
 										"appversion" : 										{
 											"major" : 8,
-											"minor" : 1,
-											"revision" : 11,
+											"minor" : 5,
+											"revision" : 3,
 											"architecture" : "x64",
 											"modernui" : 1
 										}
@@ -608,8 +608,8 @@
 									"id" : "obj-13",
 									"maxclass" : "preset",
 									"numinlets" : 1,
-									"numoutlets" : 4,
-									"outlettype" : [ "preset", "int", "preset", "int" ],
+									"numoutlets" : 5,
+									"outlettype" : [ "preset", "int", "preset", "int", "" ],
 									"patching_rect" : [ 262.0, 209.0, 31.0, 100.0 ],
 									"preset_data" : [ 										{
 											"number" : 1,
@@ -1477,8 +1477,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -1549,9 +1549,9 @@
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 111.0, 577.0, 518.0, 37.0 ],
+									"patching_rect" : [ 111.0, 577.0, 350.0, 37.0 ],
 									"style" : "SDTpackage",
-									"text" : ";\rmax launchbrowser https://www.academia.edu/download/38205862/SIVE15_submission_4.pdf"
+									"text" : ";\rmax launchbrowser https://doi.org/10.1109/SIVE.2015.7361287"
 								}
 
 							}
@@ -1593,8 +1593,8 @@
 						"styles" : [ 							{
 								"name" : "SDT-comments",
 								"default" : 								{
-									"fontsize" : [ 13.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 13.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -1612,8 +1612,8 @@
 , 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -1955,8 +1955,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2096,8 +2096,8 @@
 						"styles" : [ 							{
 								"name" : "SDTpackage",
 								"default" : 								{
-									"fontsize" : [ 12.0 ],
-									"fontname" : [ "Lato" ]
+									"fontname" : [ "Lato" ],
+									"fontsize" : [ 12.0 ]
 								}
 ,
 								"parentstyle" : "",
@@ -2198,8 +2198,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2470,8 +2470,8 @@
 					"id" : "obj-56",
 					"maxclass" : "preset",
 					"numinlets" : 1,
-					"numoutlets" : 4,
-					"outlettype" : [ "preset", "int", "preset", "int" ],
+					"numoutlets" : 5,
+					"outlettype" : [ "preset", "int", "preset", "int", "" ],
 					"patching_rect" : [ 697.5, 80.5, 117.0, 34.0 ],
 					"preset_data" : [ 						{
 							"number" : 1,
@@ -2520,8 +2520,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -2731,8 +2731,8 @@
 						"fileversion" : 1,
 						"appversion" : 						{
 							"major" : 8,
-							"minor" : 1,
-							"revision" : 11,
+							"minor" : 5,
+							"revision" : 3,
 							"architecture" : "x64",
 							"modernui" : 1
 						}
@@ -3211,7 +3211,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-43", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 772.333333333333371, 159.0, 878.833333333333371, 159.0, 878.833333333333371, 5.0, 707.0, 5.0 ],
+					"midpoints" : [ 756.0, 159.0, 878.833333333333371, 159.0, 878.833333333333371, 5.0, 707.0, 5.0 ],
 					"source" : [ "obj-56", 2 ]
 				}
 
@@ -3220,7 +3220,7 @@
 				"patchline" : 				{
 					"destination" : [ "obj-57", 0 ],
 					"hidden" : 1,
-					"midpoints" : [ 739.666666666666629, 124.5, 695.833333333333258, 124.5, 695.833333333333258, 51.0, 652.0, 51.0 ],
+					"midpoints" : [ 731.5, 124.5, 695.833333333333258, 124.5, 695.833333333333258, 51.0, 652.0, 51.0 ],
 					"order" : 1,
 					"source" : [ "obj-56", 1 ]
 				}
@@ -3396,14 +3396,14 @@
 		"dependency_cache" : [ 			{
 				"name" : "enginemodel.png",
 				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
-				"patcherrelativepath" : "../media",
+				"patcherrelativepath" : "../../../Documents/GitHub/SDT/MaxPackage/media",
 				"type" : "PNG",
 				"implicit" : 1
 			}
 , 			{
 				"name" : "fourstrokegraphs.png",
 				"bootpath" : "~/Documents/GitHub/SDT/MaxPackage/media",
-				"patcherrelativepath" : "../media",
+				"patcherrelativepath" : "../../../Documents/GitHub/SDT/MaxPackage/media",
 				"type" : "PNG",
 				"implicit" : 1
 			}
@@ -3432,8 +3432,8 @@
 		"styles" : [ 			{
 				"name" : "SDT-comments",
 				"default" : 				{
-					"fontsize" : [ 13.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 13.0 ]
 				}
 ,
 				"parentstyle" : "",
@@ -3451,8 +3451,8 @@
 , 			{
 				"name" : "SDTpackage",
 				"default" : 				{
-					"fontsize" : [ 12.0 ],
-					"fontname" : [ "Lato" ]
+					"fontname" : [ "Lato" ],
+					"fontsize" : [ 12.0 ]
 				}
 ,
 				"parentstyle" : "",
