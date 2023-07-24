@@ -5,6 +5,8 @@
 doc
 *.dll
 *.def
+*.mxo
+*.framework
 *.mxe
 *.mxe64
 .idea
