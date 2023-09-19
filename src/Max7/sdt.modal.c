@@ -23,7 +23,7 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
   t_modal *x;
   SDTResonator *modal;
   char *key;
-  char attrName[16];
+  char attrName[17];
   int err;
 
   err = 0;
@@ -77,7 +77,7 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
 }
 
 void modal_free(t_modal *x) {
-  char attrName[16];
+  char attrName[17];
   int pickup, nPickups = SDTResonator_getNPickups(x->modal);
 
   dsp_free((t_pxobject *)x);
