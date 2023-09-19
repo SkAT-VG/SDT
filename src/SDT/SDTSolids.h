@@ -11,7 +11,6 @@ instantiation is generally asynchronous.
 #include "SDTInteractors.h"
 #include "SDTResonators.h"
 
-#define SDT_MAX_MODES 16
 #define SDT_MAX_PICKUPS 16
 
 #ifdef __cplusplus

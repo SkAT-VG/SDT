@@ -92,9 +92,51 @@ The t_class pointer should be a variable "c"
 @param[in] ATTRNAME The name of the Max attribute
 @param[in] TYPE The type of the Max attribute
 @param[in] FLAGS Any attribute flags, expressed as a bitfield */
-#define SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS)               \
-  class_addattr(                                                            \
-      c, attribute_new(#ATTRNAME, gensym(#TYPE), 0, (method)M##_get##UCASE, \
-                       (method)M##_set##UCASE));
+#define SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS)                 \
+  class_addattr(                                                              \
+      (c), attribute_new(#ATTRNAME, gensym(#TYPE), 0, (method)M##_get##UCASE, \
+                         (method)M##_set##UCASE));
+
+/** @brief Define the setter function for an array attribute
+@param[in] M The Max type (without the leading `t_`)
+@param[in] T The SDT type (without the leading `SDT`)
+@param[in] F The name of the Max object field where the SDT object is stored
+@param[in] A The name of the attribute
+@param[in] AT The type of the attribute
+@param[in] U Type `update` to trigger the structure update function */
+#define SDT_MAX_ARRAY_SETTER(M, T, F, A, AT, U)                     \
+  t_max_err M##_set##A(t_##M *x, void *attr, long ac, t_atom *av) { \
+    for (long i = 0; av && i < ac; ++i) {                           \
+      SDT##T##_set##A(x->F, i, atom_get##AT(av + i));               \
+    }                                                               \
+    _SDT_MAX_TYPE_UPDATE_##U(T, x->F);                              \
+    return MAX_ERR_NONE;                                            \
+  }
+
+/** @brief Define the getter function for an array attribute
+@param[in] M The Max type (without the leading "t_")
+@param[in] T The SDT type (without the leading "SDT")
+@param[in] F The name of the Max object field where the SDT object is stored
+@param[in] A The name of the attribute
+@param[in] AT The type of the attribute
+@param[in] N Array size getter */
+#define SDT_MAX_ARRAY_GETTER(M, T, F, A, AT, N)                       \
+  t_max_err M##_get##A(t_##M *x, void *attr, long *ac, t_atom **av) { \
+    long n = (N);                                                     \
+    if (!(*ac >= n && *av)) {                                         \
+      if (*av) sysmem_freeptr(*av);                                   \
+      *av = (t_atom *)sysmem_newptr(sizeof(t_atom) * (n));            \
+      if (!*av) {                                                     \
+        *ac = 0;                                                      \
+        return MAX_ERR_OUT_OF_MEM;                                    \
+      }                                                               \
+    }                                                                 \
+    *ac = n;                                                          \
+    t_max_err err = MAX_ERR_NONE;                                     \
+    for (long i = 0; i < n && err == MAX_ERR_NONE; ++i) {             \
+      err = atom_set##AT((*av) + i, SDT##T##_get##A(x->F, i));        \
+    }                                                                 \
+    return err;                                                       \
+  }
 
 #endif
