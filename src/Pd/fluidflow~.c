@@ -19,7 +19,7 @@ typedef struct _fluidflow {
   t_object obj;
   SDTFluidFlow *flow;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_fluidflow;
 
 void fluidflow_avgRate(t_fluidflow *x, t_float f) {

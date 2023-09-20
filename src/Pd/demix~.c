@@ -13,7 +13,7 @@ typedef struct _demix {
   SDTDemix *demix;
   t_float f;
   t_outlet *out0, *out1, *out2;
-  char *key;
+  const char *key;
 } t_demix;
 
 static t_class *demix_class = NULL;

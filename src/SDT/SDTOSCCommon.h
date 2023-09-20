@@ -366,21 +366,22 @@ Macros for implementing OSC methods
 
 /** @brief Implement OSC argument read
 @param [in] VAR Argument destination variable
+@param [in] IDX Argument index
 @param [in] CTYPE C type for destination variable
 @param [in] OSCTYPE OSC type of argument
 @param [in] OSCTYPELCASE OSC type of argument (lowercase)
 @param [in] MSGVAR Message variable identifier */
-#define _SDTOSC_GETARG(VAR, CTYPE, OSCTYPE, OSCTYPELCASE, MSGVAR)            \
+#define _SDTOSC_GETARG(VAR, IDX, CTYPE, OSCTYPE, OSCTYPELCASE, MSGVAR)       \
   CTYPE VAR;                                                                 \
-  if (SDTOSCArgumentList_getNArgs(args) < 2) {                               \
+  if (SDTOSCArgumentList_getNArgs(args) < ((IDX) + 1)) {                     \
     SDTOSC_MESSAGE_LOGA(ERROR,                                               \
                         "\n  %s\n  [ARGUMENT ERROR] Missing argument: " #VAR \
                         "\n  %s\n",                                          \
                         x, SDTOSC_rtfm_string());                            \
     return 5;                                                                \
   }                                                                          \
-  if (SDTOSCArgumentList_is##OSCTYPE(args, 1)) {                             \
-    VAR = (CTYPE)SDTOSCArgumentList_get##OSCTYPE(args, 1);                   \
+  if (SDTOSCArgumentList_is##OSCTYPE(args, IDX)) {                           \
+    VAR = (CTYPE)SDTOSCArgumentList_get##OSCTYPE(args, IDX);                 \
   } else {                                                                   \
     SDTOSC_MESSAGE_LOGA(ERROR,                                               \
                         "\n  %s\n  [ARGUMENT ERROR] Second argument should " \
@@ -465,7 +466,7 @@ Macros for implementing OSC methods
   int SDTOSC##TYPENAME##_set##UCASE(const SDTOSCMessage *x) {           \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                     \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                     \
-    _SDTOSC_GETARG(LCASE, CTYPE, OSCTYPE, OSCTYPELCASE, x)              \
+    _SDTOSC_GETARG(LCASE, 1, CTYPE, OSCTYPE, OSCTYPELCASE, x)           \
     SDT##TYPENAME##_set##UCASE(obj, LCASE);                             \
     return 0;                                                           \
   }

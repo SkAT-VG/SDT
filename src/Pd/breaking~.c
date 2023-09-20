@@ -12,7 +12,7 @@ typedef struct _breaking {
   t_object obj;
   SDTBreaking *breaking;
   t_outlet *out0, *out1;
-  char *key;
+  const char *key;
 } t_breaking;
 
 void breaking_bang(t_breaking *x) { SDTBreaking_reset(x->breaking); }

@@ -13,7 +13,7 @@ typedef struct _scraping {
   SDTScraping *scraping;
   t_float f;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_scraping;
 
 void scraping_grain(t_scraping *x, t_float f) {

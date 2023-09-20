@@ -13,7 +13,7 @@ typedef struct _envelope {
   SDTEnvelope *envelope;
   t_float f;
   t_outlet *out0;
-  char *key;
+  const char *key;
 } t_envelope;
 
 void envelope_attack(t_envelope *x, t_float f) {

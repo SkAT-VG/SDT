@@ -13,7 +13,7 @@ typedef struct _spectralfeats {
   SDTSpectralFeats *feats;
   t_float f;
   t_outlet *out0;
-  char *key;
+  const char *key;
 } t_spectralfeats;
 
 SDT_PD_SETTER(spectralfeats, SpectralFeats, feats, Overlap, )

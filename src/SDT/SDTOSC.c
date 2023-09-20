@@ -22,13 +22,13 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
   if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
     return SDTOSCZeroCrossing(x);
+  if (!strcmp("resonator", k) || !strcmp("modal", k) || !strcmp("inertial", k))
+    return SDTOSCResonator(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified container is "
                       "not implemented: % s\n %s\n ",
                       x, k, SDTOSC_rtfm_string());
   return 2;
-  // else if (!strcmp("resonator", method) || !strcmp("inertial", method))
-  //   return_code = SDTOSCResonator(log, sub);
   // else if (!strcmp("interactor", method))
   //   return_code = SDTOSCInteractor(log, sub);
   // else if (!strcmp("project", method))

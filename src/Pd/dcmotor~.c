@@ -11,7 +11,7 @@ static t_class *dcmotor_class;
 typedef struct _dcmotor {
   t_object obj;
   SDTDCMotor *motor;
-  char *key;
+  const char *key;
   t_float f;
   t_inlet *in;
   t_outlet *out;

@@ -20,7 +20,7 @@ typedef struct _windkarman {
   SDTWindKarman *karman;
   t_float f;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_windkarman;
 
 void windkarman_diameter(t_windkarman *x, t_float f) {

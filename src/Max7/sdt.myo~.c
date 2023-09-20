@@ -41,15 +41,15 @@ void myoelastic_assist(t_myoelastic *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(myoelastic, Myoelastic, myo, "myo~", "myoelastic feature extractor")
 
-SDT_MAX_GETTER(myoelastic, Myoelastic, myo, DcFrequency)
-SDT_MAX_GETTER(myoelastic, Myoelastic, myo, LowFrequency)
-SDT_MAX_GETTER(myoelastic, Myoelastic, myo, HighFrequency)
-SDT_MAX_GETTER(myoelastic, Myoelastic, myo, Threshold)
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, DcFrequency, float)
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, LowFrequency, float)
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, HighFrequency, float)
+SDT_MAX_GETTER(myoelastic, Myoelastic, myo, Threshold, float)
 
-SDT_MAX_SETTER(myoelastic, Myoelastic, myo, DcFrequency, update)
-SDT_MAX_SETTER(myoelastic, Myoelastic, myo, LowFrequency, update)
-SDT_MAX_SETTER(myoelastic, Myoelastic, myo, HighFrequency, update)
-SDT_MAX_SETTER(myoelastic, Myoelastic, myo, Threshold, update)
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, DcFrequency, float, update)
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, LowFrequency, float, update)
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, HighFrequency, float, update)
+SDT_MAX_SETTER(myoelastic, Myoelastic, myo, Threshold, float, update)
 
 void myoelastic_send(t_myoelastic *x) {
   outlet_float(x->outlets[0], x->out[0]);

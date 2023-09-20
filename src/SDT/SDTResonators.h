@@ -26,6 +26,9 @@ extern "C" {
 /** @brief Opaque data structure representing a solid resonator object. */
 typedef struct SDTResonator SDTResonator;
 
+#define SDT_RESONATOR_NMODES_DEFAULT 1
+#define SDT_RESONATOR_NPICKUPS_DEFAULT 1
+
 /** @brief Object constructor.
 @param[in] nModes Number of resonant modes
 @param[in] nPickups Number of pickup points
@@ -37,19 +40,65 @@ extern SDTResonator *SDTResonator_new(unsigned int nModes,
 @param[in] x Pointer to the instance to destroy */
 extern void SDTResonator_free(SDTResonator *x);
 
-#define SDT_RESONATOR Resonator
+/** @brief Update inner coefficients.
+Call this function whenever you change the SDT sample rate.
+@param[in] x Pointer to the instance to update */
+extern void SDTResonator_update(SDTResonator *x);
 
-SDT_TYPE_COPY_H(SDT_RESONATOR)
-SDT_JSON_SERIALIZE_H(SDT_RESONATOR)
-SDT_JSON_DESERIALIZE_H(SDT_RESONATOR)
+/** @brief Deep-copies a resonator.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTResonator *SDTResonator_copy(SDTResonator *dest,
+                                       const SDTResonator *src,
+                                       unsigned char unsafe);
 
-/** @brief Object reinitializer
-@param[in] x Pointer to the instance to renew
-@param[in] nModes New number of resonant modes
-@param[in] nPickups New number of pickup points
-@return Pointer to the instance x */
-extern SDTResonator *SDTResonator_renew(SDTResonator *x, unsigned int nModes,
-                                        unsigned int nPickups);
+/** @brief Registers a resonator into the zero crossing rate
+detectors list with a unique ID.
+@param[in] x Resonator instance to register
+@param[in] key Unique ID assigned to the resonator instance
+@return Zero on success, otherwise one */
+extern int SDT_registerResonator(SDTResonator *x, const char *key);
+
+/** @brief Queries the resonators list by its unique ID.
+If a resonator with the ID is present, a pointer to the zero
+crossing rate detector is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the resonator instance
+@return Resonator instance pointer */
+extern SDTResonator *SDT_getResonator(const char *key);
+
+/** @brief Unregisters a resonator from the zero crossing rate
+detectors list. If a resonator with the given ID is present,
+it is unregistered from the list.
+@param[in] key Unique ID of the resonator instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterResonator(const char *key);
+
+extern json_value *_SDTResonator_toFrequencyJSON(const SDTResonator *x);
+extern json_value *_SDTResonator_toDecayJSON(const SDTResonator *x);
+extern json_value *_SDTResonator_toWeightJSON(const SDTResonator *x);
+extern json_value *_SDTResonator_toGainJSON(const SDTResonator *x);
+
+/** @brief Represent a resonator as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTResonator_toJSON(const SDTResonator *x);
+
+/** @brief Set parameters of a resonator from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTResonator *SDTResonator_setParams(SDTResonator *x,
+                                            const json_value *j,
+                                            unsigned char unsafe);
+
+/** @brief Initialize a resonator from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTResonator *SDTResonator_fromJSON(const json_value *x);
 
 /** @brief Gets the displacement of the object at a given pickup point.
 @param[in] pickup Pickup point
@@ -102,6 +151,16 @@ extern int SDTResonator_getActiveModes(const SDTResonator *x);
 /** @brief Gets the fragment size
 @return Fragment size */
 extern double SDTResonator_getFragmentSize(const SDTResonator *x);
+
+/** @brief Sets the number of pickup points.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] f Number of pickup points */
+extern void SDTResonator_setNPickups(SDTResonator *x, int f);
+
+/** @brief Sets the number of resonant modes.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] f Number of resonant modes */
+extern void SDTResonator_setNModes(SDTResonator *x, int f);
 
 /** @brief Sets a modal displacement at a given pickup point
 @param[in] pickup Pickup point

@@ -259,7 +259,7 @@ Function that implements OSC parameter setting for #SDTPitch  objects
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCPitch_setOverlap(const SDTOSCMessage *x);
 
-/** @brief `/pitch/minFreq <name> <value>`
+/** @brief `/pitch/tolerance <name> <value>`
 
 Function that implements OSC parameter setting for #SDTPitch  objects
 @param x OSC message

@@ -1,6 +1,8 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "SDTCommonPd.h"
 #include "m_pd.h"
+
 #ifdef NT
 #pragma warning(disable : 4244)
 #pragma warning(disable : 4305)
@@ -11,7 +13,7 @@ static t_class *inertial_class;
 typedef struct _inertial {
   t_object obj;
   SDTResonator *inertial;
-  char *key;
+  const char *key;
   t_sample f;
 } t_inertial;
 
@@ -19,9 +21,7 @@ void inertial_mass(t_inertial *x, t_float f) {
   SDTResonator_setWeight(x->inertial, 0, f);
 }
 
-void inertial_fragmentSize(t_inertial *x, t_float f) {
-  SDTResonator_setFragmentSize(x->inertial, f);
-}
+SDT_PD_SETTER(inertial, Resonator, inertial, FragmentSize, )
 
 void inertial_strike(t_inertial *x, t_float p, t_float v) {
   SDTResonator_setPosition(x->inertial, 0, p);
@@ -30,12 +30,7 @@ void inertial_strike(t_inertial *x, t_float p, t_float v) {
 
 void inertial_dsp(t_inertial *x, t_signal **sp) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTResonator_setFrequency(x->inertial, 0, 0.0);
-  SDTResonator_setDecay(x->inertial, 0, 0.0);
-  SDTResonator_setWeight(x->inertial, 0, 1.0);
-  SDTResonator_setGain(x->inertial, 0, 0, 1.0);
-  SDTResonator_setFragmentSize(x->inertial, 1.0);
-  SDTResonator_setActiveModes(x->inertial, 1);
+  SDTResonator_update(x->inertial);
 }
 
 void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
@@ -55,6 +50,12 @@ void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
     SDTResonator_free(x->inertial);
     return NULL;
   }
+  SDTResonator_setFrequency(x->inertial, 0, 0.0);
+  SDTResonator_setDecay(x->inertial, 0, 0.0);
+  SDTResonator_setWeight(x->inertial, 0, 1.0);
+  SDTResonator_setGain(x->inertial, 0, 0, 1.0);
+  SDTResonator_setFragmentSize(x->inertial, 1.0);
+  SDTResonator_setActiveModes(x->inertial, 1);
   return x;
 }
 
@@ -71,7 +72,7 @@ void inertial_setup(void) {
   class_addmethod(inertial_class, (t_method)inertial_dsp, gensym("dsp"), 0);
   class_addmethod(inertial_class, (t_method)inertial_mass, gensym("mass"),
                   A_FLOAT, 0);
-  class_addmethod(inertial_class, (t_method)inertial_fragmentSize,
+  class_addmethod(inertial_class, (t_method)inertial_setFragmentSize,
                   gensym("fragmentSize"), A_FLOAT, 0);
   class_addmethod(inertial_class, (t_method)inertial_strike, gensym("strike"),
                   A_FLOAT, A_FLOAT, 0);

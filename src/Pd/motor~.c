@@ -14,7 +14,7 @@ typedef struct _motor {
   t_float f;
   t_inlet *in1;
   t_outlet *out0, *out1, *out2;
-  char *key;
+  const char *key;
 } t_motor;
 
 void motor_cycle(t_motor *x, t_float f) {

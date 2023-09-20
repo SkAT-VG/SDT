@@ -30,13 +30,13 @@ void spectralfeats_assist(t_spectralfeats *x, void *b, long m, long a,
 SDT_MAX_KEY(spectralfeats, SpectralFeats, feats, "spectralfeats",
             "spectral features extractor")
 
-SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, Overlap)
-SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MinFreq)
-SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MaxFreq)
+SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, Overlap, float)
+SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MinFreq, float)
+SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MaxFreq, float)
 
-SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, Overlap, )
-SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MinFreq, )
-SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MaxFreq, )
+SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, Overlap, float, )
+SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MinFreq, float, )
+SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MaxFreq, float, )
 
 void spectralfeats_send(t_spectralfeats *x) {
   t_atom argv[1];

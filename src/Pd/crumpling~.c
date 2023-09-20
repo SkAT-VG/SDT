@@ -12,7 +12,7 @@ typedef struct _crumpling {
   t_object obj;
   SDTCrumpling *crumpling;
   t_outlet *out0, *out1;
-  char *key;
+  const char *key;
 } t_crumpling;
 
 void crumpling_crushingEnergy(t_crumpling *x, t_float f) {

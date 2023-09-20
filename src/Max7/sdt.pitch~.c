@@ -35,11 +35,11 @@ void pitch_assist(t_pitch *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(pitch, Pitch, pitch, "pitch~", "fundamental frequency estimator")
 
-SDT_MAX_GETTER(pitch, Pitch, pitch, Overlap)
-SDT_MAX_GETTER(pitch, Pitch, pitch, Tolerance)
+SDT_MAX_GETTER(pitch, Pitch, pitch, Overlap, float)
+SDT_MAX_GETTER(pitch, Pitch, pitch, Tolerance, float)
 
-SDT_MAX_SETTER(pitch, Pitch, pitch, Overlap, )
-SDT_MAX_SETTER(pitch, Pitch, pitch, Tolerance, )
+SDT_MAX_SETTER(pitch, Pitch, pitch, Overlap, float, )
+SDT_MAX_SETTER(pitch, Pitch, pitch, Tolerance, float, )
 
 void pitch_send(t_pitch *x) {
   outlet_float(x->outlets[0], x->outs[0]);

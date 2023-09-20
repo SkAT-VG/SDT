@@ -20,7 +20,7 @@ typedef struct _windflow {
   SDTWindFlow *flow;
   t_float f;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_windflow;
 
 static t_int *windflow_perform(t_int *w) {

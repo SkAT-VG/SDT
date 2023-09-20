@@ -18,6 +18,11 @@ extern "C" {
 @return The string, or 0 on fail. Must be freed */
 extern char *SDTJSON_dumps(const json_value *x);
 
+/** @brief Dump a JSON value to string (packed)
+@param[in] x The JSON value
+@return The string, or 0 on fail. Must be freed */
+extern char *SDTJSON_dumps_packed(const json_value *x);
+
 /** @brief Dump a JSON value to file
 @param[in] x The JSON value
 @param[in] fpath The file path

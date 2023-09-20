@@ -13,7 +13,7 @@ typedef struct _rolling {
   SDTRolling *rolling;
   t_float f;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_rolling;
 
 void rolling_grain(t_rolling *x, t_float f) {

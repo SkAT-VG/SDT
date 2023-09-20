@@ -72,7 +72,7 @@ SDTZeroCrossing *SDTZeroCrossing_fromJSON(const json_value *x) {
   _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
 
   SDTZeroCrossing *y = SDTZeroCrossing_new(size);
-  return SDTZeroCrossing_setParams(y, x, 1);
+  return SDTZeroCrossing_setParams(y, x, 0);
 }
 
 SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
@@ -204,7 +204,7 @@ json_value *SDTMyoelastic_toJSON(const SDTMyoelastic *x) {
 SDTMyoelastic *SDTMyoelastic_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
   SDTMyoelastic *y = SDTMyoelastic_new();
-  return SDTMyoelastic_setParams(y, x, 1);
+  return SDTMyoelastic_setParams(y, x, 0);
 }
 
 SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
@@ -395,7 +395,7 @@ SDTSpectralFeats *SDTSpectralFeats_fromJSON(const json_value *x) {
   _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
 
   SDTSpectralFeats *y = SDTSpectralFeats_new(size);
-  return SDTSpectralFeats_setParams(y, x, 1);
+  return SDTSpectralFeats_setParams(y, x, 0);
 }
 
 void SDTSpectralFeats_setSize(SDTSpectralFeats *x, unsigned int f) {
@@ -613,7 +613,7 @@ SDTPitch *SDTPitch_fromJSON(const json_value *x) {
   _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
 
   SDTPitch *y = SDTPitch_new(size);
-  return SDTPitch_setParams(y, x, 1);
+  return SDTPitch_setParams(y, x, 0);
 }
 
 SDTPitch *SDTPitch_setParams(SDTPitch *x, const json_value *j,
