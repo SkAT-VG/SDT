@@ -188,15 +188,15 @@ void C74_EXPORT ext_main(void *r) {
   // R/W (arrays)
   SDT_MAX_ATTRIBUTE(c, modal, Frequency, freqs, float64, 0);
   SDT_MAX_ATTRIBUTE(c, modal, Decay, decays, float64, 0);
-  SDT_MAX_ATTRIBUTE(c, modal, Weight, weights, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, modal, Weight, masses, float64, 0);
   CLASS_ATTR_ORDER(c, "freqs", 0, "5");
   CLASS_ATTR_ORDER(c, "decays", 0, "6");
-  CLASS_ATTR_ORDER(c, "weights", 0, "7");
+  CLASS_ATTR_ORDER(c, "masses", 0, "7");
 
   CLASS_ATTR_FILTER_CLIP(c, "fragmentSize", 0.0, 1.0);
   CLASS_ATTR_FILTER_MIN(c, "freqs", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "decays", 0.0);
-  CLASS_ATTR_FILTER_MIN(c, "weights", 0.0);
+  CLASS_ATTR_FILTER_MIN(c, "masses", 0.0);
 
   // Gains are instantiated at initialization (one attribute per pickup)
 
