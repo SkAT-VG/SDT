@@ -9,7 +9,7 @@
 typedef struct _modal {
   t_pxobject ob;
   SDTResonator *modal;
-  char *key;
+  const char *key;
   t_object **pickups;
 } t_modal;
 
@@ -22,7 +22,7 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_setupMaxLoggers();
   t_modal *x;
   SDTResonator *modal;
-  char *key;
+  const char *key;
   char attrName[17];
   int err;
 

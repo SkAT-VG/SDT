@@ -13,7 +13,7 @@ typedef struct _reverb {
   t_float f;
   SDTReverb *reverb;
   t_outlet *out0;
-  char *key;
+  const char *key;
 } t_reverb;
 
 void reverb_xSize(t_reverb *x, t_float f) {

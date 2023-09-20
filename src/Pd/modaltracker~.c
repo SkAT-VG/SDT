@@ -14,7 +14,7 @@ typedef struct _modaltracker {
   t_float f;
   t_outlet *out0, *out1;
   int nModes, nSamples, pickup, isRecording;
-  char *key;
+  const char *key;
 } t_modaltracker;
 
 void modaltracker_overlap(t_modaltracker *x, t_float f) {

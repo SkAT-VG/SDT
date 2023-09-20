@@ -20,7 +20,7 @@ typedef struct _bubble {
   SDTBubble *bubble;
   t_float radius, riseFactor;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_bubble;
 
 void bubble_bang(t_bubble *x) {

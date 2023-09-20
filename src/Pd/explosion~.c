@@ -12,7 +12,7 @@ typedef struct _explosion {
   t_object obj;
   SDTExplosion *explosion;
   t_outlet *out0, *out1;
-  char *key;
+  const char *key;
 } t_explosion;
 
 void explosion_blastTime(t_explosion *x, t_float f) {

@@ -13,7 +13,7 @@ typedef struct _pitchshift {
   t_float f;
   SDTPitchShift *shift;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_pitchshift;
 
 void pitchshift_ratio(t_pitchshift *x, t_float f) {

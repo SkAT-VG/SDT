@@ -1,7 +1,9 @@
 #include "SDTStructs.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "SDTCommon.h"
 
 typedef struct SDTHashItem {

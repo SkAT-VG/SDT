@@ -12,7 +12,7 @@ typedef struct _bouncing {
   t_object obj;
   SDTBouncing *bouncing;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_bouncing;
 
 void bouncing_bang(t_bouncing *x) { SDTBouncing_reset(x->bouncing); }

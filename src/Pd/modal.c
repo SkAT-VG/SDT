@@ -11,7 +11,7 @@ static t_class *modal_class;
 typedef struct _modal {
   t_object obj;
   SDTResonator *modal;
-  char *key;
+  const char *key;
   int nModes, nPickups;
   t_sample f;
 } t_modal;

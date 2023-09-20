@@ -11,7 +11,7 @@ static t_class *inertial_class;
 typedef struct _inertial {
   t_object obj;
   SDTResonator *inertial;
-  char *key;
+  const char *key;
   t_sample f;
 } t_inertial;
 

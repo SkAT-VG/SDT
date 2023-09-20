@@ -14,7 +14,7 @@ typedef struct _myo {
   t_float f;
   t_outlet *out0, *out1, *out2, *out3;
   double time;
-  char *key;
+  const char *key;
 } t_myo;
 
 SDT_PD_SETTER(myo, Myoelastic, myo, DcFrequency, update)
@@ -76,10 +76,10 @@ void myo_tilde_setup(void) {
       class_new(gensym("myo~"), (t_newmethod)myo_new, (t_method)myo_free,
                 sizeof(t_myo), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(myo_class, t_myo, f);
-  class_addmethod(myo_class, (t_method)myo_setDcFrequency, gensym("dcFrequency"),
-                  A_FLOAT, 0);
-  class_addmethod(myo_class, (t_method)myo_setLowFrequency, gensym("lowFrequency"),
-                  A_FLOAT, 0);
+  class_addmethod(myo_class, (t_method)myo_setDcFrequency,
+                  gensym("dcFrequency"), A_FLOAT, 0);
+  class_addmethod(myo_class, (t_method)myo_setLowFrequency,
+                  gensym("lowFrequency"), A_FLOAT, 0);
   class_addmethod(myo_class, (t_method)myo_setHighFrequency,
                   gensym("highFrequency"), A_FLOAT, 0);
   class_addmethod(myo_class, (t_method)myo_setThreshold, gensym("threshold"),

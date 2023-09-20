@@ -9,7 +9,7 @@
 typedef struct _inertial {
   t_pxobject ob;
   SDTResonator *inertial;
-  char *key;
+  const char *key;
 } t_inertial;
 
 static t_class *inertial_class = NULL;
@@ -18,7 +18,7 @@ void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_setupMaxLoggers();
   t_inertial *x;
   SDTResonator *inertial;
-  char *key;
+  const char *key;
 
   if (argc < 1 || atom_gettype(&argv[0]) != A_SYM) {
     error("sdt.inertial: Please provide a unique id as first argument.");
