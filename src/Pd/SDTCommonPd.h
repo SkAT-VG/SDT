@@ -90,10 +90,24 @@ memory This macro works for destroyer functions whose signature is
 @param[in] F The name of the Pd object field where the SDT object is stored
 @param[in] A The name of the attribute
 @param[in] U Type `update` to trigger the structure update function */
-#define SDT_PD_SETTER(M, T, F, A, U)          \
-  void M##_set##A(t_##M *x, t_float f) {      \
-    SDT##T##_set##A(x->F, f); \
-    _SDT_PD_TYPE_UPDATE_##U(T, x->F);         \
+#define SDT_PD_SETTER(M, T, F, A, U)     \
+  void M##_set##A(t_##M *x, t_float f) { \
+    SDT##T##_set##A(x->F, f);            \
+    _SDT_PD_TYPE_UPDATE_##U(T, x->F);    \
+  }
+
+/** @brief Define the setter function for an array attribute
+@param[in] M The Pd type (without the leading `t_`)
+@param[in] T The SDT type (without the leading `SDT`)
+@param[in] F The name of the Pd object field where the SDT object is stored
+@param[in] A The name of the attribute
+@param[in] U Type `update` to trigger the structure update function */
+#define SDT_PD_ARRAY_SETTER(M, T, F, A, U)                     \
+  void M##_set##A(t_##M *x, void *attr, long ac, t_atom *av) { \
+    for (int i = 0; i < ac; ++i) {                             \
+      SDT##T##_set##A(x->F, i, atom_getfloat(av + i));         \
+    }                                                          \
+    _SDT_PD_TYPE_UPDATE_##U(T, x->F);                          \
   }
 
 #endif

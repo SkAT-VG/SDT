@@ -1,6 +1,8 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTSolids.h"
+#include "SDTCommonPd.h"
 #include "m_pd.h"
+
 #ifdef NT
 #pragma warning(disable : 4244)
 #pragma warning(disable : 4305)
@@ -19,9 +21,7 @@ void inertial_mass(t_inertial *x, t_float f) {
   SDTResonator_setWeight(x->inertial, 0, f);
 }
 
-void inertial_fragmentSize(t_inertial *x, t_float f) {
-  SDTResonator_setFragmentSize(x->inertial, f);
-}
+SDT_PD_SETTER(inertial, Resonator, inertial, FragmentSize, )
 
 void inertial_strike(t_inertial *x, t_float p, t_float v) {
   SDTResonator_setPosition(x->inertial, 0, p);
@@ -72,7 +72,7 @@ void inertial_setup(void) {
   class_addmethod(inertial_class, (t_method)inertial_dsp, gensym("dsp"), 0);
   class_addmethod(inertial_class, (t_method)inertial_mass, gensym("mass"),
                   A_FLOAT, 0);
-  class_addmethod(inertial_class, (t_method)inertial_fragmentSize,
+  class_addmethod(inertial_class, (t_method)inertial_setFragmentSize,
                   gensym("fragmentSize"), A_FLOAT, 0);
   class_addmethod(inertial_class, (t_method)inertial_strike, gensym("strike"),
                   A_FLOAT, A_FLOAT, 0);
