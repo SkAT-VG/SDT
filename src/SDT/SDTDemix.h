@@ -92,7 +92,7 @@ extern void SDTDemix_dsp(SDTDemix *x, double *outs, double in);
 /** @brief Registers a demixer into the demixers list with a unique ID.
 @param[in] x Demix instance to register
 @param[in] key Unique ID assigned to the demixer instance */
-extern int SDT_registerDemix(SDTDemix *x, char *key);
+extern int SDT_registerDemix(SDTDemix *x, const char *key);
 
 /** @brief Queries the demixers list by its unique ID.
 If a demixer with the ID is present, a pointer to the demixer is returned.
@@ -104,7 +104,7 @@ extern SDTDemix *SDT_getDemix(const char *key);
 /** @brief Unregisters a demixer from the demixers list.
 If a demixer with the given ID is present, it is unregistered from the list.
 @param[in] key Unique ID of the Demix instance to unregister */
-extern int SDT_unregisterDemix(char *key);
+extern int SDT_unregisterDemix(const char *key);
 
 #ifdef __cplusplus
 };

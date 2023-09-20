@@ -428,7 +428,7 @@ frequency estimators list with a unique ID.
 @param[in] x Fundamental frequency estimator instance to register
 @param[in] key Unique ID assigned to the fundamental frequency estimator
 @return Zero on success, otherwise one */
-extern int SDT_registerPitch(struct SDTPitch *x, const char *key);
+extern int SDT_registerPitch(SDTPitch *x, const char *key);
 
 /** @brief Queries the fundamental frequency estimators list by its unique ID.
 If a fundamental frequency estimator with the ID is present, a pointer to the
