@@ -67,7 +67,7 @@ static t_int *dcmotor_perform(t_int *w) {
 
 static void dcmotor_dsp(t_dcmotor *x, t_signal **sp) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTDCMotor_setFilters(x->motor);
+  SDTDCMotor_update(x->motor);
   dsp_add(dcmotor_perform, 5, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
           sp[0]->s_n);
 }

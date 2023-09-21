@@ -32,6 +32,8 @@ extern "C" {
 /** @brief Opaque data structure for the electric motor synthesis model. */
 typedef struct SDTDCMotor SDTDCMotor;
 
+#define SDT_DCMOTOR_MAXSIZE_DEFAULT 48000
+
 /** @brief Object constructor.
 @param[in] maxSize Buffer length of the internal comb filter, in samples
 @return Pointer to the new instance */
@@ -41,31 +43,114 @@ extern SDTDCMotor *SDTDCMotor_new(long maxSize);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDCMotor_free(SDTDCMotor *x);
 
-#define SDT_DCMOTOR DCMotor
-#define SDT_DCMOTOR_NEW_ARGS 48000
-#define SDT_DCMOTOR_ATTRIBUTES(T, A)                         \
-  A(T, maxSize, long, MaxSize, maxSize, integer, 48000)      \
-  A(T, coils, long, Coils, coils, integer, 2)                \
-  A(T, size, double, Size, size, double, 0.2)                \
-  A(T, reson, double, Reson, reson, double, 0.8)             \
-  A(T, gearRatio, double, GearRatio, gearRatio, double, 1.0) \
-  A(T, harshness, double, Harshness, harshness, double, 0.5) \
-  A(T, rotorGain, double, RotorGain, rotorGain, double, 0.5) \
-  A(T, gearGain, double, GearGain, gearGain, double, 0.3)    \
-  A(T, brushGain, double, BrushGain, brushGain, double, 0.2) \
-  A(T, airGain, double, AirGain, airGain, double, 0.0)
+/** @brief Deep-copies an electric motor synthesis model.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTDCMotor *SDTDCMotor_copy(SDTDCMotor *dest, const SDTDCMotor *src,
+                                   unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_DCMOTOR)
-SDT_DEFINE_HASHMAP_H(SDT_DCMOTOR)
-SDT_TYPE_MAKE_GETTERS_H(SDT_DCMOTOR)
-SDT_JSON_SERIALIZE_H(SDT_DCMOTOR)
-SDT_JSON_DESERIALIZE_H(SDT_DCMOTOR)
+/** @brief Update inner filters. Call this function whenever you change the SDT
+sample rate or one or more frequency parameters of this structure
+@param[in] x Pointer to the instance to update */
+extern void SDTDCMotor_update(SDTDCMotor *x);
 
+/** @brief Registers an electric motor synthesis model into the myoelastic
+feature extractors list with a unique ID.
+@param[in] x DCMotor feature extractor instance to register
+@param[in] key Unique ID assigned to the electric motor synthesis model instance
+@return Zero on success, otherwise one */
+extern int SDT_registerDCMotor(SDTDCMotor *x, const char *key);
+
+/** @brief Queries the electric motor synthesis models list by its unique ID.
+If an electric motor synthesis model with the ID is present, a pointer to the
+electric motor synthesis model is returned. Otherwise, a NULL pointer is
+returned.
+@param[in] key Unique ID assigned to the electric motor synthesis model instance
+@return DCMotor feature extractor instance pointer */
+extern SDTDCMotor *SDT_getDCMotor(const char *key);
+
+/** @brief Unregisters an electric motor synthesis model from the myoelastic
+feature extractors list. If an electric motor synthesis model with the given ID
+is present, it is unregistered from the list.
+@param[in] key Unique ID of the electric motor synthesis model instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterDCMotor(const char *key);
+
+/** @brief Gets the buffer length of the internal comb filter.
+@return Buffer length of the internal comb filter, in samples */
+extern long SDTDCMotor_getMaxSize(const SDTDCMotor *x);
+
+/** @brief Gets the Revolutions Per Minute (RPM) of the engine rotor.
+@return f Engine RPM */
+extern double SDTDCMotor_getRpm(const SDTDCMotor *x);
+
+/** @brief Gets the number of coils on the rotor.
+@return Number of coils on the rotor */
+extern long SDTDCMotor_getCoils(const SDTDCMotor *x);
+
+/** @brief Gets the size of the chassis.
+@return Chassis length, in m */
+extern double SDTDCMotor_getSize(const SDTDCMotor *x);
+
+/** @brief Sets the amount of resonance caused by the chassis.
+@return Chassis resonance */
+extern double SDTDCMotor_getReson(const SDTDCMotor *x);
+
+/** @brief Gets the gear ratio of the engine.
+@return Gear ratio */
+extern double SDTDCMotor_getGearRatio(const SDTDCMotor *x);
+
+/** @brief Gets the harshness of the engine sound.
+@return Harshness */
+extern double SDTDCMotor_getHarshness(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume coming from the rotor.
+@return Rotor gain */
+extern double SDTDCMotor_getRotorGain(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume coming from the gears.
+@return Gear gain */
+extern double SDTDCMotor_getGearGain(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume coming from the commutator ring and brushes.
+@return Brush gain */
+extern double SDTDCMotor_getBrushGain(const SDTDCMotor *x);
+
+/** @brief Gets the sound volume of the air turbulence caused by rotation.
+@return Air gain */
+extern double SDTDCMotor_getAirGain(const SDTDCMotor *x);
+
+/** @brief Represent an electric motor synthesis model as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTDCMotor_toJSON(const SDTDCMotor *x);
+
+/** @brief Initialize an electric motor synthesis model from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTDCMotor *SDTDCMotor_fromJSON(const json_value *x);
+
+/** @brief Set parameters of an electric motor synthesis model from a JSON
+object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTDCMotor *SDTDCMotor_setParams(SDTDCMotor *x, const json_value *j,
+                                        unsigned char unsafe);
+
+/** @brief Sets the filter coefficients. Call this function whenever the sample
+rate changes
+@param[in] x Pointer to the instance to update */
+extern void SDTDCMotor_update(SDTDCMotor *x);
+
+/** @brief Sets the buffer length of the internal comb filter.
+This function allocates memory and should not be called inside a DSP cycle.
+@param[in] f Buffer length of the internal comb filter, in samples */
 extern void SDTDCMotor_setMaxSize(SDTDCMotor *x, long f);
-
-/** @brief Sets the filter coefficients.
-Call this function whenever the sample rate changes */
-extern void SDTDCMotor_setFilters(SDTDCMotor *x);
 
 /** @brief Sets the Revolutions Per Minute (RPM) of the engine rotor.
 @param[in] f Engine RPM */
