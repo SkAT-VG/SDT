@@ -57,6 +57,8 @@ json_value *SDTDCMotor_toJSON(const SDTDCMotor *x) {
   json_value *obj = json_object_new(0);
   json_object_push(obj, "maxSize", json_integer_new(SDTDCMotor_getMaxSize(x)));
   json_object_push(obj, "coils", json_integer_new(SDTDCMotor_getCoils(x)));
+  json_object_push(obj, "rpm", json_double_new(SDTDCMotor_getRpm(x)));
+  json_object_push(obj, "load", json_double_new(SDTDCMotor_getLoad(x)));
   json_object_push(obj, "size", json_double_new(SDTDCMotor_getSize(x)));
   json_object_push(obj, "reson", json_double_new(SDTDCMotor_getReson(x)));
   json_object_push(obj, "gearRatio",
@@ -91,6 +93,8 @@ SDTDCMotor *SDTDCMotor_setParams(SDTDCMotor *x, const json_value *j,
 
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, MaxSize, maxSize, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Coils, coils, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Rpm, rpm, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Load, load, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Size, size, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Reson, reson, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearRatio, gearRatio, integer);
@@ -100,6 +104,8 @@ SDTDCMotor *SDTDCMotor_setParams(SDTDCMotor *x, const json_value *j,
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, BrushGain, brushGain, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, AirGain, airGain, integer);
 
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Rpm, rpm, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Load, load, double);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Size, size, double);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Reson, reson, double);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearRatio, gearRatio, double);
@@ -112,14 +118,13 @@ SDTDCMotor *SDTDCMotor_setParams(SDTDCMotor *x, const json_value *j,
   return x;
 }
 
-// SDT_TYPE_COPY(SDT_DCMOTOR)
-// SDT_DEFINE_HASHMAP(SDT_DCMOTOR, 59)
-// SDT_JSON_SERIALIZE(SDT_DCMOTOR)
-// SDT_JSON_DESERIALIZE(SDT_DCMOTOR)
-
 long SDTDCMotor_getMaxSize(const SDTDCMotor *x) {
   return SDTComb_getMaxXDelay(x->chassis);
 }
+
+double SDTDCMotor_getRpm(const SDTDCMotor *x) { return x->rpm; }
+
+double SDTDCMotor_getLoad(const SDTDCMotor *x) { return x->load; }
 
 long SDTDCMotor_getCoils(const SDTDCMotor *x) { return x->coils; }
 

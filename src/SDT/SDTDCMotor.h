@@ -87,6 +87,10 @@ extern long SDTDCMotor_getMaxSize(const SDTDCMotor *x);
 @return f Engine RPM */
 extern double SDTDCMotor_getRpm(const SDTDCMotor *x);
 
+/** @brief Gets the mechanical stress on the rotor.
+@return Engine load */
+extern double SDTDCMotor_getLoad(const SDTDCMotor *x);
+
 /** @brief Gets the number of coils on the rotor.
 @return Number of coils on the rotor */
 extern long SDTDCMotor_getCoils(const SDTDCMotor *x);
