@@ -3,7 +3,8 @@
 
 /** @file SDTOSCResonators.h
 @defgroup OSCResonators SDTOSCResonators.h: OSC Resonators
-OSC containers and methods for SDT Resonators
+OSC for #SDTResonator objects.
+@ingroup osc
 @{
 */
 
