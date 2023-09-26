@@ -10,3 +10,6 @@
 [submodule "3rdparty/cutest"]
 	path = 3rdparty/cutest
 	url = https://github.com/ennorehling/cutest.git
+[submodule "3rdparty/max-sdk-base"]
+	path = 3rdparty/max-sdk-base
+	url = https://github.com/ChromaticIsobar/max-sdk-base.git

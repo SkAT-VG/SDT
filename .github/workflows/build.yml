@@ -50,6 +50,7 @@ jobs:
           max: false
         - target: win32
           mingw: true
+          max: false
         - target: win64
           mingw: true
           pd: false
