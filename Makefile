@@ -301,7 +301,8 @@ MAXSDK_DIR=$(THIRDP_DIR)/max-sdk-base/c74support
 
 INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
 MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 \
-           -DC74_NO_DEPRECATION -fvisibility=hidden
+           -DC74_NO_DEPRECATION -fvisibility=hidden \
+					 -Wno-unused-function
 
 #  --- Version ---
 max_version:; @echo $(SDT_MAX_VERSION)
