@@ -65,12 +65,20 @@ into the desired destination folder.
 Users may as well build on their machines the Max *package*, Pd *library*, and shared core library or Apple framework.
 
 Before moving on to the instructions, you should [install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and clone this repository.
-Make sure to pull the SDT repository **including the submodules**. If your
-git client doesn't do that automatically, enter the following git command:
+Make sure to pull the SDT repository **including the submodules**.
+If you are cloning from the command-line interface, we suggest running `git clone` with these options to speed up the download:
+```bash
+git clone --recurse-submodules \
+	--filter=blob:none --also-filter-submodules \
+	git@github.com:SkAT-VG/SDT.git
+```
+The option `--recurse-submodules` will check out all submodules, while `--filter=blob:none` and `--also-filter-submodules` will avoid downloading unneeded blobs (but may not be supported in older `git` versions).
+
+If you are using a git client that doesn't check-out submodules automatically, enter the following git command:
 ```bash
 git submodule update --init --recursive
 ```
-or check the equivalent option in the git preferences of your GUI client.
+or enable the equivalent option in the git preferences of your GUI client.
 
 #### Dependencies (Windows)
 To compile the SDT under Windows, you need a distribution of the GNU C Compiler, 
