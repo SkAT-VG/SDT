@@ -112,7 +112,7 @@ ifeq ("$(TARGET)", "win64")
 endif
 ifeq ("$(TARGET)", "macosx")
 	CC=clang
-	MACARCH=-arch i386 -arch x86_64
+	MACARCH=-arch x86_64
 	MACVERSION_N=10.7
 	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
 	CFLAGS_+= -g $(MACARCH) $(MACVERSION)
