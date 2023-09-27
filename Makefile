@@ -112,9 +112,9 @@ ifeq ("$(TARGET)", "win64")
 endif
 ifeq ("$(TARGET)", "macosx")
 	CC=clang
-	MACARCH=-arch x86_64
-	MACVERSION_N=10.7
-	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
+	MACARCH=-arch x86_64 -arch arm64
+	MACVERSION_N=11.0
+	MACVERSION=-isysroot $(THIRDP_DIR)/MacOSX-SDKs/MacOSX$(MACVERSION_N).sdk -mmacosx-version-min=$(MACVERSION_N)
 	CFLAGS_+= -g $(MACARCH) $(MACVERSION)
 	SHARED_LDFLAGS=$(LDFLAGS) -dynamiclib -headerpad_max_install_names $(MACARCH) $(MACVERSION)
 else

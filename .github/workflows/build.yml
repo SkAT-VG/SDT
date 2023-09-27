@@ -76,6 +76,11 @@ jobs:
     - name: Install mingw compiler
       if: ${{ env.RUNS_ON_UBUNTU && matrix.mingw }}
       run: ${{ env.SUDO }} apt-get -y install mingw-w64
+    - name: Install LLVM and Clang
+      uses: KyleMayes/install-llvm-action@v1
+      if: ${{ startsWith(matrix.runs_on, 'macos') }}
+      with:
+        version: "12.0.0"
     - uses: actions/checkout@v3
       with:
         submodules: recursive
