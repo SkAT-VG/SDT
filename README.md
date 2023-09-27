@@ -88,6 +88,9 @@ We use `i686-w64-mingw32-gcc` for 32-bit systems and `x86_64-w64-mingw32-gcc` fo
 #### Dependencies (MacOS)
 To compile the SDT under MacOS, you need a distribution of the Clang C Compiler (https://clang.llvm.org) and Make (https://www.gnu.org/software/make).
 
+The `Makefile` will build fat binaries compatible with both `x86_64` and `arm64` (Apple Silicon), so you will need a Clang C Compiler version that supports `arm64`: we use version `12.0.0`.
+We are building against version `11.0` of the MacOSX SDK (included in this repository as a submodule).
+
 #### Dependencies (Linux)
 To compile the SDT under Linux, you need a distribution of the GNU C Compiler (https://gcc.gnu.org) and Make (https://www.gnu.org/software/make).
 
