@@ -49,8 +49,8 @@ endif
 TARGET?=$(AUTO_TARGET)
 BUILDDIR?=.build.$(TARGET)
 
-ALL=check_os core test
-PHONY=all install_core uninstall_core \
+ALL=check_os core testrunner
+PHONY=all test install_core uninstall_core \
 			check_os_detected check_os_supported \
 			core_version pd_version max_version full_version
 NOTINTERMEDIATE=
@@ -247,8 +247,10 @@ ifeq ("$(TARGET)", "win64")
 endif
 
 test: $(TEST_EXE)
+	$(info Running tests: $<)
+	$<
+testrunner: $(TEST_EXE)
 	$(info Compiled test runner: $<)
-
 $(TEST_EXE): $(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) $(CORE_OBJS) | $(BUILDDIR)
 	$(CC) -o $@ $(TEST_RUNNER_OBJ) $(TEST_OBJS) $(CUTEST_OBJS) $(CORE_OBJS) $(LDFLAGS)
 
