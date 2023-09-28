@@ -131,7 +131,7 @@ $(CC) $(CFLAGS_) $1 -c $< -o $@
 endef
 
 define make-dir
-mkdir -p $@
+mkdir -p $(if $(1),$(1),$@)
 endef
 # -----------------------------------------------------------------------------
 
@@ -183,7 +183,7 @@ endif
 CORE_FNAME=$(CORE_PREFIX)$(CORE_FNAME_NO_EXT)$(CORE_EXT)
 LINK_SDT=-L$(BUILDDIR) -l$(CORE_FNAME_NO_EXT)
 CORE_BUILDDIR=$(strip $(call get_build_dest,$(CORE_DIR)))
-CORE_OBJS=$(strip $(call get_objects,$(CORE_DIR)) $(JSON_OBJS))
+CORE_OBJS=$(strip $(call get_objects,$(CORE_DIR)) $(call get_objects,$(CORE_DIR)/OSC) $(JSON_OBJS))
 CORE_LIB=$(strip $(BUILDDIR)/$(CORE_FNAME))
 CORE_ARTIFACT=$(CORE_LIB)
 
@@ -205,12 +205,14 @@ LINK_SDT=-F$(BUILDDIR) -framework $(CORE_FNAME_NO_EXT)
 CORE_SRC_HEADS=$(call get_sources,$(CORE_DIR),h) \
                $(call get_sources,$(JSONP_DIR),h) \
                $(call get_sources,$(JSONB_DIR),h)
+CORE_SRC_OSC_HEADS=$(call get_sources,$(CORE_DIR)/OSC,h)
 
-$(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
+$(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS) $(CORE_SRC_OSC_HEADS)
 	rm -rf $@
-	mkdir -p $(CORE_FRAMEWORK_HEADDIR)
+	mkdir -p $(CORE_FRAMEWORK_HEADDIR)/OSC
 	mkdir -p $(CORE_FRAMEWORK_LIBDIR)
 	cp $(CORE_SRC_HEADS) $(CORE_FRAMEWORK_HEADDIR)
+	cp $(CORE_SRC_OSC_HEADS) $(CORE_FRAMEWORK_HEADDIR)/OSC
 	cp $(CORE_LIB) $(CORE_FRAMEWORK_LIBDIR)
 	cp -a $(CORE_FRAMEWORK_TEMPLATE)/* $@
 	install_name_tool -id @rpath/$(CORE_FNAME) $(CORE_FRAMEWORK)/$(CORE_FNAME)
@@ -220,7 +222,8 @@ $(CORE_FRAMEWORK): $(CORE_FRAMEWORK_TEMPLATE) $(CORE_LIB) $(CORE_SRC_HEADS)
 endif
 core: $(CORE_ARTIFACT); $(info Core library built (v$(SDT_CORE_VERSION)): $<)
 $(CORE_LIB): $(CORE_OBJS); $(call build-lib,$(CORE_LDFLAGS))
-$(CORE_BUILDDIR):; $(make-dir)
+$(CORE_BUILDDIR): $(CORE_BUILDDIR)/OSC
+$(CORE_BUILDDIR)/OSC:; $(make-dir)
 $(CORE_BUILDDIR)/%.o: $(CORE_DIR)/%.c | $(CORE_BUILDDIR)
 	$(call build-obj,$(INCLUDE_JSON))
 # -----------------------------------------------------------------------------
@@ -420,9 +423,10 @@ ifeq ("$(TARGET)", "macosx")
 	@mkdir -p $(DSTDIR)/$(CORE_SUBDIR)
 	@cp -a $(CORE_FRAMEWORK) $(DSTDIR)/$(CORE_SUBDIR)
 else
-	@mkdir -p $(DSTDIR)/$(CORE_HEADER_SUBDIR)
+	@mkdir -p $(DSTDIR)/$(CORE_HEADER_SUBDIR)/OSC
 	@mkdir -p $(DSTDIR)/$(CORE_LIB_SUBDIR)
 	@cp -a $(CORE_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
+	@cp -a $(CORE_DIR)/OSC/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)/OSC
 	@cp -a $(JSONP_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
 	@cp -a $(JSONB_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
 	@cp -a $(CORE_LIB) $(DSTDIR)/$(CORE_LIB_SUBDIR)

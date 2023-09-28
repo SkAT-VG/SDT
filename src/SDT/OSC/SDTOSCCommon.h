@@ -1,4 +1,4 @@
-#include "SDTCommon.h"
+#include "../SDTCommon.h"
 #include "json-builder.h"
 
 /** @file SDTOSCCommon.h

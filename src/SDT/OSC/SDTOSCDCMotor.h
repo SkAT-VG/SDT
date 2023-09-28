@@ -1,4 +1,4 @@
-#include "SDTDCMotor.h"
+#include "../SDTDCMotor.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCDCMotor.h

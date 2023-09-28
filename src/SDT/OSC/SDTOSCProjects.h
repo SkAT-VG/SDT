@@ -1,4 +1,4 @@
-#include "SDTJSON.h"
+#include "../SDTJSON.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCProjects.h

@@ -1,5 +1,6 @@
 #include <stdlib.h>
-#include "SDT/SDTOSC.h"
+
+#include "SDT/OSC/SDTOSC.h"
 #include "SDTCommonMax.h"
 #include "SDT_fileusage.h"
 #include "ext.h"

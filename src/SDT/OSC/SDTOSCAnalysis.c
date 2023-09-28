@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "SDTCommon.h"
+#include "../SDTCommon.h"
 
 /* --- ZeroCrossing -------------------------------------------------------- */
 int SDTOSCZeroCrossing(const SDTOSCMessage* x) {

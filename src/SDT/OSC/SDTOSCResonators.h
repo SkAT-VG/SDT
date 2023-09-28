@@ -1,5 +1,6 @@
+#include "../SDTResonators.h"
 #include "SDTOSCCommon.h"
-#include "SDTResonators.h"
+
 
 /** @file SDTOSCResonators.h
 @defgroup OSCResonators SDTOSCResonators.h: OSC Resonators

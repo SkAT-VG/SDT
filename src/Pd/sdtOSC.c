@@ -1,5 +1,7 @@
-#include "SDT/SDTOSC.h"
+#include "SDT/OSC/SDTOSC.h"
+
 #include <stdlib.h>
+
 #include "m_pd.h"
 
 static t_class *sdt_osc_class;

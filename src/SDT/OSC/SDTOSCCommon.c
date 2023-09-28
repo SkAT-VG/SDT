@@ -1,10 +1,13 @@
 #include "SDTOSCCommon.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "SDTCommon.h"
-#include "SDTJSON.h"
+
+#include "../SDTCommon.h"
+#include "../SDTJSON.h"
+
 
 const char *SDTOSC_rtfm_string() {
   return "For further details, please, visit the documentation at "

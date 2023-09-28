@@ -7,8 +7,8 @@
  * @copyright Copyright (c) 2023
  */
 #include "CuTest.h"
-#include "SDT/SDTOSC.h"
-#include "SDT/SDTOSCAnalysis.h"
+#include "SDT/OSC/SDTOSC.h"
+#include "SDT/OSC/SDTOSCAnalysis.h"
 #include "SDTTestUtils.h"
 #include "stdio.h"
 

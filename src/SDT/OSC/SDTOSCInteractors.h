@@ -1,6 +1,6 @@
-#include "SDTInteractors.h"
+#include "../SDTInteractors.h"
+#include "../SDTSolids.h"
 #include "SDTOSCCommon.h"
-#include "SDTSolids.h"
 
 /** @file SDTOSCInteractors.h
 @defgroup OSCInteractors SDTOSCInteractors.h: OSC Interactors

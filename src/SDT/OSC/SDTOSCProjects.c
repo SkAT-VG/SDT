@@ -1,12 +1,14 @@
 #include "SDTOSCProjects.h"
+
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "SDTJSON.h"
-#include "SDTProjects.h"
-#include "SDTSolids.h"
+
+#include "../SDTJSON.h"
+#include "../SDTProjects.h"
+#include "../SDTSolids.h"
 
 /*
 SDTOSCReturnCode SDTOSCProject(void (*log)(const char *, ...),
