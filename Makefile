@@ -53,6 +53,7 @@ ALL=check_os core test
 PHONY=all install_core uninstall_core \
 			check_os_detected check_os_supported \
 			core_version pd_version max_version full_version
+NOTINTERMEDIATE=
 
 ifeq ("$(TARGET)", "linux")
 	ALL+= pd
@@ -381,6 +382,7 @@ $(MAX_BUILDDIR)/%.def: $(TEMPLATE_DIR)/Info.def | $(MAX_BUILDDIR)
 	cp $< $@
 	sed -i $@ -e s/\$${PRODUCT_NAME}/$(patsubst $(strip $(MAX_BUILDDIR))/%.def,%,$@)/g
 endif
+NOTINTERMEDIATE+= $(MAX_HELPER_OBJS)
 # -----------------------------------------------------------------------------
 
 SDT_FULL_VERSION=v$(SDT_CORE_VERSION)-Max$(SDT_MAX_VERSION)-Pd$(SDT_PD_VERSION)
@@ -477,3 +479,5 @@ uninstall_max:
 	$(info Sound Design Toolkit for Max \
 	       removed from '$(DSTDIR)/$(MAX_SUBDIR)')
 # -----------------------------------------------------------------------------
+
+.NOTINTERMEDIATE: $(NOTINTERMEDIATE)
