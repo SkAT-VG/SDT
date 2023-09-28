@@ -17,17 +17,9 @@ typedef struct _bouncing {
 
 void bouncing_bang(t_bouncing *x) { SDTBouncing_reset(x->bouncing); }
 
-void bouncing_restitution(t_bouncing *x, t_float f) {
-  SDTBouncing_setRestitution(x->bouncing, f);
-}
-
-void bouncing_height(t_bouncing *x, t_float f) {
-  SDTBouncing_setHeight(x->bouncing, f);
-}
-
-void bouncing_irregularity(t_bouncing *x, t_float f) {
-  SDTBouncing_setIrregularity(x->bouncing, f);
-}
+SDT_PD_SETTER(bouncing, Bouncing, bouncing, Restitution, )
+SDT_PD_SETTER(bouncing, Bouncing, bouncing, Height, )
+SDT_PD_SETTER(bouncing, Bouncing, bouncing, Irregularity, )
 
 t_int *bouncing_perform(t_int *w) {
   t_bouncing *x = (t_bouncing *)(w[1]);
@@ -67,11 +59,11 @@ void bouncing_tilde_setup(void) {
                              (t_method)bouncing_free, (long)sizeof(t_bouncing),
                              CLASS_DEFAULT, A_GIMME, 0);
   class_addmethod(bouncing_class, (t_method)bouncing_bang, gensym("bang"), 0);
-  class_addmethod(bouncing_class, (t_method)bouncing_restitution,
+  class_addmethod(bouncing_class, (t_method)bouncing_setRestitution,
                   gensym("restitution"), A_FLOAT, 0);
-  class_addmethod(bouncing_class, (t_method)bouncing_height, gensym("height"),
-                  A_FLOAT, 0);
-  class_addmethod(bouncing_class, (t_method)bouncing_irregularity,
+  class_addmethod(bouncing_class, (t_method)bouncing_setHeight,
+                  gensym("height"), A_FLOAT, 0);
+  class_addmethod(bouncing_class, (t_method)bouncing_setIrregularity,
                   gensym("irregularity"), A_FLOAT, 0);
   class_addmethod(bouncing_class, (t_method)bouncing_dsp, gensym("dsp"), 0);
 }
