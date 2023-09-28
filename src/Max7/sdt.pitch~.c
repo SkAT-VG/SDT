@@ -35,11 +35,10 @@ void pitch_assist(t_pitch *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(pitch, Pitch, pitch, "pitch~", "fundamental frequency estimator")
 
-SDT_MAX_GETTER(pitch, Pitch, pitch, Overlap, float)
-SDT_MAX_GETTER(pitch, Pitch, pitch, Tolerance, float)
+SDT_MAX_GETTER(pitch, Pitch, pitch, Size, long)
 
-SDT_MAX_SETTER(pitch, Pitch, pitch, Overlap, float, )
-SDT_MAX_SETTER(pitch, Pitch, pitch, Tolerance, float, )
+SDT_MAX_ACCESSORS(pitch, Pitch, pitch, Overlap, float, )
+SDT_MAX_ACCESSORS(pitch, Pitch, pitch, Tolerance, float, )
 
 void pitch_send(t_pitch *x) {
   outlet_float(x->outlets[0], x->outs[0]);
@@ -131,8 +130,11 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(pitch, "1")
 
+  SDT_MAX_RO_ATTRIBUTE(c, pitch, Size, size, long, 0);
   SDT_MAX_ATTRIBUTE(c, pitch, Overlap, overlap, float64, 0);
   SDT_MAX_ATTRIBUTE(c, pitch, Tolerance, tolerance, float64, 0);
+
+  CLASS_ATTR_ORDER(c, "size", 0, "2");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

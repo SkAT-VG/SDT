@@ -50,13 +50,9 @@ void bouncing_free(t_bouncing *x) {
 
 SDT_MAX_KEY(bouncing, Bouncing, bouncing, "bouncing~", "bouncing process")
 
-SDT_MAX_GETTER(bouncing, Bouncing, bouncing, Restitution, float)
-SDT_MAX_GETTER(bouncing, Bouncing, bouncing, Height, float)
-SDT_MAX_GETTER(bouncing, Bouncing, bouncing, Irregularity, float)
-
-SDT_MAX_SETTER(bouncing, Bouncing, bouncing, Restitution, float, )
-SDT_MAX_SETTER(bouncing, Bouncing, bouncing, Height, float, )
-SDT_MAX_SETTER(bouncing, Bouncing, bouncing, Irregularity, float, )
+SDT_MAX_ACCESSORS(bouncing, Bouncing, bouncing, Restitution, float, )
+SDT_MAX_ACCESSORS(bouncing, Bouncing, bouncing, Height, float, )
+SDT_MAX_ACCESSORS(bouncing, Bouncing, bouncing, Irregularity, float, )
 
 t_int *bouncing_perform(t_int *w) {
   t_bouncing *x = (t_bouncing *)(w[1]);

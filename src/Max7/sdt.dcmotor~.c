@@ -60,25 +60,16 @@ void dcmotor_assist(t_dcmotor *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(dcmotor, DCMotor, motor, "dcmotor~", "electric motor")
 
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, Coils, long)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, Size, float)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, Reson, float)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, GearRatio, float)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, Harshness, float)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, RotorGain, float)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, GearGain, float)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, BrushGain, float)
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, AirGain, float)
-
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, Coils, long, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, Size, float, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, Reson, float, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, GearRatio, float, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, Harshness, float, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, RotorGain, float, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, GearGain, float, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, BrushGain, float, )
-SDT_MAX_SETTER(dcmotor, DCMotor, motor, AirGain, float, )
+SDT_MAX_GETTER(dcmotor, DCMotor, motor, MaxSize, long)
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Coils, long, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Size, float, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Reson, float, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, GearRatio, float, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Harshness, float, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, RotorGain, float, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, GearGain, float, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, BrushGain, float, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, AirGain, float, )
 
 t_int *dcmotor_perform(t_int *w) {
   t_dcmotor *x = (t_dcmotor *)(w[1]);
@@ -137,6 +128,7 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(dcmotor, "1")
 
+  SDT_MAX_RO_ATTRIBUTE(c, dcmotor, MaxSize, maxSize, long, 0);
   SDT_MAX_ATTRIBUTE(c, dcmotor, Coils, coils, long, 0);
   SDT_MAX_ATTRIBUTE(c, dcmotor, Size, size, float64, 0);
   SDT_MAX_ATTRIBUTE(c, dcmotor, Reson, reson, float64, 0);
@@ -157,15 +149,16 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_CLIP(c, "brushGain", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "airGain", 0.0, 1.0);
 
-  CLASS_ATTR_ORDER(c, "coils", 0, "2");
-  CLASS_ATTR_ORDER(c, "size", 0, "3");
-  CLASS_ATTR_ORDER(c, "reson", 0, "4");
-  CLASS_ATTR_ORDER(c, "gearRatio", 0, "5");
-  CLASS_ATTR_ORDER(c, "harshness", 0, "6");
-  CLASS_ATTR_ORDER(c, "rotorGain", 0, "7");
-  CLASS_ATTR_ORDER(c, "gearGain", 0, "8");
-  CLASS_ATTR_ORDER(c, "brushGain", 0, "9");
-  CLASS_ATTR_ORDER(c, "airGain", 0, "10");
+  CLASS_ATTR_ORDER(c, "maxSize", 0, "2");
+  CLASS_ATTR_ORDER(c, "coils", 0, "3");
+  CLASS_ATTR_ORDER(c, "size", 0, "4");
+  CLASS_ATTR_ORDER(c, "reson", 0, "5");
+  CLASS_ATTR_ORDER(c, "gearRatio", 0, "6");
+  CLASS_ATTR_ORDER(c, "harshness", 0, "7");
+  CLASS_ATTR_ORDER(c, "rotorGain", 0, "8");
+  CLASS_ATTR_ORDER(c, "gearGain", 0, "9");
+  CLASS_ATTR_ORDER(c, "brushGain", 0, "10");
+  CLASS_ATTR_ORDER(c, "airGain", 0, "11");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
