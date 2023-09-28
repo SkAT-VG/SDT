@@ -1,6 +1,8 @@
 #include "SDTControl.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTStructs.h"
 
@@ -29,11 +31,50 @@ SDTBouncing *SDTBouncing_new() {
 
 void SDTBouncing_free(SDTBouncing *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_BOUNCING)
-SDT_DEFINE_HASHMAP(SDT_BOUNCING, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_BOUNCING)
-SDT_JSON_SERIALIZE(SDT_BOUNCING)
-SDT_JSON_DESERIALIZE(SDT_BOUNCING)
+_SDT_COPY_FUNCTION(Bouncing)
+
+_SDT_HASHMAP_FUNCTIONS(Bouncing)
+
+json_value *SDTBouncing_toJSON(const SDTBouncing *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "restitution",
+                   json_double_new(SDTBouncing_getRestitution(x)));
+  json_object_push(obj, "height", json_double_new(SDTBouncing_getHeight(x)));
+  json_object_push(obj, "irregularity",
+                   json_double_new(SDTBouncing_getIrregularity(x)));
+  return obj;
+}
+
+SDTBouncing *SDTBouncing_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTBouncing *y = SDTBouncing_new();
+  return SDTBouncing_setParams(y, x, 0);
+}
+
+SDTBouncing *SDTBouncing_setParams(SDTBouncing *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Restitution, restitution, integer);
+  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Height, height, integer);
+  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Irregularity, irregularity, integer);
+
+  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Restitution, restitution, double);
+  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Height, height, double);
+  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Irregularity, irregularity, double);
+
+  return x;
+}
+
+double SDTBouncing_getRestitution(const SDTBouncing *x) {
+  return x->restitution;
+}
+
+double SDTBouncing_getHeight(const SDTBouncing *x) { return x->height; }
+
+double SDTBouncing_getIrregularity(const SDTBouncing *x) {
+  return x->irregularity;
+}
 
 void SDTBouncing_setRestitution(SDTBouncing *x, double f) {
   x->restitution = SDT_fclip(f, 0.0, 1.0);
