@@ -1,6 +1,8 @@
 #include "SDTDCMotor.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
@@ -91,8 +93,8 @@ SDTDCMotor *SDTDCMotor_setParams(SDTDCMotor *x, const json_value *j,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(DCMotor, x, j, MaxSize, maxSize, integer,
                                   unsafe);
 
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, MaxSize, maxSize, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Coils, coils, integer);
+
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Rpm, rpm, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Load, load, integer);
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Size, size, integer);

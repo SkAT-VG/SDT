@@ -58,7 +58,7 @@ extern void SDTDCMotor_update(SDTDCMotor *x);
 
 /** @brief Registers an electric motor synthesis model into the myoelastic
 feature extractors list with a unique ID.
-@param[in] x DCMotor feature extractor instance to register
+@param[in] x DCMotor instance to register
 @param[in] key Unique ID assigned to the electric motor synthesis model instance
 @return Zero on success, otherwise one */
 extern int SDT_registerDCMotor(SDTDCMotor *x, const char *key);
@@ -68,7 +68,7 @@ If an electric motor synthesis model with the ID is present, a pointer to the
 electric motor synthesis model is returned. Otherwise, a NULL pointer is
 returned.
 @param[in] key Unique ID assigned to the electric motor synthesis model instance
-@return DCMotor feature extractor instance pointer */
+@return DCMotor instance pointer */
 extern SDTDCMotor *SDT_getDCMotor(const char *key);
 
 /** @brief Unregisters an electric motor synthesis model from the myoelastic
