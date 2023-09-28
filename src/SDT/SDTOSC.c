@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "SDTOSCAnalysis.h"
+#include "SDTOSCDCMotor.h"
 #include "SDTOSCInteractors.h"
 #include "SDTOSCMisc.h"
 #include "SDTOSCProjects.h"
@@ -17,13 +18,14 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
+  if (!strcmp("dcmotor", k)) return SDTOSCDCMotor(x);
   if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
   if (!strcmp("pitch", k)) return SDTOSCPitch(x);
+  if (!strcmp("resonator", k) || !strcmp("modal", k) || !strcmp("inertial", k))
+    return SDTOSCResonator(x);
   if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
   if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
     return SDTOSCZeroCrossing(x);
-  if (!strcmp("resonator", k) || !strcmp("modal", k) || !strcmp("inertial", k))
-    return SDTOSCResonator(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified container is "
                       "not implemented: % s\n %s\n ",
@@ -43,8 +45,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCBubble(log, sub);
   // else if (!strcmp("crumpling", method))
   //   return_code = SDTOSCCrumpling(log, sub);
-  // else if (!strcmp("dcmotor", method))
-  //   return_code = SDTOSCDCMotor(log, sub);
   // else if (!strcmp("demix", method))
   //   return_code = SDTOSCDemix(log, sub);
   // else if (!strcmp("envelope", method))

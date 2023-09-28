@@ -17,39 +17,15 @@ typedef struct _dcmotor {
   t_outlet *out;
 } t_dcmotor;
 
-void dcmotor_coils(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setCoils(x->motor, f);
-}
-
-void dcmotor_size(t_dcmotor *x, t_float f) { SDTDCMotor_setSize(x->motor, f); }
-
-void dcmotor_reson(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setReson(x->motor, f);
-}
-
-void dcmotor_gearRatio(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setGearRatio(x->motor, f);
-}
-
-void dcmotor_harshness(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setHarshness(x->motor, f);
-}
-
-void dcmotor_rotorGain(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setRotorGain(x->motor, f);
-}
-
-void dcmotor_gearGain(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setGearGain(x->motor, f);
-}
-
-void dcmotor_brushGain(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setBrushGain(x->motor, f);
-}
-
-void dcmotor_airGain(t_dcmotor *x, t_float f) {
-  SDTDCMotor_setAirGain(x->motor, f);
-}
+SDT_PD_SETTER(dcmotor, DCMotor, motor, Coils, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, Size, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, Reson, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, GearRatio, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, Harshness, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, RotorGain, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, GearGain, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, BrushGain, )
+SDT_PD_SETTER(dcmotor, DCMotor, motor, AirGain, )
 
 static t_int *dcmotor_perform(t_int *w) {
   t_dcmotor *x = (t_dcmotor *)(w[1]);
@@ -67,7 +43,7 @@ static t_int *dcmotor_perform(t_int *w) {
 
 static void dcmotor_dsp(t_dcmotor *x, t_signal **sp) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTDCMotor_setFilters(x->motor);
+  SDTDCMotor_update(x->motor);
   dsp_add(dcmotor_perform, 5, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
           sp[0]->s_n);
 }
@@ -96,23 +72,23 @@ void dcmotor_tilde_setup(void) {
                             (t_method)dcmotor_free, sizeof(t_dcmotor),
                             CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(dcmotor_class, t_dcmotor, f);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_coils, gensym("coils"),
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setCoils, gensym("coils"),
                   A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_size, gensym("size"),
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setSize, gensym("size"),
                   A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_reson, gensym("reson"),
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setReson, gensym("reson"),
                   A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_gearRatio,
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setGearRatio,
                   gensym("gearRatio"), A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_harshness,
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setHarshness,
                   gensym("harshness"), A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_rotorGain,
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setRotorGain,
                   gensym("rotorGain"), A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_gearGain, gensym("gearGain"),
-                  A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_brushGain,
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setGearGain,
+                  gensym("gearGain"), A_FLOAT, 0);
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setBrushGain,
                   gensym("brushGain"), A_FLOAT, 0);
-  class_addmethod(dcmotor_class, (t_method)dcmotor_airGain, gensym("airGain"),
-                  A_FLOAT, 0);
+  class_addmethod(dcmotor_class, (t_method)dcmotor_setAirGain,
+                  gensym("airGain"), A_FLOAT, 0);
   class_addmethod(dcmotor_class, (t_method)dcmotor_dsp, gensym("dsp"), 0);
 }

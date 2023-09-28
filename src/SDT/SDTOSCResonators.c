@@ -1,8 +1,5 @@
 #include "SDTOSCResonators.h"
-// #include <stdio.h>
-// #include <stdlib.h>
 #include <string.h>
-// #include "SDTSolids.h"
 
 int SDTOSCResonator(const SDTOSCMessage *x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");

@@ -49,14 +49,82 @@ void SDTDCMotor_setMaxSize(SDTDCMotor *x, long f) {
   x->chassis = SDTComb_new(f, f);
 }
 
-SDT_TYPE_COPY(SDT_DCMOTOR)
-SDT_DEFINE_HASHMAP(SDT_DCMOTOR, 59)
-SDT_JSON_SERIALIZE(SDT_DCMOTOR)
-SDT_JSON_DESERIALIZE(SDT_DCMOTOR)
+_SDT_COPY_FUNCTION(DCMotor)
+
+_SDT_HASHMAP_FUNCTIONS(DCMotor)
+
+json_value *SDTDCMotor_toJSON(const SDTDCMotor *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "maxSize", json_integer_new(SDTDCMotor_getMaxSize(x)));
+  json_object_push(obj, "coils", json_integer_new(SDTDCMotor_getCoils(x)));
+  json_object_push(obj, "rpm", json_double_new(SDTDCMotor_getRpm(x)));
+  json_object_push(obj, "load", json_double_new(SDTDCMotor_getLoad(x)));
+  json_object_push(obj, "size", json_double_new(SDTDCMotor_getSize(x)));
+  json_object_push(obj, "reson", json_double_new(SDTDCMotor_getReson(x)));
+  json_object_push(obj, "gearRatio",
+                   json_double_new(SDTDCMotor_getGearRatio(x)));
+  json_object_push(obj, "harshness",
+                   json_double_new(SDTDCMotor_getHarshness(x)));
+  json_object_push(obj, "rotorGain",
+                   json_double_new(SDTDCMotor_getRotorGain(x)));
+  json_object_push(obj, "gearGain", json_double_new(SDTDCMotor_getGearGain(x)));
+  json_object_push(obj, "brushGain",
+                   json_double_new(SDTDCMotor_getBrushGain(x)));
+  json_object_push(obj, "airGain", json_double_new(SDTDCMotor_getAirGain(x)));
+  return obj;
+}
+
+SDTDCMotor *SDTDCMotor_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int maxSize = SDT_DCMOTOR_MAXSIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxSize, x, maxSize, integer);
+
+  SDTDCMotor *y = SDTDCMotor_new(maxSize);
+  return SDTDCMotor_setParams(y, x, 0);
+}
+
+SDTDCMotor *SDTDCMotor_setParams(SDTDCMotor *x, const json_value *j,
+                                 unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(DCMotor, x, j, MaxSize, maxSize, integer,
+                                  unsafe);
+
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, MaxSize, maxSize, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Coils, coils, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Rpm, rpm, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Load, load, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Size, size, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Reson, reson, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearRatio, gearRatio, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Harshness, harshness, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, RotorGain, rotorGain, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearGain, gearGain, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, BrushGain, brushGain, integer);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, AirGain, airGain, integer);
+
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Rpm, rpm, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Load, load, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Size, size, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Reson, reson, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearRatio, gearRatio, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Harshness, harshness, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, RotorGain, rotorGain, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearGain, gearGain, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, BrushGain, brushGain, double);
+  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, AirGain, airGain, double);
+
+  return x;
+}
 
 long SDTDCMotor_getMaxSize(const SDTDCMotor *x) {
   return SDTComb_getMaxXDelay(x->chassis);
 }
+
+double SDTDCMotor_getRpm(const SDTDCMotor *x) { return x->rpm; }
+
+double SDTDCMotor_getLoad(const SDTDCMotor *x) { return x->load; }
 
 long SDTDCMotor_getCoils(const SDTDCMotor *x) { return x->coils; }
 
@@ -76,7 +144,7 @@ double SDTDCMotor_getBrushGain(const SDTDCMotor *x) { return x->brushGain; }
 
 double SDTDCMotor_getAirGain(const SDTDCMotor *x) { return x->airGain; }
 
-void SDTDCMotor_setFilters(SDTDCMotor *x) {
+void SDTDCMotor_update(SDTDCMotor *x) {
   SDTComb_setYGain(x->chassis, x->reson);
   SDTComb_setYDelay(x->chassis, SDT_samplesInAir(x->size));
   SDTTwoPoles_resonant(x->brushFilter, 4000.0, 1.0);
