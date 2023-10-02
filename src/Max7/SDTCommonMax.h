@@ -85,6 +85,26 @@ The t_class pointer should be a variable "c"
     return MAX_ERR_NONE;                                            \
   }
 
+/** @brief Define the getter and setter functions for an attribute
+@param[in] M The Max type (without the leading `t_`)
+@param[in] T The SDT type (without the leading `SDT`)
+@param[in] F The name of the Max object field where the SDT object is stored
+@param[in] A The name of the attribute
+@param[in] AT The type of the attribute
+@param[in] U Type `update` to trigger the structure update function */
+#define SDT_MAX_ACCESSORS(M, T, F, A, AT, U) \
+  SDT_MAX_GETTER(M, T, F, A, AT)             \
+  SDT_MAX_SETTER(M, T, F, A, AT, U)
+
+#define _SDT_MAX_ATTRIBUTE_(M, UCASE) 0
+#define _SDT_MAX_ATTRIBUTE_READ(M, UCASE) (method) M##_get##UCASE
+#define _SDT_MAX_ATTRIBUTE_WRITE(M, UCASE) (method) M##_set##UCASE
+
+#define _SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS, READ, WRITE) \
+  class_addattr((c), attribute_new(#ATTRNAME, gensym(#TYPE), 0,             \
+                                   _SDT_MAX_ATTRIBUTE_##READ(M, UCASE),     \
+                                   _SDT_MAX_ATTRIBUTE_##WRITE(M, UCASE)));
+
 /** @brief Define an attribute with getter and setter
 @param[in] C The class pointer
 @param[in] M The Max type (without the leading `t_`)
@@ -92,10 +112,18 @@ The t_class pointer should be a variable "c"
 @param[in] ATTRNAME The name of the Max attribute
 @param[in] TYPE The type of the Max attribute
 @param[in] FLAGS Any attribute flags, expressed as a bitfield */
-#define SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS)                 \
-  class_addattr(                                                              \
-      (c), attribute_new(#ATTRNAME, gensym(#TYPE), 0, (method)M##_get##UCASE, \
-                         (method)M##_set##UCASE));
+#define SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS) \
+  _SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS, READ, WRITE)
+
+/** @brief Define an attribute with a getter only
+@param[in] C The class pointer
+@param[in] M The Max type (without the leading `t_`)
+@param[in] UCASE The name of the attribute (uppercase)
+@param[in] ATTRNAME The name of the Max attribute
+@param[in] TYPE The type of the Max attribute
+@param[in] FLAGS Any attribute flags, expressed as a bitfield */
+#define SDT_MAX_RO_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS) \
+  _SDT_MAX_ATTRIBUTE(C, M, UCASE, ATTRNAME, TYPE, FLAGS, READ, )
 
 /** @brief Define the setter function for an array attribute
 @param[in] M The Max type (without the leading `t_`)
@@ -137,6 +165,24 @@ The t_class pointer should be a variable "c"
       err = atom_set##AT((*av) + i, SDT##T##_get##A(x->F, i));        \
     }                                                                 \
     return err;                                                       \
+  }
+
+/** @brief Define the getter function for a member attribute
+@param[in] M The Max type (without the leading "t_")
+@param[in] F The name of the Max object member attribute
+@param[in] A The name of the attribute
+@param[in] AT The type of the attribute */
+#define SDT_MAX_GETTER_MEMBER(M, F, A, AT)                             \
+  t_max_err M##_get_##A(t_##M *x, void *attr, long *ac, t_atom **av) { \
+    if (!(*ac && *av)) {                                               \
+      *ac = 1;                                                         \
+      *av = (t_atom *)getbytes(sizeof(t_atom) * (*ac));                \
+      if (!*av) {                                                      \
+        *ac = 0;                                                       \
+        return MAX_ERR_OUT_OF_MEM;                                     \
+      }                                                                \
+    }                                                                  \
+    return atom_set##AT(*av, x->F);                                    \
   }
 
 #endif

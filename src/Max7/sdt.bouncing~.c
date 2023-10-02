@@ -10,7 +10,6 @@ typedef struct _bouncing {
   t_pxobject ob;
   void *velocity;
   SDTBouncing *bouncing;
-  double restitution, height, irregularity;
   int reset;
   t_symbol *key;
 } t_bouncing;
@@ -28,21 +27,6 @@ void bouncing_assist(t_bouncing *x, void *b, long m, long a, char *s) {
 }
 
 void bouncing_bang(t_bouncing *x) { x->reset = 1; }
-
-void bouncing_restitution(t_bouncing *x, void *attr, long ac, t_atom *av) {
-  x->restitution = atom_getfloat(av);
-  SDTBouncing_setRestitution(x->bouncing, x->restitution);
-}
-
-void bouncing_height(t_bouncing *x, void *attr, long ac, t_atom *av) {
-  x->height = atom_getfloat(av);
-  SDTBouncing_setHeight(x->bouncing, x->height);
-}
-
-void bouncing_irregularity(t_bouncing *x, void *attr, long ac, t_atom *av) {
-  x->irregularity = atom_getfloat(av);
-  SDTBouncing_setIrregularity(x->bouncing, x->irregularity);
-}
 
 void *bouncing_new(t_symbol *s, short argc, t_atom *argv) {
   SDT_setupMaxLoggers();
@@ -65,6 +49,10 @@ void bouncing_free(t_bouncing *x) {
 }
 
 SDT_MAX_KEY(bouncing, Bouncing, bouncing, "bouncing~", "bouncing process")
+
+SDT_MAX_ACCESSORS(bouncing, Bouncing, bouncing, Restitution, float, )
+SDT_MAX_ACCESSORS(bouncing, Bouncing, bouncing, Height, float, )
+SDT_MAX_ACCESSORS(bouncing, Bouncing, bouncing, Irregularity, float, )
 
 t_int *bouncing_perform(t_int *w) {
   t_bouncing *x = (t_bouncing *)(w[1]);
@@ -120,17 +108,13 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(bouncing, "1")
 
-  CLASS_ATTR_DOUBLE(c, "restitution", 0, t_bouncing, restitution);
-  CLASS_ATTR_DOUBLE(c, "height", 0, t_bouncing, height);
-  CLASS_ATTR_DOUBLE(c, "irregularity", 0, t_bouncing, irregularity);
+  SDT_MAX_ATTRIBUTE(c, bouncing, Restitution, restitution, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, bouncing, Height, height, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, bouncing, Irregularity, irregularity, float64, 0);
 
   CLASS_ATTR_FILTER_CLIP(c, "restitution", 0.0, 1.0);
   CLASS_ATTR_FILTER_MIN(c, "height", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "irregularity", 0.0, 1.0);
-
-  CLASS_ATTR_ACCESSORS(c, "restitution", NULL, (method)bouncing_restitution);
-  CLASS_ATTR_ACCESSORS(c, "height", NULL, (method)bouncing_height);
-  CLASS_ATTR_ACCESSORS(c, "irregularity", NULL, (method)bouncing_irregularity);
 
   CLASS_ATTR_ORDER(c, "restitution", 0, "2");
   CLASS_ATTR_ORDER(c, "height", 0, "3");

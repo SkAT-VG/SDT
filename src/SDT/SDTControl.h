@@ -21,7 +21,7 @@ textures. The output should be used to control the impact velocity between two
 resonators.
 @{ */
 
-/** @brief Opaque data structure for the crumpling object. */
+/** @brief Opaque data structure for the bouncing process. */
 typedef struct SDTBouncing SDTBouncing;
 
 /** @brief Object constructor.
@@ -32,18 +32,63 @@ extern SDTBouncing *SDTBouncing_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTBouncing_free(SDTBouncing *x);
 
-#define SDT_BOUNCING Bouncing
-#define SDT_BOUNCING_NEW_ARGS
-#define SDT_BOUNCING_ATTRIBUTES(T, A)                              \
-  A(T, restitution, double, Restitution, restitution, double, 0.0) \
-  A(T, height, double, Height, height, double, 0.0)                \
-  A(T, irregularity, double, Irregularity, irregularity, double, 0.0)
+/** @brief Deep-copies a bouncing process.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTBouncing *SDTBouncing_copy(SDTBouncing *dest, const SDTBouncing *src,
+                                     unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_BOUNCING)
-SDT_DEFINE_HASHMAP_H(SDT_BOUNCING)
-SDT_TYPE_MAKE_GETTERS_H(SDT_BOUNCING)
-SDT_JSON_SERIALIZE_H(SDT_BOUNCING)
-SDT_JSON_DESERIALIZE_H(SDT_BOUNCING)
+/** @brief Registers a bouncing process into the bouncing processes list with a
+unique ID.
+@param[in] x Bouncing instance to register
+@param[in] key Unique ID assigned to the bouncing process instance
+@return Zero on success, otherwise one */
+extern int SDT_registerBouncing(SDTBouncing *x, const char *key);
+
+/** @brief Queries the bouncing processes list by its unique ID.
+If a bouncing process with the ID is present, a pointer to the bouncing process
+is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the bouncing process instance
+@return Bouncing instance pointer */
+extern SDTBouncing *SDT_getBouncing(const char *key);
+
+/** @brief Unregisters a bouncing process from the bouncing processes list. If a
+bouncing process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the bouncing process instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterBouncing(const char *key);
+
+/** @brief Gets the coefficient of restitution.
+@return Coefficient of restitution of the bouncing process */
+extern double SDTBouncing_getRestitution(const SDTBouncing *x);
+
+/** @brief Gets the initial height of the falling object.
+@return Object height, in m. */
+extern double SDTBouncing_getHeight(const SDTBouncing *x);
+
+/** @brief Gets the irregularity of the shape of the object.
+@return Object shape irregularity (deviation from a spherical shape) [0,1] */
+extern double SDTBouncing_getIrregularity(const SDTBouncing *x);
+
+/** @brief Represent a bouncing process as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTBouncing_toJSON(const SDTBouncing *x);
+
+/** @brief Initialize a bouncing process from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTBouncing *SDTBouncing_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a bouncing process from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTBouncing *SDTBouncing_setParams(SDTBouncing *x, const json_value *j,
+                                          unsigned char unsafe);
 
 /** @brief Sets the coefficient of restitution.
 @param[in] f Coefficient of restitution of the bouncing process */

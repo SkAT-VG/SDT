@@ -9,7 +9,7 @@
 typedef struct _inertial {
   t_pxobject ob;
   SDTResonator *inertial;
-  const char *key;
+  t_symbol *key;
 } t_inertial;
 
 static t_class *inertial_class = NULL;
@@ -18,15 +18,15 @@ void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_setupMaxLoggers();
   t_inertial *x;
   SDTResonator *inertial;
-  const char *key;
+  t_symbol *key;
 
   if (argc < 1 || atom_gettype(&argv[0]) != A_SYM) {
     error("sdt.inertial: Please provide a unique id as first argument.");
     return NULL;
   }
   inertial = SDTResonator_new(1, 1);
-  key = atom_getsym(&argv[0])->s_name;
-  if (SDT_registerResonator(inertial, key)) {
+  key = atom_getsym(&argv[0]);  //->s_name;
+  if (SDT_registerResonator(inertial, key->s_name)) {
     error(
         "sdt.inertial: Error registering the resonator. Probably a duplicate "
         "id?");
@@ -55,7 +55,7 @@ void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
 
 void inertial_free(t_inertial *x) {
   dsp_free((t_pxobject *)x);
-  SDT_unregisterResonator(x->key);
+  SDT_unregisterResonator(x->key->s_name);
   SDTResonator_free(x->inertial);
 }
 
@@ -88,8 +88,9 @@ t_max_err inertial_setMass(t_inertial *x, void *attr, long ac, t_atom *av) {
   return MAX_ERR_NONE;
 }
 
-SDT_MAX_GETTER(inertial, Resonator, inertial, FragmentSize, float)
-SDT_MAX_SETTER(inertial, Resonator, inertial, FragmentSize, float, )
+SDT_MAX_GETTER_MEMBER(inertial, key, key, sym)
+
+SDT_MAX_ACCESSORS(inertial, Resonator, inertial, FragmentSize, float, )
 
 void inertial_strike(t_inertial *x, double p, double v) {
   SDTResonator_setPosition(x->inertial, 0, p);
@@ -117,11 +118,14 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)inertial_strike, "strike", A_FLOAT, A_FLOAT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
+  SDT_MAX_RO_ATTRIBUTE(c, inertial, _key, key, symbol, 0);
   SDT_MAX_ATTRIBUTE(c, inertial, Mass, mass, float64, 0);
   SDT_MAX_ATTRIBUTE(c, inertial, FragmentSize, fragmentSize, float64, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "mass", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "fragmentSize", 0.0, 1.0);
+
+  CLASS_ATTR_ORDER(c, "key", 0, "1");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

@@ -29,9 +29,9 @@ void zerocrossing_assist(t_zerocrossing *x, void *b, long m, long a, char *s) {
 SDT_MAX_KEY(zerocrossing, ZeroCrossing, zerox, "zerox~",
             "zero crossing rate detector")
 
-SDT_MAX_GETTER(zerocrossing, ZeroCrossing, zerox, Overlap, float)
+SDT_MAX_GETTER(zerocrossing, ZeroCrossing, zerox, Size, long)
 
-SDT_MAX_SETTER(zerocrossing, ZeroCrossing, zerox, Overlap, float, )
+SDT_MAX_ACCESSORS(zerocrossing, ZeroCrossing, zerox, Overlap, float, )
 
 void zerocrossing_send(t_zerocrossing *x) { outlet_float(x->outlet, x->out); }
 
@@ -115,7 +115,10 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(zerocrossing, "1")
 
+  SDT_MAX_RO_ATTRIBUTE(c, zerocrossing, Size, size, long, 0);
   SDT_MAX_ATTRIBUTE(c, zerocrossing, Overlap, overlap, float64, 0);
+
+  CLASS_ATTR_ORDER(c, "size", 0, "2");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

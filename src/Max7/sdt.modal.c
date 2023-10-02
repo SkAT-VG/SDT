@@ -9,7 +9,7 @@
 typedef struct _modal {
   t_pxobject ob;
   SDTResonator *modal;
-  const char *key;
+  t_symbol *key;
   t_object **pickups;
 } t_modal;
 
@@ -22,7 +22,7 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
   SDT_setupMaxLoggers();
   t_modal *x;
   SDTResonator *modal;
-  const char *key;
+  t_symbol *key;
   char attrName[17];
   int err;
 
@@ -43,8 +43,8 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
   long nModes = atom_getlong(&argv[1]);
   long nPickups = atom_getlong(&argv[2]);
   modal = SDTResonator_new(nModes, nPickups);
-  key = atom_getsym(&argv[0])->s_name;
-  if (SDT_registerResonator(modal, key)) {
+  key = atom_getsym(&argv[0]);
+  if (SDT_registerResonator(modal, key->s_name)) {
     error(
         "sdt.modal: Error registering the resonator. Probably a duplicate id?");
     SDTResonator_free(modal);
@@ -86,7 +86,7 @@ void modal_free(t_modal *x) {
     sprintf(attrName, "pickup%d", pickup);
     object_deleteattr(x, gensym(attrName));
   }
-  SDT_unregisterResonator(x->key);
+  SDT_unregisterResonator(x->key->s_name);
   SDTResonator_free(x->modal);
   sysmem_freeptr(x->pickups);
 }
@@ -97,10 +97,14 @@ void modal_assist(t_modal *x, void *b, long m, long a, char *s) {
   }
 }
 
+SDT_MAX_GETTER_MEMBER(modal, key, key, sym)
+
 SDT_MAX_GETTER(modal, Resonator, modal, NModes, long)
 SDT_MAX_GETTER(modal, Resonator, modal, NPickups, long)
-SDT_MAX_GETTER(modal, Resonator, modal, ActiveModes, long)
-SDT_MAX_GETTER(modal, Resonator, modal, FragmentSize, float)
+
+SDT_MAX_ACCESSORS(modal, Resonator, modal, ActiveModes, long, )
+SDT_MAX_ACCESSORS(modal, Resonator, modal, FragmentSize, float, )
+
 SDT_MAX_ARRAY_GETTER(modal, Resonator, modal, Frequency, float,
                      SDTResonator_getNModes(x->modal))
 SDT_MAX_ARRAY_GETTER(modal, Resonator, modal, Decay, float,
@@ -108,8 +112,6 @@ SDT_MAX_ARRAY_GETTER(modal, Resonator, modal, Decay, float,
 SDT_MAX_ARRAY_GETTER(modal, Resonator, modal, Weight, float,
                      SDTResonator_getNModes(x->modal))
 
-SDT_MAX_SETTER(modal, Resonator, modal, ActiveModes, long, )
-SDT_MAX_SETTER(modal, Resonator, modal, FragmentSize, float, )
 SDT_MAX_ARRAY_SETTER(modal, Resonator, modal, Frequency, float, )
 SDT_MAX_ARRAY_SETTER(modal, Resonator, modal, Decay, float, )
 SDT_MAX_ARRAY_SETTER(modal, Resonator, modal, Weight, float, )
@@ -174,24 +176,24 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   // Read-only
-  class_addattr(c, attribute_new("nModes", gensym("long"), 0,
-                                 (method)modal_getNModes, 0));
-  class_addattr(c, attribute_new("nPickups", gensym("long"), 0,
-                                 (method)modal_getNPickups, 0));
-  CLASS_ATTR_ORDER(c, "nModes", 0, "1");
-  CLASS_ATTR_ORDER(c, "nPickups", 0, "2");
+  SDT_MAX_RO_ATTRIBUTE(c, modal, _key, key, symbol, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, modal, NModes, nModes, long, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, modal, NPickups, nPickups, long, 0);
+  CLASS_ATTR_ORDER(c, "key", 0, "1");
+  CLASS_ATTR_ORDER(c, "nModes", 0, "2");
+  CLASS_ATTR_ORDER(c, "nPickups", 0, "3");
   // R/W (scalars)
   SDT_MAX_ATTRIBUTE(c, modal, ActiveModes, activeModes, long, 0);
   SDT_MAX_ATTRIBUTE(c, modal, FragmentSize, fragmentSize, float64, 0);
-  CLASS_ATTR_ORDER(c, "activeModes", 0, "3");
-  CLASS_ATTR_ORDER(c, "fragmentSize", 0, "4");
+  CLASS_ATTR_ORDER(c, "activeModes", 0, "4");
+  CLASS_ATTR_ORDER(c, "fragmentSize", 0, "5");
   // R/W (arrays)
   SDT_MAX_ATTRIBUTE(c, modal, Frequency, freqs, float64, 0);
   SDT_MAX_ATTRIBUTE(c, modal, Decay, decays, float64, 0);
   SDT_MAX_ATTRIBUTE(c, modal, Weight, masses, float64, 0);
-  CLASS_ATTR_ORDER(c, "freqs", 0, "5");
-  CLASS_ATTR_ORDER(c, "decays", 0, "6");
-  CLASS_ATTR_ORDER(c, "masses", 0, "7");
+  CLASS_ATTR_ORDER(c, "freqs", 0, "6");
+  CLASS_ATTR_ORDER(c, "decays", 0, "7");
+  CLASS_ATTR_ORDER(c, "masses", 0, "8");
 
   CLASS_ATTR_FILTER_CLIP(c, "fragmentSize", 0.0, 1.0);
   CLASS_ATTR_FILTER_MIN(c, "freqs", 0.0);

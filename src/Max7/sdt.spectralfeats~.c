@@ -30,13 +30,11 @@ void spectralfeats_assist(t_spectralfeats *x, void *b, long m, long a,
 SDT_MAX_KEY(spectralfeats, SpectralFeats, feats, "spectralfeats",
             "spectral features extractor")
 
-SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, Overlap, float)
-SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MinFreq, float)
-SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, MaxFreq, float)
+SDT_MAX_GETTER(spectralfeats, SpectralFeats, feats, Size, long)
 
-SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, Overlap, float, )
-SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MinFreq, float, )
-SDT_MAX_SETTER(spectralfeats, SpectralFeats, feats, MaxFreq, float, )
+SDT_MAX_ACCESSORS(spectralfeats, SpectralFeats, feats, Overlap, float, )
+SDT_MAX_ACCESSORS(spectralfeats, SpectralFeats, feats, MinFreq, float, )
+SDT_MAX_ACCESSORS(spectralfeats, SpectralFeats, feats, MaxFreq, float, )
 
 void spectralfeats_send(t_spectralfeats *x) {
   t_atom argv[1];
@@ -146,9 +144,12 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(spectralfeats, "1")
 
+  SDT_MAX_RO_ATTRIBUTE(c, spectralfeats, Size, size, long, 0);
   SDT_MAX_ATTRIBUTE(c, spectralfeats, Overlap, overlap, float64, 0);
   SDT_MAX_ATTRIBUTE(c, spectralfeats, MinFreq, minFreq, float64, 0);
   SDT_MAX_ATTRIBUTE(c, spectralfeats, MaxFreq, maxFreq, float64, 0);
+
+  CLASS_ATTR_ORDER(c, "size", 0, "2");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
