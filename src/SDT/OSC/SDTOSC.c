@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "SDTOSCAnalysis.h"
+#include "SDTOSCControl.h"
 #include "SDTOSCDCMotor.h"
 #include "SDTOSCInteractors.h"
 #include "SDTOSCMisc.h"
@@ -18,6 +19,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
+  if (!strcmp("bouncing", k)) return SDTOSCBouncing(x);
   if (!strcmp("dcmotor", k)) return SDTOSCDCMotor(x);
   if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
   if (!strcmp("pitch", k)) return SDTOSCPitch(x);
