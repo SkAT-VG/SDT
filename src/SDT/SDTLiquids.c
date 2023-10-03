@@ -23,7 +23,7 @@ SDTBubble *SDTBubble_new() {
 
   x = (SDTBubble *)malloc(sizeof(SDTBubble));
   x->radius = 1.0;
-  x->depth = 0.0;
+  x->depth = 1.0;
   x->riseFactor = 0.0;
   x->amp = 0.0;
   x->decay = 0.0;
