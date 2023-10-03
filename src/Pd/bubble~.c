@@ -18,21 +18,19 @@ static t_class *bubble_class;
 typedef struct _bubble {
   t_object obj;
   SDTBubble *bubble;
-  t_float radius, riseFactor;
   t_outlet *out;
   const char *key;
 } t_bubble;
 
 void bubble_bang(t_bubble *x) {
-  SDTBubble_setRadius(x->bubble, x->radius);
-  SDTBubble_setRiseFactor(x->bubble, x->riseFactor);
   SDTBubble_update(x->bubble);
+  // Do not normalize w.r.t. radius and depth
   SDTBubble_normAmp(x->bubble);
 }
 
-void bubble_radius(t_bubble *x, t_float f) { x->radius = f; }
-
-void bubble_riseFactor(t_bubble *x, t_float f) { x->riseFactor = f; }
+SDT_PD_SETTER(bubble, Bubble, bubble, Radius, )
+SDT_PD_SETTER(bubble, Bubble, bubble, RiseFactor, )
+// SDT_PD_SETTER(bubble, Bubble, bubble, Depth, ) // Unused
 
 static t_int *bubble_perform(t_int *w) {
   t_bubble *x = (t_bubble *)(w[1]);
@@ -71,9 +69,11 @@ void bubble_tilde_setup(void) {
                            (t_method)bubble_free, sizeof(t_bubble),
                            CLASS_DEFAULT, A_GIMME, 0);
   class_addmethod(bubble_class, (t_method)bubble_bang, gensym("bang"), 0);
-  class_addmethod(bubble_class, (t_method)bubble_radius, gensym("radius"),
+  class_addmethod(bubble_class, (t_method)bubble_setRadius, gensym("radius"),
                   A_FLOAT, 0);
-  class_addmethod(bubble_class, (t_method)bubble_riseFactor,
+  class_addmethod(bubble_class, (t_method)bubble_setRiseFactor,
                   gensym("riseFactor"), A_FLOAT, 0);
+  // class_addmethod(bubble_class, (t_method)bubble_setDepth, gensym("depth"),
+  //                 A_FLOAT, 0); // Unused
   class_addmethod(bubble_class, (t_method)bubble_dsp, gensym("dsp"), 0);
 }
