@@ -20,6 +20,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
   if (!strcmp("bouncing", k)) return SDTOSCBouncing(x);
+  if (!strcmp("breaking", k)) return SDTOSCBreaking(x);
   if (!strcmp("dcmotor", k)) return SDTOSCDCMotor(x);
   if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
   if (!strcmp("pitch", k)) return SDTOSCPitch(x);
@@ -39,10 +40,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCProject(log, sub);
   // else if (!strcmp("biquad", method))
   //   return_code = SDTOSCBiquad(log, sub);
-  // else if (!strcmp("bouncing", method))
-  //   return_code = SDTOSCBouncing(log, sub);
-  // else if (!strcmp("breaking", method))
-  //   return_code = SDTOSCBreaking(log, sub);
   // else if (!strcmp("bubble", method))
   //   return_code = SDTOSCBubble(log, sub);
   // else if (!strcmp("crumpling", method))

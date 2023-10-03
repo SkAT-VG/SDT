@@ -10,7 +10,6 @@ typedef struct _breaking {
   t_pxobject ob;
   void *size, *energy;
   SDTBreaking *breaking;
-  double storedEnergy, crushingEnergy, granularity, fragmentation;
   t_symbol *key;
 } t_breaking;
 
@@ -37,26 +36,6 @@ void breaking_assist(t_breaking *x, void *b, long m, long a, char *s) {
 
 void breaking_bang(t_breaking *x) { SDTBreaking_reset(x->breaking); }
 
-void breaking_storedEnergy(t_breaking *x, void *attr, long ac, t_atom *av) {
-  x->storedEnergy = atom_getfloat(av);
-  SDTBreaking_setStoredEnergy(x->breaking, x->storedEnergy);
-}
-
-void breaking_crushingEnergy(t_breaking *x, void *attr, long ac, t_atom *av) {
-  x->crushingEnergy = atom_getfloat(av);
-  SDTBreaking_setCrushingEnergy(x->breaking, x->crushingEnergy);
-}
-
-void breaking_granularity(t_breaking *x, void *attr, long ac, t_atom *av) {
-  x->granularity = atom_getfloat(av);
-  SDTBreaking_setGranularity(x->breaking, x->granularity);
-}
-
-void breaking_fragmentation(t_breaking *x, void *attr, long ac, t_atom *av) {
-  x->fragmentation = atom_getfloat(av);
-  SDTBreaking_setFragmentation(x->breaking, x->fragmentation);
-}
-
 void *breaking_new(t_symbol *s, short argc, t_atom *argv) {
   SDT_setupMaxLoggers();
   t_breaking *x = (t_breaking *)object_alloc(breaking_class);
@@ -79,6 +58,11 @@ void breaking_free(t_breaking *x) {
 }
 
 SDT_MAX_KEY(breaking, Breaking, breaking, "breaking~", "breaking process")
+
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, StoredEnergy, float, )
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, CrushingEnergy, float, )
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, Granularity, float, )
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, Fragmentation, float, )
 
 t_int *breaking_perform(t_int *w) {
   t_breaking *x = (t_breaking *)(w[1]);
@@ -134,22 +118,15 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(breaking, "1")
 
-  CLASS_ATTR_DOUBLE(c, "storedEnergy", 0, t_breaking, storedEnergy);
-  CLASS_ATTR_DOUBLE(c, "crushingEnergy", 0, t_breaking, crushingEnergy);
-  CLASS_ATTR_DOUBLE(c, "granularity", 0, t_breaking, granularity);
-  CLASS_ATTR_DOUBLE(c, "fragmentation", 0, t_breaking, fragmentation);
+  SDT_MAX_ATTRIBUTE(c, breaking, StoredEnergy, storedEnergy, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, breaking, CrushingEnergy, crushingEnergy, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, breaking, Granularity, granularity, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, breaking, Fragmentation, fragmentation, float64, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "storedEnergy", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "crushingEnergy", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "granularity", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "fragmentation", 0.0, 1.0);
-
-  CLASS_ATTR_ACCESSORS(c, "storedEnergy", NULL, (method)breaking_storedEnergy);
-  CLASS_ATTR_ACCESSORS(c, "crushingEnergy", NULL,
-                       (method)breaking_crushingEnergy);
-  CLASS_ATTR_ACCESSORS(c, "granularity", NULL, (method)breaking_granularity);
-  CLASS_ATTR_ACCESSORS(c, "fragmentation", NULL,
-                       (method)breaking_fragmentation);
 
   CLASS_ATTR_ORDER(c, "storedEnergy", 0, "2");
   CLASS_ATTR_ORDER(c, "crushingEnergy", 0, "3");

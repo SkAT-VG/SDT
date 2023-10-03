@@ -4,7 +4,6 @@
 /** @file SDTOSCDCMotor.h
 @defgroup OSCDCMotor SDTOSCDCMotor.h: OSC DCMotor
 OSC for #SDTDCMotor objects.
-@ingroup osc
 @{
 */
 
@@ -14,6 +13,12 @@ OSC for #SDTDCMotor objects.
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/** @defgroup oscdcmotor SDTOSCDCMotor
+OSC for #SDTDCMotor objects.
+@ingroup osc
+@{
+*/
 
 /** @brief `/dcmotor/log <name>`
 
@@ -127,6 +132,8 @@ Function that sets the sound volume air turbulence caused by rotation.
 @param x OSC message pointer
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCDCMotor_setAirGain(const SDTOSCMessage *x);
+
+/** @} */
 
 #ifdef __cplusplus
 };

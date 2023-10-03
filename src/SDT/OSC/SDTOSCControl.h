@@ -76,6 +76,77 @@ extern int SDTOSCBouncing(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscbreaking SDTOSCBreaking
+OSC for #SDTBreaking objects
+@ingroup osc
+@{ */
+
+/** @brief `/breaking/log <name>`
+
+Function that implements OSC JSON log for #SDTBreaking objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_log(const SDTOSCMessage *x);
+
+/** @brief `/breaking/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTBreaking objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_save(const SDTOSCMessage *x);
+
+/** @brief `/breaking/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTBreaking objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_load(const SDTOSCMessage *x);
+
+/** @brief `/breaking/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTBreaking
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_loads(const SDTOSCMessage *x);
+
+/** @brief `/breaking/storedEnergy <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBreaking objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_setStoredEnergy(const SDTOSCMessage *x);
+
+/** @brief `/breaking/crushingEnergy <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBreaking objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_setCrushingEnergy(const SDTOSCMessage *x);
+
+/** @brief `/breaking/granularity <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBreaking objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_setGranularity(const SDTOSCMessage *x);
+
+/** @brief `/breaking/fragmentation <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBreaking objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking_setFragmentation(const SDTOSCMessage *x);
+
+/** @brief `/breaking/...`
+
+Function that routes OSC commands for #SDTBreaking objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCBreaking(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif

@@ -1,11 +1,9 @@
 #include "../SDTResonators.h"
 #include "SDTOSCCommon.h"
 
-
 /** @file SDTOSCResonators.h
 @defgroup OSCResonators SDTOSCResonators.h: OSC Resonators
 OSC for #SDTResonator objects.
-@ingroup osc
 @{
 */
 
@@ -15,6 +13,11 @@ OSC for #SDTResonator objects.
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/** @defgroup oscresonators SDTOSCResonators
+OSC for #SDTResonators objects
+@ingroup osc
+@{ */
 
 /** @brief `/resonator/log <name>`
 
@@ -93,6 +96,8 @@ Function that sets the resonator active modes
 @param x OSC message pointer
 @return Zero on success, non-zero otherwise */
 extern int SDTOSCResonator_setActiveModes(const SDTOSCMessage *x);
+
+/** @} */
 
 #ifdef __cplusplus
 };
