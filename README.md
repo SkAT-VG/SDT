@@ -66,13 +66,20 @@ Users may as well build on their machines the Max *package*, Pd *library*, and s
 
 Before moving on to the instructions, you should [install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and clone this repository.
 Make sure to pull the SDT repository **including the submodules**.
-If you are cloning from the command-line interface, we suggest running `git clone` with these options to speed up the download:
+If you are cloning from the command-line interface, we suggest running `git clone` with the following options to speed up the download: the option `--recurse-submodules` will check out all submodules, while `--filter=blob:none` and `--also-filter-submodules` will avoid downloading unneeded blobs (but may not be supported in older `git` versions).
+
+Especially on **Windows** systems, avoid cloning the MacOSX SDKs to avoid invalid path errors. Consider using this command on **Linux** systems too, since that submodule won't be needed.
+```bash
+git clone --recurse-submodules=":(exclude)3rdparty/MacOSX-SDKs" \
+	--filter=blob:none --also-filter-submodules \
+	git@github.com:SkAT-VG/SDT.git
+```
+On **MacOS** systems, you should clone all submodules.
 ```bash
 git clone --recurse-submodules \
 	--filter=blob:none --also-filter-submodules \
 	git@github.com:SkAT-VG/SDT.git
 ```
-The option `--recurse-submodules` will check out all submodules, while `--filter=blob:none` and `--also-filter-submodules` will avoid downloading unneeded blobs (but may not be supported in older `git` versions).
 
 If you are using a git client that doesn't check-out submodules automatically, enter the following git command:
 ```bash
