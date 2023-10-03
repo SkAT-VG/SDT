@@ -132,11 +132,65 @@ SDTBreaking *SDTBreaking_new() {
 
 void SDTBreaking_free(SDTBreaking *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_BREAKING)
-SDT_DEFINE_HASHMAP(SDT_BREAKING, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_BREAKING)
-SDT_JSON_SERIALIZE(SDT_BREAKING)
-SDT_JSON_DESERIALIZE(SDT_BREAKING)
+_SDT_COPY_FUNCTION(Breaking)
+
+_SDT_HASHMAP_FUNCTIONS(Breaking)
+
+json_value *SDTBreaking_toJSON(const SDTBreaking *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "storedEnergy",
+                   json_double_new(SDTBreaking_getStoredEnergy(x)));
+  json_object_push(obj, "crushingEnergy",
+                   json_double_new(SDTBreaking_getCrushingEnergy(x)));
+  json_object_push(obj, "granularity",
+                   json_double_new(SDTBreaking_getGranularity(x)));
+  json_object_push(obj, "fragmentation",
+                   json_double_new(SDTBreaking_getFragmentation(x)));
+  return obj;
+}
+
+SDTBreaking *SDTBreaking_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTBreaking *y = SDTBreaking_new();
+  return SDTBreaking_setParams(y, x, 0);
+}
+
+SDTBreaking *SDTBreaking_setParams(SDTBreaking *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, StoredEnergy, storedEnergy, integer);
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, CrushingEnergy, crushingEnergy,
+                           integer);
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Granularity, granularity, integer);
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Fragmentation, fragmentation,
+                           integer);
+
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, StoredEnergy, storedEnergy, double);
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, CrushingEnergy, crushingEnergy,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Granularity, granularity, double);
+  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Fragmentation, fragmentation,
+                           double);
+
+  return x;
+}
+
+double SDTBreaking_getStoredEnergy(const SDTBreaking *x) {
+  return x->storedEnergy;
+}
+
+double SDTBreaking_getCrushingEnergy(const SDTBreaking *x) {
+  return x->crushingEnergy;
+}
+
+double SDTBreaking_getGranularity(const SDTBreaking *x) {
+  return x->granularity;
+}
+
+double SDTBreaking_getFragmentation(const SDTBreaking *x) {
+  return x->fragmentation;
+}
 
 void SDTBreaking_setStoredEnergy(SDTBreaking *x, double f) {
   x->storedEnergy = fmax(SDT_MICRO, f);

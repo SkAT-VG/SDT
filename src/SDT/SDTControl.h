@@ -137,19 +137,68 @@ extern SDTBreaking *SDTBreaking_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTBreaking_free(SDTBreaking *x);
 
-#define SDT_BREAKING Breaking
-#define SDT_BREAKING_NEW_ARGS
-#define SDT_BREAKING_ATTRIBUTES(T, A)                                 \
-  A(T, storedEnergy, double, StoredEnergy, storedEnergy, double, 0.0) \
-  A(T, crushingEnergy, double, CrushingEnergy, crushing, double, 0.0) \
-  A(T, granularity, double, Granularity, granularity, double, 0.0)    \
-  A(T, fragmentation, double, Fragmentation, fragmentation, double, 0.0)
+/** @brief Deep-copies a breaking process.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTBreaking *SDTBreaking_copy(SDTBreaking *dest, const SDTBreaking *src,
+                                     unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_BREAKING)
-SDT_DEFINE_HASHMAP_H(SDT_BREAKING)
-SDT_TYPE_MAKE_GETTERS_H(SDT_BREAKING)
-SDT_JSON_SERIALIZE_H(SDT_BREAKING)
-SDT_JSON_DESERIALIZE_H(SDT_BREAKING)
+/** @brief Registers a breaking process into the breaking processes list with a
+unique ID.
+@param[in] x Breaking instance to register
+@param[in] key Unique ID assigned to the breaking process instance
+@return Zero on success, otherwise one */
+extern int SDT_registerBreaking(SDTBreaking *x, const char *key);
+
+/** @brief Queries the breaking processes list by its unique ID.
+If a breaking process with the ID is present, a pointer to the breaking process
+is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the breaking process instance
+@return Breaking instance pointer */
+extern SDTBreaking *SDT_getBreaking(const char *key);
+
+/** @brief Unregisters a breaking process from the breaking processes list. If a
+breaking process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the breaking process instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterBreaking(const char *key);
+
+/** @brief Gets the total stored energy.
+@return Total stored energy of the breaking process */
+extern double SDTBreaking_getStoredEnergy(const SDTBreaking *x);
+
+/** @brief Gets the crushing energy.
+@return Average energy of the micro impacts */
+extern double SDTBreaking_getCrushingEnergy(const SDTBreaking *x);
+
+/** @brief Gets the event density.
+@return Event density of the breaking process */
+extern double SDTBreaking_getGranularity(const SDTBreaking *x);
+
+/** @brief Gets the amount of progressive fragmentation.
+@return Amount of progressive fragmentation of the object during the breaking
+process */
+extern double SDTBreaking_getFragmentation(const SDTBreaking *x);
+
+/** @brief Represent a breaking process as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTBreaking_toJSON(const SDTBreaking *x);
+
+/** @brief Initialize a breaking process from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTBreaking *SDTBreaking_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a breaking process from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTBreaking *SDTBreaking_setParams(SDTBreaking *x, const json_value *j,
+                                          unsigned char unsafe);
 
 /** @brief Sets the total energy stored in the object.
 @param[in] f Total stored energy consumed by the micro impacts, in N */
@@ -160,7 +209,7 @@ extern void SDTBreaking_setStoredEnergy(SDTBreaking *x, double f);
 of the process, in N */
 extern void SDTBreaking_setCrushingEnergy(SDTBreaking *x, double f);
 
-/** @brief Sets the event density of the crumpling process.
+/** @brief Sets the event density of the breaking process.
 @param[in] f Event density [0, 1] */
 extern void SDTBreaking_setGranularity(SDTBreaking *x, double f);
 
@@ -169,7 +218,7 @@ process.
 @param[in] f Object fragmentation [0, 1] */
 extern void SDTBreaking_setFragmentation(SDTBreaking *x, double f);
 
-/** @brief Resets the crumpling process, restoring its initial energy
+/** @brief Resets the breaking process, restoring its initial energy
 and triggering the first micro impact.
 @param[out] outs Pointer to the output array: impact energy and fragment size */
 extern void SDTBreaking_reset(SDTBreaking *x);
