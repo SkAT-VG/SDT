@@ -17,21 +17,10 @@ typedef struct _breaking {
 
 void breaking_bang(t_breaking *x) { SDTBreaking_reset(x->breaking); }
 
-void breaking_storedEnergy(t_breaking *x, t_float f) {
-  SDTBreaking_setStoredEnergy(x->breaking, f);
-}
-
-void breaking_crushingEnergy(t_breaking *x, t_float f) {
-  SDTBreaking_setCrushingEnergy(x->breaking, f);
-}
-
-void breaking_granularity(t_breaking *x, t_float f) {
-  SDTBreaking_setGranularity(x->breaking, f);
-}
-
-void breaking_fragmentation(t_breaking *x, t_float f) {
-  SDTBreaking_setFragmentation(x->breaking, f);
-}
+SDT_PD_SETTER(breaking, Breaking, breaking, StoredEnergy, )
+SDT_PD_SETTER(breaking, Breaking, breaking, CrushingEnergy, )
+SDT_PD_SETTER(breaking, Breaking, breaking, Granularity, )
+SDT_PD_SETTER(breaking, Breaking, breaking, Fragmentation, )
 
 t_int *breaking_perform(t_int *w) {
   t_breaking *x = (t_breaking *)(w[1]);
@@ -77,13 +66,13 @@ void breaking_tilde_setup(void) {
                              (t_method)breaking_free, (long)sizeof(t_breaking),
                              CLASS_DEFAULT, A_GIMME, 0);
   class_addmethod(breaking_class, (t_method)breaking_bang, gensym("bang"), 0);
-  class_addmethod(breaking_class, (t_method)breaking_storedEnergy,
+  class_addmethod(breaking_class, (t_method)breaking_setStoredEnergy,
                   gensym("storedEnergy"), A_FLOAT, 0);
-  class_addmethod(breaking_class, (t_method)breaking_crushingEnergy,
+  class_addmethod(breaking_class, (t_method)breaking_setCrushingEnergy,
                   gensym("crushingEnergy"), A_FLOAT, 0);
-  class_addmethod(breaking_class, (t_method)breaking_granularity,
+  class_addmethod(breaking_class, (t_method)breaking_setGranularity,
                   gensym("granularity"), A_FLOAT, 0);
-  class_addmethod(breaking_class, (t_method)breaking_fragmentation,
+  class_addmethod(breaking_class, (t_method)breaking_setFragmentation,
                   gensym("fragmentation"), A_FLOAT, 0);
   class_addmethod(breaking_class, (t_method)breaking_dsp, gensym("dsp"), 0);
 }
