@@ -1,10 +1,4 @@
 # SDT source code
-## Myoelastic
-`SDTMyoelastic_new` has an unused `bufSize` argument
-## Demix
-Header `SDTDemix.h` is included only if `SDT_EFFECTS_H` is not defined. So, it is mutually exclusive with `SDTEffects.h` (***fixed***)
-## Biquad
-`SDTBiquad_free` doesn't seem to free all allocated memory (***fixed***)
 ## Delay
 Something seems wrong in `SDTDelay_setDelay` (see comment below)
 ```
@@ -17,6 +11,6 @@ void SDTDelay_setDelay(SDTDelay *x, double f) {
   x->feedback = (1.0 - d) / (1.0 + d) // = 0.382 / 1.618 ≈ 0.236;
 }
 ```
-# MAX
-## lowpass~
-The filter in the object is defined through `SDTBiquad_butterworthHP`. This makes it an high-pass filter. (***removed*** as it seems useless in Max)
+# MAX externals
+## Bubble
+The max external `sdt.bubble~` takes its radius in mm, while the C API and the Pd external expects the radius in meters.

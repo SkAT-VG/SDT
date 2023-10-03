@@ -9,7 +9,6 @@
 typedef struct _bubble {
   t_pxobject ob;
   SDTBubble *bubble;
-  double radius, riseFactor;
   t_symbol *key;
 } t_bubble;
 
@@ -47,10 +46,36 @@ void bubble_assist(t_bubble *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(bubble, Bubble, bubble, "bubble~", "bubble")
 
+SDT_MAX_ACCESSORS(bubble, Bubble, bubble, RiseFactor, float, )
+// SDT_MAX_ACCESSORS(bubble, Bubble, bubble, Depth, float, ) // Unused
+
+t_max_err bubble_getRadius(t_bubble *x, void *attr, long *ac, t_atom **av) {
+  if (!(*ac && *av)) {
+    *ac = 1;
+    *av =
+        (t_atom *)((char *)sysmem_newptr((t_ptr_size)(sizeof(t_atom) * (*ac))));
+    if (!*av) {
+      *ac = 0;
+      return MAX_ERR_OUT_OF_MEM;
+    }
+  }
+  return atom_setfloat(*av,
+                       /* radius to mm for backwards compatibility */ 1000.0 *
+                           SDTBubble_getRadius(x->bubble));
+}
+
+t_max_err bubble_setRadius(t_bubble *x, void *attr, long ac, t_atom *av) {
+  if (ac && av) {
+    SDTBubble_setRadius(x->bubble,
+                        /* radius from mm for backwards compatibility */ 0.001 *
+                            atom_getfloat(av));
+  };
+  return MAX_ERR_NONE;
+}
+
 void bubble_bang(t_bubble *x) {
-  SDTBubble_setRadius(x->bubble, 0.001 * x->radius);
-  SDTBubble_setRiseFactor(x->bubble, x->riseFactor);
   SDTBubble_update(x->bubble);
+  // Do not normalize w.r.t. radius and depth
   SDTBubble_normAmp(x->bubble);
 }
 
@@ -75,14 +100,12 @@ void bubble_perform64(t_bubble *x, t_object *dsp64, double **ins, long numins,
 
 void bubble_dsp(t_bubble *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTBubble_setDepth(x->bubble, 1.0);
   dsp_add(bubble_perform, 3, x, sp[1]->s_vec, sp[0]->s_n);
 }
 
 void bubble_dsp64(t_bubble *x, t_object *dsp64, short *count, double samplerate,
                   long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTBubble_setDepth(x->bubble, 1.0);
   object_method(dsp64, gensym("dsp_add64"), x, bubble_perform64, 0, NULL);
 }
 
@@ -98,14 +121,17 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(bubble, "1")
 
-  CLASS_ATTR_DOUBLE(c, "radius", 0, t_bubble, radius);
-  CLASS_ATTR_DOUBLE(c, "riseFactor", 0, t_bubble, riseFactor);
+  SDT_MAX_ATTRIBUTE(c, bubble, Radius, radius, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, bubble, RiseFactor, riseFactor, float64, 0);
+  // SDT_MAX_ATTRIBUTE(c, bubble, Depth, depth, float64, 0); // Unused
 
   CLASS_ATTR_FILTER_CLIP(c, "radius", 0.15, 150.0);
   CLASS_ATTR_FILTER_CLIP(c, "riseFactor", 0.0, 3.0);
+  // CLASS_ATTR_FILTER_CLIP(c, "depth", 0.0, 1.0); // Unused
 
   CLASS_ATTR_ORDER(c, "radius", 0, "2");
   CLASS_ATTR_ORDER(c, "riseFactor", 0, "3");
+  // CLASS_ATTR_ORDER(c, "depth", 0, "4"); // Unused
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
