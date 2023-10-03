@@ -237,7 +237,7 @@ extern int SDTOSCMessage_snprintf(char *s, size_t n, const char *float_fmt,
 
 /** @brief Print OSC message onto a statically-allocated string.
 Please, note that any subsequent calls to SDT log functions
-may write over this string. Use the macro ::SDTOSC_MESSAGE_LOG for ease of use.
+may write over this string. Use the macro ::SDTOSC_MESSAGE_LOGA for ease of use.
 @param[in] m OSC message pointer
 @return String pointer or zero on fail */
 extern const char *SDTOSCMessage_staticPrint(const SDTOSCMessage *m);

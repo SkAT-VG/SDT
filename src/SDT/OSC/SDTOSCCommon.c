@@ -8,7 +8,6 @@
 #include "../SDTCommon.h"
 #include "../SDTJSON.h"
 
-
 const char *SDTOSC_rtfm_string() {
   return "For further details, please, visit the documentation at "
          "https://skat-vg.github.io/SDT";
