@@ -14,7 +14,7 @@ extern "C" {
 
 /** @defgroup osczerox SDTOSCZeroCrossing
 OSC for #SDTZeroCrossing objects
-@ingroup osc
+@ingroup oscmethods
 @{ */
 
 /** @brief `/zerox/log <name>`
@@ -71,7 +71,7 @@ extern int SDTOSCZeroCrossing(const SDTOSCMessage *x);
 
 /** @defgroup oscmyo SDTOSCMyoelastic
 OSC for #SDTMyoelastic objects
-@ingroup osc
+@ingroup oscmethods
 @{ */
 
 /** @brief `/myo/log <name>`
@@ -142,7 +142,7 @@ extern int SDTOSCMyoelastic(const SDTOSCMessage *x);
 
 /** @defgroup oscspectralfeats SDTOSCSpectralFeats
 OSC for #SDTSpectralFeats objects
-@ingroup osc
+@ingroup oscmethods
 @{ */
 
 /** @brief `/spectralfeats/log <name>`
@@ -213,7 +213,7 @@ extern int SDTOSCSpectralFeats(const SDTOSCMessage *x);
 
 /** @defgroup oscpitch SDTOSCPitch
 OSC for #SDTPitch objects
-@ingroup osc
+@ingroup oscmethods
 @{ */
 
 /** @brief `/pitch/log <name>`

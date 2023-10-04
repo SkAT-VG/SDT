@@ -15,8 +15,8 @@ extern "C" {
 #endif
 
 /** @defgroup oscresonators SDTOSCResonators
-OSC for #SDTResonators objects
-@ingroup osc
+OSC for #SDTResonator objects
+@ingroup oscmethods
 @{ */
 
 /** @brief `/resonator/log <name>`

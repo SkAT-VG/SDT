@@ -14,7 +14,7 @@ extern "C" {
 
 /** @defgroup oscbouncing SDTOSCBouncing
 OSC for #SDTBouncing objects
-@ingroup osc
+@ingroup oscmethods
 @{ */
 
 /** @brief `/bouncing/log <name>`
@@ -78,7 +78,7 @@ extern int SDTOSCBouncing(const SDTOSCMessage *x);
 
 /** @defgroup oscbreaking SDTOSCBreaking
 OSC for #SDTBreaking objects
-@ingroup osc
+@ingroup oscmethods
 @{ */
 
 /** @brief `/breaking/log <name>`

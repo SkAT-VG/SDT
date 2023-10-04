@@ -16,7 +16,7 @@ extern "C" {
 
 /** @defgroup oscdcmotor SDTOSCDCMotor
 OSC for #SDTDCMotor objects.
-@ingroup osc
+@ingroup oscmethods
 @{
 */
 

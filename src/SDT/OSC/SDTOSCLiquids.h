@@ -14,7 +14,7 @@ extern "C" {
 
 /** @defgroup oscbubble SDTOSCBubble
 OSC for #SDTBubble objects
-@ingroup osc
+@ingroup oscmethods
 @{ */
 
 /** @brief `/bubble/log <name>`
