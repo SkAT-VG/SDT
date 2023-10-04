@@ -1,6 +1,8 @@
 #include "SDTLiquids.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTFilters.h"
 #include "SDTStructs.h"
@@ -21,7 +23,7 @@ SDTBubble *SDTBubble_new() {
 
   x = (SDTBubble *)malloc(sizeof(SDTBubble));
   x->radius = 1.0;
-  x->depth = 0.0;
+  x->depth = 1.0;
   x->riseFactor = 0.0;
   x->amp = 0.0;
   x->decay = 0.0;
@@ -36,11 +38,45 @@ SDTBubble *SDTBubble_new() {
 
 void SDTBubble_free(SDTBubble *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_BUBBLE)
-SDT_DEFINE_HASHMAP(SDT_BUBBLE, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_BUBBLE)
-SDT_JSON_SERIALIZE(SDT_BUBBLE)
-SDT_JSON_DESERIALIZE(SDT_BUBBLE)
+_SDT_COPY_FUNCTION(Bubble)
+
+_SDT_HASHMAP_FUNCTIONS(Bubble)
+
+json_value *SDTBubble_toJSON(const SDTBubble *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "radius", json_double_new(SDTBubble_getRadius(x)));
+  json_object_push(obj, "riseFactor",
+                   json_double_new(SDTBubble_getRiseFactor(x)));
+  json_object_push(obj, "depth", json_double_new(SDTBubble_getDepth(x)));
+  return obj;
+}
+
+SDTBubble *SDTBubble_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTBubble *y = SDTBubble_new();
+  return SDTBubble_setParams(y, x, 0);
+}
+
+SDTBubble *SDTBubble_setParams(SDTBubble *x, const json_value *j,
+                               unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Radius, radius, integer);
+  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, RiseFactor, riseFactor, integer);
+  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Depth, depth, integer);
+
+  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Radius, radius, double);
+  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, RiseFactor, riseFactor, double);
+  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Depth, depth, double);
+
+  return x;
+}
+
+double SDTBubble_getRadius(const SDTBubble *x) { return x->radius; }
+
+double SDTBubble_getRiseFactor(const SDTBubble *x) { return x->riseFactor; }
+
+double SDTBubble_getDepth(const SDTBubble *x) { return x->depth; }
 
 void SDTBubble_setRadius(SDTBubble *x, double f) {
   x->radius = SDT_fclip(f, MIN_RADIUS, MAX_RADIUS);

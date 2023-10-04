@@ -38,18 +38,63 @@ extern SDTBubble *SDTBubble_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTBubble_free(SDTBubble *x);
 
-#define SDT_BUBBLE Bubble
-#define SDT_BUBBLE_NEW_ARGS
-#define SDT_BUBBLE_ATTRIBUTES(T, A)                             \
-  A(T, radius, double, Radius, radius, double, 1.0)             \
-  A(T, riseFactor, double, RiseFactor, riseFactor, double, 0.0) \
-  A(T, depth, double, Depth, depth, double, 0.0)
+/** @brief Deep-copies a bouncing process.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTBubble *SDTBubble_copy(SDTBubble *dest, const SDTBubble *src,
+                                 unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_BUBBLE)
-SDT_DEFINE_HASHMAP_H(SDT_BUBBLE)
-SDT_TYPE_MAKE_GETTERS_H(SDT_BUBBLE)
-SDT_JSON_SERIALIZE_H(SDT_BUBBLE)
-SDT_JSON_DESERIALIZE_H(SDT_BUBBLE)
+/** @brief Registers a bouncing process into the bouncing processes list with a
+unique ID.
+@param[in] x Bubble instance to register
+@param[in] key Unique ID assigned to the bouncing process instance
+@return Zero on success, otherwise one */
+extern int SDT_registerBubble(SDTBubble *x, const char *key);
+
+/** @brief Queries the bouncing processes list by its unique ID.
+If a bouncing process with the ID is present, a pointer to the bouncing process
+is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the bouncing process instance
+@return Bubble instance pointer */
+extern SDTBubble *SDT_getBubble(const char *key);
+
+/** @brief Unregisters a bouncing process from the bouncing processes list. If a
+bouncing process with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the bouncing process instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterBubble(const char *key);
+
+/** @brief Gets the bubble radius.
+@return Radius of the bubble */
+extern double SDTBubble_getRadius(const SDTBubble *x);
+
+/** @brief Gets the amount of blooping.
+@return Amount of blooping of the bubble */
+extern double SDTBubble_getRiseFactor(const SDTBubble *x);
+
+/** @brief Gets the bubble depth.
+@return Depth of the bubble */
+extern double SDTBubble_getDepth(const SDTBubble *x);
+
+/** @brief Represent a bouncing process as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTBubble_toJSON(const SDTBubble *x);
+
+/** @brief Initialize a bouncing process from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTBubble *SDTBubble_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a bouncing process from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTBubble *SDTBubble_setParams(SDTBubble *x, const json_value *j,
+                                      unsigned char unsafe);
 
 /** @brief Sets the bubble radius.
 @param[in] f Bubble radius, in m [0.00015, 0.150] */
