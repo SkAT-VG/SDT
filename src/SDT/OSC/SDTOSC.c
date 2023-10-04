@@ -23,6 +23,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("bouncing", k)) return SDTOSCBouncing(x);
   if (!strcmp("breaking", k)) return SDTOSCBreaking(x);
   if (!strcmp("bubble", k)) return SDTOSCBubble(x);
+  if (!strcmp("crumpling", k)) return SDTOSCCrumpling(x);
   if (!strcmp("dcmotor", k)) return SDTOSCDCMotor(x);
   if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
   if (!strcmp("pitch", k)) return SDTOSCPitch(x);
@@ -42,8 +43,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCProject(log, sub);
   // else if (!strcmp("biquad", method))
   //   return_code = SDTOSCBiquad(log, sub);
-  // else if (!strcmp("crumpling", method))
-  //   return_code = SDTOSCCrumpling(log, sub);
   // else if (!strcmp("demix", method))
   //   return_code = SDTOSCDemix(log, sub);
   // else if (!strcmp("envelope", method))
