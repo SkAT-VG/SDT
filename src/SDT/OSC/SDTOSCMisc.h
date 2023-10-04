@@ -1,29 +1,3 @@
-// extern SDTOSCReturnCode SDTOSCCrumpling_log(void (*log)(const char *, ...),
-//                                             const char *key, SDTCrumpling
-//                                             *x);
-
-// extern SDTOSCReturnCode SDTOSCCrumpling_save(void (*log)(const char *, ...),
-//                                              const char *key, SDTCrumpling
-//                                              *x, const SDTOSCArgumentList
-//                                              *args);
-
-// extern SDTOSCReturnCode SDTOSCCrumpling_load(void (*log)(const char *, ...),
-//                                              const char *key, SDTCrumpling
-//                                              *x, const SDTOSCArgumentList
-//                                              *args);
-
-// extern SDTOSCReturnCode SDTOSCCrumpling_setCrushingEnergy(
-//     SDTCrumpling *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCCrumpling_setGranularity(
-//     SDTCrumpling *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCCrumpling_setFragmentation(
-//     SDTCrumpling *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCCrumpling(void (*log)(const char *, ...),
-//                                         const SDTOSCMessage *x);
-
 // extern SDTOSCReturnCode SDTOSCDemix_log(void (*log)(const char *, ...),
 //                                         const char *key, SDTDemix *x);
 

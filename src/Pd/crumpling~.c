@@ -15,17 +15,9 @@ typedef struct _crumpling {
   const char *key;
 } t_crumpling;
 
-void crumpling_crushingEnergy(t_crumpling *x, t_float f) {
-  SDTCrumpling_setCrushingEnergy(x->crumpling, f);
-}
-
-void crumpling_granularity(t_crumpling *x, t_float f) {
-  SDTCrumpling_setGranularity(x->crumpling, f);
-}
-
-void crumpling_fragmentation(t_crumpling *x, t_float f) {
-  SDTCrumpling_setFragmentation(x->crumpling, f);
-}
+SDT_PD_SETTER(crumpling, Crumpling, crumpling, CrushingEnergy, )
+SDT_PD_SETTER(crumpling, Crumpling, crumpling, Granularity, )
+SDT_PD_SETTER(crumpling, Crumpling, crumpling, Fragmentation, )
 
 t_int *crumpling_perform(t_int *w) {
   t_crumpling *x = (t_crumpling *)(w[1]);
@@ -71,11 +63,11 @@ void crumpling_tilde_setup(void) {
       class_new(gensym("crumpling~"), (t_newmethod)crumpling_new,
                 (t_method)crumpling_free, (long)sizeof(t_crumpling),
                 CLASS_DEFAULT, A_GIMME, 0);
-  class_addmethod(crumpling_class, (t_method)crumpling_crushingEnergy,
+  class_addmethod(crumpling_class, (t_method)crumpling_setCrushingEnergy,
                   gensym("crushingEnergy"), A_FLOAT, 0);
-  class_addmethod(crumpling_class, (t_method)crumpling_granularity,
+  class_addmethod(crumpling_class, (t_method)crumpling_setGranularity,
                   gensym("granularity"), A_FLOAT, 0);
-  class_addmethod(crumpling_class, (t_method)crumpling_fragmentation,
+  class_addmethod(crumpling_class, (t_method)crumpling_setFragmentation,
                   gensym("fragmentation"), A_FLOAT, 0);
   class_addmethod(crumpling_class, (t_method)crumpling_dsp, gensym("dsp"), 0);
 }

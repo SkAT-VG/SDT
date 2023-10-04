@@ -254,18 +254,70 @@ extern SDTCrumpling *SDTCrumpling_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTCrumpling_free(SDTCrumpling *x);
 
-#define SDT_CRUMPLING Crumpling
-#define SDT_CRUMPLING_NEW_ARGS
-#define SDT_CRUMPLING_ATTRIBUTES(T, A)                                \
-  A(T, crushingEnergy, double, CrushingEnergy, crushing, double, 0.0) \
-  A(T, granularity, double, Granularity, granularity, double, 0.0)    \
-  A(T, fragmentation, double, Fragmentation, fragmentation, double, 0.0)
+/** @brief Deep-copies a crumpling process.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTCrumpling *SDTCrumpling_copy(SDTCrumpling *dest,
+                                       const SDTCrumpling *src,
+                                       unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_CRUMPLING)
-SDT_DEFINE_HASHMAP_H(SDT_CRUMPLING)
-SDT_TYPE_MAKE_GETTERS_H(SDT_CRUMPLING)
-SDT_JSON_SERIALIZE_H(SDT_CRUMPLING)
-SDT_JSON_DESERIALIZE_H(SDT_CRUMPLING)
+/** @brief Registers a crumpling process into the crumpling processes list with
+a unique ID.
+@param[in] x Crumpling process instance to register
+@param[in] key Unique ID assigned to the crumpling process instance
+@return Zero on success, otherwise one */
+extern int SDT_registerCrumpling(SDTCrumpling *x, const char *key);
+
+/** @brief Queries the crumpling processes list by its unique ID.
+If a crumpling process with the ID is present, a pointer to the crumpling
+process is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the crumpling process instance
+@return Crumpling process instance pointer */
+extern SDTCrumpling *SDT_getCrumpling(const char *key);
+
+/** @brief Unregisters a crumpling process from the crumpling processes list. If
+a crumpling process with the given ID is present, it is unregistered from the
+list.
+@param[in] key Unique ID of the crumpling process instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterCrumpling(const char *key);
+
+/** @brief Represent a crumpling process as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTCrumpling_toJSON(const SDTCrumpling *x);
+
+/** @brief Initialize a crumpling process from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTCrumpling *SDTCrumpling_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a crumpling process from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTCrumpling *SDTCrumpling_setParams(SDTCrumpling *x,
+                                            const json_value *j,
+                                            unsigned char unsafe);
+
+/** @brief Gets the crushing energy.
+@param[in] x Pointer to the instance
+@return Average energy of the micro impacts */
+extern double SDTCrumpling_getCrushingEnergy(const SDTCrumpling *x);
+
+/** @brief Gets the event density of the crumpling process.
+@param[in] x Pointer to the instance
+@return Event density */
+extern double SDTCrumpling_getGranularity(const SDTCrumpling *x);
+
+/** @brief Gets the amount of fragmentation of the object during the process.
+@param[in] x Pointer to the instance
+@return Object fragmentation */
+extern double SDTCrumpling_getFragmentation(const SDTCrumpling *x);
 
 /** @brief Sets the crushing energy.
 @param[in] f Average energy of the micro impacts, compared to the global energy

@@ -33,21 +33,6 @@ void crumpling_assist(t_crumpling *x, void *b, long m, long a, char *s) {
   }
 }
 
-void crumpling_crushingEnergy(t_crumpling *x, void *attr, long ac, t_atom *av) {
-  x->crushingEnergy = atom_getfloat(av);
-  SDTCrumpling_setCrushingEnergy(x->crumpling, x->crushingEnergy);
-}
-
-void crumpling_granularity(t_crumpling *x, void *attr, long ac, t_atom *av) {
-  x->granularity = atom_getfloat(av);
-  SDTCrumpling_setGranularity(x->crumpling, x->granularity);
-}
-
-void crumpling_fragmentation(t_crumpling *x, void *attr, long ac, t_atom *av) {
-  x->fragmentation = atom_getfloat(av);
-  SDTCrumpling_setFragmentation(x->crumpling, x->fragmentation);
-}
-
 void *crumpling_new(t_symbol *s, short argc, t_atom *argv) {
   SDT_setupMaxLoggers();
   t_crumpling *x = (t_crumpling *)object_alloc(crumpling_class);
@@ -70,6 +55,10 @@ void crumpling_free(t_crumpling *x) {
 }
 
 SDT_MAX_KEY(crumpling, Crumpling, crumpling, "crumpling~", "crumpling process")
+
+SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, CrushingEnergy, float, )
+SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, Granularity, float, )
+SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, Fragmentation, float, )
 
 t_int *crumpling_perform(t_int *w) {
   t_crumpling *x = (t_crumpling *)(w[1]);
@@ -124,19 +113,13 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(crumpling, "1")
 
-  CLASS_ATTR_DOUBLE(c, "crushingEnergy", 0, t_crumpling, crushingEnergy);
-  CLASS_ATTR_DOUBLE(c, "granularity", 0, t_crumpling, granularity);
-  CLASS_ATTR_DOUBLE(c, "fragmentation", 0, t_crumpling, fragmentation);
+  SDT_MAX_ATTRIBUTE(c, crumpling, CrushingEnergy, crushingEnergy, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, crumpling, Granularity, granularity, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, crumpling, Fragmentation, fragmentation, float64, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "crushingEnergy", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "granularity", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "fragmentation", 0.0, 1.0);
-
-  CLASS_ATTR_ACCESSORS(c, "crushingEnergy", NULL,
-                       (method)crumpling_crushingEnergy);
-  CLASS_ATTR_ACCESSORS(c, "granularity", NULL, (method)crumpling_granularity);
-  CLASS_ATTR_ACCESSORS(c, "fragmentation", NULL,
-                       (method)crumpling_fragmentation);
 
   CLASS_ATTR_ORDER(c, "crushingEnergy", 0, "2");
   CLASS_ATTR_ORDER(c, "granularity", 0, "3");

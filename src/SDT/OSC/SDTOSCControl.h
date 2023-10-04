@@ -147,6 +147,70 @@ extern int SDTOSCBreaking(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup osccrumpling SDTOSCCrumpling
+OSC for #SDTCrumpling objects
+@ingroup oscmethods
+@{ */
+
+/** @brief `/crumpling/log <name>`
+
+Function that implements OSC JSON log for #SDTCrumpling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling_log(const SDTOSCMessage *x);
+
+/** @brief `/crumpling/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTCrumpling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling_save(const SDTOSCMessage *x);
+
+/** @brief `/crumpling/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTCrumpling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling_load(const SDTOSCMessage *x);
+
+/** @brief `/crumpling/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTCrumpling
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling_loads(const SDTOSCMessage *x);
+
+/** @brief `/crumpling/crushingEnergy <name> <value>`
+
+Function that implements OSC parameter setting for #SDTCrumpling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling_setCrushingEnergy(const SDTOSCMessage *x);
+
+/** @brief `/crumpling/granularity <name> <value>`
+
+Function that implements OSC parameter setting for #SDTCrumpling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling_setGranularity(const SDTOSCMessage *x);
+
+/** @brief `/crumpling/fragmentation <name> <value>`
+
+Function that implements OSC parameter setting for #SDTCrumpling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling_setFragmentation(const SDTOSCMessage *x);
+
+/** @brief `/crumpling/...`
+
+Function that routes OSC commands for #SDTCrumpling objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCCrumpling(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif
