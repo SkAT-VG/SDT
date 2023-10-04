@@ -253,11 +253,57 @@ SDTCrumpling *SDTCrumpling_new() {
 
 void SDTCrumpling_free(SDTCrumpling *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_CRUMPLING)
-SDT_DEFINE_HASHMAP(SDT_CRUMPLING, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_CRUMPLING)
-SDT_JSON_SERIALIZE(SDT_CRUMPLING)
-SDT_JSON_DESERIALIZE(SDT_CRUMPLING)
+_SDT_COPY_FUNCTION(Crumpling)
+
+_SDT_HASHMAP_FUNCTIONS(Crumpling)
+
+json_value *SDTCrumpling_toJSON(const SDTCrumpling *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "crushingEnergy",
+                   json_double_new(SDTCrumpling_getCrushingEnergy(x)));
+  json_object_push(obj, "granularity",
+                   json_double_new(SDTCrumpling_getGranularity(x)));
+  json_object_push(obj, "fragmentation",
+                   json_double_new(SDTCrumpling_getFragmentation(x)));
+  return obj;
+}
+
+SDTCrumpling *SDTCrumpling_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTCrumpling *y = SDTCrumpling_new();
+  return SDTCrumpling_setParams(y, x, 0);
+}
+
+SDTCrumpling *SDTCrumpling_setParams(SDTCrumpling *x, const json_value *j,
+                                     unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, CrushingEnergy, crushingEnergy,
+                           integer);
+  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Granularity, granularity, integer);
+  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Fragmentation, fragmentation,
+                           integer);
+
+  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, CrushingEnergy, crushingEnergy,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Granularity, granularity, double);
+  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Fragmentation, fragmentation,
+                           double);
+
+  return x;
+}
+
+double SDTCrumpling_getCrushingEnergy(const SDTCrumpling *x) {
+  return x->crushingEnergy;
+}
+
+double SDTCrumpling_getGranularity(const SDTCrumpling *x) {
+  return x->granularity;
+}
+
+double SDTCrumpling_getFragmentation(const SDTCrumpling *x) {
+  return x->fragmentation;
+}
 
 void SDTCrumpling_setCrushingEnergy(SDTCrumpling *x, double f) {
   x->crushingEnergy = fmax(SDT_MICRO, f);
