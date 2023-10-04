@@ -1,15 +1,14 @@
-#include "SDTProjects.h"
-#include "SDTAnalysis.h"
-#include "SDTControl.h"
-#include "SDTDCMotor.h"
-#include "SDTDemix.h"
-#include "SDTEffects.h"
-#include "SDTFilters.h"
-#include "SDTGases.h"
-#include "SDTLiquids.h"
-#include "SDTModalTracker.h"
-#include "SDTMotor.h"
-#include "SDTSolids.h"
+// #include "SDTProjects.h"
+// #include "SDTAnalysis.h"
+// #include "SDTControl.h"
+// #include "SDTDCMotor.h"
+// #include "SDTDemix.h"
+// #include "SDTEffects.h"
+// #include "SDTFilters.h"
+// #include "SDTGases.h"
+// #include "SDTLiquids.h"
+// #include "SDTMotor.h"
+// #include "SDTSolids.h"
 
 /*
 
@@ -43,7 +42,6 @@ json_value *SDTProject_toJSON(int argc, const char **argv) {
   json_value *dict_ENVELOPE = json_object_new(0);
   json_value *dict_EXPLOSION = json_object_new(0);
   json_value *dict_FLUIDFLOW = json_object_new(0);
-  json_value *dict_MODALTRACKER = json_object_new(0);
   json_value *dict_MOTOR = json_object_new(0);
   json_value *dict_MYOELASTIC = json_object_new(0);
   json_value *dict_PITCH = json_object_new(0);
@@ -94,8 +92,6 @@ json_value *SDTProject_toJSON(int argc, const char **argv) {
       json_object_push(dict_EXPLOSION, argv[i], SDTExplosion_toJSON(v));
     if ((v = SDT_getFluidFlow(argv[i])))
       json_object_push(dict_FLUIDFLOW, argv[i], SDTFluidFlow_toJSON(v));
-    if ((v = SDT_getModalTracker(argv[i])))
-      json_object_push(dict_MODALTRACKER, argv[i], SDTModalTracker_toJSON(v));
     if ((v = SDT_getMotor(argv[i])))
       json_object_push(dict_MOTOR, argv[i], SDTMotor_toJSON(v));
     if ((v = SDT_getMyoelastic(argv[i])))
@@ -144,8 +140,6 @@ json_value *SDTProject_toJSON(int argc, const char **argv) {
                  dict_EXPLOSION->u.object.length);
   push_else_free(prj, "fluidflows", dict_FLUIDFLOW,
                  dict_FLUIDFLOW->u.object.length);
-  push_else_free(prj, "modaltrackers", dict_MODALTRACKER,
-                 dict_MODALTRACKER->u.object.length);
   push_else_free(prj, "motors", dict_MOTOR, dict_MOTOR->u.object.length);
   push_else_free(prj, "myos", dict_MYOELASTIC,
                  dict_MYOELASTIC->u.object.length);
@@ -368,24 +362,6 @@ static int SDTProject_loadFluidFlow(const json_object_entry *value,
   SDTFluidFlow *tmp = SDTFluidFlow_fromJSON(value->value);
   SDTFluidFlow_copy(x, tmp);
   SDTFluidFlow_free(tmp);
-  return 1;
-}
-
-static int SDTProject_loadModalTracker(const json_object_entry *value,
-                                       SDTOSCReturnCode *return_code,
-                                       json_value *return_msg) {
-  SDTModalTracker *x;
-  if (!SDTProject_assert(value->value->type == json_object, return_code,
-                         return_msg, SDT_OSC_RETURN_JSON_NOT_COMPLIANT,
-                         value->name, json_string_new("not a JSON object")) ||
-      !SDTProject_assert((uintptr_t)(x = SDT_getModalTracker(value->name)),
-                         return_code, return_msg,
-                         SDT_OSC_RETURN_OBJECT_NOT_FOUND, value->name,
-                         json_string_new("not found")))
-    return 0;
-  SDTModalTracker *tmp = SDTModalTracker_fromJSON(value->value);
-  SDTModalTracker_copy(x, tmp);
-  SDTModalTracker_free(tmp);
   return 1;
 }
 
@@ -884,19 +860,6 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
     for (unsigned int i = 0; i < dict_FLUIDFLOW->u.object.length; ++i)
       if (!SDTProject_loadFluidFlow(dict_FLUIDFLOW->u.object.values + i,
                                     return_code, msg))
-        return;
-  }
-  const json_value *dict_MODALTRACKER =
-      json_object_get_by_key(prj, "modaltrackers");
-  if (dict_MODALTRACKER) {
-    if (!SDTProject_assert(
-            dict_MODALTRACKER->type == json_object, return_code, msg,
-            SDT_OSC_RETURN_JSON_NOT_COMPLIANT, "modaltrackers",
-            json_string_new("not compliant (not a JSON object)")))
-      return;
-    for (unsigned int i = 0; i < dict_MODALTRACKER->u.object.length; ++i)
-      if (!SDTProject_loadModalTracker(dict_MODALTRACKER->u.object.values + i,
-                                       return_code, msg))
         return;
   }
   const json_value *dict_MOTOR = json_object_get_by_key(prj, "motors");

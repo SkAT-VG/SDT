@@ -8,7 +8,6 @@
 #include "../SDTGases.h"
 #include "../SDTJSON.h"
 #include "../SDTLiquids.h"
-#include "../SDTModalTracker.h"
 #include "../SDTMotor.h"
 #include "SDTOSCCommon.h"
 
@@ -324,40 +323,6 @@ OSC containers and methods for SDT objects that don't require special treatment.
 
 // extern SDTOSCReturnCode SDTOSCFluidFlow(void (*log)(const char *, ...),
 //                                         const SDTOSCMessage *x);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker_log(void (*log)(const char *,
-// ...),
-//                                                const char *key,
-//                                                SDTModalTracker *x);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker_save(void (*log)(const char *,
-// ...),
-//                                                 const char *key,
-//                                                 SDTModalTracker *x,
-//                                                 const SDTOSCArgumentList
-//                                                 *args);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker_load(void (*log)(const char *,
-// ...),
-//                                                 const char *key,
-//                                                 SDTModalTracker *x,
-//                                                 const SDTOSCArgumentList
-//                                                 *args);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker_setNModes(
-//     SDTModalTracker *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker_setBufferSize(
-//     SDTModalTracker *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker_setWinSize(
-//     SDTModalTracker *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker_setOverlap(
-//     SDTModalTracker *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCModalTracker(void (*log)(const char *, ...),
-//                                            const SDTOSCMessage *x);
 
 // extern SDTOSCReturnCode SDTOSCMotor_log(void (*log)(const char *, ...),
 //                                         const char *key, SDTMotor *x);

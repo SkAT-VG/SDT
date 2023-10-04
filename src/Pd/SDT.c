@@ -29,7 +29,6 @@ void friction_tilde_setup(void);
 void impact_tilde_setup(void);
 void inertial_setup(void);
 void modal_setup(void);
-void modaltracker_tilde_setup(void);
 void motor_tilde_setup(void);
 void myo_tilde_setup(void);
 void pitch_tilde_setup(void);
@@ -74,7 +73,6 @@ void SDT_setup() {
   impact_tilde_setup();
   inertial_setup();
   modal_setup();
-  modaltracker_tilde_setup();
   motor_tilde_setup();
   myo_tilde_setup();
   pitch_tilde_setup();
@@ -104,7 +102,6 @@ void SDT_setup() {
   post("Included externals:");
   post("bouncing~ breaking~ bubble~ crumpling~ dcmotor~ demix~ envelope~");
   post("explosion~ fluidflow~ friction~ impact~ inertial modal");
-  post("modaltracker~ motor~ myo~ pitch~ pitchshift~ reverb~ rolling~");
-  post("sdtOSC");
+  post("motor~ myo~ pitch~ pitchshift~ reverb~ rolling~ sdtOSC");
   post("scraping~ spectralfeats~ windcavity~ windflow~ windkarman~ zerox~");
 }

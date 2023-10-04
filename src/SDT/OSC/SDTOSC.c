@@ -52,8 +52,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCExplosion(log, sub);
   // else if (!strcmp("fluidflow", method))
   //   return_code = SDTOSCFluidFlow(log, sub);
-  // else if (!strcmp("modaltracker", method))
-  //   return_code = SDTOSCModalTracker(log, sub);
   // else if (!strcmp("motor", method))
   //   return_code = SDTOSCMotor(log, sub);
   // else if (!strcmp("pitchshift", method))
