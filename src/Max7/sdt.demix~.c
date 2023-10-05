@@ -9,7 +9,6 @@
 typedef struct _demix {
   t_pxobject ob;
   SDTDemix *demix;
-  double overlap, noiseThreshold, tonalThreshold;
   t_symbol *key;
 } t_demix;
 
@@ -76,20 +75,12 @@ void demix_assist(t_demix *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(demix, Demix, demix, "demix~", "demixer")
 
-void demix_overlap(t_demix *x, void *attr, long ac, t_atom *av) {
-  x->overlap = atom_getfloat(av);
-  SDTDemix_setOverlap(x->demix, x->overlap);
-}
+SDT_MAX_GETTER(demix, Demix, demix, Size, long, )
+SDT_MAX_GETTER(demix, Demix, demix, Radius, long, )
 
-void demix_noiseThreshold(t_demix *x, void *attr, long ac, t_atom *av) {
-  x->noiseThreshold = atom_getfloat(av);
-  SDTDemix_setNoiseThreshold(x->demix, x->noiseThreshold);
-}
-
-void demix_tonalThreshold(t_demix *x, void *attr, long ac, t_atom *av) {
-  x->tonalThreshold = atom_getfloat(av);
-  SDTDemix_setTonalThreshold(x->demix, x->tonalThreshold);
-}
+SDT_MAX_ACCESSORS(demix, Demix, demix, Overlap, float, , )
+SDT_MAX_ACCESSORS(demix, Demix, demix, NoiseThreshold, float, , )
+SDT_MAX_ACCESSORS(demix, Demix, demix, TonalThreshold, float, , )
 
 t_int *demix_perform(t_int *w) {
   t_demix *x = (t_demix *)(w[1]);
@@ -151,21 +142,22 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(demix, "1")
 
-  CLASS_ATTR_DOUBLE(c, "overlap", 0, t_demix, overlap);
-  CLASS_ATTR_DOUBLE(c, "noiseThreshold", 0, t_demix, noiseThreshold);
-  CLASS_ATTR_DOUBLE(c, "tonalThreshold", 0, t_demix, tonalThreshold);
+  SDT_MAX_RO_ATTRIBUTE(c, demix, Size, size, long, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, demix, Radius, radius, long, 0);
+
+  SDT_MAX_ATTRIBUTE(c, demix, Overlap, overlap, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, demix, NoiseThreshold, noiseThreshold, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, demix, TonalThreshold, tonalThreshold, float64, 0);
 
   CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.5, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "noiseThreshold", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "tonalThreshold", 0.0, 1.0);
 
-  CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)demix_overlap);
-  CLASS_ATTR_ACCESSORS(c, "noiseThreshold", NULL, (method)demix_noiseThreshold);
-  CLASS_ATTR_ACCESSORS(c, "tonalThreshold", NULL, (method)demix_tonalThreshold);
-
-  CLASS_ATTR_ORDER(c, "overlap", 0, "2");
-  CLASS_ATTR_ORDER(c, "noiseThreshold", 0, "3");
-  CLASS_ATTR_ORDER(c, "tonalThreshold", 0, "4");
+  CLASS_ATTR_ORDER(c, "size", 0, "2");
+  CLASS_ATTR_ORDER(c, "radius", 0, "3");
+  CLASS_ATTR_ORDER(c, "overlap", 0, "4");
+  CLASS_ATTR_ORDER(c, "noiseThreshold", 0, "5");
+  CLASS_ATTR_ORDER(c, "tonalThreshold", 0, "6");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
