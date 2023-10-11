@@ -92,17 +92,67 @@ extern SDTEnvelope *SDTEnvelope_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTEnvelope_free(SDTEnvelope *x);
 
-#define SDT_ENVELOPE Envelope
-#define SDT_ENVELOPE_NEW_ARGS
-#define SDT_ENVELOPE_ATTRIBUTES(T, A)               \
-  A(T, attack, double, Attack, attack, double, 0.0) \
-  A(T, release, double, Release, release, double, 0.0)
+/** @brief Deep-copies an envelope tracker.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTEnvelope *SDTEnvelope_copy(SDTEnvelope *dest, const SDTEnvelope *src,
+                                     unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_ENVELOPE)
-SDT_DEFINE_HASHMAP_H(SDT_ENVELOPE)
-SDT_TYPE_MAKE_GETTERS_H(SDT_ENVELOPE)
-SDT_JSON_SERIALIZE_H(SDT_ENVELOPE)
-SDT_JSON_DESERIALIZE_H(SDT_ENVELOPE)
+/** @brief Update inner filters. Manually call this function whenever you change
+the SDT sample rate
+@param[in] x Pointer to the instance to update */
+extern void SDTEnvelope_update(SDTEnvelope *x);
+
+/** @brief Registers an envelope tracker into the myoelastic
+feature extractors list with a unique ID.
+@param[in] x Envelope instance to register
+@param[in] key Unique ID assigned to the envelope tracker instance
+@return Zero on success, otherwise one */
+extern int SDT_registerEnvelope(SDTEnvelope *x, const char *key);
+
+/** @brief Queries the envelope trackers list by its unique ID.
+If an envelope tracker with the ID is present, a pointer to the
+envelope tracker is returned. Otherwise, a NULL pointer is
+returned.
+@param[in] key Unique ID assigned to the envelope tracker instance
+@return Envelope instance pointer */
+extern SDTEnvelope *SDT_getEnvelope(const char *key);
+
+/** @brief Unregisters an envelope tracker from the envelope trackers list. If
+an envelope tracker with the given ID is present, it is unregistered from the
+list.
+@param[in] key Unique ID of the envelope tracker instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterEnvelope(const char *key);
+
+/** @brief Gets the attack time.
+@return Attack time, in ms */
+extern double SDTEnvelope_getAttack(const SDTEnvelope *x);
+
+/** @brief Gets the release time.
+@return Release time, in ms */
+extern double SDTEnvelope_getRelease(const SDTEnvelope *x);
+
+/** @brief Represent an envelope tracker as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTEnvelope_toJSON(const SDTEnvelope *x);
+
+/** @brief Initialize an envelope tracker from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTEnvelope *SDTEnvelope_fromJSON(const json_value *x);
+
+/** @brief Set parameters of an envelope tracker from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTEnvelope *SDTEnvelope_setParams(SDTEnvelope *x, const json_value *j,
+                                          unsigned char unsafe);
 
 /** @brief Sets the attack time.
 @param[in] a Attack time, in ms */

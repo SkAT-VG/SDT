@@ -77,8 +77,25 @@ double SDTAllPass_dsp(SDTAllPass *x, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTEnvelope {
-  double b0a, a1a, b0r, a1r, y1;
+  double ta, tr, b0a, a1a, b0r, a1r, y1;
 };
+
+static void SDTEnvelope_updateAttack(SDTEnvelope *x) {
+  double w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / x->ta, 0.0, 0.5);
+  x->a1a = -exp(w);
+  x->b0a = 1.0 + x->a1a;
+}
+
+static void SDTEnvelope_updateRelease(SDTEnvelope *x) {
+  double w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / x->tr, 0.0, 0.5);
+  x->a1r = -exp(w);
+  x->b0r = 1.0 + x->a1r;
+}
+
+void SDTEnvelope_update(SDTEnvelope *x) {
+  SDTEnvelope_updateAttack(x);
+  SDTEnvelope_updateRelease(x);
+}
 
 SDTEnvelope *SDTEnvelope_new() {
   SDTEnvelope *x;
@@ -94,39 +111,53 @@ SDTEnvelope *SDTEnvelope_new() {
 
 void SDTEnvelope_free(SDTEnvelope *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_ENVELOPE)
-SDT_DEFINE_HASHMAP(SDT_ENVELOPE, 59)
-SDT_JSON_SERIALIZE(SDT_ENVELOPE)
-SDT_JSON_DESERIALIZE(SDT_ENVELOPE)
+_SDT_COPY_FUNCTION(Envelope)
 
-double SDTEnvelope_getAttack(const SDTEnvelope *x) {
-  return -SDT_TWOPI * SDT_timeStep / log(-x->a1a);
+_SDT_HASHMAP_FUNCTIONS(Envelope)
+
+json_value *SDTEnvelope_toJSON(const SDTEnvelope *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "attack", json_double_new(SDTEnvelope_getAttack(x)));
+  json_object_push(obj, "release", json_double_new(SDTEnvelope_getRelease(x)));
+  return obj;
 }
 
-double SDTEnvelope_getRelease(const SDTEnvelope *x) {
-  return -SDT_TWOPI * SDT_timeStep / log(-x->a1r);
+SDTEnvelope *SDTEnvelope_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  SDTEnvelope *y = SDTEnvelope_new();
+  return SDTEnvelope_setParams(y, x, 0);
 }
+
+SDTEnvelope *SDTEnvelope_setParams(SDTEnvelope *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Attack, attack, integer);
+  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Release, release, integer);
+
+  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Attack, attack, double);
+  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Release, release, double);
+
+  return x;
+}
+
+double SDTEnvelope_getAttack(const SDTEnvelope *x) { return x->ta; }
+
+double SDTEnvelope_getRelease(const SDTEnvelope *x) { return x->tr; }
 
 void SDTEnvelope_setAttack(SDTEnvelope *x, double a) {
-  double w;
-
-  w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / a, 0.0, 0.5);
-  x->a1a = -exp(w);
-  x->b0a = 1.0 + x->a1a;
+  x->ta = a;
+  SDTEnvelope_updateAttack(x);
 }
 
 void SDTEnvelope_setRelease(SDTEnvelope *x, double r) {
-  double w;
-
-  w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / r, 0.0, 0.5);
-  x->a1r = -exp(w);
-  x->b0r = 1.0 + x->a1r;
+  x->tr = r;
+  SDTEnvelope_updateRelease(x);
 }
 
 double SDTEnvelope_dsp(SDTEnvelope *x, double in) {
-  double x0;
-
-  x0 = fabs(in);
+  double x0 = fabs(in);
   if (x0 > x->y1)
     x->y1 = x->b0a * x0 - x->a1a * x->y1;
   else

@@ -71,9 +71,9 @@ returned.
 @return DCMotor instance pointer */
 extern SDTDCMotor *SDT_getDCMotor(const char *key);
 
-/** @brief Unregisters an electric motor synthesis model from the myoelastic
-feature extractors list. If an electric motor synthesis model with the given ID
-is present, it is unregistered from the list.
+/** @brief Unregisters an electric motor synthesis model from the electric motor
+synthesis models list. If an electric motor synthesis model with the given ID is
+present, it is unregistered from the list.
 @param[in] key Unique ID of the electric motor synthesis model instance to
 unregister
 @return Zero on success, otherwise one */
