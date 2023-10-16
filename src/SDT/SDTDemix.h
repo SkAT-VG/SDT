@@ -124,11 +124,6 @@ extern SDTDemix *SDTDemix_fromJSON(const json_value *x);
 extern SDTDemix *SDTDemix_setParams(SDTDemix *x, const json_value *j,
                                     unsigned char unsafe);
 
-/** @brief Gets the crushing energy.
-@param[in] x Pointer to the instance
-@return Average energy of the micro impacts */
-extern double SDTDemix_getCrushingEnergy(const SDTDemix *x);
-
 /** @brief Sets the analysis window length.
 @param[in] f Analysis window length, in samples */
 extern void SDTDemix_setSize(SDTDemix *x, int f);
