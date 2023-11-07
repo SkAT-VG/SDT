@@ -15,29 +15,12 @@ typedef struct _explosion {
   const char *key;
 } t_explosion;
 
-void explosion_blastTime(t_explosion *x, t_float f) {
-  SDTExplosion_setBlastTime(x->explosion, f);
-}
-
-void explosion_scatterTime(t_explosion *x, t_float f) {
-  SDTExplosion_setScatterTime(x->explosion, f);
-}
-
-void explosion_dispersion(t_explosion *x, t_float f) {
-  SDTExplosion_setDispersion(x->explosion, f);
-}
-
-void explosion_distance(t_explosion *x, t_float f) {
-  SDTExplosion_setDistance(x->explosion, f);
-}
-
-void explosion_waveSpeed(t_explosion *x, t_float f) {
-  SDTExplosion_setWaveSpeed(x->explosion, f);
-}
-
-void explosion_windSpeed(t_explosion *x, t_float f) {
-  SDTExplosion_setWindSpeed(x->explosion, f);
-}
+SDT_PD_SETTER(explosion, Explosion, explosion, BlastTime, )
+SDT_PD_SETTER(explosion, Explosion, explosion, ScatterTime, )
+SDT_PD_SETTER(explosion, Explosion, explosion, Dispersion, )
+SDT_PD_SETTER(explosion, Explosion, explosion, Distance, )
+SDT_PD_SETTER(explosion, Explosion, explosion, WaveSpeed, )
+SDT_PD_SETTER(explosion, Explosion, explosion, WindSpeed, )
 
 void explosion_update(t_explosion *x) { SDTExplosion_update(x->explosion); }
 
@@ -88,17 +71,17 @@ void explosion_tilde_setup(void) {
                               CLASS_DEFAULT, A_GIMME, 0);
   class_addmethod(explosion_class, (t_method)explosion_update, gensym("bang"),
                   0);
-  class_addmethod(explosion_class, (t_method)explosion_blastTime,
+  class_addmethod(explosion_class, (t_method)explosion_setBlastTime,
                   gensym("blastTime"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_scatterTime,
+  class_addmethod(explosion_class, (t_method)explosion_setScatterTime,
                   gensym("scatterTime"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_dispersion,
+  class_addmethod(explosion_class, (t_method)explosion_setDispersion,
                   gensym("dispersion"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_distance,
+  class_addmethod(explosion_class, (t_method)explosion_setDistance,
                   gensym("distance"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_waveSpeed,
+  class_addmethod(explosion_class, (t_method)explosion_setWaveSpeed,
                   gensym("waveSpeed"), A_FLOAT, 0);
-  class_addmethod(explosion_class, (t_method)explosion_windSpeed,
+  class_addmethod(explosion_class, (t_method)explosion_setWindSpeed,
                   gensym("windSpeed"), A_FLOAT, 0);
   class_addmethod(explosion_class, (t_method)explosion_dsp, gensym("dsp"), 0);
 }
