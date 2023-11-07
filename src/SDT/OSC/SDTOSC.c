@@ -5,6 +5,7 @@
 #include "SDTOSCAnalysis.h"
 #include "SDTOSCControl.h"
 #include "SDTOSCDCMotor.h"
+#include "SDTOSCFilters.h"
 #include "SDTOSCInteractors.h"
 #include "SDTOSCLiquids.h"
 #include "SDTOSCMisc.h"
@@ -25,6 +26,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("bubble", k)) return SDTOSCBubble(x);
   if (!strcmp("crumpling", k)) return SDTOSCCrumpling(x);
   if (!strcmp("dcmotor", k)) return SDTOSCDCMotor(x);
+  if (!strcmp("envelope", k)) return SDTOSCEnvelope(x);
   if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
   if (!strcmp("pitch", k)) return SDTOSCPitch(x);
   if (!strcmp("resonator", k) || !strcmp("modal", k) || !strcmp("inertial", k))
@@ -45,8 +47,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCBiquad(log, sub);
   // else if (!strcmp("demix", method))
   //   return_code = SDTOSCDemix(log, sub);
-  // else if (!strcmp("envelope", method))
-  //   return_code = SDTOSCEnvelope(log, sub);
   // else if (!strcmp("explosion", method))
   //   return_code = SDTOSCExplosion(log, sub);
   // else if (!strcmp("fluidflow", method))
