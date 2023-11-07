@@ -18,15 +18,9 @@ typedef struct _demix {
 
 static t_class *demix_class = NULL;
 
-void demix_overlap(t_demix *x, t_float f) { SDTDemix_setOverlap(x->demix, f); }
-
-void demix_noiseThreshold(t_demix *x, t_float f) {
-  SDTDemix_setNoiseThreshold(x->demix, f);
-}
-
-void demix_tonalThreshold(t_demix *x, t_float f) {
-  SDTDemix_setTonalThreshold(x->demix, f);
-}
+SDT_PD_SETTER(demix, Demix, demix, Overlap, )
+SDT_PD_SETTER(demix, Demix, demix, NoiseThreshold, )
+SDT_PD_SETTER(demix, Demix, demix, TonalThreshold, )
 
 t_int *demix_perform(t_int *w) {
   t_demix *x = (t_demix *)(w[1]);
@@ -83,11 +77,11 @@ void demix_tilde_setup(void) {
       class_new(gensym("demix~"), (t_newmethod)demix_new, (t_method)demix_free,
                 (long)sizeof(t_demix), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(demix_class, t_demix, f);
-  class_addmethod(demix_class, (t_method)demix_overlap, gensym("overlap"),
+  class_addmethod(demix_class, (t_method)demix_setOverlap, gensym("overlap"),
                   A_FLOAT, 0);
-  class_addmethod(demix_class, (t_method)demix_noiseThreshold,
+  class_addmethod(demix_class, (t_method)demix_setNoiseThreshold,
                   gensym("noiseThreshold"), A_FLOAT, 0);
-  class_addmethod(demix_class, (t_method)demix_tonalThreshold,
+  class_addmethod(demix_class, (t_method)demix_setTonalThreshold,
                   gensym("tonalThreshold"), A_FLOAT, 0);
   class_addmethod(demix_class, (t_method)demix_dsp, gensym("dsp"), 0);
 }

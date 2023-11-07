@@ -1,34 +1,3 @@
-// extern SDTOSCReturnCode SDTOSCDemix_log(void (*log)(const char *, ...),
-//                                         const char *key, SDTDemix *x);
-
-// extern SDTOSCReturnCode SDTOSCDemix_save(void (*log)(const char *, ...),
-//                                          const char *key, SDTDemix *x,
-//                                          const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCDemix_load(void (*log)(const char *, ...),
-//                                          const char *key, SDTDemix *x,
-//                                          const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCDemix_setSize(SDTDemix *x,
-//                                             const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCDemix_setRadius(SDTDemix *x,
-//                                               const SDTOSCArgumentList
-//                                               *args);
-
-// extern SDTOSCReturnCode SDTOSCDemix_setOverlap(SDTDemix *x,
-//                                                const SDTOSCArgumentList
-//                                                *args);
-
-// extern SDTOSCReturnCode SDTOSCDemix_setNoiseThreshold(
-//     SDTDemix *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCDemix_setTonalThreshold(
-//     SDTDemix *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCDemix(void (*log)(const char *, ...),
-//                                     const SDTOSCMessage *x);
-
 // extern SDTOSCReturnCode SDTOSCExplosion_log(void (*log)(const char *, ...),
 //                                             const char *key, SDTExplosion
 //                                             *x);

@@ -40,6 +40,9 @@ extern "C" {
  * separator. */
 typedef struct SDTDemix SDTDemix;
 
+#define SDT_DEMIX_SIZE_DEFAULT 1024
+#define SDT_DEMIX_RADIUS_DEFAULT 4
+
 /** @brief Object constructor.
 @param[in] size Analysis window length, in samples
 @param[in] radius Smoothing kernel radius, in samples
@@ -50,23 +53,83 @@ extern SDTDemix *SDTDemix_new(int size, int radius);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDemix_free(SDTDemix *x);
 
-#define SDT_DEMIX Demix
-#define SDT_DEMIX_NEW_ARGS 1024, 4
-#define SDT_DEMIX_ATTRIBUTES(T, A)                                    \
-  A(T, size, int, Size, size, integer, 1024)                          \
-  A(T, radius, int, Radius, radius, integer, 4)                       \
-  A(T, overlap, double, Overlap, overlap, double, 0.75)               \
-  A(T, gammaIso, double, NoiseThreshold, noiseThreshold, double, 0.0) \
-  A(T, gammaDir, double, TonalThreshold, tonalThreshold, double, 0.0)
+/** @brief Deep-copies a components
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTDemix *SDTDemix_copy(SDTDemix *dest, const SDTDemix *src,
+                               unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_DEMIX)
-SDT_DEFINE_HASHMAP_H(SDT_DEMIX)
-SDT_TYPE_MAKE_GETTERS_H(SDT_DEMIX)
-SDT_JSON_SERIALIZE_H(SDT_DEMIX)
-SDT_JSON_DESERIALIZE_H(SDT_DEMIX)
+/** @brief Registers a demixer into the demixers list with
+a unique ID.
+@param[in] x Demix process instance to register
+@param[in] key Unique ID assigned to the demixer instance
+@return Zero on success, otherwise one */
+extern int SDT_registerDemix(SDTDemix *x, const char *key);
 
+/** @brief Queries the demixers list by its unique ID.
+If a demixer with the ID is present, a pointer to the demixer is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the demixer instance
+@return Demix process instance pointer */
+extern SDTDemix *SDT_getDemix(const char *key);
+
+/** @brief Gets the analysis window length.
+@param[in] x Pointer to the instance
+@return Analysis window length, in samples */
+extern int SDTDemix_getSize(const SDTDemix *x);
+
+/** @brief Gets the smoothing kernel radius.
+@param[in] x Pointer to the instance
+@return Smoothing kernel radius, in samples */
+extern int SDTDemix_getRadius(const SDTDemix *x);
+
+/** @brief Gets the window overlapping factor.
+@param[in] x Pointer to the instance
+@return Window overlapping factor */
+extern double SDTDemix_getOverlap(const SDTDemix *x);
+
+/** @brief Gets the noise threshold.
+@param[in] x Pointer to the instance
+@return Amount of signal falling into the residual category */
+extern double SDTDemix_getNoiseThreshold(const SDTDemix *x);
+
+/** @brief Gets the tonal threshold.
+@param[in] x Pointer to the instance
+@return Amount of non-residual falling into the tonal category */
+extern double SDTDemix_getTonalThreshold(const SDTDemix *x);
+
+/** @brief Unregisters a demixer from the demixers list. If a demixer with the
+given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the demixer instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterDemix(const char *key);
+
+/** @brief Represent a demixer as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTDemix_toJSON(const SDTDemix *x);
+
+/** @brief Initialize a demixer from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTDemix *SDTDemix_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a demixer from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTDemix *SDTDemix_setParams(SDTDemix *x, const json_value *j,
+                                    unsigned char unsafe);
+
+/** @brief Sets the analysis window length.
+@param[in] f Analysis window length, in samples */
 extern void SDTDemix_setSize(SDTDemix *x, int f);
 
+/** @brief Sets the smoothing kernel radius.
+@param[in] f Smoothing kernel radius, in samples */
 extern void SDTDemix_setRadius(SDTDemix *x, int f);
 
 /** @brief Sets the window overlapping factor.
@@ -77,7 +140,7 @@ extern void SDTDemix_setOverlap(SDTDemix *x, double f);
 @param[in] f Amount of signal falling into the residual category */
 extern void SDTDemix_setNoiseThreshold(SDTDemix *x, double f);
 
-/** @brief Sets the tornal threshold.
+/** @brief Sets the tonal threshold.
 @param[in] f Amount of non-residual falling into the tonal category */
 extern void SDTDemix_setTonalThreshold(SDTDemix *x, double f);
 

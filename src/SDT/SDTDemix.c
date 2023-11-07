@@ -1,8 +1,5 @@
 #include "SDTDemix.h"
-#include <assert.h>
 #include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
@@ -210,10 +207,53 @@ void SDTDemix_setRadius(SDTDemix *x, int f) {
   x->center = center;
 }
 
-SDT_TYPE_COPY(SDT_DEMIX)
-SDT_DEFINE_HASHMAP(SDT_DEMIX, 59)
-SDT_JSON_SERIALIZE(SDT_DEMIX)
-SDT_JSON_DESERIALIZE(SDT_DEMIX)
+_SDT_COPY_FUNCTION(Demix)
+
+_SDT_HASHMAP_FUNCTIONS(Demix)
+
+json_value *SDTDemix_toJSON(const SDTDemix *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "size", json_integer_new(SDTDemix_getSize(x)));
+  json_object_push(obj, "radius", json_integer_new(SDTDemix_getRadius(x)));
+  json_object_push(obj, "overlap", json_double_new(SDTDemix_getOverlap(x)));
+  json_object_push(obj, "noiseThreshold",
+                   json_double_new(SDTDemix_getNoiseThreshold(x)));
+  json_object_push(obj, "tonalThreshold",
+                   json_double_new(SDTDemix_getTonalThreshold(x)));
+  return obj;
+}
+
+SDTDemix *SDTDemix_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int size = SDT_DEMIX_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
+  unsigned int radius = SDT_DEMIX_RADIUS_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(radius, x, radius, integer);
+
+  SDTDemix *y = SDTDemix_new(size, radius);
+  return SDTDemix_setParams(y, x, 0);
+}
+
+SDTDemix *SDTDemix_setParams(SDTDemix *x, const json_value *j,
+                             unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Demix, x, j, Size, size, integer, unsafe);
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Demix, x, j, Radius, radius, integer, unsafe);
+
+  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, Overlap, overlap, integer);
+  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, NoiseThreshold, noiseThreshold,
+                           integer);
+  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, TonalThreshold, tonalThreshold,
+                           integer);
+
+  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, Overlap, overlap, double);
+  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, NoiseThreshold, noiseThreshold, double);
+  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, TonalThreshold, tonalThreshold, double);
+
+  return x;
+}
 
 int SDTDemix_getSize(const SDTDemix *x) { return x->size; }
 
