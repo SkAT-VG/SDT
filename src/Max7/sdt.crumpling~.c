@@ -56,9 +56,9 @@ void crumpling_free(t_crumpling *x) {
 
 SDT_MAX_KEY(crumpling, Crumpling, crumpling, "crumpling~", "crumpling process")
 
-SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, CrushingEnergy, float, )
-SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, Granularity, float, )
-SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, Fragmentation, float, )
+SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, CrushingEnergy, float, , )
+SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, Granularity, float, , )
+SDT_MAX_ACCESSORS(crumpling, Crumpling, crumpling, Fragmentation, float, , )
 
 t_int *crumpling_perform(t_int *w) {
   t_crumpling *x = (t_crumpling *)(w[1]);

@@ -47,23 +47,36 @@ The t_class pointer should be a variable "c"
   CLASS_ATTR_ACCESSORS(c, "key", NULL, (method)M##_key); \
   CLASS_ATTR_ORDER(c, "key", 0, I);
 
+// Conditional multiplier helper macros
+#define _SDT_GLUE2_(A, B) A##B
+#define _SDT_GLUE2(A, B) _SDT_GLUE2_(A, B)
+#define _SDT_MULTIPLY_IF_1(E, K) (E)
+#define _SDT_MULTIPLY_IF_0(E, K) ((E) * (K))
+#define _SDT_MULTIPLY_IF(E, K) \
+  _SDT_GLUE2(_SDT_MULTIPLY_IF_, _SDT_IS_EMPTY(K))(E, K)
+#define _SDT_DIVIDE_IF_1(E, K) (E)
+#define _SDT_DIVIDE_IF_0(E, K) ((E) / (K))
+#define _SDT_DIVIDE_IF(E, K) _SDT_GLUE2(_SDT_DIVIDE_IF_, _SDT_IS_EMPTY(K))(E, K)
+
 /** @brief Define the getter function for an attribute
 @param[in] M The Max type (without the leading "t_")
 @param[in] T The SDT type (without the leading "SDT")
 @param[in] F The name of the Max object field where the SDT object is stored
 @param[in] A The name of the attribute
-@param[in] AT The type of the attribute */
-#define SDT_MAX_GETTER(M, T, F, A, AT)                                \
-  t_max_err M##_get##A(t_##M *x, void *attr, long *ac, t_atom **av) { \
-    if (!(*ac && *av)) {                                              \
-      *ac = 1;                                                        \
-      *av = (t_atom *)getbytes(sizeof(t_atom) * (*ac));               \
-      if (!*av) {                                                     \
-        *ac = 0;                                                      \
-        return MAX_ERR_OUT_OF_MEM;                                    \
-      }                                                               \
-    }                                                                 \
-    return atom_set##AT(*av, SDT##T##_get##A(x->F));                  \
+@param[in] AT The type of the attribute
+@param[in] K Optional ratio between external (Max) value and internal (SDT)
+value. Multiplier for the gotten value */
+#define SDT_MAX_GETTER(M, T, F, A, AT, K)                                 \
+  t_max_err M##_get##A(t_##M *x, void *attr, long *ac, t_atom **av) {     \
+    if (!(*ac && *av)) {                                                  \
+      *ac = 1;                                                            \
+      *av = (t_atom *)getbytes(sizeof(t_atom) * (*ac));                   \
+      if (!*av) {                                                         \
+        *ac = 0;                                                          \
+        return MAX_ERR_OUT_OF_MEM;                                        \
+      }                                                                   \
+    }                                                                     \
+    return atom_set##AT(*av, _SDT_MULTIPLY_IF(SDT##T##_get##A(x->F), K)); \
   }
 
 #define _SDT_MAX_TYPE_UPDATE_(T, O)
@@ -75,11 +88,13 @@ The t_class pointer should be a variable "c"
 @param[in] F The name of the Max object field where the SDT object is stored
 @param[in] A The name of the attribute
 @param[in] AT The type of the attribute
+@param[in] K Optional ratio between external (Max) value and internal (SDT)
+value. Divider for the value to be set
 @param[in] U Type `update` to trigger the structure update function */
-#define SDT_MAX_SETTER(M, T, F, A, AT, U)                           \
+#define SDT_MAX_SETTER(M, T, F, A, AT, K, U)                        \
   t_max_err M##_set##A(t_##M *x, void *attr, long ac, t_atom *av) { \
     if (ac && av) {                                                 \
-      SDT##T##_set##A(x->F, atom_get##AT(av));                      \
+      SDT##T##_set##A(x->F, _SDT_DIVIDE_IF(atom_get##AT(av), K));   \
     }                                                               \
     _SDT_MAX_TYPE_UPDATE_##U(T, x->F);                              \
     return MAX_ERR_NONE;                                            \
@@ -91,10 +106,12 @@ The t_class pointer should be a variable "c"
 @param[in] F The name of the Max object field where the SDT object is stored
 @param[in] A The name of the attribute
 @param[in] AT The type of the attribute
+@param[in] K Optional ratio between external (Max) value and internal (SDT)
+value. Multiplier for the gotten value. Divider for the value to be set
 @param[in] U Type `update` to trigger the structure update function */
-#define SDT_MAX_ACCESSORS(M, T, F, A, AT, U) \
-  SDT_MAX_GETTER(M, T, F, A, AT)             \
-  SDT_MAX_SETTER(M, T, F, A, AT, U)
+#define SDT_MAX_ACCESSORS(M, T, F, A, AT, K, U) \
+  SDT_MAX_GETTER(M, T, F, A, AT, K)             \
+  SDT_MAX_SETTER(M, T, F, A, AT, K, U)
 
 #define _SDT_MAX_ATTRIBUTE_(M, UCASE) 0
 #define _SDT_MAX_ATTRIBUTE_READ(M, UCASE) (method) M##_get##UCASE

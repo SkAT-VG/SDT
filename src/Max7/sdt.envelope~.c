@@ -46,55 +46,9 @@ void envelope_assist(t_envelope *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(envelope, Envelope, envelope, "envelope~", "envelope filter")
 
-t_max_err envelope_getAttack(t_envelope *x, void *attr, long *ac, t_atom **av) {
-  if (!(*ac && *av)) {
-    *ac = 1;
-    *av =
-        (t_atom *)((char *)sysmem_newptr((t_ptr_size)(sizeof(t_atom) * (*ac))));
-    if (!*av) {
-      *ac = 0;
-      return MAX_ERR_OUT_OF_MEM;
-    }
-  }
-  return atom_setfloat(*av,
-                       /* attack to ms for backwards compatibility */ 1000.0 *
-                           SDTBubble_getAttack(x->envelope));
-}
-
-t_max_err envelope_setAttack(t_envelope *x, void *attr, long ac, t_atom *av) {
-  if (ac && av) {
-    SDTBubble_setAttack(x->envelope,
-                        /* attack from ms for backwards compatibility */ 0.001 *
-                            atom_getfloat(av));
-  };
-  return MAX_ERR_NONE;
-}
-
-t_max_err envelope_getRelease(t_envelope *x, void *attr, long *ac,
-                              t_atom **av) {
-  if (!(*ac && *av)) {
-    *ac = 1;
-    *av =
-        (t_atom *)((char *)sysmem_newptr((t_ptr_size)(sizeof(t_atom) * (*ac))));
-    if (!*av) {
-      *ac = 0;
-      return MAX_ERR_OUT_OF_MEM;
-    }
-  }
-  return atom_setfloat(*av,
-                       /* release to ms for backwards compatibility */ 1000.0 *
-                           SDTBubble_getRelease(x->envelope));
-}
-
-t_max_err envelope_setRelease(t_envelope *x, void *attr, long ac, t_atom *av) {
-  if (ac && av) {
-    SDTBubble_setRelease(
-        x->envelope,
-        /* release from ms for backwards compatibility */ 0.001 *
-            atom_getfloat(av));
-  };
-  return MAX_ERR_NONE;
-}
+// Attack and release to ms for backwards compatibility
+SDT_MAX_ACCESSORS(envelope, Envelope, envelope, Attack, float, 1000.0, )
+SDT_MAX_ACCESSORS(envelope, Envelope, envelope, Release, float, 1000.0, )
 
 t_int *envelope_perform(t_int *w) {
   t_envelope *x = (t_envelope *)(w[1]);
