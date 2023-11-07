@@ -29,26 +29,6 @@
 // extern SDTOSCReturnCode SDTOSCDemix(void (*log)(const char *, ...),
 //                                     const SDTOSCMessage *x);
 
-// extern SDTOSCReturnCode SDTOSCEnvelope_log(void (*log)(const char *, ...),
-//                                            const char *key, SDTEnvelope *x);
-
-// extern SDTOSCReturnCode SDTOSCEnvelope_save(void (*log)(const char *, ...),
-//                                             const char *key, SDTEnvelope *x,
-//                                             const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCEnvelope_load(void (*log)(const char *, ...),
-//                                             const char *key, SDTEnvelope *x,
-//                                             const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCEnvelope_setAttack(
-//     SDTEnvelope *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCEnvelope_setRelease(
-//     SDTEnvelope *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCEnvelope(void (*log)(const char *, ...),
-//                                        const SDTOSCMessage *x);
-
 // extern SDTOSCReturnCode SDTOSCExplosion_log(void (*log)(const char *, ...),
 //                                             const char *key, SDTExplosion
 //                                             *x);
