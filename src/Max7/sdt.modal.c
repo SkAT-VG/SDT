@@ -99,11 +99,11 @@ void modal_assist(t_modal *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_GETTER_MEMBER(modal, key, key, sym)
 
-SDT_MAX_GETTER(modal, Resonator, modal, NModes, long)
-SDT_MAX_GETTER(modal, Resonator, modal, NPickups, long)
+SDT_MAX_GETTER(modal, Resonator, modal, NModes, long, )
+SDT_MAX_GETTER(modal, Resonator, modal, NPickups, long, )
 
-SDT_MAX_ACCESSORS(modal, Resonator, modal, ActiveModes, long, )
-SDT_MAX_ACCESSORS(modal, Resonator, modal, FragmentSize, float, )
+SDT_MAX_ACCESSORS(modal, Resonator, modal, ActiveModes, long, , )
+SDT_MAX_ACCESSORS(modal, Resonator, modal, FragmentSize, float, , )
 
 SDT_MAX_ARRAY_GETTER(modal, Resonator, modal, Frequency, float,
                      SDTResonator_getNModes(x->modal))

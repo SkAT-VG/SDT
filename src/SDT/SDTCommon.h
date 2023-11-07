@@ -249,6 +249,24 @@ extern int SDT_eprintf(const char *fmt, ...);
   SDT_ONLY_IN_LEVEL(LEVEL, SDT_log(SDT_LOG_LEVEL_##LEVEL, __FILE__, __LINE__, \
                                    __func__, FMT, __VA_ARGS__))
 
+// --- EMPTY MACRO ARGUMENT DETECTOR ------------------------------------------
+// Adapted from
+// https://gustedt.wordpress.com/2010/06/08/detect-empty-macro-arguments
+#define _SDT_ARG3(X, Y, Z, ...) Z
+#define _SDT_HAS_COMMA(...) _SDT_ARG3(__VA_ARGS__, 1, 0)
+#define _SDT_TRIGGER_PARENTHESIS_(...) ,
+#define _SDT_IS_EMPTY_CASE_0001 ,
+#define _SDT_GLUE5(A, B, C, D, E) A##B##C##D##E
+#define _SDT_IS_EMPTY_(A, B, C, D) \
+  _SDT_HAS_COMMA(_SDT_GLUE5(_SDT_IS_EMPTY_CASE_, A, B, C, D))
+#define _SDT_IS_EMPTY(...)                                   \
+  _SDT_IS_EMPTY_(                                            \
+      _SDT_HAS_COMMA(__VA_ARGS__),                           \
+      _SDT_HAS_COMMA(_SDT_TRIGGER_PARENTHESIS_ __VA_ARGS__), \
+      _SDT_HAS_COMMA(__VA_ARGS__(/*empty*/)),                \
+      _SDT_HAS_COMMA(_SDT_TRIGGER_PARENTHESIS_ __VA_ARGS__(/*empty*/)))
+// ----------------------------------------------------------------------------
+
 #ifdef __cplusplus
 extern "C" {
 #endif

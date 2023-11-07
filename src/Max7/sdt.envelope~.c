@@ -9,7 +9,6 @@
 typedef struct _envelope {
   t_pxobject ob;
   SDTEnvelope *envelope;
-  double attack, release;
   t_symbol *key;
 } t_envelope;
 
@@ -47,15 +46,9 @@ void envelope_assist(t_envelope *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(envelope, Envelope, envelope, "envelope~", "envelope filter")
 
-void envelope_attack(t_envelope *x, void *attr, long ac, t_atom *av) {
-  x->attack = atom_getfloat(av);
-  SDTEnvelope_setAttack(x->envelope, 0.001 * x->attack);
-}
-
-void envelope_release(t_envelope *x, void *attr, long ac, t_atom *av) {
-  x->release = atom_getfloat(av);
-  SDTEnvelope_setRelease(x->envelope, 0.001 * x->release);
-}
+// Attack and release to ms for backwards compatibility
+SDT_MAX_ACCESSORS(envelope, Envelope, envelope, Attack, float, 1000.0, )
+SDT_MAX_ACCESSORS(envelope, Envelope, envelope, Release, float, 1000.0, )
 
 t_int *envelope_perform(t_int *w) {
   t_envelope *x = (t_envelope *)(w[1]);
@@ -71,8 +64,6 @@ t_int *envelope_perform(t_int *w) {
 
 void envelope_dsp(t_envelope *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTEnvelope_setAttack(x->envelope, 0.001 * x->attack);
-  SDTEnvelope_setRelease(x->envelope, 0.001 * x->release);
   dsp_add(envelope_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
@@ -91,8 +82,6 @@ void envelope_perform64(t_envelope *x, t_object *dsp64, double **ins,
 void envelope_dsp64(t_envelope *x, t_object *dsp64, short *count,
                     double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTEnvelope_setAttack(x->envelope, 0.001 * x->attack);
-  SDTEnvelope_setRelease(x->envelope, 0.001 * x->release);
   object_method(dsp64, gensym("dsp_add64"), x, envelope_perform64, 0, NULL);
 }
 
@@ -107,14 +96,11 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(envelope, "1")
 
-  CLASS_ATTR_DOUBLE(c, "attack", 0, t_envelope, attack);
-  CLASS_ATTR_DOUBLE(c, "release", 0, t_envelope, release);
+  SDT_MAX_ATTRIBUTE(c, envelope, Attack, attack, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, envelope, Release, release, float64, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "attack", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "release", 0.0);
-
-  CLASS_ATTR_ACCESSORS(c, "attack", NULL, (method)envelope_attack);
-  CLASS_ATTR_ACCESSORS(c, "release", NULL, (method)envelope_release);
 
   CLASS_ATTR_ORDER(c, "attack", 0, "2");
   CLASS_ATTR_ORDER(c, "release", 0, "3");

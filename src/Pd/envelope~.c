@@ -16,13 +16,8 @@ typedef struct _envelope {
   const char *key;
 } t_envelope;
 
-void envelope_attack(t_envelope *x, t_float f) {
-  SDTEnvelope_setAttack(x->envelope, f);
-}
-
-void envelope_release(t_envelope *x, t_float f) {
-  SDTEnvelope_setRelease(x->envelope, f);
-}
+SDT_PD_SETTER(envelope, Envelope, envelope, Attack, )
+SDT_PD_SETTER(envelope, Envelope, envelope, Release, )
 
 t_int *envelope_perform(t_int *w) {
   t_envelope *x = (t_envelope *)(w[1]);
@@ -63,9 +58,9 @@ void envelope_tilde_setup(void) {
                              (t_method)envelope_free, sizeof(t_envelope),
                              CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(envelope_class, t_envelope, f);
-  class_addmethod(envelope_class, (t_method)envelope_attack, gensym("attack"),
-                  A_FLOAT, 0);
-  class_addmethod(envelope_class, (t_method)envelope_release, gensym("release"),
-                  A_FLOAT, 0);
+  class_addmethod(envelope_class, (t_method)envelope_setAttack,
+                  gensym("attack"), A_FLOAT, 0);
+  class_addmethod(envelope_class, (t_method)envelope_setRelease,
+                  gensym("release"), A_FLOAT, 0);
   class_addmethod(envelope_class, (t_method)envelope_dsp, gensym("dsp"), 0);
 }

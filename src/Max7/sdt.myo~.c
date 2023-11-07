@@ -41,10 +41,10 @@ void myoelastic_assist(t_myoelastic *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(myoelastic, Myoelastic, myo, "myo~", "myoelastic feature extractor")
 
-SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, DcFrequency, float, update)
-SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, LowFrequency, float, update)
-SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, HighFrequency, float, update)
-SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, Threshold, float, update)
+SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, DcFrequency, float, , update)
+SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, LowFrequency, float, , update)
+SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, HighFrequency, float, , update)
+SDT_MAX_ACCESSORS(myoelastic, Myoelastic, myo, Threshold, float, , update)
 
 void myoelastic_send(t_myoelastic *x) {
   outlet_float(x->outlets[0], x->out[0]);

@@ -46,32 +46,9 @@ void bubble_assist(t_bubble *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(bubble, Bubble, bubble, "bubble~", "bubble")
 
-SDT_MAX_ACCESSORS(bubble, Bubble, bubble, RiseFactor, float, )
-// SDT_MAX_ACCESSORS(bubble, Bubble, bubble, Depth, float, ) // Unused
-
-t_max_err bubble_getRadius(t_bubble *x, void *attr, long *ac, t_atom **av) {
-  if (!(*ac && *av)) {
-    *ac = 1;
-    *av =
-        (t_atom *)((char *)sysmem_newptr((t_ptr_size)(sizeof(t_atom) * (*ac))));
-    if (!*av) {
-      *ac = 0;
-      return MAX_ERR_OUT_OF_MEM;
-    }
-  }
-  return atom_setfloat(*av,
-                       /* radius to mm for backwards compatibility */ 1000.0 *
-                           SDTBubble_getRadius(x->bubble));
-}
-
-t_max_err bubble_setRadius(t_bubble *x, void *attr, long ac, t_atom *av) {
-  if (ac && av) {
-    SDTBubble_setRadius(x->bubble,
-                        /* radius from mm for backwards compatibility */ 0.001 *
-                            atom_getfloat(av));
-  };
-  return MAX_ERR_NONE;
-}
+SDT_MAX_ACCESSORS(bubble, Bubble, bubble, RiseFactor, float, , )
+// SDT_MAX_ACCESSORS(bubble, Bubble, bubble, Depth, float, , ) // Unused
+SDT_MAX_ACCESSORS(bubble, Bubble, bubble, Radius, float, 1000.0, )
 
 void bubble_bang(t_bubble *x) {
   SDTBubble_update(x->bubble);

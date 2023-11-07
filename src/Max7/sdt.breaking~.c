@@ -59,10 +59,10 @@ void breaking_free(t_breaking *x) {
 
 SDT_MAX_KEY(breaking, Breaking, breaking, "breaking~", "breaking process")
 
-SDT_MAX_ACCESSORS(breaking, Breaking, breaking, StoredEnergy, float, )
-SDT_MAX_ACCESSORS(breaking, Breaking, breaking, CrushingEnergy, float, )
-SDT_MAX_ACCESSORS(breaking, Breaking, breaking, Granularity, float, )
-SDT_MAX_ACCESSORS(breaking, Breaking, breaking, Fragmentation, float, )
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, StoredEnergy, float, , )
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, CrushingEnergy, float, , )
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, Granularity, float, , )
+SDT_MAX_ACCESSORS(breaking, Breaking, breaking, Fragmentation, float, , )
 
 t_int *breaking_perform(t_int *w) {
   t_breaking *x = (t_breaking *)(w[1]);

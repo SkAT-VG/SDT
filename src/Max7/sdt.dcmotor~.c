@@ -60,16 +60,16 @@ void dcmotor_assist(t_dcmotor *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(dcmotor, DCMotor, motor, "dcmotor~", "electric motor")
 
-SDT_MAX_GETTER(dcmotor, DCMotor, motor, MaxSize, long)
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Coils, long, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Size, float, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Reson, float, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, GearRatio, float, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Harshness, float, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, RotorGain, float, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, GearGain, float, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, BrushGain, float, )
-SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, AirGain, float, )
+SDT_MAX_GETTER(dcmotor, DCMotor, motor, MaxSize, long, )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Coils, long, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Size, float, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Reson, float, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, GearRatio, float, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, Harshness, float, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, RotorGain, float, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, GearGain, float, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, BrushGain, float, , )
+SDT_MAX_ACCESSORS(dcmotor, DCMotor, motor, AirGain, float, , )
 
 t_int *dcmotor_perform(t_int *w) {
   t_dcmotor *x = (t_dcmotor *)(w[1]);
