@@ -199,8 +199,11 @@ such as rifle bullets or cracking whip tails.
 /** @brief Opaque data structure for an explosion object */
 typedef struct SDTExplosion SDTExplosion;
 
+#define SDT_EXPLOSION_MAX_SCATTER_DEFAULT 44100
+#define SDT_EXPLOSION_MAX_DELAY_DEFAULT 441000
+
 /** @brief Object constructor.
-@param[in] maxScatter Maximum scattering time, in samples)
+@param[in] maxScatter Maximum scattering time, in samples
 @param[in] maxDelay Maximum delay between explosion and sound, in samples
 @return Pointer to the new instance */
 extern SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay);
@@ -209,26 +212,100 @@ extern SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTExplosion_free(SDTExplosion *x);
 
-#define SDT_EXPLOSION Explosion
-#define SDT_EXPLOSION_NEW_ARGS 1, 1
-#define SDT_EXPLOSION_ATTRIBUTES(T, A)                             \
-  A(T, scatter, long, MaxScatter, maxScatter, integer, 44100)      \
-  A(T, size, long, MaxDelay, maxDelay, integer, 441000)            \
-  A(T, blastTime, double, BlastTime, blastTime, double, 0.0)       \
-  A(T, scatterTime, double, ScatterTime, scatterTime, double, 0.0) \
-  A(T, dispersion, double, Dispersion, dispersion, double, 0.0)    \
-  A(T, distance, double, Distance, distance, double, 0.0)          \
-  A(T, waveSpeed, double, WaveSpeed, waveSpeed, double, 0.0)       \
-  A(T, windSpeed, double, WindSpeed, windSpeed, double, 0.0)
+/** @brief Deep-copies an explosion
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTExplosion *SDTExplosion_copy(SDTExplosion *dest,
+                                       const SDTExplosion *src,
+                                       unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_EXPLOSION)
-SDT_DEFINE_HASHMAP_H(SDT_EXPLOSION)
-SDT_TYPE_MAKE_GETTERS_H(SDT_EXPLOSION)
-SDT_JSON_SERIALIZE_H(SDT_EXPLOSION)
-SDT_JSON_DESERIALIZE_H(SDT_EXPLOSION)
+/** @brief Registers an explosion into the explosions list with
+a unique ID.
+@param[in] x Explosion process instance to register
+@param[in] key Unique ID assigned to the explosion instance
+@return Zero on success, otherwise one */
+extern int SDT_registerExplosion(SDTExplosion *x, const char *key);
 
+/** @brief Queries the explosions list by its unique ID.
+If an explosion with the ID is present, a pointer to the explosion is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the explosion instance
+@return Explosion process instance pointer */
+extern SDTExplosion *SDT_getExplosion(const char *key);
+
+/** @brief Unregisters an explosion from the explosions list. If an explosion
+with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the explosion instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterExplosion(const char *key);
+
+/** @brief Represent an explosion as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTExplosion_toJSON(const SDTExplosion *x);
+
+/** @brief Initialize an explosion from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTExplosion *SDTExplosion_fromJSON(const json_value *x);
+
+/** @brief Set parameters of an explosion from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTExplosion *SDTExplosion_setParams(SDTExplosion *x,
+                                            const json_value *j,
+                                            unsigned char unsafe);
+
+/** @brief Gets the maximum scattering time
+@param[in] x Pointer to the instance
+@return Maximum scattering time, in samples */
+extern long SDTExplosion_getMaxScatter(const SDTExplosion *x);
+
+/** @brief Gets the maximum delay between explosion and sound.
+@param[in] x Pointer to the instance
+@return Maximum delay between explosion and sound, in samples */
+extern long SDTExplosion_getMaxDelay(const SDTExplosion *x);
+
+/** @brief Gets the duration of the initial spike.
+@param[in] x Pointer to the instance
+@return Blast time, in s */
+extern double SDTExplosion_getBlastTime(const SDTExplosion *x);
+
+/** @brief Gets the duration of the scattering.
+@param[in] x Pointer to the instance
+@return Scattering time, in s */
+extern double SDTExplosion_getScatterTime(const SDTExplosion *x);
+
+/** @brief Gets the balance between initial spike and successive scattering.
+@param[in] x Pointer to the instance
+@return Amount of scattering, [0,1] */
+extern double SDTExplosion_getDispersion(const SDTExplosion *x);
+
+/** @brief Gets the distance of the listener from the explosion.
+@param[in] x Pointer to the instance
+@return Distance between explosion and listener, in m */
+extern double SDTExplosion_getDistance(const SDTExplosion *x);
+
+/** @brief Gets the propagation velocity of the shockwave.
+@param[in] x Pointer to the instance
+@return Propagation velocity of the shockwave, in m/s */
+extern double SDTExplosion_getWaveSpeed(const SDTExplosion *x);
+
+/** @brief Gets the propagation velocity of the blast wind.
+@param[in] x Pointer to the instance
+@return Propagation velocity of the blast wind, in m/s */
+extern double SDTExplosion_getWindSpeed(const SDTExplosion *x);
+
+/** @brief Sets the maximum scattering time
+@param[in] f Maximum scattering time, in samples */
 extern void SDTExplosion_setMaxScatter(SDTExplosion *x, long f);
 
+/** @brief Sets the maximum delay between explosion and sound.
+@param[in] f Maximum delay between explosion and sound, in samples */
 extern void SDTExplosion_setMaxDelay(SDTExplosion *x, long f);
 
 /** @brief Sets the duration of the initial spike.
@@ -255,9 +332,9 @@ extern void SDTExplosion_setWaveSpeed(SDTExplosion *x, double f);
 @param[in] f Propagation velocity of the blast wind, in m/s */
 extern void SDTExplosion_setWindSpeed(SDTExplosion *x, double f);
 
-/** @brief Updates the internal state of the object.
-Please call this function after having reset one or more synthesis parameters.
-*/
+/** @brief Resets the internal state of the object to the beginning of the
+explosion. Please call this function after changing the SDT sample rate or one
+or more of these parameters: scatter time, distance, wave speed, wind speed. */
 extern void SDTExplosion_update(SDTExplosion *x);
 
 /** @brief Signal processing routine.

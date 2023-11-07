@@ -53,7 +53,7 @@ extern SDTDemix *SDTDemix_new(int size, int radius);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTDemix_free(SDTDemix *x);
 
-/** @brief Deep-copies a components
+/** @brief Deep-copies a demixer
 @param[in] dest Pointer to the instance to modify
 @param[in] src Pointer to the instance to copy
 @param[in] unsafe If false, do not perform any memory-related changes
