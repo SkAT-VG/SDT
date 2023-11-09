@@ -83,6 +83,112 @@ extern int SDTOSCBubble(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscfluidflow SDTOSCFluidFlow
+OSC for #SDTFluidFlow objects
+@ingroup oscmethods
+@{ */
+
+/** @brief `/fluidflow/log <name>`
+
+Function that implements OSC JSON log for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_log(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_save(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_load(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTFluidFlow
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_loads(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/avgRate <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setAvgRate(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/minRadius <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setMinRadius(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/maxRadius <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setMaxRadius(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/expRadius <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setExpRadius(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/minDepth <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setMinDepth(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/maxDepth <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setMaxDepth(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/expDepth <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setExpDepth(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/riseFactor <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setRiseFactor(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/riseCutoff <name> <value>`
+
+Function that implements OSC parameter setting for #SDTFluidFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow_setRiseCutoff(const SDTOSCMessage *x);
+
+/** @brief `/fluidflow/...`
+
+Function that routes OSC commands for #SDTFluidFlow objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCFluidFlow(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif

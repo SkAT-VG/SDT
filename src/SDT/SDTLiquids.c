@@ -171,11 +171,98 @@ void SDTFluidFlow_setNBubbles(SDTFluidFlow *x, int f) {
     x->bubbles[i] = SDTBubble_new();
 }
 
-SDT_TYPE_COPY(SDT_FLUIDFLOW)
-SDT_DEFINE_HASHMAP(SDT_FLUIDFLOW, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_FLUIDFLOW)
-SDT_JSON_SERIALIZE(SDT_FLUIDFLOW)
-SDT_JSON_DESERIALIZE(SDT_FLUIDFLOW)
+_SDT_COPY_FUNCTION(FluidFlow)
+
+_SDT_HASHMAP_FUNCTIONS(FluidFlow)
+
+json_value *SDTFluidFlow_toJSON(const SDTFluidFlow *x) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "nBubbles",
+                   json_integer_new(SDTFluidFlow_getNBubbles(x)));
+  json_object_push(obj, "avgRate", json_double_new(SDTFluidFlow_getAvgRate(x)));
+  json_object_push(obj, "minRadius",
+                   json_double_new(SDTFluidFlow_getMinRadius(x)));
+  json_object_push(obj, "maxRadius",
+                   json_double_new(SDTFluidFlow_getMaxRadius(x)));
+  json_object_push(obj, "expRadius",
+                   json_double_new(SDTFluidFlow_getExpRadius(x)));
+  json_object_push(obj, "minDepth",
+                   json_double_new(SDTFluidFlow_getMinDepth(x)));
+  json_object_push(obj, "maxDepth",
+                   json_double_new(SDTFluidFlow_getMaxDepth(x)));
+  json_object_push(obj, "expDepth",
+                   json_double_new(SDTFluidFlow_getExpDepth(x)));
+  json_object_push(obj, "riseFactor",
+                   json_double_new(SDTFluidFlow_getRiseFactor(x)));
+  json_object_push(obj, "riseCutoff",
+                   json_double_new(SDTFluidFlow_getRiseCutoff(x)));
+  return obj;
+}
+
+SDTFluidFlow *SDTFluidFlow_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int nBubbles = SDT_FLUIDFLOW_NBUBBLES_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(nBubbles, x, nBubbles, integer);
+
+  SDTFluidFlow *y = SDTFluidFlow_new(nBubbles);
+  return SDTFluidFlow_setParams(y, x, 0);
+}
+
+SDTFluidFlow *SDTFluidFlow_setParams(SDTFluidFlow *x, const json_value *j,
+                                     unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(FluidFlow, x, j, NBubbles, nBubbles, integer,
+                                  unsafe);
+
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, AvgRate, avgRate, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinRadius, minRadius, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxRadius, maxRadius, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpRadius, expRadius, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinDepth, minDepth, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxDepth, maxDepth, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpDepth, expDepth, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseFactor, riseFactor, integer);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseCutoff, riseCutoff, integer);
+
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, AvgRate, avgRate, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinRadius, minRadius, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxRadius, maxRadius, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpRadius, expRadius, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinDepth, minDepth, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxDepth, maxDepth, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpDepth, expDepth, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseFactor, riseFactor, double);
+  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseCutoff, riseCutoff, double);
+
+  return x;
+}
+
+int SDTFluidFlow_getNBubbles(const SDTFluidFlow *x) { return x->nBubbles; }
+
+double SDTFluidFlow_getAvgRate(const SDTFluidFlow *x) { return x->avgRate; }
+
+double SDTFluidFlow_getMinRadius(const SDTFluidFlow *x) { return x->minRadius; }
+
+double SDTFluidFlow_getMaxRadius(const SDTFluidFlow *x) { return x->maxRadius; }
+
+double SDTFluidFlow_getExpRadius(const SDTFluidFlow *x) { return x->expRadius; }
+
+double SDTFluidFlow_getMinDepth(const SDTFluidFlow *x) { return x->minDepth; }
+
+double SDTFluidFlow_getMaxDepth(const SDTFluidFlow *x) { return x->maxDepth; }
+
+double SDTFluidFlow_getExpDepth(const SDTFluidFlow *x) { return x->expDepth; }
+
+double SDTFluidFlow_getRiseFactor(const SDTFluidFlow *x) {
+  return x->riseFactor;
+}
+
+double SDTFluidFlow_getRiseCutoff(const SDTFluidFlow *x) {
+  return x->riseCutoff;
+}
 
 void SDTFluidFlow_setMinRadius(SDTFluidFlow *x, double f) {
   x->minRadius = SDT_fclip(f, MIN_RADIUS, x->maxRadius);

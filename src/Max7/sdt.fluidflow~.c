@@ -51,50 +51,17 @@ void fluidflow_assist(t_fluidflow *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(fluidflow, FluidFlow, flow, "fluidflow~", "fluid flow")
 
-void fluidflow_avgRate(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->avgRate = atom_getfloat(av);
-  SDTFluidFlow_setAvgRate(x->flow, x->avgRate);
-}
+SDT_MAX_GETTER(fluidflow, FluidFlow, flow, NBubbles, long, )
 
-void fluidflow_minRadius(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->minRadius = atom_getfloat(av);
-  SDTFluidFlow_setMinRadius(x->flow, 0.001 * x->minRadius);
-}
-
-void fluidflow_maxRadius(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->maxRadius = atom_getfloat(av);
-  SDTFluidFlow_setMaxRadius(x->flow, 0.001 * x->maxRadius);
-}
-
-void fluidflow_expRadius(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->expRadius = atom_getfloat(av);
-  SDTFluidFlow_setExpRadius(x->flow, x->expRadius);
-}
-
-void fluidflow_minDepth(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->minDepth = atom_getfloat(av);
-  SDTFluidFlow_setMinDepth(x->flow, x->minDepth);
-}
-
-void fluidflow_maxDepth(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->maxDepth = atom_getfloat(av);
-  SDTFluidFlow_setMaxDepth(x->flow, x->maxDepth);
-}
-
-void fluidflow_expDepth(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->expDepth = atom_getfloat(av);
-  SDTFluidFlow_setExpDepth(x->flow, x->expDepth);
-}
-
-void fluidflow_riseFactor(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->riseFactor = atom_getfloat(av);
-  SDTFluidFlow_setRiseFactor(x->flow, x->riseFactor);
-}
-
-void fluidflow_riseCutoff(t_fluidflow *x, void *attr, long ac, t_atom *av) {
-  x->riseCutoff = atom_getfloat(av);
-  SDTFluidFlow_setRiseCutoff(x->flow, x->riseCutoff);
-}
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, AvgRate, float, , )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, MinRadius, float, 1000.0, )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, MaxRadius, float, 1000.0, )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, ExpRadius, float, , )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, MinDepth, float, , )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, MaxDepth, float, , )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, ExpDepth, float, , )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, RiseFactor, float, , )
+SDT_MAX_ACCESSORS(fluidflow, FluidFlow, flow, RiseCutoff, float, , )
 
 t_int *fluidflow_perform(t_int *w) {
   t_fluidflow *x = (t_fluidflow *)(w[1]);
@@ -138,15 +105,17 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(fluidflow, "1")
 
-  CLASS_ATTR_DOUBLE(c, "avgRate", 0, t_fluidflow, avgRate);
-  CLASS_ATTR_DOUBLE(c, "minRadius", 0, t_fluidflow, minRadius);
-  CLASS_ATTR_DOUBLE(c, "maxRadius", 0, t_fluidflow, maxRadius);
-  CLASS_ATTR_DOUBLE(c, "expRadius", 0, t_fluidflow, expRadius);
-  CLASS_ATTR_DOUBLE(c, "minDepth", 0, t_fluidflow, minDepth);
-  CLASS_ATTR_DOUBLE(c, "maxDepth", 0, t_fluidflow, maxDepth);
-  CLASS_ATTR_DOUBLE(c, "expDepth", 0, t_fluidflow, expDepth);
-  CLASS_ATTR_DOUBLE(c, "riseFactor", 0, t_fluidflow, riseFactor);
-  CLASS_ATTR_DOUBLE(c, "riseCutoff", 0, t_fluidflow, riseCutoff);
+  SDT_MAX_RO_ATTRIBUTE(c, fluidflow, NBubbles, nBubbles, long, 0);
+
+  SDT_MAX_ATTRIBUTE(c, fluidflow, AvgRate, avgRate, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, MinRadius, minRadius, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, MaxRadius, maxRadius, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, ExpRadius, expRadius, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, MinDepth, minDepth, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, MaxDepth, maxDepth, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, ExpDepth, expDepth, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, RiseFactor, riseFactor, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, fluidflow, RiseCutoff, riseCutoff, float64, 0);
 
   CLASS_ATTR_FILTER_CLIP(c, "avgRate", 0.0, 100000.0);
   CLASS_ATTR_FILTER_CLIP(c, "minRadius", 0.15, 150.0);
@@ -158,25 +127,16 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_CLIP(c, "riseFactor", 0.0, 3.0);
   CLASS_ATTR_FILTER_CLIP(c, "riseCutoff", 0.0, 1.0);
 
-  CLASS_ATTR_ACCESSORS(c, "avgRate", NULL, (method)fluidflow_avgRate);
-  CLASS_ATTR_ACCESSORS(c, "minRadius", NULL, (method)fluidflow_minRadius);
-  CLASS_ATTR_ACCESSORS(c, "maxRadius", NULL, (method)fluidflow_maxRadius);
-  CLASS_ATTR_ACCESSORS(c, "expRadius", NULL, (method)fluidflow_expRadius);
-  CLASS_ATTR_ACCESSORS(c, "minDepth", NULL, (method)fluidflow_minDepth);
-  CLASS_ATTR_ACCESSORS(c, "maxDepth", NULL, (method)fluidflow_maxDepth);
-  CLASS_ATTR_ACCESSORS(c, "expDepth", NULL, (method)fluidflow_expDepth);
-  CLASS_ATTR_ACCESSORS(c, "riseFactor", NULL, (method)fluidflow_riseFactor);
-  CLASS_ATTR_ACCESSORS(c, "riseCutoff", NULL, (method)fluidflow_riseCutoff);
-
-  CLASS_ATTR_ORDER(c, "avgRate", 0, "2");
-  CLASS_ATTR_ORDER(c, "minRadius", 0, "3");
-  CLASS_ATTR_ORDER(c, "maxRadius", 0, "4");
-  CLASS_ATTR_ORDER(c, "expRadius", 0, "5");
-  CLASS_ATTR_ORDER(c, "minDepth", 0, "6");
-  CLASS_ATTR_ORDER(c, "maxDepth", 0, "7");
-  CLASS_ATTR_ORDER(c, "expDepth", 0, "8");
-  CLASS_ATTR_ORDER(c, "riseFactor", 0, "9");
-  CLASS_ATTR_ORDER(c, "riseCutoff", 0, "10");
+  CLASS_ATTR_ORDER(c, "nBubbles", 0, "2");
+  CLASS_ATTR_ORDER(c, "avgRate", 0, "3");
+  CLASS_ATTR_ORDER(c, "minRadius", 0, "4");
+  CLASS_ATTR_ORDER(c, "maxRadius", 0, "5");
+  CLASS_ATTR_ORDER(c, "expRadius", 0, "6");
+  CLASS_ATTR_ORDER(c, "minDepth", 0, "7");
+  CLASS_ATTR_ORDER(c, "maxDepth", 0, "8");
+  CLASS_ATTR_ORDER(c, "expDepth", 0, "9");
+  CLASS_ATTR_ORDER(c, "riseFactor", 0, "10");
+  CLASS_ATTR_ORDER(c, "riseCutoff", 0, "11");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
