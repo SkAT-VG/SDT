@@ -139,6 +139,8 @@ new one.
 /** @brief Opaque data structure representing a fluid flow object */
 typedef struct SDTFluidFlow SDTFluidFlow;
 
+#define SDT_FLUIDFLOW_NBUBBLES_DEFAULT 64
+
 /** @brief Object constructor.
 @param[in] Number of voices in the oscillator bank
 @return Pointer to the new instance */
@@ -148,26 +150,98 @@ extern SDTFluidFlow *SDTFluidFlow_new(int nBubbles);
 @param[in] x Poiter to the instance to destroy */
 extern void SDTFluidFlow_free(SDTFluidFlow *x);
 
-#define SDT_FLUIDFLOW FluidFlow
-#define SDT_FLUIDFLOW_NEW_ARGS 0
-#define SDT_FLUIDFLOW_ATTRIBUTES(T, A)                           \
-  A(T, nBubbles, int, NBubbles, nBubbles, integer, 64)           \
-  A(T, avgRate, double, AvgRate, avgRate, double, 0)             \
-  A(T, minRadius, double, MinRadius, minRadius, double, 0.00015) \
-  A(T, maxRadius, double, MaxRadius, maxRadius, double, 0.015)   \
-  A(T, expRadius, double, ExpRadius, expRadius, double, 1.0)     \
-  A(T, minDepth, double, MinDepth, minDepth, double, 0.0)        \
-  A(T, maxDepth, double, MaxDepth, maxDepth, double, 1.0)        \
-  A(T, expDepth, double, ExpDepth, expDepth, double, 1.0)        \
-  A(T, riseFactor, double, RiseFactor, riseFactor, double, 0.1)  \
-  A(T, riseCutoff, double, RiseCutoff, riseCutoff, double, 0.9)
+/** @brief Deep-copies an fluid flow.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTFluidFlow *SDTFluidFlow_copy(SDTFluidFlow *dest,
+                                       const SDTFluidFlow *src,
+                                       unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_FLUIDFLOW)
-SDT_DEFINE_HASHMAP_H(SDT_FLUIDFLOW)
-SDT_TYPE_MAKE_GETTERS_H(SDT_FLUIDFLOW)
-SDT_JSON_SERIALIZE_H(SDT_FLUIDFLOW)
-SDT_JSON_DESERIALIZE_H(SDT_FLUIDFLOW)
+/** @brief Registers an fluid flow into the myoelastic
+feature extractors list with a unique ID.
+@param[in] x FluidFlow instance to register
+@param[in] key Unique ID assigned to the fluid flow instance
+@return Zero on success, otherwise one */
+extern int SDT_registerFluidFlow(SDTFluidFlow *x, const char *key);
 
+/** @brief Queries the fluid flows list by its unique ID.
+If an fluid flow with the ID is present, a pointer to the fluid flow is
+returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the fluid flow instance
+@return FluidFlow instance pointer */
+extern SDTFluidFlow *SDT_getFluidFlow(const char *key);
+
+/** @brief Unregisters an fluid flow from the fluid flows list.
+If an fluid flow with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the fluid flow instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterFluidFlow(const char *key);
+
+/** @brief Gets the number of bubbles.
+@return Number of voices in the oscillator bank */
+extern int SDTFluidFlow_getNBubbles(const SDTFluidFlow *x);
+
+/** @brief Gets the minimum radius for the bubble population.
+@return Minimum radius of the generated bubbles, in m [0.00015, 0.150] */
+extern double SDTFluidFlow_getMinRadius(const SDTFluidFlow *x);
+
+/** @brief Gets the maximum radius for the bubble population.
+@return Maximum radius of the generated bubbles, in m [0.00015, 0.150] */
+extern double SDTFluidFlow_getMaxRadius(const SDTFluidFlow *x);
+
+/** @brief Gets the gamma factor for the radius assignment
+@return Radius gamma factor. O to 1 = bigger bubbles, > 1 = smaller bubbles */
+extern double SDTFluidFlow_getExpRadius(const SDTFluidFlow *x);
+
+/** @brief Gets the minimum depth value for the bubble population.
+@return Minimum depth value of the generated bubbles, [0, 1] */
+extern double SDTFluidFlow_getMinDepth(const SDTFluidFlow *x);
+
+/** @brief Gets the maximum depth value for the bubble population.
+@return Maximum depth value of the generated bubbles, [0, 1] */
+extern double SDTFluidFlow_getMaxDepth(const SDTFluidFlow *x);
+
+/** @brief Gets the gamma factor for the depth assignment
+@return Depth gamma factor. O to 1 = shallower bubbles, > 1 = deeper
+bubbles */
+extern double SDTFluidFlow_getExpDepth(const SDTFluidFlow *x);
+
+/** @brief Gets the amount of blooping for the bubble population
+@return Rise factor. Typical value for water = 0.1 */
+extern double SDTFluidFlow_getRiseFactor(const SDTFluidFlow *x);
+
+/** @brief Bubbles deeper than this threshold do not rise in frequency
+@return Rise cutoff, [0, 1] */
+extern double SDTFluidFlow_getRiseCutoff(const SDTFluidFlow *x);
+
+/** @brief Gets the amount of generated bubbles per second.
+@return Average number of bubbles per second */
+extern double SDTFluidFlow_getAvgRate(const SDTFluidFlow *x);
+
+/** @brief Represent a fluid flow as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTFluidFlow_toJSON(const SDTFluidFlow *x);
+
+/** @brief Initialize a fluid flow from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTFluidFlow *SDTFluidFlow_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a fluid flow from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTFluidFlow *SDTFluidFlow_setParams(SDTFluidFlow *x,
+                                            const json_value *j,
+                                            unsigned char unsafe);
+
+/** @brief Sets the number of bubbles.
+@param[in] f Number of voices in the oscillator bank */
 extern void SDTFluidFlow_setNBubbles(SDTFluidFlow *x, int f);
 
 /** @brief Sets the minimum radius for the bubble population.
