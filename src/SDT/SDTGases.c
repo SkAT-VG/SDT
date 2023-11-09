@@ -252,10 +252,70 @@ void SDTExplosion_setMaxDelay(SDTExplosion *x, long f) {
   x->size = f;
 }
 
-SDT_TYPE_COPY(SDT_EXPLOSION)
-SDT_DEFINE_HASHMAP(SDT_EXPLOSION, 59)
-SDT_JSON_SERIALIZE(SDT_EXPLOSION)
-SDT_JSON_DESERIALIZE(SDT_EXPLOSION)
+_SDT_COPY_FUNCTION(Explosion)
+
+_SDT_HASHMAP_FUNCTIONS(Explosion)
+
+json_value *SDTExplosion_toJSON(const SDTExplosion *x) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "maxScatter",
+                   json_integer_new(SDTExplosion_getMaxScatter(x)));
+  json_object_push(obj, "maxDelay",
+                   json_integer_new(SDTExplosion_getMaxDelay(x)));
+  json_object_push(obj, "blastTime",
+                   json_double_new(SDTExplosion_getBlastTime(x)));
+  json_object_push(obj, "scatterTime",
+                   json_double_new(SDTExplosion_getScatterTime(x)));
+  json_object_push(obj, "dispersion",
+                   json_double_new(SDTExplosion_getDispersion(x)));
+  json_object_push(obj, "distance",
+                   json_double_new(SDTExplosion_getDistance(x)));
+  json_object_push(obj, "waveSpeed",
+                   json_double_new(SDTExplosion_getWaveSpeed(x)));
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTExplosion_getWindSpeed(x)));
+
+  return obj;
+}
+
+SDTExplosion *SDTExplosion_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int maxScatter = SDT_EXPLOSION_MAX_SCATTER_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxScatter, x, maxScatter, integer);
+  unsigned int maxDelay = SDT_EXPLOSION_MAX_DELAY_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxDelay, x, maxDelay, integer);
+
+  SDTExplosion *y = SDTExplosion_new(maxScatter, maxDelay);
+  return SDTExplosion_setParams(y, x, 0);
+}
+
+SDTExplosion *SDTExplosion_setParams(SDTExplosion *x, const json_value *j,
+                                     unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Explosion, x, j, MaxScatter, maxScatter,
+                                  integer, unsafe);
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Explosion, x, j, MaxDelay, maxDelay, integer,
+                                  unsafe);
+
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, BlastTime, blastTime, integer);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, ScatterTime, scatterTime, integer);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Dispersion, dispersion, integer);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Distance, distance, integer);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WaveSpeed, waveSpeed, integer);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WindSpeed, windSpeed, integer);
+
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, BlastTime, blastTime, double);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, ScatterTime, scatterTime, double);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Dispersion, dispersion, double);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Distance, distance, double);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WaveSpeed, waveSpeed, double);
+  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WindSpeed, windSpeed, double);
+
+  return x;
+}
 
 long SDTExplosion_getMaxScatter(const SDTExplosion *x) {
   return SDTReverb_getMaxDelay(x->scatter);

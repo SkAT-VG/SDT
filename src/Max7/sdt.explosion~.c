@@ -58,35 +58,15 @@ void explosion_assist(t_explosion *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(explosion, Explosion, blow, "explosion~", "explosion")
 
-void explosion_blastTime(t_explosion *x, void *attr, long ac, t_atom *av) {
-  x->blastTime = atom_getfloat(av);
-  SDTExplosion_setBlastTime(x->blow, x->blastTime);
-}
+SDT_MAX_GETTER(explosion, Explosion, blow, MaxScatter, long, )
+SDT_MAX_GETTER(explosion, Explosion, blow, MaxDelay, long, )
 
-void explosion_scatterTime(t_explosion *x, void *attr, long ac, t_atom *av) {
-  x->scatterTime = atom_getfloat(av);
-  SDTExplosion_setScatterTime(x->blow, x->scatterTime);
-}
-
-void explosion_dispersion(t_explosion *x, void *attr, long ac, t_atom *av) {
-  x->dispersion = atom_getfloat(av);
-  SDTExplosion_setDispersion(x->blow, x->dispersion);
-}
-
-void explosion_distance(t_explosion *x, void *attr, long ac, t_atom *av) {
-  x->distance = atom_getfloat(av);
-  SDTExplosion_setDistance(x->blow, x->distance);
-}
-
-void explosion_waveSpeed(t_explosion *x, void *attr, long ac, t_atom *av) {
-  x->waveSpeed = atom_getfloat(av);
-  SDTExplosion_setWaveSpeed(x->blow, x->waveSpeed);
-}
-
-void explosion_windSpeed(t_explosion *x, void *attr, long ac, t_atom *av) {
-  x->windSpeed = atom_getfloat(av);
-  SDTExplosion_setWindSpeed(x->blow, x->windSpeed);
-}
+SDT_MAX_ACCESSORS(explosion, Explosion, blow, BlastTime, float, , )
+SDT_MAX_ACCESSORS(explosion, Explosion, blow, ScatterTime, float, , )
+SDT_MAX_ACCESSORS(explosion, Explosion, blow, Dispersion, float, , )
+SDT_MAX_ACCESSORS(explosion, Explosion, blow, Distance, float, , )
+SDT_MAX_ACCESSORS(explosion, Explosion, blow, WaveSpeed, float, , )
+SDT_MAX_ACCESSORS(explosion, Explosion, blow, WindSpeed, float, , )
 
 void explosion_update(t_explosion *x) { SDTExplosion_update(x->blow); }
 
@@ -145,12 +125,15 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(explosion, "1")
 
-  CLASS_ATTR_DOUBLE(c, "blastTime", 0, t_explosion, blastTime);
-  CLASS_ATTR_DOUBLE(c, "scatterTime", 0, t_explosion, scatterTime);
-  CLASS_ATTR_DOUBLE(c, "dispersion", 0, t_explosion, dispersion);
-  CLASS_ATTR_DOUBLE(c, "distance", 0, t_explosion, distance);
-  CLASS_ATTR_DOUBLE(c, "waveSpeed", 0, t_explosion, waveSpeed);
-  CLASS_ATTR_DOUBLE(c, "windSpeed", 0, t_explosion, windSpeed);
+  SDT_MAX_RO_ATTRIBUTE(c, explosion, MaxScatter, maxScatter, long, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, explosion, MaxDelay, maxDelay, long, 0);
+
+  SDT_MAX_ATTRIBUTE(c, explosion, BlastTime, blastTime, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, explosion, ScatterTime, scatterTime, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, explosion, Dispersion, dispersion, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, explosion, Distance, distance, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, explosion, WaveSpeed, waveSpeed, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, explosion, WindSpeed, windSpeed, float64, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "blastTime", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "scatterTime", 0.0);
@@ -159,19 +142,14 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_MIN(c, "waveSpeed", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "windSpeed", 0.0);
 
-  CLASS_ATTR_ACCESSORS(c, "blastTime", NULL, (method)explosion_blastTime);
-  CLASS_ATTR_ACCESSORS(c, "scatterTime", NULL, (method)explosion_scatterTime);
-  CLASS_ATTR_ACCESSORS(c, "dispersion", NULL, (method)explosion_dispersion);
-  CLASS_ATTR_ACCESSORS(c, "distance", NULL, (method)explosion_distance);
-  CLASS_ATTR_ACCESSORS(c, "waveSpeed", NULL, (method)explosion_waveSpeed);
-  CLASS_ATTR_ACCESSORS(c, "windSpeed", NULL, (method)explosion_windSpeed);
-
-  CLASS_ATTR_ORDER(c, "blastTime", 0, "2");
-  CLASS_ATTR_ORDER(c, "scatterTime", 0, "3");
-  CLASS_ATTR_ORDER(c, "dispersion", 0, "4");
-  CLASS_ATTR_ORDER(c, "distance", 0, "5");
-  CLASS_ATTR_ORDER(c, "waveSpeed", 0, "6");
-  CLASS_ATTR_ORDER(c, "windSpeed", 0, "7");
+  CLASS_ATTR_ORDER(c, "maxScatter", 0, "2");
+  CLASS_ATTR_ORDER(c, "maxDelay", 0, "3");
+  CLASS_ATTR_ORDER(c, "blastTime", 0, "4");
+  CLASS_ATTR_ORDER(c, "scatterTime", 0, "5");
+  CLASS_ATTR_ORDER(c, "dispersion", 0, "6");
+  CLASS_ATTR_ORDER(c, "distance", 0, "7");
+  CLASS_ATTR_ORDER(c, "waveSpeed", 0, "8");
+  CLASS_ATTR_ORDER(c, "windSpeed", 0, "9");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
