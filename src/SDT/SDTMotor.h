@@ -140,6 +140,14 @@ extern double SDTMotor_getMufflerFeedback(const SDTMotor *x);
 @return Outlet size, in m */
 extern double SDTMotor_getOutletSize(const SDTMotor *x);
 
+/** @brief Gets lowpass damping filter cutoff frequency.
+@return Cutoff frequency, in hertz */
+extern double SDTMotor_getDamp(const SDTMotor *x);
+
+/** @brief Gets lowpass DC filter cutoff frequency.
+@return Cutoff frequency, in hertz */
+extern double SDTMotor_getDc(const SDTMotor *x);
+
 /** @brief Represent an combustion engine model as a JSON object.
 @param[in] x Pointer to the instance
 @return JSON object */
@@ -166,12 +174,6 @@ extern void SDTMotor_setMaxDelay(SDTMotor *x, long f);
 /** @brief Sets the cycle type.
 @param[in] f Zero for four-stroke and non-zero for two-stroke */
 extern void SDTMotor_setCycle(SDTMotor *x, double f);
-
-/** @brief Update filter coefficients.
-Should be always called after setting the sampling rate with
-SDT_setSampleRate().
-@param[in] x Pointer to a SDTMotor instance */
-extern void SDTMotor_setFilters(SDTMotor *x, double damp, double dc);
 
 /** @brief Sets the Revolutions Per Minute (RPM) of the engine.
 @param[in] f RPM value */
@@ -245,6 +247,27 @@ extern void SDTMotor_setMufflerFeedback(SDTMotor *x, double f);
 /** @brief Sets the length of the exhaust outlet.
 @param[in] f Outlet size, in m */
 extern void SDTMotor_setOutletSize(SDTMotor *x, double f);
+
+/** @brief Sets lowpass damping filter cutoff frequency.
+You should call #SDTMotor_update after this function.
+@param[in] f Cutoff frequency, in hertz */
+extern void SDTMotor_setDamp(SDTMotor *x, double f);
+
+/** @brief Sets lowpass DC filter cutoff frequency.
+You should call #SDTMotor_update after this function.
+@param[in] f Cutoff frequency, in hertz */
+extern void SDTMotor_setDc(SDTMotor *x, double f);
+
+/** @brief Update filter coefficients.
+Set all filter coefficients and update internal structure.
+There is no need to call #SDTMotor_update separately.
+@param[in] x Pointer to a SDTMotor instance */
+extern void SDTMotor_setFilters(SDTMotor *x, double damp, double dc);
+
+/** @brief Update filter coefficients.
+Should be called after changing the sampling rate or any filter coefficient.
+@param[in] x Pointer to a SDTMotor instance */
+extern void SDTMotor_update(SDTMotor *x);
 
 /** @brief Signal processing routine.
 Call this function at sample rate to synthesize the engine sound.

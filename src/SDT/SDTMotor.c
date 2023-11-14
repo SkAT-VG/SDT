@@ -21,7 +21,7 @@ struct SDTMotor {
   SDTOnePole *air, *walls, *intakeDC, *vibrationsDC, *outletDC;
   double rpm, throttle, phase, step, cylinderSize, compressionRatio, sparkTime,
       asymmetry, backfire, backfireRate, revIntakes, vibrations, fwdExtractors,
-      revMufflers, fwdMufflers, fwdOutlet;
+      revMufflers, fwdMufflers, fwdOutlet, damp, dc;
   unsigned char isRevvingDown, isBackfiring;
   int nCylinders;
 };
@@ -88,6 +88,8 @@ SDTMotor *SDTMotor_new(long maxDelay) {
   x->isRevvingDown = 0;
   x->isBackfiring = 0;
   x->nCylinders = 4;
+  x->damp = 20.0;
+  x->dc = 20.0;
   return x;
 }
 
@@ -198,6 +200,8 @@ json_value *SDTMotor_toJSON(const SDTMotor *x) {
   json_object_push(obj, "outletSize",
                    json_double_new(SDTMotor_getOutletSize(x)));
   json_object_push(obj, "throttle", json_double_new(SDTMotor_getThrottle(x)));
+  json_object_push(obj, "damp", json_double_new(SDTMotor_getDamp(x)));
+  json_object_push(obj, "dc", json_double_new(SDTMotor_getDc(x)));
 
   return obj;
 }
@@ -236,6 +240,8 @@ SDTMotor *SDTMotor_setParams(SDTMotor *x, const json_value *j,
                            double);
   _SDT_SET_PARAM_FROM_JSON(Motor, x, j, OutletSize, outletSize, double);
   _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Throttle, throttle, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Damp, damp, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Dc, dc, double);
 
   return x;
 }
@@ -300,12 +306,26 @@ double SDTMotor_getOutletSize(const SDTMotor *x) {
   return SDT_samplesInAir_inv(SDTWaveguide_getDelay(x->outlet));
 }
 
+double SDTMotor_getDamp(const SDTMotor *x) { return x->damp; }
+
+double SDTMotor_getDc(const SDTMotor *x) { return x->dc; }
+
+void SDTMotor_setDamp(SDTMotor *x, double f) { x->damp = f; }
+
+void SDTMotor_setDc(SDTMotor *x, double f) { x->dc = f; }
+
 void SDTMotor_setFilters(SDTMotor *x, double damp, double dc) {
-  SDTOnePole_lowpass(x->air, damp);
-  SDTOnePole_lowpass(x->walls, damp);
-  SDTOnePole_lowpass(x->intakeDC, dc);
-  SDTOnePole_lowpass(x->vibrationsDC, dc);
-  SDTOnePole_lowpass(x->outletDC, dc);
+  SDTMotor_setDamp(x, damp);
+  SDTMotor_setDc(x, dc);
+  SDTMotor_update(x);
+}
+
+void SDTMotor_update(SDTMotor *x) {
+  SDTOnePole_lowpass(x->air, x->damp);
+  SDTOnePole_lowpass(x->walls, x->damp);
+  SDTOnePole_lowpass(x->intakeDC, x->dc);
+  SDTOnePole_lowpass(x->vibrationsDC, x->dc);
+  SDTOnePole_lowpass(x->outletDC, x->dc);
 }
 
 void SDTMotor_setRpm(SDTMotor *x, double f) {

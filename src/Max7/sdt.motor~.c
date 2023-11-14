@@ -173,7 +173,7 @@ t_int *motor_perform(t_int *w) {
 
 void motor_dsp(t_motor *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTMotor_setFilters(x->motor, 20.0, 20.0);
+  SDTMotor_update(x->motor);
   dsp_add(motor_perform, 7, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
           sp[3]->s_vec, sp[4]->s_vec, sp[0]->s_n);
 }
@@ -202,7 +202,7 @@ void motor_perform64(t_motor *x, t_object *dsp64, double **ins, long numins,
 void motor_dsp64(t_motor *x, t_object *dsp64, short *count, double samplerate,
                  long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTMotor_setFilters(x->motor, 20.0, 20.0);
+  SDTMotor_update(x->motor);
   object_method(dsp64, gensym("dsp_add64"), x, motor_perform64, 0, NULL);
 }
 

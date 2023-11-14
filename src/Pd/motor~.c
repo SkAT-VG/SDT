@@ -98,7 +98,7 @@ static t_int *motor_perform(t_int *w) {
 
 static void motor_dsp(t_motor *x, t_signal **sp) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTMotor_setFilters(x->motor, 20.0, 20.0);
+  SDTMotor_update(x->motor);
   dsp_add(motor_perform, 7, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
           sp[3]->s_vec, sp[4]->s_vec, sp[0]->s_n);
 }
