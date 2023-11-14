@@ -84,7 +84,7 @@ extern int SDT_unregisterDCMotor(const char *key);
 extern long SDTDCMotor_getMaxSize(const SDTDCMotor *x);
 
 /** @brief Gets the Revolutions Per Minute (RPM) of the engine rotor.
-@return f Engine RPM */
+@return Engine RPM */
 extern double SDTDCMotor_getRpm(const SDTDCMotor *x);
 
 /** @brief Gets the mechanical stress on the rotor.

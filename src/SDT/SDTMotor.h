@@ -29,7 +29,10 @@ extern "C" {
 /** @brief Opaque data structure representing a combustion engine object */
 typedef struct SDTMotor SDTMotor;
 
+#define SDT_MOTOR_MAXDELAY_DEFAULT 44100
+
 /** @brief Object constructor.
+@param[in] maxDelay Maximum delay time, in samples
 @return Pointer to the new instance */
 extern SDTMotor *SDTMotor_new(long maxDelay);
 
@@ -37,35 +40,131 @@ extern SDTMotor *SDTMotor_new(long maxDelay);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTMotor_free(SDTMotor *x);
 
-#define SDT_MOTOR Motor
-#define SDT_MOTOR_NEW_ARGS 44100
-#define SDT_MOTOR_ATTRIBUTES(T, A)                                           \
-  A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100)                   \
-  A(T, cycle, double, Cycle, cycle, double, 0.0)                             \
-  A(T, nCylinders, int, NCylinders, nCylinders, integer, 4)                  \
-  A(T, cylinderSize, double, CylinderSize, cylinderSize, double, 500.0)      \
-  A(T, compressionRatio, double, CompressionRatio, compressionRatio, double, \
-    10.0)                                                                    \
-  A(T, sparkTime, double, SparkTime, sparkTime, double, 0.1)                 \
-  A(T, asymmetry, double, Asymmetry, asymmetry, double, 0.1)                 \
-  A(T, backfire, double, Backfire, backfire, double, 0.0)                    \
-  A(T, intakeSize, double, IntakeSize, intakeSize, double, 0)                \
-  A(T, extractorSize, double, ExtractorSize, extractorSize, double, 0)       \
-  A(T, exhaustSize, double, ExhaustSize, exhaustSize, double, 0)             \
-  A(T, expansion, double, Expansion, expansion, double, JOINT_FEED)          \
-  A(T, mufflerSize, double, MufflerSize, mufflerSize, double, 0)             \
-  A(T, mufflerFeedback, double, MufflerFeedback, mufflerFeedback, double,    \
-    MUFFLER_FEED)                                                            \
-  A(T, outletSize, double, OutletSize, outletSize, double, 0)
+/** @brief Deep-copies a combustion engine model.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTMotor *SDTMotor_copy(SDTMotor *dest, const SDTMotor *src,
+                               unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_MOTOR)
-SDT_DEFINE_HASHMAP_H(SDT_MOTOR)
-SDT_TYPE_MAKE_GETTERS_H(SDT_MOTOR)
-SDT_JSON_SERIALIZE_H(SDT_MOTOR)
-SDT_JSON_DESERIALIZE_H(SDT_MOTOR)
+/** @brief Registers a combustion engine model into the myoelastic
+feature extractors list with a unique ID.
+@param[in] x Motor instance to register
+@param[in] key Unique ID assigned to the combustion engine model instance
+@return Zero on success, otherwise one */
+extern int SDT_registerMotor(SDTMotor *x, const char *key);
 
+/** @brief Queries the combustion engine models list by its unique ID.
+If a combustion engine model with the ID is present, a pointer to the
+combustion engine model is returned. Otherwise, a NULL pointer is
+returned.
+@param[in] key Unique ID assigned to the combustion engine model instance
+@return Motor instance pointer */
+extern SDTMotor *SDT_getMotor(const char *key);
+
+/** @brief Unregisters a combustion engine model from the electric motor
+synthesis models list. If a combustion engine model with the given ID is
+present, it is unregistered from the list.
+@param[in] key Unique ID of the combustion engine model instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterMotor(const char *key);
+
+/** @brief Gets the Revolutions Per Minute (RPM) of the engine.
+@return RPM value */
+extern double SDTMotor_getRpm(const SDTMotor *x);
+
+/** @brief Gets the maximum delay time.
+@return Maximum delay time, in samples */
+extern long SDTMotor_getMaxDelay(const SDTMotor *x);
+
+/** @brief Gets the cycle type.
+@return Zero for four-stroke and non-zero for two-stroke */
+extern double SDTMotor_getCycle(const SDTMotor *x);
+
+/** @brief Gets the throttle load.
+@return Throttle load */
+extern double SDTMotor_getThrottle(const SDTMotor *x);
+
+/** @brief Gets the number of cylinders in the engine block.
+@return Number of cylinders */
+extern int SDTMotor_getNCylinders(const SDTMotor *x);
+
+/** @brief Gets the size of each single cylinder.
+@return Cylinder volume, in cc */
+extern double SDTMotor_getCylinderSize(const SDTMotor *x);
+
+/** @brief Gets the compression ratio of the engine.
+@return Compression ratio */
+extern double SDTMotor_getCompressionRatio(const SDTMotor *x);
+
+/** @brief Gets the width of the ignition pulse,
+compared to a full operation cycle.
+@return Ignition time */
+extern double SDTMotor_getSparkTime(const SDTMotor *x);
+
+/** @brief Gets the amount of irregularity in the operation cycle.
+@return Cycle asymmetry */
+extern double SDTMotor_getAsymmetry(const SDTMotor *x);
+
+/** @brief Gets the amount of backfiring when the engine revs down.
+@return Chance of backfiring [0,1] */
+extern double SDTMotor_getBackfire(const SDTMotor *x);
+
+/** @brief Gets the average length of the intake pipes.
+@return Intake size, in m */
+extern double SDTMotor_getIntakeSize(const SDTMotor *x);
+
+/** @brief Gets the average length of the extractor pipes.
+@return Extractor size, in m */
+extern double SDTMotor_getExtractorSize(const SDTMotor *x);
+
+/** @brief Gets the length of the main exhaust pipe.
+@return Exhaust size, in m */
+extern double SDTMotor_getExhaustSize(const SDTMotor *x);
+
+/** @brief Gets the amount of expansion of the main exhaust pipe.
+@return Exhaust expansion */
+extern double SDTMotor_getExpansion(const SDTMotor *x);
+
+/** @brief Gets the average length of the muffler chambers.
+@return Muffler size, in m */
+extern double SDTMotor_getMufflerSize(const SDTMotor *x);
+
+/** @brief Gets the amount of energy dissipated by the muffler chambers.
+@return Muffler feedback */
+extern double SDTMotor_getMufflerFeedback(const SDTMotor *x);
+
+/** @brief Gets the length of the exhaust outlet.
+@return Outlet size, in m */
+extern double SDTMotor_getOutletSize(const SDTMotor *x);
+
+/** @brief Represent an combustion engine model as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTMotor_toJSON(const SDTMotor *x);
+
+/** @brief Initialize an combustion engine model from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTMotor *SDTMotor_fromJSON(const json_value *x);
+
+/** @brief Set parameters of an combustion engine model from a JSON
+object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTMotor *SDTMotor_setParams(SDTMotor *x, const json_value *j,
+                                    unsigned char unsafe);
+
+/** @brief Sets the maximum delay time.
+@param[in] f Maximum delay time, in samples */
 extern void SDTMotor_setMaxDelay(SDTMotor *x, long f);
 
+/** @brief Sets the cycle type.
+@param[in] f Zero for four-stroke and non-zero for two-stroke */
 extern void SDTMotor_setCycle(SDTMotor *x, double f);
 
 /** @brief Update filter coefficients.

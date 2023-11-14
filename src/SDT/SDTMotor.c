@@ -166,14 +166,85 @@ void SDTMotor_setCycle(SDTMotor *x, double f) {
     SDTMotor_setTwoStroke(x);
 }
 
-SDT_TYPE_COPY(SDT_MOTOR)
-SDT_DEFINE_HASHMAP(SDT_MOTOR, 59)
-SDT_JSON_SERIALIZE(SDT_MOTOR)
-SDT_JSON_DESERIALIZE(SDT_MOTOR)
+_SDT_COPY_FUNCTION(Motor)
+
+_SDT_HASHMAP_FUNCTIONS(Motor)
+
+json_value *SDTMotor_toJSON(const SDTMotor *x) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "maxDelay", json_integer_new(SDTMotor_getMaxDelay(x)));
+  json_object_push(obj, "cycle", json_double_new(SDTMotor_getCycle(x)));
+  json_object_push(obj, "nCylinders",
+                   json_integer_new(SDTMotor_getNCylinders(x)));
+  json_object_push(obj, "cylinderSize",
+                   json_double_new(SDTMotor_getCylinderSize(x)));
+  json_object_push(obj, "compressionRatio",
+                   json_double_new(SDTMotor_getCompressionRatio(x)));
+  json_object_push(obj, "sparkTime", json_double_new(SDTMotor_getSparkTime(x)));
+  json_object_push(obj, "asymmetry", json_double_new(SDTMotor_getAsymmetry(x)));
+  json_object_push(obj, "backfire", json_double_new(SDTMotor_getBackfire(x)));
+  json_object_push(obj, "intakeSize",
+                   json_double_new(SDTMotor_getIntakeSize(x)));
+  json_object_push(obj, "extractorSize",
+                   json_double_new(SDTMotor_getExtractorSize(x)));
+  json_object_push(obj, "exhaustSize",
+                   json_double_new(SDTMotor_getExhaustSize(x)));
+  json_object_push(obj, "expansion", json_double_new(SDTMotor_getExpansion(x)));
+  json_object_push(obj, "mufflerSize",
+                   json_double_new(SDTMotor_getMufflerSize(x)));
+  json_object_push(obj, "mufflerFeedback",
+                   json_double_new(SDTMotor_getMufflerFeedback(x)));
+  json_object_push(obj, "outletSize",
+                   json_double_new(SDTMotor_getOutletSize(x)));
+  json_object_push(obj, "throttle", json_double_new(SDTMotor_getThrottle(x)));
+
+  return obj;
+}
+
+SDTMotor *SDTMotor_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int maxDelay = SDT_MOTOR_MAXDELAY_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxDelay, x, maxDelay, integer);
+
+  SDTMotor *y = SDTMotor_new(maxDelay);
+  return SDTMotor_setParams(y, x, 0);
+}
+
+SDTMotor *SDTMotor_setParams(SDTMotor *x, const json_value *j,
+                             unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Motor, x, j, MaxDelay, maxDelay, integer,
+                                  unsafe);
+
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Cycle, cycle, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, NCylinders, nCylinders, integer);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, CylinderSize, cylinderSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, CompressionRatio, compressionRatio,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, SparkTime, sparkTime, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Asymmetry, asymmetry, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Backfire, backfire, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, IntakeSize, intakeSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, ExtractorSize, extractorSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, ExhaustSize, exhaustSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Expansion, expansion, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, MufflerSize, mufflerSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, MufflerFeedback, mufflerFeedback,
+                           double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, OutletSize, outletSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Throttle, throttle, double);
+
+  return x;
+}
 
 long SDTMotor_getMaxDelay(const SDTMotor *x) {
   return SDTWaveguide_getMaxDelay(x->outlet);
 }
+
+double SDTMotor_getThrottle(const SDTMotor *x) { return x->throttle; }
 
 double SDTMotor_getCycle(const SDTMotor *x) { return x->step == 60.0; }
 
