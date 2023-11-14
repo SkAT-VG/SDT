@@ -1,6 +1,8 @@
 #include "SDTMotor.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
@@ -19,7 +21,7 @@ struct SDTMotor {
   SDTWaveguide *intakes[MAX_CYLINDERS], *cylinders[MAX_CYLINDERS],
       *extractors[MAX_CYLINDERS], *exhaust, *mufflers[N_MUFFLERS], *outlet;
   SDTOnePole *air, *walls;
-  SDTBiquad *intakeDC, *vibrationsDC, *outletDC;
+  SDTDCFilter *intakeDC, *vibrationsDC, *outletDC;
   double rpm, throttle, phase, step, cylinderSize, compressionRatio, sparkTime,
       asymmetry, backfire, backfireRate, revIntakes, vibrations, fwdExtractors,
       revMufflers, fwdMufflers, fwdOutlet, damp, dc;
@@ -73,9 +75,9 @@ SDTMotor *SDTMotor_new(long maxDelay) {
   SDTWaveguide_setFwdFeedback(x->outlet, AIR_FEED);
   x->air = SDTOnePole_new();
   x->walls = SDTOnePole_new();
-  x->intakeDC = SDTBiquad_new(1);
-  x->vibrationsDC = SDTBiquad_new(1);
-  x->outletDC = SDTBiquad_new(1);
+  x->intakeDC = SDTDCFilter_new();
+  x->vibrationsDC = SDTDCFilter_new();
+  x->outletDC = SDTDCFilter_new();
   x->rpm = 700.0;
   x->throttle = 0.0;
   x->phase = 0.0;
@@ -156,9 +158,9 @@ void SDTMotor_free(SDTMotor *x) {
   SDTWaveguide_free(x->outlet);
   SDTOnePole_free(x->air);
   SDTOnePole_free(x->walls);
-  SDTBiquad_free(x->intakeDC);
-  SDTBiquad_free(x->vibrationsDC);
-  SDTBiquad_free(x->outletDC);
+  SDTDCFilter_free(x->intakeDC);
+  SDTDCFilter_free(x->vibrationsDC);
+  SDTDCFilter_free(x->outletDC);
   free(x);
 }
 
@@ -324,9 +326,9 @@ void SDTMotor_setFilters(SDTMotor *x, double damp, double dc) {
 void SDTMotor_update(SDTMotor *x) {
   SDTOnePole_lowpass(x->air, x->damp);
   SDTOnePole_lowpass(x->walls, x->damp);
-  SDTBiquad_butterworthHP(x->intakeDC, x->dc);
-  SDTBiquad_butterworthHP(x->vibrationsDC, x->dc);
-  SDTBiquad_butterworthHP(x->outletDC, x->dc);
+  SDTDCFilter_setFrequency(x->intakeDC, x->dc);
+  SDTDCFilter_setFrequency(x->vibrationsDC, x->dc);
+  SDTDCFilter_setFrequency(x->outletDC, x->dc);
 }
 
 void SDTMotor_setRpm(SDTMotor *x, double f) {
@@ -516,7 +518,7 @@ void SDTMotor_dsp(SDTMotor *x, double *outs) {
   SDTWaveguide_dsp(x->outlet, fwdIn, revIn);
   x->fwdOutlet = SDTWaveguide_getFwdOut(x->outlet);
   // remove DC offset
-  outs[0] = SDTBiquad_dsp(x->intakeDC, x->revIntakes);
-  outs[1] = SDTBiquad_dsp(x->vibrationsDC, x->vibrations);
-  outs[2] = SDTBiquad_dsp(x->outletDC, x->fwdOutlet);
+  outs[0] = SDTDCFilter_dsp(x->intakeDC, x->revIntakes);
+  outs[1] = SDTDCFilter_dsp(x->vibrationsDC, x->vibrations);
+  outs[2] = SDTDCFilter_dsp(x->outletDC, x->fwdOutlet);
 }
