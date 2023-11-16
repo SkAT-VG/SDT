@@ -9,10 +9,6 @@
 typedef struct _motor {
   t_pxobject ob;
   SDTMotor *motor;
-  double cylinderSize, compressionRatio, sparkTime, asymmetry, backfire,
-      intakeSize, extractorSize, exhaustSize, mufflerSize, outletSize,
-      expansion, mufflerFeedback;
-  long nCylinders, cycle;
   t_symbol *key;
 } t_motor;
 
@@ -76,78 +72,24 @@ void motor_assist(t_motor *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(motor, Motor, motor, "motor~", "motor")
 
-void motor_cycle(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->cycle = atom_getlong(av);
-  if (x->cycle == 0)
-    SDTMotor_setFourStroke(x->motor);
-  else
-    SDTMotor_setTwoStroke(x->motor);
-}
-
-void motor_nCylinders(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->nCylinders = atom_getlong(av);
-  SDTMotor_setNCylinders(x->motor, x->nCylinders);
-}
-
-void motor_cylinderSize(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->cylinderSize = atom_getfloat(av);
-  SDTMotor_setCylinderSize(x->motor, x->cylinderSize);
-}
-
-void motor_compressionRatio(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->compressionRatio = atom_getfloat(av);
-  SDTMotor_setCompressionRatio(x->motor, x->compressionRatio);
-}
-
-void motor_sparkTime(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->sparkTime = atom_getfloat(av);
-  SDTMotor_setSparkTime(x->motor, x->sparkTime);
-}
-
-void motor_asymmetry(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->asymmetry = atom_getfloat(av);
-  SDTMotor_setAsymmetry(x->motor, x->asymmetry);
-}
-
-void motor_backfire(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->backfire = atom_getfloat(av);
-  SDTMotor_setBackfire(x->motor, x->backfire);
-}
-
-void motor_intakeSize(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->intakeSize = atom_getfloat(av);
-  SDTMotor_setIntakeSize(x->motor, x->intakeSize);
-}
-
-void motor_extractorSize(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->extractorSize = atom_getfloat(av);
-  SDTMotor_setExtractorSize(x->motor, x->extractorSize);
-}
-
-void motor_exhaustSize(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->exhaustSize = atom_getfloat(av);
-  SDTMotor_setExhaustSize(x->motor, x->exhaustSize);
-}
-
-void motor_expansion(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->expansion = atom_getfloat(av);
-  SDTMotor_setExpansion(x->motor, x->expansion);
-}
-
-void motor_mufflerSize(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->mufflerSize = atom_getfloat(av);
-  SDTMotor_setMufflerSize(x->motor, x->mufflerSize);
-}
-
-void motor_mufflerFeedback(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->mufflerFeedback = atom_getfloat(av);
-  SDTMotor_setMufflerFeedback(x->motor, x->mufflerFeedback);
-}
-
-void motor_outletSize(t_motor *x, void *attr, long ac, t_atom *av) {
-  x->outletSize = atom_getfloat(av);
-  SDTMotor_setOutletSize(x->motor, x->outletSize);
-}
+SDT_MAX_GETTER(motor, Motor, motor, MaxDelay, long, )
+SDT_MAX_ACCESSORS(motor, Motor, motor, Cycle, long, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, Throttle, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, NCylinders, long, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, CylinderSize, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, CompressionRatio, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, SparkTime, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, Asymmetry, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, Backfire, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, IntakeSize, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, ExtractorSize, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, ExhaustSize, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, Expansion, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, MufflerSize, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, MufflerFeedback, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, OutletSize, float, , )
+SDT_MAX_ACCESSORS(motor, Motor, motor, Damp, float, , update)
+SDT_MAX_ACCESSORS(motor, Motor, motor, Dc, float, , update)
 
 t_int *motor_perform(t_int *w) {
   t_motor *x = (t_motor *)(w[1]);
@@ -173,7 +115,7 @@ t_int *motor_perform(t_int *w) {
 
 void motor_dsp(t_motor *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTMotor_setFilters(x->motor, 20.0, 20.0);
+  SDTMotor_update(x->motor);
   dsp_add(motor_perform, 7, x, sp[0]->s_vec, sp[1]->s_vec, sp[2]->s_vec,
           sp[3]->s_vec, sp[4]->s_vec, sp[0]->s_n);
 }
@@ -202,7 +144,7 @@ void motor_perform64(t_motor *x, t_object *dsp64, double **ins, long numins,
 void motor_dsp64(t_motor *x, t_object *dsp64, short *count, double samplerate,
                  long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTMotor_setFilters(x->motor, 20.0, 20.0);
+  SDTMotor_update(x->motor);
   object_method(dsp64, gensym("dsp_add64"), x, motor_perform64, 0, NULL);
 }
 
@@ -217,20 +159,25 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(motor, "1")
 
-  CLASS_ATTR_LONG(c, "cycle", 0, t_motor, cycle);
-  CLASS_ATTR_LONG(c, "nCylinders", 0, t_motor, nCylinders);
-  CLASS_ATTR_DOUBLE(c, "cylinderSize", 0, t_motor, cylinderSize);
-  CLASS_ATTR_DOUBLE(c, "compressionRatio", 0, t_motor, compressionRatio);
-  CLASS_ATTR_DOUBLE(c, "sparkTime", 0, t_motor, sparkTime);
-  CLASS_ATTR_DOUBLE(c, "asymmetry", 0, t_motor, asymmetry);
-  CLASS_ATTR_DOUBLE(c, "backfire", 0, t_motor, backfire);
-  CLASS_ATTR_DOUBLE(c, "intakeSize", 0, t_motor, intakeSize);
-  CLASS_ATTR_DOUBLE(c, "extractorSize", 0, t_motor, extractorSize);
-  CLASS_ATTR_DOUBLE(c, "exhaustSize", 0, t_motor, exhaustSize);
-  CLASS_ATTR_DOUBLE(c, "mufflerSize", 0, t_motor, mufflerSize);
-  CLASS_ATTR_DOUBLE(c, "outletSize", 0, t_motor, outletSize);
-  CLASS_ATTR_DOUBLE(c, "expansion", 0, t_motor, expansion);
-  CLASS_ATTR_DOUBLE(c, "mufflerFeedback", 0, t_motor, mufflerFeedback);
+  SDT_MAX_RO_ATTRIBUTE(c, motor, MaxDelay, maxDelay, long, 0);
+
+  SDT_MAX_ATTRIBUTE(c, motor, Cycle, cycle, long, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, Throttle, throttle, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, NCylinders, nCylinders, long, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, CylinderSize, cylinderSize, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, CompressionRatio, compressionRatio, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, SparkTime, sparkTime, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, Asymmetry, asymmetry, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, Backfire, backfire, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, IntakeSize, intakeSize, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, ExtractorSize, extractorSize, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, ExhaustSize, exhaustSize, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, Expansion, expansion, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, MufflerSize, mufflerSize, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, MufflerFeedback, mufflerFeedback, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, OutletSize, outletSize, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, Damp, damp, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, motor, Dc, dc, float64, 0);
 
   CLASS_ATTR_FILTER_CLIP(c, "cycle", 0, 1);
   CLASS_ATTR_FILTER_CLIP(c, "nCylinders", 1, 12);
@@ -246,23 +193,8 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_MIN(c, "outletSize", 0.0);
   CLASS_ATTR_FILTER_CLIP(c, "expansion", 0.0, 1.0);
   CLASS_ATTR_FILTER_CLIP(c, "mufflerFeedback", 0.0, 1.0);
-
-  CLASS_ATTR_ACCESSORS(c, "cycle", NULL, (method)motor_cycle);
-  CLASS_ATTR_ACCESSORS(c, "nCylinders", NULL, (method)motor_nCylinders);
-  CLASS_ATTR_ACCESSORS(c, "cylinderSize", NULL, (method)motor_cylinderSize);
-  CLASS_ATTR_ACCESSORS(c, "compressionRatio", NULL,
-                       (method)motor_compressionRatio);
-  CLASS_ATTR_ACCESSORS(c, "sparkTime", NULL, (method)motor_sparkTime);
-  CLASS_ATTR_ACCESSORS(c, "asymmetry", NULL, (method)motor_asymmetry);
-  CLASS_ATTR_ACCESSORS(c, "backfire", NULL, (method)motor_backfire);
-  CLASS_ATTR_ACCESSORS(c, "intakeSize", NULL, (method)motor_intakeSize);
-  CLASS_ATTR_ACCESSORS(c, "extractorSize", NULL, (method)motor_extractorSize);
-  CLASS_ATTR_ACCESSORS(c, "exhaustSize", NULL, (method)motor_exhaustSize);
-  CLASS_ATTR_ACCESSORS(c, "mufflerSize", NULL, (method)motor_mufflerSize);
-  CLASS_ATTR_ACCESSORS(c, "outletSize", NULL, (method)motor_outletSize);
-  CLASS_ATTR_ACCESSORS(c, "expansion", NULL, (method)motor_expansion);
-  CLASS_ATTR_ACCESSORS(c, "mufflerFeedback", NULL,
-                       (method)motor_mufflerFeedback);
+  CLASS_ATTR_FILTER_MIN(c, "damp", 0.0);
+  CLASS_ATTR_FILTER_MIN(c, "dc", 0.0);
 
   CLASS_ATTR_ORDER(c, "cycle", 0, "2");
   CLASS_ATTR_ORDER(c, "nCylinders", 0, "3");
@@ -278,6 +210,8 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_ORDER(c, "outletSize", 0, "13");
   CLASS_ATTR_ORDER(c, "expansion", 0, "14");
   CLASS_ATTR_ORDER(c, "mufflerFeedback", 0, "15");
+  CLASS_ATTR_ORDER(c, "damp", 0, "16");
+  CLASS_ATTR_ORDER(c, "dc", 0, "17");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

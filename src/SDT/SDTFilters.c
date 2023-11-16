@@ -1,6 +1,8 @@
 #include "SDTFilters.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTStructs.h"
 
@@ -44,6 +46,55 @@ void SDTOnePole_highpass(SDTOnePole *x, double f) {
 double SDTOnePole_dsp(SDTOnePole *x, double in) {
   x->y1 = x->b0 * in - x->a1 * x->y1;
   return x->y1;
+}
+
+//-------------------------------------------------------------------------------------//
+
+struct SDTDCFilter {
+  double a_, g, y;
+};
+
+SDTDCFilter *SDTDCFilter_new() {
+  SDTDCFilter *x;
+
+  x = (SDTDCFilter *)malloc(sizeof(SDTDCFilter));
+  x->y = 0.0;
+  SDTDCFilter_setFeedback(x, 0.0);
+  return x;
+}
+
+void SDTDCFilter_free(SDTDCFilter *x) { free(x); }
+
+void SDTDCFilter_setFeedback(SDTDCFilter *x, double f) {
+  // x->a_ is 1 - feedback
+  x->a_ = SDT_fclip(1.0 - f, SDT_MICRO, 1.0);
+  // H(z)  = (1 - z^-1) / (1 - feedback * z^-1)
+  // H(1)  = 0 => DC cut
+  // H(-1) = 2 / (1 + feedback) =>
+  // => x->g = (1 + feedback) / 2 makeup gain
+  x->g = 1.0 - x->a_ / 2.0;
+}
+
+void SDTDCFilter_setFrequency(SDTDCFilter *x, double f) {
+  double w = f * SDT_TWOPI * SDT_timeStep;
+  double cos_w = cos(w);
+  SDTDCFilter_setFeedback(x,
+                          (cos_w < SDT_MICRO)  // Avoid division by zero
+                              ? 1  // Effectively, set to max feedback allowed
+                              : (1 - fabs(sin(w))) / cos_w);
+}
+
+double SDTDCFilter_getFeedback(const SDTDCFilter *x) { return 1.0 - x->a_; }
+
+double SDTDCFilter_getFrequency(const SDTDCFilter *x) {
+  double a = SDTDCFilter_getFeedback(x);
+  return acos(2 * a / (a * a + 1));
+}
+
+double SDTDCFilter_dsp(SDTDCFilter *x, double in) {
+  double out = x->g * in - x->y;
+  x->y = x->a_ * out + x->y;
+  return out;
 }
 
 //-------------------------------------------------------------------------------------//

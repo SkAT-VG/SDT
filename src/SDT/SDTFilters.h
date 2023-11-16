@@ -50,6 +50,49 @@ extern double SDTOnePole_dsp(SDTOnePole *x, double in);
 
 /** @} */
 
+/** @defgroup dcf DC Filter
+One-pole one-zero filter intended for DC removal.
+Gain is normalized to peak at 0dB.
+@{ */
+
+/** @brief Opaque data structure for a DC filter object. */
+typedef struct SDTDCFilter SDTDCFilter;
+
+/** @brief Object constructor.
+@return Pointer to the new instance */
+extern SDTDCFilter *SDTDCFilter_new();
+
+/** @brief Object destructor.
+@param[in] x Pointer to the instance to destroy */
+extern void SDTDCFilter_free(SDTDCFilter *x);
+
+/** @brief Sets the alpha coefficient
+@param[in] f Feedback coefficient */
+extern void SDTDCFilter_setFeedback(SDTDCFilter *x, double f);
+
+/** @brief Sets the alpha coefficient so that the filter
+has the desired -3dB cutoff frequency.
+
+Call this function again when changing the sample rate
+@param[in] f Cutoff frequency, in hertz */
+extern void SDTDCFilter_setFrequency(SDTDCFilter *x, double f);
+
+/** @brief Gets the alpha coefficient
+@return Feedback coefficient */
+extern double SDTDCFilter_getFeedback(const SDTDCFilter *x);
+
+/** @brief Gets the -3dB cutoff frequency of the filter.
+@return Cutoff frequency, in hertz */
+extern double SDTDCFilter_getFrequency(const SDTDCFilter *x);
+
+/** @brief Signal processing routine.
+Call this function at sample rate to compute the filtered signal.
+@param[in] in Input sample
+@return Output sample */
+extern double SDTDCFilter_dsp(SDTDCFilter *x, double in);
+
+/** @} */
+
 /** @defgroup allpass Allpass filter
 Allpass filter, used to adjust phases in fractional delay lines.
 @{ */
