@@ -17,64 +17,23 @@ typedef struct _motor {
   const char *key;
 } t_motor;
 
-void motor_cycle(t_motor *x, t_float f) {
-  if (f == 0.0)
-    SDTMotor_setFourStroke(x->motor);
-  else
-    SDTMotor_setTwoStroke(x->motor);
-}
-
-void motor_nCylinders(t_motor *x, t_float f) {
-  SDTMotor_setNCylinders(x->motor, (int)f);
-}
-
-void motor_cylinderSize(t_motor *x, t_float f) {
-  SDTMotor_setCylinderSize(x->motor, f);
-}
-
-void motor_compressionRatio(t_motor *x, t_float f) {
-  SDTMotor_setCompressionRatio(x->motor, f);
-}
-
-void motor_sparkTime(t_motor *x, t_float f) {
-  SDTMotor_setSparkTime(x->motor, f);
-}
-
-void motor_asymmetry(t_motor *x, t_float f) {
-  SDTMotor_setAsymmetry(x->motor, f);
-}
-
-void motor_backfire(t_motor *x, t_float f) {
-  SDTMotor_setBackfire(x->motor, f);
-}
-
-void motor_intakeSize(t_motor *x, t_float f) {
-  SDTMotor_setIntakeSize(x->motor, f);
-}
-
-void motor_extractorSize(t_motor *x, t_float f) {
-  SDTMotor_setExtractorSize(x->motor, f);
-}
-
-void motor_exhaustSize(t_motor *x, t_float f) {
-  SDTMotor_setExhaustSize(x->motor, f);
-}
-
-void motor_expansion(t_motor *x, t_float f) {
-  SDTMotor_setExpansion(x->motor, f);
-}
-
-void motor_mufflerSize(t_motor *x, t_float f) {
-  SDTMotor_setMufflerSize(x->motor, f);
-}
-
-void motor_mufflerFeedback(t_motor *x, t_float f) {
-  SDTMotor_setMufflerFeedback(x->motor, f);
-}
-
-void motor_outletSize(t_motor *x, t_float f) {
-  SDTMotor_setOutletSize(x->motor, f);
-}
+SDT_PD_SETTER(motor, Motor, motor, Cycle, )
+SDT_PD_SETTER(motor, Motor, motor, Throttle, )
+SDT_PD_SETTER(motor, Motor, motor, NCylinders, )
+SDT_PD_SETTER(motor, Motor, motor, CylinderSize, )
+SDT_PD_SETTER(motor, Motor, motor, CompressionRatio, )
+SDT_PD_SETTER(motor, Motor, motor, SparkTime, )
+SDT_PD_SETTER(motor, Motor, motor, Asymmetry, )
+SDT_PD_SETTER(motor, Motor, motor, Backfire, )
+SDT_PD_SETTER(motor, Motor, motor, IntakeSize, )
+SDT_PD_SETTER(motor, Motor, motor, ExtractorSize, )
+SDT_PD_SETTER(motor, Motor, motor, ExhaustSize, )
+SDT_PD_SETTER(motor, Motor, motor, Expansion, )
+SDT_PD_SETTER(motor, Motor, motor, MufflerSize, )
+SDT_PD_SETTER(motor, Motor, motor, MufflerFeedback, )
+SDT_PD_SETTER(motor, Motor, motor, OutletSize, )
+SDT_PD_SETTER(motor, Motor, motor, Damp, update)
+SDT_PD_SETTER(motor, Motor, motor, Dc, update)
 
 static t_int *motor_perform(t_int *w) {
   t_motor *x = (t_motor *)(w[1]);
@@ -131,33 +90,36 @@ void motor_tilde_setup(void) {
       class_new(gensym("motor~"), (t_newmethod)motor_new, (t_method)motor_free,
                 sizeof(t_motor), CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(motor_class, t_motor, f);
-  class_addmethod(motor_class, (t_method)motor_cycle, gensym("cycle"), A_FLOAT,
-                  0);
-  class_addmethod(motor_class, (t_method)motor_nCylinders, gensym("nCylinders"),
+  class_addmethod(motor_class, (t_method)motor_setCycle, gensym("cycle"),
                   A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_cylinderSize,
+  class_addmethod(motor_class, (t_method)motor_setNCylinders,
+                  gensym("nCylinders"), A_FLOAT, 0);
+  class_addmethod(motor_class, (t_method)motor_setCylinderSize,
                   gensym("cylinderSize"), A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_compressionRatio,
+  class_addmethod(motor_class, (t_method)motor_setCompressionRatio,
                   gensym("compressionRatio"), A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_sparkTime, gensym("sparkTime"),
+  class_addmethod(motor_class, (t_method)motor_setSparkTime,
+                  gensym("sparkTime"), A_FLOAT, 0);
+  class_addmethod(motor_class, (t_method)motor_setAsymmetry,
+                  gensym("asymmetry"), A_FLOAT, 0);
+  class_addmethod(motor_class, (t_method)motor_setBackfire, gensym("backfire"),
                   A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_asymmetry, gensym("asymmetry"),
-                  A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_backfire, gensym("backfire"),
-                  A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_intakeSize, gensym("intakeSize"),
-                  A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_extractorSize,
+  class_addmethod(motor_class, (t_method)motor_setIntakeSize,
+                  gensym("intakeSize"), A_FLOAT, 0);
+  class_addmethod(motor_class, (t_method)motor_setExtractorSize,
                   gensym("extractorSize"), A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_exhaustSize,
+  class_addmethod(motor_class, (t_method)motor_setExhaustSize,
                   gensym("exhaustSize"), A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_expansion, gensym("expansion"),
-                  A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_mufflerSize,
+  class_addmethod(motor_class, (t_method)motor_setExpansion,
+                  gensym("expansion"), A_FLOAT, 0);
+  class_addmethod(motor_class, (t_method)motor_setMufflerSize,
                   gensym("mufflerSize"), A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_mufflerFeedback,
+  class_addmethod(motor_class, (t_method)motor_setMufflerFeedback,
                   gensym("mufflerFeedback"), A_FLOAT, 0);
-  class_addmethod(motor_class, (t_method)motor_outletSize, gensym("outletSize"),
-                  A_FLOAT, 0);
+  class_addmethod(motor_class, (t_method)motor_setOutletSize,
+                  gensym("outletSize"), A_FLOAT, 0);
+  class_addmethod(motor_class, (t_method)motor_setDamp, gensym("damp"), A_FLOAT,
+                  0);
+  class_addmethod(motor_class, (t_method)motor_setDc, gensym("dc"), A_FLOAT, 0);
   class_addmethod(motor_class, (t_method)motor_dsp, gensym("dsp"), 0);
 }
