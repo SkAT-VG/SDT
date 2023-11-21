@@ -66,7 +66,8 @@ static void *motor_new(t_symbol *s, int argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
 
   t_motor *x = (t_motor *)pd_new(motor_class);
-  x->motor = SDTMotor_new(GET_ARG(1, atom_getfloat, 44100));
+  x->motor =
+      SDTMotor_new(GET_ARG(1, atom_getfloat, SDT_MOTOR_MAXDELAY_DEFAULT));
 
   SDT_PD_REGISTER(Motor, motor, "motor", 0)
 
