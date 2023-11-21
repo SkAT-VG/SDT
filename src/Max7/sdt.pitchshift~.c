@@ -9,7 +9,6 @@
 typedef struct _pitchshift {
   t_pxobject ob;
   SDTPitchShift *shift;
-  double ratio, overlap;
   t_symbol *key;
 } t_pitchshift;
 
@@ -57,15 +56,11 @@ void pitchshift_assist(t_pitchshift *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(pitchshift, PitchShift, shift, "pitchshift~", "pitch shifter")
 
-void pitchshift_ratio(t_pitchshift *x, void *attr, long ac, t_atom *av) {
-  x->ratio = atom_getfloat(av);
-  SDTPitchShift_setRatio(x->shift, x->ratio);
-}
+SDT_MAX_GETTER(pitchshift, PitchShift, shift, Size, long, )
+SDT_MAX_GETTER(pitchshift, PitchShift, shift, Oversample, long, )
 
-void pitchshift_overlap(t_pitchshift *x, void *attr, long ac, t_atom *av) {
-  x->overlap = atom_getfloat(av);
-  SDTPitchShift_setOverlap(x->shift, x->overlap);
-}
+SDT_MAX_ACCESSORS(pitchshift, PitchShift, shift, Overlap, float, , )
+SDT_MAX_ACCESSORS(pitchshift, PitchShift, shift, Ratio, float, , )
 
 t_int *pitchshift_perform(t_int *w) {
   t_pitchshift *x = (t_pitchshift *)(w[1]);
@@ -115,14 +110,18 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(pitchshift, "1")
 
-  CLASS_ATTR_DOUBLE(c, "ratio", 0, t_pitchshift, ratio);
-  CLASS_ATTR_DOUBLE(c, "overlap", 0, t_pitchshift, overlap);
+  SDT_MAX_RO_ATTRIBUTE(c, pitchshift, Size, size, long, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, pitchshift, Oversample, oversample, long, 0);
+  SDT_MAX_ATTRIBUTE(c, pitchshift, Overlap, overlap, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, pitchshift, Ratio, ratio, float64, 0);
 
   CLASS_ATTR_FILTER_CLIP(c, "ratio", 0.125, 8.0);
   CLASS_ATTR_FILTER_CLIP(c, "overlap", 0.5, 0.875);
 
-  CLASS_ATTR_ACCESSORS(c, "ratio", NULL, (method)pitchshift_ratio);
-  CLASS_ATTR_ACCESSORS(c, "overlap", NULL, (method)pitchshift_overlap);
+  CLASS_ATTR_ORDER(c, "size", 0, "2");
+  CLASS_ATTR_ORDER(c, "oversample", 0, "3");
+  CLASS_ATTR_ORDER(c, "overlap", 0, "4");
+  CLASS_ATTR_ORDER(c, "ratio", 0, "5");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
