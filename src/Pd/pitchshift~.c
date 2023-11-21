@@ -16,13 +16,8 @@ typedef struct _pitchshift {
   const char *key;
 } t_pitchshift;
 
-void pitchshift_ratio(t_pitchshift *x, t_float f) {
-  SDTPitchShift_setRatio(x->shift, f);
-}
-
-void pitchshift_overlap(t_pitchshift *x, t_float f) {
-  SDTPitchShift_setOverlap(x->shift, f);
-}
+SDT_PD_SETTER(pitchshift, PitchShift, shift, Overlap, )
+SDT_PD_SETTER(pitchshift, PitchShift, shift, Ratio, )
 
 static t_int *pitchshift_perform(t_int *w) {
   t_pitchshift *x = (t_pitchshift *)(w[1]);
@@ -47,8 +42,8 @@ static void *pitchshift_new(t_symbol *s, long argc, t_atom *argv) {
 
   t_pitchshift *x = (t_pitchshift *)pd_new(pitchshift_class);
   float size, oversample;
-  size = GET_ARG(1, atom_getfloat, 2048);
-  oversample = GET_ARG(2, atom_getfloat, 4);
+  size = GET_ARG(1, atom_getfloat, SDT_PITCHSHIFT_SIZE_DEFAULT);
+  oversample = GET_ARG(2, atom_getfloat, SDT_PITCHSHIFT_OVERSAMPLE_DEFAULT);
   x->shift = SDTPitchShift_new(size, oversample);
 
   SDT_PD_REGISTER(PitchShift, shift, "pitch shifter", 0)
@@ -68,9 +63,9 @@ void pitchshift_tilde_setup(void) {
                 (t_method)pitchshift_free, sizeof(t_pitchshift), CLASS_DEFAULT,
                 A_GIMME, 0);
   CLASS_MAINSIGNALIN(pitchshift_class, t_pitchshift, f);
-  class_addmethod(pitchshift_class, (t_method)pitchshift_ratio, gensym("ratio"),
-                  A_FLOAT, 0);
-  class_addmethod(pitchshift_class, (t_method)pitchshift_overlap,
+  class_addmethod(pitchshift_class, (t_method)pitchshift_setRatio,
+                  gensym("ratio"), A_FLOAT, 0);
+  class_addmethod(pitchshift_class, (t_method)pitchshift_setOverlap,
                   gensym("overlap"), A_FLOAT, 0);
   class_addmethod(pitchshift_class, (t_method)pitchshift_dsp, gensym("dsp"), 0);
 }
