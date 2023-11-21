@@ -1,7 +1,9 @@
 #include "SDTEffects.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "SDTCommon.h"
 #include "SDTComplex.h"
 #include "SDTFFT.h"
@@ -303,10 +305,51 @@ void SDTPitchShift_setOversample(SDTPitchShift *x, int f) {
   x->fftSize = fftSize;
 }
 
-SDT_TYPE_COPY(SDT_PITCHSHIFT)
-SDT_DEFINE_HASHMAP(SDT_PITCHSHIFT, 59)
-SDT_JSON_SERIALIZE(SDT_PITCHSHIFT)
-SDT_JSON_DESERIALIZE(SDT_PITCHSHIFT)
+_SDT_COPY_FUNCTION(PitchShift)
+
+_SDT_HASHMAP_FUNCTIONS(PitchShift)
+
+SDTPitchShift *SDTPitchShift_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int size = SDT_PITCHSHIFT_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
+
+  unsigned int oversample = SDT_PITCHSHIFT_OVERSAMPLE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(oversample, x, oversample, integer);
+
+  SDTPitchShift *y = SDTPitchShift_new(size, oversample);
+  return SDTPitchShift_setParams(y, x, 0);
+}
+
+SDTPitchShift *SDTPitchShift_setParams(SDTPitchShift *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(PitchShift, x, j, Size, size, integer,
+                                  unsafe);
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(PitchShift, x, j, Oversample, oversample,
+                                  integer, unsafe);
+
+  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Ratio, ratio, integer);
+  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Overlap, overlap, integer);
+
+  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Ratio, ratio, double);
+  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Overlap, overlap, double);
+
+  return x;
+}
+
+json_value *SDTPitchShift_toJSON(const SDTPitchShift *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "size", json_integer_new(SDTPitchShift_getSize(x)));
+  json_object_push(obj, "oversample",
+                   json_integer_new(SDTPitchShift_getOversample(x)));
+  json_object_push(obj, "ratio", json_double_new(SDTPitchShift_getRatio(x)));
+  json_object_push(obj, "overlap",
+                   json_double_new(SDTPitchShift_getOverlap(x)));
+  return obj;
+}
 
 int SDTPitchShift_getSize(const SDTPitchShift *x) { return x->size; }
 

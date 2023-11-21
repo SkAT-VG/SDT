@@ -52,7 +52,8 @@ static void *dcmotor_new(t_symbol *s, int argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
 
   t_dcmotor *x = (t_dcmotor *)pd_new(dcmotor_class);
-  x->motor = SDTDCMotor_new(GET_ARG(1, atom_getfloat, 48000));
+  x->motor =
+      SDTDCMotor_new(GET_ARG(1, atom_getfloat, SDT_DCMOTOR_MAXSIZE_DEFAULT));
 
   SDT_PD_REGISTER(DCMotor, motor, "electric motor", 0)
 

@@ -52,8 +52,8 @@ void *demix_new(t_symbol *s, long argc, t_atom *argv) {
 
   t_demix *x = (t_demix *)pd_new(demix_class);
   long kernelRadius;
-  GET_ARG_WINSIZE(long, windowSize, 1, 1024)
-  kernelRadius = GET_ARG(2, atom_getfloat, 4);
+  GET_ARG_WINSIZE(long, windowSize, 1, SDT_DEMIX_SIZE_DEFAULT)
+  kernelRadius = GET_ARG(2, atom_getfloat, SDT_DEMIX_RADIUS_DEFAULT);
 
   x->demix = SDTDemix_new(windowSize, kernelRadius);
 

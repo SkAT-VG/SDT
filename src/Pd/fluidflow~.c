@@ -51,7 +51,8 @@ static void *fluidflow_new(t_symbol *s, int argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
 
   t_fluidflow *x = (t_fluidflow *)pd_new(fluidflow_class);
-  x->flow = SDTFluidFlow_new(GET_ARG(1, atom_getfloat, 64));
+  x->flow = SDTFluidFlow_new(
+      GET_ARG(1, atom_getfloat, SDT_FLUIDFLOW_NBUBBLES_DEFAULT));
 
   SDT_PD_REGISTER(FluidFlow, flow, "fluid flow", 0)
 

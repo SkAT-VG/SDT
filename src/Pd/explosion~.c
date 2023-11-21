@@ -48,8 +48,8 @@ static void *explosion_new(t_symbol *s, int argc, t_atom *argv) {
 
   t_explosion *x = (t_explosion *)pd_new(explosion_class);
   t_float maxScatter, maxDelay;
-  maxScatter = GET_ARG(1, atom_getfloat, 44100.0);
-  maxDelay = GET_ARG(2, atom_getfloat, 441000.0);
+  maxScatter = GET_ARG(1, atom_getfloat, SDT_EXPLOSION_MAX_SCATTER_DEFAULT);
+  maxDelay = GET_ARG(2, atom_getfloat, SDT_EXPLOSION_MAX_DELAY_DEFAULT);
   x->explosion = SDTExplosion_new(maxScatter, maxDelay);
 
   SDT_PD_REGISTER(Explosion, explosion, "explosion", 0)

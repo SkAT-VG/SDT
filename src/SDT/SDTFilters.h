@@ -148,8 +148,8 @@ the SDT sample rate
 @param[in] x Pointer to the instance to update */
 extern void SDTEnvelope_update(SDTEnvelope *x);
 
-/** @brief Registers an envelope tracker into the myoelastic
-feature extractors list with a unique ID.
+/** @brief Registers an envelope tracker into the envelope trackers list with a
+unique ID.
 @param[in] x Envelope instance to register
 @param[in] key Unique ID assigned to the envelope tracker instance
 @return Zero on success, otherwise one */

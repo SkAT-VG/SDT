@@ -97,6 +97,9 @@ or other applications requiring pitch shifting.
 /** @brief Opaque data structure for a pitch shifter object. */
 typedef struct SDTPitchShift SDTPitchShift;
 
+#define SDT_PITCHSHIFT_SIZE_DEFAULT 2048
+#define SDT_PITCHSHIFT_OVERSAMPLE_DEFAULT 4
+
 /** @brief Object constructor.
 @param[in] size Internal buffer size, in samples
 @param[in] oversample FFT oversampling rate
@@ -107,22 +110,76 @@ extern SDTPitchShift *SDTPitchShift_new(int size, int oversample);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTPitchShift_free(SDTPitchShift *x);
 
-#define SDT_PITCHSHIFT PitchShift
-#define SDT_PITCHSHIFT_NEW_ARGS 2048, 4
-#define SDT_PITCHSHIFT_ATTRIBUTES(T, A)                     \
-  A(T, size, int, Size, size, integer, 2048)                \
-  A(T, oversample, int, Oversample, oversample, integer, 4) \
-  A(T, ratio, double, Ratio, ratio, double, 1.0)            \
-  A(T, overlap, double, Overlap, overlap, double, 0.75)
+/** @brief Deep-copies a pitch shifter.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTPitchShift *SDTPitchShift_copy(SDTPitchShift *dest,
+                                         const SDTPitchShift *src,
+                                         unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_PITCHSHIFT)
-SDT_DEFINE_HASHMAP_H(SDT_PITCHSHIFT)
-SDT_TYPE_MAKE_GETTERS_H(SDT_PITCHSHIFT)
-SDT_JSON_SERIALIZE_H(SDT_PITCHSHIFT)
-SDT_JSON_DESERIALIZE_H(SDT_PITCHSHIFT)
+/** @brief Registers a pitch shifter into the pitch shifters list with a unique
+ID.
+@param[in] x PitchShift instance to register
+@param[in] key Unique ID assigned to the pitch shifter instance
+@return Zero on success, otherwise one */
+extern int SDT_registerPitchShift(SDTPitchShift *x, const char *key);
 
+/** @brief Queries the pitch shifters list by its unique ID. If a pitch shifter
+with the ID is present, a pointer to the pitch shifter is returned. Otherwise, a
+NULL pointer is returned.
+@param[in] key Unique ID assigned to the pitch shifter instance
+@return PitchShift instance pointer */
+extern SDTPitchShift *SDT_getPitchShift(const char *key);
+
+/** @brief Unregisters a pitch shifter from the pitch shifters list. If a pitch
+shifter with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the pitch shifter instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterPitchShift(const char *key);
+
+/** @brief Gets the internal buffer size.
+@return Internal buffer size, in samples */
+extern int SDTPitchShift_getSize(const SDTPitchShift *x);
+
+/** @brief Gets the FFT oversampling rate.
+@return FFT oversampling rate */
+extern int SDTPitchShift_getOversample(const SDTPitchShift *x);
+
+/** @brief Gets the pitch shifting ratio.
+@return New pitch / original pitch ratio */
+extern double SDTPitchShift_getRatio(const SDTPitchShift *x);
+
+/** @brief Gets the analysis window overlapping ratio.
+@return Overlap ratio [0.0, 1.0] */
+extern double SDTPitchShift_getOverlap(const SDTPitchShift *x);
+
+/** @brief Represent a pitch shifter as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTPitchShift_toJSON(const SDTPitchShift *x);
+
+/** @brief Initialize a pitch shifter from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTPitchShift *SDTPitchShift_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a pitch shifter from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTPitchShift *SDTPitchShift_setParams(SDTPitchShift *x,
+                                              const json_value *j,
+                                              unsigned char unsafe);
+
+/** @brief Sets the internal buffer size.
+@param[in] f Internal buffer size, in samples */
 extern void SDTPitchShift_setSize(SDTPitchShift *x, int f);
 
+/** @brief Sets the FFT oversampling rate.
+@param[in] f FFT oversampling rate */
 extern void SDTPitchShift_setOversample(SDTPitchShift *x, int f);
 
 /** @brief Sets the pitch shifting ratio.
