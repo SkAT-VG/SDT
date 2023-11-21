@@ -1,32 +1,3 @@
-// extern SDTOSCReturnCode SDTOSCPitchShift_log(void (*log)(const char *, ...),
-//                                              const char *key, SDTPitchShift
-//                                              *x);
-
-// extern SDTOSCReturnCode SDTOSCPitchShift_save(void (*log)(const char *, ...),
-//                                               const char *key, SDTPitchShift
-//                                               *x, const SDTOSCArgumentList
-//                                               *args);
-
-// extern SDTOSCReturnCode SDTOSCPitchShift_load(void (*log)(const char *, ...),
-//                                               const char *key, SDTPitchShift
-//                                               *x, const SDTOSCArgumentList
-//                                               *args);
-
-// extern SDTOSCReturnCode SDTOSCPitchShift_setSize(
-//     SDTPitchShift *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCPitchShift_setOversample(
-//     SDTPitchShift *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCPitchShift_setRatio(
-//     SDTPitchShift *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCPitchShift_setOverlap(
-//     SDTPitchShift *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCPitchShift(void (*log)(const char *, ...),
-//                                          const SDTOSCMessage *x);
-
 // extern SDTOSCReturnCode SDTOSCReverb_log(void (*log)(const char *, ...),
 //                                          const char *key, SDTReverb *x);
 
