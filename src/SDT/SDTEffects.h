@@ -116,33 +116,45 @@ extern SDTReverb *SDTReverb_setParams(SDTReverb *x, const json_value *j,
 extern void SDTReverb_setMaxDelay(SDTReverb *x, long f);
 
 /** @brief Sets the room width.
+
+You should call #SDTReverb_update after this function.
 @param[in] f Room width, in m */
 extern void SDTReverb_setXSize(SDTReverb *x, double f);
 
 /** @brief Sets the room height.
+
+You should call #SDTReverb_update after this function.
 @param[in] f Room height, in m */
 extern void SDTReverb_setYSize(SDTReverb *x, double f);
 
 /** @brief Sets the room depth.
+
+You should call #SDTReverb_update after this function.
 @param[in] f Room depth, in m */
 extern void SDTReverb_setZSize(SDTReverb *x, double f);
 
 /** @brief Sets how randomly distributed are the resonant modes.
 This parameter is directly proportional to the irregularity of the shape of the
 room.
+
+You should call #SDTReverb_update after this function.
 @param[in] f Randomness in the modal distribution [0, 1] */
 extern void SDTReverb_setRandomness(SDTReverb *x, double f);
 
 /** @brief Sets the global, frequency-independent reverberation time.
+
+You should call #SDTReverb_update after this function.
 @param[in] f Reverberation time, in s */
 extern void SDTReverb_setTime(SDTReverb *x, double f);
 
 /** @brief Sets the reverberation time at 1kHz.
+
+You should call #SDTReverb_update after this function.
 @param[in] f Reverberation time at 1kHz, in s */
 extern void SDTReverb_setTime1k(SDTReverb *x, double f);
 
 /** @brief Updates the internal filters.
-Call this function after every sample rate change. */
+Call this function after changing the sample rate or any parameter. */
 extern void SDTReverb_update(SDTReverb *x);
 
 /** @brief Signal processing routine.

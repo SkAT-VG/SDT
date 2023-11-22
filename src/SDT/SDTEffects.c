@@ -10,14 +10,18 @@
 #include "SDTFilters.h"
 #include "SDTStructs.h"
 
-double modes[15][3] = {{1, 0, 0}, {0, 2, 1}, {1, 0, 1}, {2, 1, 0}, {0, 1, 1},
-                       {1, 1, 1}, {1, 1, 0}, {0, 1, 2}, {1, 2, 1}, {1, 2, 0},
-                       {0, 0, 1}, {2, 1, 1}, {0, 1, 0}, {1, 0, 2}, {2, 0, 1}};
+#define _SDT_REVERB_NMODES 15
+
+static const double modes[_SDT_REVERB_NMODES][3] = {
+    {1, 0, 0}, {0, 2, 1}, {1, 0, 1}, {2, 1, 0}, {0, 1, 1},
+    {1, 1, 1}, {1, 1, 0}, {0, 1, 2}, {1, 2, 1}, {1, 2, 0},
+    {0, 0, 1}, {2, 1, 1}, {0, 1, 0}, {1, 0, 2}, {2, 0, 1}};
 
 struct SDTReverb {
-  SDTDelay *delays[15];
-  SDTOnePole *filters[15];
-  double g[15], v[30], r[15], xSize, ySize, zSize, randomness, time, time1k;
+  SDTDelay *delays[_SDT_REVERB_NMODES];
+  SDTOnePole *filters[_SDT_REVERB_NMODES];
+  double g[_SDT_REVERB_NMODES], v[2 * _SDT_REVERB_NMODES],
+      r[_SDT_REVERB_NMODES], xSize, ySize, zSize, randomness, time, time1k;
 };
 
 SDTReverb *SDTReverb_new(long maxDelay) {
@@ -25,12 +29,12 @@ SDTReverb *SDTReverb_new(long maxDelay) {
   int i;
 
   x = (SDTReverb *)malloc(sizeof(SDTReverb));
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     x->delays[i] = SDTDelay_new(maxDelay);
     x->filters[i] = SDTOnePole_new();
     x->g[i] = 0.0;
     x->v[i] = 0.0;
-    x->v[i + 15] = 0.0;
+    x->v[i + _SDT_REVERB_NMODES] = 0.0;
     x->r[i] = 2.0 * SDT_frand() - 1.0;
   }
   x->xSize = 4.0;
@@ -45,7 +49,7 @@ SDTReverb *SDTReverb_new(long maxDelay) {
 void SDTReverb_free(SDTReverb *x) {
   int i;
 
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     SDTDelay_free(x->delays[i]);
     SDTOnePole_free(x->filters[i]);
   }
@@ -53,7 +57,7 @@ void SDTReverb_free(SDTReverb *x) {
 }
 
 void SDTReverb_setMaxDelay(SDTReverb *x, long f) {
-  for (unsigned int i = 0; i < 15; i++) {
+  for (unsigned int i = 0; i < _SDT_REVERB_NMODES; i++) {
     SDTDelay_free(x->delays[i]);
     x->delays[i] = SDTDelay_new(f);
   }
@@ -131,7 +135,7 @@ void SDTReverb_update(SDTReverb *x) {
   double xMode, yMode, zMode, freq, delay, gi, gw, a, b, c, d;
   int i;
 
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     xMode = modes[i][0] / x->xSize;
     yMode = modes[i][1] / x->ySize;
     zMode = modes[i][2] / x->zSize;
@@ -172,7 +176,7 @@ double SDTReverb_dsp(SDTReverb *x, double in) {
 
   out = 0.0;
 
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     s = &x->v[i];
     b = s[1] + s[2] + s[3] + s[5] + s[6] + s[9] + s[11];
     c = s[0] + s[4] + s[7] + s[8] + s[10] + s[12] + s[13] + s[14];
@@ -181,8 +185,8 @@ double SDTReverb_dsp(SDTReverb *x, double in) {
     x->v[i] = x->g[i] * SDTOnePole_dsp(x->filters[i], d);
     out += x->v[i];
   }
-  memcpy(&x->v[15], x->v, 14 * sizeof(double));
-  return out / 15.0;
+  memcpy(&x->v[_SDT_REVERB_NMODES], x->v, 14 * sizeof(double));
+  return out / ((double)_SDT_REVERB_NMODES);
 }
 
 //-------------------------------------------------------------------------------------//
