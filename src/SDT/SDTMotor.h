@@ -48,8 +48,8 @@ extern void SDTMotor_free(SDTMotor *x);
 extern SDTMotor *SDTMotor_copy(SDTMotor *dest, const SDTMotor *src,
                                unsigned char unsafe);
 
-/** @brief Registers a combustion engine model into the myoelastic
-feature extractors list with a unique ID.
+/** @brief Registers a combustion engine model into the combustion engine models
+list with a unique ID.
 @param[in] x Motor instance to register
 @param[in] key Unique ID assigned to the combustion engine model instance
 @return Zero on success, otherwise one */
@@ -63,9 +63,9 @@ returned.
 @return Motor instance pointer */
 extern SDTMotor *SDT_getMotor(const char *key);
 
-/** @brief Unregisters a combustion engine model from the electric motor
-synthesis models list. If a combustion engine model with the given ID is
-present, it is unregistered from the list.
+/** @brief Unregisters a combustion engine model from the combustion engine
+models list. If a combustion engine model with the given ID is present, it is
+unregistered from the list.
 @param[in] key Unique ID of the combustion engine model instance to
 unregister
 @return Zero on success, otherwise one */

@@ -60,10 +60,56 @@ void SDTReverb_setMaxDelay(SDTReverb *x, long f) {
   SDTReverb_update(x);
 }
 
-SDT_TYPE_COPY(SDT_REVERB)
-SDT_DEFINE_HASHMAP(SDT_REVERB, 59)
-SDT_JSON_SERIALIZE(SDT_REVERB)
-SDT_JSON_DESERIALIZE(SDT_REVERB)
+_SDT_COPY_FUNCTION(Reverb)
+
+_SDT_HASHMAP_FUNCTIONS(Reverb)
+
+json_value *SDTReverb_toJSON(const SDTReverb *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "maxDelay", json_integer_new(SDTReverb_getMaxDelay(x)));
+  json_object_push(obj, "xSize", json_double_new(SDTReverb_getXSize(x)));
+  json_object_push(obj, "ySize", json_double_new(SDTReverb_getYSize(x)));
+  json_object_push(obj, "zSize", json_double_new(SDTReverb_getZSize(x)));
+  json_object_push(obj, "randomness",
+                   json_double_new(SDTReverb_getRandomness(x)));
+  json_object_push(obj, "time", json_double_new(SDTReverb_getTime(x)));
+  json_object_push(obj, "time1k", json_double_new(SDTReverb_getTime1k(x)));
+  return obj;
+}
+
+SDTReverb *SDTReverb_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  long maxDelay = SDT_REVERB_MAXDELAY_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxDelay, x, maxDelay, integer);
+
+  SDTReverb *y = SDTReverb_new(maxDelay);
+  return SDTReverb_setParams(y, x, 0);
+}
+
+SDTReverb *SDTReverb_setParams(SDTReverb *x, const json_value *j,
+                               unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Reverb, x, j, MaxDelay, maxDelay, integer,
+                                  unsafe);
+
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, XSize, xSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, YSize, ySize, double);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, ZSize, zSize, double);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Randomness, randomness, double);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time, time, double);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time1k, time1k, double);
+
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, XSize, xSize, integer);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, YSize, ySize, integer);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, ZSize, zSize, integer);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Randomness, randomness, integer);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time, time, integer);
+  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time1k, time1k, integer);
+
+  return x;
+}
 
 long SDTReverb_getMaxDelay(const SDTReverb *x) {
   return SDTDelay_getMaxDelay(x->delays[0]);

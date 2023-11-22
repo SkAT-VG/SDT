@@ -23,6 +23,8 @@ for artificial reverberation", Signal Processing Letters, IEEE 4.9 (1997):
 /** @brief Opaque data structure for a reverberator object. */
 typedef struct SDTReverb SDTReverb;
 
+#define SDT_REVERB_MAXDELAY_DEFAULT 44100
+
 /** @brief Object constructor.
 @param[in] maxDelay Maximum length of the delay lines, in samples
 @return Pointer to the new instance */
@@ -32,23 +34,85 @@ extern SDTReverb *SDTReverb_new(long maxDelay);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTReverb_free(SDTReverb *x);
 
-#define SDT_REVERB Reverb
-#define SDT_REVERB_NEW_ARGS 44100
-#define SDT_REVERB_ATTRIBUTES(T, A)                           \
-  A(T, maxDelay, long, MaxDelay, maxDelay, integer, 44100)    \
-  A(T, xSize, double, XSize, xSize, double, 4.0)              \
-  A(T, ySize, double, YSize, ySize, double, 5.0)              \
-  A(T, zSize, double, ZSize, zSize, double, 3.0)              \
-  A(T, randomness, double, Randomness, randomness, double, 0) \
-  A(T, time, double, Time, time, double, 4.0)                 \
-  A(T, time1k, double, Time1k, time1k, double, 3.6)
+/** @brief Deep-copies a reverberator.
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTReverb *SDTReverb_copy(SDTReverb *dest, const SDTReverb *src,
+                                 unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_REVERB)
-SDT_DEFINE_HASHMAP_H(SDT_REVERB)
-SDT_TYPE_MAKE_GETTERS_H(SDT_REVERB)
-SDT_JSON_SERIALIZE_H(SDT_REVERB)
-SDT_JSON_DESERIALIZE_H(SDT_REVERB)
+/** @brief Registers a reverberator into the reverberators list with a unique
+ID.
+@param[in] x Reverb instance to register
+@param[in] key Unique ID assigned to the reverberator instance
+@return Zero on success, otherwise one */
+extern int SDT_registerReverb(SDTReverb *x, const char *key);
 
+/** @brief Queries the reverberators list by its unique ID. If a reverberator
+with the ID is present, a pointer to the reverberator is returned. Otherwise, a
+NULL pointer is returned.
+@param[in] key Unique ID assigned to the reverberator instance
+@return Reverb instance pointer */
+extern SDTReverb *SDT_getReverb(const char *key);
+
+/** @brief Unregisters a reverberator from the reverberator list. If a
+reverberator with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the reverberator instance to
+unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterReverb(const char *key);
+
+/** @brief Gets the maximum delay.
+@return Maximum length of the delay lines, in samples */
+extern long SDTReverb_getMaxDelay(const SDTReverb *x);
+
+/** @brief Gets the room width.
+@return Room width, in m */
+extern double SDTReverb_getXSize(const SDTReverb *x);
+
+/** @brief Gets the room height.
+@return Room height, in m */
+extern double SDTReverb_getYSize(const SDTReverb *x);
+
+/** @brief Gets the room depth.
+@return Room depth, in m */
+extern double SDTReverb_getZSize(const SDTReverb *x);
+
+/** @brief Gets how randomly distributed are the resonant modes.
+This parameter is directly proportional to the irregularity of the shape of the
+room.
+@return Randomness in the modal distribution [0, 1] */
+extern double SDTReverb_getRandomness(const SDTReverb *x);
+
+/** @brief Gets the global, frequency-independent reverberation time.
+@return Reverberation time, in s */
+extern double SDTReverb_getTime(const SDTReverb *x);
+
+/** @brief Gets the reverberation time at 1kHz.
+@return Reverberation time at 1kHz, in s */
+extern double SDTReverb_getTime1k(const SDTReverb *x);
+
+/** @brief Represent a reverberator as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTReverb_toJSON(const SDTReverb *x);
+
+/** @brief Initialize a reverberator from a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern SDTReverb *SDTReverb_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a reverberator from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTReverb *SDTReverb_setParams(SDTReverb *x, const json_value *j,
+                                      unsigned char unsafe);
+
+/** @brief Sets the maximum delay.
+@param[in] f Maximum length of the delay lines, in samples */
 extern void SDTReverb_setMaxDelay(SDTReverb *x, long f);
 
 /** @brief Sets the room width.

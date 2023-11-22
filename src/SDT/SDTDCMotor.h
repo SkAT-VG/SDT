@@ -56,8 +56,8 @@ sample rate or one or more frequency parameters of this structure
 @param[in] x Pointer to the instance to update */
 extern void SDTDCMotor_update(SDTDCMotor *x);
 
-/** @brief Registers an electric motor synthesis model into the myoelastic
-feature extractors list with a unique ID.
+/** @brief Registers an electric motor synthesis model into the electric motor
+synthesis models list with a unique ID.
 @param[in] x DCMotor instance to register
 @param[in] key Unique ID assigned to the electric motor synthesis model instance
 @return Zero on success, otherwise one */
