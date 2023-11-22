@@ -298,7 +298,8 @@ $(PD_LIB): $(PD_OBJS) $(CORE_OBJS);
 	$(call build-lib,$(LINK_PD_SDK) $(PD_LDFLAGS))
 $(PD_BUILDDIR):; $(make-dir)
 $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
-	$(call build-obj,$(INCLUDE_SDT) $(INCLUDE_PD_SDK))
+	$(call build-obj,$(INCLUDE_SDT) $(INCLUDE_PD_SDK) \
+	                 -DSDT_PD_ver="$(SDT_PD_VERSION)")
 # -----------------------------------------------------------------------------
 
 # --- Max ---------------------------------------------------------------------
