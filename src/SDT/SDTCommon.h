@@ -167,7 +167,7 @@ extern int SDT_eprintf(const char *fmt, ...);
 #define SDT_DEBUG
 #endif
 #else
-/** @brief Conditionally include code in debug or non-debug build
+/** @brief Conditionally include code in verbose or non-verbose build
 @param[in] X Code to include in debug builds
 @param[in] Y Code to include in non-debug builds */
 #define SDT_VERBOSE_IF_ELSE(X, Y) Y

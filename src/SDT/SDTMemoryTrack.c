@@ -192,6 +192,21 @@ void* _SDT_mallocTrack(size_t size, const char* file, unsigned int line,
   return p;
 }
 
+void* _SDT_callocTrack(size_t count, size_t size, const char* file,
+                       unsigned int line, const char* func) {
+  void* p = calloc(count, size);
+  size *= count;
+  if (!heap_dll) heap_dll = SDTDoublyLinkedList_new();
+  SDTDoublyLinkedList_push(heap_dll, SDTDLLNode_new(SDTMallocInfo_new(
+                                         p, size, 1, file, line, func)));
+  SDT_ONLY_IN_LEVEL(
+      VERBOSE,
+      SDT_log(SDT_LOG_LEVEL_VERBOSE, file, line, func,
+              "Arena: %li B\t[%li objs]\tAllocated: %p -> %li B\n",
+              _SDT_currentArena(), _SDT_currentArenaLength(), p, size);)
+  return p;
+}
+
 void _SDT_freeTrack(void* p, const char* file, unsigned int line,
                     const char* func) {
   SDTDLLNode* n = (SDTDLLNode*)0;

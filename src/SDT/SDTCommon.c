@@ -1,4 +1,5 @@
 #include "SDTCommon.h"
+
 #include <assert.h>
 #include <limits.h>
 #include <math.h>
@@ -430,7 +431,7 @@ static int _SDT_log_newlines[N_LOGGERS] = {0, 0, 0, 0, 0};
 
 void SDT_setLogger(int level, int (*print_func)(const char *, ...),
                    int newline) {
-  if (level >= 0 && level < N_LOGGERS - 1) {
+  if (level >= 0 && level < N_LOGGERS) {
     _SDT_log_inner[level] = print_func;
     _SDT_log_newlines[level] = newline;
   }
@@ -438,7 +439,7 @@ void SDT_setLogger(int level, int (*print_func)(const char *, ...),
 
 int (*SDT_getLogger(int level, int *newline))(const char *, ...) {
   int (*p)(const char *, ...) = 0;
-  if (level >= 0 && level < N_LOGGERS - 1) {
+  if (level >= 0 && level < N_LOGGERS) {
     p = _SDT_log_inner[level];
     if (newline) *newline = _SDT_log_newlines[level];
   } else if (newline)

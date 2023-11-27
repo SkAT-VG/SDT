@@ -43,9 +43,8 @@ int SDT_maxError(const char* fmt, ...) {
 }
 
 void SDT_setupMaxLoggers() {
-  // Verbose on standard error
-  SDT_setLogger(SDT_LOG_LEVEL_VERBOSE, &SDT_maxCPost, 1);
-  // Everything else on Max console
+  // Everything on Max console (can't see stdout)
+  SDT_setLogger(SDT_LOG_LEVEL_VERBOSE, &SDT_maxPost, 1);
   SDT_setLogger(SDT_LOG_LEVEL_DEBUG, &SDT_maxPost, 1);
   SDT_setLogger(SDT_LOG_LEVEL_INFO, &SDT_maxPost, 1);
   SDT_setLogger(SDT_LOG_LEVEL_WARN, &SDT_maxError, 1);

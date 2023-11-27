@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 
 /** @file SDTMemoryTrack.h
@@ -39,6 +40,16 @@ extern size_t _SDT_currentArenaLength();
 extern void* _SDT_mallocTrack(size_t size, const char* file, unsigned int line,
                               const char* func);
 
+/** @brief SDT's tracking calloc
+@param[in] count Number of elements to allocate
+@param[in] size Size of each element
+@param[in] file File where call to malloc happens
+@param[in] line Line where call to malloc happens
+@param[in] func Function where call to malloc happens
+@return Pointer to the allocated memory */
+extern void* _SDT_callocTrack(size_t count, size_t size, const char* file,
+                              unsigned int line, const char* func);
+
 /** @brief SDT's tracking free
 @param[in] p Pointer to the allocated memory to free
 @param[in] file File where call to free happens
@@ -48,6 +59,7 @@ extern void _SDT_freeTrack(void* p, const char* file, unsigned int line,
                            const char* func);
 
 #define malloc(X) _SDT_mallocTrack(X, __FILE__, __LINE__, __func__)
+#define calloc(C, S) _SDT_callocTrack(C, S, __FILE__, __LINE__, __func__)
 #define free(X) _SDT_freeTrack(X, __FILE__, __LINE__, __func__)
 
 #ifdef __cplusplus
