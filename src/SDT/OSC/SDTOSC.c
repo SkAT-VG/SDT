@@ -39,6 +39,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("pitchshift", k)) return SDTOSCPitchShift(x);
   if (!strcmp("resonator", k) || !strcmp("modal", k) || !strcmp("inertial", k))
     return SDTOSCResonator(x);
+  if (!strcmp("reverb", k)) return SDTOSCReverb(x);
   if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
   if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
     return SDTOSCZeroCrossing(x);
@@ -53,8 +54,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCProject(log, sub);
   // else if (!strcmp("fluidflow", method))
   //   return_code = SDTOSCFluidFlow(log, sub);
-  // else if (!strcmp("reverb", method))
-  //   return_code = SDTOSCReverb(log, sub);
   // else if (!strcmp("rolling", method))
   //   return_code = SDTOSCRolling(log, sub);
   // else if (!strcmp("scraping", method))
