@@ -1,6 +1,7 @@
 #include "SDTCommonMax.h"
 
 #include "SDT/SDTCommon.h"
+#include "SDT/SDTCommonMacros.h"
 #include "ext.h"
 
 static char _SDT_logBufferMax[MAXSDTMAXSTRING];
@@ -43,10 +44,23 @@ int SDT_maxError(const char* fmt, ...) {
 }
 
 void SDT_setupMaxLoggers() {
-  // Everything on Max console (can't see stdout)
-  SDT_setLogger(SDT_LOG_LEVEL_VERBOSE, &SDT_maxPost, 1);
-  SDT_setLogger(SDT_LOG_LEVEL_DEBUG, &SDT_maxPost, 1);
-  SDT_setLogger(SDT_LOG_LEVEL_INFO, &SDT_maxPost, 1);
-  SDT_setLogger(SDT_LOG_LEVEL_WARN, &SDT_maxError, 1);
-  SDT_setLogger(SDT_LOG_LEVEL_ERROR, &SDT_maxError, 1);
+  // Only set-up once
+  int newline = 0;
+  SDT_getLogger(SDT_LOG_LEVEL_ERROR, &newline);
+  if (!newline) {
+    // Everything on Max console (can't see stdout)
+    SDT_setLogger(SDT_LOG_LEVEL_VERBOSE, &SDT_maxPost, 1);
+    SDT_setLogger(SDT_LOG_LEVEL_DEBUG, &SDT_maxPost, 1);
+    SDT_setLogger(SDT_LOG_LEVEL_INFO, &SDT_maxPost, 1);
+    SDT_setLogger(SDT_LOG_LEVEL_WARN, &SDT_maxError, 1);
+    SDT_setLogger(SDT_LOG_LEVEL_ERROR, &SDT_maxError, 1);
+#ifdef SDT_INFO
+    if (SDT_LOG_LEVEL_INFO <= SDT_getLogLevelFromEnv()) {
+      post("SDT version %s, (C) 2001 - 2023", STRINGIFY(SDT_ver));
+#ifdef SDT_MAX_ver
+      post("SDT for Max version %s, (C) 2001 - 2023", STRINGIFY(SDT_MAX_ver));
+#endif
+    }
+#endif
+  }
 }

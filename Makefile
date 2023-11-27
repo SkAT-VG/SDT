@@ -306,11 +306,6 @@ $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
 MAX_DIR=$(SRC_DIR)/Max7
 MAXSDK_DIR=$(THIRDP_DIR)/max-sdk-base/c74support
 
-INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
-MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 \
-           -DC74_NO_DEPRECATION -fvisibility=hidden \
-					 -Wno-unused-function
-
 #  --- Version ---
 max_version:; @echo $(SDT_MAX_VERSION)
 SDT_MAX_VERSION:=$(shell grep "\"version\"" "$(ROOT)/MaxPackage/package-info.json")
@@ -320,6 +315,11 @@ comma:=,
 SDT_MAX_VERSION:=$(subst $(comma),,$(SDT_MAX_VERSION))
 SDT_MAX_VERSION:=$(subst ",,$(SDT_MAX_VERSION))
 #  --- Version ---
+
+INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
+MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 \
+           -DC74_NO_DEPRECATION -fvisibility=hidden \
+					 -Wno-unused-function -DSDT_MAX_ver="$(SDT_MAX_VERSION)"
 
 ifeq ("$(TARGET)", "win32")
 	LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes \
