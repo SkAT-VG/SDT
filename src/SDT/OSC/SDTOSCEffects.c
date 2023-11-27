@@ -35,11 +35,12 @@ int SDTOSCPitchShift(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(PitchShift)
 _SDTOSC_SAVE_FUNCTION(PitchShift)
-_SDTOSC_LOAD_FUNCTION(PitchShift)
-_SDTOSC_LOADS_FUNCTION(PitchShift)
+_SDTOSC_LOAD_FUNCTION(PitchShift, )
+_SDTOSC_LOADS_FUNCTION(PitchShift, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, size, Size, unsigned int)
-_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, oversample, Oversample, unsigned int)
-_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, overlap, Overlap, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, ratio, Ratio, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, size, Size, unsigned int, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, oversample, Oversample,
+                              unsigned int, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, overlap, Overlap, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(PitchShift, ratio, Ratio, double, )
 /* ------------------------------------------------------------------------- */

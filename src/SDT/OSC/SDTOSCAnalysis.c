@@ -33,11 +33,11 @@ int SDTOSCZeroCrossing(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(ZeroCrossing)
 _SDTOSC_SAVE_FUNCTION(ZeroCrossing)
-_SDTOSC_LOAD_FUNCTION(ZeroCrossing)
-_SDTOSC_LOADS_FUNCTION(ZeroCrossing)
+_SDTOSC_LOAD_FUNCTION(ZeroCrossing, )
+_SDTOSC_LOADS_FUNCTION(ZeroCrossing, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, size, Size, unsigned int)
-_SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, overlap, Overlap, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, size, Size, unsigned int, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(ZeroCrossing, overlap, Overlap, double, )
 /* ------------------------------------------------------------------------- */
 
 /* --- Myoelastic ---------------------------------------------------------- */
@@ -72,13 +72,16 @@ int SDTOSCMyoelastic(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Myoelastic)
 _SDTOSC_SAVE_FUNCTION(Myoelastic)
-_SDTOSC_LOAD_FUNCTION(Myoelastic)
-_SDTOSC_LOADS_FUNCTION(Myoelastic)
+_SDTOSC_LOAD_FUNCTION(Myoelastic, update)
+_SDTOSC_LOADS_FUNCTION(Myoelastic, update)
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, dcFrequency, DcFrequency, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, lowFrequency, LowFrequency, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, highFrequency, HighFrequency, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, threshold, Threshold, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, dcFrequency, DcFrequency, double,
+                              update)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, lowFrequency, LowFrequency, double,
+                              update)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, highFrequency, HighFrequency, double,
+                              update)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Myoelastic, threshold, Threshold, double, )
 /* ------------------------------------------------------------------------- */
 
 /* --- SpectralFeats ------------------------------------------------------- */
@@ -112,13 +115,13 @@ int SDTOSCSpectralFeats(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(SpectralFeats)
 _SDTOSC_SAVE_FUNCTION(SpectralFeats)
-_SDTOSC_LOAD_FUNCTION(SpectralFeats)
-_SDTOSC_LOADS_FUNCTION(SpectralFeats)
+_SDTOSC_LOAD_FUNCTION(SpectralFeats, )
+_SDTOSC_LOADS_FUNCTION(SpectralFeats, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, size, Size, unsigned int)
-_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, overlap, Overlap, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, minFreq, MinFreq, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, maxFreq, MaxFreq, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, size, Size, unsigned int, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, overlap, Overlap, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, minFreq, MinFreq, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(SpectralFeats, maxFreq, MaxFreq, double, )
 /* ------------------------------------------------------------------------- */
 
 /* --- Pitch --------------------------------------------------------------- */
@@ -149,10 +152,10 @@ int SDTOSCPitch(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Pitch)
 _SDTOSC_SAVE_FUNCTION(Pitch)
-_SDTOSC_LOAD_FUNCTION(Pitch)
-_SDTOSC_LOADS_FUNCTION(Pitch)
+_SDTOSC_LOAD_FUNCTION(Pitch, )
+_SDTOSC_LOADS_FUNCTION(Pitch, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Pitch, size, Size, unsigned int)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Pitch, overlap, Overlap, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Pitch, tolerance, Tolerance, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Pitch, size, Size, unsigned int, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Pitch, overlap, Overlap, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Pitch, tolerance, Tolerance, double, )
 /* ------------------------------------------------------------------------- */

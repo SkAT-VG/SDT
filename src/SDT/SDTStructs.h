@@ -75,6 +75,15 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
     json_builder_free(j);                                                    \
     return dest;                                                             \
   }
+
+// Call this macro like this:
+//   _SDT_TYPE_UPDATE_##U(T, O);
+// If U is empty, then the macro will expand to nothing
+#define _SDT_TYPE_UPDATE_(T, O)
+// If U is update, then the macro will expand to call the update function
+// of type T on the object O
+#define _SDT_TYPE_UPDATE_update(T, O) SDT##T##_update(O)
+
 /** ------------------------------------------------------------------------ */
 
 #ifdef __cplusplus

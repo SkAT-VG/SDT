@@ -39,13 +39,13 @@ int SDTOSCExplosion(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Explosion)
 _SDTOSC_SAVE_FUNCTION(Explosion)
-_SDTOSC_LOAD_FUNCTION(Explosion)
-_SDTOSC_LOADS_FUNCTION(Explosion)
+_SDTOSC_LOAD_FUNCTION(Explosion, )
+_SDTOSC_LOADS_FUNCTION(Explosion, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, blastTime, BlastTime, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, scatterTime, ScatterTime, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, dispersion, Dispersion, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, distance, Distance, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, waveSpeed, WaveSpeed, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, windSpeed, WindSpeed, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, blastTime, BlastTime, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, scatterTime, ScatterTime, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, dispersion, Dispersion, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, distance, Distance, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, waveSpeed, WaveSpeed, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, windSpeed, WindSpeed, double, )
 /* ------------------------------------------------------------------------- */

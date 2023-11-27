@@ -1,4 +1,5 @@
 #include "SDTOSCDCMotor.h"
+
 #include <string.h>
 
 int SDTOSCDCMotor(const SDTOSCMessage *x) {
@@ -43,17 +44,17 @@ int SDTOSCDCMotor(const SDTOSCMessage *x) {
 
 _SDTOSC_LOG_FUNCTION(DCMotor)
 _SDTOSC_SAVE_FUNCTION(DCMotor)
-_SDTOSC_LOAD_FUNCTION(DCMotor)
-_SDTOSC_LOADS_FUNCTION(DCMotor)
+_SDTOSC_LOAD_FUNCTION(DCMotor, )
+_SDTOSC_LOADS_FUNCTION(DCMotor, )
 
-_SDTOSC_SETTER_FUNCTION(DCMotor, coils, Coils, long, Float, float)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, rpm, Rpm, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, load, Load, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, size, Size, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, reson, Reson, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, gearRatio, GearRatio, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, harshness, Harshness, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, rotorGain, RotorGain, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, gearGain, GearGain, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, brushGain, BrushGain, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, airGain, AirGain, double)
+_SDTOSC_SETTER_FUNCTION(DCMotor, coils, Coils, long, Float, float, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, rpm, Rpm, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, load, Load, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, size, Size, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, reson, Reson, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, gearRatio, GearRatio, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, harshness, Harshness, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, rotorGain, RotorGain, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, gearGain, GearGain, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, brushGain, BrushGain, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(DCMotor, airGain, AirGain, double, )

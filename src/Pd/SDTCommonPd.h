@@ -1,3 +1,4 @@
+#include "SDT/SDTStructs.h"
 #include "m_pd.h"
 
 #ifndef SDT_COMMONPD_H
@@ -81,9 +82,6 @@ memory This macro works for destroyer functions whose signature is
   if (x->key) SDT_unregister##T(x->key); \
   SDT##T##_free(x->F);
 
-#define _SDT_PD_TYPE_UPDATE_(T, O)
-#define _SDT_PD_TYPE_UPDATE_update(T, O) SDT##T##_update(O)
-
 /** @brief Define the setter function for an attribute
 @param[in] M The Pd type (without the leading `t_`)
 @param[in] T The SDT type (without the leading `SDT`)
@@ -93,7 +91,7 @@ memory This macro works for destroyer functions whose signature is
 #define SDT_PD_SETTER(M, T, F, A, U)     \
   void M##_set##A(t_##M *x, t_float f) { \
     SDT##T##_set##A(x->F, f);            \
-    _SDT_PD_TYPE_UPDATE_##U(T, x->F);    \
+    _SDT_TYPE_UPDATE_##U(T, x->F);       \
   }
 
 /** @brief Define the setter function for an array attribute
@@ -107,7 +105,7 @@ memory This macro works for destroyer functions whose signature is
     for (int i = 0; i < ac; ++i) {                             \
       SDT##T##_set##A(x->F, i, atom_getfloat(av + i));         \
     }                                                          \
-    _SDT_PD_TYPE_UPDATE_##U(T, x->F);                          \
+    _SDT_TYPE_UPDATE_##U(T, x->F);                             \
   }
 
 #endif

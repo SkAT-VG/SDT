@@ -1,3 +1,4 @@
+#include "SDT/SDTStructs.h"
 #include "ext.h"
 #include "ext_obex_util.h"
 
@@ -79,9 +80,6 @@ value. Multiplier for the gotten value */
     return atom_set##AT(*av, _SDT_MULTIPLY_IF(SDT##T##_get##A(x->F), K)); \
   }
 
-#define _SDT_MAX_TYPE_UPDATE_(T, O)
-#define _SDT_MAX_TYPE_UPDATE_update(T, O) SDT##T##_update(O)
-
 /** @brief Define the setter function for an attribute
 @param[in] M The Max type (without the leading `t_`)
 @param[in] T The SDT type (without the leading `SDT`)
@@ -96,7 +94,7 @@ value. Divider for the value to be set
     if (ac && av) {                                                 \
       SDT##T##_set##A(x->F, _SDT_DIVIDE_IF(atom_get##AT(av), K));   \
     }                                                               \
-    _SDT_MAX_TYPE_UPDATE_##U(T, x->F);                              \
+    _SDT_TYPE_UPDATE_##U(T, x->F);                                  \
     return MAX_ERR_NONE;                                            \
   }
 
@@ -154,7 +152,7 @@ value. Multiplier for the gotten value. Divider for the value to be set
     for (long i = 0; av && i < ac; ++i) {                           \
       SDT##T##_set##A(x->F, i, atom_get##AT(av + i));               \
     }                                                               \
-    _SDT_MAX_TYPE_UPDATE_##U(T, x->F);                              \
+    _SDT_TYPE_UPDATE_##U(T, x->F);                                  \
     return MAX_ERR_NONE;                                            \
   }
 

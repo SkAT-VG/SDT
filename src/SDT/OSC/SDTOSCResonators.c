@@ -1,4 +1,5 @@
 #include "SDTOSCResonators.h"
+
 #include <string.h>
 
 int SDTOSCResonator(const SDTOSCMessage *x) {
@@ -35,8 +36,8 @@ int SDTOSCResonator(const SDTOSCMessage *x) {
 
 _SDTOSC_LOG_FUNCTION(Resonator)
 _SDTOSC_SAVE_FUNCTION(Resonator)
-_SDTOSC_LOAD_FUNCTION(Resonator)
-_SDTOSC_LOADS_FUNCTION(Resonator)
+_SDTOSC_LOAD_FUNCTION(Resonator, )
+_SDTOSC_LOADS_FUNCTION(Resonator, )
 
 #define _SDT_OSC_RESONATOR_SET_ARRAY_ELEM(ATTRNAME)           \
   int SDTOSCResonator_set##ATTRNAME(const SDTOSCMessage *x) { \
@@ -62,5 +63,6 @@ int SDTOSCResonator_setGain(const SDTOSCMessage *x) {
   return 0;
 }
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Resonator, fragmentSize, FragmentSize, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Resonator, activeModes, ActiveModes, unsigned int)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Resonator, fragmentSize, FragmentSize, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Resonator, activeModes, ActiveModes,
+                              unsigned int, )

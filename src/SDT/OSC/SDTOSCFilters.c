@@ -33,9 +33,9 @@ int SDTOSCEnvelope(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Envelope)
 _SDTOSC_SAVE_FUNCTION(Envelope)
-_SDTOSC_LOAD_FUNCTION(Envelope)
-_SDTOSC_LOADS_FUNCTION(Envelope)
+_SDTOSC_LOAD_FUNCTION(Envelope, )
+_SDTOSC_LOADS_FUNCTION(Envelope, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Envelope, attack, Attack, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Envelope, release, Release, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Envelope, attack, Attack, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Envelope, release, Release, double, )
 /* ------------------------------------------------------------------------- */

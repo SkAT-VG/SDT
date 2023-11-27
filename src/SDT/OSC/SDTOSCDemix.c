@@ -29,9 +29,9 @@ int SDTOSCDemix(const SDTOSCMessage *x) {
 
 _SDTOSC_LOG_FUNCTION(Demix)
 _SDTOSC_SAVE_FUNCTION(Demix)
-_SDTOSC_LOAD_FUNCTION(Demix)
-_SDTOSC_LOADS_FUNCTION(Demix)
+_SDTOSC_LOAD_FUNCTION(Demix, )
+_SDTOSC_LOADS_FUNCTION(Demix, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Demix, overlap, Overlap, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Demix, noiseThreshold, NoiseThreshold, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Demix, tonalThreshold, TonalThreshold, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Demix, overlap, Overlap, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Demix, noiseThreshold, NoiseThreshold, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Demix, tonalThreshold, TonalThreshold, double, )

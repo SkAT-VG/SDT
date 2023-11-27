@@ -36,12 +36,12 @@ int SDTOSCBubble(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Bubble)
 _SDTOSC_SAVE_FUNCTION(Bubble)
-_SDTOSC_LOAD_FUNCTION(Bubble)
-_SDTOSC_LOADS_FUNCTION(Bubble)
+_SDTOSC_LOAD_FUNCTION(Bubble, )
+_SDTOSC_LOADS_FUNCTION(Bubble, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Bubble, radius, Radius, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Bubble, depth, Depth, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Bubble, riseFactor, RiseFactor, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Bubble, radius, Radius, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Bubble, depth, Depth, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Bubble, riseFactor, RiseFactor, double, )
 
 int SDTOSCBubble_trigger(const SDTOSCMessage* x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")
@@ -88,16 +88,16 @@ int SDTOSCFluidFlow(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(FluidFlow)
 _SDTOSC_SAVE_FUNCTION(FluidFlow)
-_SDTOSC_LOAD_FUNCTION(FluidFlow)
-_SDTOSC_LOADS_FUNCTION(FluidFlow)
+_SDTOSC_LOAD_FUNCTION(FluidFlow, )
+_SDTOSC_LOADS_FUNCTION(FluidFlow, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, avgRate, AvgRate, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, minRadius, MinRadius, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, maxRadius, MaxRadius, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, expRadius, ExpRadius, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, minDepth, MinDepth, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, maxDepth, MaxDepth, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, expDepth, ExpDepth, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, riseFactor, RiseFactor, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, riseCutoff, RiseCutoff, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, avgRate, AvgRate, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, minRadius, MinRadius, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, maxRadius, MaxRadius, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, expRadius, ExpRadius, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, minDepth, MinDepth, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, maxDepth, MaxDepth, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, expDepth, ExpDepth, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, riseFactor, RiseFactor, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(FluidFlow, riseCutoff, RiseCutoff, double, )
 /* ------------------------------------------------------------------------- */

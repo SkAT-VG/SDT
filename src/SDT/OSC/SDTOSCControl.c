@@ -34,12 +34,12 @@ int SDTOSCBouncing(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Bouncing)
 _SDTOSC_SAVE_FUNCTION(Bouncing)
-_SDTOSC_LOAD_FUNCTION(Bouncing)
-_SDTOSC_LOADS_FUNCTION(Bouncing)
+_SDTOSC_LOAD_FUNCTION(Bouncing, )
+_SDTOSC_LOADS_FUNCTION(Bouncing, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Bouncing, restitution, Restitution, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Bouncing, height, Height, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Bouncing, irregularity, Irregularity, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Bouncing, restitution, Restitution, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Bouncing, height, Height, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Bouncing, irregularity, Irregularity, double, )
 /* ------------------------------------------------------------------------- */
 
 /* --- Breaking ------------------------------------------------------------ */
@@ -73,13 +73,14 @@ int SDTOSCBreaking(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Breaking)
 _SDTOSC_SAVE_FUNCTION(Breaking)
-_SDTOSC_LOAD_FUNCTION(Breaking)
-_SDTOSC_LOADS_FUNCTION(Breaking)
+_SDTOSC_LOAD_FUNCTION(Breaking, )
+_SDTOSC_LOADS_FUNCTION(Breaking, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, storedEnergy, StoredEnergy, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, crushingEnergy, CrushingEnergy, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, granularity, Granularity, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, fragmentation, Fragmentation, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, storedEnergy, StoredEnergy, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, crushingEnergy, CrushingEnergy,
+                              double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, granularity, Granularity, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Breaking, fragmentation, Fragmentation, double, )
 /* ------------------------------------------------------------------------- */
 
 /* --- Crumpling ----------------------------------------------------------- */
@@ -112,10 +113,11 @@ int SDTOSCCrumpling(const SDTOSCMessage* x) {
 
 _SDTOSC_LOG_FUNCTION(Crumpling)
 _SDTOSC_SAVE_FUNCTION(Crumpling)
-_SDTOSC_LOAD_FUNCTION(Crumpling)
-_SDTOSC_LOADS_FUNCTION(Crumpling)
+_SDTOSC_LOAD_FUNCTION(Crumpling, )
+_SDTOSC_LOADS_FUNCTION(Crumpling, )
 
-_SDTOSC_FLOAT_SETTER_FUNCTION(Crumpling, crushingEnergy, CrushingEnergy, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Crumpling, granularity, Granularity, double)
-_SDTOSC_FLOAT_SETTER_FUNCTION(Crumpling, fragmentation, Fragmentation, double)
+_SDTOSC_FLOAT_SETTER_FUNCTION(Crumpling, crushingEnergy, CrushingEnergy,
+                              double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Crumpling, granularity, Granularity, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Crumpling, fragmentation, Fragmentation, double, )
 /* ------------------------------------------------------------------------- */
