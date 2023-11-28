@@ -10,14 +10,13 @@
 	"os": {
 		"macintosh": {
 			"platform": [
-				"ia32",
-				"x64"
+				"x64",
+				"aarch64"
 			],
-			"min_version": "10.7.x"
+			"min_version": "11.0.x"
 		},
 		"windows": {
 			"platform": [
-				"ia32",
 				"x64"
 			],
 			"min_version": "7"
