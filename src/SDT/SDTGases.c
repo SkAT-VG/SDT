@@ -300,19 +300,12 @@ SDTExplosion *SDTExplosion_setParams(SDTExplosion *x, const json_value *j,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(Explosion, x, j, MaxDelay, maxDelay, integer,
                                   unsafe);
 
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, BlastTime, blastTime, integer);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, ScatterTime, scatterTime, integer);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Dispersion, dispersion, integer);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Distance, distance, integer);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WaveSpeed, waveSpeed, integer);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WindSpeed, windSpeed, integer);
-
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, BlastTime, blastTime, double);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, ScatterTime, scatterTime, double);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Dispersion, dispersion, double);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, Distance, distance, double);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WaveSpeed, waveSpeed, double);
-  _SDT_SET_PARAM_FROM_JSON(Explosion, x, j, WindSpeed, windSpeed, double);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, BlastTime, blastTime);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, ScatterTime, scatterTime);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, Dispersion, dispersion);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, Distance, distance);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, WaveSpeed, waveSpeed);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, WindSpeed, windSpeed);
 
   return x;
 }

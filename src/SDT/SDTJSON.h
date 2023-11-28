@@ -89,6 +89,29 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
     }                                                                      \
   }
 
+/** @brief Implement double parameter setting from JSON
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] CATTR C attribute name
+@param[in] KEY JSON attribute key */
+#define _SDT_SET_DOUBLE_FROM_JSON(TYPENAME, VAR, JVAR, CATTR, KEY)     \
+  {                                                                    \
+    const json_value *v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY); \
+    if (v_##KEY) {                                                     \
+      switch (v_##KEY->type) {                                         \
+        case json_double:                                              \
+          SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u.dbl);             \
+          break;                                                       \
+        case json_integer:                                             \
+          SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u.integer);         \
+          break;                                                       \
+        default:                                                       \
+          break;                                                       \
+      }                                                                \
+    }                                                                  \
+  }
+
 /** @brief Implement parameter getting from JSON
 @param[in] VAR Structure variable identifier
 @param[in] JVAR JSON variable identifier

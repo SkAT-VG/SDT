@@ -61,13 +61,9 @@ SDTBubble *SDTBubble_setParams(SDTBubble *x, const json_value *j,
                                unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Radius, radius, integer);
-  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, RiseFactor, riseFactor, integer);
-  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Depth, depth, integer);
-
-  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Radius, radius, double);
-  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, RiseFactor, riseFactor, double);
-  _SDT_SET_PARAM_FROM_JSON(Bubble, x, j, Depth, depth, double);
+  _SDT_SET_DOUBLE_FROM_JSON(Bubble, x, j, Radius, radius);
+  _SDT_SET_DOUBLE_FROM_JSON(Bubble, x, j, RiseFactor, riseFactor);
+  _SDT_SET_DOUBLE_FROM_JSON(Bubble, x, j, Depth, depth);
 
   return x;
 }
@@ -217,25 +213,15 @@ SDTFluidFlow *SDTFluidFlow_setParams(SDTFluidFlow *x, const json_value *j,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(FluidFlow, x, j, NBubbles, nBubbles, integer,
                                   unsafe);
 
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, AvgRate, avgRate, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinRadius, minRadius, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxRadius, maxRadius, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpRadius, expRadius, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinDepth, minDepth, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxDepth, maxDepth, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpDepth, expDepth, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseFactor, riseFactor, integer);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseCutoff, riseCutoff, integer);
-
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, AvgRate, avgRate, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinRadius, minRadius, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxRadius, maxRadius, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpRadius, expRadius, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MinDepth, minDepth, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, MaxDepth, maxDepth, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, ExpDepth, expDepth, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseFactor, riseFactor, double);
-  _SDT_SET_PARAM_FROM_JSON(FluidFlow, x, j, RiseCutoff, riseCutoff, double);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, AvgRate, avgRate);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, MinRadius, minRadius);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, MaxRadius, maxRadius);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, ExpRadius, expRadius);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, MinDepth, minDepth);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, MaxDepth, maxDepth);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, ExpDepth, expDepth);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, RiseFactor, riseFactor);
+  _SDT_SET_DOUBLE_FROM_JSON(FluidFlow, x, j, RiseCutoff, riseCutoff);
 
   return x;
 }

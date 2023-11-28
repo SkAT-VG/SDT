@@ -524,9 +524,7 @@ SDTResonator *SDTResonator_setParams(SDTResonator *x, const json_value *j,
                                   unsafe);
   // Scalar members
   _SDT_SET_PARAM_FROM_JSON(Resonator, x, j, ActiveModes, activeModes, integer);
-  _SDT_SET_PARAM_FROM_JSON(Resonator, x, j, FragmentSize, fragmentSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Resonator, x, j, FragmentSize, fragmentSize,
-                           integer);
+  _SDT_SET_DOUBLE_FROM_JSON(Resonator, x, j, FragmentSize, fragmentSize);
 
   // Array members
   unsigned int mode, pickup;

@@ -95,27 +95,16 @@ SDTDCMotor *SDTDCMotor_setParams(SDTDCMotor *x, const json_value *j,
 
   _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Coils, coils, integer);
 
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Rpm, rpm, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Load, load, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Size, size, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Reson, reson, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearRatio, gearRatio, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Harshness, harshness, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, RotorGain, rotorGain, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearGain, gearGain, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, BrushGain, brushGain, integer);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, AirGain, airGain, integer);
-
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Rpm, rpm, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Load, load, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Size, size, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Reson, reson, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearRatio, gearRatio, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, Harshness, harshness, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, RotorGain, rotorGain, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, GearGain, gearGain, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, BrushGain, brushGain, double);
-  _SDT_SET_PARAM_FROM_JSON(DCMotor, x, j, AirGain, airGain, double);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, Rpm, rpm);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, Load, load);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, Size, size);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, Reson, reson);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, GearRatio, gearRatio);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, Harshness, harshness);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, RotorGain, rotorGain);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, GearGain, gearGain);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, BrushGain, brushGain);
+  _SDT_SET_DOUBLE_FROM_JSON(DCMotor, x, j, AirGain, airGain);
 
   return x;
 }
