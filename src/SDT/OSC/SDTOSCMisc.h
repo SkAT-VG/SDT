@@ -1,28 +1,3 @@
-// extern SDTOSCReturnCode SDTOSCScraping_log(void (*log)(const char *, ...),
-//                                            const char *key, SDTScraping *x);
-
-// extern SDTOSCReturnCode SDTOSCScraping_save(void (*log)(const char *, ...),
-//                                             const char *key, SDTScraping *x,
-//                                             const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCScraping_load(void (*log)(const char *, ...),
-//                                             const char *key, SDTScraping *x,
-//                                             const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCScraping_setGrain(SDTScraping *x,
-//                                                 const SDTOSCArgumentList
-//                                                 *args);
-
-// extern SDTOSCReturnCode SDTOSCScraping_setForce(SDTScraping *x,
-//                                                 const SDTOSCArgumentList
-//                                                 *args);
-
-// extern SDTOSCReturnCode SDTOSCScraping_setVelocity(
-//     SDTScraping *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCScraping(void (*log)(const char *, ...),
-//                                        const SDTOSCMessage *x);
-
 // extern SDTOSCReturnCode SDTOSCWindCavity_log(void (*log)(const char *, ...),
 //                                              const char *key, SDTWindCavity
 //                                              *x);
