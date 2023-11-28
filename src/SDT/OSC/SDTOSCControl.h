@@ -283,6 +283,71 @@ extern int SDTOSCRolling_setVelocity(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscscraping SDTOSCScraping
+OSC for #SDTScraping objects.
+@ingroup oscmethods
+@{
+*/
+
+/** @brief `/scraping/log <name>`
+
+Function that implements OSC JSON log for #SDTScraping objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping_log(const SDTOSCMessage *x);
+
+/** @brief `/scraping/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTScraping objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping_save(const SDTOSCMessage *x);
+
+/** @brief `/scraping/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTScraping objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping_load(const SDTOSCMessage *x);
+
+/** @brief `/scraping/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTScraping
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping_loads(const SDTOSCMessage *x);
+
+/** @brief `/scraping/...`
+
+Function that routes OSC commands for #SDTScraping objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping(const SDTOSCMessage *x);
+
+/** @brief `/scraping/grain <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping_setGrain(const SDTOSCMessage *x);
+
+/** @brief `/scraping/force <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping_setForce(const SDTOSCMessage *x);
+
+/** @brief `/scraping/velocity <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCScraping_setVelocity(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif

@@ -226,25 +226,24 @@ SDTMotor *SDTMotor_setParams(SDTMotor *x, const json_value *j,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(Motor, x, j, MaxDelay, maxDelay, integer,
                                   unsafe);
 
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Cycle, cycle, double);
   _SDT_SET_PARAM_FROM_JSON(Motor, x, j, NCylinders, nCylinders, integer);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, CylinderSize, cylinderSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, CompressionRatio, compressionRatio,
-                           double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, SparkTime, sparkTime, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Asymmetry, asymmetry, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Backfire, backfire, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, IntakeSize, intakeSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, ExtractorSize, extractorSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, ExhaustSize, exhaustSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Expansion, expansion, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, MufflerSize, mufflerSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, MufflerFeedback, mufflerFeedback,
-                           double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, OutletSize, outletSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Throttle, throttle, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Damp, damp, double);
-  _SDT_SET_PARAM_FROM_JSON(Motor, x, j, Dc, dc, double);
+
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, Cycle, cycle);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, CylinderSize, cylinderSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, CompressionRatio, compressionRatio);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, SparkTime, sparkTime);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, Asymmetry, asymmetry)
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, Backfire, backfire);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, IntakeSize, intakeSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, ExtractorSize, extractorSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, ExhaustSize, exhaustSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, Expansion, expansion);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, MufflerSize, mufflerSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, MufflerFeedback, mufflerFeedback);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, OutletSize, outletSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, Throttle, throttle);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, Damp, damp);
+  _SDT_SET_DOUBLE_FROM_JSON(Motor, x, j, Dc, dc);
 
   return x;
 }

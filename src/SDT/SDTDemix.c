@@ -242,15 +242,9 @@ SDTDemix *SDTDemix_setParams(SDTDemix *x, const json_value *j,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(Demix, x, j, Size, size, integer, unsafe);
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(Demix, x, j, Radius, radius, integer, unsafe);
 
-  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, Overlap, overlap, integer);
-  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, NoiseThreshold, noiseThreshold,
-                           integer);
-  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, TonalThreshold, tonalThreshold,
-                           integer);
-
-  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, Overlap, overlap, double);
-  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, NoiseThreshold, noiseThreshold, double);
-  _SDT_SET_PARAM_FROM_JSON(Demix, x, j, TonalThreshold, tonalThreshold, double);
+  _SDT_SET_DOUBLE_FROM_JSON(Demix, x, j, Overlap, overlap);
+  _SDT_SET_DOUBLE_FROM_JSON(Demix, x, j, NoiseThreshold, noiseThreshold);
+  _SDT_SET_DOUBLE_FROM_JSON(Demix, x, j, TonalThreshold, tonalThreshold);
 
   return x;
 }

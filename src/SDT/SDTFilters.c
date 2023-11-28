@@ -184,11 +184,8 @@ SDTEnvelope *SDTEnvelope_setParams(SDTEnvelope *x, const json_value *j,
                                    unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Attack, attack, integer);
-  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Release, release, integer);
-
-  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Attack, attack, double);
-  _SDT_SET_PARAM_FROM_JSON(Envelope, x, j, Release, release, double);
+  _SDT_SET_DOUBLE_FROM_JSON(Envelope, x, j, Attack, attack);
+  _SDT_SET_DOUBLE_FROM_JSON(Envelope, x, j, Release, release);
 
   return x;
 }

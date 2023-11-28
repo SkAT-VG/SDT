@@ -79,11 +79,9 @@ SDTZeroCrossing *SDTZeroCrossing_setParams(SDTZeroCrossing *x,
                                            const json_value *j,
                                            unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
-
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(ZeroCrossing, x, j, Size, size, integer,
                                   unsafe);
-  _SDT_SET_PARAM_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap, double);
-  _SDT_SET_PARAM_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap, integer);
+  _SDT_SET_DOUBLE_FROM_JSON(ZeroCrossing, x, j, Overlap, overlap);
 
   return x;
 }
@@ -211,18 +209,10 @@ SDTMyoelastic *SDTMyoelastic_setParams(SDTMyoelastic *x, const json_value *j,
                                        unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency, double);
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency, integer);
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency,
-                           double);
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency,
-                           integer);
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency,
-                           double);
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency,
-                           integer);
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, Threshold, threshold, double);
-  _SDT_SET_PARAM_FROM_JSON(Myoelastic, x, j, Threshold, threshold, integer);
+  _SDT_SET_DOUBLE_FROM_JSON(Myoelastic, x, j, DcFrequency, dcFrequency);
+  _SDT_SET_DOUBLE_FROM_JSON(Myoelastic, x, j, LowFrequency, lowFrequency);
+  _SDT_SET_DOUBLE_FROM_JSON(Myoelastic, x, j, HighFrequency, highFrequency);
+  _SDT_SET_DOUBLE_FROM_JSON(Myoelastic, x, j, Threshold, threshold);
 
   return x;
 }
@@ -367,12 +357,11 @@ SDTSpectralFeats *SDTSpectralFeats_setParams(SDTSpectralFeats *x,
 
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(SpectralFeats, x, j, Size, size, integer,
                                   unsafe);
-  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, Overlap, overlap, double);
-  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, Overlap, overlap, integer);
-  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MinFreq, minFreq, double);
-  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MinFreq, minFreq, integer);
-  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MaxFreq, maxFreq, double);
-  _SDT_SET_PARAM_FROM_JSON(SpectralFeats, x, j, MaxFreq, maxFreq, integer);
+
+  _SDT_SET_DOUBLE_FROM_JSON(SpectralFeats, x, j, Overlap, overlap);
+  _SDT_SET_DOUBLE_FROM_JSON(SpectralFeats, x, j, MinFreq, minFreq);
+  _SDT_SET_DOUBLE_FROM_JSON(SpectralFeats, x, j, MaxFreq, maxFreq);
+
   return x;
 }
 
@@ -621,10 +610,9 @@ SDTPitch *SDTPitch_setParams(SDTPitch *x, const json_value *j,
   if (!x || !j || j->type != json_object) return 0;
 
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(Pitch, x, j, Size, size, integer, unsafe);
-  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Overlap, overlap, double);
-  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Overlap, overlap, integer);
-  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Tolerance, tolerance, double);
-  _SDT_SET_PARAM_FROM_JSON(Pitch, x, j, Tolerance, tolerance, integer);
+
+  _SDT_SET_DOUBLE_FROM_JSON(Pitch, x, j, Overlap, overlap);
+  _SDT_SET_DOUBLE_FROM_JSON(Pitch, x, j, Tolerance, tolerance);
 
   return x;
 }

@@ -98,19 +98,12 @@ SDTReverb *SDTReverb_setParams(SDTReverb *x, const json_value *j,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(Reverb, x, j, MaxDelay, maxDelay, integer,
                                   unsafe);
 
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, XSize, xSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, YSize, ySize, double);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, ZSize, zSize, double);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Randomness, randomness, double);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time, time, double);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time1k, time1k, double);
-
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, XSize, xSize, integer);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, YSize, ySize, integer);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, ZSize, zSize, integer);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Randomness, randomness, integer);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time, time, integer);
-  _SDT_SET_PARAM_FROM_JSON(Reverb, x, j, Time1k, time1k, integer);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, XSize, xSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, YSize, ySize);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, ZSize, zSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, Randomness, randomness);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, Time, time);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, Time1k, time1k);
 
   return x;
 }
@@ -381,11 +374,8 @@ SDTPitchShift *SDTPitchShift_setParams(SDTPitchShift *x, const json_value *j,
   _SDT_SET_UNSAFE_PARAM_FROM_JSON(PitchShift, x, j, Oversample, oversample,
                                   integer, unsafe);
 
-  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Ratio, ratio, integer);
-  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Overlap, overlap, integer);
-
-  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Ratio, ratio, double);
-  _SDT_SET_PARAM_FROM_JSON(PitchShift, x, j, Overlap, overlap, double);
+  _SDT_SET_DOUBLE_FROM_JSON(PitchShift, x, j, Ratio, ratio);
+  _SDT_SET_DOUBLE_FROM_JSON(PitchShift, x, j, Overlap, overlap);
 
   return x;
 }

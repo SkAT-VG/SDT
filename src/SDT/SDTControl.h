@@ -468,18 +468,63 @@ extern SDTScraping *SDTScraping_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTScraping_free(SDTScraping *x);
 
-#define SDT_SCRAPING Scraping
-#define SDT_SCRAPING_NEW_ARGS
-#define SDT_SCRAPING_ATTRIBUTES(T, A)            \
-  A(T, grain, double, Grain, grain, double, 0.0) \
-  A(T, force, double, Force, force, double, 0.0) \
-  A(T, velocity, double, Velocity, velocity, double, 0.0)
+/** @brief Deep-copies a scraping object
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTScraping *SDTScraping_copy(SDTScraping *dest, const SDTScraping *src,
+                                     unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_SCRAPING)
-SDT_DEFINE_HASHMAP_H(SDT_SCRAPING)
-SDT_TYPE_MAKE_GETTERS_H(SDT_SCRAPING)
-SDT_JSON_SERIALIZE_H(SDT_SCRAPING)
-SDT_JSON_DESERIALIZE_H(SDT_SCRAPING)
+/** @brief Registers a scraping object into the scraping objects list with
+a unique ID.
+@param[in] x Scraping process instance to register
+@param[in] key Unique ID assigned to the scraping object instance
+@return Zero on success, otherwise one */
+extern int SDT_registerScraping(SDTScraping *x, const char *key);
+
+/** @brief Queries the scraping objects list by its unique ID.
+If a scraping object with the ID is present, a pointer to the scraping object is
+returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the scraping object instance
+@return Scraping process instance pointer */
+extern SDTScraping *SDT_getScraping(const char *key);
+
+/** @brief Unregisters a scraping object from the scraping objects list. If a
+scraping object with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the scraping object instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterScraping(const char *key);
+
+/** @brief Gets the grain of the surface.
+@return Surface grain */
+extern double SDTScraping_getGrain(const SDTScraping *x);
+
+/** @brief Gets the normal force of the scraping probe.
+@return Normal force of the scraping probe on the resonating surface */
+extern double SDTScraping_getForce(const SDTScraping *x);
+
+/** @brief Gets the scraping velocity.
+@return Scraping velocity */
+extern double SDTScraping_getVelocity(const SDTScraping *x);
+
+/** @brief Represent a scraping object as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTScraping_toJSON(const SDTScraping *x);
+
+/** @brief Initialize a scraping object from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTScraping *SDTScraping_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a scraping object from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTScraping *SDTScraping_setParams(SDTScraping *x, const json_value *j,
+                                          unsigned char unsafe);
 
 /** @brief Sets the grain of the surface.
 This parameter affects the density of the micro-impacts:

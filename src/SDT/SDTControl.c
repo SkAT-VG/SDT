@@ -55,13 +55,9 @@ SDTBouncing *SDTBouncing_setParams(SDTBouncing *x, const json_value *j,
                                    unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Restitution, restitution, integer);
-  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Height, height, integer);
-  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Irregularity, irregularity, integer);
-
-  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Restitution, restitution, double);
-  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Height, height, double);
-  _SDT_SET_PARAM_FROM_JSON(Bouncing, x, j, Irregularity, irregularity, double);
+  _SDT_SET_DOUBLE_FROM_JSON(Bouncing, x, j, Restitution, restitution);
+  _SDT_SET_DOUBLE_FROM_JSON(Bouncing, x, j, Height, height);
+  _SDT_SET_DOUBLE_FROM_JSON(Bouncing, x, j, Irregularity, irregularity);
 
   return x;
 }
@@ -159,19 +155,10 @@ SDTBreaking *SDTBreaking_setParams(SDTBreaking *x, const json_value *j,
                                    unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, StoredEnergy, storedEnergy, integer);
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, CrushingEnergy, crushingEnergy,
-                           integer);
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Granularity, granularity, integer);
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Fragmentation, fragmentation,
-                           integer);
-
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, StoredEnergy, storedEnergy, double);
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, CrushingEnergy, crushingEnergy,
-                           double);
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Granularity, granularity, double);
-  _SDT_SET_PARAM_FROM_JSON(Breaking, x, j, Fragmentation, fragmentation,
-                           double);
+  _SDT_SET_DOUBLE_FROM_JSON(Breaking, x, j, StoredEnergy, storedEnergy);
+  _SDT_SET_DOUBLE_FROM_JSON(Breaking, x, j, CrushingEnergy, crushingEnergy);
+  _SDT_SET_DOUBLE_FROM_JSON(Breaking, x, j, Granularity, granularity);
+  _SDT_SET_DOUBLE_FROM_JSON(Breaking, x, j, Fragmentation, fragmentation);
 
   return x;
 }
@@ -278,17 +265,9 @@ SDTCrumpling *SDTCrumpling_setParams(SDTCrumpling *x, const json_value *j,
                                      unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, CrushingEnergy, crushingEnergy,
-                           integer);
-  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Granularity, granularity, integer);
-  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Fragmentation, fragmentation,
-                           integer);
-
-  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, CrushingEnergy, crushingEnergy,
-                           double);
-  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Granularity, granularity, double);
-  _SDT_SET_PARAM_FROM_JSON(Crumpling, x, j, Fragmentation, fragmentation,
-                           double);
+  _SDT_SET_DOUBLE_FROM_JSON(Crumpling, x, j, CrushingEnergy, crushingEnergy);
+  _SDT_SET_DOUBLE_FROM_JSON(Crumpling, x, j, Granularity, granularity);
+  _SDT_SET_DOUBLE_FROM_JSON(Crumpling, x, j, Fragmentation, fragmentation);
 
   return x;
 }
@@ -388,11 +367,10 @@ SDTRolling *SDTRolling_setParams(SDTRolling *x, const json_value *j,
                                  unsigned char unsafe) {
   if (!x || !j || j->type != json_object) return 0;
 
-  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Grain, grain, double);
-  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Depth, depth, double);
-  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Mass, mass, double);
-  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Velocity, velocity, double);
-
+  _SDT_SET_DOUBLE_FROM_JSON(Rolling, x, j, Grain, grain);
+  _SDT_SET_DOUBLE_FROM_JSON(Rolling, x, j, Depth, depth);
+  _SDT_SET_DOUBLE_FROM_JSON(Rolling, x, j, Mass, mass);
+  _SDT_SET_DOUBLE_FROM_JSON(Rolling, x, j, Velocity, velocity);
   return x;
 }
 
@@ -451,11 +429,42 @@ SDTScraping *SDTScraping_new() {
 
 void SDTScraping_free(SDTScraping *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_SCRAPING)
-SDT_DEFINE_HASHMAP(SDT_SCRAPING, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_SCRAPING)
-SDT_JSON_SERIALIZE(SDT_SCRAPING)
-SDT_JSON_DESERIALIZE(SDT_SCRAPING)
+_SDT_COPY_FUNCTION(Scraping)
+
+_SDT_HASHMAP_FUNCTIONS(Scraping)
+
+double SDTScraping_getGrain(const SDTScraping *x) { return x->grain; }
+
+double SDTScraping_getForce(const SDTScraping *x) { return x->force; }
+
+double SDTScraping_getVelocity(const SDTScraping *x) { return x->velocity; }
+
+json_value *SDTScraping_toJSON(const SDTScraping *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "grain", json_double_new(SDTScraping_getGrain(x)));
+  json_object_push(obj, "force", json_double_new(SDTScraping_getForce(x)));
+  json_object_push(obj, "velocity",
+                   json_double_new(SDTScraping_getVelocity(x)));
+  return obj;
+}
+
+SDTScraping *SDTScraping_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  SDTScraping *y = SDTScraping_new();
+  return SDTScraping_setParams(y, x, 0);
+}
+
+SDTScraping *SDTScraping_setParams(SDTScraping *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_DOUBLE_FROM_JSON(Scraping, x, j, Grain, grain);
+  _SDT_SET_DOUBLE_FROM_JSON(Scraping, x, j, Force, force);
+  _SDT_SET_DOUBLE_FROM_JSON(Scraping, x, j, Velocity, velocity);
+
+  return x;
+}
 
 void SDTScraping_setGrain(SDTScraping *x, double f) {
   x->grain = SDT_fclip(f, 0.0, 1.0);

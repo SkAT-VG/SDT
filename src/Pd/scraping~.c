@@ -16,17 +16,9 @@ typedef struct _scraping {
   const char *key;
 } t_scraping;
 
-void scraping_grain(t_scraping *x, t_float f) {
-  SDTScraping_setGrain(x->scraping, f);
-}
-
-void scraping_force(t_scraping *x, t_float f) {
-  SDTScraping_setForce(x->scraping, f);
-}
-
-void scraping_velocity(t_scraping *x, t_float f) {
-  SDTScraping_setVelocity(x->scraping, f);
-}
+SDT_PD_SETTER(scraping, Scraping, scraping, Grain, )
+SDT_PD_SETTER(scraping, Scraping, scraping, Force, )
+SDT_PD_SETTER(scraping, Scraping, scraping, Velocity, )
 
 t_int *scraping_perform(t_int *w) {
   t_scraping *x = (t_scraping *)(w[1]);
@@ -67,11 +59,11 @@ void scraping_tilde_setup(void) {
                              (t_method)scraping_free, (long)sizeof(t_scraping),
                              CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(scraping_class, t_scraping, f);
-  class_addmethod(scraping_class, (t_method)scraping_grain, gensym("grain"),
+  class_addmethod(scraping_class, (t_method)scraping_setGrain, gensym("grain"),
                   A_FLOAT, 0);
-  class_addmethod(scraping_class, (t_method)scraping_force, gensym("force"),
+  class_addmethod(scraping_class, (t_method)scraping_setForce, gensym("force"),
                   A_FLOAT, 0);
-  class_addmethod(scraping_class, (t_method)scraping_velocity,
+  class_addmethod(scraping_class, (t_method)scraping_setVelocity,
                   gensym("velocity"), A_FLOAT, 0);
   class_addmethod(scraping_class, (t_method)scraping_dsp, gensym("dsp"), 0);
 }

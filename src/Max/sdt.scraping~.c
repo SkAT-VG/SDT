@@ -9,7 +9,6 @@
 typedef struct _scraping {
   t_pxobject ob;
   SDTScraping *scraping;
-  double grain, force, velocity;
   t_symbol *key;
 } t_scraping;
 
@@ -47,20 +46,9 @@ void scraping_assist(t_scraping *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(scraping, Scraping, scraping, "scraping~", "scraping process")
 
-void scraping_grain(t_scraping *x, void *attr, long ac, t_atom *av) {
-  x->grain = atom_getfloat(av);
-  SDTScraping_setGrain(x->scraping, x->grain);
-}
-
-void scraping_force(t_scraping *x, void *attr, long ac, t_atom *av) {
-  x->force = atom_getfloat(av);
-  SDTScraping_setForce(x->scraping, x->force);
-}
-
-void scraping_velocity(t_scraping *x, void *attr, long ac, t_atom *av) {
-  x->velocity = atom_getfloat(av);
-  SDTScraping_setVelocity(x->scraping, x->velocity);
-}
+SDT_MAX_ACCESSORS(scraping, Scraping, scraping, Grain, float, , )
+SDT_MAX_ACCESSORS(scraping, Scraping, scraping, Force, float, , )
+SDT_MAX_ACCESSORS(scraping, Scraping, scraping, Velocity, float, , )
 
 t_int *scraping_perform(t_int *w) {
   t_scraping *x = (t_scraping *)(w[1]);
@@ -111,17 +99,13 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(scraping, "1")
 
-  CLASS_ATTR_DOUBLE(c, "grain", 0, t_scraping, grain);
-  CLASS_ATTR_DOUBLE(c, "force", 0, t_scraping, force);
-  CLASS_ATTR_DOUBLE(c, "velocity", 0, t_scraping, velocity);
+  SDT_MAX_ATTRIBUTE(c, scraping, Grain, grain, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, scraping, Force, force, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, scraping, Velocity, velocity, float64, 0);
 
   CLASS_ATTR_FILTER_CLIP(c, "grain", 0.0, 1.0);
   CLASS_ATTR_FILTER_MIN(c, "force", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "velocity", 0.0);
-
-  CLASS_ATTR_ACCESSORS(c, "grain", NULL, (method)scraping_grain);
-  CLASS_ATTR_ACCESSORS(c, "force", NULL, (method)scraping_force);
-  CLASS_ATTR_ACCESSORS(c, "velocity", NULL, (method)scraping_velocity);
 
   CLASS_ATTR_ORDER(c, "grain", 0, "2");
   CLASS_ATTR_ORDER(c, "force", 0, "3");
