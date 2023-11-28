@@ -474,6 +474,8 @@ install_max:
 	@mkdir -p "$(DSTDIR)/$(MAX_PACKNAME)/externals"
 	@mkdir -p "$(DSTDIR)/$(MAX_PACKNAME)/support"
 	@cp -a $(ROOT)/MaxPackage/* "$(DSTDIR)/$(MAX_PACKNAME)"
+	@cp $(ROOT)/LICENSE.txt "$(DSTDIR)/$(MAX_PACKNAME)"
+	@cp $(ROOT)/COPYING.txt "$(DSTDIR)/$(MAX_PACKNAME)"
 	@cp -a $(CORE_ARTIFACT) "$(DSTDIR)/$(MAX_PACKNAME)/support"
 	@cp -a $(MAX_EXTS) "$(DSTDIR)/$(MAX_PACKNAME)/externals"
 	$(info Sound Design Toolkit for Max \
