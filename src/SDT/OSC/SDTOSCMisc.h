@@ -1,32 +1,3 @@
-// extern SDTOSCReturnCode SDTOSCRolling_log(void (*log)(const char *, ...),
-//                                           const char *key, SDTRolling *x);
-
-// extern SDTOSCReturnCode SDTOSCRolling_save(void (*log)(const char *, ...),
-//                                            const char *key, SDTRolling *x,
-//                                            const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCRolling_load(void (*log)(const char *, ...),
-//                                            const char *key, SDTRolling *x,
-//                                            const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCRolling_setGrain(SDTRolling *x,
-//                                                const SDTOSCArgumentList
-//                                                *args);
-
-// extern SDTOSCReturnCode SDTOSCRolling_setDepth(SDTRolling *x,
-//                                                const SDTOSCArgumentList
-//                                                *args);
-
-// extern SDTOSCReturnCode SDTOSCRolling_setMass(SDTRolling *x,
-//                                               const SDTOSCArgumentList
-//                                               *args);
-
-// extern SDTOSCReturnCode SDTOSCRolling_setVelocity(
-//     SDTRolling *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCRolling(void (*log)(const char *, ...),
-//                                       const SDTOSCMessage *x);
-
 // extern SDTOSCReturnCode SDTOSCScraping_log(void (*log)(const char *, ...),
 //                                            const char *key, SDTScraping *x);
 
