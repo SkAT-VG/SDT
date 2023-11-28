@@ -355,14 +355,46 @@ SDTRolling *SDTRolling_new() {
   x->ballFlight = 0.0;
   return x;
 }
-
 void SDTRolling_free(SDTRolling *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_ROLLING)
-SDT_DEFINE_HASHMAP(SDT_ROLLING, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_ROLLING)
-SDT_JSON_SERIALIZE(SDT_ROLLING)
-SDT_JSON_DESERIALIZE(SDT_ROLLING)
+_SDT_COPY_FUNCTION(Rolling)
+
+_SDT_HASHMAP_FUNCTIONS(Rolling)
+
+double SDTRolling_getGrain(const SDTRolling *x) { return x->grain; }
+
+double SDTRolling_getDepth(const SDTRolling *x) { return x->depth; }
+
+double SDTRolling_getMass(const SDTRolling *x) { return x->mass; }
+
+double SDTRolling_getVelocity(const SDTRolling *x) { return x->velocity; }
+
+json_value *SDTRolling_toJSON(const SDTRolling *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "grain", json_double_new(SDTRolling_getGrain(x)));
+  json_object_push(obj, "depth", json_double_new(SDTRolling_getDepth(x)));
+  json_object_push(obj, "mass", json_double_new(SDTRolling_getMass(x)));
+  json_object_push(obj, "velocity", json_double_new(SDTRolling_getVelocity(x)));
+  return obj;
+}
+
+SDTRolling *SDTRolling_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTRolling *y = SDTRolling_new();
+  return SDTRolling_setParams(y, x, 0);
+}
+
+SDTRolling *SDTRolling_setParams(SDTRolling *x, const json_value *j,
+                                 unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Grain, grain, double);
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Depth, depth, double);
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Mass, mass, double);
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Velocity, velocity, double);
+
+  return x;
+}
 
 void SDTRolling_setGrain(SDTRolling *x, double f) {
   x->grain = SDT_fclip(f, 0.0, 1.0);

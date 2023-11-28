@@ -358,19 +358,67 @@ extern SDTRolling *SDTRolling_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTRolling_free(SDTRolling *x);
 
-#define SDT_ROLLING Rolling
-#define SDT_ROLLING_NEW_ARGS
-#define SDT_ROLLING_ATTRIBUTES(T, A)             \
-  A(T, grain, double, Grain, grain, double, 0.0) \
-  A(T, depth, double, Depth, depth, double, 0.0) \
-  A(T, mass, double, Mass, mass, double, 0.0)    \
-  A(T, velocity, double, Velocity, velocity, double, 0.0)
+/** @brief Deep-copies a rolling object
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTRolling *SDTRolling_copy(SDTRolling *dest, const SDTRolling *src,
+                                   unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_ROLLING)
-SDT_DEFINE_HASHMAP_H(SDT_ROLLING)
-SDT_TYPE_MAKE_GETTERS_H(SDT_ROLLING)
-SDT_JSON_SERIALIZE_H(SDT_ROLLING)
-SDT_JSON_DESERIALIZE_H(SDT_ROLLING)
+/** @brief Registers a rolling object into the rolling objects list with a
+unique ID.
+@param[in] x Rolling process instance to register
+@param[in] key Unique ID assigned to the rolling object instance
+@return Zero on success, otherwise one */
+extern int SDT_registerRolling(SDTRolling *x, const char *key);
+
+/** @brief Queries the rolling objects list by its unique ID. If a rolling
+object with the ID is present, a pointer to the rolling object is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the rolling object instance
+@return Rolling process instance pointer */
+extern SDTRolling *SDT_getRolling(const char *key);
+
+/** @brief Unregisters a rolling object from the rolling objects list. If a
+rolling object with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the rolling object instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterRolling(const char *key);
+
+/** @brief Gets the grain of the surface.
+@return Surface grain */
+extern double SDTRolling_getGrain(const SDTRolling *x);
+
+/** @brief Gets the average bump depth.
+@return Average depth of the surface bumps */
+extern double SDTRolling_getDepth(const SDTRolling *x);
+
+/** @brief Gets the rolling mass.
+@return Mass of the rolling object, in Kg */
+extern double SDTRolling_getMass(const SDTRolling *x);
+
+/** @brief Gets the rolling velocity.
+@return Rolling velocity */
+extern double SDTRolling_getVelocity(const SDTRolling *x);
+
+/** @brief Represent a rolling object as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTRolling_toJSON(const SDTRolling *x);
+
+/** @brief Initialize a rolling object from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTRolling *SDTRolling_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a rolling object from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTRolling *SDTRolling_setParams(SDTRolling *x, const json_value *j,
+                                        unsigned char unsafe);
 
 /** @brief Sets the grain of the surface.
 This parameter affects the density of the micro-impacts:
