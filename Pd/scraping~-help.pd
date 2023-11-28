@@ -3,7 +3,7 @@
 #X obj 98 566 dac~;
 #X text 416 559 Args: object ID \, n. of modes \, n. of pickups;
 #X text 300 429 Args: 1st obj ID \, 2nd obj ID \, n. of outlets;
-#X msg 498 9 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
+#X msg 498 9 Sound Design Toolkit \; (C) 2001 - 2023 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 227 97 vsl 15 128 1e-05 1 1 0 empty grain empty 0 -9 0 10 -262144

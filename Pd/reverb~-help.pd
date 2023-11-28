@@ -38,7 +38,7 @@
 #X text 50 310 Dry;
 #X text 123 311 Wet;
 #X text 18 6 reverb~ - Signal reverberator;
-#X msg 632 10 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
+#X msg 632 10 Sound Design Toolkit \; (C) 2001 - 2023 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X msg 680 206 \; xSize 7 \; ySize 9 \; zSize 11 \; randomness 0.33

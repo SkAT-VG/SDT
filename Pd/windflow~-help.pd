@@ -5,7 +5,7 @@
 #X floatatom 114 206 5 0 0 0 - - -;
 #X text 90 43 Wind speed;
 #X obj 114 260 dac~;
-#X msg 294 9 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
+#X msg 294 9 Sound Design Toolkit \; (C) 2001 - 2023 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X text 11 4 windflow~ - Wind against solid surfaces;
