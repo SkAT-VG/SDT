@@ -43,6 +43,20 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
   if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
     return SDTOSCZeroCrossing(x);
+#ifdef SDT_VERBOSE
+  // In verbose builds, where memory tracking is active,
+  // an OSC message to /_arenaWarnNonEmpty will print
+  // all non-deallocated SDT dynamic memory allocations
+  // on the warning-level logger.
+  // Please, consider that it will print warnings also for
+  // the memory occupied by the OSC message itself.
+  if (!strcmp("_arenaWarnNonEmpty", k)) {
+    SDT_LOG(WARN, "--- Start of memory warnings ----------");
+    _SDT_arenaWarnNonEmpty();
+    SDT_LOG(WARN, "--- End of memory warnings ------------");
+    return 0;
+  }
+#endif
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified container is "
                       "not implemented: % s\n %s\n ",

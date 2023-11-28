@@ -19,8 +19,9 @@ Functions and structures to track memory leaks
 extern "C" {
 #endif
 
-/** @brief Warn if SDT's memory is not empty */
-extern void _SDT_arenaWarnNonEmpty();
+/** @brief Warn if SDT's memory is not empty
+@return Zero if empty, non-zero otherwise */
+extern int _SDT_arenaWarnNonEmpty();
 
 /** @brief Reset SDT's memory trace */
 extern void _SDT_resetArena();

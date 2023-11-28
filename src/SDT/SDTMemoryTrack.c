@@ -165,17 +165,20 @@ void _SDT_resetArena() {
   heap_dll = (SDTDoublyLinkedList*)0;
 }
 
-void _SDT_arenaWarnNonEmpty() {
-#ifdef SDT_WARN
-  if (!heap_dll) return;
+int _SDT_arenaWarnNonEmpty() {
+  int r = 0;
+  if (!heap_dll) return r;
   SDTMallocInfo* minfo;
   for (SDTDLLNode* node = SDTDoublyLinkedList_getTop(heap_dll); node;
        node = SDTDLLNode_getPrev(node)) {
+    r = 1;
+#ifdef SDT_WARN
     minfo = (SDTMallocInfo*)node->ptr;
     SDT_log(SDT_LOG_LEVEL_WARN, minfo->file, minfo->line, minfo->func,
             "Memory not freed! %p\n", minfo->ptr);
-  }
 #endif
+  }
+  return r;
 }
 
 void* _SDT_mallocTrack(size_t size, const char* file, unsigned int line,
