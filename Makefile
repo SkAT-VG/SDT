@@ -424,16 +424,16 @@ install_core:
 	$(call check_dst_string)
 	$(call check_dst_exists)
 ifeq ("$(TARGET)", "macosx")
-	@mkdir -p $(DSTDIR)/$(CORE_SUBDIR)
-	@cp -a $(CORE_FRAMEWORK) $(DSTDIR)/$(CORE_SUBDIR)
+	@mkdir -p "$(DSTDIR)/$(CORE_SUBDIR)"
+	@cp -a $(CORE_FRAMEWORK) "$(DSTDIR)/$(CORE_SUBDIR)"
 else
-	@mkdir -p $(DSTDIR)/$(CORE_HEADER_SUBDIR)/OSC
-	@mkdir -p $(DSTDIR)/$(CORE_LIB_SUBDIR)
-	@cp -a $(CORE_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
-	@cp -a $(CORE_DIR)/OSC/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)/OSC
-	@cp -a $(JSONP_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
-	@cp -a $(JSONB_DIR)/*.h $(DSTDIR)/$(CORE_HEADER_SUBDIR)
-	@cp -a $(CORE_LIB) $(DSTDIR)/$(CORE_LIB_SUBDIR)
+	@mkdir -p "$(DSTDIR)/$(CORE_HEADER_SUBDIR)/OSC"
+	@mkdir -p "$(DSTDIR)/$(CORE_LIB_SUBDIR)"
+	@cp -a $(CORE_DIR)/*.h "$(DSTDIR)/$(CORE_HEADER_SUBDIR)"
+	@cp -a $(CORE_DIR)/OSC/*.h "$(DSTDIR)/$(CORE_HEADER_SUBDIR)/OSC"
+	@cp -a $(JSONP_DIR)/*.h "$(DSTDIR)/$(CORE_HEADER_SUBDIR)"
+	@cp -a $(JSONB_DIR)/*.h "$(DSTDIR)/$(CORE_HEADER_SUBDIR)"
+	@cp -a $(CORE_LIB) "$(DSTDIR)/$(CORE_LIB_SUBDIR)"
 endif
 	$(info Sound Design Toolkit 'Core Library' installed in '$(DSTDIR)')
 
@@ -442,10 +442,10 @@ uninstall_core:
 	$(call check_dst_string)
 	$(call check_dst_exists)
 ifeq ("$(TARGET)", "macosx")
-	@rm -rf $(DSTDIR)/$(CORE_SUBDIR)
+	@rm -rf "$(DSTDIR)/$(CORE_SUBDIR)"
 else
-	@rm -rf $(DSTDIR)/$(CORE_HEADER_SUBDIR)
-	@rm -f $(DSTDIR)/$(CORE_LIB_SUBDIR)/$(CORE_FNAME)
+	@rm -rf "$(DSTDIR)/$(CORE_HEADER_SUBDIR)"
+	@rm -f "$(DSTDIR)/$(CORE_LIB_SUBDIR)/$(CORE_FNAME)"
 endif
 	$(info Sound Design Toolkit 'Core Library' removed from '$(DSTDIR)')
 
@@ -453,9 +453,9 @@ install_pd:
 	$(call get_dstdir, $(DEFAULT_PD_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@mkdir -p $(DSTDIR)/$(PD_SUBDIR)
-	@cp -a $(PDPATCH_DIR)/* $(DSTDIR)/$(PD_SUBDIR)
-	@cp -a $(PD_LIB) $(DSTDIR)/$(PD_SUBDIR)
+	@mkdir -p "$(DSTDIR)/$(PD_SUBDIR)"
+	@cp -a $(PDPATCH_DIR)/* "$(DSTDIR)/$(PD_SUBDIR)"
+	@cp -a $(PD_LIB) "$(DSTDIR)/$(PD_SUBDIR)"
 	$(info Sound Design Toolkit for PureData \
 			installed in '$(DSTDIR)/$(PD_SUBDIR)')
 
@@ -463,7 +463,7 @@ uninstall_pd:
 	$(call get_dstdir, $(DEFAULT_PD_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@rm -rf $(DSTDIR)/$(PD_SUBDIR)
+	@rm -rf "$(DSTDIR)/$(PD_SUBDIR)"
 	$(info Sound Design Toolkit for PureData \
 	       removed from '$(DSTDIR)/$(PD_SUBDIR)')
 
@@ -471,11 +471,11 @@ install_max:
 	$(call get_dstdir, $(DEFAULT_MAX_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@mkdir -p $(DSTDIR)/$(MAX_PACKNAME)/externals
-	@mkdir -p $(DSTDIR)/$(MAX_PACKNAME)/support
-	@cp -a $(ROOT)/MaxPackage/* $(DSTDIR)/$(MAX_PACKNAME)
-	@cp -a $(CORE_ARTIFACT) $(DSTDIR)/$(MAX_PACKNAME)/support
-	@cp -a $(MAX_EXTS) $(DSTDIR)/$(MAX_PACKNAME)/externals
+	@mkdir -p "$(DSTDIR)/$(MAX_PACKNAME)/externals"
+	@mkdir -p "$(DSTDIR)/$(MAX_PACKNAME)/support"
+	@cp -a $(ROOT)/MaxPackage/* "$(DSTDIR)/$(MAX_PACKNAME)"
+	@cp -a $(CORE_ARTIFACT) "$(DSTDIR)/$(MAX_PACKNAME)/support"
+	@cp -a $(MAX_EXTS) "$(DSTDIR)/$(MAX_PACKNAME)/externals"
 	$(info Sound Design Toolkit for Max \
 			installed in '$(DSTDIR)/$(MAX_PACKNAME)')
 
@@ -483,7 +483,7 @@ uninstall_max:
 	$(call get_dstdir, $(DEFAULT_MAX_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@rm -rf $(DSTDIR)/$(MAX_PACKNAME)
+	@rm -rf "$(DSTDIR)/$(MAX_PACKNAME)"
 	$(info Sound Design Toolkit for Max \
 	       removed from '$(DSTDIR)/$(MAX_PACKNAME)')
 # -----------------------------------------------------------------------------
