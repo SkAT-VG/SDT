@@ -159,3 +159,39 @@ _SDTOSC_FLOAT_SETTER_FUNCTION(Rolling, depth, Depth, double, )
 _SDTOSC_FLOAT_SETTER_FUNCTION(Rolling, mass, Mass, double, )
 _SDTOSC_FLOAT_SETTER_FUNCTION(Rolling, velocity, Velocity, double, )
 /* ------------------------------------------------------------------------- */
+
+/* --- Scraping ------------------------------------------------------------ */
+int SDTOSCScraping(const SDTOSCMessage* x) {
+  SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
+  const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
+  if (SDTOSCAddress_getDepth(a) < 2) {
+    SDTOSC_MESSAGE_LOGA(ERROR,
+                        "\n  %s\n  [MISSING METHOD] Please, specify an OSC "
+                        "method from the container\n  %s\n",
+                        x, SDTOSC_rtfm_string());
+    return 1;
+  }
+  const char* k = SDTOSCAddress_getNode(a, 1);
+  if (!strcmp("log", k)) return SDTOSCScraping_log(x);
+  if (!strcmp("save", k)) return SDTOSCScraping_save(x);
+  if (!strcmp("load", k)) return SDTOSCScraping_load(x);
+  if (!strcmp("loads", k)) return SDTOSCScraping_loads(x);
+  if (!strcmp("grain", k)) return SDTOSCScraping_setGrain(x);
+  if (!strcmp("force", k)) return SDTOSCScraping_setForce(x);
+  if (!strcmp("velocity", k)) return SDTOSCScraping_setVelocity(x);
+  SDTOSC_MESSAGE_LOGA(ERROR,
+                      "\n  %s\n  [NOT IMPLEMENTED] The specified method is not"
+                      " implemented: % s\n %s\n ",
+                      x, k, SDTOSC_rtfm_string());
+  return 2;
+}
+
+_SDTOSC_LOG_FUNCTION(Scraping)
+_SDTOSC_SAVE_FUNCTION(Scraping)
+_SDTOSC_LOAD_FUNCTION(Scraping, )
+_SDTOSC_LOADS_FUNCTION(Scraping, )
+
+_SDTOSC_FLOAT_SETTER_FUNCTION(Scraping, grain, Grain, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Scraping, force, Force, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(Scraping, velocity, Velocity, double, )
+/* ------------------------------------------------------------------------- */
