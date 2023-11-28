@@ -393,6 +393,11 @@ SDTRolling *SDTRolling_setParams(SDTRolling *x, const json_value *j,
   _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Mass, mass, double);
   _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Velocity, velocity, double);
 
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Grain, grain, integer);
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Depth, depth, integer);
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Mass, mass, integer);
+  _SDT_SET_PARAM_FROM_JSON(Rolling, x, j, Velocity, velocity, integer);
+
   return x;
 }
 
@@ -451,11 +456,46 @@ SDTScraping *SDTScraping_new() {
 
 void SDTScraping_free(SDTScraping *x) { free(x); }
 
-SDT_TYPE_COPY(SDT_SCRAPING)
-SDT_DEFINE_HASHMAP(SDT_SCRAPING, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_SCRAPING)
-SDT_JSON_SERIALIZE(SDT_SCRAPING)
-SDT_JSON_DESERIALIZE(SDT_SCRAPING)
+_SDT_COPY_FUNCTION(Scraping)
+
+_SDT_HASHMAP_FUNCTIONS(Scraping)
+
+double SDTScraping_getGrain(const SDTScraping *x) { return x->grain; }
+
+double SDTScraping_getForce(const SDTScraping *x) { return x->force; }
+
+double SDTScraping_getVelocity(const SDTScraping *x) { return x->velocity; }
+
+json_value *SDTScraping_toJSON(const SDTScraping *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "grain", json_double_new(SDTScraping_getGrain(x)));
+  json_object_push(obj, "force", json_double_new(SDTScraping_getForce(x)));
+  json_object_push(obj, "velocity",
+                   json_double_new(SDTScraping_getVelocity(x)));
+  return obj;
+}
+
+SDTScraping *SDTScraping_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  SDTScraping *y = SDTScraping_new();
+  return SDTScraping_setParams(y, x, 0);
+}
+
+SDTScraping *SDTScraping_setParams(SDTScraping *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Scraping, x, j, Grain, grain, double);
+  _SDT_SET_PARAM_FROM_JSON(Scraping, x, j, Force, force, double);
+  _SDT_SET_PARAM_FROM_JSON(Scraping, x, j, Velocity, velocity, double);
+
+  _SDT_SET_PARAM_FROM_JSON(Scraping, x, j, Grain, grain, integer);
+  _SDT_SET_PARAM_FROM_JSON(Scraping, x, j, Force, force, integer);
+  _SDT_SET_PARAM_FROM_JSON(Scraping, x, j, Velocity, velocity, integer);
+
+  return x;
+}
 
 void SDTScraping_setGrain(SDTScraping *x, double f) {
   x->grain = SDT_fclip(f, 0.0, 1.0);
