@@ -9,7 +9,6 @@
 typedef struct _rolling {
   t_pxobject ob;
   SDTRolling *rolling;
-  double grain, depth, mass, velocity;
   t_symbol *key;
 } t_rolling;
 
@@ -47,25 +46,10 @@ void rolling_assist(t_rolling *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(rolling, Rolling, rolling, "rolling~", "rolling process")
 
-void rolling_grain(t_rolling *x, void *attr, long ac, t_atom *av) {
-  x->grain = atom_getfloat(av);
-  SDTRolling_setGrain(x->rolling, x->grain);
-}
-
-void rolling_depth(t_rolling *x, void *attr, long ac, t_atom *av) {
-  x->depth = atom_getfloat(av);
-  SDTRolling_setDepth(x->rolling, x->depth);
-}
-
-void rolling_mass(t_rolling *x, void *attr, long ac, t_atom *av) {
-  x->mass = atom_getfloat(av);
-  SDTRolling_setMass(x->rolling, x->mass);
-}
-
-void rolling_velocity(t_rolling *x, void *attr, long ac, t_atom *av) {
-  x->velocity = atom_getfloat(av);
-  SDTRolling_setVelocity(x->rolling, x->velocity);
-}
+SDT_MAX_ACCESSORS(rolling, Rolling, rolling, Grain, float, , )
+SDT_MAX_ACCESSORS(rolling, Rolling, rolling, Depth, float, , )
+SDT_MAX_ACCESSORS(rolling, Rolling, rolling, Mass, float, , )
+SDT_MAX_ACCESSORS(rolling, Rolling, rolling, Velocity, float, , )
 
 t_int *rolling_perform(t_int *w) {
   t_rolling *x = (t_rolling *)(w[1]);
@@ -115,19 +99,14 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(rolling, "1")
 
-  CLASS_ATTR_DOUBLE(c, "grain", 0, t_rolling, grain);
-  CLASS_ATTR_DOUBLE(c, "depth", 0, t_rolling, depth);
-  CLASS_ATTR_DOUBLE(c, "mass", 0, t_rolling, mass);
-  CLASS_ATTR_DOUBLE(c, "velocity", 0, t_rolling, velocity);
+  SDT_MAX_ATTRIBUTE(c, rolling, Grain, grain, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, rolling, Depth, depth, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, rolling, Mass, mass, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, rolling, Velocity, velocity, float64, 0);
 
   CLASS_ATTR_FILTER_CLIP(c, "grain", 0.0, 1.0);
   CLASS_ATTR_FILTER_MIN(c, "depth", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "mass", 0.0);
-
-  CLASS_ATTR_ACCESSORS(c, "grain", NULL, (method)rolling_grain);
-  CLASS_ATTR_ACCESSORS(c, "depth", NULL, (method)rolling_depth);
-  CLASS_ATTR_ACCESSORS(c, "mass", NULL, (method)rolling_mass);
-  CLASS_ATTR_ACCESSORS(c, "velocity", NULL, (method)rolling_velocity);
 
   CLASS_ATTR_ORDER(c, "grain", 0, "2");
   CLASS_ATTR_ORDER(c, "depth", 0, "3");
