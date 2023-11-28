@@ -116,7 +116,7 @@ void TestSDT_functionName(CuTest* tc)
 }
 */
 
-#ifdef SDT_DEBUG
+#ifdef SDT_VERBOSE
 #define SDT_TEST_BEGIN() \
   _SDT_resetArena();     \
   SDT_LOG(INFO, "\n");   \
