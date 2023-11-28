@@ -211,6 +211,78 @@ extern int SDTOSCCrumpling(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscrolling SDTOSCRolling
+OSC for #SDTRolling objects.
+@ingroup oscmethods
+@{
+*/
+
+/** @brief `/rolling/log <name>`
+
+Function that implements OSC JSON log for #SDTRolling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_log(const SDTOSCMessage *x);
+
+/** @brief `/rolling/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTRolling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_save(const SDTOSCMessage *x);
+
+/** @brief `/rolling/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTRolling objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_load(const SDTOSCMessage *x);
+
+/** @brief `/rolling/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTRolling
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_loads(const SDTOSCMessage *x);
+
+/** @brief `/rolling/...`
+
+Function that routes OSC commands for #SDTRolling objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling(const SDTOSCMessage *x);
+
+/** @brief `/rolling/grain <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_setGrain(const SDTOSCMessage *x);
+
+/** @brief `/rolling/depth <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_setDepth(const SDTOSCMessage *x);
+
+/** @brief `/rolling/mass <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_setMass(const SDTOSCMessage *x);
+
+/** @brief `/rolling/velocity <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCRolling_setVelocity(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif
