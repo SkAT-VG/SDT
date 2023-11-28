@@ -61,6 +61,8 @@ extern int SDTHashmap_empty(const SDTHashmap *x);
     if (!hashmap_##TYPENAME) return 1;                                         \
     if (SDTHashmap_del(hashmap_##TYPENAME, key)) return 1;                     \
     if (SDTHashmap_empty(hashmap_##TYPENAME)) {                                \
+      SDT_LOGA(DEBUG, "Deleting hashmap (was emptied): %p\n",                  \
+               hashmap_##TYPENAME);                                            \
       SDTHashmap_free(hashmap_##TYPENAME);                                     \
       hashmap_##TYPENAME = NULL;                                               \
     }                                                                          \
