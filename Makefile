@@ -303,7 +303,7 @@ $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
 # -----------------------------------------------------------------------------
 
 # --- Max ---------------------------------------------------------------------
-MAX_DIR=$(SRC_DIR)/Max7
+MAX_DIR=$(SRC_DIR)/Max
 MAXSDK_DIR=$(THIRDP_DIR)/max-sdk-base/c74support
 MAX_PACKNAME=Sound Design Toolkit
 
