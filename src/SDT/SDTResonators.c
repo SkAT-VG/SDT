@@ -281,6 +281,7 @@ int SDT_unregisterResonator(const char *key) {
   if (!hashmap_Resonator) return 1;
   if (SDTHashmap_del(hashmap_Resonator, key)) return 1;
   if (SDTHashmap_empty(hashmap_Resonator)) {
+    SDT_LOGA(DEBUG, "Deleting hashmap (was emptied): %p\n", hashmap_Resonator);
     SDTHashmap_free(hashmap_Resonator);
     hashmap_Resonator = NULL;
   }

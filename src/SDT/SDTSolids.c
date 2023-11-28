@@ -1,8 +1,8 @@
 #include "SDTSolids.h"
+#include "SDTCommon.h"
+#include "SDTStructs.h"
 
 #include <stdlib.h>
-
-#include "SDTStructs.h"
 
 #define HASHMAP_SIZE 59
 
@@ -58,5 +58,15 @@ int SDT_unregisterInteractor(char *key0, char *key1) {
     return 1;
   SDTHashmap_del(interactors0, key0);
   SDTHashmap_del(interactors1, key1);
+  if (SDTHashmap_empty(interactors0)) {
+    SDT_LOGA(DEBUG, "Deleting hashmap (was emptied): %p\n", interactors0);
+    SDTHashmap_free(interactors0);
+    interactors0 = NULL;
+  }
+  if (SDTHashmap_empty(interactors1)) {
+    SDT_LOGA(DEBUG, "Deleting hashmap (was emptied): %p\n", interactors1);
+    SDTHashmap_free(interactors1);
+    interactors1 = NULL;
+  }
   return 0;
 }
