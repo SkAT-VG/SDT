@@ -305,6 +305,7 @@ $(PD_BUILDDIR)/%.o: $(PD_DIR)/%.c | $(PD_BUILDDIR)
 # --- Max ---------------------------------------------------------------------
 MAX_DIR=$(SRC_DIR)/Max7
 MAXSDK_DIR=$(THIRDP_DIR)/max-sdk-base/c74support
+MAX_PACKNAME=Sound Design Toolkit
 
 #  --- Version ---
 max_version:; @echo $(SDT_MAX_VERSION)
@@ -319,7 +320,8 @@ SDT_MAX_VERSION:=$(subst ",,$(SDT_MAX_VERSION))
 INCLUDE_MAX_SDK=-I$(MAXSDK_DIR)/max-includes -I$(MAXSDK_DIR)/msp-includes
 MAX_CFLAGS=-DDENORM_WANT_FIX=1 -DNO_TRANSLATION_SUPPORT=1 \
            -DC74_NO_DEPRECATION -fvisibility=hidden \
-					 -Wno-unused-function -DSDT_MAX_ver="$(SDT_MAX_VERSION)"
+           -Wno-unused-function \
+           -DSDT_MAX_ver="$(SDT_MAX_VERSION)" -DSDT_MAX_PACKNAME="$(MAX_PACKNAME)"
 
 ifeq ("$(TARGET)", "win32")
 	LINK_MAX_SDK=-L$(MAXSDK_DIR)/max-includes \
@@ -397,7 +399,6 @@ full_version:; @echo $(SDT_FULL_VERSION)
 # --- Un/Installers -----------------------------------------------------------
 CORE_SUBDIR=SDT
 PD_SUBDIR=SDT
-MAX_SUBDIR="Sound Design Toolkit"
 DEFAULT_CORE_DSTDIR=
 DEFAULT_PD_DSTDIR=
 DEFAULT_MAX_DSTDIR=
@@ -470,21 +471,21 @@ install_max:
 	$(call get_dstdir, $(DEFAULT_MAX_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@mkdir -p $(DSTDIR)/$(MAX_SUBDIR)/externals
-	@mkdir -p $(DSTDIR)/$(MAX_SUBDIR)/support
-	@cp -a $(ROOT)/MaxPackage/* $(DSTDIR)/$(MAX_SUBDIR)
-	@cp -a $(CORE_ARTIFACT) $(DSTDIR)/$(MAX_SUBDIR)/support
-	@cp -a $(MAX_EXTS) $(DSTDIR)/$(MAX_SUBDIR)/externals
+	@mkdir -p $(DSTDIR)/$(MAX_PACKNAME)/externals
+	@mkdir -p $(DSTDIR)/$(MAX_PACKNAME)/support
+	@cp -a $(ROOT)/MaxPackage/* $(DSTDIR)/$(MAX_PACKNAME)
+	@cp -a $(CORE_ARTIFACT) $(DSTDIR)/$(MAX_PACKNAME)/support
+	@cp -a $(MAX_EXTS) $(DSTDIR)/$(MAX_PACKNAME)/externals
 	$(info Sound Design Toolkit for Max \
-			installed in '$(DSTDIR)/$(MAX_SUBDIR)')
+			installed in '$(DSTDIR)/$(MAX_PACKNAME)')
 
 uninstall_max:
 	$(call get_dstdir, $(DEFAULT_MAX_DSTDIR))
 	$(call check_dst_string)
 	$(call check_dst_exists)
-	@rm -rf $(DSTDIR)/$(MAX_SUBDIR)
+	@rm -rf $(DSTDIR)/$(MAX_PACKNAME)
 	$(info Sound Design Toolkit for Max \
-	       removed from '$(DSTDIR)/$(MAX_SUBDIR)')
+	       removed from '$(DSTDIR)/$(MAX_PACKNAME)')
 # -----------------------------------------------------------------------------
 
 .NOTINTERMEDIATE: $(NOTINTERMEDIATE)
