@@ -159,8 +159,7 @@ extern SDTFluidFlow *SDTFluidFlow_copy(SDTFluidFlow *dest,
                                        const SDTFluidFlow *src,
                                        unsigned char unsafe);
 
-/** @brief Registers an fluid flow into the myoelastic
-feature extractors list with a unique ID.
+/** @brief Registers a fluid flow into the fluid flows list with a unique ID.
 @param[in] x FluidFlow instance to register
 @param[in] key Unique ID assigned to the fluid flow instance
 @return Zero on success, otherwise one */

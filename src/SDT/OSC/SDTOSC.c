@@ -66,8 +66,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCInteractor(log, sub);
   // else if (!strcmp("project", method))
   //   return_code = SDTOSCProject(log, sub);
-  // else if (!strcmp("fluidflow", method))
-  //   return_code = SDTOSCFluidFlow(log, sub);
   // else if (!strcmp("rolling", method))
   //   return_code = SDTOSCRolling(log, sub);
   // else if (!strcmp("scraping", method))
