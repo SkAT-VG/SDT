@@ -22,7 +22,7 @@ SDT_PD_SETTER(explosion, Explosion, explosion, Distance, )
 SDT_PD_SETTER(explosion, Explosion, explosion, WaveSpeed, )
 SDT_PD_SETTER(explosion, Explosion, explosion, WindSpeed, )
 
-void explosion_update(t_explosion *x) { SDTExplosion_update(x->explosion); }
+void explosion_trigger(t_explosion *x) { SDTExplosion_trigger(x->explosion); }
 
 static t_int *explosion_perform(t_int *w) {
   t_explosion *x = (t_explosion *)(w[1]);
@@ -69,7 +69,7 @@ void explosion_tilde_setup(void) {
   explosion_class = class_new(gensym("explosion~"), (t_newmethod)explosion_new,
                               (t_method)explosion_free, sizeof(t_explosion),
                               CLASS_DEFAULT, A_GIMME, 0);
-  class_addmethod(explosion_class, (t_method)explosion_update, gensym("bang"),
+  class_addmethod(explosion_class, (t_method)explosion_trigger, gensym("bang"),
                   0);
   class_addmethod(explosion_class, (t_method)explosion_setBlastTime,
                   gensym("blastTime"), A_FLOAT, 0);

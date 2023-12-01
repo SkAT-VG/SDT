@@ -412,7 +412,9 @@ void SDTExplosion_setWindSpeed(SDTExplosion *x, double f) {
   x->windSpeed = fmax(0.0, f);
 }
 
-void SDTExplosion_update(SDTExplosion *x) {
+void SDTExplosion_update(SDTExplosion *x) { SDTExplosion_trigger(x); }
+
+void SDTExplosion_trigger(SDTExplosion *x) {
   SDTReverb_setXSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
   SDTReverb_setYSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
   SDTReverb_setZSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);

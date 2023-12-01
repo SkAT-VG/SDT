@@ -418,10 +418,15 @@ extern void SDTExplosion_setWaveSpeed(SDTExplosion *x, double f);
 @param[in] f Propagation velocity of the blast wind, in m/s */
 extern void SDTExplosion_setWindSpeed(SDTExplosion *x, double f);
 
-/** @brief Resets the internal state of the object to the beginning of the
-explosion. Please call this function after changing the SDT sample rate or one
-or more of these parameters: scatter time, distance, wave speed, wind speed. */
-extern void SDTExplosion_update(SDTExplosion *x);
+/** @brief DEPRECATED: Use #SDTSDTExplosion_trigger, instead */
+extern void SDTSDTExplosion_update(SDTWindFlow *x) __attribute__((deprecated(
+    "SDTExplosion_update() has been renamed SDTExplosion_trigger() "
+    "to be consistent with other types in the SDT library and avoid "
+    "confusion with the usual behaviour of SDT*_update() functions.")));
+
+/** @brief Resets the internal state of the object
+to the beginning of the explosion. */
+extern void SDTExplosion_trigger(SDTExplosion *x);
 
 /** @brief Signal processing routine.
 Call this function at sample rate to synthesize an explosion sound.

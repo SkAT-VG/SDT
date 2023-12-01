@@ -68,7 +68,7 @@ SDT_MAX_ACCESSORS(explosion, Explosion, blow, Distance, float, , )
 SDT_MAX_ACCESSORS(explosion, Explosion, blow, WaveSpeed, float, , )
 SDT_MAX_ACCESSORS(explosion, Explosion, blow, WindSpeed, float, , )
 
-void explosion_update(t_explosion *x) { SDTExplosion_update(x->blow); }
+void explosion_trigger(t_explosion *x) { SDTExplosion_trigger(x->blow); }
 
 t_int *explosion_perform(t_int *w) {
   t_explosion *x = (t_explosion *)(w[1]);
@@ -120,7 +120,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)explosion_dsp, "dsp", A_CANT, 0);
   class_addmethod(c, (method)explosion_dsp64, "dsp64", A_CANT, 0);
   class_addmethod(c, (method)explosion_assist, "assist", A_CANT, 0);
-  class_addmethod(c, (method)explosion_update, "bang", 0);
+  class_addmethod(c, (method)explosion_trigger, "bang", 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
   SDT_CLASS_KEY(explosion, "1")
