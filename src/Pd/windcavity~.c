@@ -68,9 +68,9 @@ void windcavity_tilde_setup(void) {
                 (t_method)windcavity_free, sizeof(t_windcavity), CLASS_DEFAULT,
                 A_GIMME, 0);
   CLASS_MAINSIGNALIN(windcavity_class, t_windcavity, f);
-  class_addmethod(windcavity_class, (t_method)windcavity_length,
+  class_addmethod(windcavity_class, (t_method)windcavity_setLength,
                   gensym("length"), A_FLOAT, 0);
-  class_addmethod(windcavity_class, (t_method)windcavity_diameter,
+  class_addmethod(windcavity_class, (t_method)windcavity_setDiameter,
                   gensym("diameter"), A_FLOAT, 0);
   class_addmethod(windcavity_class, (t_method)windcavity_dsp, gensym("dsp"), 0);
 }
