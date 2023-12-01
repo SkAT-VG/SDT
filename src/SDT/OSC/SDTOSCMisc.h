@@ -24,26 +24,6 @@
 // extern SDTOSCReturnCode SDTOSCWindCavity(void (*log)(const char *, ...),
 //                                          const SDTOSCMessage *x);
 
-// extern SDTOSCReturnCode SDTOSCWindKarman_log(void (*log)(const char *, ...),
-//                                              const char *key, SDTWindKarman
-//                                              *x);
-
-// extern SDTOSCReturnCode SDTOSCWindKarman_save(void (*log)(const char *, ...),
-//                                               const char *key, SDTWindKarman
-//                                               *x, const SDTOSCArgumentList
-//                                               *args);
-
-// extern SDTOSCReturnCode SDTOSCWindKarman_load(void (*log)(const char *, ...),
-//                                               const char *key, SDTWindKarman
-//                                               *x, const SDTOSCArgumentList
-//                                               *args);
-
-// extern SDTOSCReturnCode SDTOSCWindKarman_setDiameter(
-//     SDTWindKarman *x, const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCWindKarman(void (*log)(const char *, ...),
-//                                          const SDTOSCMessage *x);
-
 // extern SDTOSCReturnCode SDTOSCWindFlow_log(void (*log)(const char *, ...),
 //                                            const char *key, SDTWindFlow *x);
 
