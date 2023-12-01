@@ -1,6 +1,8 @@
 #include "SDTGases.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTEffects.h"
 #include "SDTFilters.h"
@@ -168,11 +170,33 @@ extern void SDTWindKarman_free(SDTWindKarman *x) {
   free(x);
 }
 
-SDT_TYPE_COPY(SDT_WINDKARMAN)
-SDT_DEFINE_HASHMAP(SDT_WINDKARMAN, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_WINDKARMAN)
-SDT_JSON_SERIALIZE(SDT_WINDKARMAN)
-SDT_JSON_DESERIALIZE(SDT_WINDKARMAN)
+_SDT_COPY_FUNCTION(WindKarman)
+
+_SDT_HASHMAP_FUNCTIONS(WindKarman)
+
+json_value *SDTWindKarman_toJSON(const SDTWindKarman *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "diameter",
+                   json_double_new(SDTWindKarman_getDiameter(x)));
+  return obj;
+}
+
+SDTWindKarman *SDTWindKarman_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTWindKarman *y = SDTWindKarman_new();
+  return SDTWindKarman_setParams(y, x, 0);
+}
+
+SDTWindKarman *SDTWindKarman_setParams(SDTWindKarman *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_DOUBLE_FROM_JSON(WindKarman, x, j, Diameter, diameter);
+
+  return x;
+}
+
+double SDTWindKarman_getDiameter(const SDTWindKarman *x) { return x->diameter; }
 
 void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
   x->diameter = fmax(SDT_MICRO, f);

@@ -162,16 +162,57 @@ extern SDTWindKarman *SDTWindKarman_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTWindKarman_free(SDTWindKarman *x);
 
-#define SDT_WINDKARMAN WindKarman
-#define SDT_WINDKARMAN_NEW_ARGS
-#define SDT_WINDKARMAN_ATTRIBUTES(T, A) \
-  A(T, diameter, double, Diameter, diameter, double, 0.001)
+/** @brief Deep-copies a windkarman object
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTWindKarman *SDTWindKarman_copy(SDTWindKarman *dest,
+                                         const SDTWindKarman *src,
+                                         unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_WINDKARMAN)
-SDT_DEFINE_HASHMAP_H(SDT_WINDKARMAN)
-SDT_TYPE_MAKE_GETTERS_H(SDT_WINDKARMAN)
-SDT_JSON_SERIALIZE_H(SDT_WINDKARMAN)
-SDT_JSON_DESERIALIZE_H(SDT_WINDKARMAN)
+/** @brief Registers a windkarman object into the windkarman objects list with
+a unique ID.
+@param[in] x WindKarman process instance to register
+@param[in] key Unique ID assigned to the windkarman object instance
+@return Zero on success, otherwise one */
+extern int SDT_registerWindKarman(SDTWindKarman *x, const char *key);
+
+/** @brief Queries the windkarman objects list by its unique ID.
+If a windkarman object with the ID is present, a pointer to the windkarman
+object is returned. Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the windkarman object instance
+@return WindKarman process instance pointer */
+extern SDTWindKarman *SDT_getWindKarman(const char *key);
+
+/** @brief Unregisters a windkarman object from the windkarman objects list. If
+a windkarman object with the given ID is present, it is unregistered from the
+list.
+@param[in] key Unique ID of the WindKarman instance to unregister */
+extern int SDT_unregisterWindKarman(const char *key);
+
+/** @brief Gets the diameter of the object.
+@return Diameter of the object, in m */
+extern double SDTWindKarman_getDiameter(const SDTWindKarman *x);
+
+/** @brief Represent a windkarman object as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTWindKarman_toJSON(const SDTWindKarman *x);
+
+/** @brief Initialize a windkarman object from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTWindKarman *SDTWindKarman_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a windkarman object from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTWindKarman *SDTWindKarman_setParams(SDTWindKarman *x,
+                                              const json_value *j,
+                                              unsigned char unsafe);
 
 /** @brief Sets the diameter of the object.
 @param[in] f Diameter of the object, in m. Works best with very small values (<
