@@ -127,10 +127,45 @@ void SDTWindCavity_setMaxDelay(SDTWindCavity *x, int f) {
   x->comb = SDTComb_new(f, f);
 }
 
-SDT_TYPE_COPY(SDT_WINDCAVITY)
-SDT_DEFINE_HASHMAP(SDT_WINDCAVITY, 59)
-SDT_JSON_SERIALIZE(SDT_WINDCAVITY)
-SDT_JSON_DESERIALIZE(SDT_WINDCAVITY)
+_SDT_COPY_FUNCTION(WindCavity)
+
+_SDT_HASHMAP_FUNCTIONS(WindCavity)
+
+json_value *SDTWindCavity_toJSON(const SDTWindCavity *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "maxDelay",
+                   json_integer_new(SDTWindCavity_getMaxDelay(x)));
+  json_object_push(obj, "length", json_double_new(SDTWindCavity_getLength(x)));
+  json_object_push(obj, "diameter",
+                   json_double_new(SDTWindCavity_getDiameter(x)));
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTWindCavity_getWindSpeed(x)));
+  return obj;
+}
+
+SDTWindCavity *SDTWindCavity_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int maxDelay = SDT_WINDCAVITY_MAXDELAY_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxDelay, x, maxDelay, integer);
+
+  SDTWindCavity *y = SDTWindCavity_new(maxDelay);
+  return SDTWindCavity_setParams(y, x, 0);
+}
+
+SDTWindCavity *SDTWindCavity_setParams(SDTWindCavity *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(WindCavity, x, j, MaxDelay, maxDelay, integer,
+                                  unsafe);
+
+  _SDT_SET_DOUBLE_FROM_JSON(WindCavity, x, j, Length, length);
+  _SDT_SET_DOUBLE_FROM_JSON(WindCavity, x, j, Diameter, diameter);
+  _SDT_SET_DOUBLE_FROM_JSON(WindCavity, x, j, WindSpeed, windSpeed);
+
+  return x;
+}
 
 int SDTWindCavity_getMaxDelay(const SDTWindCavity *x) {
   return SDTComb_getMaxXDelay(x->comb);
@@ -139,6 +174,10 @@ int SDTWindCavity_getMaxDelay(const SDTWindCavity *x) {
 double SDTWindCavity_getLength(const SDTWindCavity *x) { return x->length; }
 
 double SDTWindCavity_getDiameter(const SDTWindCavity *x) { return x->diameter; }
+
+double SDTWindCavity_getWindSpeed(const SDTWindCavity *x) {
+  return x->windSpeed;
+}
 
 void SDTWindCavity_setLength(SDTWindCavity *x, double f) {
   x->length = fmax(SDT_MICRO, f);

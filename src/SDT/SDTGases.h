@@ -140,6 +140,8 @@ resonance.
 /** @brief Opaque data structure for a hollow cavity object */
 typedef struct SDTWindCavity SDTWindCavity;
 
+#define SDT_WINDCAVITY_MAXDELAY_DEFAULT 48000
+
 /** @brief Object constructor.
 @param[in] maxDelay Size of the comb filter buffer, in samples.
 @return Pointer to the new instance */
@@ -149,22 +151,75 @@ extern SDTWindCavity *SDTWindCavity_new(int maxDelay);
 @param[in] x Pointer to the instance to destroy */
 extern void SDTWindCavity_free(SDTWindCavity *x);
 
-#define SDT_WINDCAVITY WindCavity
-#define SDT_WINDCAVITY_NEW_ARGS 48000
-#define SDT_WINDCAVITY_ATTRIBUTES(T, A)                   \
-  A(T, maxDelay, int, MaxDelay, maxDelay, integer, 48000) \
-  A(T, length, double, Length, length, double, 1.0)       \
-  A(T, diameter, double, Diameter, diameter, double, 1.0)
+/** @brief Deep-copies a windcavity
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTWindCavity *SDTWindCavity_copy(SDTWindCavity *dest,
+                                         const SDTWindCavity *src,
+                                         unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_WINDCAVITY)
-SDT_DEFINE_HASHMAP_H(SDT_WINDCAVITY)
-SDT_TYPE_MAKE_GETTERS_H(SDT_WINDCAVITY)
-SDT_JSON_SERIALIZE_H(SDT_WINDCAVITY)
-SDT_JSON_DESERIALIZE_H(SDT_WINDCAVITY)
+/** @brief Registers a windcavity into the windcavities list with
+a unique ID.
+@param[in] x WindCavity process instance to register
+@param[in] key Unique ID assigned to the windcavity instance
+@return Zero on success, otherwise one */
+extern int SDT_registerWindCavity(SDTWindCavity *x, const char *key);
 
+/** @brief Queries the windcavities list by its unique ID.
+If a windcavity with the ID is present, a pointer to the windcavity is returned.
+Otherwise, a NULL pointer is returned.
+@param[in] key Unique ID assigned to the windcavity instance
+@return WindCavity process instance pointer */
+extern SDTWindCavity *SDT_getWindCavity(const char *key);
+
+/** @brief Unregisters a windcavity from the windcavities list. If a windcavity
+with the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the windcavity instance to unregister
+@return Zero on success, otherwise one */
+extern int SDT_unregisterWindCavity(const char *key);
+
+/** @brief Gets the size of the comb filter.
+@return Size of the comb filter buffer, in samples. */
+extern int SDTWindCavity_getMaxDelay(const SDTWindCavity *x);
+
+/** @brief Gets the length of the cavity.
+@return Length of the cavity, in m */
+extern double SDTWindCavity_getLength(const SDTWindCavity *x);
+
+/** @brief Gets the diameter of the cavity.
+@return Diameter of the cavity, in m */
+extern double SDTWindCavity_getDiameter(const SDTWindCavity *x);
+
+/** @brief Gets the wind speed.
+@return Wind speed */
+extern double SDTWindCavity_getWindSpeed(const SDTWindCavity *x);
+
+/** @brief Represent a windcavity as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTWindCavity_toJSON(const SDTWindCavity *x);
+
+/** @brief Initialize a windcavity from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTWindCavity *SDTWindCavity_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a windcavity from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTWindCavity *SDTWindCavity_setParams(SDTWindCavity *x,
+                                              const json_value *j,
+                                              unsigned char unsafe);
+
+/** @brief Sets the size of the comb filter.
+@param[in] f Size of the comb filter buffer, in samples. */
 extern void SDTWindCavity_setMaxDelay(SDTWindCavity *x, int f);
 
-/** @brief Sets the lenght of the cavity.
+/** @brief Sets the length of the cavity.
 @param[in] f Length of the cavity, in m */
 extern void SDTWindCavity_setLength(SDTWindCavity *x, double f);
 
