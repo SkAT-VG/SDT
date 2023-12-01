@@ -9,7 +9,6 @@
 typedef struct _windcavity {
   t_pxobject ob;
   SDTWindCavity *cavity;
-  double length, diameter;
   t_symbol *key;
 } t_windcavity;
 
@@ -26,7 +25,7 @@ void *windcavity_new(t_symbol *s, long argc, t_atom *argv) {
     if (argc > 0 && atom_gettype(&argv[0]) == A_LONG) {
       maxDelay = atom_getlong(&argv[0]);
     } else {
-      maxDelay = 44100;
+      maxDelay = SDT_WINDCAVITY_MAXDELAY_DEFAULT;
     }
     x->cavity = SDTWindCavity_new(maxDelay);
     x->key = 0;
@@ -52,15 +51,10 @@ void windcavity_assist(t_windcavity *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(windcavity, WindCavity, cavity, "windcavity~", "wind cavity")
 
-void windcavity_length(t_windcavity *x, void *attr, long ac, t_atom *av) {
-  x->length = atom_getfloat(av);
-  SDTWindCavity_setLength(x->cavity, x->length);
-}
+SDT_MAX_GETTER(windcavity, WindCavity, cavity, MaxDelay, long, )
 
-void windcavity_diameter(t_windcavity *x, void *attr, long ac, t_atom *av) {
-  x->diameter = atom_getfloat(av);
-  SDTWindCavity_setDiameter(x->cavity, x->diameter);
-}
+SDT_MAX_ACCESSORS(windcavity, WindCavity, cavity, Length, float, , )
+SDT_MAX_ACCESSORS(windcavity, WindCavity, cavity, Diameter, float, , )
 
 t_int *windcavity_perform(t_int *w) {
   t_windcavity *x = (t_windcavity *)(w[1]);
@@ -78,8 +72,6 @@ t_int *windcavity_perform(t_int *w) {
 
 void windcavity_dsp(t_windcavity *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTWindCavity_setLength(x->cavity, x->length);
-  SDTWindCavity_setDiameter(x->cavity, x->diameter);
   dsp_add(windcavity_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
@@ -99,8 +91,6 @@ void windcavity_perform64(t_windcavity *x, t_object *dsp64, double **ins,
 void windcavity_dsp64(t_windcavity *x, t_object *dsp64, short *count,
                       double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTWindCavity_setLength(x->cavity, x->length);
-  SDTWindCavity_setDiameter(x->cavity, x->diameter);
   object_method(dsp64, gensym("dsp_add64"), x, windcavity_perform64, 0, NULL);
 }
 
@@ -116,17 +106,17 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(windcavity, "1")
 
-  CLASS_ATTR_DOUBLE(c, "length", 0, t_windcavity, length);
-  CLASS_ATTR_DOUBLE(c, "diameter", 0, t_windcavity, diameter);
+  SDT_MAX_RO_ATTRIBUTE(c, windcavity, MaxDelay, maxDelay, long, 0);
 
-  CLASS_ATTR_FILTER_MIN(c, "length", 0.000001);
-  CLASS_ATTR_FILTER_MIN(c, "diameter", 0.000001);
+  SDT_MAX_ATTRIBUTE(c, windcavity, Length, length, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, windcavity, Diameter, diameter, float64, 0);
 
-  CLASS_ATTR_ACCESSORS(c, "length", NULL, (method)windcavity_length);
-  CLASS_ATTR_ACCESSORS(c, "diameter", NULL, (method)windcavity_diameter);
+  CLASS_ATTR_FILTER_MIN(c, "length", SDT_MICRO);
+  CLASS_ATTR_FILTER_MIN(c, "diameter", SDT_MICRO);
 
-  CLASS_ATTR_ORDER(c, "length", 0, "2");
-  CLASS_ATTR_ORDER(c, "diameter", 0, "3");
+  CLASS_ATTR_ORDER(c, "maxDelay", 0, "2");
+  CLASS_ATTR_ORDER(c, "length", 0, "3");
+  CLASS_ATTR_ORDER(c, "diameter", 0, "4");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
