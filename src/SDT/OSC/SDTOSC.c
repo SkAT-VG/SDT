@@ -43,6 +43,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("rolling", k)) return SDTOSCReverb(x);
   if (!strcmp("scraping", k)) return SDTOSCScraping(x);
   if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
+  if (!strcmp("windflow", k)) return SDTOSCWindFlow(x);
   if (!strcmp("windkarman", k) || !strcmp("karman", k))
     return SDTOSCWindKarman(x);
   if (!strcmp("zerox", k) || !strcmp("zerocrossing", k))
@@ -72,6 +73,4 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCProject(log, sub);
   // else if (!strcmp("windcavity", method))
   //   return_code = SDTOSCWindCavity(log, sub);
-  // else if (!strcmp("windflow", method))
-  //   return_code = SDTOSCWindFlow(log, sub);
 }
