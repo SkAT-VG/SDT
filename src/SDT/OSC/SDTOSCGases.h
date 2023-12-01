@@ -97,6 +97,71 @@ extern int SDTOSCExplosion(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscwindcavity SDTOSCWindCavity
+OSC for #SDTWindCavity objects.
+@ingroup oscmethods
+@{
+*/
+
+/** @brief `/windcavity/log <name>`
+
+Function that implements OSC JSON log for #SDTWindCavity objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity_log(const SDTOSCMessage *x);
+
+/** @brief `/windcavity/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTWindCavity objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity_save(const SDTOSCMessage *x);
+
+/** @brief `/windcavity/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTWindCavity objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity_load(const SDTOSCMessage *x);
+
+/** @brief `/windcavity/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTWindCavity
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity_loads(const SDTOSCMessage *x);
+
+/** @brief `/windcavity/...`
+
+Function that routes OSC commands for #SDTWindCavity objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity(const SDTOSCMessage *x);
+
+/** @brief `/windcavity/length <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity_setLength(const SDTOSCMessage *x);
+
+/** @brief `/windcavity/diameter <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity_setDiameter(const SDTOSCMessage *x);
+
+/** @brief `/windcavity/windSpeed <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindCavity_setWindSpeed(const SDTOSCMessage *x);
+
+/** @} */
+
 /** @defgroup oscwindflow SDTOSCWindFlow
 OSC for #SDTWindFlow objects.
 @ingroup oscmethods
