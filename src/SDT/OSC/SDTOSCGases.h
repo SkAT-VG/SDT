@@ -97,6 +97,57 @@ extern int SDTOSCExplosion(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscwindflow SDTOSCWindFlow
+OSC for #SDTWindFlow objects.
+@ingroup oscmethods
+@{
+*/
+
+/** @brief `/windflow/log <name>`
+
+Function that implements OSC JSON log for #SDTWindFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindFlow_log(const SDTOSCMessage *x);
+
+/** @brief `/windflow/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTWindFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindFlow_save(const SDTOSCMessage *x);
+
+/** @brief `/windflow/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTWindFlow objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindFlow_load(const SDTOSCMessage *x);
+
+/** @brief `/windflow/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTWindFlow
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindFlow_loads(const SDTOSCMessage *x);
+
+/** @brief `/windflow/...`
+
+Function that routes OSC commands for #SDTWindFlow objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindFlow(const SDTOSCMessage *x);
+
+/** @brief `/windflow/windSpeed <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindFlow_setWindSpeed(const SDTOSCMessage *x);
+
+/** @} */
+
 /** @defgroup oscwindkarman SDTOSCWindKarman
 OSC for #SDTWindKarman objects.
 @ingroup oscmethods

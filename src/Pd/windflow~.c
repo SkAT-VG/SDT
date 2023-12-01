@@ -37,7 +37,7 @@ static t_int *windflow_perform(t_int *w) {
 
 static void windflow_dsp(t_windflow *x, t_signal **sp) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTWindFlow_setFilters(x->flow);
+  SDTWindFlow_update(x->flow);
   dsp_add(windflow_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 

@@ -59,7 +59,7 @@ t_int *windflow_perform(t_int *w) {
 
 void windflow_dsp(t_windflow *x, t_signal **sp, short *count) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTWindFlow_setFilters(x->flow);
+  SDTWindFlow_update(x->flow);
   dsp_add(windflow_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
@@ -79,7 +79,7 @@ void windflow_perform64(t_windflow *x, t_object *dsp64, double **ins,
 void windflow_dsp64(t_windflow *x, t_object *dsp64, short *count,
                     double samplerate, long maxvectorsize, long flags) {
   SDT_setSampleRate(samplerate);
-  SDTWindFlow_setFilters(x->flow);
+  SDTWindFlow_update(x->flow);
   object_method(dsp64, gensym("dsp_add64"), x, windflow_perform64, 0, NULL);
 }
 

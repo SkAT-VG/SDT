@@ -28,14 +28,39 @@ extern void SDTWindFlow_free(SDTWindFlow *x) {
   free(x);
 }
 
-SDT_TYPE_COPY(SDT_WINDFLOW)
-SDT_DEFINE_HASHMAP(SDT_WINDFLOW, 59)
-SDT_JSON_SERIALIZE(SDT_WINDFLOW)
-SDT_JSON_DESERIALIZE(SDT_WINDFLOW)
+_SDT_COPY_FUNCTION(WindFlow)
 
-void SDTWindFlow_setFilters(SDTWindFlow *x) {
+_SDT_HASHMAP_FUNCTIONS(WindFlow)
+
+json_value *SDTWindFlow_toJSON(const SDTWindFlow *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTWindFlow_getWindSpeed(x)));
+  return obj;
+}
+
+SDTWindFlow *SDTWindFlow_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTWindFlow *y = SDTWindFlow_new();
+  return SDTWindFlow_setParams(y, x, 0);
+}
+
+SDTWindFlow *SDTWindFlow_setParams(SDTWindFlow *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_DOUBLE_FROM_JSON(WindFlow, x, j, WindSpeed, windSpeed);
+
+  return x;
+}
+
+void SDTWindFlow_setFilters(SDTWindFlow *x) { SDTWindFlow_update(x); }
+
+void SDTWindFlow_update(SDTWindFlow *x) {
   SDTTwoPoles_resonant(x->reso, 800.0, 1.0);
 }
+
+double SDTWindFlow_getWindSpeed(const SDTWindFlow *x) { return x->windSpeed; }
 
 void SDTWindFlow_setWindSpeed(SDTWindFlow *x, double f) {
   x->windSpeed = SDT_fclip(f, -1.0, 1.0);
