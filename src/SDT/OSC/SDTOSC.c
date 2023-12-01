@@ -40,6 +40,8 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("resonator", k) || !strcmp("modal", k) || !strcmp("inertial", k))
     return SDTOSCResonator(x);
   if (!strcmp("reverb", k)) return SDTOSCReverb(x);
+  if (!strcmp("rolling", k)) return SDTOSCReverb(x);
+  if (!strcmp("scraping", k)) return SDTOSCScraping(x);
   if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
   if (!strcmp("windkarman", k) || !strcmp("karman", k))
     return SDTOSCWindKarman(x);
@@ -68,10 +70,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   //   return_code = SDTOSCInteractor(log, sub);
   // else if (!strcmp("project", method))
   //   return_code = SDTOSCProject(log, sub);
-  // else if (!strcmp("rolling", method))
-  //   return_code = SDTOSCRolling(log, sub);
-  // else if (!strcmp("scraping", method))
-  //   return_code = SDTOSCScraping(log, sub);
   // else if (!strcmp("windcavity", method))
   //   return_code = SDTOSCWindCavity(log, sub);
   // else if (!strcmp("windflow", method))
