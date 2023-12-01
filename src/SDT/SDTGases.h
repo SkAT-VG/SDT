@@ -195,6 +195,10 @@ extern int SDT_unregisterWindKarman(const char *key);
 @return Diameter of the object, in m */
 extern double SDTWindKarman_getDiameter(const SDTWindKarman *x);
 
+/** @brief Gets the wind speed.
+@return Wind speed */
+extern double SDTWindKarman_getWindSpeed(const SDTWindKarman *x);
+
 /** @brief Represent a windkarman object as a JSON object.
 @param[in] x Pointer to the instance
 @return JSON object */

@@ -178,6 +178,8 @@ json_value *SDTWindKarman_toJSON(const SDTWindKarman *x) {
   json_value *obj = json_object_new(0);
   json_object_push(obj, "diameter",
                    json_double_new(SDTWindKarman_getDiameter(x)));
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTWindKarman_getWindSpeed(x)));
   return obj;
 }
 
@@ -192,11 +194,16 @@ SDTWindKarman *SDTWindKarman_setParams(SDTWindKarman *x, const json_value *j,
   if (!x || !j || j->type != json_object) return 0;
 
   _SDT_SET_DOUBLE_FROM_JSON(WindKarman, x, j, Diameter, diameter);
+  _SDT_SET_DOUBLE_FROM_JSON(WindKarman, x, j, WindSpeed, windSpeed);
 
   return x;
 }
 
 double SDTWindKarman_getDiameter(const SDTWindKarman *x) { return x->diameter; }
+
+double SDTWindKarman_getWindSpeed(const SDTWindKarman *x) {
+  return x->windSpeed;
+}
 
 void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
   x->diameter = fmax(SDT_MICRO, f);
