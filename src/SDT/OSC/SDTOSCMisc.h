@@ -23,17 +23,3 @@
 
 // extern SDTOSCReturnCode SDTOSCWindCavity(void (*log)(const char *, ...),
 //                                          const SDTOSCMessage *x);
-
-// extern SDTOSCReturnCode SDTOSCWindFlow_log(void (*log)(const char *, ...),
-//                                            const char *key, SDTWindFlow *x);
-
-// extern SDTOSCReturnCode SDTOSCWindFlow_save(void (*log)(const char *, ...),
-//                                             const char *key, SDTWindFlow *x,
-//                                             const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCWindFlow_load(void (*log)(const char *, ...),
-//                                             const char *key, SDTWindFlow *x,
-//                                             const SDTOSCArgumentList *args);
-
-// extern SDTOSCReturnCode SDTOSCWindFlow(void (*log)(const char *, ...),
-//                                        const SDTOSCMessage *x);
