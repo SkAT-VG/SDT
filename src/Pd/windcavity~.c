@@ -24,13 +24,8 @@ typedef struct _windcavity {
   const char *key;
 } t_windcavity;
 
-void windcavity_length(t_windcavity *x, t_float f) {
-  SDTWindCavity_setLength(x->cavity, f);
-}
-
-void windcavity_diameter(t_windcavity *x, t_float f) {
-  SDTWindCavity_setDiameter(x->cavity, f);
-}
+SDT_PD_SETTER(windcavity, WindCavity, cavity, Length, )
+SDT_PD_SETTER(windcavity, WindCavity, cavity, Diameter, )
 
 static t_int *windcavity_perform(t_int *w) {
   t_windcavity *x = (t_windcavity *)(w[1]);
@@ -53,7 +48,8 @@ static void *windcavity_new(t_symbol *s, int argc, t_atom *argv) {
   SDT_PD_ARG_PARSE(2, A_SYMBOL, A_FLOAT)
 
   t_windcavity *x = (t_windcavity *)pd_new(windcavity_class);
-  x->cavity = SDTWindCavity_new(GET_ARG(1, atom_getfloat, 48000));
+  x->cavity = SDTWindCavity_new(
+      GET_ARG(1, atom_getfloat, SDT_WINDCAVITY_MAXDELAY_DEFAULT));
 
   SDT_PD_REGISTER(WindCavity, cavity, "wind cavity", 0)
 
