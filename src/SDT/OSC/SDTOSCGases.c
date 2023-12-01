@@ -49,3 +49,39 @@ _SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, distance, Distance, double, )
 _SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, waveSpeed, WaveSpeed, double, )
 _SDTOSC_FLOAT_SETTER_FUNCTION(Explosion, windSpeed, WindSpeed, double, )
 /* ------------------------------------------------------------------------- */
+
+/* --- WindKarman ---------------------------------------------------------- */
+int SDTOSCWindKarman(const SDTOSCMessage* x) {
+  SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
+  const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
+  if (SDTOSCAddress_getDepth(a) < 2) {
+    SDTOSC_MESSAGE_LOGA(ERROR,
+                        "\n  %s\n  [MISSING METHOD] Please, specify an OSC "
+                        "method from the container\n  %s\n",
+                        x, SDTOSC_rtfm_string());
+    return 1;
+  }
+  const char* k = SDTOSCAddress_getNode(a, 1);
+  if (!strcmp("log", k)) return SDTOSCWindKarman_log(x);
+  if (!strcmp("save", k)) return SDTOSCWindKarman_save(x);
+  if (!strcmp("load", k)) return SDTOSCWindKarman_load(x);
+  if (!strcmp("loads", k)) return SDTOSCWindKarman_loads(x);
+  if (!strcmp("diameter", k)) return SDTOSCWindKarman_setDiameter(x);
+  if (!strcmp("windSpeed", k) || !strcmp("wind", k) || !strcmp("speed", k) ||
+      !strcmp("windspeed", k))
+    return SDTOSCWindKarman_setWindSpeed(x);
+  SDTOSC_MESSAGE_LOGA(ERROR,
+                      "\n  %s\n  [NOT IMPLEMENTED] The specified method is not"
+                      " implemented: % s\n %s\n ",
+                      x, k, SDTOSC_rtfm_string());
+  return 2;
+}
+
+_SDTOSC_LOG_FUNCTION(WindKarman)
+_SDTOSC_SAVE_FUNCTION(WindKarman)
+_SDTOSC_LOAD_FUNCTION(WindKarman, )
+_SDTOSC_LOADS_FUNCTION(WindKarman, )
+
+_SDTOSC_FLOAT_SETTER_FUNCTION(WindKarman, diameter, Diameter, double, )
+_SDTOSC_FLOAT_SETTER_FUNCTION(WindKarman, windSpeed, WindSpeed, double, )
+/* ------------------------------------------------------------------------- */

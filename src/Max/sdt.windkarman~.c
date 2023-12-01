@@ -9,7 +9,6 @@
 typedef struct _windkarman {
   t_pxobject ob;
   SDTWindKarman *karman;
-  double diameter;
   t_symbol *key;
 } t_windkarman;
 
@@ -46,10 +45,7 @@ void windkarman_assist(t_windkarman *x, void *b, long m, long a, char *s) {
 
 SDT_MAX_KEY(windkarman, WindKarman, karman, "windkarman~", "wind Karman")
 
-void windkarman_diameter(t_windkarman *x, void *attr, long ac, t_atom *av) {
-  x->diameter = atom_getfloat(av);
-  SDTWindKarman_setDiameter(x->karman, 0.001 * x->diameter);
-}
+SDT_MAX_ACCESSORS(windkarman, WindKarman, karman, Diameter, float, 1000.0, )
 
 t_int *windkarman_perform(t_int *w) {
   t_windkarman *x = (t_windkarman *)(w[1]);
@@ -101,9 +97,9 @@ void C74_EXPORT ext_main(void *r) {
 
   SDT_CLASS_KEY(windkarman, "1")
 
-  CLASS_ATTR_DOUBLE(c, "diameter", 0, t_windkarman, diameter);
+  SDT_MAX_ATTRIBUTE(c, windkarman, Diameter, diameter, float64, 0);
+
   CLASS_ATTR_FILTER_MIN(c, "diameter", 0.001);
-  CLASS_ATTR_ACCESSORS(c, "diameter", NULL, (method)windkarman_diameter);
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

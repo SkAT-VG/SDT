@@ -23,9 +23,7 @@ typedef struct _windkarman {
   const char *key;
 } t_windkarman;
 
-void windkarman_diameter(t_windkarman *x, t_float f) {
-  SDTWindKarman_setDiameter(x->karman, f);
-}
+SDT_PD_SETTER(windkarman, WindKarman, karman, Diameter, )
 
 static t_int *windkarman_perform(t_int *w) {
   t_windkarman *x = (t_windkarman *)(w[1]);
@@ -67,7 +65,7 @@ void windkarman_tilde_setup(void) {
                 (t_method)windkarman_free, sizeof(t_windkarman), CLASS_DEFAULT,
                 A_GIMME, 0);
   CLASS_MAINSIGNALIN(windkarman_class, t_windkarman, f);
-  class_addmethod(windkarman_class, (t_method)windkarman_diameter,
+  class_addmethod(windkarman_class, (t_method)windkarman_setDiameter,
                   gensym("diameter"), A_FLOAT, 0);
   class_addmethod(windkarman_class, (t_method)windkarman_dsp, gensym("dsp"), 0);
 }

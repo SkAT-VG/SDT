@@ -97,6 +97,64 @@ extern int SDTOSCExplosion(const SDTOSCMessage *x);
 
 /** @} */
 
+/** @defgroup oscwindkarman SDTOSCWindKarman
+OSC for #SDTWindKarman objects.
+@ingroup oscmethods
+@{
+*/
+
+/** @brief `/windkarman/log <name>`
+
+Function that implements OSC JSON log for #SDTWindKarman objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindKarman_log(const SDTOSCMessage *x);
+
+/** @brief `/windkarman/save <name> <filepath>`
+
+Function that implements OSC JSON save for #SDTWindKarman objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindKarman_save(const SDTOSCMessage *x);
+
+/** @brief `/windkarman/load <name> <filepath>`
+
+Function that implements OSC JSON file loading for #SDTWindKarman objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindKarman_load(const SDTOSCMessage *x);
+
+/** @brief `/windkarman/loads <name> <json_string>`
+
+Function that implements OSC JSON loading from string for #SDTWindKarman
+objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindKarman_loads(const SDTOSCMessage *x);
+
+/** @brief `/windkarman/...`
+
+Function that routes OSC commands for #SDTWindKarman objects
+@param x OSC message pointer
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindKarman(const SDTOSCMessage *x);
+
+/** @brief `/windkarman/diameter <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindKarman_setDiameter(const SDTOSCMessage *x);
+
+/** @brief `/windkarman/windSpeed <name> <value>`
+
+Function that implements OSC parameter setting for #SDTBouncing objects
+@param x OSC message
+@return Zero on success, non-zero otherwise */
+extern int SDTOSCWindKarman_setWindSpeed(const SDTOSCMessage *x);
+
+/** @} */
+
 #ifdef __cplusplus
 };
 #endif
