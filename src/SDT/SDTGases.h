@@ -40,7 +40,7 @@ the filter are empirically set to fixed values, while the resulting output is
 modulated in amplitude according to the velocity of the air flow.
 @{ */
 
-/** @brief Opaque data structure for a solid obstacle object */
+/** @brief Opaque data structure for a windflow object */
 typedef struct SDTWindFlow SDTWindFlow;
 
 /** @brief Object constructor.
@@ -51,26 +51,67 @@ extern SDTWindFlow *SDTWindFlow_new();
 @param[in] x Pointer to the instance to destroy */
 extern void SDTWindFlow_free(SDTWindFlow *x);
 
-#define SDT_WINDFLOW WindFlow
-#define SDT_WINDFLOW_NEW_ARGS
-#define SDT_WINDFLOW_ATTRIBUTES(T, A)
+/** @brief Deep-copies a windflow
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTWindFlow *SDTWindFlow_copy(SDTWindFlow *dest, const SDTWindFlow *src,
+                                     unsigned char unsafe);
 
-SDT_TYPE_COPY_H(SDT_WINDFLOW)
-SDT_DEFINE_HASHMAP_H(SDT_WINDFLOW)
-SDT_TYPE_MAKE_GETTERS_H(SDT_WINDFLOW)
-SDT_JSON_SERIALIZE_H(SDT_WINDFLOW)
-SDT_JSON_DESERIALIZE_H(SDT_WINDFLOW)
+/** @brief Registers a windflow into the windflows list with a unique ID.
+@param[in] x WindFlow instance to register
+@param[in] key Unique ID assigned to the windflow instance */
+extern int SDT_registerWindFlow(SDTWindFlow *x, const char *key);
+
+/** @brief Queries the windflows list by its unique ID. If a windflow with the
+ID is present, a pointer to the windflow is returned. Otherwise, a NULL pointer
+is returned.
+@param[in] key Unique ID assigned to the WindFlow instance
+@return WindFlow instance pointer */
+extern SDTWindFlow *SDT_getWindFlow(const char *key);
+
+/** @brief Unregisters a windflow from the windflows list. If a windflow with
+the given ID is present, it is unregistered from the list.
+@param[in] key Unique ID of the WindFlow instance to unregister */
+extern int SDT_unregisterWindFlow(const char *key);
+
+/** @brief Represent a windflow as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTWindFlow_toJSON(const SDTWindFlow *x);
+
+/** @brief Initialize a windflow from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTWindFlow *SDTWindFlow_fromJSON(const json_value *x);
+
+/** @brief Set parameters of a windflow from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTWindFlow *SDTWindFlow_setParams(SDTWindFlow *x, const json_value *j,
+                                          unsigned char unsafe);
+
+/** @brief DEPRECATED: Use #SDTWindFlow_update, instead */
+extern void SDTWindFlow_setFilters(SDTWindFlow *x) __attribute__((
+    deprecated("SDTWindFlow_setFilters() has been renamed SDTWindFlow_update() "
+               "to be consistent with other types in the SDT library.")));
 
 /** @brief Update filter coefficients.
-Should be always called after setting the sampling rate with
-SDT_setSampleRate().
+Should be always called after changing the sampling rate.
 @param[in] x Pointer to a SDTWindFlow instance */
-extern void SDTWindFlow_setFilters(SDTWindFlow *x);
+extern void SDTWindFlow_update(SDTWindFlow *x);
+
+/** @brief Gets the wind speed.
+@return Wind speed */
+extern double SDTWindFlow_getWindSpeed(const SDTWindFlow *x);
 
 /** @brief Sets the wind speed.
 @param[in] x Pointer to a SDTWindFlow instance
 @param[in] f Wind speed [0,1] */
-void SDTWindFlow_setWindSpeed(SDTWindFlow *x, double f);
+extern void SDTWindFlow_setWindSpeed(SDTWindFlow *x, double f);
 
 /** @brief Signal processing routine.
 Call this function at sample rate to synthesize a wind turbulence sound.
