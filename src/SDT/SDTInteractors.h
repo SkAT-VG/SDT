@@ -101,7 +101,8 @@ are immediately bound to the interactor.
 @param[in] x Resonator instance to register
 @param[in] key0 Unique ID of the first resonator
 @param[in] key1 Unique ID of the second resonator */
-extern int SDT_registerInteractor(SDTInteractor *x, char *key0, char *key1);
+extern int SDT_registerInteractor(SDTInteractor *x, const char *key0,
+                                  const char *key1);
 
 /** @brief Retrieves an interactor from the interactors list.
 If an interactor with the given IDs is present, it is retrieved from the list.
@@ -115,7 +116,7 @@ If an interactor with the given IDs is present, it is unregistered from the
 list.
 @param[in] key0 Unique ID of the first resonator
 @param[in] key1 Unique ID of the second resonator */
-extern int SDT_unregisterInteractor(char *key0, char *key1);
+extern int SDT_unregisterInteractor(const char *key0, const char *key1);
 
 /** @brief Represent an interactor as a JSON object.
 @param[in] x Pointer to the instance

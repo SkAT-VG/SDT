@@ -256,7 +256,8 @@ json_value *SDTInteractor_toJSON(const SDTInteractor *x) {
 static SDTHashmap *hashmap_interactors0 = NULL;
 static SDTHashmap *hashmap_interactors1 = NULL;
 
-int SDT_registerInteractor(SDTInteractor *x, char *key0, char *key1) {
+int SDT_registerInteractor(SDTInteractor *x, const char *key0,
+                           const char *key1) {
   if (!hashmap_interactors0)
     hashmap_interactors0 = SDTHashmap_new(SDT_HASHMAP_SIZE_DEFAULT);
   if (!hashmap_interactors1)
@@ -293,7 +294,7 @@ SDTInteractor *SDT_getInteractor(const char *key0, const char *key1) {
   }                                                         \
   SDT_updateInteractors(key##I);
 
-int SDT_unregisterInteractor(char *key0, char *key1) {
+int SDT_unregisterInteractor(const char *key0, const char *key1) {
   if (!SDT_getInteractor(key0, key1)) return 1;
   _SDT_POP_INTERACTOR_HASHMAP(0)
   _SDT_POP_INTERACTOR_HASHMAP(1)
