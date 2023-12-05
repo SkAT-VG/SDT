@@ -8,6 +8,11 @@
 #define MAX_ERROR 0.001
 #define MAX_ITERATIONS 50
 
+#define SDT_INTERACTOR Interactor
+#define SDT_INTERACTOR_ATTRIBUTES(T, A)                 \
+  A(T, contact0, int, FirstPoint, contact0, integer, 0) \
+  A(T, contact1, int, SecondPoint, contact1, integer, 0)
+
 struct SDTInteractor {
   SDTResonator *obj0, *obj1;
   long contact0, contact1;
