@@ -10,8 +10,6 @@ between two resonators: impacts and friction.
 #ifndef SDT_INTERACTORS_H
 #define SDT_INTERACTORS_H
 
-#define SDT_RESONATOR_NPICKUPS_MAX 16
-
 #ifdef __cplusplus
 extern "C" {
 #endif
