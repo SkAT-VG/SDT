@@ -39,7 +39,7 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("resonator", k) || !strcmp("modal", k) || !strcmp("inertial", k))
     return SDTOSCResonator(x);
   if (!strcmp("reverb", k)) return SDTOSCReverb(x);
-  if (!strcmp("rolling", k)) return SDTOSCReverb(x);
+  if (!strcmp("rolling", k)) return SDTOSCRolling(x);
   if (!strcmp("scraping", k)) return SDTOSCScraping(x);
   if (!strcmp("spectralfeats", k)) return SDTOSCSpectralFeats(x);
   if (!strcmp("windcavity", k)) return SDTOSCWindCavity(x);
