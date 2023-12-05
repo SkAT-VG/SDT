@@ -35,7 +35,13 @@ SDTInteractor *SDTInteractor_new() {
   return x;
 }
 
-void SDTInteractor_free(SDTInteractor *x) { free(x); }
+void SDTInteractor_free(SDTInteractor *x) {
+  if (x->state) {
+    free(x->state);
+    x->state = NULL;
+  }
+  free(x);
+}
 
 void SDTInteractor_setFirstResonator(SDTInteractor *x, SDTResonator *p) {
   x->obj0 = p;
@@ -259,10 +265,7 @@ int SDTInteractor_isImpact(const SDTInteractor *x) {
   return x->computeForce == SDTImpact_MarhefkaOrin;
 }
 
-void SDTImpact_free(SDTInteractor *x) {
-  free(x->state);
-  SDTInteractor_free(x);
-}
+void SDTImpact_free(SDTInteractor *x) { SDTInteractor_free(x); }
 
 double SDTImpact_getStiffness(const SDTInteractor *x) {
   return ((SDTImpact *)x->state)->stiffness;
@@ -425,10 +428,7 @@ int SDTInteractor_isFriction(const SDTInteractor *x) {
   return x->computeForce == SDTFriction_ElastoPlastic;
 }
 
-void SDTFriction_free(SDTInteractor *x) {
-  free(x->state);
-  SDTInteractor_free(x);
-}
+void SDTFriction_free(SDTInteractor *x) { SDTInteractor_free(x); }
 
 void SDTFriction_setNormalForce(SDTInteractor *x, double f) {
   SDTFriction *s = (SDTFriction *)x->state;
