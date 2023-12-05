@@ -1,5 +1,6 @@
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTInteractors.h"
+#include "SDTCommonPd.h"
 #include "m_pd.h"
 #ifdef NT
 #pragma warning(disable : 4244)
@@ -19,23 +20,11 @@ typedef struct _impact {
   long nOuts;
 } t_impact;
 
-void impact_stiffness(t_impact *x, t_float f) {
-  SDTImpact_setStiffness(x->impact, f);
-}
-
-void impact_dissipation(t_impact *x, t_float f) {
-  SDTImpact_setDissipation(x->impact, f);
-}
-
-void impact_shape(t_impact *x, t_float f) { SDTImpact_setShape(x->impact, f); }
-
-void impact_contact0(t_impact *x, t_float f) {
-  SDTInteractor_setFirstPoint(x->impact, f);
-}
-
-void impact_contact1(t_impact *x, t_float f) {
-  SDTInteractor_setSecondPoint(x->impact, f);
-}
+SDT_PD_SETTER(impact, Impact, impact, Stiffness, )
+SDT_PD_SETTER(impact, Impact, impact, Dissipation, )
+SDT_PD_SETTER(impact, Impact, impact, Shape, )
+SDT_PD_SETTER(impact, Interactor, impact, FirstPoint, )
+SDT_PD_SETTER(impact, Interactor, impact, SecondPoint, )
 
 t_int *impact_perform(t_int *w) {
   t_impact *x = (t_impact *)(w[1]);
@@ -130,15 +119,15 @@ void impact_tilde_setup(void) {
                            (t_method)impact_free, (long)sizeof(t_impact),
                            CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(impact_class, t_impact, f);
-  class_addmethod(impact_class, (t_method)impact_stiffness, gensym("stiffness"),
-                  A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_dissipation,
+  class_addmethod(impact_class, (t_method)impact_setStiffness,
+                  gensym("stiffness"), A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_setDissipation,
                   gensym("dissipation"), A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_shape, gensym("shape"),
+  class_addmethod(impact_class, (t_method)impact_setShape, gensym("shape"),
                   A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_contact0, gensym("contact0"),
-                  A_FLOAT, 0);
-  class_addmethod(impact_class, (t_method)impact_contact1, gensym("contact1"),
-                  A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_setFirstPoint,
+                  gensym("contact0"), A_FLOAT, 0);
+  class_addmethod(impact_class, (t_method)impact_setSecondPoint,
+                  gensym("contact1"), A_FLOAT, 0);
   class_addmethod(impact_class, (t_method)impact_dsp, gensym("dsp"), 0);
 }
