@@ -1,361 +1,218 @@
 #include "SDTOSCInteractors.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-/*
-//-------------------------------------------------------------------------------------//
-// Private utils
+#include "../SDTCommon.h"
 
-static int SDTInteractor_checkSameResonators(const SDTInteractor *x,
-                                             const SDTInteractor *y) {
-  return SDTInteractor_getFirstResonator(x) ==
-             SDTInteractor_getFirstResonator(y) &&
-         SDTInteractor_getSecondResonator(x) ==
-             SDTInteractor_getSecondResonator(y);
-}
-
-//-------------------------------------------------------------------------------------//
-
-SDTOSCReturnCode SDTOSCInteractor(void (*log)(const char *, ...),
-                                  const SDTOSCMessage *x) {
-  SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
-  if (SDTOSCArgumentList_getNArgs(args) < 2 ||
-      !SDTOSCArgumentList_isString(args, 0) ||
-      !SDTOSCArgumentList_isString(args, 1))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-
-  const char *key0 = SDTOSCArgumentList_getString(args, 0);
-  const char *key1 = SDTOSCArgumentList_getString(args, 1);
-  SDTInteractor *obj = (key0 && key1) ? SDT_getInteractor(key0, key1) : 0;
-  SDTOSCReturnCode return_code;
-
-  if (obj)
-    if (SDTOSCMessage_hasContainer(x)) {
-      SDTOSCMessage *sub = SDTOSCMessage_new(
-          SDTOSCMessage_openContainerAddress(x),
-          SDTOSCArgumentList_copyFromTo(SDTOSCMessage_getArguments(x), 2, -1));
-      SDTOSCArgumentList *sub_args = SDTOSCMessage_getArguments(sub);
-      char *method = SDTOSCMessage_getContainer(x);
-      if (!strcmp("impact", method))
-        return_code = SDTOSCImpact(log, key0, key1, obj, sub);
-      else if (!strcmp("friction", method))
-        return_code = SDTOSCFriction(log, key0, key1, obj, sub);
-      else if (!strcmp("contact0", method))
-        return_code = SDTOSCInteractor_setFirstPoint(obj, sub_args);
-      else if (!strcmp("contact1", method))
-        return_code = SDTOSCInteractor_setSecondPoint(obj, sub_args);
-      else
-        return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-      SDTOSCMessage_free(sub);
-    } else
-      return_code = SDT_OSC_RETURN_MISSING_METHOD;
-  else if (key0 && key1)
-    return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
-  else
-    return_code = SDT_OSC_RETURN_ARGUMENT_ERROR;
-
-  return return_code;
-}
-
-SDTOSCReturnCode SDTOSCInteractor_setFirstPoint(
-    SDTInteractor *x, const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTInteractor_setFirstPoint(x, (int)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCInteractor_setSecondPoint(
-    SDTInteractor *x, const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTInteractor_setSecondPoint(x, (int)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCImpact(void (*log)(const char *, ...), const char *key0,
-                              const char *key1, SDTInteractor *obj,
-                              const SDTOSCMessage *x) {
-  if (!SDTInteractor_isImpact(obj))
-    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
-  SDTOSCArgumentList *sub_args = SDTOSCMessage_getArguments(x);
-  SDTOSCReturnCode return_code;
-  if (obj)
-    if (SDTOSCMessage_hasContainer(x)) {
-      char *method = SDTOSCMessage_getContainer(x);
-      if (!strcmp("log", method))
-        return_code = SDTOSCImpact_log(log, key0, key1, obj);
-      else if (!strcmp("save", method))
-        return_code = SDTOSCImpact_save(log, key0, key1, obj, sub_args);
-      else if (!strcmp("load", method))
-        return_code = SDTOSCImpact_load(log, key0, key1, obj, sub_args);
-      else if (!strcmp("shape", method))
-        return_code = SDTOSCImpact_setShape(obj, sub_args);
-      else if (!strcmp("stiffness", method))
-        return_code = SDTOSCImpact_setStiffness(obj, sub_args);
-      else if (!strcmp("dissipation", method))
-        return_code = SDTOSCImpact_setDissipation(obj, sub_args);
-      else if (!strcmp("contact0", method))
-        return_code = SDTOSCInteractor_setFirstPoint(obj, sub_args);
-      else if (!strcmp("contact1", method))
-        return_code = SDTOSCInteractor_setSecondPoint(obj, sub_args);
-      else
-        return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-    } else
-      return_code = SDT_OSC_RETURN_MISSING_METHOD;
-  else
-    return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
-  return return_code;
-}
-
-SDTOSCReturnCode SDTOSCImpact_setShape(SDTInteractor *x,
-                                       const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTImpact_setShape(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCImpact_setStiffness(SDTInteractor *x,
-                                           const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTImpact_setStiffness(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCImpact_setDissipation(SDTInteractor *x,
-                                             const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTImpact_setDissipation(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-//-------------------------------------------------------------------------------------//
-
-SDTOSCReturnCode SDTOSCImpact_log(void (*log)(const char *, ...),
-                                  const char *key0, const char *key1,
-                                  SDTInteractor *x) {
-  json_value *obj = SDTImpact_toJSON(x, key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_log("sdtOSC:", obj);
-  json_builder_free(obj);
-  return r;
-}
-
-SDTOSCReturnCode SDTOSCImpact_save(void (*log)(const char *, ...),
-                                   const char *key0, const char *key1,
-                                   SDTInteractor *x,
-                                   const SDTOSCArgumentList *args) {
-  json_value *obj = SDTImpact_toJSON(x, key0, key1);
-  char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
-  sprintf(name, "impact between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_save(name, obj, args);
-  free(name);
-  json_builder_free(obj);
-  return r;
-}
-
-SDTOSCReturnCode SDTOSCImpact_load(void (*log)(const char *, ...),
-                                   const char *key0, const char *key1,
-                                   SDTInteractor *x,
-                                   const SDTOSCArgumentList *args) {
-  json_value *obj = 0;
-  char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
-  sprintf(name, "impact between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
-  free(name);
-  if (return_code == SDT_OSC_RETURN_OK) {
-    SDTInteractor *inter = SDTImpact_fromJSON(obj);
-    if (!SDTInteractor_checkSameResonators(x, inter))
-      return_code = SDT_OSC_RETURN_WARNING_INTERACTOR_KEY;
-
-    SDTImpact_copy(x, inter);
-    SDTImpact_free(inter);
+/** @brief Implement OSC hashmap lookup for interactors
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] OBJVAR Object variable identifier
+@param[in] NAMEVAR0 First name variable identifier
+@param[in] NAMEVAR1 Second name variable identifier
+@param[in] MSGVAR Message variable identifier */
+#define _SDTOSCINTERACTOR_FIND_IN_HASHMAP(TYPENAME, OBJVAR, NAMEVAR0,          \
+                                          NAMEVAR1, MSGVAR)                    \
+  SDTInteractor* OBJVAR = NULL;                                                \
+  const char* NAMEVAR0 = NULL;                                                 \
+  const char* NAMEVAR1 = NULL;                                                 \
+  const SDTOSCArgumentList* args = SDTOSCMessage_getArguments(MSGVAR);         \
+  if (!SDTOSCArgumentList_getNArgs(args)) {                                    \
+    SDTOSC_MESSAGE_LOGA(                                                       \
+        ERROR,                                                                 \
+        "\n  %s\n  [ARGUMENT ERROR] Missing argument: first resonator name\n " \
+        " %s\n",                                                               \
+        x, SDTOSC_rtfm_string());                                              \
+    return 1;                                                                  \
+  }                                                                            \
+  if (SDTOSCArgumentList_isString(args, 0)) {                                  \
+    NAMEVAR0 = SDTOSCArgumentList_getString(args, 0);                          \
+  } else {                                                                     \
+    SDTOSC_MESSAGE_LOGA(                                                       \
+        ERROR,                                                                 \
+        "\n  %s\n  [ARGUMENT ERROR] First argument should be a string\n "      \
+        " %s\n",                                                               \
+        x, SDTOSC_rtfm_string());                                              \
+    return 2;                                                                  \
+  }                                                                            \
+  if (!NAMEVAR0) {                                                             \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                                 \
+                        "\n  %s\n  [NULL POINTER] First argument is a null "   \
+                        "pointer string %s\n",                                 \
+                        x, SDTOSC_rtfm_string());                              \
+    return 3;                                                                  \
+  }                                                                            \
+  if (SDTOSCArgumentList_getNArgs(args) < 2) {                                 \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                                 \
+                        "\n  %s\n  [ARGUMENT ERROR] Missing argument: second " \
+                        "resonator name\n "                                    \
+                        " %s\n",                                               \
+                        x, SDTOSC_rtfm_string());                              \
+    return 11;                                                                 \
+  }                                                                            \
+  if (SDTOSCArgumentList_isString(args, 1)) {                                  \
+    NAMEVAR1 = SDTOSCArgumentList_getString(args, 1);                          \
+  } else {                                                                     \
+    SDTOSC_MESSAGE_LOGA(                                                       \
+        ERROR,                                                                 \
+        "\n  %s\n  [ARGUMENT ERROR] Second argument should be a string\n "     \
+        " %s\n",                                                               \
+        x, SDTOSC_rtfm_string());                                              \
+    return 12;                                                                 \
+  }                                                                            \
+  if (!NAMEVAR1) {                                                             \
+    SDTOSC_MESSAGE_LOGA(ERROR,                                                 \
+                        "\n  %s\n  [NULL POINTER] Second argument is a null "  \
+                        "pointer string %s\n",                                 \
+                        x, SDTOSC_rtfm_string());                              \
+    return 13;                                                                 \
+  }                                                                            \
+  OBJVAR = SDT_getInteractor(NAMEVAR0, NAMEVAR1);                              \
+  if (!OBJVAR) {                                                               \
+    SDTOSC_MESSAGE_LOGA(                                                       \
+        ERROR,                                                                 \
+        "\n  %s\n  [OBJECT NOT FOUND] No SDTInteractor object registered "     \
+        "between the specified resonators:\n    %s\n    %s\n  %s\n",           \
+        x, NAMEVAR0, NAMEVAR1, SDTOSC_rtfm_string());                          \
+    return 4;                                                                  \
+  }                                                                            \
+  if (!SDTInteractor_is##TYPENAME(OBJVAR)) {                                   \
+    SDTOSC_MESSAGE_LOGA(                                                       \
+        ERROR,                                                                 \
+        "\n  %s\n  [INTERACTOR TYPE] SDTInteractor found between the "         \
+        "specified resonators is not of type " #TYPENAME                       \
+        ":\n    %s\n    %s\n  %s\n",                                           \
+        x, NAMEVAR0, NAMEVAR1, SDTOSC_rtfm_string());                          \
+    return 5;                                                                  \
   }
-  if (obj) json_builder_free(obj);
-  return return_code;
-}
 
-//-------------------------------------------------------------------------------------//
+#define _SDTOSCINTERACTORS_MAKENAME(VAR, KEY0, KEY1)                           \
+  char* VAR = (char*)malloc(sizeof(char) * (strlen(KEY0) + strlen(KEY1) + 2)); \
+  sprintf(VAR, "%s~%s", KEY0, KEY1);
 
-SDTOSCReturnCode SDTOSCFriction(void (*log)(const char *, ...),
-                                const char *key0, const char *key1,
-                                SDTInteractor *obj, const SDTOSCMessage *x) {
-  if (!SDTInteractor_isFriction(obj))
-    return SDT_OSC_RETURN_INCORRECT_INTERACTOR_TYPE;
-  SDTOSCArgumentList *sub_args = SDTOSCMessage_getArguments(x);
-  SDTOSCReturnCode return_code;
-  if (obj)
-    if (SDTOSCMessage_hasContainer(x)) {
-      char *method = SDTOSCMessage_getContainer(x);
-      if (!strcmp("log", method))
-        return_code = SDTOSCFriction_log(log, key0, key1, obj);
-      else if (!strcmp("save", method))
-        return_code = SDTOSCFriction_save(log, key0, key1, obj, sub_args);
-      else if (!strcmp("load", method))
-        return_code = SDTOSCFriction_load(log, key0, key1, obj, sub_args);
-      else if (!strcmp("force", method))
-        return_code = SDTOSCFriction_setNormalForce(obj, sub_args);
-      else if (!strcmp("stribeck", method))
-        return_code = SDTOSCFriction_setStribeckVelocity(obj, sub_args);
-      else if (!strcmp("kStatic", method))
-        return_code = SDTOSCFriction_setStaticCoefficient(obj, sub_args);
-      else if (!strcmp("kDynamic", method))
-        return_code = SDTOSCFriction_setDynamicCoefficient(obj, sub_args);
-      else if (!strcmp("breakAway", method))
-        return_code = SDTOSCFriction_setBreakAway(obj, sub_args);
-      else if (!strcmp("stiffness", method))
-        return_code = SDTOSCFriction_setStiffness(obj, sub_args);
-      else if (!strcmp("dissipation", method))
-        return_code = SDTOSCFriction_setDissipation(obj, sub_args);
-      else if (!strcmp("viscosity", method))
-        return_code = SDTOSCFriction_setViscosity(obj, sub_args);
-      else if (!strcmp("noisiness", method))
-        return_code = SDTOSCFriction_setNoisiness(obj, sub_args);
-      else if (!strcmp("contact0", method))
-        return_code = SDTOSCInteractor_setFirstPoint(obj, sub_args);
-      else if (!strcmp("contact1", method))
-        return_code = SDTOSCInteractor_setSecondPoint(obj, sub_args);
-      else
-        return_code = SDT_OSC_RETURN_NOT_IMPLEMENTED;
-    } else
-      return_code = SDT_OSC_RETURN_MISSING_METHOD;
-  else
-    return_code = SDT_OSC_RETURN_OBJECT_NOT_FOUND;
-  return return_code;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setNormalForce(SDTInteractor *x,
-                                               const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setNormalForce(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setStribeckVelocity(
-    SDTInteractor *x, const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setStribeckVelocity(x,
-                                  (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setStaticCoefficient(
-    SDTInteractor *x, const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setStaticCoefficient(
-      x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setDynamicCoefficient(
-    SDTInteractor *x, const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setDynamicCoefficient(
-      x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setBreakAway(SDTInteractor *x,
-                                             const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setBreakAway(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setStiffness(SDTInteractor *x,
-                                             const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setStiffness(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setDissipation(SDTInteractor *x,
-                                               const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setDissipation(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setViscosity(SDTInteractor *x,
-                                             const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setViscosity(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_setNoisiness(SDTInteractor *x,
-                                             const SDTOSCArgumentList *args) {
-  if (SDTOSCArgumentList_getNArgs(args) < 1 ||
-      !SDTOSCArgumentList_isFloat(args, 0))
-    return SDT_OSC_RETURN_ARGUMENT_ERROR;
-  SDTFriction_setNoisiness(x, (double)SDTOSCArgumentList_getFloat(args, 0));
-  return SDT_OSC_RETURN_OK;
-}
-
-SDTOSCReturnCode SDTOSCFriction_log(void (*log)(const char *, ...),
-                                    const char *key0, const char *key1,
-                                    SDTInteractor *x) {
-  json_value *obj = SDTFriction_toJSON(x, key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_log("sdtOSC:", obj);
-  json_builder_free(obj);
-  return r;
-}
-
-SDTOSCReturnCode SDTOSCFriction_save(void (*log)(const char *, ...),
-                                     const char *key0, const char *key1,
-                                     SDTInteractor *x,
-                                     const SDTOSCArgumentList *args) {
-  json_value *obj = SDTFriction_toJSON(x, key0, key1);
-  char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
-  sprintf(name, "friction between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode r = SDTOSCJSON_save(name, obj, args);
-  free(name);
-  json_builder_free(obj);
-  return r;
-}
-
-SDTOSCReturnCode SDTOSCFriction_load(void (*log)(const char *, ...),
-                                     const char *key0, const char *key1,
-                                     SDTInteractor *x,
-                                     const SDTOSCArgumentList *args) {
-  json_value *obj = 0;
-  char *name = malloc(sizeof(char) * (strlen(key0) + strlen(key1) + 64));
-  sprintf(name, "friction between '%s' and '%s'", key0, key1);
-  SDTOSCReturnCode return_code = SDTOSCJSON_load(name, &obj, args);
-  free(name);
-  if (return_code == SDT_OSC_RETURN_OK) {
-    SDTInteractor *inter = SDTFriction_fromJSON(obj);
-    if (!SDTInteractor_checkSameResonators(x, inter))
-      return_code = SDT_OSC_RETURN_WARNING_INTERACTOR_KEY;
-
-    SDTFriction_copy(x, inter);
-    SDTFriction_free(inter);
+/** @brief Implement OSC JSON log method for interactors
+@param[in] TYPENAME SDT type name, without the leading `SDT` */
+#define _SDTOSCINTERACTOR_LOG_FUNCTION(TYPENAME)                \
+  int SDTOSC##TYPENAME##_log(const SDTOSCMessage* x) {          \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")             \
+    _SDTOSCINTERACTOR_FIND_IN_HASHMAP(TYPENAME, obj, k0, k1, x) \
+    json_value* jobj = SDTInteractor_toJSON(obj);               \
+    _SDTOSCINTERACTORS_MAKENAME(keys, k0, k1);                  \
+    int r = SDTOSCJSON_log(keys, jobj);                         \
+    json_builder_free(jobj);                                    \
+    free(keys);                                                 \
+    return r;                                                   \
   }
-  if (obj) json_builder_free(obj);
-  return return_code;
+
+/** @brief Implement OSC JSON save method for interactors
+@param[in] TYPENAME SDT type name, without the leading `SDT` */
+#define _SDTOSCINTERACTOR_SAVE_FUNCTION(TYPENAME)               \
+  int SDTOSC##TYPENAME##_save(const SDTOSCMessage* x) {         \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")             \
+    _SDTOSCINTERACTOR_FIND_IN_HASHMAP(TYPENAME, obj, k0, k1, x) \
+    _SDTOSC_GETFPATH(fpath, x, 2)                               \
+    _SDTOSCINTERACTORS_MAKENAME(keys, k0, k1);                  \
+    json_value* jobj = SDTInteractor_toJSON(obj);               \
+    int r = SDTOSCJSON_save(keys, jobj, fpath);                 \
+    json_builder_free(jobj);                                    \
+    free(keys);                                                 \
+    return r;                                                   \
+  }
+
+/** @brief Implement OSC JSON file load method for interactors
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] U Type `update` to trigger the structure update function */
+#define _SDTOSCINTERACTOR_LOAD_FUNCTION(TYPENAME, U)            \
+  int SDTOSC##TYPENAME##_load(const SDTOSCMessage* x) {         \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")             \
+    _SDTOSCINTERACTOR_FIND_IN_HASHMAP(TYPENAME, obj, k0, k1, x) \
+    _SDTOSC_GETFPATH(fpath, x, 2)                               \
+    json_value* jobj;                                           \
+    _SDTOSCINTERACTORS_MAKENAME(keys, k0, k1);                  \
+    int r = SDTOSCJSON_load(keys, &jobj, fpath);                \
+    free(keys);                                                 \
+    SDTInteractor_setParams(obj, jobj, 0);                      \
+    json_builder_free(jobj);                                    \
+    _SDT_TYPE_UPDATE_##U(TYPENAME, obj);                        \
+    return r;                                                   \
+  }
+
+/** @brief Implement OSC JSON string load method for interactors
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] U Type `update` to trigger the structure update function */
+#define _SDTOSCINTERACTOR_LOADS_FUNCTION(TYPENAME, U)                        \
+  int SDTOSC##TYPENAME##_loads(const SDTOSCMessage* x) {                     \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                          \
+    _SDTOSCINTERACTOR_FIND_IN_HASHMAP(TYPENAME, obj, k0, k1, x)              \
+    json_value* jobj = _SDTOSC_tralingArgsToJSON(x, 2);                      \
+    if (!jobj) {                                                             \
+      SDTOSC_MESSAGE_LOGA(                                                   \
+          ERROR,                                                             \
+          "\n  %s\n  [PARSER ERROR] Error while parsing JSON string\n%s", x, \
+          "");                                                               \
+      return 7;                                                              \
+    }                                                                        \
+    SDTInteractor_setParams(obj, jobj, 0);                                   \
+    json_builder_free(jobj);                                                 \
+    _SDT_TYPE_UPDATE_##U(TYPENAME, obj);                                     \
+    return 0;                                                                \
+  }
+
+/* --- Impact -------------------------------------------------------------- */
+int SDTOSCImpact(const SDTOSCMessage* x) {
+  SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
+  const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
+  if (SDTOSCAddress_getDepth(a) < 2) {
+    SDTOSC_MESSAGE_LOGA(ERROR,
+                        "\n  %s\n  [MISSING METHOD] Please, specify an OSC "
+                        "method from the container\n  %s\n",
+                        x, SDTOSC_rtfm_string());
+    return 1;
+  }
+  const char* k = SDTOSCAddress_getNode(a, 1);
+  if (!strcmp("log", k)) return SDTOSCImpact_log(x);
+  if (!strcmp("save", k)) return SDTOSCImpact_save(x);
+  if (!strcmp("load", k)) return SDTOSCImpact_load(x);
+  if (!strcmp("loads", k)) return SDTOSCImpact_loads(x);
+  SDTOSC_MESSAGE_LOGA(ERROR,
+                      "\n  %s\n  [NOT IMPLEMENTED] The specified method is not "
+                      "implemented: %s\n  %s\n",
+                      x, k, SDTOSC_rtfm_string());
+  return 2;
 }
-*/
+
+_SDTOSCINTERACTOR_LOG_FUNCTION(Impact)
+_SDTOSCINTERACTOR_SAVE_FUNCTION(Impact)
+_SDTOSCINTERACTOR_LOAD_FUNCTION(Impact, )
+_SDTOSCINTERACTOR_LOADS_FUNCTION(Impact, )
+/* ------------------------------------------------------------------------- */
+
+/* --- Friction ------------------------------------------------------------ */
+int SDTOSCFriction(const SDTOSCMessage* x) {
+  SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
+  const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
+  if (SDTOSCAddress_getDepth(a) < 2) {
+    SDTOSC_MESSAGE_LOGA(ERROR,
+                        "\n  %s\n  [MISSING METHOD] Please, specify an OSC "
+                        "method from the container\n  %s\n",
+                        x, SDTOSC_rtfm_string());
+    return 1;
+  }
+  const char* k = SDTOSCAddress_getNode(a, 1);
+  if (!strcmp("log", k)) return SDTOSCFriction_log(x);
+  if (!strcmp("save", k)) return SDTOSCFriction_save(x);
+  if (!strcmp("load", k)) return SDTOSCFriction_load(x);
+  if (!strcmp("loads", k)) return SDTOSCFriction_loads(x);
+  SDTOSC_MESSAGE_LOGA(ERROR,
+                      "\n  %s\n  [NOT IMPLEMENTED] The specified method is not "
+                      "implemented: %s\n  %s\n",
+                      x, k, SDTOSC_rtfm_string());
+  return 2;
+}
+
+_SDTOSCINTERACTOR_LOG_FUNCTION(Friction)
+_SDTOSCINTERACTOR_SAVE_FUNCTION(Friction)
+_SDTOSCINTERACTOR_LOAD_FUNCTION(Friction, )
+_SDTOSCINTERACTOR_LOADS_FUNCTION(Friction, )
+/* ------------------------------------------------------------------------- */

@@ -32,6 +32,8 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   if (!strcmp("demix", k)) return SDTOSCDemix(x);
   if (!strcmp("envelope", k)) return SDTOSCEnvelope(x);
   if (!strcmp("explosion", k)) return SDTOSCExplosion(x);
+  if (!strcmp("friction", k)) return SDTOSCFriction(x);
+  if (!strcmp("impact", k)) return SDTOSCImpact(x);
   if (!strcmp("motor", k)) return SDTOSCMotor(x);
   if (!strcmp("myo", k) || !strcmp("myoelastic", k)) return SDTOSCMyoelastic(x);
   if (!strcmp("pitch", k)) return SDTOSCPitch(x);
@@ -67,8 +69,6 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
                       "not implemented: % s\n %s\n ",
                       x, k, SDTOSC_rtfm_string());
   return 2;
-  // else if (!strcmp("interactor", method))
-  //   return_code = SDTOSCInteractor(log, sub);
   // else if (!strcmp("project", method))
   //   return_code = SDTOSCProject(log, sub);
 }

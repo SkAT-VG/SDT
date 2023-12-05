@@ -354,3 +354,13 @@ int SDTOSCJSON_load(const char *name, json_value **obj, const char *fpath) {
   SDT_LOGA(INFO, "Loaded %s from '%s'\n", name, fpath);
   return 0;
 }
+
+json_value *_SDTOSC_tralingArgsToJSON(const SDTOSCMessage *x, int start) {
+  const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, start, -1);
+  char *js = (char *)malloc(sizeof(char) * (nchars + 2));
+  SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, start, -1);
+  json_value *jobj = SDTJSON_reads(js, -1);
+  free(js);
+  return jobj;
+}
