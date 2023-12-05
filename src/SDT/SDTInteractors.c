@@ -13,6 +13,24 @@
   A(T, contact0, int, FirstPoint, contact0, integer, 0) \
   A(T, contact1, int, SecondPoint, contact1, integer, 0)
 
+#define SDT_IMPACT Impact
+#define SDT_IMPACT_ATTRIBUTES(T, A)                        \
+  A(T, shape, double, Shape, shape, double, 0)             \
+  A(T, stiffness, double, Stiffness, stiffness, double, 0) \
+  A(T, dissipation, double, Dissipation, dissipation, double, 0)
+
+#define SDT_FRICTION Friction
+#define SDT_FRICTION_ATTRIBUTES(T, A)                     \
+  A(T, , double, NormalForce, force, double, 0)           \
+  A(T, , double, StribeckVelocity, stribeck, double, 0)   \
+  A(T, , double, StaticCoefficient, kStatic, double, 0)   \
+  A(T, , double, DynamicCoefficient, kDynamic, double, 0) \
+  A(T, , double, BreakAway, breakAway, double, 0)         \
+  A(T, , double, Stiffness, stiffness, double, 0)         \
+  A(T, , double, Dissipation, dissipation, double, 0)     \
+  A(T, , double, Viscosity, viscosity, double, 0)         \
+  A(T, , double, Noisiness, noisiness, double, 0)
+
 struct SDTInteractor {
   SDTResonator *obj0, *obj1;
   long contact0, contact1;
