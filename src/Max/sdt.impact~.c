@@ -10,8 +10,7 @@ typedef struct _impact {
   t_pxobject ob;
   SDTInteractor *impact;
   char *key0, *key1;
-  double stiffness, dissipation, shape;
-  long contact0, contact1, nOutlets;
+  long nOutlets;
 } t_impact;
 
 static t_class *impact_class = NULL;
@@ -108,30 +107,15 @@ void impact_assist(t_impact *x, void *b, long m, long a, char *s) {
   }
 }
 
-void impact_stiffness(t_impact *x, void *attr, long ac, t_atom *av) {
-  x->stiffness = atom_getfloat(av);
-  SDTImpact_setStiffness(x->impact, x->stiffness);
-}
+SDT_MAX_KEY_GETTER(impact, Interactor, key0)
+SDT_MAX_KEY_GETTER(impact, Interactor, key1)
 
-void impact_dissipation(t_impact *x, void *attr, long ac, t_atom *av) {
-  x->dissipation = atom_getfloat(av);
-  SDTImpact_setDissipation(x->impact, x->dissipation);
-}
+SDT_MAX_ACCESSORS(impact, Interactor, impact, FirstPoint, long, , )
+SDT_MAX_ACCESSORS(impact, Interactor, impact, SecondPoint, long, , )
 
-void impact_shape(t_impact *x, void *attr, long ac, t_atom *av) {
-  x->shape = atom_getfloat(av);
-  SDTImpact_setShape(x->impact, x->shape);
-}
-
-void impact_contact0(t_impact *x, void *attr, long ac, t_atom *av) {
-  x->contact0 = atom_getlong(av);
-  SDTInteractor_setFirstPoint(x->impact, x->contact0);
-}
-
-void impact_contact1(t_impact *x, void *attr, long ac, t_atom *av) {
-  x->contact1 = atom_getlong(av);
-  SDTInteractor_setSecondPoint(x->impact, x->contact1);
-}
+SDT_MAX_ACCESSORS(impact, Impact, impact, Stiffness, float, , )
+SDT_MAX_ACCESSORS(impact, Impact, impact, Dissipation, float, , )
+SDT_MAX_ACCESSORS(impact, Impact, impact, Shape, float, , )
 
 t_int *impact_perform(t_int *w) {
   t_impact *x = (t_impact *)(w[1]);
@@ -200,11 +184,14 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)impact_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
-  CLASS_ATTR_DOUBLE(c, "stiffness", 0, t_impact, stiffness);
-  CLASS_ATTR_DOUBLE(c, "dissipation", 0, t_impact, dissipation);
-  CLASS_ATTR_DOUBLE(c, "shape", 0, t_impact, shape);
-  CLASS_ATTR_LONG(c, "contact0", 0, t_impact, contact0);
-  CLASS_ATTR_LONG(c, "contact1", 0, t_impact, contact1);
+  SDT_MAX_RO_ATTRIBUTE(c, impact, _key0, resonator 1, sym, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, impact, _key1, resonator 2, sym, 0);
+
+  SDT_MAX_ATTRIBUTE(c, impact, Stiffness, stiffness, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, impact, Dissipation, dissipation, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, impact, Shape, shape, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, impact, FirstPoint, contact0, long, 0);
+  SDT_MAX_ATTRIBUTE(c, impact, SecondPoint, contact1, long, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "stiffness", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "dissipation", 0.0);
@@ -212,17 +199,13 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_MIN(c, "contact0", 0);
   CLASS_ATTR_FILTER_MIN(c, "contact1", 0);
 
-  CLASS_ATTR_ACCESSORS(c, "stiffness", NULL, (method)impact_stiffness);
-  CLASS_ATTR_ACCESSORS(c, "dissipation", NULL, (method)impact_dissipation);
-  CLASS_ATTR_ACCESSORS(c, "shape", NULL, (method)impact_shape);
-  CLASS_ATTR_ACCESSORS(c, "contact0", NULL, (method)impact_contact0);
-  CLASS_ATTR_ACCESSORS(c, "contact1", NULL, (method)impact_contact1);
-
-  CLASS_ATTR_ORDER(c, "stiffness", 0, "1");
-  CLASS_ATTR_ORDER(c, "dissipation", 0, "2");
-  CLASS_ATTR_ORDER(c, "shape", 0, "3");
-  CLASS_ATTR_ORDER(c, "contact0", 0, "4");
-  CLASS_ATTR_ORDER(c, "contact1", 0, "5");
+  CLASS_ATTR_ORDER(c, "resonator0", 0, "1");
+  CLASS_ATTR_ORDER(c, "resonator1", 0, "2");
+  CLASS_ATTR_ORDER(c, "contact0", 0, "3");
+  CLASS_ATTR_ORDER(c, "contact1", 0, "4");
+  CLASS_ATTR_ORDER(c, "stiffness", 0, "5");
+  CLASS_ATTR_ORDER(c, "dissipation", 0, "6");
+  CLASS_ATTR_ORDER(c, "shape", 0, "7");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);
