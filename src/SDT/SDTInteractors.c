@@ -161,6 +161,98 @@ void SDTInteractor_dsp(SDTInteractor *x, double f0, double v0, double s0,
   }
 }
 
+SDTInteractor *SDTInteractor_copy(SDTInteractor *dest, const SDTInteractor *src,
+                                  unsigned char unsafe) {
+  if (dest->computeForce && dest->computeForce == src->computeForce) {
+    SDTInteractor_setFirstResonator(dest, SDTInteractor_getFirstResonator(src));
+    SDTInteractor_setSecondResonator(dest,
+                                     SDTInteractor_getSecondResonator(src));
+    json_value *j = SDTInteractor_toJSON(src);
+    SDTInteractor_setParams(dest, j, unsafe);
+    json_builder_free(j);
+  } else {
+    SDT_LOG(ERROR,
+            "Copy won't be performed because source and destination of "
+            "SDTInteractor_copy() are interactors of different types.");
+  }
+  return dest;
+}
+
+/** @brief Set impact state from a JSON object.
+@param[in] x Pointer to the interactor
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+static SDTInteractor *_SDTImpact_setStateParams(SDTInteractor *x,
+                                                const json_value *j,
+                                                unsigned char unsafe);
+
+/** @brief Set friction state from a JSON object.
+@param[in] x Pointer to the interactor
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+static SDTInteractor *_SDTFriction_setStateParams(SDTInteractor *x,
+                                                  const json_value *j,
+                                                  unsigned char unsafe);
+
+/** @brief Implement resonator setting from JSON for interactors
+@param[in] VAR Structure variable identifier
+@param[in] JVAR JSON variable identifier
+@param[in] CATTR C attribute name
+@param[in] KEY JSON attribute key */
+#define _SDT_INTERACTOR_SET_RESONATOR_FROM_KEY(VAR, JVAR, CATTR, KEY) \
+  {                                                                   \
+    const json_value *v_##KEY;                                        \
+    SDTResonator *r_##KEY;                                            \
+    if ((v_##KEY = SDTJSON_object_get_by_key(JVAR, #KEY)) &&          \
+        (v_##KEY->type == json_string) &&                             \
+        (r_##KEY = SDT_getResonator(v_##KEY->u.string.ptr))) {        \
+      SDTInteractor_set##CATTR(VAR, r_##KEY);                         \
+    }                                                                 \
+  }
+
+SDTInteractor *SDTInteractor_setParams(SDTInteractor *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_PARAM_FROM_JSON(Interactor, x, j, FirstPoint, contact0, integer);
+  _SDT_SET_PARAM_FROM_JSON(Interactor, x, j, SecondPoint, contact1, integer);
+
+  _SDT_INTERACTOR_SET_RESONATOR_FROM_KEY(x, j, FirstResonator, key0);
+  _SDT_INTERACTOR_SET_RESONATOR_FROM_KEY(x, j, SecondResonator, key1);
+
+  if (SDTInteractor_isImpact(x)) _SDTImpact_setStateParams(x, j, unsafe);
+  if (SDTInteractor_isFriction(x)) _SDTFriction_setStateParams(x, j, unsafe);
+
+  return x;
+}
+
+/** @brief Add impact state to a JSON object.
+@param[in] x Pointer to the interactor
+@param[in] JSON object */
+static json_value *_SDTImpact_addStateToJSON(const SDTInteractor *x,
+                                             json_value *j);
+
+/** @brief Add friction state to a JSON object.
+@param[in] x Pointer to the interactor
+@param[in] JSON object */
+static json_value *_SDTFriction_addStateToJSON(const SDTInteractor *x,
+                                               json_value *j);
+
+json_value *SDTInteractor_toJSON(const SDTInteractor *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "contact0",
+                   json_integer_new(SDTInteractor_getFirstPoint(x)));
+  json_object_push(obj, "contact1",
+                   json_integer_new(SDTInteractor_getSecondPoint(x)));
+
+  if (SDTInteractor_isImpact(x)) _SDTImpact_addStateToJSON(x, obj);
+  if (SDTInteractor_isFriction(x)) _SDTFriction_addStateToJSON(x, obj);
+
+  return obj;
+}
+
 static SDTHashmap *hashmap_interactors0 = NULL;
 static SDTHashmap *hashmap_interactors1 = NULL;
 
@@ -262,19 +354,9 @@ SDTInteractor *SDTImpact_new() {
   return x;
 }
 
-SDTInteractor *SDTImpact_copy(SDTInteractor *dest, const SDTInteractor *src) {
-  SDTImpact_setStiffness(dest, SDTImpact_getStiffness(src));
-  SDTImpact_setDissipation(dest, SDTImpact_getDissipation(src));
-  SDTImpact_setShape(dest, SDTImpact_getShape(src));
-  SDTFriction_setDissipation(dest, SDTFriction_getDissipation(src));
-  SDTFriction_setViscosity(dest, SDTFriction_getViscosity(src));
-  SDTFriction_setNoisiness(dest, SDTFriction_getNoisiness(src));
-  SDTInteractor_setFirstResonator(dest, SDTInteractor_getFirstResonator(src));
-  SDTInteractor_setSecondResonator(dest, SDTInteractor_getSecondResonator(src));
-  SDTInteractor_setFirstPoint(dest, SDTInteractor_getFirstPoint(src));
-  SDTInteractor_setSecondPoint(dest, SDTInteractor_getSecondPoint(src));
-
-  return dest;
+SDTInteractor *SDTImpact_copy(SDTInteractor *dest, const SDTInteractor *src,
+                              unsigned char unsafe) {
+  return SDTInteractor_copy(dest, src, unsafe);
 }
 
 int SDTInteractor_isImpact(const SDTInteractor *x) {
@@ -307,58 +389,22 @@ void SDTImpact_setShape(SDTInteractor *x, double f) {
   ((SDTImpact *)x->state)->shape = fmax(1.0, f);
 }
 
-json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0,
-                             const char *key1) {
-  json_value *obj = json_object_new(0);
-
-  json_object_push(obj, "stiffness",
-                   json_double_new(SDTImpact_getStiffness(x)));
-  json_object_push(obj, "dissipation",
+static json_value *_SDTImpact_addStateToJSON(const SDTInteractor *x,
+                                             json_value *j) {
+  json_object_push(j, "stiffness", json_double_new(SDTImpact_getStiffness(x)));
+  json_object_push(j, "dissipation",
                    json_double_new(SDTImpact_getDissipation(x)));
-  json_object_push(obj, "shape", json_double_new(SDTImpact_getShape(x)));
-  json_object_push(obj, "key0", json_string_new(key0));
-  json_object_push(obj, "key1", json_string_new(key1));
-  json_object_push(obj, "contact0",
-                   json_integer_new(SDTInteractor_getFirstPoint(x)));
-  json_object_push(obj, "contact1",
-                   json_integer_new(SDTInteractor_getSecondPoint(x)));
-
-  return obj;
+  json_object_push(j, "shape", json_double_new(SDTImpact_getShape(x)));
+  return j;
 }
 
-SDTInteractor *SDTImpact_fromJSON(const json_value *x) {
-  SDTInteractor *inter = SDTImpact_new();
-  const json_value *v;
-
-  v = SDTJSON_object_get_by_key(x, "stiffness");
-  SDTImpact_setStiffness(inter, (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "dissipation");
-  SDTImpact_setDissipation(inter,
-                           (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "shape");
-  SDTImpact_setShape(inter, (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "key0");
-  SDTInteractor_setFirstResonator(inter, (v && (v->type == json_string))
-                                             ? SDT_getResonator(v->u.string.ptr)
-                                             : 0);
-
-  v = SDTJSON_object_get_by_key(x, "key1");
-  SDTInteractor_setSecondResonator(
-      inter,
-      (v && (v->type == json_string)) ? SDT_getResonator(v->u.string.ptr) : 0);
-
-  v = SDTJSON_object_get_by_key(x, "contact0");
-  SDTInteractor_setFirstPoint(
-      inter, (v && (v->type == json_integer)) ? v->u.integer : 0);
-
-  v = SDTJSON_object_get_by_key(x, "contact1");
-  SDTInteractor_setSecondPoint(
-      inter, (v && (v->type == json_integer)) ? v->u.integer : 0);
-
-  return inter;
+static SDTInteractor *_SDTImpact_setStateParams(SDTInteractor *x,
+                                                const json_value *j,
+                                                unsigned char unsafe) {
+  _SDT_SET_DOUBLE_FROM_JSON(Impact, x, j, Stiffness, stiffness);
+  _SDT_SET_DOUBLE_FROM_JSON(Impact, x, j, Dissipation, dissipation);
+  _SDT_SET_DOUBLE_FROM_JSON(Impact, x, j, Shape, shape);
+  return x;
 }
 
 //-------------------------------------------------------------------------------------//
@@ -422,22 +468,9 @@ SDTInteractor *SDTFriction_new() {
   return x;
 }
 
-SDTInteractor *SDTFriction_copy(SDTInteractor *dest, const SDTInteractor *src) {
-  SDTFriction_setNormalForce(dest, SDTFriction_getNormalForce(src));
-  SDTFriction_setStaticCoefficient(dest, SDTFriction_getStaticCoefficient(src));
-  SDTFriction_setDynamicCoefficient(dest,
-                                    SDTFriction_getDynamicCoefficient(src));
-  SDTFriction_setBreakAway(dest, SDTFriction_getBreakAway(src));
-  SDTFriction_setStiffness(dest, SDTFriction_getStiffness(src));
-  SDTFriction_setDissipation(dest, SDTFriction_getDissipation(src));
-  SDTFriction_setViscosity(dest, SDTFriction_getViscosity(src));
-  SDTFriction_setNoisiness(dest, SDTFriction_getNoisiness(src));
-  SDTInteractor_setFirstResonator(dest, SDTInteractor_getFirstResonator(src));
-  SDTInteractor_setSecondResonator(dest, SDTInteractor_getSecondResonator(src));
-  SDTInteractor_setFirstPoint(dest, SDTInteractor_getFirstPoint(src));
-  SDTInteractor_setSecondPoint(dest, SDTInteractor_getSecondPoint(src));
-
-  return dest;
+SDTInteractor *SDTFriction_copy(SDTInteractor *dest, const SDTInteractor *src,
+                                unsigned char unsafe) {
+  return SDTInteractor_copy(dest, src, unsafe);
 }
 
 int SDTInteractor_isFriction(const SDTInteractor *x) {
@@ -525,95 +558,39 @@ double SDTFriction_getNoisiness(const SDTInteractor *x) {
   return ((SDTFriction *)x->state)->s3;
 }
 
-json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0,
-                               const char *key1) {
-  json_value *obj = json_object_new(0);
-
-  json_object_push(obj, "force",
-                   json_double_new(SDTFriction_getNormalForce(x)));
-  json_object_push(obj, "stribeck",
+static json_value *_SDTFriction_addStateToJSON(const SDTInteractor *x,
+                                               json_value *j) {
+  json_object_push(j, "force", json_double_new(SDTFriction_getNormalForce(x)));
+  json_object_push(j, "stribeck",
                    json_double_new(SDTFriction_getStribeckVelocity(x)));
-  json_object_push(obj, "kStatic",
+  json_object_push(j, "kStatic",
                    json_double_new(SDTFriction_getStaticCoefficient(x)));
-  json_object_push(obj, "kDynamic",
+  json_object_push(j, "kDynamic",
                    json_double_new(SDTFriction_getDynamicCoefficient(x)));
-  json_object_push(obj, "breakAway",
+  json_object_push(j, "breakAway",
                    json_double_new(SDTFriction_getBreakAway(x)));
-  json_object_push(obj, "stiffness",
+  json_object_push(j, "stiffness",
                    json_double_new(SDTFriction_getStiffness(x)));
-  json_object_push(obj, "dissipation",
+  json_object_push(j, "dissipation",
                    json_double_new(SDTFriction_getDissipation(x)));
-  json_object_push(obj, "viscosity",
+  json_object_push(j, "viscosity",
                    json_double_new(SDTFriction_getViscosity(x)));
-  json_object_push(obj, "noisiness",
+  json_object_push(j, "noisiness",
                    json_double_new(SDTFriction_getNoisiness(x)));
-  json_object_push(obj, "key0", json_string_new(key0));
-  json_object_push(obj, "key1", json_string_new(key1));
-  json_object_push(obj, "contact0",
-                   json_integer_new(SDTInteractor_getFirstPoint(x)));
-  json_object_push(obj, "contact1",
-                   json_integer_new(SDTInteractor_getSecondPoint(x)));
-
-  return obj;
+  return j;
 }
 
-SDTInteractor *SDTFriction_fromJSON(const json_value *x) {
-  SDTInteractor *inter = SDTFriction_new();
-  const json_value *v;
-
-  v = SDTJSON_object_get_by_key(x, "force");
-  SDTFriction_setNormalForce(inter,
-                             (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "stribeck");
-  SDTFriction_setStribeckVelocity(
-      inter, (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "kStatic");
-  SDTFriction_setStaticCoefficient(
-      inter, (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "kDynamic");
-  SDTFriction_setDynamicCoefficient(
-      inter, (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "breakAway");
-  SDTFriction_setBreakAway(inter,
-                           (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "stiffness");
-  SDTFriction_setStiffness(inter,
-                           (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "dissipation");
-  SDTFriction_setDissipation(inter,
-                             (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "viscosity");
-  SDTFriction_setViscosity(inter,
-                           (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "noisiness");
-  SDTFriction_setNoisiness(inter,
-                           (v && (v->type == json_double)) ? v->u.dbl : 0);
-
-  v = SDTJSON_object_get_by_key(x, "key0");
-  SDTInteractor_setFirstResonator(inter, (v && (v->type == json_string))
-                                             ? SDT_getResonator(v->u.string.ptr)
-                                             : 0);
-
-  v = SDTJSON_object_get_by_key(x, "key1");
-  SDTInteractor_setSecondResonator(
-      inter,
-      (v && (v->type == json_string)) ? SDT_getResonator(v->u.string.ptr) : 0);
-
-  v = SDTJSON_object_get_by_key(x, "contact0");
-  SDTInteractor_setFirstPoint(
-      inter, (v && (v->type == json_integer)) ? v->u.integer : 0);
-
-  v = SDTJSON_object_get_by_key(x, "contact1");
-  SDTInteractor_setSecondPoint(
-      inter, (v && (v->type == json_integer)) ? v->u.integer : 0);
-
-  return inter;
+static SDTInteractor *_SDTFriction_setStateParams(SDTInteractor *x,
+                                                  const json_value *j,
+                                                  unsigned char unsafe) {
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, NormalForce, force);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, StribeckVelocity, stribeck);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, StaticCoefficient, kStatic);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, DynamicCoefficient, kDynamic);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, BreakAway, breakAway);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, Stiffness, stiffness);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, Dissipation, dissipation);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, Viscosity, viscosity);
+  _SDT_SET_DOUBLE_FROM_JSON(Friction, x, j, Noisiness, noisiness);
+  return x;
 }
