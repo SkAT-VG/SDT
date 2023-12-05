@@ -10,7 +10,7 @@
 
 const char *SDTOSC_rtfm_string() {
   return "For further details, please, visit the documentation at "
-         "https://skat-vg.github.io/SDT/group__oscmethods.html";
+         "https://skat-vg.github.io/SDT/OSC";
 }
 
 #define _SDT_JSON_BUFLEN 512
