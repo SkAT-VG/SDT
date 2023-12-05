@@ -10,6 +10,8 @@ between two resonators: impacts and friction.
 #ifndef SDT_INTERACTORS_H
 #define SDT_INTERACTORS_H
 
+#define SDT_RESONATOR_NPICKUPS_MAX 16
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -83,6 +85,33 @@ to make contact with first object if present)
 @param[out] outs Displacement of the resonators at their pickup points */
 extern void SDTInteractor_dsp(SDTInteractor *x, double f0, double v0, double s0,
                               double f1, double v1, double s1, double *outs);
+
+/** @brief Update interactors in the interactors list that involve
+the specified resonator.
+@param[in] key Unique ID of a resonator */
+extern void SDT_updateInteractors(const char *key);
+
+/** @brief Registers an interactor into the interactors list with two unique
+IDs, one for each resonator. If resonators with the same IDs are present, they
+are immediately bound to the interactor.
+@param[in] x Resonator instance to register
+@param[in] key0 Unique ID of the first resonator
+@param[in] key1 Unique ID of the second resonator */
+extern int SDT_registerInteractor(SDTInteractor *x, char *key0, char *key1);
+
+/** @brief Retrieves an interactor from the interactors list.
+If an interactor with the given IDs is present, it is retrieved from the list.
+@param[in] key0 Unique ID of the first resonator
+@param[in] key1 Unique ID of the second resonator
+@return Interactor instance pointer */
+extern SDTInteractor *SDT_getInteractor(const char *key0, const char *key1);
+
+/** @brief Unregisters an interactor from the interactors list.
+If an interactor with the given IDs is present, it is unregistered from the
+list.
+@param[in] key0 Unique ID of the first resonator
+@param[in] key1 Unique ID of the second resonator */
+extern int SDT_unregisterInteractor(char *key0, char *key1);
 
 /** @} */
 

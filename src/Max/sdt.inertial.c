@@ -1,5 +1,5 @@
 #include "SDT/SDTCommon.h"
-#include "SDT/SDTSolids.h"
+#include "SDT/SDTInteractors.h"
 #include "SDTCommonMax.h"
 #include "SDT_fileusage.h"
 #include "ext.h"

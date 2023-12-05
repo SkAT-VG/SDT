@@ -1,5 +1,5 @@
 #include "SDT/SDTCommon.h"
-#include "SDT/SDTSolids.h"
+#include "SDT/SDTInteractors.h"
 #include "m_pd.h"
 #ifdef NT
 #pragma warning(disable : 4244)
@@ -46,7 +46,7 @@ t_int *impact_perform(t_int *w) {
   t_float *in4 = (t_float *)(w[6]);
   t_float *in5 = (t_float *)(w[7]);
   int n = (int)w[8];
-  double tmpOuts[2 * SDT_MAX_PICKUPS];
+  double tmpOuts[2 * SDT_RESONATOR_NPICKUPS_MAX];
   int i, k;
 
   for (k = 0; k < n; k++) {

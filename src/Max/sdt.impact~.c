@@ -1,5 +1,5 @@
 #include "SDT/SDTCommon.h"
-#include "SDT/SDTSolids.h"
+#include "SDT/SDTInteractors.h"
 #include "SDTCommonMax.h"
 #include "SDT_fileusage.h"
 #include "ext.h"
@@ -144,7 +144,7 @@ t_int *impact_perform(t_int *w) {
   t_float *in5 = (t_float *)(sp[5]->s_vec);
   int n = (int)w[3];
   t_float *out;
-  double tmpOuts[2 * SDT_MAX_PICKUPS];
+  double tmpOuts[2 * SDT_RESONATOR_NPICKUPS_MAX];
   int i, k;
 
   for (k = 0; k < n; k++) {
@@ -173,7 +173,7 @@ void impact_perform64(t_impact *x, t_object *dsp64, double **ins, long numins,
   t_double *in4 = (t_double *)ins[4];
   t_double *in5 = (t_double *)ins[5];
   int n = sampleframes;
-  double tmpOuts[2 * SDT_MAX_PICKUPS];
+  double tmpOuts[2 * SDT_RESONATOR_NPICKUPS_MAX];
   int i, k;
 
   for (k = 0; k < n; k++) {
