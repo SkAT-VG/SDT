@@ -143,71 +143,69 @@ void SDTInteractor_dsp(SDTInteractor *x, double f0, double v0, double s0,
   }
 }
 
-#define HASHMAP_SIZE 59
-
-SDT_DEFINE_HASHMAP_GLOBAL(interactors0)
-SDT_DEFINE_HASHMAP_GLOBAL(interactors1)
-
-void SDT_updateInteractors(const char *key) {
-  SDTResonator *resonator;
-  SDTInteractor *interactor;
-
-  if (interactors0) {
-    resonator = SDT_getResonator(key);
-    interactor = SDTHashmap_get(interactors0, key);
-    if (interactor) SDTInteractor_setFirstResonator(interactor, resonator);
-  }
-  if (interactors1) {
-    resonator = SDT_getResonator(key);
-    interactor = SDTHashmap_get(interactors1, key);
-    if (interactor) SDTInteractor_setSecondResonator(interactor, resonator);
-  }
-}
+static SDTHashmap *hashmap_interactors0 = NULL;
+static SDTHashmap *hashmap_interactors1 = NULL;
 
 int SDT_registerInteractor(SDTInteractor *x, char *key0, char *key1) {
-  SDTResonator *resonator0, *resonator1;
-
-  if (!interactors0) interactors0 = SDTHashmap_new(HASHMAP_SIZE);
-  if (!interactors1) interactors1 = SDTHashmap_new(HASHMAP_SIZE);
-  if (SDTHashmap_get(interactors0, key0) || SDTHashmap_get(interactors1, key1))
+  if (!hashmap_interactors0)
+    hashmap_interactors0 = SDTHashmap_new(SDT_HASHMAP_SIZE_DEFAULT);
+  if (!hashmap_interactors1)
+    hashmap_interactors1 = SDTHashmap_new(SDT_HASHMAP_SIZE_DEFAULT);
+  if (SDTHashmap_get(hashmap_interactors0, key0)) {
+    SDT_LOGA(WARN, "Not registering. First key already present: %s\n", key0);
     return 1;
-  resonator0 = SDT_getResonator(key0);
-  resonator1 = SDT_getResonator(key1);
-  SDTInteractor_setFirstResonator(x, resonator0);
-  SDTInteractor_setSecondResonator(x, resonator1);
-  SDTHashmap_put(interactors0, key0, x);
-  SDTHashmap_put(interactors1, key1, x);
+  }
+  if (SDTHashmap_get(hashmap_interactors1, key1)) {
+    SDT_LOGA(WARN, "Not registering. Second key already present: %s\n", key1);
+    return 1;
+  }
+
+  SDTHashmap_put(hashmap_interactors0, key0, x);
+  SDTHashmap_put(hashmap_interactors1, key1, x);
+  SDT_updateInteractors(key0);
+  SDT_updateInteractors(key1);
   return 0;
 }
 
 SDTInteractor *SDT_getInteractor(const char *key0, const char *key1) {
-  if (!interactors0 || !interactors1) return 0;
-  SDTInteractor *x0, *x1;
-  x0 = SDTHashmap_get(interactors0, key0);
-  x1 = SDTHashmap_get(interactors1, key1);
-  if (!x0 || !x1) return 0;
-  if (x0 == x1) return x0;
+  if (!hashmap_interactors0 || !hashmap_interactors1) return 0;
+  SDTInteractor *x0 = SDTHashmap_get(hashmap_interactors0, key0);
+  return (x0 && x0 == SDTHashmap_get(hashmap_interactors1, key1)) ? x0 : 0;
+}
+
+#define _SDT_POP_INTERACTOR_HASHMAP(I)                      \
+  SDTHashmap_del(hashmap_interactors##I, key##I);           \
+  if (SDTHashmap_empty(hashmap_interactors##I)) {           \
+    SDT_LOGA(DEBUG, "Deleting hashmap (was emptied): %p\n", \
+             hashmap_interactors##I);                       \
+    SDTHashmap_free(hashmap_interactors##I);                \
+    hashmap_interactors##I = NULL;                          \
+  }                                                         \
+  SDT_updateInteractors(key##I);
+
+int SDT_unregisterInteractor(char *key0, char *key1) {
+  if (!SDT_getInteractor(key0, key1)) return 1;
+  _SDT_POP_INTERACTOR_HASHMAP(0)
+  _SDT_POP_INTERACTOR_HASHMAP(1)
   return 0;
 }
 
-int SDT_unregisterInteractor(char *key0, char *key1) {
-  if (!interactors0 || !interactors1) return 1;
-  if (!SDTHashmap_get(interactors0, key0) ||
-      !SDTHashmap_get(interactors1, key1))
-    return 1;
-  SDTHashmap_del(interactors0, key0);
-  SDTHashmap_del(interactors1, key1);
-  if (SDTHashmap_empty(interactors0)) {
-    SDT_LOGA(DEBUG, "Deleting hashmap (was emptied): %p\n", interactors0);
-    SDTHashmap_free(interactors0);
-    interactors0 = NULL;
+#define _SDT_ORDINAL_0 First
+#define _SDT_ORDINAL_1 Second
+#define _SDT_ORDINAL(I) _SDT_ORDINAL_##I
+#define _SDT_UPDATE_INTERACTORS(I)                                           \
+  if (hashmap_interactors##I) {                                              \
+    SDTResonator *resonator = SDT_getResonator(key);                         \
+    SDTInteractor *interactor = SDTHashmap_get(hashmap_interactors##I, key); \
+    if (interactor) {                                                        \
+      CONCAT(CONCAT(SDTInteractor_set, _SDT_ORDINAL(I)), Resonator)          \
+      (interactor, resonator);                                               \
+    }                                                                        \
   }
-  if (SDTHashmap_empty(interactors1)) {
-    SDT_LOGA(DEBUG, "Deleting hashmap (was emptied): %p\n", interactors1);
-    SDTHashmap_free(interactors1);
-    interactors1 = NULL;
-  }
-  return 0;
+
+void SDT_updateInteractors(const char *key) {
+  _SDT_UPDATE_INTERACTORS(0)
+  _SDT_UPDATE_INTERACTORS(1)
 }
 
 //-------------------------------------------------------------------------------------//

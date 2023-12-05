@@ -83,6 +83,8 @@ extern void SDTInteractor_dsp(SDTInteractor *x, double f0, double v0, double s0,
 
 /** @brief Update interactors in the interactors list that involve
 the specified resonator.
+
+Call this function after un/registering a #SDTResonator or a #SDTInteractor
 @param[in] key Unique ID of a resonator */
 extern void SDT_updateInteractors(const char *key);
 
