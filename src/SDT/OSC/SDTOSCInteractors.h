@@ -1,4 +1,3 @@
-#include "../SDTInteractors.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCInteractors.h

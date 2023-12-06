@@ -1,4 +1,3 @@
-#include "../SDTGases.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCGases.h

@@ -1,10 +1,8 @@
 #include "SDTOSCInteractors.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include "../SDTCommon.h"
+#include "../SDTInteractors.h"
 
 /** @brief Implement OSC hashmap lookup for interactors
 @param[in] TYPENAME SDT type name, without the leading `SDT`

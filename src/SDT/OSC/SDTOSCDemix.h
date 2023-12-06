@@ -1,4 +1,3 @@
-#include "../SDTDemix.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCDemix.h

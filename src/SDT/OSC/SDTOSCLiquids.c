@@ -1,10 +1,8 @@
 #include "SDTOSCLiquids.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include "../SDTCommon.h"
+#include "../SDTLiquids.h"
 
 /* --- Bubble -------------------------------------------------------------- */
 int SDTOSCBubble(const SDTOSCMessage* x) {

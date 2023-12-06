@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-#include "../SDTCommon.h"
+#include "../SDTGases.h"
 
 /* --- Explosion -------------------------------------------------------- */
 int SDTOSCExplosion(const SDTOSCMessage* x) {

@@ -9,6 +9,7 @@
 #include "CuTest.h"
 #include "SDT/OSC/SDTOSC.h"
 #include "SDT/OSC/SDTOSCAnalysis.h"
+#include "SDT/SDTAnalysis.h"
 #include "SDTTestUtils.h"
 #include "stdio.h"
 

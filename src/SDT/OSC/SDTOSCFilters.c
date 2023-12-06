@@ -1,10 +1,8 @@
 #include "SDTOSCFilters.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include "../SDTCommon.h"
+#include "../SDTFilters.h"
 
 /* --- Envelope -------------------------------------------------------- */
 int SDTOSCEnvelope(const SDTOSCMessage* x) {

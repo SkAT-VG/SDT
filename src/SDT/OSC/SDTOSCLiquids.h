@@ -1,4 +1,3 @@
-#include "../SDTLiquids.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCLiquids.h

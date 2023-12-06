@@ -1,10 +1,8 @@
 #include "SDTOSCControl.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include "../SDTCommon.h"
+#include "../SDTControl.h"
 
 /* --- Bouncing -------------------------------------------------------- */
 int SDTOSCBouncing(const SDTOSCMessage* x) {

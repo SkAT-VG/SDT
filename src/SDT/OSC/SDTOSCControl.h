@@ -1,4 +1,3 @@
-#include "../SDTControl.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCControl.h

@@ -2,6 +2,9 @@
 
 #include <string.h>
 
+#include "../SDTDemix.h"
+
+
 int SDTOSCDemix(const SDTOSCMessage *x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
   const SDTOSCAddress *a = SDTOSCMessage_getAddress(x);

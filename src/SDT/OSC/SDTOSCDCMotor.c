@@ -2,6 +2,8 @@
 
 #include <string.h>
 
+#include "../SDTDCMotor.h"
+
 int SDTOSCDCMotor(const SDTOSCMessage *x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
   const SDTOSCAddress *a = SDTOSCMessage_getAddress(x);

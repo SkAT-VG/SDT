@@ -1,10 +1,8 @@
 #include "SDTOSCAnalysis.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include "../SDTCommon.h"
+#include "../SDTAnalysis.h"
 
 /* --- ZeroCrossing -------------------------------------------------------- */
 int SDTOSCZeroCrossing(const SDTOSCMessage* x) {

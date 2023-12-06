@@ -1,4 +1,3 @@
-#include "../SDTResonators.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCResonators.h

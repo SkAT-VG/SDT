@@ -1,4 +1,3 @@
-#include "../SDTFilters.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCFilters.h

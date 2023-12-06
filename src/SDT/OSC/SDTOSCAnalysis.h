@@ -1,4 +1,3 @@
-#include "../SDTAnalysis.h"
 #include "SDTOSCCommon.h"
 
 /** @file SDTOSCAnalysis.h

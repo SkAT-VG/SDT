@@ -1,10 +1,8 @@
 #include "SDTOSCEffects.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#include "../SDTCommon.h"
+#include "../SDTEffects.h"
 
 /* --- PitchShift ---------------------------------------------------------- */
 int SDTOSCPitchShift(const SDTOSCMessage* x) {
