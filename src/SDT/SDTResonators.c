@@ -5,7 +5,7 @@
 #include <string.h>
 
 #include "SDTCommon.h"
-#include "SDTSolids.h"
+#include "SDTInteractors.h"
 #include "SDTStructs.h"
 
 #define MAX_POS 10000.0

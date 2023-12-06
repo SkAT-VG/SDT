@@ -8,7 +8,6 @@
 
 #include "../SDTJSON.h"
 #include "../SDTProjects.h"
-#include "../SDTSolids.h"
 
 /*
 SDTOSCReturnCode SDTOSCProject(void (*log)(const char *, ...),

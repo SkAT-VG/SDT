@@ -336,10 +336,11 @@ Macros for implementing OSC methods
 
 /** @brief Implement OSC file path read
 @param[in] FPATHVAR Filepath variable identifier
-@param[in] MSGVAR Message variable identifier */
-#define _SDTOSC_GETFPATH(FPATHVAR, MSGVAR)                                 \
+@param[in] MSGVAR Message variable identifier
+@param[in] IDX Argument index in message */
+#define _SDTOSC_GETFPATH(FPATHVAR, MSGVAR, IDX)                            \
   const char *FPATHVAR = NULL;                                             \
-  if (SDTOSCArgumentList_getNArgs(args) < 2) {                             \
+  if (SDTOSCArgumentList_getNArgs(args) < ((IDX) + 1)) {                   \
     SDTOSC_MESSAGE_LOGA(                                                   \
         ERROR,                                                             \
         "\n  %s\n  [ARGUMENT ERROR] Missing argument: file path\n "        \
@@ -347,8 +348,8 @@ Macros for implementing OSC methods
         x, SDTOSC_rtfm_string());                                          \
     return 5;                                                              \
   }                                                                        \
-  if (SDTOSCArgumentList_isString(args, 1)) {                              \
-    FPATHVAR = SDTOSCArgumentList_getString(args, 1);                      \
+  if (SDTOSCArgumentList_isString(args, IDX)) {                            \
+    FPATHVAR = SDTOSCArgumentList_getString(args, IDX);                    \
   } else {                                                                 \
     SDTOSC_MESSAGE_LOGA(                                                   \
         ERROR,                                                             \
@@ -411,7 +412,7 @@ Macros for implementing OSC methods
   int SDTOSC##TYPENAME##_save(const SDTOSCMessage *x) { \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")     \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)     \
-    _SDTOSC_GETFPATH(fpath, x)                          \
+    _SDTOSC_GETFPATH(fpath, x, 1)                       \
     json_value *jobj = SDT##TYPENAME##_toJSON(obj);     \
     int r = SDTOSCJSON_save(name, jobj, fpath);         \
     json_builder_free(jobj);                            \
@@ -425,7 +426,7 @@ Macros for implementing OSC methods
   int SDTOSC##TYPENAME##_load(const SDTOSCMessage *x) { \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")     \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)     \
-    _SDTOSC_GETFPATH(fpath, x)                          \
+    _SDTOSC_GETFPATH(fpath, x, 1)                       \
     json_value *jobj;                                   \
     int r = SDTOSCJSON_load(name, &jobj, fpath);        \
     SDT##TYPENAME##_setParams(obj, jobj, 0);            \
@@ -434,6 +435,13 @@ Macros for implementing OSC methods
     return r;                                           \
   }
 
+/** @brief Dump last arguments to a JSON object
+@param[in] x OSC message
+@param[in] start Index of the first parameter to include in the dump
+@return JSON object, if valid, NULL pointer otherwise. Memory must be freed
+with json_builder_free */
+extern json_value *_SDTOSC_tralingArgsToJSON(const SDTOSCMessage *x, int start);
+
 /** @brief Implement OSC JSON string load method
 @param[in] TYPENAME SDT type name, without the leading `SDT`
 @param[in] U Type `update` to trigger the structure update function */
@@ -441,11 +449,7 @@ Macros for implementing OSC methods
   int SDTOSC##TYPENAME##_loads(const SDTOSCMessage *x) {                     \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                          \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                          \
-    int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, 1, -1);    \
-    char *js = (char *)malloc(sizeof(char) * (nchars + 2));                  \
-    SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, 1, -1);          \
-    json_value *jobj = SDTJSON_reads(js, -1);                                \
-    free(js);                                                                \
+    json_value *jobj = _SDTOSC_tralingArgsToJSON(x, 1);                      \
     if (!jobj) {                                                             \
       SDTOSC_MESSAGE_LOGA(                                                   \
           ERROR,                                                             \

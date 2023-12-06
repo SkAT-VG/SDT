@@ -1,5 +1,5 @@
 #include "SDT/SDTCommon.h"
-#include "SDT/SDTSolids.h"
+#include "SDT/SDTInteractors.h"
 #include "SDTCommonMax.h"
 #include "SDT_fileusage.h"
 #include "ext.h"
@@ -9,10 +9,8 @@
 typedef struct _friction {
   t_pxobject ob;
   SDTInteractor *friction;
-  char *key0, *key1;
-  double force, stribeck, kStatic, kDynamic, stiffness, dissipation, viscosity,
-      noisiness, breakAway;
-  long contact0, contact1, nOutlets;
+  const char *key0, *key1;
+  long nOutlets;
 } t_friction;
 
 static t_class *friction_class = NULL;
@@ -109,60 +107,21 @@ void friction_assist(t_friction *x, void *b, long m, long a, char *s) {
   }
 }
 
-void friction_force(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->force = atom_getfloat(av);
-  SDTFriction_setNormalForce(x->friction, x->force);
-}
+SDT_MAX_KEY_GETTER(friction, Interactor, key0)
+SDT_MAX_KEY_GETTER(friction, Interactor, key1)
 
-void friction_stribeck(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->stribeck = atom_getfloat(av);
-  SDTFriction_setStribeckVelocity(x->friction, x->stribeck);
-}
+SDT_MAX_ACCESSORS(friction, Interactor, friction, FirstPoint, long, , )
+SDT_MAX_ACCESSORS(friction, Interactor, friction, SecondPoint, long, , )
 
-void friction_kStatic(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->kStatic = atom_getfloat(av);
-  SDTFriction_setStaticCoefficient(x->friction, x->kStatic);
-}
-
-void friction_kDynamic(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->kDynamic = atom_getfloat(av);
-  SDTFriction_setDynamicCoefficient(x->friction, x->kDynamic);
-}
-
-void friction_stiffness(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->stiffness = atom_getfloat(av);
-  SDTFriction_setStiffness(x->friction, x->stiffness);
-}
-
-void friction_dissipation(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->dissipation = atom_getfloat(av);
-  SDTFriction_setDissipation(x->friction, x->dissipation);
-}
-
-void friction_viscosity(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->viscosity = atom_getfloat(av);
-  SDTFriction_setViscosity(x->friction, x->viscosity);
-}
-
-void friction_noisiness(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->noisiness = atom_getfloat(av);
-  SDTFriction_setNoisiness(x->friction, x->noisiness);
-}
-
-void friction_breakAway(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->breakAway = atom_getfloat(av);
-  SDTFriction_setBreakAway(x->friction, x->breakAway);
-}
-
-void friction_contact0(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->contact0 = atom_getlong(av);
-  SDTInteractor_setFirstPoint(x->friction, x->contact0);
-}
-
-void friction_contact1(t_friction *x, void *attr, long ac, t_atom *av) {
-  x->contact1 = atom_getlong(av);
-  SDTInteractor_setSecondPoint(x->friction, x->contact1);
-}
+SDT_MAX_ACCESSORS(friction, Friction, friction, NormalForce, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, StribeckVelocity, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, StaticCoefficient, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, DynamicCoefficient, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, Stiffness, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, Dissipation, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, Viscosity, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, Noisiness, float, , )
+SDT_MAX_ACCESSORS(friction, Friction, friction, BreakAway, float, , )
 
 t_int *friction_perform(t_int *w) {
   t_friction *x = (t_friction *)(w[1]);
@@ -175,7 +134,7 @@ t_int *friction_perform(t_int *w) {
   t_float *in5 = (t_float *)(sp[5]->s_vec);
   int n = (int)w[3];
   t_float *out;
-  double tmpOuts[2 * SDT_MAX_PICKUPS];
+  double tmpOuts[2 * SDT_RESONATOR_NPICKUPS_MAX];
   int i, k;
 
   for (k = 0; k < n; k++) {
@@ -204,7 +163,7 @@ void friction_perform64(t_friction *x, t_object *dsp64, double **ins,
   t_double *in4 = (t_double *)ins[4];
   t_double *in5 = (t_double *)ins[5];
   int n = sampleframes;
-  double tmpOuts[2 * SDT_MAX_PICKUPS];
+  double tmpOuts[2 * SDT_RESONATOR_NPICKUPS_MAX];
   int i, k;
 
   for (k = 0; k < n; k++) {
@@ -232,17 +191,20 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)friction_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
-  CLASS_ATTR_DOUBLE(c, "force", 0, t_friction, force);
-  CLASS_ATTR_DOUBLE(c, "stribeck", 0, t_friction, stribeck);
-  CLASS_ATTR_DOUBLE(c, "kStatic", 0, t_friction, kStatic);
-  CLASS_ATTR_DOUBLE(c, "kDynamic", 0, t_friction, kDynamic);
-  CLASS_ATTR_DOUBLE(c, "stiffness", 0, t_friction, stiffness);
-  CLASS_ATTR_DOUBLE(c, "dissipation", 0, t_friction, dissipation);
-  CLASS_ATTR_DOUBLE(c, "viscosity", 0, t_friction, viscosity);
-  CLASS_ATTR_DOUBLE(c, "noisiness", 0, t_friction, noisiness);
-  CLASS_ATTR_DOUBLE(c, "breakAway", 0, t_friction, breakAway);
-  CLASS_ATTR_LONG(c, "contact0", 0, t_friction, contact0);
-  CLASS_ATTR_LONG(c, "contact1", 0, t_friction, contact1);
+  SDT_MAX_RO_ATTRIBUTE(c, friction, _key0, resonator 1, sym, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, friction, _key1, resonator 2, sym, 0);
+
+  SDT_MAX_ATTRIBUTE(c, friction, NormalForce, force, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, StribeckVelocity, stribeck, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, StaticCoefficient, kStatic, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, DynamicCoefficient, kDynamic, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, Stiffness, stiffness, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, Dissipation, dissipation, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, Viscosity, viscosity, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, Noisiness, noisiness, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, BreakAway, breakAway, float64, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, FirstPoint, contact0, long, 0);
+  SDT_MAX_ATTRIBUTE(c, friction, SecondPoint, contact1, long, 0);
 
   CLASS_ATTR_FILTER_MIN(c, "force", 0.0);
   CLASS_ATTR_FILTER_MIN(c, "stribeck", 0.0);
@@ -256,29 +218,19 @@ void C74_EXPORT ext_main(void *r) {
   CLASS_ATTR_FILTER_MIN(c, "contact0", 0);
   CLASS_ATTR_FILTER_MIN(c, "contact1", 0);
 
-  CLASS_ATTR_ACCESSORS(c, "force", NULL, (method)friction_force);
-  CLASS_ATTR_ACCESSORS(c, "stribeck", NULL, (method)friction_stribeck);
-  CLASS_ATTR_ACCESSORS(c, "kStatic", NULL, (method)friction_kStatic);
-  CLASS_ATTR_ACCESSORS(c, "kDynamic", NULL, (method)friction_kDynamic);
-  CLASS_ATTR_ACCESSORS(c, "stiffness", NULL, (method)friction_stiffness);
-  CLASS_ATTR_ACCESSORS(c, "dissipation", NULL, (method)friction_dissipation);
-  CLASS_ATTR_ACCESSORS(c, "viscosity", NULL, (method)friction_viscosity);
-  CLASS_ATTR_ACCESSORS(c, "noisiness", NULL, (method)friction_noisiness);
-  CLASS_ATTR_ACCESSORS(c, "breakAway", NULL, (method)friction_breakAway);
-  CLASS_ATTR_ACCESSORS(c, "contact0", NULL, (method)friction_contact0);
-  CLASS_ATTR_ACCESSORS(c, "contact1", NULL, (method)friction_contact1);
-
-  CLASS_ATTR_ORDER(c, "force", 0, "1");
-  CLASS_ATTR_ORDER(c, "stribeck", 0, "2");
-  CLASS_ATTR_ORDER(c, "kStatic", 0, "3");
-  CLASS_ATTR_ORDER(c, "kDynamic", 0, "4");
-  CLASS_ATTR_ORDER(c, "stiffness", 0, "5");
-  CLASS_ATTR_ORDER(c, "dissipation", 0, "6");
-  CLASS_ATTR_ORDER(c, "viscosity", 0, "7");
-  CLASS_ATTR_ORDER(c, "noisiness", 0, "8");
-  CLASS_ATTR_ORDER(c, "breakAway", 0, "9");
-  CLASS_ATTR_ORDER(c, "contact0", 0, "10");
-  CLASS_ATTR_ORDER(c, "contact1", 0, "11");
+  CLASS_ATTR_ORDER(c, "resonator0", 0, "1");
+  CLASS_ATTR_ORDER(c, "resonator1", 0, "2");
+  CLASS_ATTR_ORDER(c, "contact0", 0, "3");
+  CLASS_ATTR_ORDER(c, "contact1", 0, "4");
+  CLASS_ATTR_ORDER(c, "force", 0, "5");
+  CLASS_ATTR_ORDER(c, "stribeck", 0, "6");
+  CLASS_ATTR_ORDER(c, "kStatic", 0, "7");
+  CLASS_ATTR_ORDER(c, "kDynamic", 0, "8");
+  CLASS_ATTR_ORDER(c, "stiffness", 0, "9");
+  CLASS_ATTR_ORDER(c, "dissipation", 0, "10");
+  CLASS_ATTR_ORDER(c, "viscosity", 0, "11");
+  CLASS_ATTR_ORDER(c, "noisiness", 0, "12");
+  CLASS_ATTR_ORDER(c, "breakAway", 0, "13");
 
   class_dspinit(c);
   class_register(CLASS_BOX, c);

@@ -27,11 +27,6 @@ through the specific SDTImpact and SDTFriction constructors.
 /** @brief Opaque data structure representing the interactor interface */
 typedef struct SDTInteractor SDTInteractor;
 
-#define SDT_INTERACTOR Interactor
-#define SDT_INTERACTOR_ATTRIBUTES(T, A)                 \
-  A(T, contact0, int, FirstPoint, contact0, integer, 0) \
-  A(T, contact1, int, SecondPoint, contact1, integer, 0)
-
 /** @brief Sets the pointer to the first interacting resonator
 @param[in] p Pointer to a SDTResonator instance */
 extern void SDTInteractor_setFirstResonator(SDTInteractor *x, SDTResonator *p);
@@ -84,6 +79,64 @@ to make contact with first object if present)
 extern void SDTInteractor_dsp(SDTInteractor *x, double f0, double v0, double s0,
                               double f1, double v1, double s1, double *outs);
 
+/** @brief Update interactors in the interactors list that involve
+the specified resonator.
+
+Call this function after un/registering a #SDTResonator or a #SDTInteractor
+@param[in] key Unique ID of a resonator */
+extern void SDT_updateInteractors(const char *key);
+
+/** @brief Deep-copies an interactor
+@param[in] dest Pointer to the instance to modify
+@param[in] src Pointer to the instance to copy
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTInteractor *SDTInteractor_copy(SDTInteractor *dest,
+                                         const SDTInteractor *src,
+                                         unsigned char unsafe);
+
+/** @brief Registers an interactor into the interactors list with two unique
+IDs, one for each resonator. If resonators with the same IDs are present, they
+are immediately bound to the interactor.
+@param[in] x Resonator instance to register
+@param[in] key0 Unique ID of the first resonator
+@param[in] key1 Unique ID of the second resonator */
+extern int SDT_registerInteractor(SDTInteractor *x, const char *key0,
+                                  const char *key1);
+
+/** @brief Retrieves an interactor from the interactors list.
+If an interactor with the given IDs is present, it is retrieved from the list.
+@param[in] key0 Unique ID of the first resonator
+@param[in] key1 Unique ID of the second resonator
+@return Interactor instance pointer */
+extern SDTInteractor *SDT_getInteractor(const char *key0, const char *key1);
+
+/** @brief Unregisters an interactor from the interactors list.
+If an interactor with the given IDs is present, it is unregistered from the
+list.
+@param[in] key0 Unique ID of the first resonator
+@param[in] key1 Unique ID of the second resonator */
+extern int SDT_unregisterInteractor(const char *key0, const char *key1);
+
+/** @brief Represent an interactor as a JSON object.
+@param[in] x Pointer to the instance
+@return JSON object */
+extern json_value *SDTInteractor_toJSON(const SDTInteractor *x);
+
+/** @brief Initialize an interactor from a JSON object.
+@param[in] x JSON object
+@return Pointer to the instance */
+extern SDTInteractor *SDTInteractor_fromJSON(const json_value *x);
+
+/** @brief Set parameters of an interactor from a JSON object.
+@param[in] x Pointer to the instance
+@param[in] j JSON object
+@param[in] unsafe If false, do not perform any memory-related changes
+@return Pointer to destination instance */
+extern SDTInteractor *SDTInteractor_setParams(SDTInteractor *x,
+                                              const json_value *j,
+                                              unsigned char unsafe);
+
 /** @} */
 
 /** @defgroup impact Impact
@@ -105,19 +158,6 @@ typedef struct SDTImpact SDTImpact;
 /** @brief Object constructor.
 @return Pointer to a SDTInteractor instance, configured for the impact case */
 extern SDTInteractor *SDTImpact_new();
-
-#define SDT_IMPACT Impact
-#define SDT_IMPACT_ATTRIBUTES(T, A)                        \
-  A(T, shape, double, Shape, shape, double, 0)             \
-  A(T, stiffness, double, Stiffness, stiffness, double, 0) \
-  A(T, dissipation, double, Dissipation, dissipation, double, 0)
-
-/** @brief Copy src into dest
-@param[in] dest Pointer to the instance to overwrite
-@param[in] src Pointer to the instance to copy
-@return Pointer to the dest */
-extern SDTInteractor *SDTImpact_copy(SDTInteractor *dest,
-                                     const SDTInteractor *src);
 
 /** @brief Check if the interactor is an Impact
 @return Truth value of the check */
@@ -153,25 +193,6 @@ extern void SDTImpact_setDissipation(SDTInteractor *x, double f);
 range [1,4] */
 extern void SDTImpact_setShape(SDTInteractor *x, double f);
 
-/** @defgroup json_impact JSON
-JSON functions for SDT Impacts
-@{ */
-
-/** @brief Convert an SDTImpact object in a JSON object
-@param[in] x Pointer to the SDTInteractor
-@param[in] key0 First resonator ID
-@param[in] key1 Second resonator ID
-@return Pointer to the JSON object. Memory must be freed with json_builder_free
-*/
-extern json_value *SDTImpact_toJSON(const SDTInteractor *x, const char *key0,
-                                    const char *key1);
-
-/** @brief Load an SDTImpact object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with
-::SDTImpact_free */
-extern SDTInteractor *SDTImpact_fromJSON(const json_value *x);
-
 /** @} */
 
 /** @} */
@@ -200,25 +221,6 @@ typedef struct SDTFriction SDTFriction;
 /** @brief Object constructor.
 @return Pointer to a SDTInteractor instance, configured for the friction case */
 extern SDTInteractor *SDTFriction_new();
-
-#define SDT_FRICTION Friction
-#define SDT_FRICTION_ATTRIBUTES(T, A)                     \
-  A(T, , double, NormalForce, force, double, 0)           \
-  A(T, , double, StribeckVelocity, stribeck, double, 0)   \
-  A(T, , double, StaticCoefficient, kStatic, double, 0)   \
-  A(T, , double, DynamicCoefficient, kDynamic, double, 0) \
-  A(T, , double, BreakAway, breakAway, double, 0)         \
-  A(T, , double, Stiffness, stiffness, double, 0)         \
-  A(T, , double, Dissipation, dissipation, double, 0)     \
-  A(T, , double, Viscosity, viscosity, double, 0)         \
-  A(T, , double, Noisiness, noisiness, double, 0)
-
-/** @brief Copy src into dest
-@param[in] dest Pointer to the instance to overwrite
-@param[in] src Pointer to the instance to copy
-@return Pointer to the dest */
-extern SDTInteractor *SDTFriction_copy(SDTInteractor *dest,
-                                       const SDTInteractor *src);
 
 /** @brief Check if the interactor is a Friction
 @return Truth value of the check */
@@ -303,27 +305,6 @@ extern double SDTFriction_getViscosity(const SDTInteractor *x);
 /** @brief Gets the surface roughness.
 @return Surface roughness */
 extern double SDTFriction_getNoisiness(const SDTInteractor *x);
-
-/** @defgroup json_friction JSON
-JSON functions for SDT Frctions
-@{ */
-
-/** @brief Convert an SDTImpact object in a JSON object
-@param[in] x Pointer to the SDTInteractor
-@param[in] key0 First resonator ID
-@param[in] key1 Second resonator ID
-@return Pointer to the JSON object. Memory must be freed with json_builder_free
-*/
-extern json_value *SDTFriction_toJSON(const SDTInteractor *x, const char *key0,
-                                      const char *key1);
-
-/** @brief Load an SDTImpact object from a JSON object
-@param[in] x Pointer to the JSON object
-@return Pointer to the SDTImpact, or 0 on failure. Memory must be freed with
-::SDTImpact_free */
-extern SDTInteractor *SDTFriction_fromJSON(const json_value *x);
-
-/** @} */
 
 /** @} */
 

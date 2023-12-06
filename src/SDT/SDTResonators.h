@@ -28,6 +28,7 @@ typedef struct SDTResonator SDTResonator;
 
 #define SDT_RESONATOR_NMODES_DEFAULT 1
 #define SDT_RESONATOR_NPICKUPS_DEFAULT 1
+#define SDT_RESONATOR_NPICKUPS_MAX 16
 
 /** @brief Object constructor.
 @param[in] nModes Number of resonant modes

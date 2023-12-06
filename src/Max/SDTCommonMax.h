@@ -39,6 +39,26 @@ If the registration is unsuccessful, the key is not set
       x->key = key;                                                          \
   }
 
+/** @brief Define the getter function for a key attribute.
+
+Meant for SDT interactors, which have two keys.
+@param[in] M The Max type (without the leading "t_")
+@param[in] T The SDT type (without the leading "SDT")
+@param[in] F The name of the Max object field where the key is stored */
+#define SDT_MAX_KEY_GETTER(M, T, F)                                    \
+  t_max_err M##_get_##F(t_##M *x, void *attr, long *ac, t_atom **av) { \
+    if (!(*ac && *av)) {                                               \
+      *ac = 1;                                                         \
+      *av = (t_atom *)((char *)sysmem_newptr(                          \
+          (t_ptr_size)(sizeof(t_atom) * (*ac))));                      \
+      if (!*av) {                                                      \
+        *ac = 0;                                                       \
+        return MAX_ERR_OUT_OF_MEM;                                     \
+      }                                                                \
+    }                                                                  \
+    return atom_setsym(*av, gensym(x->F));                             \
+  }
+
 /** @brief Register the attribute "key" in the Max class
 The t_class pointer should be a variable "c"
 @param[in] M The Max type (without the leading "t_")
