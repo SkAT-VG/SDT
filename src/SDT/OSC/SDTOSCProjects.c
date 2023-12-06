@@ -74,31 +74,26 @@ int SDTOSCProject_save(const SDTOSCMessage *x) {
 
 int SDTOSCProject_load(const SDTOSCMessage *x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "n  %sn", x, "")
-  // TODO
-  // _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)
-  // _SDTOSC_GETFPATH(fpath, x, 1)
-  // json_value *jobj;
-  int r = 0;  // SDTOSCJSON_load(name, &jobj, fpath);
-  // SDTProject_setParams(obj, jobj, 0);
-  // json_builder_free(jobj);
-  // _SDT_TYPE_UPDATE_##U(TYPENAME, obj);
+  const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  _SDTOSC_GETFPATH(fpath, x, 0);
+  json_value *jobj;
+  int r = SDTOSCJSON_load("SDT project", &jobj, fpath);
+  if (r) return r;
+  r = SDTProject_fromJSON(jobj, 0);
+  json_builder_free(jobj);
   return r;
 }
 
 int SDTOSCProject_loads(const SDTOSCMessage *x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "n  %sn", x, "")
-  // TODO
-  // _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)
-  // json_value *jobj = _SDTOSC_tralingArgsToJSON(x, 1);
-  // if (!jobj) {
-  //   SDTOSC_MESSAGE_LOGA(
-  //       ERROR, "n  %sn  [PARSER ERROR] Error while parsing JSON stringn%s",
-  //       x,
-  //       "");
-  //   return 7;
-  // }
-  // SDTProject_setParams(obj, jobj, 0);
-  // json_builder_free(jobj);
-  // _SDT_TYPE_UPDATE_##U(TYPENAME, obj);
-  return 0;
+  json_value *jobj = _SDTOSC_trailingArgsToJSON(x, 0);
+  if (!jobj) {
+    SDTOSC_MESSAGE_LOGA(
+        ERROR, "\n  %s\n  [PARSER ERROR] Error while parsing JSON string\n%s",
+        x, "");
+    return 7;
+  }
+  int r = SDTProject_fromJSON(jobj, 0);
+  json_builder_free(jobj);
+  return r;
 }

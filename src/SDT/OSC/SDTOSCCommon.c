@@ -17,7 +17,7 @@ const char *SDTOSC_rtfm_string() {
 static char _SDT_JSON_logBuffer[_SDT_JSON_BUFLEN];
 
 static size_t _SDT_updateRemainingCharsNPrintf(size_t n, int c) {
-  return (n > c) ? n - c * sizeof(char) : (size_t)0;
+  return (n > c * sizeof(char)) ? n - c * sizeof(char) : (size_t)1;
 }
 
 //-------------------------------------------------------------------------------------//
@@ -215,6 +215,9 @@ const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
 
 int SDTOSCArgumentList_getNArgs(const SDTOSCArgumentList *x) { return x->argc; }
 
+#define _SDTOSCALPRINT_CURSOR (s + ((tot < n) ? tot : n - 1))
+#define _SDTOSCALPRINT_CURMEM ((tot < n) ? n - tot : 1)
+
 int SDTOSCArgumentList_snprintf(char *s, size_t n, const char *float_fmt,
                                 const SDTOSCArgumentList *x, int start,
                                 int end) {
@@ -223,12 +226,11 @@ int SDTOSCArgumentList_snprintf(char *s, size_t n, const char *float_fmt,
   int tot = 0, c;
   for (int i = start; i < end; ++i) {
     if (i != start) {
-      c = snprintf(s + tot, n, " ");
-      n = _SDT_updateRemainingCharsNPrintf(n, c);
+      c = snprintf(_SDTOSCALPRINT_CURSOR, _SDTOSCALPRINT_CURMEM, " ");
       tot += c;
     }
-    c = SDTOSCArgument_snprintf(s + tot, n, float_fmt, x->argv[i]);
-    n = _SDT_updateRemainingCharsNPrintf(n, c);
+    c = SDTOSCArgument_snprintf(_SDTOSCALPRINT_CURSOR, _SDTOSCALPRINT_CURMEM,
+                                float_fmt, x->argv[i]);
     tot += c;
   }
   return tot;
@@ -355,12 +357,20 @@ int SDTOSCJSON_load(const char *name, json_value **obj, const char *fpath) {
   return 0;
 }
 
-json_value *_SDTOSC_tralingArgsToJSON(const SDTOSCMessage *x, int start) {
+json_value *_SDTOSC_trailingArgsToJSON(const SDTOSCMessage *x, int start) {
   const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
-  int nchars = SDTOSCArgumentList_snprintf(NULL, 0, "%f", args, start, -1);
-  char *js = (char *)malloc(sizeof(char) * (nchars + 2));
-  SDTOSCArgumentList_snprintf(js, nchars + 1, "%f", args, start, -1);
-  json_value *jobj = SDTJSON_reads(js, -1);
-  free(js);
-  return jobj;
+  _SDT_ITERATIVE_MEMORY_DOUBLING(
+      0, 24, js, js_size,
+      SDTOSCArgumentList_snprintf(js, js_size, "%f", args, start, -1) >= 0,
+      {
+        json_value *jobj = SDTJSON_reads(js, -1);
+        free(js);
+        return jobj;
+      },
+      SDT_LOGA(
+          ERROR,
+          "Could not parse OSC arguments as JSON: string would be greater than "
+          "%ld characters",
+          js_size);)
+  return NULL;
 }

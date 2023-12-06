@@ -267,6 +267,34 @@ extern int SDT_eprintf(const char *fmt, ...);
       _SDT_HAS_COMMA(_SDT_TRIGGER_PARENTHESIS_ __VA_ARGS__(/*empty*/)))
 // ----------------------------------------------------------------------------
 
+/** @brief Convenience macro for looping through doubling memory sizes
+@param[in] MINEXP Base-2 logarithm of minimum memory size
+@param[in] MAXEXP Base-2 logarithm of maximum memory size
+@param[in] MEMVAR Variable name for memory pointer
+@param[in] SIZEVAR Variable name for memory size
+@param[in] TRY Code to try at each iteration. Lvalue is the success condition
+@param[in] WHENTRUE Code to execute on success
+@param[in] IFALLFAILS Code to execute if every iteration
+fails (e.g. raise an error) */
+#define _SDT_ITERATIVE_MEMORY_DOUBLING(MINEXP, MAXEXP, MEMVAR, SIZEVAR, TRY, \
+                                       WHENTRUE, IFALLFAILS)                 \
+  {                                                                          \
+    unsigned int e;                                                          \
+    size_t SIZEVAR = 0;                                                      \
+    for (e = MINEXP; e < MAXEXP; ++e) {                                      \
+      SIZEVAR = ((size_t)1) << e;                                            \
+      void *MEMVAR = malloc(SIZEVAR);                                        \
+      if (!(TRY)) {                                                          \
+        free(MEMVAR);                                                        \
+        continue;                                                            \
+      }                                                                      \
+      WHENTRUE                                                               \
+    }                                                                        \
+    if (e >= MAXEXP) {                                                       \
+      IFALLFAILS                                                             \
+    }                                                                        \
+  }
+
 #ifdef __cplusplus
 extern "C" {
 #endif

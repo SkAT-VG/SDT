@@ -18,10 +18,11 @@
 
 /** @brief Forward message to appropriate type
 @param[in] TYPENAME SDT type
-@param[in] TYPEKEY SDT JSON type key */
-#define _SDT_FORWARD_CASE(TYPENAME, TYPEKEY) \
-  if (!strcmp(#TYPEKEY, k)) {                \
-    return SDTOSC##TYPENAME(x);              \
+@param[in] TYPEKEY SDT JSON type key
+@param[in] U Ignored */
+#define _SDT_FORWARD_CASE(TYPENAME, TYPEKEY, U) \
+  if (!strcmp(#TYPEKEY, k)) {                   \
+    return SDTOSC##TYPENAME(x);                 \
   }
 
 int SDTOSCRoot(const SDTOSCMessage* x) {
