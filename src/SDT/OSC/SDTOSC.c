@@ -24,6 +24,8 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   const SDTOSCAddress* a = SDTOSCMessage_getAddress(x);
   if (!(a && SDTOSCAddress_getDepth(a))) return 1;
   const char* k = SDTOSCAddress_getNode(a, 0);
+  if (!strcmp("project", k)) return SDTOSCProject(x);
+
   if (!strcmp("bouncing", k)) return SDTOSCBouncing(x);
   if (!strcmp("breaking", k)) return SDTOSCBreaking(x);
   if (!strcmp("bubble", k)) return SDTOSCBubble(x);
@@ -69,6 +71,4 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
                       "not implemented: % s\n %s\n ",
                       x, k, SDTOSC_rtfm_string());
   return 2;
-  // else if (!strcmp("project", method))
-  //   return_code = SDTOSCProject(log, sub);
 }
