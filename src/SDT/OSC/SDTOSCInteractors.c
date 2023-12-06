@@ -159,6 +159,26 @@
     return 0;                                                                \
   }
 
+/** @brief Implement OSC argument setters for interactors
+@param[in] TYPENAME SDT type name, without the leading `SDT`
+@param[in] SETTYPENAME SDT type name for the setter, without the leading `SDT`
+@param[in] LCASE Attribute name (lowercase)
+@param[in] UCASE Attribute name (Capitalized)
+@param[in] CTYPE C type for argument
+@param[in] OSCTYPE OSC type of argument
+@param[in] OSCTYPELCASE OSC type of argument (lowercase)
+@param[in] U Type `update` to trigger the structure update function */
+#define _SDTOSCINTERACTOR_SETTER_FUNCTION(TYPENAME, SETTYPENAME, LCASE, UCASE, \
+                                          CTYPE, OSCTYPE, OSCTYPELCASE, U)     \
+  int SDTOSC##TYPENAME##_set##UCASE(const SDTOSCMessage* x) {                  \
+    SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                            \
+    _SDTOSCINTERACTOR_FIND_IN_HASHMAP(TYPENAME, obj, k0, k1, x)                \
+    _SDTOSC_GETARG(LCASE, 2, CTYPE, OSCTYPE, OSCTYPELCASE, x)                  \
+    SDT##SETTYPENAME##_set##UCASE(obj, LCASE);                                 \
+    _SDT_TYPE_UPDATE_##U(TYPENAME, obj);                                       \
+    return 0;                                                                  \
+  }
+
 /* --- Impact -------------------------------------------------------------- */
 int SDTOSCImpact(const SDTOSCMessage* x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "");
@@ -175,6 +195,11 @@ int SDTOSCImpact(const SDTOSCMessage* x) {
   if (!strcmp("save", k)) return SDTOSCImpact_save(x);
   if (!strcmp("load", k)) return SDTOSCImpact_load(x);
   if (!strcmp("loads", k)) return SDTOSCImpact_loads(x);
+  if (!strcmp("stiffness", k)) return SDTOSCImpact_setStiffness(x);
+  if (!strcmp("dissipation", k)) return SDTOSCImpact_setDissipation(x);
+  if (!strcmp("shape", k)) return SDTOSCImpact_setShape(x);
+  if (!strcmp("contact0", k)) return SDTOSCImpact_setFirstPoint(x);
+  if (!strcmp("contact1", k)) return SDTOSCImpact_setSecondPoint(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified method is not "
                       "implemented: %s\n  %s\n",
@@ -186,6 +211,16 @@ _SDTOSCINTERACTOR_LOG_FUNCTION(Impact)
 _SDTOSCINTERACTOR_SAVE_FUNCTION(Impact)
 _SDTOSCINTERACTOR_LOAD_FUNCTION(Impact, )
 _SDTOSCINTERACTOR_LOADS_FUNCTION(Impact, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Impact, Impact, stiffness, Stiffness, double,
+                                  Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Impact, Impact, dissipation, Dissipation,
+                                  double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Impact, Impact, shape, Shape, double, Float,
+                                  float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Impact, Interactor, contact0, FirstPoint, int,
+                                  Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Impact, Interactor, contact1, SecondPoint,
+                                  int, Float, float, )
 /* ------------------------------------------------------------------------- */
 
 /* --- Friction ------------------------------------------------------------ */
@@ -204,6 +239,20 @@ int SDTOSCFriction(const SDTOSCMessage* x) {
   if (!strcmp("save", k)) return SDTOSCFriction_save(x);
   if (!strcmp("load", k)) return SDTOSCFriction_load(x);
   if (!strcmp("loads", k)) return SDTOSCFriction_loads(x);
+  if (!strcmp("force", k)) return SDTOSCFriction_setNormalForce(x);
+  if (!strcmp("stribeck", k)) return SDTOSCFriction_setStribeckVelocity(x);
+  if (!strcmp("kStatic", k) || !strcmp("static", k))
+    return SDTOSCFriction_setStaticCoefficient(x);
+  if (!strcmp("kDynamic", k) || !strcmp("dynamic", k))
+    return SDTOSCFriction_setDynamicCoefficient(x);
+  if (!strcmp("stiffness", k)) return SDTOSCFriction_setStiffness(x);
+  if (!strcmp("dissipation", k)) return SDTOSCFriction_setDissipation(x);
+  if (!strcmp("viscosity", k)) return SDTOSCFriction_setViscosity(x);
+  if (!strcmp("noisiness", k)) return SDTOSCFriction_setNoisiness(x);
+  if (!strcmp("breakAway", k) || !strcmp("breakaway", k))
+    return SDTOSCFriction_setBreakAway(x);
+  if (!strcmp("contact0", k)) return SDTOSCFriction_setFirstPoint(x);
+  if (!strcmp("contact1", k)) return SDTOSCFriction_setSecondPoint(x);
   SDTOSC_MESSAGE_LOGA(ERROR,
                       "\n  %s\n  [NOT IMPLEMENTED] The specified method is not "
                       "implemented: %s\n  %s\n",
@@ -215,4 +264,26 @@ _SDTOSCINTERACTOR_LOG_FUNCTION(Friction)
 _SDTOSCINTERACTOR_SAVE_FUNCTION(Friction)
 _SDTOSCINTERACTOR_LOAD_FUNCTION(Friction, )
 _SDTOSCINTERACTOR_LOADS_FUNCTION(Friction, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, force, NormalForce,
+                                  double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, stribeck,
+                                  StribeckVelocity, double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, kStatic,
+                                  StaticCoefficient, double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, kDynamic,
+                                  DynamicCoefficient, double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, stiffness, Stiffness,
+                                  double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, dissipation, Dissipation,
+                                  double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, viscosity, Viscosity,
+                                  double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, noisiness, Noisiness,
+                                  double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Friction, breakAway, BreakAway,
+                                  double, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Interactor, contact0, FirstPoint,
+                                  int, Float, float, )
+_SDTOSCINTERACTOR_SETTER_FUNCTION(Friction, Interactor, contact1, SecondPoint,
+                                  int, Float, float, )
 /* ------------------------------------------------------------------------- */
