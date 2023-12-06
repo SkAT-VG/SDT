@@ -26,24 +26,49 @@ int SDTOSCProject(const SDTOSCMessage *x) {
   return 2;
 }
 
+/** @brief Convert an OSC argument list to a C-string array
+@param[in] x OSC Message
+@param[in] start Index of the first argument to save
+@param[out] s Output string array. Array should be freed.
+Individual strings should not
+@return Number of strings */
+static int _SDTOSC_getStringsFromArgs(const SDTOSCMessage *x, int start,
+                                      const char ***s) {
+  int argc = 0;
+  const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  int n = SDTOSCArgumentList_getNArgs(args);
+  for (int i = start; i < n; ++i)
+    if (SDTOSCArgumentList_isString(args, i)) argc++;
+  *s = malloc(sizeof(const char *) * argc);
+  for (int i = start, j = 0; i < n; ++i)
+    if (SDTOSCArgumentList_isString(args, i)) {
+      (*s)[j] = SDTOSCArgumentList_getString(args, i);
+      j++;
+    }
+  return argc;
+}
+
 int SDTOSCProject_log(const SDTOSCMessage *x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "n  %sn", x, "")
-  // TODO
-  // _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)
-  // json_value *jobj = SDTProject_toJSON(obj);
-  int r = 0;  // SDTOSCJSON_log(name, jobj);
-  // json_builder_free(jobj);
+  const char **argv = NULL;
+  int argc = _SDTOSC_getStringsFromArgs(x, 0, &argv);
+  json_value *jobj = SDTProject_toJSON(argc, argv);
+  free(argv);
+  int r = SDTOSCJSON_log("SDT project", jobj);
+  json_builder_free(jobj);
   return r;
 }
 
 int SDTOSCProject_save(const SDTOSCMessage *x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "n  %sn", x, "")
-  // TODO
-  // _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)
-  // _SDTOSC_GETFPATH(fpath, x, 1)
-  // json_value *jobj = SDTProject_toJSON(obj);
-  int r = 0;  // SDTOSCJSON_save(name, jobj, fpath);
-  // json_builder_free(jobj);
+  const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  _SDTOSC_GETFPATH(fpath, x, 0);
+  const char **argv = NULL;
+  int argc = _SDTOSC_getStringsFromArgs(x, 1, &argv);
+  json_value *jobj = SDTProject_toJSON(argc, argv);
+  free(argv);
+  int r = SDTOSCJSON_save("SDT project", jobj, fpath);
+  json_builder_free(jobj);
   return r;
 }
 

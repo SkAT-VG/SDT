@@ -168,7 +168,7 @@ extern float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i);
 /** @brief Gets the string value of the argument at the specified position
 @param[in] x Instance pointer
 Argument should be previously checked with ::SDTOSCArgumentList_isString
-@return The float value */
+@return The string pointer */
 extern const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x,
                                                 int i);
 

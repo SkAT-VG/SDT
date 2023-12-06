@@ -1,189 +1,118 @@
-// #include "SDTProjects.h"
-// #include "SDTAnalysis.h"
-// #include "SDTControl.h"
-// #include "SDTDCMotor.h"
-// #include "SDTDemix.h"
-// #include "SDTEffects.h"
-// #include "SDTFilters.h"
-// #include "SDTGases.h"
-// #include "SDTLiquids.h"
-// #include "SDTMotor.h"
-// #include "SDTInteractors.h"
+#include "SDTProjects.h"
 
-/*
+#include "SDTAnalysis.h"
+#include "SDTCommon.h"
+#include "SDTControl.h"
+#include "SDTDCMotor.h"
+#include "SDTDemix.h"
+#include "SDTEffects.h"
+#include "SDTFilters.h"
+#include "SDTGases.h"
+#include "SDTInteractors.h"
+#include "SDTLiquids.h"
+#include "SDTMotor.h"
+#include "SDTResonators.h"
 
-json_value *push_else_free(json_value *dest, const char *key, json_value *src,
-                           int length) {
-  if (!src) return src;
-  if (!length) {
-    json_builder_free(src);
-    return 0;
+/** @brief Declare JSON object
+@param[in] TYPENAME SDT type
+@param[in] TYPEKEY SDT JSON type key */
+#define _SDT_DECLARE_CASE(TYPENAME, TYPEKEY) json_value *dict_##TYPENAME = NULL
+
+/** @brief Push new JSON object to collector object
+@param[in] TYPENAME SDT type
+@param[in] TYPEKEY SDT JSON type key */
+#define _SDT_PUSH_CASE(TYPENAME, TYPEKEY)                                 \
+  {                                                                       \
+    const SDT##TYPENAME *sdt_obj = SDT_get##TYPENAME(argv[i]);            \
+    if (sdt_obj) {                                                        \
+      SDT_LOGA(DEBUG, "Found object of type " #TYPENAME ": %s", argv[i]); \
+      if (!dict_##TYPENAME) {                                             \
+        dict_##TYPENAME = json_object_new(0);                             \
+      }                                                                   \
+      json_object_push(dict_##TYPENAME, argv[i],                          \
+                       SDT##TYPENAME##_toJSON(sdt_obj));                  \
+    }                                                                     \
   }
-  if (dest && key) json_object_push(dest, key, src);
-  return src;
-}
 
-static json_value *json_error(const char *err, const json_value *value) {
-  json_value *error = json_object_new(1 + ((value) ? 1 : 0));
-  json_object_push(error, "error", json_string_new(err));
-  if (value) json_object_push(error, "value", json_deepcopy(value));
-  return error;
-}
+/** @brief Push new JSON interactor object to collector object
+@param[in] TYPENAME SDT type
+@param[in] TYPEKEY SDT JSON type key */
+#define _SDT_INTERACTOR_PUSH_CASE(TYPENAME, TYPEKEY) \
+  if (SDTInteractor_is##TYPENAME(sdt_obj)) {         \
+    if (!arr_##TYPENAME) {                           \
+      arr_##TYPENAME = json_array_new(0);            \
+    }                                                \
+    json_array_push(arr_##TYPENAME, sdt_jobj);       \
+  }
+
+/** @brief Push non-empty collector objects to project JSON object
+@param[in] TYPENAME SDT type
+@param[in] TYPEKEY SDT JSON type key  */
+#define _SDT_COLLECT_CASE(TYPENAME, TYPEKEY)          \
+  if (dict_##TYPENAME) {                              \
+    json_object_push(prj, #TYPEKEY, dict_##TYPENAME); \
+  }
+
+/** @brief Push non-empty collector arrays to interactors JSON object
+@param[in] TYPENAME SDT type
+@param[in] TYPEKEY SDT JSON type key  */
+#define _SDT_INTERACTOR_COLLECT_CASE(TYPENAME, TYPEKEY)          \
+  if (arr_##TYPENAME) {                                          \
+    if (!dict_Interactor) {                                      \
+      dict_Interactor = json_object_new(0);                      \
+    }                                                            \
+    json_object_push(dict_Interactor, #TYPEKEY, arr_##TYPENAME); \
+  }
 
 json_value *SDTProject_toJSON(int argc, const char **argv) {
   json_value *prj = json_object_new(0);
-  json_value *dict_BIQUAD = json_object_new(0);
-  json_value *dict_BOUNCING = json_object_new(0);
-  json_value *dict_BREAKING = json_object_new(0);
-  json_value *dict_BUBBLE = json_object_new(0);
-  json_value *dict_CRUMPLING = json_object_new(0);
-  json_value *dict_DCMOTOR = json_object_new(0);
-  json_value *dict_DEMIX = json_object_new(0);
-  json_value *dict_ENVELOPE = json_object_new(0);
-  json_value *dict_EXPLOSION = json_object_new(0);
-  json_value *dict_FLUIDFLOW = json_object_new(0);
-  json_value *dict_MOTOR = json_object_new(0);
-  json_value *dict_MYOELASTIC = json_object_new(0);
-  json_value *dict_PITCH = json_object_new(0);
-  json_value *dict_PITCHSHIFT = json_object_new(0);
-  json_value *dict_REVERB = json_object_new(0);
-  json_value *dict_ROLLING = json_object_new(0);
-  json_value *dict_SCRAPING = json_object_new(0);
-  json_value *dict_SPECTRALFEATS = json_object_new(0);
-  json_value *dict_WINDCAVITY = json_object_new(0);
-  json_value *dict_WINDKARMAN = json_object_new(0);
-  json_value *dict_WINDFLOW = json_object_new(0);
-  json_value *dict_ZEROCROSSING = json_object_new(0);
+  _SDT_CALL_FOR_ALL_TYPES(_SDT_DECLARE_CASE);
+  json_value *arr_Impact = NULL;
+  json_value *arr_Friction = NULL;
+  json_value *dict_Interactor = NULL;
 
-  // Fetch all objects
-  json_value *res = json_object_new(0), *inter = json_object_new(0),
-             *imp = json_array_new(0), *fri = json_array_new(0);
-  SDTResonator *r;
-  SDTInteractor *s;
-  void *v;
-  for (unsigned int i = 0; i < argc; ++i) {
-    if ((r = SDT_getResonator(argv[i]))) {
-      json_object_push(res, argv[i], SDTResonator_toJSON(r));
-      for (unsigned int j = 0; j < argc; ++j)
-        if ((s = SDT_getInteractor(argv[i], argv[j]))) {
-          if (SDTInteractor_isImpact(s))
-            json_array_push(imp, SDTImpact_toJSON(s, argv[i], argv[j]));
-          else if (SDTInteractor_isFriction(s))
-            json_array_push(fri, SDTFriction_toJSON(s, argv[i], argv[j]));
+  for (int i = 0; i < argc; ++i) {
+    _SDT_CALL_FOR_ALL_TYPES(_SDT_PUSH_CASE);
+    // Check pairs of keys for interactors
+    for (int j = 0; j < argc; ++j) {
+      if (i == j) continue;
+      const SDTInteractor *sdt_obj = SDT_getInteractor(argv[i], argv[j]);
+      if (sdt_obj) {
+        json_value *sdt_jobj = SDTInteractor_toJSON(sdt_obj);
+        // Add resonator keys
+        json_object_push(sdt_jobj, "resonator0", json_string_new(argv[i]));
+        json_object_push(sdt_jobj, "resonator1", json_string_new(argv[j]));
+        // Push to correct array
+        _SDT_INTERACTOR_PUSH_CASE(Impact, impact)
+        else _SDT_INTERACTOR_PUSH_CASE(Friction, friction) else {
+          json_builder_free(sdt_jobj);
         }
+      }
     }
-    if ((v = SDT_getBiquad(argv[i])))
-      json_object_push(dict_BIQUAD, argv[i], SDTBiquad_toJSON(v));
-    if ((v = SDT_getBouncing(argv[i])))
-      json_object_push(dict_BOUNCING, argv[i], SDTBouncing_toJSON(v));
-    if ((v = SDT_getBreaking(argv[i])))
-      json_object_push(dict_BREAKING, argv[i], SDTBreaking_toJSON(v));
-    if ((v = SDT_getBubble(argv[i])))
-      json_object_push(dict_BUBBLE, argv[i], SDTBubble_toJSON(v));
-    if ((v = SDT_getCrumpling(argv[i])))
-      json_object_push(dict_CRUMPLING, argv[i], SDTCrumpling_toJSON(v));
-    if ((v = SDT_getDCMotor(argv[i])))
-      json_object_push(dict_DCMOTOR, argv[i], SDTDCMotor_toJSON(v));
-    if ((v = SDT_getDemix(argv[i])))
-      json_object_push(dict_DEMIX, argv[i], SDTDemix_toJSON(v));
-    if ((v = SDT_getEnvelope(argv[i])))
-      json_object_push(dict_ENVELOPE, argv[i], SDTEnvelope_toJSON(v));
-    if ((v = SDT_getExplosion(argv[i])))
-      json_object_push(dict_EXPLOSION, argv[i], SDTExplosion_toJSON(v));
-    if ((v = SDT_getFluidFlow(argv[i])))
-      json_object_push(dict_FLUIDFLOW, argv[i], SDTFluidFlow_toJSON(v));
-    if ((v = SDT_getMotor(argv[i])))
-      json_object_push(dict_MOTOR, argv[i], SDTMotor_toJSON(v));
-    if ((v = SDT_getMyoelastic(argv[i])))
-      json_object_push(dict_MYOELASTIC, argv[i], SDTMyoelastic_toJSON(v));
-    if ((v = SDT_getPitch(argv[i])))
-      json_object_push(dict_PITCH, argv[i], SDTPitch_toJSON(v));
-    if ((v = SDT_getPitchShift(argv[i])))
-      json_object_push(dict_PITCHSHIFT, argv[i], SDTPitchShift_toJSON(v));
-    if ((v = SDT_getReverb(argv[i])))
-      json_object_push(dict_REVERB, argv[i], SDTReverb_toJSON(v));
-    if ((v = SDT_getRolling(argv[i])))
-      json_object_push(dict_ROLLING, argv[i], SDTRolling_toJSON(v));
-    if ((v = SDT_getScraping(argv[i])))
-      json_object_push(dict_SCRAPING, argv[i], SDTScraping_toJSON(v));
-    if ((v = SDT_getSpectralFeats(argv[i])))
-      json_object_push(dict_SPECTRALFEATS, argv[i], SDTSpectralFeats_toJSON(v));
-    if ((v = SDT_getWindCavity(argv[i])))
-      json_object_push(dict_WINDCAVITY, argv[i], SDTWindCavity_toJSON(v));
-    if ((v = SDT_getWindKarman(argv[i])))
-      json_object_push(dict_WINDKARMAN, argv[i], SDTWindKarman_toJSON(v));
-    if ((v = SDT_getWindFlow(argv[i])))
-      json_object_push(dict_WINDFLOW, argv[i], SDTWindFlow_toJSON(v));
-    if ((v = SDT_getZeroCrossing(argv[i])))
-      json_object_push(dict_ZEROCROSSING, argv[i], SDTZeroCrossing_toJSON(v));
   }
 
-  push_else_free(prj, "metadata", SDTProjectMetadata_pop(),
-                 SDTProjectMetadata_get()->u.object.length);
-  push_else_free(prj, "resonators", res, res->u.object.length);
-  push_else_free(inter, "impacts", imp, imp->u.array.length);
-  push_else_free(inter, "frictions", fri, fri->u.array.length);
-  push_else_free(prj, "interactors", inter, inter->u.object.length);
-  push_else_free(prj, "biquads", dict_BIQUAD, dict_BIQUAD->u.object.length);
-  push_else_free(prj, "bouncings", dict_BOUNCING,
-                 dict_BOUNCING->u.object.length);
-  push_else_free(prj, "breakings", dict_BREAKING,
-                 dict_BREAKING->u.object.length);
-  push_else_free(prj, "bubbles", dict_BUBBLE, dict_BUBBLE->u.object.length);
-  push_else_free(prj, "crumplings", dict_CRUMPLING,
-                 dict_CRUMPLING->u.object.length);
-  push_else_free(prj, "dcmotors", dict_DCMOTOR, dict_DCMOTOR->u.object.length);
-  push_else_free(prj, "demixs", dict_DEMIX, dict_DEMIX->u.object.length);
-  push_else_free(prj, "envelopes", dict_ENVELOPE,
-                 dict_ENVELOPE->u.object.length);
-  push_else_free(prj, "explosions", dict_EXPLOSION,
-                 dict_EXPLOSION->u.object.length);
-  push_else_free(prj, "fluidflows", dict_FLUIDFLOW,
-                 dict_FLUIDFLOW->u.object.length);
-  push_else_free(prj, "motors", dict_MOTOR, dict_MOTOR->u.object.length);
-  push_else_free(prj, "myos", dict_MYOELASTIC,
-                 dict_MYOELASTIC->u.object.length);
-  push_else_free(prj, "pitchs", dict_PITCH, dict_PITCH->u.object.length);
-  push_else_free(prj, "pitchshifts", dict_PITCHSHIFT,
-                 dict_PITCHSHIFT->u.object.length);
-  push_else_free(prj, "reverbs", dict_REVERB, dict_REVERB->u.object.length);
-  push_else_free(prj, "rollings", dict_ROLLING, dict_ROLLING->u.object.length);
-  push_else_free(prj, "scrapings", dict_SCRAPING,
-                 dict_SCRAPING->u.object.length);
-  push_else_free(prj, "spectralfeatss", dict_SPECTRALFEATS,
-                 dict_SPECTRALFEATS->u.object.length);
-  push_else_free(prj, "windcavitys", dict_WINDCAVITY,
-                 dict_WINDCAVITY->u.object.length);
-  push_else_free(prj, "windkarmans", dict_WINDKARMAN,
-                 dict_WINDKARMAN->u.object.length);
-  push_else_free(prj, "windflows", dict_WINDFLOW,
-                 dict_WINDFLOW->u.object.length);
-  push_else_free(prj, "zeroxs", dict_ZEROCROSSING,
-                 dict_ZEROCROSSING->u.object.length);
-
+  // Push collectors objects/arrays to project object
+  // project
+  //  |
+  //  +- bouncing
+  //  |   + <bouncing objects>
+  //  +- ...
+  //  |
+  //  +- zerox
+  //  |   + <zerox objects>
+  //  +- interactor
+  //      + impact
+  //      |  + <impact objects>
+  //      + friction
+  //         + <friction objects>
+  _SDT_CALL_FOR_ALL_TYPES(_SDT_COLLECT_CASE);
+  _SDT_INTERACTOR_COLLECT_CASE(Impact, impact);
+  _SDT_INTERACTOR_COLLECT_CASE(Friction, friction);
+  _SDT_COLLECT_CASE(Interactor, interactor);
   return prj;
 }
 
-static int SDTProject_assert(int value, SDTOSCReturnCode *return_code,
-                             json_value *return_msg, SDTOSCReturnCode fail_code,
-                             const char *fail_head, json_value *fail_body) {
-  if (return_code && *return_code != SDT_OSC_RETURN_OK) {
-    if (fail_body) json_builder_free(fail_body);
-    return 0;
-  }
-  if (value) {
-    if (fail_body) json_builder_free(fail_body);
-    return 1;
-  }
-  if (return_code) *return_code = fail_code;
-  if (fail_body) {
-    if (fail_head && return_msg && return_msg->type == json_object)
-      json_object_push(return_msg, fail_head, fail_body);
-    else
-      json_builder_free(fail_body);
-  }
-  return 0;
-}
+/*
 
 static int SDTProject_loadBiquad(const json_object_entry *value,
                                  SDTOSCReturnCode *return_code,
@@ -594,11 +523,10 @@ static int SDTProject_loadResonator(const json_object_entry *value,
 
   SDTResonator *tmp = SDTResonator_fromJSON(value->value);
   SDTProject_assert(
-      SDTResonator_getNPickups(x) == SDTResonator_getNPickups(tmp), return_code,
-      return_msg, SDT_OSC_RETURN_OK, value->name,
-      json_string_new(
-          "WARNING: number of pickup points changed, check that any interactor "
-          "that involves this resonator has the correct number of outlets"));
+      SDTResonator_getNPickups(x) == SDTResonator_getNPickups(tmp),
+return_code, return_msg, SDT_OSC_RETURN_OK, value->name, json_string_new(
+          "WARNING: number of pickup points changed, check that any interactor
+" "that involves this resonator has the correct number of outlets"));
   SDTResonator_copy(x, tmp);
   SDTResonator_free(tmp);
   return 1;
@@ -690,18 +618,16 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
                          json_value *msg) {
   if (!SDTProject_assert(prj && prj->type == json_object, return_code, msg,
                          SDT_OSC_RETURN_JSON_NOT_COMPLIANT, "project",
-                         json_string_new("not compliant (not a JSON object)")))
-    return;
+                         json_string_new("not compliant (not a JSON
+object)"))) return;
 
   // Load metadata
   const json_value *meta = json_object_get_by_key(prj, "metadata");
   if (meta) {
     if (SDTProject_assert(meta->type == json_object, return_code, msg,
                           SDT_OSC_RETURN_JSON_NOT_COMPLIANT, "metadata",
-                          json_string_new("not compliant (not a JSON object)")))
-      SDTProjectMetadata_set(json_deepcopy(meta));
-    else
-      return;
+                          json_string_new("not compliant (not a JSON
+object)"))) SDTProjectMetadata_set(json_deepcopy(meta)); else return;
   }
 
   // Load resonators
@@ -713,8 +639,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
             json_string_new("not compliant (not a JSON object)")))
       return;
     for (unsigned int i = 0; i < res->u.object.length; ++i)
-      if (!SDTProject_loadResonator(res->u.object.values + i, return_code, msg))
-        return;
+      if (!SDTProject_loadResonator(res->u.object.values + i, return_code,
+msg)) return;
   }
 
   // Load interactors
@@ -736,9 +662,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
     const json_value *fri = json_object_get_by_key(inter, "frictions");
     if (fri)
       if (!SDTProject_loadInteractors("frictions", &SDTInteractor_isFriction,
-                                      &SDTFriction_fromJSON, &SDTFriction_copy,
-                                      &SDTFriction_free, fri, return_code, msg))
-        return;
+                                      &SDTFriction_fromJSON,
+&SDTFriction_copy, &SDTFriction_free, fri, return_code, msg)) return;
   }
 
   // Load misc
@@ -750,9 +675,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
             json_string_new("not compliant (not a JSON object)")))
       return;
     for (unsigned int i = 0; i < dict_BIQUAD->u.object.length; ++i)
-      if (!SDTProject_loadBiquad(dict_BIQUAD->u.object.values + i, return_code,
-                                 msg))
-        return;
+      if (!SDTProject_loadBiquad(dict_BIQUAD->u.object.values + i,
+return_code, msg)) return;
   }
   const json_value *dict_BOUNCING = json_object_get_by_key(prj, "bouncings");
   if (dict_BOUNCING) {
@@ -786,13 +710,11 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
             json_string_new("not compliant (not a JSON object)")))
       return;
     for (unsigned int i = 0; i < dict_BUBBLE->u.object.length; ++i)
-      if (!SDTProject_loadBubble(dict_BUBBLE->u.object.values + i, return_code,
-                                 msg))
-        return;
+      if (!SDTProject_loadBubble(dict_BUBBLE->u.object.values + i,
+return_code, msg)) return;
   }
-  const json_value *dict_CRUMPLING = json_object_get_by_key(prj, "crumplings");
-  if (dict_CRUMPLING) {
-    if (!SDTProject_assert(
+  const json_value *dict_CRUMPLING = json_object_get_by_key(prj,
+"crumplings"); if (dict_CRUMPLING) { if (!SDTProject_assert(
             dict_CRUMPLING->type == json_object, return_code, msg,
             SDT_OSC_RETURN_JSON_NOT_COMPLIANT, "crumplings",
             json_string_new("not compliant (not a JSON object)")))
@@ -838,9 +760,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
                                    return_code, msg))
         return;
   }
-  const json_value *dict_EXPLOSION = json_object_get_by_key(prj, "explosions");
-  if (dict_EXPLOSION) {
-    if (!SDTProject_assert(
+  const json_value *dict_EXPLOSION = json_object_get_by_key(prj,
+"explosions"); if (dict_EXPLOSION) { if (!SDTProject_assert(
             dict_EXPLOSION->type == json_object, return_code, msg,
             SDT_OSC_RETURN_JSON_NOT_COMPLIANT, "explosions",
             json_string_new("not compliant (not a JSON object)")))
@@ -850,9 +771,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
                                     return_code, msg))
         return;
   }
-  const json_value *dict_FLUIDFLOW = json_object_get_by_key(prj, "fluidflows");
-  if (dict_FLUIDFLOW) {
-    if (!SDTProject_assert(
+  const json_value *dict_FLUIDFLOW = json_object_get_by_key(prj,
+"fluidflows"); if (dict_FLUIDFLOW) { if (!SDTProject_assert(
             dict_FLUIDFLOW->type == json_object, return_code, msg,
             SDT_OSC_RETURN_JSON_NOT_COMPLIANT, "fluidflows",
             json_string_new("not compliant (not a JSON object)")))
@@ -919,9 +839,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
             json_string_new("not compliant (not a JSON object)")))
       return;
     for (unsigned int i = 0; i < dict_REVERB->u.object.length; ++i)
-      if (!SDTProject_loadReverb(dict_REVERB->u.object.values + i, return_code,
-                                 msg))
-        return;
+      if (!SDTProject_loadReverb(dict_REVERB->u.object.values + i,
+return_code, msg)) return;
   }
   const json_value *dict_ROLLING = json_object_get_by_key(prj, "rollings");
   if (dict_ROLLING) {
@@ -956,9 +875,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
             json_string_new("not compliant (not a JSON object)")))
       return;
     for (unsigned int i = 0; i < dict_SPECTRALFEATS->u.object.length; ++i)
-      if (!SDTProject_loadSpectralFeats(dict_SPECTRALFEATS->u.object.values + i,
-                                        return_code, msg))
-        return;
+      if (!SDTProject_loadSpectralFeats(dict_SPECTRALFEATS->u.object.values +
+i, return_code, msg)) return;
   }
   const json_value *dict_WINDCAVITY =
       json_object_get_by_key(prj, "windcavitys");
@@ -1012,7 +930,8 @@ void SDTProject_fromJSON(const json_value *prj, SDTOSCReturnCode *return_code,
   }
 }
 
-// ----------------------------------------------------------------------------
+//
+----------------------------------------------------------------------------
 
 json_value *metadata = 0;
 

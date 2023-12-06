@@ -13,8 +13,8 @@ Functions for SDT Projects
 /** @brief Convert to a JSON object the information about a SDT project
 @param[in] argc Number of arguments
 @param[in] argv Array of keys of the objects in the project
-@return The project JSON object */
-// extern json_value *SDTProject_toJSON(int argc, const char **argv);
+@return The project JSON object. Must be freed with json_builder_free */
+extern json_value *SDTProject_toJSON(int argc, const char **argv);
 
 /** @brief Load information about a SDT project from a JSON object
 @param[in] prj The project JSON object
@@ -42,6 +42,31 @@ Functions for SDT Projects
 @return The metadata JSON object (must be freed
 with json_builder_free) */
 // extern json_value *SDTProjectMetadata_pop();
+
+/** @brief Call macro for all types, except interactors
+@param[in] FOO Macro */
+#define _SDT_CALL_FOR_ALL_TYPES(FOO) \
+  FOO(Bouncing, bouncing);           \
+  FOO(Breaking, breaking);           \
+  FOO(Bubble, bubble);               \
+  FOO(Crumpling, crumpling);         \
+  FOO(DCMotor, dcmotor);             \
+  FOO(Demix, demix);                 \
+  FOO(Envelope, envelope);           \
+  FOO(Explosion, explosion);         \
+  FOO(Motor, motor);                 \
+  FOO(Myoelastic, myo);              \
+  FOO(Pitch, pitch);                 \
+  FOO(PitchShift, pitchshift);       \
+  FOO(Resonator, resonator);         \
+  FOO(Reverb, reverb);               \
+  FOO(Rolling, rolling);             \
+  FOO(Scraping, scraping);           \
+  FOO(SpectralFeats, spectralfeats); \
+  FOO(WindCavity, windcavity);       \
+  FOO(WindFlow, windflow);           \
+  FOO(WindKarman, windkarman);       \
+  FOO(ZeroCrossing, zerox);
 
 #endif
 
