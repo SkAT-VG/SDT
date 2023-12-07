@@ -143,7 +143,7 @@
   int SDTOSC##TYPENAME##_loads(const SDTOSCMessage* x) {                     \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                          \
     _SDTOSCINTERACTOR_FIND_IN_HASHMAP(TYPENAME, obj, k0, k1, x)              \
-    json_value* jobj = _SDTOSC_tralingArgsToJSON(x, 2);                      \
+    json_value* jobj = _SDTOSC_trailingArgsToJSON(x, 2);                     \
     if (!jobj) {                                                             \
       SDTOSC_MESSAGE_LOGA(                                                   \
           ERROR,                                                             \

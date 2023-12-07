@@ -168,7 +168,7 @@ extern float SDTOSCArgumentList_getFloat(const SDTOSCArgumentList *x, int i);
 /** @brief Gets the string value of the argument at the specified position
 @param[in] x Instance pointer
 Argument should be previously checked with ::SDTOSCArgumentList_isString
-@return The float value */
+@return The string pointer */
 extern const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x,
                                                 int i);
 
@@ -429,9 +429,11 @@ Macros for implementing OSC methods
     _SDTOSC_GETFPATH(fpath, x, 1)                       \
     json_value *jobj;                                   \
     int r = SDTOSCJSON_load(name, &jobj, fpath);        \
-    SDT##TYPENAME##_setParams(obj, jobj, 0);            \
-    json_builder_free(jobj);                            \
-    _SDT_TYPE_UPDATE_##U(TYPENAME, obj);                \
+    if (jobj) {                                         \
+      SDT##TYPENAME##_setParams(obj, jobj, 0);          \
+      json_builder_free(jobj);                          \
+      _SDT_TYPE_UPDATE_##U(TYPENAME, obj);              \
+    }                                                   \
     return r;                                           \
   }
 
@@ -440,7 +442,8 @@ Macros for implementing OSC methods
 @param[in] start Index of the first parameter to include in the dump
 @return JSON object, if valid, NULL pointer otherwise. Memory must be freed
 with json_builder_free */
-extern json_value *_SDTOSC_tralingArgsToJSON(const SDTOSCMessage *x, int start);
+extern json_value *_SDTOSC_trailingArgsToJSON(const SDTOSCMessage *x,
+                                              int start);
 
 /** @brief Implement OSC JSON string load method
 @param[in] TYPENAME SDT type name, without the leading `SDT`
@@ -449,7 +452,7 @@ extern json_value *_SDTOSC_tralingArgsToJSON(const SDTOSCMessage *x, int start);
   int SDTOSC##TYPENAME##_loads(const SDTOSCMessage *x) {                     \
     SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")                          \
     _SDTOSC_FIND_IN_HASHMAP(TYPENAME, obj, name, x)                          \
-    json_value *jobj = _SDTOSC_tralingArgsToJSON(x, 1);                      \
+    json_value *jobj = _SDTOSC_trailingArgsToJSON(x, 1);                     \
     if (!jobj) {                                                             \
       SDTOSC_MESSAGE_LOGA(                                                   \
           ERROR,                                                             \

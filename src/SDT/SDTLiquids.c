@@ -86,7 +86,9 @@ void SDTBubble_setRiseFactor(SDTBubble *x, double f) {
   x->riseFactor = SDT_fclip(f, 0.0, MAX_RISE);
 }
 
-void SDTBubble_update(SDTBubble *x) {
+void SDTBubble_update(SDTBubble *x) { return SDTBubble_trigger(x); }
+
+void SDTBubble_trigger(SDTBubble *x) {
   double pRadius;
 
   x->lastOut = x->out;
@@ -310,7 +312,7 @@ double SDTFluidFlow_dsp(SDTFluidFlow *x) {
     SDTBubble_setRadius(bubble, radius);
     SDTBubble_setDepth(bubble, depth);
     SDTBubble_setRiseFactor(bubble, riseFactor);
-    SDTBubble_update(bubble);
+    SDTBubble_trigger(bubble);
   }
   result = 0.0;
   for (i = 0; i < x->nBubbles; i++) {
