@@ -23,7 +23,7 @@ typedef struct _bubble {
 } t_bubble;
 
 void bubble_bang(t_bubble *x) {
-  SDTBubble_update(x->bubble);
+  SDTBubble_trigger(x->bubble);
   // Do not normalize w.r.t. radius and depth
   SDTBubble_normAmp(x->bubble);
 }

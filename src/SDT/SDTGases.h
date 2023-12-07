@@ -473,8 +473,8 @@ extern void SDTExplosion_setWaveSpeed(SDTExplosion *x, double f);
 @param[in] f Propagation velocity of the blast wind, in m/s */
 extern void SDTExplosion_setWindSpeed(SDTExplosion *x, double f);
 
-/** @brief DEPRECATED: Use #SDTSDTExplosion_trigger, instead */
-extern void SDTSDTExplosion_update(SDTWindFlow *x) __attribute__((deprecated(
+/** @brief DEPRECATED: Use #SDTExplosion_trigger, instead */
+extern void SDTExplosion_update(SDTExplosion *x) __attribute__((deprecated(
     "SDTExplosion_update() has been renamed SDTExplosion_trigger() "
     "to be consistent with other types in the SDT library and avoid "
     "confusion with the usual behaviour of SDT*_update() functions.")));

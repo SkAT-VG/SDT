@@ -51,7 +51,7 @@ SDT_MAX_ACCESSORS(bubble, Bubble, bubble, RiseFactor, float, , )
 SDT_MAX_ACCESSORS(bubble, Bubble, bubble, Radius, float, 1000.0, )
 
 void bubble_bang(t_bubble *x) {
-  SDTBubble_update(x->bubble);
+  SDTBubble_trigger(x->bubble);
   // Do not normalize w.r.t. radius and depth
   SDTBubble_normAmp(x->bubble);
 }

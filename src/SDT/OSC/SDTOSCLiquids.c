@@ -44,7 +44,7 @@ _SDTOSC_FLOAT_SETTER_FUNCTION(Bubble, riseFactor, RiseFactor, double, )
 int SDTOSCBubble_trigger(const SDTOSCMessage* x) {
   SDTOSC_MESSAGE_LOGA(VERBOSE, "\n  %s\n", x, "")
   _SDTOSC_FIND_IN_HASHMAP(Bubble, obj, name, x)
-  SDTBubble_update(obj);
+  SDTBubble_trigger(obj);
   // Do not normalize w.r.t. radius and depth
   SDTBubble_normAmp(obj);
   return 0;
