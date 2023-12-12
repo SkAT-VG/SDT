@@ -15,6 +15,23 @@ extern "C" {
 
 /** @defgroup oscresonators SDTOSCResonators
 OSC for #SDTResonator objects
+
+\section resonator_methods Resonator methods
+Resonator objects can be controlled like any other SDT object, with the
+exception of their frequency, decay, weight and gain parameters.
+
+\subsection parameter_arrays Parameter arrays
+Frequency, decay, and weight are arrays of parameters,
+their size is the number of modes of the resonator.
+The setter methods expect the mode index (zero-based) as an additional argument
+\code{osc} /resonator/<array_name> <key> <mode_index> <value> \endcode
+
+\subsection parameter_matrix Parameter matrix
+Gain is a matrix of parameters: there is one gain value for each pickup point
+and for each mode of the resonator. The setter method expects the pickup index
+and the mode index (both zero-based) as additional arguments \code{osc}
+/resonator/gain <key> <pickup_index> <mode_index> <gain>
+\endcode
 @ingroup oscmethods
 @{ */
 
