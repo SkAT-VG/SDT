@@ -15,6 +15,23 @@ extern "C" {
 
 /** @defgroup oscprojects SDTOSCProjects
 OSC for SDT projects
+
+\section project_methods Project methods
+Project methods can affect multiple objects at once. This is useful to debug,
+save and set the parameters when multiple SDT objects are involved.
+
+\subsection json_methods JSON methods
+Projects only have methods for JSON serialization and
+deserialization. The methods `save` and `load` require a filepath as a first
+argument. The methods `log` and `save` require the keys of the objects of
+interest. \code{osc}
+/<class>/log   <key0> <key1>...
+/<class>/save  <filepath> <key0> <key1>...
+/<class>/load  <filepath>
+/<class>/loads <json>...
+\endcode
+Note that, if two or more resonators are involved in the project, so will any
+interactor registered between any pair of such resonators.
 @ingroup oscmethods
 @{
 */
