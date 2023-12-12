@@ -36,9 +36,9 @@ arguments as a JSON payload. \code{osc}
 \endcode
 \section special_classes Special classes
 Some classes have a special behaviour, namely:
-- resonators (#SDTOSCResonator) have array-valued attributes
-- interactors (#SDTOSCImpact and #SDTOSCFriction) are identified by two keys
-- projects (#SDTOSCProject) allow to handle multiple objects at once with JSON
+- resonators (@ref oscresonators) have array-valued attributes
+- interactors (@ref OSCInteractors) are identified by two keys
+- projects (@ref oscprojects) allow to handle multiple objects at once with JSON
 @ingroup osc
 @{ */
 
