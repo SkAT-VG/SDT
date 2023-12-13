@@ -277,6 +277,8 @@ jobs:
           asset: max
         - target: win64
           asset: pd
+        - target: win32
+          asset: max
         include:
         - asset: lib
           version: ${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
