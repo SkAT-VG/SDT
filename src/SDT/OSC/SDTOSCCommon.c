@@ -376,7 +376,7 @@ json_value *_SDTOSC_trailingArgsToJSON(const SDTOSCMessage *x, int start) {
   const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
   size_t c;
   _SDT_ITERATIVE_MEMORY_DOUBLING(
-      0, 24, js, js_size,
+      4, 24, js, js_size,
       ((c = SDTOSCArgumentList_snprintf(js, js_size, "%f", args, start, -1)) >=
        0) &&
           (c < js_size),
