@@ -16,9 +16,18 @@ const char *SDTOSC_rtfm_string() {
 #define _SDT_JSON_BUFLEN 512
 static char _SDT_JSON_logBuffer[_SDT_JSON_BUFLEN];
 
-static size_t _SDT_updateRemainingCharsNPrintf(size_t n, int c) {
-  return (n > c * sizeof(char)) ? n - c * sizeof(char) : (size_t)1;
-}
+#define _SDTOSC_NPRINT_CHECKRETVAL(R, PRINTF)                           \
+  {                                                                     \
+    if ((R) < 0) {                                                      \
+      SDT_LOGA(DEBUG, #PRINTF "() returned a negative value: %d\n", R); \
+      return R;                                                         \
+    }                                                                   \
+  }
+
+#define _SDTOSC_NPRINT_CURSOR(S, TOT, N) ((S) + (((TOT) < (N)) ? (TOT) : (N)-1))
+#define _SDTOSC_NPRINT_CURMEM(TOT, N) (((TOT) < (N)) ? (N) - (TOT) : 1)
+#define _SDTOSC_PUT_NULL_TERMINATING(S, TOT, N) \
+  *((char *)_SDTOSC_NPRINT_CURSOR(S, TOT, N)) = 0
 
 //-------------------------------------------------------------------------------------//
 
@@ -74,11 +83,12 @@ void SDTOSCAddress_free(SDTOSCAddress *x) {
 }
 
 int SDTOSCAddress_snprintf(char *s, size_t n, const SDTOSCAddress *x) {
-  int tot = 0, c = 0;
+  int tot = 0, c;
   if (x)
     for (unsigned int i = 0; i < x->depth && tot < n; ++i) {
-      c = snprintf(s + tot, n, "/%s", x->nodes[i]);
-      n = _SDT_updateRemainingCharsNPrintf(n, c);
+      c = snprintf(_SDTOSC_NPRINT_CURSOR(s, tot, n),
+                   _SDTOSC_NPRINT_CURMEM(tot, n), "/%s", x->nodes[i]);
+      _SDTOSC_NPRINT_CHECKRETVAL(c, sprintf);
       tot += c;
     }
   return tot;
@@ -215,9 +225,6 @@ const char *SDTOSCArgumentList_getString(const SDTOSCArgumentList *x, int i) {
 
 int SDTOSCArgumentList_getNArgs(const SDTOSCArgumentList *x) { return x->argc; }
 
-#define _SDTOSCALPRINT_CURSOR (s + ((tot < n) ? tot : n - 1))
-#define _SDTOSCALPRINT_CURMEM ((tot < n) ? n - tot : 1)
-
 int SDTOSCArgumentList_snprintf(char *s, size_t n, const char *float_fmt,
                                 const SDTOSCArgumentList *x, int start,
                                 int end) {
@@ -226,11 +233,15 @@ int SDTOSCArgumentList_snprintf(char *s, size_t n, const char *float_fmt,
   int tot = 0, c;
   for (int i = start; i < end; ++i) {
     if (i != start) {
-      c = snprintf(_SDTOSCALPRINT_CURSOR, _SDTOSCALPRINT_CURMEM, " ");
+      c = snprintf(_SDTOSC_NPRINT_CURSOR(s, tot, n),
+                   _SDTOSC_NPRINT_CURMEM(tot, n), " ");
+      _SDTOSC_NPRINT_CHECKRETVAL(c, snprintf);
       tot += c;
     }
-    c = SDTOSCArgument_snprintf(_SDTOSCALPRINT_CURSOR, _SDTOSCALPRINT_CURMEM,
-                                float_fmt, x->argv[i]);
+    c = SDTOSCArgument_snprintf(_SDTOSC_NPRINT_CURSOR(s, tot, n),
+                                _SDTOSC_NPRINT_CURMEM(tot, n), float_fmt,
+                                x->argv[i]);
+    _SDTOSC_NPRINT_CHECKRETVAL(c, SDTOSCArgument_snprintf);
     tot += c;
   }
   return tot;
@@ -273,12 +284,16 @@ int SDTOSCMessage_snprintf(char *s, size_t n, const char *float_fmt,
                            const SDTOSCMessage *m) {
   int tot, c;
   tot = SDTOSCAddress_snprintf(s, n, SDTOSCMessage_getAddress(m));
-  n = _SDT_updateRemainingCharsNPrintf(n, tot);
-  c = snprintf(s + tot, n, " ");
+  _SDTOSC_NPRINT_CHECKRETVAL(tot, SDTOSCAddress_snprintf);
+  c = snprintf(_SDTOSC_NPRINT_CURSOR(s, tot, n), _SDTOSC_NPRINT_CURMEM(tot, n),
+               " ");
+  _SDTOSC_NPRINT_CHECKRETVAL(c, sprintf);
   tot += c;
-  n = _SDT_updateRemainingCharsNPrintf(n, c);
-  tot += SDTOSCArgumentList_snprintf(s + tot, n, float_fmt,
-                                     SDTOSCMessage_getArguments(m), 0, -1);
+  c = SDTOSCArgumentList_snprintf(_SDTOSC_NPRINT_CURSOR(s, tot, n),
+                                  _SDTOSC_NPRINT_CURMEM(tot, n), float_fmt,
+                                  SDTOSCMessage_getArguments(m), 0, -1);
+  _SDTOSC_NPRINT_CHECKRETVAL(c, SDTOSCArgumentList_snprintf);
+  tot += c;
   return tot;
 }
 
@@ -359,10 +374,14 @@ int SDTOSCJSON_load(const char *name, json_value **obj, const char *fpath) {
 
 json_value *_SDTOSC_trailingArgsToJSON(const SDTOSCMessage *x, int start) {
   const SDTOSCArgumentList *args = SDTOSCMessage_getArguments(x);
+  size_t c;
   _SDT_ITERATIVE_MEMORY_DOUBLING(
       0, 24, js, js_size,
-      SDTOSCArgumentList_snprintf(js, js_size, "%f", args, start, -1) >= 0,
+      ((c = SDTOSCArgumentList_snprintf(js, js_size, "%f", args, start, -1)) >=
+       0) &&
+          (c < js_size),
       {
+        SDT_LOGA(DEBUG, "Trailing args: %p->%s\n", js, js);
         json_value *jobj = SDTJSON_reads(js, -1);
         free(js);
         return jobj;

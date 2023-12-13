@@ -1,7 +1,9 @@
 #include "SDTTestUtils.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "SDT/SDTCommon.h"
 
 typedef enum SDTRandomSequenceType {

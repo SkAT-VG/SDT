@@ -1,4 +1,5 @@
 #include <stdint.h>
+
 #include "CuTest.h"
 #include "SDT/SDTCommon.h"
 
@@ -247,7 +248,7 @@ void TestSDT_functionName(CuTest* tc)
   CuAssert(tc, "Fail on invalid JSON string", SDTOSCRoot(msg) != 0);      \
   SDTOSCArgument_free(SDTOSCArgumentList_setArgument(                     \
       args, 1, SDTOSCArgument_newString(JSONS)));                         \
-  CuAssert(tc, "Succeed", SDTOSCRoot(msg) == 0);                          \
+  CuAssertIntEquals(tc, 0, SDTOSCRoot(msg));                              \
   SDT_unregister##TYPENAME(key);                                          \
   SDTOSC_TEST_END(TYPENAME, VAR)
 
