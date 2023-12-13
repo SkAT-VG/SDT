@@ -345,9 +345,11 @@ jobs:
     - name: No Jekyll in pages
       run: touch pages/.nojekyll
     - name: OSC redirect folder
-      run: mkdir OSC
+      run: mkdir pages/OSC
     - name: OSC redirect file
-      run: echo '<meta http-equiv="Refresh", content="0; url=../group__oscmethods.html" />' > OSC/index.html
+      run: |
+        echo '<meta http-equiv="Refresh", content="0; url=../group__oscmethods.html" />' \
+          > pages/OSC/index.html
     - name: Deploy pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
