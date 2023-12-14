@@ -53,9 +53,9 @@ int SDTOSCRoot(const SDTOSCMessage* x) {
   // Please, consider that it will print warnings also for
   // the memory occupied by the OSC message itself.
   if (!strcmp("_arenaWarnNonEmpty", k)) {
-    SDT_LOG(WARN, "--- Start of memory warnings ----------");
+    SDT_LOG(WARN, "--- Start of memory warnings ----------\n");
     _SDT_arenaWarnNonEmpty();
-    SDT_LOG(WARN, "--- End of memory warnings ------------");
+    SDT_LOG(WARN, "--- End of memory warnings ------------\n");
     return 0;
   }
 #endif

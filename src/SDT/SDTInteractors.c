@@ -1,9 +1,12 @@
 #include "SDTInteractors.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
 #include "SDTOscillators.h"
 #include "SDTStructs.h"
+
 
 #define MAX_ERROR 0.001
 #define MAX_ITERATIONS 50
@@ -173,7 +176,7 @@ SDTInteractor *SDTInteractor_copy(SDTInteractor *dest, const SDTInteractor *src,
   } else {
     SDT_LOG(ERROR,
             "Copy won't be performed because source and destination of "
-            "SDTInteractor_copy() are interactors of different types.");
+            "SDTInteractor_copy() are interactors of different types.\n");
   }
   return dest;
 }

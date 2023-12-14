@@ -144,7 +144,7 @@ extern json_value *SDTJSON_deepcopy(const json_value *value);
           SDT##TYPENAME##_set##CATTR(VAR, v_##KEY->u._JSON_TYPE_FIELD(JTYPE)); \
         } else {                                                               \
           SDT_LOGA(WARN,                                                       \
-                   "\n  Not setting parameter \"" #KEY                         \
+                   "Not setting parameter \"" #KEY                             \
                    "\" because it is unsafe.\n  Current: " _JSON_TYPE_CFMT(    \
                        JTYPE) "\n  JSON:    " _JSON_TYPE_CFMT(JTYPE) "\n",     \
                    SDT##TYPENAME##_get##CATTR(VAR),                            \

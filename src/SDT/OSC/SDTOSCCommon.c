@@ -389,7 +389,7 @@ json_value *_SDTOSC_trailingArgsToJSON(const SDTOSCMessage *x, int start) {
       SDT_LOGA(
           ERROR,
           "Could not parse OSC arguments as JSON: string would be greater than "
-          "%ld characters",
+          "%ld characters\n",
           js_size);)
   return NULL;
 }
