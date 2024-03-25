@@ -191,7 +191,7 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)friction_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
-  SDT_MAX_RO_ATTRIBUTE(c, friction, _key0, resonato0, symbol, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, friction, _key0, resonator0, symbol, 0);
   SDT_MAX_RO_ATTRIBUTE(c, friction, _key1, resonator1, symbol, 0);
 
   SDT_MAX_ATTRIBUTE(c, friction, NormalForce, force, float64, 0);
