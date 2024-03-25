@@ -269,7 +269,8 @@ $(TEST_BUILDDIR):; $(make-dir)
 # --- Pd ----------------------------------------------------------------------
 PD_DIR=$(SRC_DIR)/Pd
 PDPATCH_DIR=$(ROOT)/Pd
-PDSDK_DIR=$(THIRDP_DIR)/Pd
+PDSDK_VER=0.41.4
+PDSDK_DIR=$(THIRDP_DIR)/Pd/pd-$(PDSDK_VER)
 INCLUDE_PD_SDK=-I$(PDSDK_DIR)
 ifeq ("$(TARGET)", "linux")
 	PD_FNAME=SDT.pd_linux
