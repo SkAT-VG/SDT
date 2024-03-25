@@ -64,7 +64,7 @@ ifeq ("$(TARGET)", "win32")
 	PHONY+= install_pd uninstall_pd
 endif
 ifeq ("$(TARGET)", "win64")
-	ALL+= max
+	ALL+= pd max
 	PHONY+= install_max uninstall_max
 endif
 ifeq ("$(TARGET)", "macosx")
@@ -278,6 +278,10 @@ endif
 ifeq ("$(TARGET)", "win32")
 	PD_FNAME=SDT.dll
 	LINK_PD_SDK=-L$(PDSDK_DIR) -lpd
+endif
+ifeq ("$(TARGET)", "win64")
+	PD_FNAME=SDT.dll
+	LINK_PD_SDK=-L$(PDSDK_DIR)/x64 -lpd
 endif
 ifeq ("$(TARGET)", "macosx")
 	PD_FNAME=SDT.pd_darwin
