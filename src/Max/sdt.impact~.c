@@ -184,8 +184,8 @@ void C74_EXPORT ext_main(void *r) {
   class_addmethod(c, (method)impact_assist, "assist", A_CANT, 0);
   class_addmethod(c, (method)SDT_fileusage, "fileusage", A_CANT, 0L);
 
-  SDT_MAX_RO_ATTRIBUTE(c, impact, _key0, resonator 1, symbol, 0);
-  SDT_MAX_RO_ATTRIBUTE(c, impact, _key1, resonator 2, symbol, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, impact, _key0, resonator0, symbol, 0);
+  SDT_MAX_RO_ATTRIBUTE(c, impact, _key1, resonator1, symbol, 0);
 
   SDT_MAX_ATTRIBUTE(c, impact, Stiffness, stiffness, float64, 0);
   SDT_MAX_ATTRIBUTE(c, impact, Dissipation, dissipation, float64, 0);

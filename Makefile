@@ -343,7 +343,7 @@ ifeq ("$(TARGET)", "macosx")
 	             -L$(MAXSDK_DIR)/msp-includes \
 	             -F$(MAXSDK_DIR)/max-includes \
 	             -F$(MAXSDK_DIR)/msp-includes \
-	             -framework MaxAPI -framework MaxAudioAPI
+	             -framework MaxAudioAPI
 	MAX_CFLAGS+= -DMAC_VERSION -DMAC_EXT_VERSION -Dpowerc \
 	             -include $(MAXSDK_DIR)/max-includes/macho-prefix.pch
 	MAX_EXTS_EXT=mxo
