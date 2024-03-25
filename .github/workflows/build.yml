@@ -46,7 +46,7 @@ jobs:
         - pd: true
         - max: true
         - target: linux
-          container: ubuntu:16.04
+          container: ubuntu:20.04
           max: false
         - target: win32
           mingw: true
@@ -81,7 +81,7 @@ jobs:
       if: ${{ startsWith(matrix.runs_on, 'macos') }}
       with:
         version: "12.0.0"
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Build everything
@@ -93,7 +93,7 @@ jobs:
     - name: Package library
       run: make TARGET=${{ matrix.target }} install_core DSTDIR=SoundDesignToolkit
     - name: Upload library
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SDT_${{ matrix.target }}_lib${{ (matrix.debug && '_debug') || '' }}
         path: SoundDesignToolkit
@@ -104,7 +104,7 @@ jobs:
       run: make TARGET=${{ matrix.target }} install_pd DSTDIR=SoundDesignToolkit
     - name: Upload Pd library
       if: ${{ matrix.pd }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SDT_${{ matrix.target }}_pd${{ (matrix.debug && '_debug') || '' }}
         path: SoundDesignToolkit
@@ -115,12 +115,12 @@ jobs:
       run: make TARGET=${{ matrix.target }} install_max DSTDIR=SoundDesignToolkit
     - name: Upload Max library
       if: ${{ matrix.max }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SDT_${{ matrix.target }}_max${{ (matrix.debug && '_debug') || '' }}
         path: SoundDesignToolkit
     - name: Upload test runner
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: SDT_${{ matrix.target }}_test_core${{ (matrix.debug && '_debug') || '' }}
         path: .build.${{ matrix.target }}/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }}
@@ -148,9 +148,9 @@ jobs:
           runs_on: macos-latest
     runs-on: ${{ matrix.runs_on }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Download test runner
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: SDT_${{ matrix.target }}_test_core${{ (matrix.debug && '_debug') || '' }}
         path: testrunner
@@ -169,7 +169,7 @@ jobs:
         SDT_LOG_LEVEL: DEBUG
     - name: Upload test log
       if: ${{ success() || failure() }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ env.LOG_FNAME }}
         path: ${{ env.LOG_FNAME }}
@@ -194,7 +194,7 @@ jobs:
         sudo apt-get -y update
         sudo apt-get -y install doxygen-latex
         sudo apt-get -y install latexmk
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Log version names
@@ -207,14 +207,14 @@ jobs:
         echo "SDT_CORE_VERSION=$(make core_version)" >> $GITHUB_ENV
     - name: Build HTML
       run: doxygen
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: doxygen-html
         path: doc/html
     - name: Build latex
       run: make
       working-directory: doc/latex
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: refman
         path: doc/latex/refman.pdf
@@ -288,10 +288,10 @@ jobs:
           version: ${{ needs.doxygen.outputs.SDT_MAX_VERSION }}-${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Compose file name
       run: echo "SDT_ASSET_NAME=SDT_${{ matrix.target }}_${{ matrix.asset }}_${{ matrix.version }}" >> $GITHUB_ENV
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: SDT_${{ matrix.target }}_${{ matrix.asset }}
         path: ${{ env.SDT_ASSET_NAME }}
@@ -315,7 +315,7 @@ jobs:
     steps:
     - name: Export asset name
       run: echo SDT_ASSET_NAME=SDT_refman_${{ needs.doxygen.outputs.SDT_CORE_VERSION }}.pdf >> $GITHUB_ENV
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: refman
         path: artifacts
@@ -335,8 +335,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [release, doxygen]
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/download-artifact@v3
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
       with:
         name: doxygen-html
         path: pages
