@@ -40,10 +40,10 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
 
   if (argc < 3 || argv[0].a_type != A_SYMBOL || argv[1].a_type != A_FLOAT ||
       argv[2].a_type != A_FLOAT) {
-    error(
-        "modal: Please provide a unique id as first argument, "
-        "the number of modes as second argument and "
-        "the number of pickups as third argument.");
+    pd_error(NULL,
+             "modal: Please provide a unique id as first argument, "
+             "the number of modes as second argument and "
+             "the number of pickups as third argument.");
     return NULL;
   }
   x = (t_modal *)pd_new(modal_class);
@@ -52,7 +52,8 @@ void *modal_new(t_symbol *s, long argc, t_atom *argv) {
   x->modal = SDTResonator_new(nModes, nPickups);
   x->key = (char *)(atom_getsymbol(argv)->s_name);
   if (SDT_registerResonator(x->modal, x->key)) {
-    error(
+    pd_error(
+        x,
         "sdt.modal: Error registering the resonator. Probably a duplicate id?");
     SDTResonator_free(x->modal);
     return NULL;
