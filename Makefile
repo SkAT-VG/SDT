@@ -64,7 +64,7 @@ ifeq ("$(TARGET)", "win32")
 	PHONY+= install_pd uninstall_pd
 endif
 ifeq ("$(TARGET)", "win64")
-	ALL+= max
+	ALL+= pd max
 	PHONY+= install_max uninstall_max
 endif
 ifeq ("$(TARGET)", "macosx")
@@ -269,7 +269,8 @@ $(TEST_BUILDDIR):; $(make-dir)
 # --- Pd ----------------------------------------------------------------------
 PD_DIR=$(SRC_DIR)/Pd
 PDPATCH_DIR=$(ROOT)/Pd
-PDSDK_DIR=$(THIRDP_DIR)/Pd
+PDSDK_VER=0.54.1
+PDSDK_DIR=$(THIRDP_DIR)/Pd/pd-$(PDSDK_VER)
 INCLUDE_PD_SDK=-I$(PDSDK_DIR)
 ifeq ("$(TARGET)", "linux")
 	PD_FNAME=SDT.pd_linux
@@ -277,6 +278,10 @@ endif
 ifeq ("$(TARGET)", "win32")
 	PD_FNAME=SDT.dll
 	LINK_PD_SDK=-L$(PDSDK_DIR) -lpd
+endif
+ifeq ("$(TARGET)", "win64")
+	PD_FNAME=SDT.dll
+	LINK_PD_SDK=-L$(PDSDK_DIR)/x64 -lpd
 endif
 ifeq ("$(TARGET)", "macosx")
 	PD_FNAME=SDT.pd_darwin

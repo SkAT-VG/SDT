@@ -25,12 +25,12 @@ makes the function return NULL if there are unused arguments (and also prints an
 error message)
 @param[in] N Number of arguments
 @param[in] ... The type of each argument */
-#define SDT_PD_ARG_PARSE(N, ...)                                       \
-  long argi[N], uarg;                                                  \
-  t_atomtype targs[] = {__VA_ARGS__};                                  \
-  if ((uarg = sdt_pd_arg_parse(s, argc, argv, N, targs, argi)) >= 0) { \
-    error("sdt.%s: unused argument in position %ld", s->s_name, uarg); \
-    return NULL;                                                       \
+#define SDT_PD_ARG_PARSE(N, ...)                                             \
+  long argi[N], uarg;                                                        \
+  t_atomtype targs[] = {__VA_ARGS__};                                        \
+  if ((uarg = sdt_pd_arg_parse(s, argc, argv, N, targs, argi)) >= 0) {       \
+    pd_error(s, "sdt.%s: unused argument in position %ld", s->s_name, uarg); \
+    return NULL;                                                             \
   }
 
 /** @brief Get the Pd argument at the specified index. Arguments should have
@@ -66,7 +66,8 @@ If the registration is unsuccessful, this macro makes the function return NULL
   x->key = GET_ARG(I, atom_getsymbol, 0, ->s_name);                           \
   if (x->key)                                                                 \
     if (SDT_register##T(x->F, x->key)) {                                      \
-      error(                                                                  \
+      pd_error(                                                               \
+          x,                                                                  \
           "sdt.%s: Error while registering the %s. Probably a duplicate id?", \
           s->s_name, S);                                                      \
       SDT##T##_free(x->F);                                                    \

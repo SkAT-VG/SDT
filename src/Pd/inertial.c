@@ -37,14 +37,15 @@ void *inertial_new(t_symbol *s, long argc, t_atom *argv) {
   t_inertial *x;
 
   if (argc < 1 || argv[0].a_type != A_SYMBOL) {
-    error("sdt.inertial: Please provide a unique id as first argument.");
+    pd_error(s, "sdt.inertial: Please provide a unique id as first argument.");
     return NULL;
   }
   x = (t_inertial *)pd_new(inertial_class);
   x->inertial = SDTResonator_new(1, 1);
   x->key = (char *)(atom_getsymbol(argv)->s_name);
   if (SDT_registerResonator(x->inertial, x->key)) {
-    error(
+    pd_error(
+        x,
         "sdt.inertial: Error registering the resonator. Probably a duplicate "
         "id?");
     SDTResonator_free(x->inertial);
