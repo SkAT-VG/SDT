@@ -20,6 +20,7 @@ CMakeLists.txt
 *.pd_linux
 *.so
 *.dll
+!pd.dll
 *.def
 !Info.def
 *.mxe
