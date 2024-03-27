@@ -1,6 +1,6 @@
 #N canvas 434 339 541 222 10;
 #X declare -lib SDT;
-#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2023 \; \; Project
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2024 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 11 83 adc~;

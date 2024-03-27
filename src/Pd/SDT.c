@@ -1,6 +1,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTCommonMacros.h"
 #include "m_pd.h"
@@ -93,9 +94,9 @@ void SDT_setup() {
   SDT_setLogger(SDT_LOG_LEVEL_ERROR, &SDT_pdPost, 1);
 
   post("=== SDT - Sound Design Toolkit ===");
-  post("SDT version %s, (C) 2001 - 2023", STRINGIFY(SDT_ver));
+  post("SDT version %s, (C) 2001 - 2024", STRINGIFY(SDT_ver));
 #ifdef SDT_PD_ver
-  post("SDT for Pd version %s, (C) 2001 - 2023", STRINGIFY(SDT_PD_ver));
+  post("SDT for Pd version %s, (C) 2001 - 2024", STRINGIFY(SDT_PD_ver));
 #endif
   post("Project SOb - http://soundobject.org");
   post("Project CLOSED - http://closed.ircam.fr");

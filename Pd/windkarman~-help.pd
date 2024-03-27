@@ -9,7 +9,7 @@
 #X floatatom 155 218 5 0 0 0 - - -;
 #X text 15 55 Wind speed;
 #X obj 39 322 dac~;
-#X msg 328 9 Sound Design Toolkit \; (C) 2001 - 2023 \; \; Project
+#X msg 328 9 Sound Design Toolkit \; (C) 2001 - 2024 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 378 170 loadbang;

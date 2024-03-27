@@ -21,7 +21,7 @@
 #X obj 33 378 fluidflow~ 128;
 #X msg 798 318 riseCutoff \$1;
 #X text 45 5 fluidflow~ - Liquid sounds model;
-#X msg 822 11 Sound Design Toolkit \; (C) 2001 - 2023 \; \; Project
+#X msg 822 11 Sound Design Toolkit \; (C) 2001 - 2024 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X obj 325 136 vsl 15 128 0 10 0 0 empty expRadius empty 0 -9 0 10

@@ -58,10 +58,10 @@ void SDT_setupMaxLoggers() {
     if (SDT_LOG_LEVEL_DEBUG <= SDT_getLogLevelFromEnv()) {
       int (*log)(const char*, ...) =
           SDT_getLogger(SDT_LOG_LEVEL_DEBUG, &newline);
-      log("SDT version %s, (C) 2001 - 2023%s", STRINGIFY(SDT_ver),
+      log("SDT version %s, (C) 2001 - 2024%s", STRINGIFY(SDT_ver),
           (newline) ? "" : "\n");
 #ifdef SDT_MAX_ver
-      log("SDT for Max version %s, (C) 2001 - 2023%s", STRINGIFY(SDT_MAX_ver),
+      log("SDT for Max version %s, (C) 2001 - 2024%s", STRINGIFY(SDT_MAX_ver),
           (newline) ? "" : "\n");
 #endif
     }
