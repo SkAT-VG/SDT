@@ -1,0 +1,26 @@
+var group__oscmotor =
+[
+    [ "SDTOSCMotor", "group__oscmotor.html#ga9137e804bfdc05022c08d258337be0ae", null ],
+    [ "SDTOSCMotor_load", "group__oscmotor.html#gaa766ce1bb7e8d2a50c55bcd17ac4a7d4", null ],
+    [ "SDTOSCMotor_loads", "group__oscmotor.html#ga32de11466afa2cde5c427e47ad136c3b", null ],
+    [ "SDTOSCMotor_log", "group__oscmotor.html#ga91f6001bdfb6bb54f02e2c84a1e16902", null ],
+    [ "SDTOSCMotor_save", "group__oscmotor.html#gaf7679ca0e8a2823926016c716905af83", null ],
+    [ "SDTOSCMotor_setAsymmetry", "group__oscmotor.html#ga0108fc82c70da8be829d7892c76c137f", null ],
+    [ "SDTOSCMotor_setBackfire", "group__oscmotor.html#ga48e87056cbfb4b84a594de15af2d5cd4", null ],
+    [ "SDTOSCMotor_setCompressionRatio", "group__oscmotor.html#ga4ca8bc2624aaf049683044327e0b2b9d", null ],
+    [ "SDTOSCMotor_setCycle", "group__oscmotor.html#ga1b1c69e0901db2d2f4d61efb1632c404", null ],
+    [ "SDTOSCMotor_setCylinderSize", "group__oscmotor.html#gafb2075d43e6e4f138af81c43177fbd10", null ],
+    [ "SDTOSCMotor_setDamp", "group__oscmotor.html#ga40d22545aadba830b263624be00abb22", null ],
+    [ "SDTOSCMotor_setDc", "group__oscmotor.html#gadcb2c645ee1a6e9c3befd62890c5a12f", null ],
+    [ "SDTOSCMotor_setExhaustSize", "group__oscmotor.html#ga28a5fe4584e058f473be424b4bdca9ba", null ],
+    [ "SDTOSCMotor_setExpansion", "group__oscmotor.html#ga7694f68c90035c3dae49de3204b8da7e", null ],
+    [ "SDTOSCMotor_setExtractorSize", "group__oscmotor.html#gaff09733d48f19f94206dac826d0886b3", null ],
+    [ "SDTOSCMotor_setIntakeSize", "group__oscmotor.html#ga513ab17f6083b464a0fed1fffdfbca26", null ],
+    [ "SDTOSCMotor_setMufflerFeedback", "group__oscmotor.html#ga06bbe9d4f002acfe5f2fe2f7c5e01ee5", null ],
+    [ "SDTOSCMotor_setMufflerSize", "group__oscmotor.html#ga518dca3f7dbeb00740d181199d217bb4", null ],
+    [ "SDTOSCMotor_setNCylinders", "group__oscmotor.html#gac3120198d963ddaf4a3e959201e5e5d1", null ],
+    [ "SDTOSCMotor_setOutletSize", "group__oscmotor.html#ga86b970ae7c94e7cadbd2e6fdee5a4ab8", null ],
+    [ "SDTOSCMotor_setRpm", "group__oscmotor.html#ga92f52311587a647827f69f48196765d1", null ],
+    [ "SDTOSCMotor_setSparkTime", "group__oscmotor.html#ga5fbc5b644926b9ae1dec10efcae32004", null ],
+    [ "SDTOSCMotor_setThrottle", "group__oscmotor.html#ga08adcd2ecba670aa332433b450976c95", null ]
+];
