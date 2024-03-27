@@ -3,7 +3,7 @@
 #X floatatom 13 114 5 0 0 0 - - -;
 #X obj 13 64 adc~;
 #X msg 51 64 overlap 0.5;
-#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2024 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X text 12 6 zerox~ - Zero crossing rate detector;

@@ -1,6 +1,18 @@
 [submodule "3rdparty/json-parser"]
 	path = 3rdparty/json-parser
-	url = https://github.com/ChromaticIsobar/json-parser.git
+	url = https://github.com/json-parser/json-parser.git
 [submodule "3rdparty/json-builder"]
 	path = 3rdparty/json-builder
 	url = https://github.com/ChromaticIsobar/json-builder.git
+[submodule "3rdparty/doxygen-awesome-css"]
+	path = 3rdparty/doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git
+[submodule "3rdparty/cutest"]
+	path = 3rdparty/cutest
+	url = https://github.com/ennorehling/cutest.git
+[submodule "3rdparty/max-sdk-base"]
+	path = 3rdparty/max-sdk-base
+	url = https://github.com/ChromaticIsobar/max-sdk-base.git
+[submodule "3rdparty/MacOSX-SDKs"]
+	path = 3rdparty/MacOSX-SDKs
+	url = https://github.com/phracker/MacOSX-SDKs.git

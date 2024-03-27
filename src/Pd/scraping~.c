@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *scraping_class;
@@ -13,27 +13,19 @@ typedef struct _scraping {
   SDTScraping *scraping;
   t_float f;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_scraping;
 
-void scraping_grain(t_scraping *x, t_float f) {
-  SDTScraping_setGrain(x->scraping, f);
-}
-
-void scraping_force(t_scraping *x, t_float f) {
-  SDTScraping_setForce(x->scraping, f);
-}
-
-void scraping_velocity(t_scraping *x, t_float f) {
-  SDTScraping_setVelocity(x->scraping, f);
-}
+SDT_PD_SETTER(scraping, Scraping, scraping, Grain, )
+SDT_PD_SETTER(scraping, Scraping, scraping, Force, )
+SDT_PD_SETTER(scraping, Scraping, scraping, Velocity, )
 
 t_int *scraping_perform(t_int *w) {
   t_scraping *x = (t_scraping *)(w[1]);
   t_float *in = (t_float *)(w[2]);
   t_float *out = (t_float *)(w[3]);
   int n = (int)w[4];
-  
+
   while (n--) {
     *out++ = (t_float)SDTScraping_dsp(x->scraping, *in++);
   }
@@ -62,12 +54,16 @@ void scraping_free(t_scraping *x) {
   outlet_free(x->out);
 }
 
-void scraping_tilde_setup(void) {	
-  scraping_class = class_new(gensym("scraping~"), (t_newmethod)scraping_new, (t_method)scraping_free,
-                           (long)sizeof(t_scraping), CLASS_DEFAULT, A_GIMME, 0);
+void scraping_tilde_setup(void) {
+  scraping_class = class_new(gensym("scraping~"), (t_newmethod)scraping_new,
+                             (t_method)scraping_free, (long)sizeof(t_scraping),
+                             CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(scraping_class, t_scraping, f);
-  class_addmethod(scraping_class, (t_method)scraping_grain, gensym("grain"), A_FLOAT, 0);
-  class_addmethod(scraping_class, (t_method)scraping_force, gensym("force"), A_FLOAT, 0);
-  class_addmethod(scraping_class, (t_method)scraping_velocity, gensym("velocity"), A_FLOAT, 0);
+  class_addmethod(scraping_class, (t_method)scraping_setGrain, gensym("grain"),
+                  A_FLOAT, 0);
+  class_addmethod(scraping_class, (t_method)scraping_setForce, gensym("force"),
+                  A_FLOAT, 0);
+  class_addmethod(scraping_class, (t_method)scraping_setVelocity,
+                  gensym("velocity"), A_FLOAT, 0);
   class_addmethod(scraping_class, (t_method)scraping_dsp, gensym("dsp"), 0);
 }

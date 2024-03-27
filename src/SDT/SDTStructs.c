@@ -1,8 +1,10 @@
+#include "SDTStructs.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "SDTCommon.h"
-#include "SDTStructs.h"
 
 typedef struct SDTHashItem {
   char *key;
@@ -16,24 +18,19 @@ struct SDTHashmap {
 };
 
 int SDTHashmap_hash(SDTHashmap *x, const char *key) {
-  unsigned long h;
-  int i;
-  
-  h = 0;
-  for (i = 0; i < strlen(key); i++) {
-    h = h * 31 + key[i];
-  }
-  return h % x->size;
+  int h = 0;
+  for (const char *c = key; *c; c++) h = (h * 31 + *c) % x->size;
+  return h;
 }
 
 int SDTHashmap_lookup(SDTHashmap *x, const char *key) {
   int hash;
-  
+
   hash = SDTHashmap_hash(x, key);
   x->prev = NULL;
   x->item = x->bins[hash];
   while (x->item) {
-    if (strcmp(x->item->key, key) == 0) break;
+    if (!strcmp(x->item->key, key)) break;
     x->prev = x->item;
     x->item = x->item->next;
   }
@@ -43,7 +40,7 @@ int SDTHashmap_lookup(SDTHashmap *x, const char *key) {
 SDTHashmap *SDTHashmap_new(int size) {
   SDTHashmap *x;
   int i;
-  
+
   x = (SDTHashmap *)malloc(sizeof(SDTHashmap));
   x->bins = (SDTHashItem **)malloc(size * sizeof(SDTHashItem *));
   for (i = 0; i < size; i++) {
@@ -64,9 +61,9 @@ void *SDTHashmap_get(SDTHashmap *x, const char *key) {
   return x->item ? x->item->value : NULL;
 }
 
-int SDTHashmap_put(SDTHashmap *x, char *key, void *value) {
+int SDTHashmap_put(SDTHashmap *x, const char *key, void *value) {
   int hash;
-  
+
   hash = SDTHashmap_lookup(x, key);
   if (x->item) return 1;
   x->item = (SDTHashItem *)malloc(sizeof(SDTHashItem));
@@ -78,13 +75,15 @@ int SDTHashmap_put(SDTHashmap *x, char *key, void *value) {
   return 0;
 }
 
-int SDTHashmap_del(SDTHashmap *x, char *key) {
+int SDTHashmap_del(SDTHashmap *x, const char *key) {
   int hash;
-  
+
   hash = SDTHashmap_lookup(x, key);
   if (!x->item) return 1;
-  if (x->prev) x->prev->next = x->item->next;
-  else x->bins[hash] = x->item->next;
+  if (x->prev)
+    x->prev->next = x->item->next;
+  else
+    x->bins[hash] = x->item->next;
   free(x->item->key);
   free(x->item);
   return 0;
@@ -92,9 +91,8 @@ int SDTHashmap_del(SDTHashmap *x, char *key) {
 
 void SDTHashmap_clear(SDTHashmap *x) {
   SDTHashItem *item, *next;
-  int i;
-  
-  for (i = 0; i < x->size; i++) {
+
+  for (int i = 0; i < x->size; i++) {
     item = x->bins[i];
     while (item) {
       next = item->next;
@@ -104,4 +102,10 @@ void SDTHashmap_clear(SDTHashmap *x) {
     }
     x->bins[i] = NULL;
   }
+}
+
+int SDTHashmap_empty(const SDTHashmap *x) {
+  for (int i = 0; i < x->size; i++)
+    if (x->bins[i]) return 0;
+  return 1;
 }

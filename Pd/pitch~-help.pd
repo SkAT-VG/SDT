@@ -3,7 +3,7 @@
 #X floatatom 13 125 5 0 0 0 - - -;
 #X floatatom 100 124 5 0 0 0 - - -;
 #X obj 78 49 adc~;
-#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2021 \; \; Project
+#X msg 306 8 Sound Design Toolkit \; (C) 2001 - 2024 \; \; Project
 SOb - soundobject.org \; Project CLOSED - closed.ircam.fr \; Project
 NIW - soundobject.org/niw \; Project SkAT-VG - skatvg.eu;
 #X msg 307 161 \; pitch overlap 0.5 \; pitch tolerance 0.1 \;;

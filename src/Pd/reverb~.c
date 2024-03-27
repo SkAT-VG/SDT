@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTEffects.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *reverb_class;
@@ -13,45 +13,22 @@ typedef struct _reverb {
   t_float f;
   SDTReverb *reverb;
   t_outlet *out0;
-  char *key;
+  const char *key;
 } t_reverb;
 
-void reverb_xSize(t_reverb *x, t_float f) {
-  SDTReverb_setXSize(x->reverb, f);
-  SDTReverb_update(x->reverb);
-}
-
-void reverb_ySize(t_reverb *x, t_float f) {
-  SDTReverb_setYSize(x->reverb, f);
-  SDTReverb_update(x->reverb);
-}
-
-void reverb_zSize(t_reverb *x, t_float f) {
-  SDTReverb_setZSize(x->reverb, f);
-  SDTReverb_update(x->reverb);
-}
-
-void reverb_randomness(t_reverb *x, t_float f) {
-  SDTReverb_setRandomness(x->reverb, f);
-  SDTReverb_update(x->reverb);
-}
-
-void reverb_time(t_reverb *x, t_float f) {
-  SDTReverb_setTime(x->reverb, f);
-  SDTReverb_update(x->reverb);
-}
-
-void reverb_time1k(t_reverb *x, t_float f) {
-  SDTReverb_setTime1k(x->reverb, f);
-  SDTReverb_update(x->reverb);
-}
+SDT_PD_SETTER(reverb, Reverb, reverb, XSize, update)
+SDT_PD_SETTER(reverb, Reverb, reverb, YSize, update)
+SDT_PD_SETTER(reverb, Reverb, reverb, ZSize, update)
+SDT_PD_SETTER(reverb, Reverb, reverb, Randomness, update)
+SDT_PD_SETTER(reverb, Reverb, reverb, Time, update)
+SDT_PD_SETTER(reverb, Reverb, reverb, Time1k, update)
 
 static t_int *reverb_perform(t_int *w) {
   t_reverb *x = (t_reverb *)(w[1]);
   t_float *in = (t_float *)(w[2]);
   t_float *out = (t_float *)(w[3]);
   int n = (int)w[4];
-	
+
   while (n--) {
     *out++ = (float)SDTReverb_dsp(x->reverb, *in++);
   }
@@ -83,14 +60,22 @@ static void reverb_free(t_reverb *x) {
   SDT_PD_FREE(Reverb, reverb)
 }
 
-void reverb_tilde_setup(void) {	
-  reverb_class = class_new(gensym("reverb~"), (t_newmethod)reverb_new, (t_method)reverb_free, sizeof(t_reverb), CLASS_DEFAULT, A_GIMME, 0);
+void reverb_tilde_setup(void) {
+  reverb_class = class_new(gensym("reverb~"), (t_newmethod)reverb_new,
+                           (t_method)reverb_free, sizeof(t_reverb),
+                           CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(reverb_class, t_reverb, f);
-  class_addmethod(reverb_class, (t_method)reverb_xSize, gensym("xSize"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_ySize, gensym("ySize"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_zSize, gensym("zSize"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_randomness, gensym("randomness"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_time, gensym("time"), A_FLOAT, 0);
-  class_addmethod(reverb_class, (t_method)reverb_time1k, gensym("time1k"), A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_setXSize, gensym("xSize"),
+                  A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_setYSize, gensym("ySize"),
+                  A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_setZSize, gensym("zSize"),
+                  A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_setRandomness,
+                  gensym("randomness"), A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_setTime, gensym("time"),
+                  A_FLOAT, 0);
+  class_addmethod(reverb_class, (t_method)reverb_setTime1k, gensym("time1k"),
+                  A_FLOAT, 0);
   class_addmethod(reverb_class, (t_method)reverb_dsp, gensym("dsp"), 0);
 }

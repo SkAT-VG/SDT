@@ -1,0 +1,4 @@
+BasedOnStyle: Google
+ForEachMacros:
+  - FOR_RANDOM_ITER_INT
+  - FOR_RANDOM_ITER_FLOAT

@@ -5,12 +5,12 @@
  *
  *****************************************************************************/
 
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *windflow_class;
@@ -20,7 +20,7 @@ typedef struct _windflow {
   SDTWindFlow *flow;
   t_float f;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_windflow;
 
 static t_int *windflow_perform(t_int *w) {
@@ -32,12 +32,12 @@ static t_int *windflow_perform(t_int *w) {
     SDTWindFlow_setWindSpeed(x->flow, *in++);
     *out++ = (float)SDTWindFlow_dsp(x->flow);
   }
-  return (w+5);
+  return (w + 5);
 }
 
 static void windflow_dsp(t_windflow *x, t_signal **sp) {
   SDT_setSampleRate(sp[0]->s_sr);
-  SDTWindFlow_setFilters(x->flow);
+  SDTWindFlow_update(x->flow);
   dsp_add(windflow_perform, 4, x, sp[0]->s_vec, sp[1]->s_vec, sp[0]->s_n);
 }
 
@@ -59,7 +59,9 @@ static void windflow_free(t_windflow *x) {
 }
 
 void windflow_tilde_setup(void) {
-  windflow_class = class_new(gensym("windflow~"), (t_newmethod)windflow_new, (t_method)windflow_free, sizeof(t_windflow), CLASS_DEFAULT, A_GIMME, 0);
+  windflow_class = class_new(gensym("windflow~"), (t_newmethod)windflow_new,
+                             (t_method)windflow_free, sizeof(t_windflow),
+                             CLASS_DEFAULT, A_GIMME, 0);
   CLASS_MAINSIGNALIN(windflow_class, t_windflow, f);
   class_addmethod(windflow_class, (t_method)windflow_dsp, gensym("dsp"), 0);
 }

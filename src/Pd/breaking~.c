@@ -1,9 +1,9 @@
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTControl.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *breaking_class;
@@ -12,28 +12,15 @@ typedef struct _breaking {
   t_object obj;
   SDTBreaking *breaking;
   t_outlet *out0, *out1;
-  char *key;
+  const char *key;
 } t_breaking;
 
-void breaking_bang(t_breaking *x) {
-  SDTBreaking_reset(x->breaking);
-}
+void breaking_bang(t_breaking *x) { SDTBreaking_reset(x->breaking); }
 
-void breaking_storedEnergy(t_breaking *x, t_float f) {
-  SDTBreaking_setStoredEnergy(x->breaking, f);
-}
-
-void breaking_crushingEnergy(t_breaking *x, t_float f) {
-  SDTBreaking_setCrushingEnergy(x->breaking, f);
-}
-
-void breaking_granularity(t_breaking *x, t_float f) {
-  SDTBreaking_setGranularity(x->breaking, f);
-}
-
-void breaking_fragmentation(t_breaking *x, t_float f) {
-  SDTBreaking_setFragmentation(x->breaking, f);
-}
+SDT_PD_SETTER(breaking, Breaking, breaking, StoredEnergy, )
+SDT_PD_SETTER(breaking, Breaking, breaking, CrushingEnergy, )
+SDT_PD_SETTER(breaking, Breaking, breaking, Granularity, )
+SDT_PD_SETTER(breaking, Breaking, breaking, Fragmentation, )
 
 t_int *breaking_perform(t_int *w) {
   t_breaking *x = (t_breaking *)(w[1]);
@@ -41,7 +28,7 @@ t_int *breaking_perform(t_int *w) {
   t_float *out1 = (t_float *)(w[3]);
   int n = (int)w[4];
   double tmpOuts[2];
-  
+
   while (n--) {
     SDTBreaking_dsp(x->breaking, tmpOuts);
     *out0++ = (t_float)tmpOuts[0];
@@ -74,13 +61,18 @@ void breaking_free(t_breaking *x) {
   outlet_free(x->out1);
 }
 
-void breaking_tilde_setup(void) {	
-  breaking_class = class_new(gensym("breaking~"), (t_newmethod)breaking_new, (t_method)breaking_free,
-                           (long)sizeof(t_breaking), CLASS_DEFAULT, A_GIMME, 0);
+void breaking_tilde_setup(void) {
+  breaking_class = class_new(gensym("breaking~"), (t_newmethod)breaking_new,
+                             (t_method)breaking_free, (long)sizeof(t_breaking),
+                             CLASS_DEFAULT, A_GIMME, 0);
   class_addmethod(breaking_class, (t_method)breaking_bang, gensym("bang"), 0);
-  class_addmethod(breaking_class, (t_method)breaking_storedEnergy, gensym("storedEnergy"), A_FLOAT, 0);
-  class_addmethod(breaking_class, (t_method)breaking_crushingEnergy, gensym("crushingEnergy"), A_FLOAT, 0);
-  class_addmethod(breaking_class, (t_method)breaking_granularity, gensym("granularity"), A_FLOAT, 0);
-  class_addmethod(breaking_class, (t_method)breaking_fragmentation, gensym("fragmentation"), A_FLOAT, 0);
+  class_addmethod(breaking_class, (t_method)breaking_setStoredEnergy,
+                  gensym("storedEnergy"), A_FLOAT, 0);
+  class_addmethod(breaking_class, (t_method)breaking_setCrushingEnergy,
+                  gensym("crushingEnergy"), A_FLOAT, 0);
+  class_addmethod(breaking_class, (t_method)breaking_setGranularity,
+                  gensym("granularity"), A_FLOAT, 0);
+  class_addmethod(breaking_class, (t_method)breaking_setFragmentation,
+                  gensym("fragmentation"), A_FLOAT, 0);
   class_addmethod(breaking_class, (t_method)breaking_dsp, gensym("dsp"), 0);
 }

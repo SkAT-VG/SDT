@@ -3,269 +3,354 @@ name: build
 on:
   push:
     branches:
-      - master
+      - main
       - develop
     tags:
       - 'v*'
   pull_request:
     branches:
-      - master
+      - main
       - develop
 
-defaults:
-  run:
-    shell: bash
+env:
+  GH_API_HEADERS: -H "Accept:application/vnd.github+json" -H "Authorization:Bearer ${{ secrets.REPOSITORY_TOKEN }}" -H "X-GitHub-Api-Version:2022-11-28"
+  GH_API_PREFIX: https://api.github.com/repos/${{ github.repository }}
 
 jobs:
-  build-docker:
+  start:
+    if: ${{ !contains(github.event.head_commit.message, '[CI SKIP]') }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        target: [linux, win32, win64]
-        platform: [install_core, install_max, install_pd]
-        exclude:
-        - target: linux
-          platform: install_max
-        - target: win64
-          platform: install_pd
-        include:
-        - platform: install_core
-          plt_name: lib
-        - platform: install_pd
-          plt_name: pd
-        - platform: install_max
-          plt_name: max
-    container: chromaticisobar/sdt:build
     steps:
-    - uses: actions/checkout@v2
+      - name: Echo
+        run: echo "Starting CI graph"
+
+  build:
+    needs: [start]
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [
+          linux,
+          win32,
+          win64,
+          macosx
+        ]
+        debug: [
+          false,
+          true
+        ]
+        include:
+        - container: ""
+        - runs_on: ubuntu-latest
+        - mingw: false
+        - pd: true
+        - max: true
+        - target: linux
+          container: ubuntu:20.04
+          max: false
+        - target: win32
+          mingw: true
+          max: false
+        - target: win64
+          mingw: true
+        - target: macosx
+          runs_on: macos-latest
+    runs-on: ${{ matrix.runs_on }}
+    container: ${{ matrix.container }}
+    env:
+      RUNS_ON_UBUNTU: ${{ (matrix.container && startsWith(matrix.container, 'ubuntu')) || startsWith(matrix.runs_on, 'ubuntu') || '' }}
+      SUDO: ${{ !matrix.container && startsWith(matrix.runs_on, 'ubuntu') && 'sudo' || '' }}
+    steps:
+    - name: Update packages
+      if: ${{ env.RUNS_ON_UBUNTU }}
+      run: |
+        ${{ env.SUDO }} apt-get -y update
+    - name: Install git and make
+      if: ${{ env.RUNS_ON_UBUNTU && matrix.container }}
+      run: |
+        ${{ env.SUDO }} apt-get -y install software-properties-common
+        ${{ env.SUDO }} add-apt-repository -y ppa:git-core/ppa
+        ${{ env.SUDO }} apt-get -y update
+        ${{ env.SUDO }} apt-get -y install git build-essential
+    - name: Install mingw compiler
+      if: ${{ env.RUNS_ON_UBUNTU && matrix.mingw }}
+      run: ${{ env.SUDO }} apt-get -y install mingw-w64
+    - name: Install LLVM and Clang
+      uses: KyleMayes/install-llvm-action@v1
+      if: ${{ startsWith(matrix.runs_on, 'macos') }}
       with:
-        submodules: true
-    - name: Make
-      run: cd build/${{ matrix.target }} && make
+        version: "12.0.0"
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    - name: Build everything
+      run: make TARGET=${{ matrix.target }} ${{ (matrix.debug && 'CFLAGS=-DSDT_VERBOSE') || '' }} -j16
+    - name: Display build directory content
+      run: ls -R .build.${{ matrix.target }}
     - name: Prepare package directory
       run: mkdir SoundDesignToolkit
-    - name: Package
-      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} DSTDIR=../../SoundDesignToolkit
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v1
+    - name: Package library
+      run: make TARGET=${{ matrix.target }} install_core DSTDIR=SoundDesignToolkit
+    - name: Upload library
+      uses: actions/upload-artifact@v4
       with:
-        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
+        name: SDT_${{ matrix.target }}_lib${{ (matrix.debug && '_debug') || '' }}
         path: SoundDesignToolkit
+    - name: Reset package directory
+      run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
+    - name: Package Pd library
+      if: ${{ matrix.pd }}
+      run: make TARGET=${{ matrix.target }} install_pd DSTDIR=SoundDesignToolkit
+    - name: Upload Pd library
+      if: ${{ matrix.pd }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: SDT_${{ matrix.target }}_pd${{ (matrix.debug && '_debug') || '' }}
+        path: SoundDesignToolkit
+    - name: Reset package directory
+      run: rm -rf SoundDesignToolkit && mkdir SoundDesignToolkit
+    - name: Package Max library
+      if: ${{ matrix.max }}
+      run: make TARGET=${{ matrix.target }} install_max DSTDIR=SoundDesignToolkit
+    - name: Upload Max library
+      if: ${{ matrix.max }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: SDT_${{ matrix.target }}_max${{ (matrix.debug && '_debug') || '' }}
+        path: SoundDesignToolkit
+    - name: Upload test runner
+      uses: actions/upload-artifact@v4
+      with:
+        name: SDT_${{ matrix.target }}_test_core${{ (matrix.debug && '_debug') || '' }}
+        path: .build.${{ matrix.target }}/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }}
 
-  # Cannot be run in the previous matrix because there is no way (for now) to specify not to use a container for macos
-  # https://github.community/t/run-matrix-job-on-macos-and-on-ubuntu-in-container/16359/3
-  # Job definiton is ready for merge in case the option is implemented
-  build-macos:
-    runs-on: macos-latest
+  test:
+    needs: [build]
     strategy:
+      fail-fast: false
       matrix:
-        target: [macosx]
-        platform: [install_core, install_max, install_pd]
+        target: [
+          linux,
+          win32,
+          win64,
+          macosx
+        ]
+        debug: [
+          false,
+          true
+        ]
         include:
-        - platform: install_core
-          plt_name: lib
-        - platform: install_pd
-          plt_name: pd
-        - platform: install_max
-          plt_name: max
-    # notice that steps are the same as build-docker
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: true
-    - name: Make
-      run: cd build/${{ matrix.target }} && make
-    - name: Prepare package directory
-      run: mkdir SoundDesignToolkit
-    - name: Package
-      run: cd build/${{ matrix.target }} && make ${{ matrix.platform }} DSTDIR=../../SoundDesignToolkit
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v1
-      with:
-        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
-        path: SoundDesignToolkit
-
-  release-create:
-    if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
-    runs-on: ubuntu-latest
-    needs: [build-docker, build-macos]
-    outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-    steps:
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        draft: false
-        prerelease: ${{ contains( github.ref , 'dev' ) || contains( github.ref , 'alpha' ) || contains( github.ref , 'beta' ) || contains( github.ref , 'rc' ) }}
-
-  release-upload:
-    strategy:
-      matrix:
-        target: [linux, win32, win64, macosx]
-        plt_name: [lib, pd, max]
-        exclude:
+        - runs_on: windows-latest
         - target: linux
-          plt_name: max
-        - target: win64
-          plt_name: pd
-    runs-on: ubuntu-latest
-    needs: release-create
+          runs_on: ubuntu-latest
+        - target: macosx
+          runs_on: macos-latest
+    runs-on: ${{ matrix.runs_on }}
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - name: Download test runner
+      uses: actions/download-artifact@v4
       with:
-        persist-credentials: false
-    - name: Download artifacts
-      uses: actions/download-artifact@v1
-      with:
-        name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
-    - name: Zip artifacts
-      run: zip -r ../SDT_${{ matrix.target }}_${{ matrix.plt_name }}.zip *
-      working-directory: SDT_${{ matrix.target }}_${{ matrix.plt_name }}
-    - name: Set platform-specific version name
-      run: echo "SDT_VERSION=$(./build/version_echo ${{ matrix.plt_name }})" >> $GITHUB_ENV
-    - name: Upload Release Asset
-      id: upload-release-asset 
-      uses: actions/upload-release-asset@v1
+        name: SDT_${{ matrix.target }}_test_core${{ (matrix.debug && '_debug') || '' }}
+        path: testrunner
+    - name: Display directory content
+      run: ls -R testrunner
+    - name: Make test log file name
+      run: echo LOG_FNAME=test_${{ matrix.target }}_core${{ (matrix.debug && '_debug') || '' }}.log >> $GITHUB_ENV
+      shell: bash
+    - name: Make test runner executable
+      if: ${{ !startsWith(matrix.target, 'win') }}
+      run: chmod +x ./testrunner/test
+    - name: Run tests
+      run: ./testrunner/test${{ (startsWith(matrix.target, 'win') && '.exe') || '' }} >${{ env.LOG_FNAME }} 2>&1
+      shell: bash
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SDT_LOG_LEVEL: DEBUG
+    - name: Upload test log
+      if: ${{ success() || failure() }}
+      uses: actions/upload-artifact@v4
       with:
-        upload_url: ${{ needs.release-create.outputs.upload_url }}
-        asset_path: ./SDT_${{ matrix.target }}_${{ matrix.plt_name }}.zip
-        asset_name: SDT_${{ matrix.target }}_${{ matrix.plt_name }}_${{ env.SDT_VERSION }}.zip
-        asset_content_type: application/zip
+        name: ${{ env.LOG_FNAME }}
+        path: ${{ env.LOG_FNAME }}
+    - name: Export test log to env
+      run: echo CUTEST_LOG=$(cat ${{ env.LOG_FNAME }}) >> $GITHUB_ENV
+      shell: bash
+    - name: Check test success
+      if: ${{ contains(env.CUTEST_LOG, '!!!FAILURES!!!') }}
+      run: exit 1
 
   doxygen:
+    needs: [start]
     runs-on: ubuntu-latest
-    container: chromaticisobar/sdt:doxy
+    outputs:
+      SDT_CORE_VERSION: ${{ steps.version-log.outputs.SDT_CORE_VERSION }}
+      SDT_PD_VERSION: ${{ steps.version-log.outputs.SDT_PD_VERSION }}
+      SDT_MAX_VERSION: ${{ steps.version-log.outputs.SDT_MAX_VERSION }}
+      SDT_FULL_VERSION: ${{ steps.version-log.outputs.SDT_FULL_VERSION }}
     steps:
-    - uses: actions/checkout@v2
+    - name: Install doxygen
+      run: |
+        sudo apt-get -y update
+        sudo apt-get -y install doxygen-latex
+        sudo apt-get -y install latexmk
+    - uses: actions/checkout@v4
       with:
-        persist-credentials: false
-    - name: Set version name
-      run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
+        submodules: recursive
+    - name: Log version names
+      id: version-log
+      run: |
+        echo "SDT_CORE_VERSION=$(make core_version)" >> $GITHUB_OUTPUT
+        echo "SDT_PD_VERSION=$(make pd_version)" >> $GITHUB_OUTPUT
+        echo "SDT_MAX_VERSION=$(make max_version)" >> $GITHUB_OUTPUT
+        echo "SDT_FULL_VERSION=$(make full_version)" >> $GITHUB_OUTPUT
+        echo "SDT_CORE_VERSION=$(make core_version)" >> $GITHUB_ENV
     - name: Build HTML
       run: doxygen
-    - name: Upload HTML
-      uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v4
       with:
         name: doxygen-html
         path: doc/html
     - name: Build latex
-      run: cd doc/latex && make && cd ../..
-    - name: Upload pdf
-      uses: actions/upload-artifact@v1
+      run: make
+      working-directory: doc/latex
+    - uses: actions/upload-artifact@v4
       with:
         name: refman
         path: doc/latex/refman.pdf
 
-  sphinx:
+  release:
+    if: ${{ startsWith( github.ref , 'refs/tags/' ) }}
     runs-on: ubuntu-latest
-    container: chromaticisobar/sdt:doxy
+    needs: [build, test, doxygen]
+    outputs:
+      RELEASE_HTTP_CODE: ${{ steps.create_release.outputs.RELEASE_HTTP_CODE }}
+      RELEASE_JSON: ${{ steps.release_json.outputs.RELEASE_JSON }}
+      RELEASE_ID: ${{ steps.release_id.outputs.RELEASE_ID }}
     steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          submodules: true
-      - name: Set version name
-        run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
-      - name: Build HTML
-        run: make oscdoc_html
-        working-directory: build/linux
-      - name: Upload HTML
-        uses: actions/upload-artifact@v1
-        with:
-          name: osc-quickreference-html
-          path: oscdoc/build/html
-      - name: Build latex
-        run: make oscdoc_latexpdf
-        working-directory: build/linux
-      - name: Upload pdf
-        uses: actions/upload-artifact@v1
-        with:
-          name: osc-quickreference
-          path: oscdoc/build/latex/SoundDesignToolkitOSCQuickReference.pdf
+    - name: Make release-create json
+      run: |
+        echo '{'\
+          '"tag_name":"${{ github.ref_name }}",'\
+          '"name":"${{ github.ref_name }}",'\
+          '"prerelease":${{ ((contains( github.ref_name , 'dev' ) || contains( github.ref_name , 'alpha' ) || contains( github.ref_name , 'beta' ) || contains( github.ref_name , 'rc' )) && 'true') || 'false' }},'\
+          '"draft":true,'\
+          '"generate_release_notes":false}' \
+          > .release-create.json
+    - name: Display release-create json
+      run: cat .release-create.json
+    - name: Create release
+    # https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#create-a-release
+      id: create_release
+      run: echo RELEASE_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} ${{ env.GH_API_PREFIX }}/releases -H "Content-Type:application/octet-stream" -d @.release-create.json --write-out "%{http_code}" -o .release.json) >> $GITHUB_OUTPUT
+    - name: Release json info to output
+      id: release_json
+      run: echo RELEASE_JSON=$(cat .release.json) >> $GITHUB_OUTPUT
+    - name: Display release json info
+      run: |
+        echo '${{ steps.create_release.outputs.RELEASE_HTTP_CODE }}'
+        echo '${{ steps.release_json.outputs.RELEASE_JSON }}'
+    - name: Check request success
+      run: exit ${{ (steps.create_release.outputs.RELEASE_HTTP_CODE >= 200 && steps.create_release.outputs.RELEASE_HTTP_CODE < 300 && '0') || '1' }}
+    - name: Export release id
+      id: release_id
+      run: echo RELEASE_ID=${{ fromJSON(steps.release_json.outputs.RELEASE_JSON)['id'] }} >> $GITHUB_OUTPUT
 
-  release-gh-pages:
+  upload-build:
+    needs: [release, build, doxygen]
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [
+          linux,
+          win32,
+          win64,
+          macosx
+        ]
+        asset: [
+          lib,
+          pd,
+          max
+        ]
+        exclude:
+        - target: linux
+          asset: max
+        - target: win32
+          asset: max
+        include:
+        - asset: lib
+          version: ${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
+        - asset: pd
+          version: ${{ needs.doxygen.outputs.SDT_PD_VERSION }}-${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
+        - asset: max
+          version: ${{ needs.doxygen.outputs.SDT_MAX_VERSION }}-${{ needs.doxygen.outputs.SDT_CORE_VERSION }}
     runs-on: ubuntu-latest
-    needs: [ release-create, doxygen, sphinx ]
     steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - name: Make directory
-        run: mkdir html
-      - name: Download doxygen
-        uses: actions/download-artifact@v1
-        with:
-          name: doxygen-html
-      - name: Include doxygen
-        run: cp -r doxygen-html html/SDT
-      - name: Download sphinx
-        uses: actions/download-artifact@v1
-        with:
-          name: osc-quickreference-html
-      - name: Include sphinx
-        run: cp -r osc-quickreference-html html/OSC
-      - name: No Jekyll
-        run: touch html/.nojekyll
-      - name: Autoredirect from home to SDT
-        run: echo '<meta http-equiv="Refresh", content="0; url=SDT" />' > html/index.html
-      - name: Deploy pages
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: html
-
-  release-upload-doxygen:
-    runs-on: ubuntu-latest
-    needs: [release-create, doxygen]
-    steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+    - name: Compose file name
+      run: echo "SDT_ASSET_NAME=SDT_${{ matrix.target }}_${{ matrix.asset }}_${{ matrix.version }}" >> $GITHUB_ENV
+    - uses: actions/download-artifact@v4
       with:
-        persist-credentials: false
-    - name: Download artifacts
-      uses: actions/download-artifact@v1
+        name: SDT_${{ matrix.target }}_${{ matrix.asset }}
+        path: ${{ env.SDT_ASSET_NAME }}
+    - name: Display downloaded artifacts
+      run: ls -R ${{ env.SDT_ASSET_NAME }}
+    - name: Compress artifact
+      run: zip -r ${{ env.SDT_ASSET_NAME }}.zip ${{ env.SDT_ASSET_NAME }}
+    - name: Upload artifact to release
+    # https://docs.github.com/en/rest/releases/assets?apiVersion=2022-11-28#upload-a-release-asset
+      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/zip" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }}.zip --data-binary @${{ env.SDT_ASSET_NAME }}.zip --write-out "%{http_code}" -o .upload.json) >> $GITHUB_ENV
+    - name: Display request response
+      run: |
+        echo '${{ env.UPLOAD_HTTP_CODE }}'
+        cat .upload.json
+    - name: Check request success
+      run: exit ${{ (env.UPLOAD_HTTP_CODE >= 200 && env.UPLOAD_HTTP_CODE < 300 && '0') || '1' }}
+
+  upload-refman:
+    runs-on: ubuntu-latest
+    needs: [release, doxygen]
+    steps:
+    - name: Export asset name
+      run: echo SDT_ASSET_NAME=SDT_refman_${{ needs.doxygen.outputs.SDT_CORE_VERSION }}.pdf >> $GITHUB_ENV
+    - uses: actions/download-artifact@v4
       with:
         name: refman
-    - name: Set version name
-      run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
-    - name: Upload Reference Manual
-      id: upload-refman
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ needs.release-create.outputs.upload_url }}
-        asset_path: ./refman/refman.pdf
-        asset_name: SDT_refman_${{ env.SDT_VERSION }}.pdf
-        asset_content_type: application/pdf
+        path: artifacts
+    - name: Display downloaded artifacts
+      run: ls -R artifacts
+    - name: Upload artifact to release
+    # https://docs.github.com/en/rest/releases/assets?apiVersion=2022-11-28#upload-a-release-asset
+      run: echo UPLOAD_HTTP_CODE=$(curl -sL -X POST ${{ env.GH_API_HEADERS }} -H "Content-Type:application/pdf" https://uploads.github.com/repos/${{ github.repository }}/releases/${{ needs.release.outputs.RELEASE_ID }}/assets?name=${{ env.SDT_ASSET_NAME }} --data-binary @artifacts/refman.pdf --write-out "%{http_code}" -o .upload.json) >> $GITHUB_ENV
+    - name: Display request response
+      run: |
+        echo '${{ env.UPLOAD_HTTP_CODE }}'
+        cat .upload.json
+    - name: Check request success
+      run: exit ${{ (env.UPLOAD_HTTP_CODE >= 200 && env.UPLOAD_HTTP_CODE < 300 && '0') || '1' }}
 
-  release-upload-sphinx:
+  deploy-pages:
     runs-on: ubuntu-latest
-    needs: [release-create, sphinx]
+    needs: [release, doxygen]
     steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - name: Download artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: osc-quickreference
-      - name: Set version name
-        run: echo "SDT_VERSION=$(./build/version_echo)" >> $GITHUB_ENV
-      - name: Upload OSC Quick Reference
-        id: upload-osc-qr
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.release-create.outputs.upload_url }}
-          asset_path: ./osc-quickreference/SoundDesignToolkitOSCQuickReference.pdf
-          asset_name: SDT_refosc_${{ env.SDT_VERSION }}.pdf
-          asset_content_type: application/pdf
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with:
+        name: doxygen-html
+        path: pages
+    - name: Display downloaded artifacts
+      run: ls -R pages
+    - name: No Jekyll in pages
+      run: touch pages/.nojekyll
+    - name: OSC redirect folder
+      run: mkdir pages/OSC
+    - name: OSC redirect file
+      run: |
+        echo '<meta http-equiv="Refresh", content="0; url=../group__oscmethods.html" />' \
+          > pages/OSC/index.html
+    - name: Deploy pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        token: ${{ secrets.REPOSITORY_TOKEN }}
+        branch: gh-pages
+        folder: pages
+        single-commit: true

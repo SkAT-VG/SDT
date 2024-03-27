@@ -1,10 +1,12 @@
+#include "SDTGases.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
+#include "SDTEffects.h"
 #include "SDTFilters.h"
 #include "SDTOscillators.h"
-#include "SDTEffects.h"
-#include "SDTGases.h"
 #include "SDTStructs.h"
 
 struct SDTWindFlow {
@@ -14,7 +16,7 @@ struct SDTWindFlow {
 
 SDTWindFlow *SDTWindFlow_new() {
   SDTWindFlow *x;
-  
+
   x = (SDTWindFlow *)malloc(sizeof(SDTWindFlow));
   x->reso = SDTTwoPoles_new();
   x->windSpeed = 0.0;
@@ -26,14 +28,39 @@ extern void SDTWindFlow_free(SDTWindFlow *x) {
   free(x);
 }
 
-SDT_TYPE_COPY(SDT_WINDFLOW)
-SDT_DEFINE_HASHMAP(SDT_WINDFLOW, 59)
-SDT_JSON_SERIALIZE(SDT_WINDFLOW)
-SDT_JSON_DESERIALIZE(SDT_WINDFLOW)
+_SDT_COPY_FUNCTION(WindFlow)
 
-void SDTWindFlow_setFilters(SDTWindFlow *x) {
+_SDT_HASHMAP_FUNCTIONS(WindFlow)
+
+json_value *SDTWindFlow_toJSON(const SDTWindFlow *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTWindFlow_getWindSpeed(x)));
+  return obj;
+}
+
+SDTWindFlow *SDTWindFlow_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTWindFlow *y = SDTWindFlow_new();
+  return SDTWindFlow_setParams(y, x, 0);
+}
+
+SDTWindFlow *SDTWindFlow_setParams(SDTWindFlow *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_DOUBLE_FROM_JSON(WindFlow, x, j, WindSpeed, windSpeed);
+
+  return x;
+}
+
+void SDTWindFlow_setFilters(SDTWindFlow *x) { SDTWindFlow_update(x); }
+
+void SDTWindFlow_update(SDTWindFlow *x) {
   SDTTwoPoles_resonant(x->reso, 800.0, 1.0);
 }
+
+double SDTWindFlow_getWindSpeed(const SDTWindFlow *x) { return x->windSpeed; }
 
 void SDTWindFlow_setWindSpeed(SDTWindFlow *x, double f) {
   x->windSpeed = SDT_fclip(f, -1.0, 1.0);
@@ -41,7 +68,7 @@ void SDTWindFlow_setWindSpeed(SDTWindFlow *x, double f) {
 
 double SDTWindFlow_dsp(SDTWindFlow *x) {
   double out;
-  
+
   out = x->windSpeed * SDT_whiteNoise();
   out = SDTTwoPoles_dsp(x->reso, out);
   return out;
@@ -57,7 +84,7 @@ struct SDTWindCavity {
 
 void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
   double gain;
-  
+
   x->harmonics = x->length / x->diameter;
   x->freq = SDT_MACH1 / (2.0 * x->length + 1.6 * x->diameter);
   x->delay = SDT_sampleRate / x->freq;
@@ -70,7 +97,7 @@ void SDTWindCavity_updateGeometry(SDTWindCavity *x) {
 
 void SDTWindCavity_updateResonance(SDTWindCavity *x) {
   double q, fc;
-  
+
   fc = x->freq * x->windSpeed * x->harmonics;
   q = 10.0 * x->windSpeed * x->harmonics;
   SDTTwoPoles_resonant(x->reso, fc, q);
@@ -78,7 +105,7 @@ void SDTWindCavity_updateResonance(SDTWindCavity *x) {
 
 SDTWindCavity *SDTWindCavity_new(int maxDelay) {
   SDTWindCavity *x;
-  
+
   x = (SDTWindCavity *)calloc(1, sizeof(SDTWindCavity));
   x->comb = SDTComb_new(maxDelay, maxDelay);
   x->reso = SDTTwoPoles_new();
@@ -100,10 +127,45 @@ void SDTWindCavity_setMaxDelay(SDTWindCavity *x, int f) {
   x->comb = SDTComb_new(f, f);
 }
 
-SDT_TYPE_COPY(SDT_WINDCAVITY)
-SDT_DEFINE_HASHMAP(SDT_WINDCAVITY, 59)
-SDT_JSON_SERIALIZE(SDT_WINDCAVITY)
-SDT_JSON_DESERIALIZE(SDT_WINDCAVITY)
+_SDT_COPY_FUNCTION(WindCavity)
+
+_SDT_HASHMAP_FUNCTIONS(WindCavity)
+
+json_value *SDTWindCavity_toJSON(const SDTWindCavity *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "maxDelay",
+                   json_integer_new(SDTWindCavity_getMaxDelay(x)));
+  json_object_push(obj, "length", json_double_new(SDTWindCavity_getLength(x)));
+  json_object_push(obj, "diameter",
+                   json_double_new(SDTWindCavity_getDiameter(x)));
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTWindCavity_getWindSpeed(x)));
+  return obj;
+}
+
+SDTWindCavity *SDTWindCavity_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int maxDelay = SDT_WINDCAVITY_MAXDELAY_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxDelay, x, maxDelay, integer);
+
+  SDTWindCavity *y = SDTWindCavity_new(maxDelay);
+  return SDTWindCavity_setParams(y, x, 0);
+}
+
+SDTWindCavity *SDTWindCavity_setParams(SDTWindCavity *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(WindCavity, x, j, MaxDelay, maxDelay, integer,
+                                  unsafe);
+
+  _SDT_SET_DOUBLE_FROM_JSON(WindCavity, x, j, Length, length);
+  _SDT_SET_DOUBLE_FROM_JSON(WindCavity, x, j, Diameter, diameter);
+  _SDT_SET_DOUBLE_FROM_JSON(WindCavity, x, j, WindSpeed, windSpeed);
+
+  return x;
+}
 
 int SDTWindCavity_getMaxDelay(const SDTWindCavity *x) {
   return SDTComb_getMaxXDelay(x->comb);
@@ -112,6 +174,10 @@ int SDTWindCavity_getMaxDelay(const SDTWindCavity *x) {
 double SDTWindCavity_getLength(const SDTWindCavity *x) { return x->length; }
 
 double SDTWindCavity_getDiameter(const SDTWindCavity *x) { return x->diameter; }
+
+double SDTWindCavity_getWindSpeed(const SDTWindCavity *x) {
+  return x->windSpeed;
+}
 
 void SDTWindCavity_setLength(SDTWindCavity *x, double f) {
   x->length = fmax(SDT_MICRO, f);
@@ -132,7 +198,7 @@ void SDTWindCavity_setWindSpeed(SDTWindCavity *x, double f) {
 
 double SDTWindCavity_dsp(SDTWindCavity *x) {
   double out;
-  
+
   out = x->windSpeed * SDT_whiteNoise();
   out = SDTComb_dsp(x->comb, out);
   out = SDTTwoPoles_dsp(x->reso, out);
@@ -148,14 +214,14 @@ struct SDTWindKarman {
 
 void SDTWindKarman_updateResonance(SDTWindKarman *x) {
   double fc;
-  
+
   fc = 8.0 * x->windSpeed / x->diameter;
   SDTTwoPoles_resonant(x->reso, fc, 30.0);
 }
 
 SDTWindKarman *SDTWindKarman_new() {
   SDTWindKarman *x;
-  
+
   x = (SDTWindKarman *)calloc(1, sizeof(SDTWindKarman));
   x->reso = SDTTwoPoles_new();
   x->diameter = 0.001;
@@ -168,11 +234,40 @@ extern void SDTWindKarman_free(SDTWindKarman *x) {
   free(x);
 }
 
-SDT_TYPE_COPY(SDT_WINDKARMAN)
-SDT_DEFINE_HASHMAP(SDT_WINDKARMAN, 59)
-SDT_TYPE_MAKE_GETTERS(SDT_WINDKARMAN)
-SDT_JSON_SERIALIZE(SDT_WINDKARMAN)
-SDT_JSON_DESERIALIZE(SDT_WINDKARMAN)
+_SDT_COPY_FUNCTION(WindKarman)
+
+_SDT_HASHMAP_FUNCTIONS(WindKarman)
+
+json_value *SDTWindKarman_toJSON(const SDTWindKarman *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "diameter",
+                   json_double_new(SDTWindKarman_getDiameter(x)));
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTWindKarman_getWindSpeed(x)));
+  return obj;
+}
+
+SDTWindKarman *SDTWindKarman_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+  SDTWindKarman *y = SDTWindKarman_new();
+  return SDTWindKarman_setParams(y, x, 0);
+}
+
+SDTWindKarman *SDTWindKarman_setParams(SDTWindKarman *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_DOUBLE_FROM_JSON(WindKarman, x, j, Diameter, diameter);
+  _SDT_SET_DOUBLE_FROM_JSON(WindKarman, x, j, WindSpeed, windSpeed);
+
+  return x;
+}
+
+double SDTWindKarman_getDiameter(const SDTWindKarman *x) { return x->diameter; }
+
+double SDTWindKarman_getWindSpeed(const SDTWindKarman *x) {
+  return x->windSpeed;
+}
 
 void SDTWindKarman_setDiameter(SDTWindKarman *x, double f) {
   x->diameter = fmax(SDT_MICRO, f);
@@ -186,7 +281,7 @@ void SDTWindKarman_setWindSpeed(SDTWindKarman *x, double f) {
 
 double SDTWindKarman_dsp(SDTWindKarman *x) {
   double out;
-  
+
   out = x->windSpeed * SDT_whiteNoise();
   out = SDTTwoPoles_dsp(x->reso, out);
   return out;
@@ -197,16 +292,15 @@ double SDTWindKarman_dsp(SDTWindKarman *x) {
 struct SDTExplosion {
   SDTReverb *scatter;
   SDTTwoPoles *wave, *wind;
-  double *waveBuf, *windBuf,
-         blastTime, scatterTime, dispersion,
-         distance, waveSpeed, windSpeed, time;
+  double *waveBuf, *windBuf, blastTime, scatterTime, dispersion, distance,
+      waveSpeed, windSpeed, time;
   long i, waveDelay, windDelay, size;
 };
 
 SDTExplosion *SDTExplosion_new(long maxScatter, long maxDelay) {
   SDTExplosion *x;
   long i;
-  
+
   x = (SDTExplosion *)malloc(sizeof(SDTExplosion));
   x->scatter = SDTReverb_new(maxScatter);
   x->wave = SDTTwoPoles_new();
@@ -253,20 +347,79 @@ void SDTExplosion_setMaxDelay(SDTExplosion *x, long f) {
   x->size = f;
 }
 
-SDT_TYPE_COPY(SDT_EXPLOSION)
-SDT_DEFINE_HASHMAP(SDT_EXPLOSION, 59)
-SDT_JSON_SERIALIZE(SDT_EXPLOSION)
-SDT_JSON_DESERIALIZE(SDT_EXPLOSION)
+_SDT_COPY_FUNCTION(Explosion)
 
-long SDTExplosion_getMaxScatter(const SDTExplosion *x) { return SDTReverb_getMaxDelay(x->scatter); }
+_SDT_HASHMAP_FUNCTIONS(Explosion)
+
+json_value *SDTExplosion_toJSON(const SDTExplosion *x) {
+  json_value *obj = json_object_new(0);
+
+  json_object_push(obj, "maxScatter",
+                   json_integer_new(SDTExplosion_getMaxScatter(x)));
+  json_object_push(obj, "maxDelay",
+                   json_integer_new(SDTExplosion_getMaxDelay(x)));
+  json_object_push(obj, "blastTime",
+                   json_double_new(SDTExplosion_getBlastTime(x)));
+  json_object_push(obj, "scatterTime",
+                   json_double_new(SDTExplosion_getScatterTime(x)));
+  json_object_push(obj, "dispersion",
+                   json_double_new(SDTExplosion_getDispersion(x)));
+  json_object_push(obj, "distance",
+                   json_double_new(SDTExplosion_getDistance(x)));
+  json_object_push(obj, "waveSpeed",
+                   json_double_new(SDTExplosion_getWaveSpeed(x)));
+  json_object_push(obj, "windSpeed",
+                   json_double_new(SDTExplosion_getWindSpeed(x)));
+
+  return obj;
+}
+
+SDTExplosion *SDTExplosion_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int maxScatter = SDT_EXPLOSION_MAX_SCATTER_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxScatter, x, maxScatter, integer);
+  unsigned int maxDelay = SDT_EXPLOSION_MAX_DELAY_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxDelay, x, maxDelay, integer);
+
+  SDTExplosion *y = SDTExplosion_new(maxScatter, maxDelay);
+  return SDTExplosion_setParams(y, x, 0);
+}
+
+SDTExplosion *SDTExplosion_setParams(SDTExplosion *x, const json_value *j,
+                                     unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Explosion, x, j, MaxScatter, maxScatter,
+                                  integer, unsafe);
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Explosion, x, j, MaxDelay, maxDelay, integer,
+                                  unsafe);
+
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, BlastTime, blastTime);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, ScatterTime, scatterTime);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, Dispersion, dispersion);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, Distance, distance);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, WaveSpeed, waveSpeed);
+  _SDT_SET_DOUBLE_FROM_JSON(Explosion, x, j, WindSpeed, windSpeed);
+
+  return x;
+}
+
+long SDTExplosion_getMaxScatter(const SDTExplosion *x) {
+  return SDTReverb_getMaxDelay(x->scatter);
+}
 
 long SDTExplosion_getMaxDelay(const SDTExplosion *x) { return x->size; }
 
 double SDTExplosion_getBlastTime(const SDTExplosion *x) { return x->blastTime; }
 
-double SDTExplosion_getScatterTime(const SDTExplosion *x) { return x->scatterTime; }
+double SDTExplosion_getScatterTime(const SDTExplosion *x) {
+  return x->scatterTime;
+}
 
-double SDTExplosion_getDispersion(const SDTExplosion *x) { return x->dispersion; }
+double SDTExplosion_getDispersion(const SDTExplosion *x) {
+  return x->dispersion;
+}
 
 double SDTExplosion_getDistance(const SDTExplosion *x) { return x->distance; }
 
@@ -298,7 +451,9 @@ void SDTExplosion_setWindSpeed(SDTExplosion *x, double f) {
   x->windSpeed = fmax(0.0, f);
 }
 
-void SDTExplosion_update(SDTExplosion *x) {
+void SDTExplosion_update(SDTExplosion *x) { SDTExplosion_trigger(x); }
+
+void SDTExplosion_trigger(SDTExplosion *x) {
   SDTReverb_setXSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
   SDTReverb_setYSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
   SDTReverb_setZSize(x->scatter, 0.01 * SDT_MACH1 * x->scatterTime);
@@ -316,13 +471,14 @@ void SDTExplosion_update(SDTExplosion *x) {
 void SDTExplosion_dsp(SDTExplosion *x, double *outs) {
   double zeroCross, blast, scatter, wave, wind;
   long waveI, windI;
-  
+
   zeroCross = x->blastTime == 0.0 ? 1.0 : x->time / x->blastTime;
   blast = exp(-zeroCross) * (1.0 - zeroCross);
   scatter = SDTReverb_dsp(x->scatter, blast);
-  wave = SDTTwoPoles_dsp(x->wave, (1.0 - x->dispersion) * blast + x->dispersion * scatter);
+  wave = SDTTwoPoles_dsp(
+      x->wave, (1.0 - x->dispersion) * blast + x->dispersion * scatter);
   wind = SDTTwoPoles_dsp(x->wind, SDT_whiteNoise() * wave);
-  
+
   if (x->waveDelay < x->size) {
     waveI = (x->i + x->waveDelay) % x->size;
     x->waveBuf[waveI] += wave;

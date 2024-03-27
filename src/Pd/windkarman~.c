@@ -5,12 +5,12 @@
  *
  *****************************************************************************/
 
-#include "SDTCommonPd.h"
 #include "SDT/SDTCommon.h"
 #include "SDT/SDTGases.h"
+#include "SDTCommonPd.h"
 #ifdef NT
-#pragma warning( disable : 4244 )
-#pragma warning( disable : 4305 )
+#pragma warning(disable : 4244)
+#pragma warning(disable : 4305)
 #endif
 
 static t_class *windkarman_class;
@@ -20,12 +20,10 @@ typedef struct _windkarman {
   SDTWindKarman *karman;
   t_float f;
   t_outlet *out;
-  char *key;
+  const char *key;
 } t_windkarman;
 
-void windkarman_diameter(t_windkarman *x, t_float f) {
-  SDTWindKarman_setDiameter(x->karman, f);
-}
+SDT_PD_SETTER(windkarman, WindKarman, karman, Diameter, )
 
 static t_int *windkarman_perform(t_int *w) {
   t_windkarman *x = (t_windkarman *)(w[1]);
@@ -36,7 +34,7 @@ static t_int *windkarman_perform(t_int *w) {
     SDTWindKarman_setWindSpeed(x->karman, *in++);
     *out++ = (float)SDTWindKarman_dsp(x->karman);
   }
-  return (w+5);
+  return (w + 5);
 }
 
 static void windkarman_dsp(t_windkarman *x, t_signal **sp) {
@@ -62,8 +60,12 @@ static void windkarman_free(t_windkarman *x) {
 }
 
 void windkarman_tilde_setup(void) {
-  windkarman_class = class_new(gensym("windkarman~"), (t_newmethod)windkarman_new, (t_method)windkarman_free, sizeof(t_windkarman), CLASS_DEFAULT, A_GIMME, 0);
+  windkarman_class =
+      class_new(gensym("windkarman~"), (t_newmethod)windkarman_new,
+                (t_method)windkarman_free, sizeof(t_windkarman), CLASS_DEFAULT,
+                A_GIMME, 0);
   CLASS_MAINSIGNALIN(windkarman_class, t_windkarman, f);
-  class_addmethod(windkarman_class, (t_method)windkarman_diameter, gensym("diameter"), A_FLOAT, 0);
+  class_addmethod(windkarman_class, (t_method)windkarman_setDiameter,
+                  gensym("diameter"), A_FLOAT, 0);
   class_addmethod(windkarman_class, (t_method)windkarman_dsp, gensym("dsp"), 0);
 }

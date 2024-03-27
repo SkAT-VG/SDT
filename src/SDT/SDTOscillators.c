@@ -1,10 +1,10 @@
+#include "SDTOscillators.h"
 #include <math.h>
 #include <stdlib.h>
 #include "SDTCommon.h"
-#include "SDTOscillators.h"
 
-#define LCG_MULT    1664525
-#define LCG_ADD  1013904223
+#define LCG_MULT 1664525
+#define LCG_ADD 1013904223
 
 unsigned int seed = 42;
 
@@ -42,7 +42,7 @@ void SDTPinkNoise_free(SDTPinkNoise *x) {
 double SDTPinkNoise_dsp(SDTPinkNoise *x) {
   double result;
   int i;
-  
+
   result = 0;
   for (i = 0; i < x->n; i++) {
     if ((x->count + x->offsets[i]) % x->steps[i] == 0) {
@@ -51,7 +51,7 @@ double SDTPinkNoise_dsp(SDTPinkNoise *x) {
     result += x->octaves[i];
   }
   result /= (double)x->n;
-  x->count = (x->count + 1) % x->steps[x->n-1];
+  x->count = (x->count + 1) % x->steps[x->n - 1];
   return result;
 }
 

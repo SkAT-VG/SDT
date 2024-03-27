@@ -1,7 +1,9 @@
+#include "SDTFilters.h"
+
 #include <math.h>
 #include <stdlib.h>
+
 #include "SDTCommon.h"
-#include "SDTFilters.h"
 #include "SDTStructs.h"
 
 struct SDTOnePole {
@@ -10,7 +12,7 @@ struct SDTOnePole {
 
 SDTOnePole *SDTOnePole_new() {
   SDTOnePole *x;
-  
+
   x = (SDTOnePole *)malloc(sizeof(SDTOnePole));
   x->b0 = 1.0;
   x->a1 = 0.0;
@@ -18,9 +20,7 @@ SDTOnePole *SDTOnePole_new() {
   return x;
 }
 
-void SDTOnePole_free(SDTOnePole *x) {
-  free(x);
-}
+void SDTOnePole_free(SDTOnePole *x) { free(x); }
 
 void SDTOnePole_setFeedback(SDTOnePole *x, double f) {
   x->a1 = SDT_fclip(f, -1.0, 1.0);
@@ -29,7 +29,7 @@ void SDTOnePole_setFeedback(SDTOnePole *x, double f) {
 
 void SDTOnePole_lowpass(SDTOnePole *x, double f) {
   double w;
-  
+
   w = SDT_fclip(f * SDT_timeStep, 0.0, 0.5);
   x->a1 = -exp(-SDT_TWOPI * w);
   x->b0 = 1.0 + x->a1;
@@ -37,7 +37,7 @@ void SDTOnePole_lowpass(SDTOnePole *x, double f) {
 
 void SDTOnePole_highpass(SDTOnePole *x, double f) {
   double w;
-  
+
   w = SDT_fclip(f * SDT_timeStep, 0.0, 0.5);
   x->a1 = exp(-SDT_TWOPI * (0.5 - w));
   x->b0 = 1.0 - x->a1;
@@ -50,13 +50,62 @@ double SDTOnePole_dsp(SDTOnePole *x, double in) {
 
 //-------------------------------------------------------------------------------------//
 
+struct SDTDCFilter {
+  double a_, g, y;
+};
+
+SDTDCFilter *SDTDCFilter_new() {
+  SDTDCFilter *x;
+
+  x = (SDTDCFilter *)malloc(sizeof(SDTDCFilter));
+  x->y = 0.0;
+  SDTDCFilter_setFeedback(x, 0.0);
+  return x;
+}
+
+void SDTDCFilter_free(SDTDCFilter *x) { free(x); }
+
+void SDTDCFilter_setFeedback(SDTDCFilter *x, double f) {
+  // x->a_ is 1 - feedback
+  x->a_ = SDT_fclip(1.0 - f, SDT_MICRO, 1.0);
+  // H(z)  = (1 - z^-1) / (1 - feedback * z^-1)
+  // H(1)  = 0 => DC cut
+  // H(-1) = 2 / (1 + feedback) =>
+  // => x->g = (1 + feedback) / 2 makeup gain
+  x->g = 1.0 - x->a_ / 2.0;
+}
+
+void SDTDCFilter_setFrequency(SDTDCFilter *x, double f) {
+  double w = f * SDT_TWOPI * SDT_timeStep;
+  double cos_w = cos(w);
+  SDTDCFilter_setFeedback(x,
+                          (cos_w < SDT_MICRO)  // Avoid division by zero
+                              ? 1  // Effectively, set to max feedback allowed
+                              : (1 - fabs(sin(w))) / cos_w);
+}
+
+double SDTDCFilter_getFeedback(const SDTDCFilter *x) { return 1.0 - x->a_; }
+
+double SDTDCFilter_getFrequency(const SDTDCFilter *x) {
+  double a = SDTDCFilter_getFeedback(x);
+  return acos(2 * a / (a * a + 1));
+}
+
+double SDTDCFilter_dsp(SDTDCFilter *x, double in) {
+  double out = x->g * in - x->y;
+  x->y = x->a_ * out + x->y;
+  return out;
+}
+
+//-------------------------------------------------------------------------------------//
+
 struct SDTAllPass {
   double a, x1, y1;
 };
 
 SDTAllPass *SDTAllPass_new() {
   SDTAllPass *x;
-  
+
   x = (SDTAllPass *)malloc(sizeof(SDTAllPass));
   x->a = 0.0;
   x->x1 = 0.0;
@@ -64,9 +113,7 @@ SDTAllPass *SDTAllPass_new() {
   return x;
 }
 
-void SDTAllPass_free(SDTAllPass *x) {
-  free(x);
-}
+void SDTAllPass_free(SDTAllPass *x) { free(x); }
 
 void SDTAllPass_setFeedback(SDTAllPass *x, double f) {
   x->a = SDT_fclip(f, -1.0, 1.0);
@@ -81,12 +128,29 @@ double SDTAllPass_dsp(SDTAllPass *x, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTEnvelope {
-  double b0a, a1a, b0r, a1r, y1;
+  double ta, tr, b0a, a1a, b0r, a1r, y1;
 };
+
+static void SDTEnvelope_updateAttack(SDTEnvelope *x) {
+  double w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / x->ta, 0.0, 0.5);
+  x->a1a = -exp(w);
+  x->b0a = 1.0 + x->a1a;
+}
+
+static void SDTEnvelope_updateRelease(SDTEnvelope *x) {
+  double w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / x->tr, 0.0, 0.5);
+  x->a1r = -exp(w);
+  x->b0r = 1.0 + x->a1r;
+}
+
+void SDTEnvelope_update(SDTEnvelope *x) {
+  SDTEnvelope_updateAttack(x);
+  SDTEnvelope_updateRelease(x);
+}
 
 SDTEnvelope *SDTEnvelope_new() {
   SDTEnvelope *x;
-  
+
   x = (SDTEnvelope *)malloc(sizeof(SDTEnvelope));
   x->b0a = 1.0;
   x->a1a = 0.0;
@@ -96,45 +160,56 @@ SDTEnvelope *SDTEnvelope_new() {
   return x;
 }
 
-void SDTEnvelope_free(SDTEnvelope *x) {
-  free(x);
+void SDTEnvelope_free(SDTEnvelope *x) { free(x); }
+
+_SDT_COPY_FUNCTION(Envelope)
+
+_SDT_HASHMAP_FUNCTIONS(Envelope)
+
+json_value *SDTEnvelope_toJSON(const SDTEnvelope *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "attack", json_double_new(SDTEnvelope_getAttack(x)));
+  json_object_push(obj, "release", json_double_new(SDTEnvelope_getRelease(x)));
+  return obj;
 }
 
-SDT_TYPE_COPY(SDT_ENVELOPE)
-SDT_DEFINE_HASHMAP(SDT_ENVELOPE, 59)
-SDT_JSON_SERIALIZE(SDT_ENVELOPE)
-SDT_JSON_DESERIALIZE(SDT_ENVELOPE)
+SDTEnvelope *SDTEnvelope_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
 
-double SDTEnvelope_getAttack(const SDTEnvelope *x) {
-  return -SDT_TWOPI * SDT_timeStep / log(-x->a1a);
+  SDTEnvelope *y = SDTEnvelope_new();
+  return SDTEnvelope_setParams(y, x, 0);
 }
 
-double SDTEnvelope_getRelease(const SDTEnvelope *x) {
-  return -SDT_TWOPI * SDT_timeStep / log(-x->a1r);
+SDTEnvelope *SDTEnvelope_setParams(SDTEnvelope *x, const json_value *j,
+                                   unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_DOUBLE_FROM_JSON(Envelope, x, j, Attack, attack);
+  _SDT_SET_DOUBLE_FROM_JSON(Envelope, x, j, Release, release);
+
+  return x;
 }
+
+double SDTEnvelope_getAttack(const SDTEnvelope *x) { return x->ta; }
+
+double SDTEnvelope_getRelease(const SDTEnvelope *x) { return x->tr; }
 
 void SDTEnvelope_setAttack(SDTEnvelope *x, double a) {
-  double w;
-  
-  w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / a, 0.0, 0.5);
-  x->a1a = -exp(w);
-  x->b0a = 1.0 + x->a1a;
+  x->ta = a;
+  SDTEnvelope_updateAttack(x);
 }
 
 void SDTEnvelope_setRelease(SDTEnvelope *x, double r) {
-  double w;
-  
-  w = -SDT_TWOPI * SDT_fclip(SDT_timeStep / r, 0.0, 0.5);
-  x->a1r = -exp(w);
-  x->b0r = 1.0 + x->a1r;
+  x->tr = r;
+  SDTEnvelope_updateRelease(x);
 }
 
 double SDTEnvelope_dsp(SDTEnvelope *x, double in) {
-  double x0;
-  
-  x0 = fabs(in);
-  if (x0 > x->y1) x->y1 = x->b0a * x0 - x->a1a * x->y1;
-  else x->y1 = x->b0r * x0 - x->a1r * x->y1;
+  double x0 = fabs(in);
+  if (x0 > x->y1)
+    x->y1 = x->b0a * x0 - x->a1a * x->y1;
+  else
+    x->y1 = x->b0r * x0 - x->a1r * x->y1;
   return x->y1;
 };
 
@@ -146,7 +221,7 @@ struct SDTTwoPoles {
 
 SDTTwoPoles *SDTTwoPoles_new() {
   SDTTwoPoles *x;
-  
+
   x = (SDTTwoPoles *)malloc(sizeof(SDTTwoPoles));
   x->b0 = 1.0;
   x->a1 = 0.0;
@@ -156,13 +231,11 @@ SDTTwoPoles *SDTTwoPoles_new() {
   return x;
 }
 
-void SDTTwoPoles_free(SDTTwoPoles *x) {
-  free(x);
-}
+void SDTTwoPoles_free(SDTTwoPoles *x) { free(x); }
 
 void SDTTwoPoles_lowpass(SDTTwoPoles *x, double fc) {
   double d;
-  
+
   d = -exp(-SDT_TWOPI * SDT_fclip(fc * SDT_timeStep, 0.0, 0.5));
   x->a1 = 2.0 * d;
   x->a2 = d * d;
@@ -171,16 +244,16 @@ void SDTTwoPoles_lowpass(SDTTwoPoles *x, double fc) {
 
 void SDTTwoPoles_highpass(SDTTwoPoles *x, double fc) {
   double d;
-  
+
   d = exp(-SDT_TWOPI * (0.5 - SDT_fclip(fc * SDT_timeStep, 0.0, 0.5)));
   x->a1 = 2.0 * d;
-  x->a2 = d * d; 
+  x->a2 = d * d;
   x->b0 = 1.0 + x->a2 - x->a1;
 }
 
 void SDTTwoPoles_resonant(SDTTwoPoles *x, double fc, double q) {
   double w, r;
-  
+
   w = SDT_TWOPI * SDT_fclip(fc * SDT_timeStep, 0.0, 0.5);
   r = SDT_fclip(exp(-0.5 * w / q), 0.0, 0.9995);
   x->a1 = -2.0 * r * cos(w);
@@ -190,7 +263,7 @@ void SDTTwoPoles_resonant(SDTTwoPoles *x, double fc, double q) {
 
 double SDTTwoPoles_dsp(SDTTwoPoles *x, double in) {
   double result;
-  
+
   result = x->b0 * in - x->a1 * x->y1 - x->a2 * x->y2;
   x->y2 = x->y1;
   x->y1 = result;
@@ -200,15 +273,14 @@ double SDTTwoPoles_dsp(SDTTwoPoles *x, double in) {
 //-------------------------------------------------------------------------------------//
 
 struct SDTBiquad {
-  double *buf, *a0, *a1, *a2, *b0, *b1, *b2,
-         f, w, cosw, sinw, *alpha;
+  double *buf, *a0, *a1, *a2, *b0, *b1, *b2, f, w, cosw, sinw, *alpha;
   int nSections;
 };
 
 SDTBiquad *SDTBiquad_new(int nSections) {
   SDTBiquad *x;
   int i, n;
-  
+
   n = 2 * nSections + 2;
   x = (SDTBiquad *)malloc(sizeof(SDTBiquad));
   x->buf = (double *)malloc(n * sizeof(double));
@@ -232,7 +304,7 @@ SDTBiquad *SDTBiquad_new(int nSections) {
     x->alpha[i] = 1.0;
   }
   x->nSections = nSections;
-  
+
   return x;
 }
 
@@ -253,17 +325,18 @@ SDT_DEFINE_HASHMAP(SDT_BIQUAD, 59)
 int SDTBiquad_getNSections(const SDTBiquad *x) { return x->nSections; }
 
 #define SDT_BIQUAD_ARRAYS(A) \
-A(a0) \
-A(a1) \
-A(a2) \
-A(b0) \
-A(b1) \
-A(b2) \
-A(alpha)
+  A(a0)                      \
+  A(a1)                      \
+  A(a2)                      \
+  A(b0)                      \
+  A(b1)                      \
+  A(b2)                      \
+  A(alpha)
 
-#define SDT_BIQUAD_COPY_ARRAY(F) free(dest-> F); \
-dest-> F = (double *)malloc(nSections * sizeof(double)); \
-for (unsigned int i = 0; i < nSections; i++) dest-> F [i] = src-> F [i];
+#define SDT_BIQUAD_COPY_ARRAY(F)                          \
+  free(dest->F);                                          \
+  dest->F = (double *)malloc(nSections * sizeof(double)); \
+  for (unsigned int i = 0; i < nSections; i++) dest->F[i] = src->F[i];
 
 SDTBiquad *SDTBiquad_copy(SDTBiquad *dest, const SDTBiquad *src) {
   int nSections = SDTBiquad_getNSections(src);
@@ -276,30 +349,35 @@ SDTBiquad *SDTBiquad_copy(SDTBiquad *dest, const SDTBiquad *src) {
   return dest;
 }
 
-#define SDT_BIQUAD_PUSH_ARRAY(F) json_value *a_ ## F = json_array_new(nSections); \
-for (unsigned int i = 0; i < nSections; i++) json_array_push(a_ ## F, json_double_new(x-> F [i])); \
-json_object_push(obj, #F, a_ ## F);
+#define SDT_BIQUAD_PUSH_ARRAY(F)                      \
+  json_value *a_##F = json_array_new(nSections);      \
+  for (unsigned int i = 0; i < nSections; i++)        \
+    json_array_push(a_##F, json_double_new(x->F[i])); \
+  json_object_push(obj, #F, a_##F);
 
 json_value *SDTBiquad_toJSON(const SDTBiquad *x) {
   int nSections = SDTBiquad_getNSections(x);
-  json_value * obj = json_object_new(0);
+  json_value *obj = json_object_new(0);
 
   json_object_push(obj, "nSections", json_integer_new(nSections));
   SDT_BIQUAD_ARRAYS(SDT_BIQUAD_PUSH_ARRAY)
   return obj;
 }
 
-#define SDT_BIQUAD_PULL_ARRAY(F) v = json_object_get_by_key(x, #F); \
-for (unsigned int i = 0; v && (v->type == json_array) && i < nSections && i < v->u.array.length; ++i) { \
-  const json_value *w = v->u.array.values[i]; \
-  y-> F [i] = (w && (w->type == json_double)) ? w->u.dbl : 0.0; \
-}
+#define SDT_BIQUAD_PULL_ARRAY(F)                                               \
+  v = SDTJSON_object_get_by_key(x, #F);                                        \
+  for (unsigned int i = 0;                                                     \
+       v && (v->type == json_array) && i < nSections && i < v->u.array.length; \
+       ++i) {                                                                  \
+    const json_value *w = v->u.array.values[i];                                \
+    y->F[i] = (w && (w->type == json_double)) ? w->u.dbl : 0.0;                \
+  }
 
 SDTBiquad *SDTBiquad_fromJSON(const json_value *x) {
   if (!x || x->type != json_object) return 0;
-  const json_value *v = json_object_get_by_key(x, "nSections");
+  const json_value *v = SDTJSON_object_get_by_key(x, "nSections");
   int nSections = (v && (v->type == json_integer)) ? v->u.integer : 1;
-  SDTBiquad * y = SDTBiquad_new(nSections);
+  SDTBiquad *y = SDTBiquad_new(nSections);
 
   SDT_BIQUAD_ARRAYS(SDT_BIQUAD_PULL_ARRAY)
   return y;
@@ -315,7 +393,7 @@ void SDTBiquad_common(SDTBiquad *x, int i, double fc, double q) {
 void SDTBiquad_butterworthLP(SDTBiquad *x, double fc) {
   double q;
   int i;
-  
+
   for (i = 0; i < x->nSections; i++) {
     q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / (2 * x->nSections)));
     SDTBiquad_common(x, i, fc, q);
@@ -331,7 +409,7 @@ void SDTBiquad_butterworthLP(SDTBiquad *x, double fc) {
 void SDTBiquad_butterworthHP(SDTBiquad *x, double fc) {
   double q;
   int i;
-  
+
   for (i = 0; i < x->nSections; i++) {
     q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / (2 * x->nSections)));
     SDTBiquad_common(x, i, fc, q);
@@ -347,7 +425,7 @@ void SDTBiquad_butterworthHP(SDTBiquad *x, double fc) {
 void SDTBiquad_butterworthAP(SDTBiquad *x, double fc) {
   double q;
   int i;
-  
+
   for (i = 0; i < x->nSections; i++) {
     q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / (2 * x->nSections)));
     SDTBiquad_common(x, i, fc, q);
@@ -363,7 +441,7 @@ void SDTBiquad_butterworthAP(SDTBiquad *x, double fc) {
 void SDTBiquad_linkwitzRileyLP(SDTBiquad *x, double fc) {
   double q;
   int i, j;
-  
+
   for (i = 0; i < x->nSections / 2; i++) {
     j = i + x->nSections / 2;
     q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / x->nSections));
@@ -381,7 +459,7 @@ void SDTBiquad_linkwitzRileyLP(SDTBiquad *x, double fc) {
 void SDTBiquad_linkwitzRileyHP(SDTBiquad *x, double fc) {
   double q;
   int i, j;
-  
+
   for (i = 0; i < x->nSections / 2; i++) {
     j = i + x->nSections / 2;
     q = 1.0 / (2.0 * cos(SDT_PI * (i + 0.5) / x->nSections));
@@ -399,17 +477,18 @@ void SDTBiquad_linkwitzRileyHP(SDTBiquad *x, double fc) {
 double SDTBiquad_dsp(SDTBiquad *x, double in) {
   double x0, y0;
   int i, j;
-  
+
   y0 = in;
   for (i = 0; i < x->nSections; i++) {
     j = 2 * i;
     x0 = y0;
-    y0 = x->b0[i] * x0 + x->b1[i] * x->buf[j] + x->b2[i] * x->buf[j+1] - x->a1[i] * x->buf[j+2] - x->a2[i] * x->buf[j+3];
-    x->buf[j+1] = x->buf[j];
+    y0 = x->b0[i] * x0 + x->b1[i] * x->buf[j] + x->b2[i] * x->buf[j + 1] -
+         x->a1[i] * x->buf[j + 2] - x->a2[i] * x->buf[j + 3];
+    x->buf[j + 1] = x->buf[j];
     x->buf[j] = x0;
   }
   j = 2 * i;
-  x->buf[j+1] = x->buf[j];
+  x->buf[j + 1] = x->buf[j];
   x->buf[j] = y0;
   return y0;
 }
@@ -446,7 +525,7 @@ void SDTAverage_free(SDTAverage *x) {
 
 void SDTAverage_setWindow(SDTAverage *x, unsigned int i) {
   int j, k;
-  
+
   i = SDT_clip(i, 1, x->size);
   for (j = i; j > x->window; j--) {
     k = (x->curr + x->size - j) % x->size;
@@ -457,7 +536,7 @@ void SDTAverage_setWindow(SDTAverage *x, unsigned int i) {
     x->sum -= x->buf[k];
   }
   x->window = i;
-  x->last = (x->curr + x->size - i) % x->size; 
+  x->last = (x->curr + x->size - i) % x->size;
 }
 
 double SDTAverage_dsp(SDTAverage *x, double in) {
@@ -513,7 +592,7 @@ void SDTDelay_free(SDTDelay *x) {
 
 void SDTDelay_clear(SDTDelay *x) {
   long i;
-  
+
   for (i = 0; i < x->size; i++) {
     x->buf[i] = 0.0;
   }
@@ -539,7 +618,7 @@ double SDTDelay_dsp(SDTDelay *x, double in) {
   double yi, yj, gi, gj, out;
   long ri, rj;
   int i, j;
-  
+
   x->buf[x->head] = in;
   if (x->count == 0) {
     x->curr ^= 1;
@@ -571,7 +650,7 @@ struct SDTComb {
 
 SDTComb *SDTComb_new(long maxXDelay, long maxYDelay) {
   SDTComb *x;
-  
+
   x = (SDTComb *)malloc(sizeof(SDTComb));
   x->xDelay = SDTDelay_new(maxXDelay);
   x->yDelay = SDTDelay_new(maxYDelay);
@@ -623,7 +702,7 @@ void SDTComb_setXYGain(SDTComb *x, double f) {
 
 double SDTComb_dsp(SDTComb *x, double in) {
   double xOut, yOut;
-  
+
   xOut = SDTDelay_dsp(x->xDelay, in);
   yOut = SDTDelay_dsp(x->yDelay, x->out);
   x->out = in + x->xGain * xOut + x->yGain * yOut;
@@ -634,8 +713,8 @@ double SDTComb_dsp(SDTComb *x, double in) {
 
 struct SDTWaveguide {
   SDTDelay *fwdDelay, *revDelay;
-  double fwdFeedGain, revFeedGain, fwdThruGain, revThruGain,
-         fwdIn, fwdFeed, fwdThru, revIn, revFeed, revThru;
+  double fwdFeedGain, revFeedGain, fwdThruGain, revThruGain, fwdIn, fwdFeed,
+      fwdThru, revIn, revFeed, revThru;
 };
 
 SDTWaveguide *SDTWaveguide_new(int maxDelay) {
@@ -671,13 +750,9 @@ double SDTWaveguide_getDelay(const SDTWaveguide *x) {
   return SDTDelay_getDelay(x->fwdDelay);
 }
 
-double SDTWaveguide_getFwdOut(SDTWaveguide *x) {
-  return x->fwdThru;
-}
+double SDTWaveguide_getFwdOut(SDTWaveguide *x) { return x->fwdThru; }
 
-double SDTWaveguide_getRevOut(SDTWaveguide *x) {
-  return x->revThru;
-}
+double SDTWaveguide_getRevOut(SDTWaveguide *x) { return x->revThru; }
 
 double SDTWaveguide_getRevFeedback(const SDTWaveguide *x) {
   return x->revFeedGain;

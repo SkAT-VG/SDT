@@ -4,7 +4,7 @@ Sound Design Toolkit (SDT)
 https://github.com/SkAT-VG/SDT
 -------------------------------------------------------------------------------
 
-Copyright (C) 2001 - 2020 with the authors (see AUTHORS.txt)
+Copyright (C) 2001 - 2024 with the authors (see AUTHORS.txt)
 
 
 This file is part of the Sound Design Toolkit (SDT).

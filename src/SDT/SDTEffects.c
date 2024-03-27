@@ -1,37 +1,40 @@
+#include "SDTEffects.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "SDTCommon.h"
 #include "SDTComplex.h"
-#include "SDTFilters.h"
 #include "SDTFFT.h"
-#include "SDTEffects.h"
+#include "SDTFilters.h"
 #include "SDTStructs.h"
 
-double modes[15][3] = {{1,0,0},{0,2,1},{1,0,1},
-                       {2,1,0},{0,1,1},{1,1,1},
-                       {1,1,0},{0,1,2},{1,2,1},
-                       {1,2,0},{0,0,1},{2,1,1},
-                       {0,1,0},{1,0,2},{2,0,1}};
-                     
+#define _SDT_REVERB_NMODES 15
+
+static const double modes[_SDT_REVERB_NMODES][3] = {
+    {1, 0, 0}, {0, 2, 1}, {1, 0, 1}, {2, 1, 0}, {0, 1, 1},
+    {1, 1, 1}, {1, 1, 0}, {0, 1, 2}, {1, 2, 1}, {1, 2, 0},
+    {0, 0, 1}, {2, 1, 1}, {0, 1, 0}, {1, 0, 2}, {2, 0, 1}};
+
 struct SDTReverb {
-  SDTDelay *delays[15];
-  SDTOnePole *filters[15];
-  double g[15], v[30], r[15],
-         xSize, ySize, zSize, randomness, time, time1k;
+  SDTDelay *delays[_SDT_REVERB_NMODES];
+  SDTOnePole *filters[_SDT_REVERB_NMODES];
+  double g[_SDT_REVERB_NMODES], v[2 * _SDT_REVERB_NMODES],
+      r[_SDT_REVERB_NMODES], xSize, ySize, zSize, randomness, time, time1k;
 };
 
 SDTReverb *SDTReverb_new(long maxDelay) {
   SDTReverb *x;
   int i;
-  
+
   x = (SDTReverb *)malloc(sizeof(SDTReverb));
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     x->delays[i] = SDTDelay_new(maxDelay);
     x->filters[i] = SDTOnePole_new();
     x->g[i] = 0.0;
     x->v[i] = 0.0;
-    x->v[i+15] = 0.0;
+    x->v[i + _SDT_REVERB_NMODES] = 0.0;
     x->r[i] = 2.0 * SDT_frand() - 1.0;
   }
   x->xSize = 4.0;
@@ -45,8 +48,8 @@ SDTReverb *SDTReverb_new(long maxDelay) {
 
 void SDTReverb_free(SDTReverb *x) {
   int i;
-  
-  for (i = 0; i < 15; i++) {
+
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     SDTDelay_free(x->delays[i]);
     SDTOnePole_free(x->filters[i]);
   }
@@ -54,17 +57,56 @@ void SDTReverb_free(SDTReverb *x) {
 }
 
 void SDTReverb_setMaxDelay(SDTReverb *x, long f) {
-  for (unsigned int i = 0; i < 15; i++) {
+  for (unsigned int i = 0; i < _SDT_REVERB_NMODES; i++) {
     SDTDelay_free(x->delays[i]);
     x->delays[i] = SDTDelay_new(f);
   }
   SDTReverb_update(x);
 }
 
-SDT_TYPE_COPY(SDT_REVERB)
-SDT_DEFINE_HASHMAP(SDT_REVERB, 59)
-SDT_JSON_SERIALIZE(SDT_REVERB)
-SDT_JSON_DESERIALIZE(SDT_REVERB)
+_SDT_COPY_FUNCTION(Reverb)
+
+_SDT_HASHMAP_FUNCTIONS(Reverb)
+
+json_value *SDTReverb_toJSON(const SDTReverb *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "maxDelay", json_integer_new(SDTReverb_getMaxDelay(x)));
+  json_object_push(obj, "xSize", json_double_new(SDTReverb_getXSize(x)));
+  json_object_push(obj, "ySize", json_double_new(SDTReverb_getYSize(x)));
+  json_object_push(obj, "zSize", json_double_new(SDTReverb_getZSize(x)));
+  json_object_push(obj, "randomness",
+                   json_double_new(SDTReverb_getRandomness(x)));
+  json_object_push(obj, "time", json_double_new(SDTReverb_getTime(x)));
+  json_object_push(obj, "time1k", json_double_new(SDTReverb_getTime1k(x)));
+  return obj;
+}
+
+SDTReverb *SDTReverb_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  long maxDelay = SDT_REVERB_MAXDELAY_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(maxDelay, x, maxDelay, integer);
+
+  SDTReverb *y = SDTReverb_new(maxDelay);
+  return SDTReverb_setParams(y, x, 0);
+}
+
+SDTReverb *SDTReverb_setParams(SDTReverb *x, const json_value *j,
+                               unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(Reverb, x, j, MaxDelay, maxDelay, integer,
+                                  unsafe);
+
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, XSize, xSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, YSize, ySize);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, ZSize, zSize);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, Randomness, randomness);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, Time, time);
+  _SDT_SET_DOUBLE_FROM_JSON(Reverb, x, j, Time1k, time1k);
+
+  return x;
+}
 
 long SDTReverb_getMaxDelay(const SDTReverb *x) {
   return SDTDelay_getMaxDelay(x->delays[0]);
@@ -85,17 +127,20 @@ double SDTReverb_getTime1k(const SDTReverb *x) { return x->time1k; }
 void SDTReverb_update(SDTReverb *x) {
   double xMode, yMode, zMode, freq, delay, gi, gw, a, b, c, d;
   int i;
-  
-  for (i = 0; i < 15; i++) {
+
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     xMode = modes[i][0] / x->xSize;
     yMode = modes[i][1] / x->ySize;
     zMode = modes[i][2] / x->zSize;
-    freq = 0.5 * SDT_MACH1 * sqrt(xMode * xMode + yMode * yMode + zMode * zMode);
+    freq =
+        0.5 * SDT_MACH1 * sqrt(xMode * xMode + yMode * yMode + zMode * zMode);
     delay = SDT_sampleRate * (1.0 + x->randomness * x->r[i]) / freq;
     SDTDelay_setDelay(x->delays[i], delay);
     gi = fmax(0.0, pow(10.0, -3.0 * delay * SDT_timeStep / x->time));
     x->g[i] = gi;
-    gw = fmax(0.0, pow(10.0, -3.0 * delay * SDT_timeStep / fmin(x->time1k, x->time)) / gi);
+    gw = fmax(
+        0.0,
+        pow(10.0, -3.0 * delay * SDT_timeStep / fmin(x->time1k, x->time)) / gi);
     a = gw * gw - 1.0;
     b = (gw * gw * cos(SDT_TWOPI * 1000 * SDT_timeStep) - 1.0);
     c = a;
@@ -104,37 +149,27 @@ void SDTReverb_update(SDTReverb *x) {
   }
 }
 
-void SDTReverb_setXSize(SDTReverb *x, double f) {
-  x->xSize = fmax(0.0, f);
-}
+void SDTReverb_setXSize(SDTReverb *x, double f) { x->xSize = fmax(0.0, f); }
 
-void SDTReverb_setYSize(SDTReverb *x, double f) {
-  x->ySize = fmax(0.0, f);
-}
+void SDTReverb_setYSize(SDTReverb *x, double f) { x->ySize = fmax(0.0, f); }
 
-void SDTReverb_setZSize(SDTReverb *x, double f) {
-  x->zSize = fmax(0.0, f);
-}
+void SDTReverb_setZSize(SDTReverb *x, double f) { x->zSize = fmax(0.0, f); }
 
 void SDTReverb_setRandomness(SDTReverb *x, double f) {
   x->randomness = SDT_fclip(f, 0.0, 1.0);
 }
 
-void SDTReverb_setTime(SDTReverb *x, double f) {
-  x->time = fmax(0.0, f);
-}
+void SDTReverb_setTime(SDTReverb *x, double f) { x->time = fmax(0.0, f); }
 
-void SDTReverb_setTime1k(SDTReverb *x, double f) {
-  x->time1k = fmax(0.0, f);
-}
+void SDTReverb_setTime1k(SDTReverb *x, double f) { x->time1k = fmax(0.0, f); }
 
 double SDTReverb_dsp(SDTReverb *x, double in) {
   double a, b, c, d, *s, out;
   int i;
-  
+
   out = 0.0;
 
-  for (i = 0; i < 15; i++) {
+  for (i = 0; i < _SDT_REVERB_NMODES; i++) {
     s = &x->v[i];
     b = s[1] + s[2] + s[3] + s[5] + s[6] + s[9] + s[11];
     c = s[0] + s[4] + s[7] + s[8] + s[10] + s[12] + s[13] + s[14];
@@ -143,16 +178,15 @@ double SDTReverb_dsp(SDTReverb *x, double in) {
     x->v[i] = x->g[i] * SDTOnePole_dsp(x->filters[i], d);
     out += x->v[i];
   }
-  memcpy(&x->v[15], x->v, 14 * sizeof(double));
-  return out / 15.0;
+  memcpy(&x->v[_SDT_REVERB_NMODES], x->v, 14 * sizeof(double));
+  return out / ((double)_SDT_REVERB_NMODES);
 }
 
 //-------------------------------------------------------------------------------------//
 
 struct SDTPitchShift {
-  double *buf, *win, *dWin, *pow, *fqs,
-         *aFrame, *dFrame, *sFrame, *phs, *out,
-	     ratio, gain;
+  double *buf, *win, *dWin, *pow, *fqs, *aFrame, *dFrame, *sFrame, *phs, *out,
+      ratio, gain;
   SDTComplex *aFFT, *dFFT, *sFFT;
   SDTFFT *fftPlan;
   int i, j, size, winSize, fftSize, hopSize;
@@ -314,25 +348,59 @@ void SDTPitchShift_setOversample(SDTPitchShift *x, int f) {
   x->fftSize = fftSize;
 }
 
-SDT_TYPE_COPY(SDT_PITCHSHIFT)
-SDT_DEFINE_HASHMAP(SDT_PITCHSHIFT, 59)
-SDT_JSON_SERIALIZE(SDT_PITCHSHIFT)
-SDT_JSON_DESERIALIZE(SDT_PITCHSHIFT)
+_SDT_COPY_FUNCTION(PitchShift)
 
-int SDTPitchShift_getSize(const SDTPitchShift *x) {
-  return x->size;
+_SDT_HASHMAP_FUNCTIONS(PitchShift)
+
+SDTPitchShift *SDTPitchShift_fromJSON(const json_value *x) {
+  if (!x || x->type != json_object) return 0;
+
+  unsigned int size = SDT_PITCHSHIFT_SIZE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(size, x, size, integer);
+
+  unsigned int oversample = SDT_PITCHSHIFT_OVERSAMPLE_DEFAULT;
+  _SDT_GET_PARAM_FROM_JSON(oversample, x, oversample, integer);
+
+  SDTPitchShift *y = SDTPitchShift_new(size, oversample);
+  return SDTPitchShift_setParams(y, x, 0);
 }
+
+SDTPitchShift *SDTPitchShift_setParams(SDTPitchShift *x, const json_value *j,
+                                       unsigned char unsafe) {
+  if (!x || !j || j->type != json_object) return 0;
+
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(PitchShift, x, j, Size, size, integer,
+                                  unsafe);
+  _SDT_SET_UNSAFE_PARAM_FROM_JSON(PitchShift, x, j, Oversample, oversample,
+                                  integer, unsafe);
+
+  _SDT_SET_DOUBLE_FROM_JSON(PitchShift, x, j, Ratio, ratio);
+  _SDT_SET_DOUBLE_FROM_JSON(PitchShift, x, j, Overlap, overlap);
+
+  return x;
+}
+
+json_value *SDTPitchShift_toJSON(const SDTPitchShift *x) {
+  json_value *obj = json_object_new(0);
+  json_object_push(obj, "size", json_integer_new(SDTPitchShift_getSize(x)));
+  json_object_push(obj, "oversample",
+                   json_integer_new(SDTPitchShift_getOversample(x)));
+  json_object_push(obj, "ratio", json_double_new(SDTPitchShift_getRatio(x)));
+  json_object_push(obj, "overlap",
+                   json_double_new(SDTPitchShift_getOverlap(x)));
+  return obj;
+}
+
+int SDTPitchShift_getSize(const SDTPitchShift *x) { return x->size; }
 
 int SDTPitchShift_getOversample(const SDTPitchShift *x) {
   return x->winSize / x->size;
 }
 
-double SDTPitchShift_getRatio(const SDTPitchShift *x) {
-  return x->ratio;
-}
+double SDTPitchShift_getRatio(const SDTPitchShift *x) { return x->ratio; }
 
 double SDTPitchShift_getOverlap(const SDTPitchShift *x) {
-  return 1 - ((double) x->hopSize) / x->size;
+  return 1 - ((double)x->hopSize) / x->size;
 }
 
 void SDTPitchShift_setRatio(SDTPitchShift *x, double f) {
@@ -348,7 +416,7 @@ double SDTPitchShift_dsp(SDTPitchShift *x, double in) {
   double power, diff, freq, dFreq, shift;
   SDTComplex w;
   int i, j, k;
-  
+
   x->buf[x->i] = in;
   x->i = (x->i + 1) % x->size;
   x->j = (x->j + 1) % x->hopSize;
@@ -369,7 +437,10 @@ double SDTPitchShift_dsp(SDTPitchShift *x, double in) {
       power = x->aFFT[i].r * x->aFFT[i].r + x->aFFT[i].i * x->aFFT[i].i;
       if (power > 4.0 * x->pow[i]) x->phs[i] = 0.0;
       x->pow[i] = power;
-      diff = power > 0.0 ? (x->dFFT[i].i * x->aFFT[i].r - x->dFFT[i].r * x->aFFT[i].i) / power : 0.0;
+      diff = power > 0.0
+                 ? (x->dFFT[i].i * x->aFFT[i].r - x->dFFT[i].r * x->aFFT[i].i) /
+                       power
+                 : 0.0;
       freq = x->fqs[i] - diff;
       dFreq = freq * (x->ratio - 1.0);
       shift = dFreq * x->winSize / SDT_TWOPI;
